@@ -12,6 +12,11 @@ import LocalAuthentication
 
 class MainSplitViewController: UISplitViewController {
     
+    // MARK: - property
+    
+    weak var popOverNavigatorController: UINavigationController?
+    
+    
     // MARK: - function
 
     override func viewDidLoad() {

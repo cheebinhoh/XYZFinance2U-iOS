@@ -125,6 +125,12 @@ class SettingTableViewController: UITableViewController,
             settingDetail.setPopover(true)
             loadSettingDetailTableView(settingDetail, indexPath)
             self.present(settingDetailNavigationController, animated: false, completion: nil)
+            
+            guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+                fatalError("Exception: MainSplitViewController is expected")
+            }
+            
+            mainSplitView.popOverNavigatorController = settingDetailNavigationController
         } else {
             
             guard let settingDetail = delegate else {

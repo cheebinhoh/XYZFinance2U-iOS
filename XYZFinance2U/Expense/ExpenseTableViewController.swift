@@ -397,6 +397,12 @@ class ExpenseTableViewController: UITableViewController,
             expenseTableView.expense = sectionExpenseList?[indexPath.row]
             expenseDetailNavigationController.modalPresentationStyle = .popover
             self.present(expenseDetailNavigationController, animated: true, completion: nil)
+            
+            guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+                fatalError("Exception: MainSplitViewController is expected")
+            }
+            
+            mainSplitView.popOverNavigatorController = expenseDetailNavigationController
         } else {
             
             guard let detailTableViewController = delegate as? ExpenseDetailTableViewController else {
@@ -497,6 +503,13 @@ class ExpenseTableViewController: UITableViewController,
                     expenseDetailTableViewController.isPushinto = false
                     expenseDetailTableViewController.isPopover = true
                     navigationController.modalPresentationStyle = .popover
+
+                    guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+                        fatalError("Exception: MainSplitViewController is expected")
+                    }
+                    
+                    mainSplitView.popOverNavigatorController = navigationController
+                    
                     OperationQueue.main.addOperation {
                         
                        self.present(navigationController, animated: true, completion: nil)

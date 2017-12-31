@@ -230,21 +230,28 @@ class IncomeTableViewController: UITableViewController,
                 
                 if !lockScreenDisplayed {
                     
-                    guard let lockScreenView = self.storyboard?.instantiateViewController(withIdentifier: "lockScreenView") as? LockScreenViewController else {
-                        fatalError("Exception: lockScreenView is expected")
+                    guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+                        fatalError("Exception: MainSplitViewController is expected")
                     }
                     
-                    lockScreenView.mainTableViewController = self
-                    let lockScreenViewNavigatorController = UINavigationController(rootViewController: lockScreenView)
-                    
-                    if let delegate = UIApplication.shared.delegate as? AppDelegate {
+                    if nil == mainSplitView.popOverNavigatorController {
+
+                        guard let lockScreenView = self.storyboard?.instantiateViewController(withIdentifier: "lockScreenView") as? LockScreenViewController else {
+                            fatalError("Exception: lockScreenView is expected")
+                        }
                         
-                        lockScreenDisplayed = true
+                        lockScreenView.mainTableViewController = self
+                        let lockScreenViewNavigatorController = UINavigationController(rootViewController: lockScreenView)
                         
-                        // NOTE: to avoid warning "Unbalanced calls to begin/end appearance transitions for"
-                        OperationQueue.main.addOperation {
+                        if let delegate = UIApplication.shared.delegate as? AppDelegate {
                             
-                            delegate.window?.rootViewController?.present(lockScreenViewNavigatorController, animated: false, completion: nil)
+                            lockScreenDisplayed = true
+                
+                            // NOTE: to avoid warning "Unbalanced calls to begin/end appearance transitions for"
+                            OperationQueue.main.addOperation {
+                                
+                                delegate.window?.rootViewController?.present(lockScreenViewNavigatorController, animated: false, completion: nil)
+                            }
                         }
                     }
                 }
@@ -263,8 +270,11 @@ class IncomeTableViewController: UITableViewController,
                                 delegate.orientation = .all
                             }
                             
-                            self.dismiss(animated: false, completion: nil)
-                            self.lockScreenDisplayed = false
+                            if self.lockScreenDisplayed {
+                                
+                                self.dismiss(animated: false, completion: nil)
+                                self.lockScreenDisplayed = false
+                            }
                             
                             if let accounts = self.loadAccounts() {
                                 
@@ -272,14 +282,37 @@ class IncomeTableViewController: UITableViewController,
                             }
                         
                             self.reloadData()
-                            self.navigationItem.leftBarButtonItem?.isEnabled = true
-                            self.navigationItem.rightBarButtonItem?.isEnabled = true
+                            //self.navigationItem.leftBarButtonItem?.isEnabled = true
+                            //self.navigationItem.rightBarButtonItem?.isEnabled = true
                         }
                     } else {
                         
                         print("authentication fail = \(String(describing: error))")
-                        self.navigationItem.leftBarButtonItem?.isEnabled = false
-                        self.navigationItem.rightBarButtonItem?.isEnabled = false
+                        //self.navigationItem.leftBarButtonItem?.isEnabled = false
+                        //self.navigationItem.rightBarButtonItem?.isEnabled = false
+                        
+                        if !self.lockScreenDisplayed {
+                            
+                            self.dismiss(animated: false, completion: nil)
+
+                            guard let lockScreenView = self.storyboard?.instantiateViewController(withIdentifier: "lockScreenView") as? LockScreenViewController else {
+                                fatalError("Exception: lockScreenView is expected")
+                            }
+                            
+                            lockScreenView.mainTableViewController = self
+                            let lockScreenViewNavigatorController = UINavigationController(rootViewController: lockScreenView)
+                            
+                            if let delegate = UIApplication.shared.delegate as? AppDelegate {
+                                
+                                self.lockScreenDisplayed = true
+                                
+                                // NOTE: to avoid warning "Unbalanced calls to begin/end appearance transitions for"
+                                OperationQueue.main.addOperation {
+                                    
+                                    delegate.window?.rootViewController?.present(lockScreenViewNavigatorController, animated: false, completion: nil)
+                                }
+                            }
+                        }
                     }
                 }
             } else {
@@ -294,14 +327,14 @@ class IncomeTableViewController: UITableViewController,
                 }
                     
                 self.reloadData()
-                self.navigationItem.leftBarButtonItem?.isEnabled = true
-                self.navigationItem.rightBarButtonItem?.isEnabled = true
+                //self.navigationItem.leftBarButtonItem?.isEnabled = true
+                //self.navigationItem.rightBarButtonItem?.isEnabled = true
             }
         } else {
             
             self.authenticatedOk = true
-            self.navigationItem.leftBarButtonItem?.isEnabled = false
-            self.navigationItem.rightBarButtonItem?.isEnabled = false
+            //self.navigationItem.leftBarButtonItem?.isEnabled = false
+            //self.navigationItem.rightBarButtonItem?.isEnabled = false
         }
     }
     
@@ -364,6 +397,13 @@ class IncomeTableViewController: UITableViewController,
                     incomeDetailTableViewController.isPushinto = false
                     incomeDetailTableViewController.isPopover = true
                     navigationController.modalPresentationStyle = .popover
+                    
+                    guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+                        fatalError("Exception: MainSplitViewController is expected")
+                    }
+                    
+                    mainSplitView.popOverNavigatorController = navigationController
+                    
                     OperationQueue.main.addOperation {
                         
                         self.present(navigationController, animated: true, completion: nil)
@@ -450,6 +490,12 @@ class IncomeTableViewController: UITableViewController,
             incomeTableView.income = incomeList[indexPath.row]
             incomeDetailNavigationController.modalPresentationStyle = .popover
             self.present(incomeDetailNavigationController, animated: true, completion: nil)
+            
+            guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+                fatalError("Exception: MainSplitViewController is expected")
+            }
+            
+            mainSplitView.popOverNavigatorController = incomeDetailNavigationController
         } else {
             
             guard let detailTableViewController = delegate as? IncomeDetailTableViewController else {
