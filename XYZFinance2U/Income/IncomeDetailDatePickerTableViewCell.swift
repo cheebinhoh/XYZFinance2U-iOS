@@ -16,12 +16,21 @@ protocol IncomeDetailDatePickerTableViewCellDelegate : class {
 
 class IncomeDetailDatePickerTableViewCell: UITableViewCell {
     
+    // MARK: - IBOutlet
+    @IBOutlet weak var datePicker: UIDatePicker!
+    
     // MARK: - property
     
     weak var delegate: IncomeDetailDatePickerTableViewCellDelegate?
     var date: Date?
     
     // MARK: - function
+    
+    func setDate(_ date: Date)
+    {
+        self.date = date
+        datePicker.date = date
+    }
     
     override func awakeFromNib() {
         

@@ -500,6 +500,9 @@
                                         <constraint firstItem="nEV-42-Iqx" firstAttribute="leading" secondItem="Bbx-2K-C80" secondAttribute="leading" constant="45" id="q8z-Xy-Bho"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="datePicker" destination="nEV-42-Iqx" id="EoL-oy-o9t"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="incomeDetailCommandTextCell" rowHeight="46" id="cxo-31-Gd4" userLabel="expenseDetailCommandTextCell" customClass="IncomeDetailCommandTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="418" width="320" height="46"/>
@@ -567,7 +570,7 @@
             </objects>
             <point key="canvasLocation" x="5280.8000000000002" y="-770.46476761619192"/>
         </scene>
-        <!--New-->
+        <!--New expense-->
         <scene sceneID="fmT-dd-bXZ">
             <objects>
                 <tableViewController id="Gx4-Cx-7iY" customClass="ExpenseDetailTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
@@ -654,6 +657,9 @@
                                         <constraint firstItem="ggf-Ds-SYx" firstAttribute="leading" secondItem="ias-5L-sdU" secondAttribute="leading" constant="45" id="n3s-2s-0ks"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="datePicker" destination="ggf-Ds-SYx" id="oGe-wP-COt"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseDetailImagePickerCell" rowHeight="192" id="o7c-jU-16B" customClass="ExpenseDetailImagePickerTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="418" width="320" height="192"/>
@@ -786,7 +792,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="New" id="B09-YJ-XlT">
+                    <navigationItem key="navigationItem" title="New expense" id="B09-YJ-XlT">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Hnw-gB-M7M">
                             <connections>
                                 <action selector="cancel:" destination="Gx4-Cx-7iY" id="qSv-6G-l46"/>

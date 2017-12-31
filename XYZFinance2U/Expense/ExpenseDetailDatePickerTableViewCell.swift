@@ -16,6 +16,10 @@ protocol ExpenseDetailDatePickerTableViewCellDelegate: class {
 
 class ExpenseDetailDatePickerTableViewCell: UITableViewCell {
     
+    // MARK: - IBOutlet
+    
+    @IBOutlet weak var datePicker: UIDatePicker!
+    
     // MARK: - property
     
     var date: Date?
@@ -27,6 +31,12 @@ class ExpenseDetailDatePickerTableViewCell: UITableViewCell {
         
         super.awakeFromNib()
         // Initialization code
+    }
+
+    func setDate(_ date: Date)
+    {
+        self.date = date
+        datePicker.date = date
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

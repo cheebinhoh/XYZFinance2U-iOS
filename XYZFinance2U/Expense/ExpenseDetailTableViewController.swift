@@ -786,6 +786,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     fatalError("Exception: expenseDetailDatePickerCell is failed to be created")
                 }
                 
+                datepickercell.setDate(date ?? Date())
                 datepickercell.delegate = self
                 cell = datepickercell
             

@@ -371,9 +371,15 @@ class IncomeDetailTableViewController: UITableViewController,
 
         let mainSection = TableSectionCell(identifier: "main",
                                            title: "",
-                                           cellList: ["bank", "accountNr", "amount", "date"],
+                                           cellList: ["bank", "accountNr"],
                                            data: nil)
         tableSectionCellList.append(mainSection)
+        
+        let balanceSection = TableSectionCell(identifier: "balance",
+                                              title: "",
+                                              cellList: ["amount", "date"],
+                                              data: nil)
+        tableSectionCellList.append(balanceSection)
         
         if modalEditing && nil != income {
             
@@ -485,6 +491,7 @@ class IncomeDetailTableViewController: UITableViewController,
                     fatalError("Exception: incomeDetailDatePickerCell is failed to be created")
                 }
                 
+                datepickercell.setDate(date ?? Date())
                 datepickercell.delegate = self
                 cell = datepickercell
             
