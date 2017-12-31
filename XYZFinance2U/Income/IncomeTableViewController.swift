@@ -51,7 +51,7 @@ class IncomeTableViewController: UITableViewController,
     @IBOutlet weak var add: UIBarButtonItem!
     
     // MARK: - IBAction
-    
+ 
     @IBAction func add(_ sender: UIBarButtonItem) {
         
         guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier:    "IncomeDetailNavigationController") as? UINavigationController else {
@@ -96,6 +96,7 @@ class IncomeTableViewController: UITableViewController,
     }
     
     // MARK: - function
+        
     override func didReceiveMemoryWarning() {
         
         super.didReceiveMemoryWarning()
