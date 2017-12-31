@@ -1,0 +1,45 @@
+//
+//  ExpenseDetailDatePickerTableViewCell.swift
+//  XYZFinance2U
+//
+//  Created by Chee Bin Hoh on 12/11/17.
+//  Copyright © 2017 CB Hoh. All rights reserved.
+//
+//  QA status: checked on dec-29, 2017
+
+import UIKit
+
+protocol ExpenseDetailDatePickerTableViewCellDelegate: class {
+    
+    func dateDidPick(_ sender:ExpenseDetailDatePickerTableViewCell)
+}
+
+class ExpenseDetailDatePickerTableViewCell: UITableViewCell {
+    
+    // MARK: - property
+    
+    var date: Date?
+    weak var delegate: ExpenseDetailDatePickerTableViewCellDelegate?
+    
+    // MARK: function
+    
+    override func awakeFromNib() {
+        
+        super.awakeFromNib()
+        // Initialization code
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+
+    // MARK: - IBAction
+    @IBAction func datePick(_ sender: UIDatePicker) {
+        
+        date = sender.date
+        delegate?.dateDidPick(self)
+    }
+}

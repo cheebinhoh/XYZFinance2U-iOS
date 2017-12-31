@@ -1,0 +1,39 @@
+
+/* Class = "UINavigationItem"; title = "Income list"; ObjectID = "0sl-lD-irv"; */
+"0sl-lD-irv.title" = "Income list";
+
+/* Class = "UILabel"; text = "Amount"; ObjectID = "6U1-rC-2b9"; */
+"6U1-rC-2b9.text" = "Amount";
+
+/* Class = "UILabel"; text = "Account number"; ObjectID = "CMI-F5-8uV"; */
+"CMI-F5-8uV.text" = "Account number";
+
+/* Class = "UITextField"; placeholder = "amount"; ObjectID = "Owp-tV-45q"; */
+"Owp-tV-45q.placeholder" = "amount";
+
+/* Class = "UINavigationItem"; title = "New"; ObjectID = "Q2E-Qe-Gr3"; */
+"Q2E-Qe-Gr3.title" = "New";
+
+/* Class = "UITextField"; placeholder = "amount"; ObjectID = "QsS-e7-fCK"; */
+"QsS-e7-fCK.placeholder" = "amount";
+
+/* Class = "UITabBarItem"; title = "Income"; ObjectID = "RqA-tQ-dzY"; */
+"RqA-tQ-dzY.title" = "Income";
+
+/* Class = "UITextField"; placeholder = "account nr"; ObjectID = "Xdw-rH-aNF"; */
+"Xdw-rH-aNF.placeholder" = "account nr";
+
+/* Class = "UITextField"; placeholder = "bank"; ObjectID = "bbD-a6-qzE"; */
+"bbD-a6-qzE.placeholder" = "bank";
+
+/* Class = "UITextField"; placeholder = "bank"; ObjectID = "gQa-Ok-1ZT"; */
+"gQa-Ok-1ZT.placeholder" = "bank";
+
+/* Class = "UINavigationItem"; title = "Edit"; ObjectID = "hwy-yf-NWZ"; */
+"hwy-yf-NWZ.title" = "Edit";
+
+/* Class = "UILabel"; text = "Bank name"; ObjectID = "wuV-kR-Y7q"; */
+"wuV-kR-Y7q.text" = "Bank name";
+
+/* Class = "UITextField"; placeholder = "account nr"; ObjectID = "ytQ-tF-wyG"; */
+"ytQ-tF-wyG.placeholder" = "account nr";
