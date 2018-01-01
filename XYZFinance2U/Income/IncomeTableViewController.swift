@@ -20,7 +20,27 @@ protocol IncomeSelectionDelegate: class {
 
 class IncomeTableViewController: UITableViewController,
     UISplitViewControllerDelegate,
+    UIViewControllerPreviewingDelegate,
     IncomeDetailDelegate {
+    
+    // MARK: - 3d touch delegate (peek & pop)
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        
+        /*
+        guard let incomeDetailViewController = self.storyboard?.instantiateViewController(withIdentifier:    "IncomeDetailViewController") as? IncomeDetailViewController else {
+            fatalError("Exception: IncomeDetailViewController is expected")
+        }
+        
+        return incomeDetailViewController
+         */
+        
+        return nil
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+
+    }
+    
     
     // MARK: - property
     
@@ -369,6 +389,19 @@ class IncomeTableViewController: UITableViewController,
         navigationController?.navigationBar.prefersLargeTitles = true
         
         loadDataInTableSectionCell()
+
+        // Check for force touch feature, and add force touch/previewing capability.
+        if traitCollection.forceTouchCapability == .available {
+            /*
+             Register for `UIViewControllerPreviewingDelegate` to enable
+             "Peek" and "Pop".
+             (see: MasterViewController+UIViewControllerPreviewing.swift)
+             
+             The view controller will be automatically unregistered when it is
+             deallocated.
+             */
+            registerForPreviewing(with: self, sourceView: view)
+        }
     }
     
     // MARK: - split view delegate
