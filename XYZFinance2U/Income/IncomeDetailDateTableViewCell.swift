@@ -24,6 +24,7 @@ class IncomeDetailDateTableViewCell: UITableViewCell {
     // MARK: - IBOutlet
     
     @IBOutlet weak var dateInput: UILabel!
+    @IBOutlet weak var label: UILabel!
     
     // MARK: - function
     

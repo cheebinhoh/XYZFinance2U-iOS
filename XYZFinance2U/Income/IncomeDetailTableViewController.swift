@@ -403,7 +403,7 @@ class IncomeDetailTableViewController: UITableViewController,
         
         if let _ = tableSectionCellList[section].title {
             
-            return ( tableSectionCellList.count - 1 ) == section ? 700 : 40
+            return ( tableSectionCellList.count - 1 ) == section ? 700 : 35
         } else {
             
             return 0
@@ -440,6 +440,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.delegate = self
                 textcell.input.placeholder = "bank"
                 textcell.input.text = bank
+                textcell.label.text = "bank"
                 
                 cell = textcell
             
@@ -452,6 +453,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.delegate = self
                 textcell.input.placeholder = "accountNr"
                 textcell.input.text = accountNr
+                textcell.label.text = "accountNr"
                 
                 cell = textcell
             
@@ -465,6 +467,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.enableMonetaryEditing(true)
                 textcell.input.placeholder = formattingCurrencyValue(input: 0.0)
                 textcell.input.text = formattingCurrencyValue(input: amount ?? 0.0)
+                textcell.label.text = "balance"
                 
                 cell = textcell
             
@@ -480,7 +483,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 
                 datecell.dateInput.text = formattingDate(date: date ?? Date())
                 datecell.delegate = self
-                
+                datecell.label.text = "last update"
                 datecell.enableEditing = modalEditing
                 
                 self.datecell = datecell

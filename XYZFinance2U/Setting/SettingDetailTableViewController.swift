@@ -94,7 +94,7 @@ class SettingDetailTableViewController: UITableViewController {
         
         if let _ = tableSectionCellList[section].title {
             
-            return ( tableSectionCellList.count - 1 ) == section ? 800 : 40
+            return ( tableSectionCellList.count - 1 ) == section ? 800 : 35
         } else {
             
             return 0

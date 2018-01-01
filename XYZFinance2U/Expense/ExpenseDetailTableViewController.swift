@@ -709,7 +709,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         if let _ = tableSectionCellList[section].title {
             
-            return ( tableSectionCellList.count - 1 ) == section ? 200 : 40
+            return ( tableSectionCellList.count - 1 ) == section ? 200 : 35
         } else {
             
             return 0
