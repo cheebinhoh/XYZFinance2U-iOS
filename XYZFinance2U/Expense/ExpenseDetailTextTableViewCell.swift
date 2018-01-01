@@ -63,6 +63,7 @@ class ExpenseDetailTextTableViewCell: UITableViewCell,
         
         if enanble {
             
+            input.clearButtonMode = .never
             input.keyboardType = .numberPad
             input.text = formattingCurrencyValue(input: 0.0)
             input.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
