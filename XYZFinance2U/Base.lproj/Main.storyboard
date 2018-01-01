@@ -717,17 +717,17 @@
                                     <outlet property="newImage2" destination="5Ph-X0-QHq" id="Eo9-MD-9Q7"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseDetailCommandTextCell" rowHeight="46" id="Tjk-9B-3vc" userLabel="expenseDetailCommandTextCell" customClass="ExpenseDetailCommandTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="610" width="320" height="46"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseDetailCommandTextCell" id="Tjk-9B-3vc" userLabel="expenseDetailCommandTextCell" customClass="ExpenseDetailCommandTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="610" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Tjk-9B-3vc" id="Ril-0t-baW">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="45.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HtK-nY-joS" userLabel="Command">
-                                            <rect key="frame" x="45" y="4" width="275" height="37.5"/>
+                                            <rect key="frame" x="37" y="5" width="283" height="35"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="Tfl-bZ-E2l"/>
+                                                <constraint firstAttribute="height" constant="35" id="zF5-Sr-6uZ"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
                                             <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -735,10 +735,9 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="HtK-nY-joS" firstAttribute="centerY" secondItem="Ril-0t-baW" secondAttribute="centerY" id="LBR-VT-o3u"/>
-                                        <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="HtK-nY-joS" secondAttribute="trailing" id="bzZ-vq-O1a"/>
-                                        <constraint firstItem="HtK-nY-joS" firstAttribute="top" secondItem="Ril-0t-baW" secondAttribute="top" constant="4" id="gU4-TJ-epa"/>
-                                        <constraint firstItem="HtK-nY-joS" firstAttribute="leading" secondItem="Ril-0t-baW" secondAttribute="leading" constant="45" id="iTX-UN-MZC"/>
+                                        <constraint firstAttribute="trailing" secondItem="HtK-nY-joS" secondAttribute="trailing" id="GWG-jm-JXL"/>
+                                        <constraint firstItem="HtK-nY-joS" firstAttribute="leading" secondItem="Ril-0t-baW" secondAttribute="leadingMargin" constant="29" id="kzz-tR-RzI"/>
+                                        <constraint firstItem="HtK-nY-joS" firstAttribute="centerY" secondItem="Ril-0t-baW" secondAttribute="centerY" id="rDK-mM-2hJ"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -746,7 +745,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseDetailLocationTextCell" rowHeight="46" id="kd8-3P-hDH" userLabel="expenseDetailLocationTextCell" customClass="ExpenseDetailLocationTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="656" width="320" height="46"/>
+                                <rect key="frame" x="0.0" y="654" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kd8-3P-hDH" id="AZh-ct-Bwh">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="45.5"/>
@@ -778,7 +777,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="expenseDetailLocationPickerTextCell" rowHeight="46" id="XC4-PS-hna" userLabel="expenseDetailLocationPickerTextCell" customClass="ExpenseDetailLocationPickerTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="702" width="320" height="46"/>
+                                <rect key="frame" x="0.0" y="700" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XC4-PS-hna" id="Q1K-1u-qBP">
                                     <rect key="frame" x="0.0" y="0.0" width="286" height="45.5"/>
