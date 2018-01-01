@@ -32,6 +32,7 @@
 		658F735C1FDF8CF300AF7F8D /* ExpenseDetailDatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F735B1FDF8CF300AF7F8D /* ExpenseDetailDatePickerTableViewCell.swift */; };
 		658F735E1FE08F5E00AF7F8D /* ExpenseDetailImagePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F735D1FE08F5E00AF7F8D /* ExpenseDetailImagePickerTableViewCell.swift */; };
 		658F73601FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F735F1FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift */; };
+		6590AFAA1FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6590AFA91FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift */; };
 		65EEC49B1FF05ED500D638CD /* IncomeDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EEC49A1FF05ED500D638CD /* IncomeDetailTableViewController.swift */; };
 		65EEC49D1FF067C200D638CD /* IncomeDetailTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EEC49C1FF067C200D638CD /* IncomeDetailTextTableViewCell.swift */; };
 		65EEC49F1FF070B400D638CD /* IncomeDetailDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EEC49E1FF070B400D638CD /* IncomeDetailDateTableViewCell.swift */; };
@@ -90,6 +91,7 @@
 		658F735B1FDF8CF300AF7F8D /* ExpenseDetailDatePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailDatePickerTableViewCell.swift; sourceTree = "<group>"; };
 		658F735D1FE08F5E00AF7F8D /* ExpenseDetailImagePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailImagePickerTableViewCell.swift; sourceTree = "<group>"; };
 		658F735F1FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailImageViewController.swift; sourceTree = "<group>"; };
+		6590AFA91FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		65EEC49A1FF05ED500D638CD /* IncomeDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailTableViewController.swift; sourceTree = "<group>"; };
 		65EEC49C1FF067C200D638CD /* IncomeDetailTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailTextTableViewCell.swift; sourceTree = "<group>"; };
 		65EEC49E1FF070B400D638CD /* IncomeDetailDateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailDateTableViewCell.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				65EEC49E1FF070B400D638CD /* IncomeDetailDateTableViewCell.swift */,
 				65EEC4A01FF072BD00D638CD /* IncomeDetailDatePickerTableViewCell.swift */,
 				65EEC4A21FF07E1400D638CD /* IncomeDetailCommandTableViewCell.swift */,
+				6590AFA91FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift */,
 			);
 			path = Income;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 			files = (
 				658F735C1FDF8CF300AF7F8D /* ExpenseDetailDatePickerTableViewCell.swift in Sources */,
 				6576938F1FDB841C00BFFB6B /* ExpenseTableViewCell.swift in Sources */,
+				6590AFAA1FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift in Sources */,
 				65EEC4A11FF072BD00D638CD /* IncomeDetailDatePickerTableViewCell.swift in Sources */,
 				657693C11FDB8C9E00BFFB6B /* XYZFinance2U.xcdatamodeld in Sources */,
 				65EEC4A51FF1D6EB00D638CD /* ExpenseDetailLocationTableViewCell.swift in Sources */,

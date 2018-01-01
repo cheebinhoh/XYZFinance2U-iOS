@@ -21,7 +21,32 @@ class IncomeDetailTableViewController: UITableViewController,
     IncomeDetailDateTableViewCellDelegate,
     IncomeDetailDatePickerTableViewCellDelegate,
     IncomeDetailCommandDelegate,
-    IncomeSelectionDelegate {
+    IncomeSelectionDelegate,
+    IncomeDetailSwitchDelegate {
+    
+    func optionUpdate(_ sender: IncomeDetailSwitchTableViewCell, option: Bool) {
+        
+        let indexPath = tableView.indexPath(for: sender)
+        
+        switch tableSectionCellList[indexPath!.section].cellList[indexPath!.row] {
+            
+            case "remind":
+                if option {
+                    
+                    hasUpdateReminder = true
+                } else {
+                    hasUpdateReminder = false
+                    reminddate = nil // FIXME: we need to reload the original value from the core data
+                }
+
+                loadDataInTableSectionCell()
+                tableView.reloadData()
+            
+            default:
+                fatalError("Exception: index of IncomeDetailSwitchTableViewCell is not found in tableview")
+        }
+    }
+    
     
     func incomeSelected(newIncome: XYZAccount?) {
         
@@ -113,13 +138,27 @@ class IncomeDetailTableViewController: UITableViewController,
     
     func dateDidPick(_ sender: IncomeDetailDatePickerTableViewCell) {
         
-        datecell?.dateInput.text = formattingDate(date: sender.date ?? Date() )
-        date = sender.date ?? Date()
+        let indexPath = tableView.indexPath(for: sender)
+        
+        switch tableSectionCellList[indexPath!.section].identifier {
+            
+            case "balance":
+                datecell?.dateInput.text = formattingDate(date: sender.date ?? Date() )
+                date = sender.date ?? Date()
+
+            case "remind":
+                dateremindcell?.dateInput.text = formattingDate(date: sender.date ?? Date() )
+                reminddate = sender.date ?? Date()
+            
+            default:
+                fatalError("Exception: dateDidPick is not handled at \(String(describing: indexPath))")
+        }
     }
     
     func dateInputTouchUp(_ sender: IncomeDetailDateTableViewCell) {
         
         let indexPath = tableView.indexPath(for: sender)
+        let showDatePicker = tableSectionCellList[indexPath!.section].cellList.count > ( (indexPath?.row)! + 1 )
         
         if !showDatePicker {
             
@@ -128,8 +167,6 @@ class IncomeDetailTableViewController: UITableViewController,
             
             tableSectionCellList[(indexPath?.section)!].cellList.remove(at: (indexPath?.row)! + 1)
         }
-        
-        showDatePicker = !showDatePicker
         
         tableView.reloadData()
     }
@@ -173,12 +210,13 @@ class IncomeDetailTableViewController: UITableViewController,
     var isPopover = false
     var isPushinto = false
     var incomeDelegate: IncomeDetailDelegate?
-    var showDatePicker = false
+    var hasUpdateReminder = false
     
     var bank = ""
     var accountNr = ""
     var amount: Double?
     var date: Date?
+    var reminddate: Date?
     
     var isCollapsed: Bool {
         
@@ -193,6 +231,7 @@ class IncomeDetailTableViewController: UITableViewController,
     
     var tableSectionCellList = [TableSectionCell]()
     weak var datecell: IncomeDetailDateTableViewCell?
+    weak var dateremindcell: IncomeDetailDateTableViewCell?
     
     // MARK: - IBAction
     
@@ -381,6 +420,17 @@ class IncomeDetailTableViewController: UITableViewController,
                                               data: nil)
         tableSectionCellList.append(balanceSection)
         
+        var updateRemindSection = TableSectionCell(identifier: "remind",
+                                                   title: "",
+                                                   cellList: ["remind"],
+                                                   data: nil)
+        
+        if hasUpdateReminder {
+            updateRemindSection.cellList.append("reminddate")
+        }
+        
+        tableSectionCellList.append(updateRemindSection)
+        
         if modalEditing && nil != income {
             
             let deleteSection = TableSectionCell(identifier: "delete",
@@ -497,6 +547,33 @@ class IncomeDetailTableViewController: UITableViewController,
                 datepickercell.setDate(date ?? Date())
                 datepickercell.delegate = self
                 cell = datepickercell
+            
+            case "remind":
+                guard let remindOptionCell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailSwitchCell", for: indexPath) as? IncomeDetailSwitchTableViewCell else {
+                    fatalError("Exception: incomeDetailSwitchCell is failed to be created")
+                }
+                
+                remindOptionCell.setOption("Remind update on a day", default: hasUpdateReminder)
+                remindOptionCell.delegate = self
+                cell = remindOptionCell
+            
+            case "reminddate":
+                guard let datecell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailDateTextCell", for: indexPath) as? IncomeDetailDateTableViewCell else {
+                    fatalError("Exception: incomeDetailDateTextCell is failed to be created")
+                }
+                
+                if nil == reminddate {
+                    
+                    reminddate = Date()
+                }
+                
+                datecell.dateInput.text = formattingDate(date: reminddate ?? Date())
+                datecell.delegate = self
+                datecell.label.text = "remind date"
+                datecell.enableEditing = modalEditing
+                dateremindcell = datecell
+                
+                cell = datecell
             
             case "delete":
                 guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailCommandTextCell", for: indexPath) as? IncomeDetailCommandTableViewCell else {

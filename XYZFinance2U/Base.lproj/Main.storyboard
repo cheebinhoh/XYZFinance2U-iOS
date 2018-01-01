@@ -534,8 +534,8 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qDS-1l-Ky4" userLabel="Command">
-                                            <rect key="frame" x="45" y="28" width="49.5" height="24"/>
-                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                            <rect key="frame" x="45" y="29.5" width="45" height="21.5"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                             <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -547,6 +547,35 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="command" destination="qDS-1l-Ky4" id="Km6-U3-Sbv"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="incomeDetailSwitchCell" rowHeight="45" id="CpF-Fj-TY1" userLabel="expenseDetailSwitchCell" customClass="IncomeDetailSwitchTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="568" width="320" height="45"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CpF-Fj-TY1" id="Mse-1O-yeL">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mg8-Y8-6Ha">
+                                            <rect key="frame" x="37" y="10" width="47.5" height="23"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qTg-Ff-a9Y">
+                                            <rect key="frame" x="255" y="7" width="51" height="31"/>
+                                        </switch>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="qTg-Ff-a9Y" secondAttribute="trailing" constant="16" id="8eU-O8-ZGe"/>
+                                        <constraint firstItem="qTg-Ff-a9Y" firstAttribute="centerY" secondItem="Mse-1O-yeL" secondAttribute="centerY" id="BRj-kB-c0O"/>
+                                        <constraint firstItem="mg8-Y8-6Ha" firstAttribute="leading" secondItem="Mse-1O-yeL" secondAttribute="leadingMargin" constant="29" id="Xnz-Zg-bJa"/>
+                                        <constraint firstItem="mg8-Y8-6Ha" firstAttribute="centerY" secondItem="Mse-1O-yeL" secondAttribute="centerY" id="icH-WG-RI7"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="label" destination="mg8-Y8-6Ha" id="LKo-94-Sc1"/>
+                                    <outlet property="switchOption" destination="qTg-Ff-a9Y" id="IAO-xf-TG2"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
