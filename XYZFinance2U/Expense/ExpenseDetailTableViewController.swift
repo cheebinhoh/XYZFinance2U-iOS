@@ -135,6 +135,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                                              data: nil)
         tableSectionCellList.append(imageSecteion)
         
+        /*
         var emailList = [String]()
         if let _ = expense {
             
@@ -151,9 +152,14 @@ class ExpenseDetailTableViewController: UITableViewController,
                 needEmail = !(persons?.isEmpty)!
             }
         }
+        */
+        
+        let needEmail = !emails.isEmpty
+                        || modalEditing
         
         if needEmail {
             
+            var emailList = Array(repeating: "email", count: emails.count)
             if modalEditing {
                 
                 emailList.append("newemail")
