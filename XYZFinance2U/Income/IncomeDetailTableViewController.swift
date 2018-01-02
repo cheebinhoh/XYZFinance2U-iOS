@@ -149,7 +149,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 date = sender.date ?? Date()
 
             case "remind":
-                dateremindcell?.dateInput.text = formattingDateTime(date: sender.date ?? Date(), .medium )
+                dateremindcell?.dateInput.text = formattingDateTime(date: sender.date ?? Date())
                 reminddate = sender.date ?? Date()
             
             default:
@@ -526,7 +526,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.delegate = self
                 textcell.input.placeholder = "bank"
                 textcell.input.text = bank
-                textcell.label.text = "bank"
+                textcell.label.text = "Bank"
                 
                 cell = textcell
             
@@ -539,7 +539,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.delegate = self
                 textcell.input.placeholder = "accountNr"
                 textcell.input.text = accountNr
-                textcell.label.text = "accountNr"
+                textcell.label.text = "AccountNr"
                 
                 cell = textcell
             
@@ -553,7 +553,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.enableMonetaryEditing(true)
                 textcell.input.placeholder = formattingCurrencyValue(input: 0.0)
                 textcell.input.text = formattingCurrencyValue(input: amount ?? 0.0)
-                textcell.label.text = "balance"
+                textcell.label.text = "Balance"
                 
                 cell = textcell
             
@@ -569,7 +569,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 
                 datecell.dateInput.text = formattingDate(date: date ?? Date(), .medium)
                 datecell.delegate = self
-                datecell.label.text = "last update"
+                datecell.label.text = "Last update"
                 datecell.enableEditing = modalEditing
                 
                 self.datecell = datecell
@@ -612,9 +612,9 @@ class IncomeDetailTableViewController: UITableViewController,
                     reminddate = Date()
                 }
                 
-                datecell.dateInput.text = formattingDateTime(date: reminddate ?? Date(), .long)
+                datecell.dateInput.text = formattingDateTime(date: reminddate ?? Date())
                 datecell.delegate = self
-                datecell.label.text = "remind date"
+                datecell.label.text = "Remind date"
                 datecell.enableEditing = modalEditing
                 dateremindcell = datecell
                 

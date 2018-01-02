@@ -1029,9 +1029,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="119.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XYZFinance2U was created by CB Hoh, 2017-2018" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YCA-iu-JJU">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YCA-iu-JJU">
                                             <rect key="frame" x="16" y="21" width="288" height="77.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <string key="text">XYZFinance2U was created by 
+
+CB Hoh, 2017-2018</string>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>

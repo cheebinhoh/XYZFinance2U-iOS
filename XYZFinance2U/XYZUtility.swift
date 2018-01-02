@@ -27,12 +27,13 @@ func formattingDate(date: Date, _ style: DateFormatter.Style) -> String {
     return dateFormatter.string(from: date)
 }
 
-func formattingDateTime(date: Date, _ style: DateFormatter.Style) -> String {
+func formattingDateTime(date: Date) -> String {
     
     let dateFormatter = DateFormatter();
     
-    dateFormatter.timeStyle = .medium
-    dateFormatter.dateStyle = style
+    // FIXME, we will need to think about localization
+    dateFormatter.dateFormat = "MMM-dd, yyyy 'at' hh:mm a"
+    
     return dateFormatter.string(from: date)
 }
 
