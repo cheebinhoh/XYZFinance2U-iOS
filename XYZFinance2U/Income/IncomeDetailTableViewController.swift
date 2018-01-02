@@ -8,6 +8,8 @@
 //  QA status: checked on dec-29, 2017
 
 import UIKit
+import UserNotifications
+import NotificationCenter
 
 protocol IncomeDetailDelegate: class {
     
@@ -143,11 +145,11 @@ class IncomeDetailTableViewController: UITableViewController,
         switch tableSectionCellList[indexPath!.section].identifier {
             
             case "balance":
-                datecell?.dateInput.text = formattingDate(date: sender.date ?? Date() )
+                datecell?.dateInput.text = formattingDate(date: sender.date ?? Date(), .medium)
                 date = sender.date ?? Date()
 
             case "remind":
-                dateremindcell?.dateInput.text = formattingDate(date: sender.date ?? Date() )
+                dateremindcell?.dateInput.text = formattingDateTime(date: sender.date ?? Date(), .medium )
                 reminddate = sender.date ?? Date()
             
             default:
@@ -159,10 +161,11 @@ class IncomeDetailTableViewController: UITableViewController,
         
         let indexPath = tableView.indexPath(for: sender)
         let showDatePicker = tableSectionCellList[indexPath!.section].cellList.count > ( (indexPath?.row)! + 1 )
+        let datepickeridentifier = tableSectionCellList[indexPath!.section].identifier == "remind" ? "reminddatepicker" : "datepicker"
         
         if !showDatePicker {
             
-            tableSectionCellList[(indexPath?.section)!].cellList.insert("datepicker", at: (indexPath?.row)! + 1)
+            tableSectionCellList[(indexPath?.section)!].cellList.insert(datepickeridentifier, at: (indexPath?.row)! + 1)
         } else {
             
             tableSectionCellList[(indexPath?.section)!].cellList.remove(at: (indexPath?.row)! + 1)
@@ -370,6 +373,40 @@ class IncomeDetailTableViewController: UITableViewController,
         income?.setValue(accountNr, forKey: XYZAccount.accountNr)
         income?.setValue(amount, forKey: XYZAccount.amount)
         income?.setValue(date, forKey: XYZAccount.lastUpdate)
+        
+        // setup local notification
+        if hasUpdateReminder {
+            let notificationCenter = UNUserNotificationCenter.current()
+        
+            notificationCenter.getPendingNotificationRequests(completionHandler: { requests in
+                for request in requests {
+                    print("-------- pending request = \(request)")
+                }
+            })
+        
+            notificationCenter.removeAllDeliveredNotifications()
+            notificationCenter.removeAllPendingNotificationRequests()
+
+            let content = UNMutableNotificationContent()
+            content.title = "Income update reminder"
+            content.body = "Check income \(bank), \(accountNr) ..."
+            content.sound = UNNotificationSound.default()
+            
+            let units: Set<Calendar.Component> = [.second, .minute, .hour, .day, .month, .year]
+            
+            let dateInfo = Calendar.current.dateComponents(units, from: reminddate!)
+
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: false)
+            
+            let identifier = "\(bank), \(accountNr)"
+            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+            
+            notificationCenter.add(request) { (error : Error?) in
+                if let theError = error {
+                    print("-------- notification scheduling error = \(theError.localizedDescription)")
+                }
+            }
+        }
     }
 
     func loadData() {
@@ -531,7 +568,7 @@ class IncomeDetailTableViewController: UITableViewController,
                     date = Date()
                 }
                 
-                datecell.dateInput.text = formattingDate(date: date ?? Date())
+                datecell.dateInput.text = formattingDate(date: date ?? Date(), .medium)
                 datecell.delegate = self
                 datecell.label.text = "last update"
                 datecell.enableEditing = modalEditing
@@ -545,6 +582,15 @@ class IncomeDetailTableViewController: UITableViewController,
                 }
                 
                 datepickercell.setDate(date ?? Date())
+                datepickercell.delegate = self
+                cell = datepickercell
+            
+            case "reminddatepicker":
+                guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailDatePickerCell", for: indexPath) as? IncomeDetailDatePickerTableViewCell else {
+                    fatalError("Exception: incomeDetailDatePickerCell is failed to be created")
+                }
+                
+                datepickercell.setDate(reminddate ?? Date())
                 datepickercell.delegate = self
                 cell = datepickercell
             
@@ -567,7 +613,7 @@ class IncomeDetailTableViewController: UITableViewController,
                     reminddate = Date()
                 }
                 
-                datecell.dateInput.text = formattingDate(date: reminddate ?? Date())
+                datecell.dateInput.text = formattingDateTime(date: reminddate ?? Date(), .long)
                 datecell.delegate = self
                 datecell.label.text = "remind date"
                 datecell.enableEditing = modalEditing

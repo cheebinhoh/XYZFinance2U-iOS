@@ -413,7 +413,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     // MARK: - date mamipulation
     func dateDidPick(_ sender: ExpenseDetailDatePickerTableViewCell) {
         
-        datecell?.dateInput.text = formattingDate(date: sender.date ?? Date() )
+        datecell?.dateInput.text = formattingDate(date: sender.date ?? Date(), .medium )
         date = sender.date ?? Date()
     }
     
@@ -779,7 +779,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     date = Date()
                 }
                 
-                datecell.dateInput.text = formattingDate(date: date ?? Date())
+                datecell.dateInput.text = formattingDate(date: date ?? Date(), .medium)
                 datecell.delegate = self
                 
                 datecell.enableEditing = modalEditing

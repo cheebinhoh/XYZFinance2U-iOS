@@ -33,7 +33,7 @@ class IncomeDetailViewController: UIViewController, UITextFieldDelegate, UINavig
     
     @IBAction func pickDate(_ sender: UIDatePicker) {
         
-        dateInput.text = formattingDate(date: sender.date)
+        dateInput.text = formattingDate(date: sender.date, .medium)
     }
     
     override func viewDidLoad() {
@@ -53,12 +53,12 @@ class IncomeDetailViewController: UIViewController, UITextFieldDelegate, UINavig
             bank.text = account.value(forKey: XYZAccount.bank) as? String
             accountNr.text = account.value(forKey: XYZAccount.accountNr) as? String
             date.date = ( account.value(forKey: XYZAccount.lastUpdate) as? Date )!
-            dateInput.text = formattingDate(date: date.date)
+            dateInput.text = formattingDate(date: date.date, .medium)
         } else {
             
             isPresentingInAddIncomeMode = true;
             amount.text = formattingCurrencyValue(input: 0.0)
-            dateInput.text = formattingDate(date: date.date)
+            dateInput.text = formattingDate(date: date.date, .medium)
         }
         
         date.isHidden = true

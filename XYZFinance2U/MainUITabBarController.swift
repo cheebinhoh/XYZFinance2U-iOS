@@ -8,10 +8,22 @@
 //  QA status: checked on dec-29, 2017
 
 import UIKit
+import UserNotifications
+import NotificationCenter
 
 class MainUITabBarController: UITabBarController,
-    UITabBarControllerDelegate {
+    UITabBarControllerDelegate,
+    UNUserNotificationCenterDelegate {
 
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print("------- notification is triggered")
+        
+        // Play a sound.
+        completionHandler(UNNotificationPresentationOptions.sound)
+    }
+    
     // MARK: - function
     
     override func viewDidLoad() {
@@ -36,6 +48,13 @@ class MainUITabBarController: UITabBarController,
             fatalError("Exception: IncomeTableViewController is expected")
         }
         
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.delegate = self
+        notificationCenter.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+            if let theError = error {
+                print("-------- requestAuthorization error = \(theError.localizedDescription)")
+            }
+        }
         // Do any additional setup after loading the view.
     }
 

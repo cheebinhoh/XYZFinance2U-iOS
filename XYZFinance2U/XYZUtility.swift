@@ -19,13 +19,23 @@ struct TableSectionCell {
     var data: Any?
 }
 
-func formattingDate(date: Date) -> String {
+func formattingDate(date: Date, _ style: DateFormatter.Style) -> String {
     
     let dateFormatter = DateFormatter();
     
-    dateFormatter.dateStyle = .medium
+    dateFormatter.dateStyle = style
     return dateFormatter.string(from: date)
 }
+
+func formattingDateTime(date: Date, _ style: DateFormatter.Style) -> String {
+    
+    let dateFormatter = DateFormatter();
+    
+    dateFormatter.timeStyle = .medium
+    dateFormatter.dateStyle = style
+    return dateFormatter.string(from: date)
+}
+
 
 func formattingAndProcessDoubleValue(input: String) -> String {
     
