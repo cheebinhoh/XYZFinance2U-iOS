@@ -378,12 +378,10 @@ class IncomeDetailTableViewController: UITableViewController,
         if hasUpdateReminder {
             let notificationCenter = UNUserNotificationCenter.current()
         
-            notificationCenter.getPendingNotificationRequests(completionHandler: { requests in
-                for request in requests {
-                    print("-------- pending request = \(request)")
-                }
-            })
-        
+            let identifier = "\(bank), \(accountNr)"
+            
+            notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
+    
             notificationCenter.removeAllDeliveredNotifications()
             notificationCenter.removeAllPendingNotificationRequests()
 
@@ -398,7 +396,7 @@ class IncomeDetailTableViewController: UITableViewController,
 
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: false)
             
-            let identifier = "\(bank), \(accountNr)"
+         
             let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
             
             notificationCenter.add(request) { (error : Error?) in

@@ -18,7 +18,7 @@ class MainUITabBarController: UITabBarController,
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        print("------- notification is triggered")
+        print("------- notification is triggered with")
         
         // Play a sound.
         completionHandler(UNNotificationPresentationOptions.sound)
