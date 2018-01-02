@@ -378,7 +378,7 @@ class IncomeDetailTableViewController: UITableViewController,
         if hasUpdateReminder {
             let notificationCenter = UNUserNotificationCenter.current()
         
-            let identifier = "\(bank), \(accountNr)"
+            let identifier = "income:\(bank):\(accountNr)"
             
             notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
     
@@ -389,8 +389,9 @@ class IncomeDetailTableViewController: UITableViewController,
             content.title = "Income update reminder"
             content.body = "Check income \(bank), \(accountNr) ..."
             content.sound = UNNotificationSound.default()
+            //content.categoryIdentifier = "Income"
             
-            let units: Set<Calendar.Component> = [.second, .minute, .hour, .day, .month, .year]
+            let units: Set<Calendar.Component> = [.minute, .hour, .day, .month, .year]
             
             let dateInfo = Calendar.current.dateComponents(units, from: reminddate!)
 

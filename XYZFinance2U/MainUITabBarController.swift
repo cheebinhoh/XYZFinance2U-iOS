@@ -16,9 +16,19 @@ class MainUITabBarController: UITabBarController,
     UNUserNotificationCenterDelegate {
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void)
+    {
+        print("-------- notification action = \(response.actionIdentifier)")
+        
+        completionHandler()
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        print("------- notification is triggered with")
+        // we might want to display notification then silently ignore it, as we do not want to disturb user
+        // activity.
         
         // Play a sound.
         completionHandler(UNNotificationPresentationOptions.sound)
@@ -55,6 +65,12 @@ class MainUITabBarController: UITabBarController,
                 print("-------- requestAuthorization error = \(theError.localizedDescription)")
             }
         }
+        
+        /* We do not need notification action and category as identifier itself is enough for us now.
+        let updateAction = UNNotificationAction(identifier: "review", title: "Review", options: [])
+        let category = UNNotificationCategory(identifier: "Income", actions: [updateAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: [])
+        notificationCenter.setNotificationCategories([category])
+         */
         // Do any additional setup after loading the view.
     }
 
