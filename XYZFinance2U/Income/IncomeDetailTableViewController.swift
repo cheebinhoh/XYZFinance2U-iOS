@@ -220,6 +220,7 @@ class IncomeDetailTableViewController: UITableViewController,
     var amount: Double?
     var date: Date?
     var reminddate: Date?
+    var repeatselection: String?
     
     var isCollapsed: Bool {
         
@@ -463,6 +464,7 @@ class IncomeDetailTableViewController: UITableViewController,
         
         if hasUpdateReminder {
             updateRemindSection.cellList.append("reminddate")
+            updateRemindSection.cellList.append("repeat")
         }
         
         tableSectionCellList.append(updateRemindSection)
@@ -619,6 +621,16 @@ class IncomeDetailTableViewController: UITableViewController,
                 dateremindcell = datecell
                 
                 cell = datecell
+            
+            case "repeat":
+                guard let repeatcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailSelectionCell", for: indexPath) as? IncomeDetailSelectionTableViewCell else {
+                    fatalError("Exception: incomeDetailSelectionCell is failed to be created")
+                }
+                
+                repeatcell.setLabel("Repeat")
+                repeatcell.setSelection(repeatselection ?? "Never")
+                
+                cell = repeatcell
             
             case "delete":
                 guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailCommandTextCell", for: indexPath) as? IncomeDetailCommandTableViewCell else {
