@@ -161,6 +161,7 @@ class IncomeDetailTableViewController: UITableViewController,
         
         let indexPath = tableView.indexPath(for: sender)
         let showDatePicker = tableSectionCellList[indexPath!.section].cellList.count > ( (indexPath?.row)! + 1 )
+            && tableView.cellForRow(at: IndexPath(row: (indexPath?.row)! + 1, section: indexPath!.section)) is IncomeDetailDatePickerTableViewCell
         let datepickeridentifier = tableSectionCellList[indexPath!.section].identifier == "remind" ? "reminddatepicker" : "datepicker"
         
         if !showDatePicker {
@@ -629,6 +630,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 
                 repeatcell.setLabel("Repeat")
                 repeatcell.setSelection(repeatselection ?? "Never")
+                repeatcell.selectionStyle = .none
                 
                 cell = repeatcell
             
@@ -647,6 +649,25 @@ class IncomeDetailTableViewController: UITableViewController,
         // Configure the cell...
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        
+        if let _ = tableView.cellForRow(at: indexPath) as? IncomeDetailSelectionTableViewCell {
+            
+            return indexPath
+        } else {
+            
+            return nil
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if let cell = tableView.cellForRow(at: indexPath) as? IncomeDetailSelectionTableViewCell {
+    
+        }
+        
     }
     
     /*
