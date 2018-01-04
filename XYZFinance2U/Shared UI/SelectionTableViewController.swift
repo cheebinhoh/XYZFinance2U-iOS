@@ -81,7 +81,7 @@ class SelectionTableViewController: UITableViewController {
         cell?.accessoryType = .checkmark
     }
     
-    func setSelections(_ sectionIdentifier: String, _ selection: String...) {
+    func setSelections(_ sectionIdentifier: String, _ selection: [String]) {
         
         var sectionIndex = -1
         

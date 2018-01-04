@@ -388,8 +388,11 @@ class IncomeDetailTableViewController: UITableViewController,
         
             let identifier = "income:\(bank):\(accountNr)"
             
+            notificationCenter.getPendingNotificationRequests(completionHandler: { (request) in
+                    print("--- \(request)")
+            })
+            
             notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
-    
             notificationCenter.removeAllDeliveredNotifications()
             notificationCenter.removeAllPendingNotificationRequests()
 
@@ -399,12 +402,31 @@ class IncomeDetailTableViewController: UITableViewController,
             content.sound = UNNotificationSound.default()
             //content.categoryIdentifier = "Income"
             
-            let units: Set<Calendar.Component> = [.minute, .hour, .day, .month, .year]
+            var units: Set<Calendar.Component> = [ .hour, .minute]
+            switch repeatselection ?? "Never" {
+                
+                case "Never":
+                    units.insert(.year)
+                    units.insert(.month)
+                    units.insert(.day)
+                
+                case "Every Month":
+                    units.insert(.month)
+                    units.insert(.day)
+                
+                case "Every Week":
+                    units.insert(.weekday)
+                
+                case "Every Day":
+                    break
+                
+                default:
+                    fatalError("Exception: \(repeatselection!) is not expected")
+            }
             
             let dateInfo = Calendar.current.dateComponents(units, from: reminddate!)
 
-            let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: false)
-            
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: ( repeatselection ?? "Never" ) != "Never" )
          
             let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
             
@@ -676,7 +698,7 @@ class IncomeDetailTableViewController: UITableViewController,
                     fatalError("Exception: SelectionNavigationController is expected")
             }
             
-            selectionTableViewController.setSelections("repeat", "Never", "Every Day", "Every Week", "Every Month", "Every Year")
+            selectionTableViewController.setSelections("repeat", ["Never", "Every Hour", "Every Day", "Every Week", "Every Month", "Every Year"])
             selectionTableViewController.setSelectedItem(repeatselection ?? "Never")
             selectionTableViewController.delegate = self
             
