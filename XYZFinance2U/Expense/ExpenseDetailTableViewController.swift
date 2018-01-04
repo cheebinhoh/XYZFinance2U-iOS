@@ -180,12 +180,6 @@ class ExpenseDetailTableViewController: UITableViewController,
                                                  data: nil)
             tableSectionCellList.append(deleteSection)
         }
-        
-        let footerSection = TableSectionCell(identifier: "footer",
-                                             title: "",
-                                             cellList: [String](),
-                                             data: nil)
-        tableSectionCellList.append(footerSection)
     }
     
     func reloadData() {
@@ -713,12 +707,12 @@ class ExpenseDetailTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        if let _ = tableSectionCellList[section].title {
+        if section == 0 {
             
-            return ( tableSectionCellList.count - 1 ) == section ? 200 : 35
+            return 35
         } else {
             
-            return 0
+            return 17.5
         }
     }
     
