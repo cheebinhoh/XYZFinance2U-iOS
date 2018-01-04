@@ -49,7 +49,7 @@ class IncomeDetailViewController: UIViewController, UITextFieldDelegate, UINavig
             
             navigationItem.title = "Edit"
             
-            amount.text = formattingCurrencyValue(input: "\((account.value(forKey: XYZAccount.amount) as? Double)!)")
+            amount.text = formattingCurrencyValue(input: "\((account.value(forKey: XYZAccount.amount) as? Double)!)", nil)
             bank.text = account.value(forKey: XYZAccount.bank) as? String
             accountNr.text = account.value(forKey: XYZAccount.accountNr) as? String
             date.date = ( account.value(forKey: XYZAccount.lastUpdate) as? Date )!
@@ -57,7 +57,7 @@ class IncomeDetailViewController: UIViewController, UITextFieldDelegate, UINavig
         } else {
             
             isPresentingInAddIncomeMode = true;
-            amount.text = formattingCurrencyValue(input: 0.0)
+            amount.text = formattingCurrencyValue(input: 0.0, nil)
             dateInput.text = formattingDate(date: date.date, .medium)
         }
         
@@ -75,7 +75,7 @@ class IncomeDetailViewController: UIViewController, UITextFieldDelegate, UINavig
         
         text = formattingDoubleValue(input: text)
         text = formattingAndProcessDoubleValue(input: text)
-        text = formattingCurrencyValue(input: text)
+        text = formattingCurrencyValue(input: text, nil)
         textField.text = text
     }
     

@@ -759,8 +759,8 @@ class ExpenseDetailTableViewController: UITableViewController,
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
                 textcell.enableMonetaryEditing(true)
-                textcell.input.placeholder = formattingCurrencyValue(input: 0.0)
-                textcell.input.text = formattingCurrencyValue(input: amount ?? 0.0)
+                textcell.input.placeholder = formattingCurrencyValue(input: 0.0, nil)
+                textcell.input.text = formattingCurrencyValue(input: amount ?? 0.0, nil)
                 
                 cell = textcell
             

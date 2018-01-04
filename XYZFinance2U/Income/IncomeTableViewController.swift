@@ -584,7 +584,7 @@ class IncomeTableViewController: UITableViewController,
             
                 incomecell.bank.text = account.value(forKey: XYZAccount.bank) as? String
                 incomecell.account.text = account.value(forKey: XYZAccount.accountNr ) as? String
-                incomecell.amount.text = formattingCurrencyValue(input: (account.value(forKey: XYZAccount.amount) as? Double)!)
+                incomecell.amount.text = formattingCurrencyValue(input: (account.value(forKey: XYZAccount.amount) as? Double)!, nil)
                 incomecell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
                 
                 cell = incomecell

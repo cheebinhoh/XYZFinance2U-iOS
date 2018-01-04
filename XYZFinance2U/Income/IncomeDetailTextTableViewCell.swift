@@ -65,7 +65,7 @@ class IncomeDetailTextTableViewCell: UITableViewCell,
             
             input.clearButtonMode = .never
             input.keyboardType = .numberPad
-            input.text = formattingCurrencyValue(input: 0.0)
+            input.text = formattingCurrencyValue(input: 0.0, nil)
             input.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         } else {
             
@@ -84,7 +84,7 @@ class IncomeDetailTextTableViewCell: UITableViewCell,
         
         text = formattingDoubleValue(input: text)
         text = formattingAndProcessDoubleValue(input: text)
-        text = formattingCurrencyValue(input: text)
+        text = formattingCurrencyValue(input: text, nil)
         textField.text = text
         delegate?.textDidEndEditing(self)
     }

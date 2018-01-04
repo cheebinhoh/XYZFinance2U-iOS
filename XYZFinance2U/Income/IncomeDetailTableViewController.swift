@@ -28,7 +28,15 @@ class IncomeDetailTableViewController: UITableViewController,
     SelectionDelegate {
     
     func selection(_ sender: SelectionTableViewController, item: String?) {
-        repeatAction = item
+        
+        if sender.selectionIdentifier == "currency" {
+            
+            currencyCode = item
+        } else {
+            
+            repeatAction = item
+        }
+        
         tableView.reloadData()
     }
     
@@ -222,13 +230,14 @@ class IncomeDetailTableViewController: UITableViewController,
     var isPushinto = false
     var incomeDelegate: IncomeDetailDelegate?
     var hasUpdateReminder = false
-    
+
     var bank = ""
     var accountNr = ""
     var amount: Double?
     var date: Date?
     var reminddate: Date?
     var repeatAction: String?
+    var currencyCode: String? = Locale.current.currencyCode
     
     var isCollapsed: Bool {
         
@@ -503,7 +512,7 @@ class IncomeDetailTableViewController: UITableViewController,
         
         let balanceSection = TableSectionCell(identifier: "balance",
                                               title: "",
-                                              cellList: ["amount", "date"],
+                                              cellList: ["amount", "currency", "date"],
                                               data: nil)
         tableSectionCellList.append(balanceSection)
         
@@ -603,8 +612,9 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
                 textcell.enableMonetaryEditing(true)
-                textcell.input.placeholder = formattingCurrencyValue(input: 0.0)
-                textcell.input.text = formattingCurrencyValue(input: amount ?? 0.0)
+                print("--- \(String(describing: currencyCode))")
+                textcell.input.placeholder = formattingCurrencyValue(input: 0.0, currencyCode)
+                textcell.input.text = formattingCurrencyValue(input: amount ?? 0.0, currencyCode)
                 textcell.label.text = "Balance"
                 
                 cell = textcell
@@ -683,6 +693,18 @@ class IncomeDetailTableViewController: UITableViewController,
                 
                 cell = repeatcell
             
+            case "currency":
+                guard let currencycell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailSelectionCell", for: indexPath) as? IncomeDetailSelectionTableViewCell else {
+                    fatalError("Exception: incomeDetailSelectionCell is failed to be created")
+                }
+                
+                currencycell.setLabel("Currency")
+                currencycell.setSelection(currencyCode ?? "USD")
+                currencycell.selectionStyle = .none
+                
+                cell = currencycell
+            
+            
             case "delete":
                 guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailCommandTextCell", for: indexPath) as? IncomeDetailCommandTableViewCell else {
                     fatalError("Exception: incomeDetailCommandTextCell is failed to be created")
@@ -714,19 +736,38 @@ class IncomeDetailTableViewController: UITableViewController,
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let _ = tableView.cellForRow(at: indexPath) as? IncomeDetailSelectionTableViewCell {
-            
-            guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+       
+            let cellId = tableSectionCellList[indexPath.section].cellList[indexPath.row];
+       
+            if cellId == "currency" {
+
+                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
                     fatalError("Exception: SelectionNavigationController is expected")
+                }
+                
+                selectionTableViewController.setSelections("currency", Locale.isoCurrencyCodes)
+                selectionTableViewController.setSelectedItem(currencyCode ?? "USD")
+                selectionTableViewController.delegate = self
+                
+                let nav = UINavigationController(rootViewController: selectionTableViewController)
+                nav.modalPresentationStyle = .popover
+                
+                self.present(nav, animated: true, completion: nil)
+            } else {
+                
+                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+                        fatalError("Exception: SelectionNavigationController is expected")
+                }
+                
+                selectionTableViewController.setSelections("repeat", ["Never", "Every Hour", "Every Day", "Every Week", "Every Month", "Every Year"])
+                selectionTableViewController.setSelectedItem(repeatAction ?? "Never")
+                selectionTableViewController.delegate = self
+                
+                let nav = UINavigationController(rootViewController: selectionTableViewController)
+                nav.modalPresentationStyle = .popover
+                
+                self.present(nav, animated: true, completion: nil)
             }
-            
-            selectionTableViewController.setSelections("repeat", ["Never", "Every Hour", "Every Day", "Every Week", "Every Month", "Every Year"])
-            selectionTableViewController.setSelectedItem(repeatAction ?? "Never")
-            selectionTableViewController.delegate = self
-            
-            let nav = UINavigationController(rootViewController: selectionTableViewController)
-            nav.modalPresentationStyle = .popover
-            
-            self.present(nav, animated: true, completion: nil)
         }
         
     }

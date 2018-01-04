@@ -20,6 +20,7 @@ class SelectionTableViewController: UITableViewController {
     var delegate: SelectionDelegate?
     var tableSectionList = [TableSectionCell]()
     var selectedItem: String?
+    var selectionIdentifier: String?
     
     // MARK: - function
     
@@ -68,6 +69,8 @@ class SelectionTableViewController: UITableViewController {
     }
     
     func setSelections(_ sectionIdentifier: String, _ selection: [String]) {
+        
+        selectionIdentifier = sectionIdentifier
         
         var sectionIndex = -1
         

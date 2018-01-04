@@ -154,14 +154,14 @@ func formattingDoubleValue(input: String) -> String {
     return processedInput
 }
 
-func formattingCurrencyValue(input: Double) -> String {
+func formattingCurrencyValue(input: Double, _ code: String?) -> String {
     
     let value = "\(input)"
     
-    return formattingCurrencyValue(input: value)
+    return formattingCurrencyValue(input: value, code)
 }
 
-func formattingCurrencyValue(input: String) -> String {
+func formattingCurrencyValue(input: String, _ code: String?) -> String {
     
     let processedInput = formattingDoubleValue(input: input)
     let formatter = NumberFormatter()
@@ -169,8 +169,8 @@ func formattingCurrencyValue(input: String) -> String {
     let amountAsDouble = Double(processedInput) ?? 0.0
     let amountASNSNumber = NSNumber(value: amountAsDouble)
     
-    formatter.locale = Locale.current
     formatter.numberStyle = .currency
+    formatter.currencyCode = code
     
     guard let formattedAmount = formatter.string(from: amountASNSNumber) else {
         return ""
