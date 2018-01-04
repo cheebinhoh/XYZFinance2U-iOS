@@ -154,15 +154,19 @@ class SelectionTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
+        for (sectionIndex, section) in tableSectionList.enumerated() {
+            
+            for (rowIndex, _ ) in section.cellList.enumerated() {
+                
+                let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
+                let cell = tableView.cellForRow(at: indexPath)
+                cell?.accessoryType = .none
+            }
+        }
+        
         let cell = tableView.cellForRow(at: indexPath)
         cell?.accessoryType = .checkmark
         selectedItem = tableSectionList[indexPath.section].cellList[indexPath.row]
-    }
-    
-    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        
-        let cell = tableView.cellForRow(at: indexPath)
-        cell?.accessoryType = .none
     }
     
     /*
