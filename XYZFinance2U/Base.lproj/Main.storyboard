@@ -582,7 +582,7 @@
                                 <rect key="frame" x="0.0" y="613" width="320" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YaX-RK-lUZ" id="qwM-kl-Jqy">
-                                    <rect key="frame" x="0.0" y="0.0" width="286" height="79.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4e5-q3-Ybb">
@@ -652,7 +652,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mDN-zo-8Kh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5280.8000000000002" y="-770.46476761619192"/>
+            <point key="canvasLocation" x="6346.875" y="-771.12676056338034"/>
         </scene>
         <!--New expense-->
         <scene sceneID="fmT-dd-bXZ">
@@ -1198,7 +1198,54 @@ Chee Bin HOH, 2017</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GG1-Xa-Qln" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3882" y="-797"/>
+            <point key="canvasLocation" x="3493" y="-785"/>
+        </scene>
+        <!--Selection Table View Controller-->
+        <scene sceneID="mHF-3H-NQg">
+            <objects>
+                <tableViewController storyboardIdentifier="SelectionTableViewController" id="qMP-z0-vPH" customClass="SelectionTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="jdF-D9-k3i">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="selectionItemCell" id="Toc-ZZ-uBG" customClass="SelectionItemTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Toc-ZZ-uBG" id="B02-ge-3JC">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="re8-JO-ugY">
+                                            <rect key="frame" x="45" y="5" width="42" height="35"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="35" id="elw-GD-1jw"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="re8-JO-ugY" firstAttribute="leading" secondItem="B02-ge-3JC" secondAttribute="leadingMargin" constant="29" id="LfQ-Bt-iIy"/>
+                                        <constraint firstItem="re8-JO-ugY" firstAttribute="centerY" secondItem="B02-ge-3JC" secondAttribute="centerY" id="UOp-0e-DBY"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="label" destination="re8-JO-ugY" id="ycH-lW-7yv"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="qMP-z0-vPH" id="sah-yG-oi7"/>
+                            <outlet property="delegate" destination="qMP-z0-vPH" id="Q3i-jz-2aE"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="AgY-Pi-k9m"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5tb-oi-olN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5295" y="-769"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="rQc-gR-7Ul">
@@ -1218,6 +1265,24 @@ Chee Bin HOH, 2017</string>
             </objects>
             <point key="canvasLocation" x="-113" y="786"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Edi-3h-N2s">
+            <objects>
+                <navigationController storyboardIdentifier="SelectionNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="omO-iR-F1i" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3Bq-eL-DSr">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="qMP-z0-vPH" kind="relationship" relationship="rootViewController" id="Q8f-m1-YdF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sn9-9o-3Yk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4410" y="-769"/>
+        </scene>
     </scenes>
     <resources>
         <image name="defaultPhoto" width="540" height="540"/>
@@ -1228,6 +1293,6 @@ Chee Bin HOH, 2017</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ve4-y6-Yqm"/>
-        <segue reference="p2p-KG-gtc"/>
+        <segue reference="12h-Ii-8y1"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -24,7 +24,13 @@ class IncomeDetailTableViewController: UITableViewController,
     IncomeDetailDatePickerTableViewCellDelegate,
     IncomeDetailCommandDelegate,
     IncomeSelectionDelegate,
-    IncomeDetailSwitchDelegate {
+    IncomeDetailSwitchDelegate,
+    SelectionDelegate {
+    
+    func selection(_ sender: SelectionTableViewController, item: String?) {
+        repeatselection = item
+        tableView.reloadData()
+    }
     
     func optionUpdate(_ sender: IncomeDetailSwitchTableViewCell, option: Bool) {
         
@@ -664,8 +670,20 @@ class IncomeDetailTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if let cell = tableView.cellForRow(at: indexPath) as? IncomeDetailSelectionTableViewCell {
-    
+        if let _ = tableView.cellForRow(at: indexPath) as? IncomeDetailSelectionTableViewCell {
+            
+            guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+                    fatalError("Exception: SelectionNavigationController is expected")
+            }
+            
+            selectionTableViewController.setSelections("repeat", "Never", "Every Day", "Every Week", "Every Month", "Every Year")
+            selectionTableViewController.setSelectedItem(repeatselection ?? "Never")
+            selectionTableViewController.delegate = self
+            
+            let nav = UINavigationController(rootViewController: selectionTableViewController)
+            nav.modalPresentationStyle = .popover
+            
+            self.present(nav, animated: true, completion: nil)
         }
         
     }

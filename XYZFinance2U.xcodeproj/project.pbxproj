@@ -12,6 +12,8 @@
 		650024051FF6B423001281EA /* SettingDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650024041FF6B423001281EA /* SettingDetailTableViewController.swift */; };
 		6522F8B51FE9BBC7005686B6 /* MainUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6522F8B41FE9BBC7005686B6 /* MainUITabBarController.swift */; };
 		65343E8B1FFD8898002C5D39 /* IncomeDetailSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65343E8A1FFD8898002C5D39 /* IncomeDetailSelectionTableViewCell.swift */; };
+		65343E8D1FFD93B1002C5D39 /* SelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65343E8C1FFD93B1002C5D39 /* SelectionTableViewController.swift */; };
+		65343E901FFD9FC1002C5D39 /* SelectionItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65343E8F1FFD9FC1002C5D39 /* SelectionItemTableViewCell.swift */; };
 		653462191FD0FFB700F88218 /* XYZUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653462181FD0FFB700F88218 /* XYZUtility.swift */; };
 		65402D961FEE0B740051367F /* ExpenseDetailCommandTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65402D951FEE0B740051367F /* ExpenseDetailCommandTableViewCell.swift */; };
 		655C979D1FCCCC210098D58D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C979C1FCCCC210098D58D /* AppDelegate.swift */; };
@@ -68,6 +70,8 @@
 		650125791FD6130900018513 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		6522F8B41FE9BBC7005686B6 /* MainUITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUITabBarController.swift; sourceTree = "<group>"; };
 		65343E8A1FFD8898002C5D39 /* IncomeDetailSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailSelectionTableViewCell.swift; sourceTree = "<group>"; };
+		65343E8C1FFD93B1002C5D39 /* SelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionTableViewController.swift; sourceTree = "<group>"; };
+		65343E8F1FFD9FC1002C5D39 /* SelectionItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionItemTableViewCell.swift; sourceTree = "<group>"; };
 		653462181FD0FFB700F88218 /* XYZUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZUtility.swift; sourceTree = "<group>"; };
 		65402D951FEE0B740051367F /* ExpenseDetailCommandTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailCommandTableViewCell.swift; sourceTree = "<group>"; };
 		655C97991FCCCC210098D58D /* XYZFinance2U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XYZFinance2U.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,6 +180,15 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
+		65343E8E1FFD969A002C5D39 /* Shared UI */ = {
+			isa = PBXGroup;
+			children = (
+				65343E8C1FFD93B1002C5D39 /* SelectionTableViewController.swift */,
+				65343E8F1FFD9FC1002C5D39 /* SelectionItemTableViewCell.swift */,
+			);
+			path = "Shared UI";
+			sourceTree = "<group>";
+		};
 		655C97901FCCCC210098D58D = {
 			isa = PBXGroup;
 			children = (
@@ -202,6 +215,7 @@
 				650024071FF6FF7E001281EA /* Income */,
 				650024081FF6FFA6001281EA /* Setting */,
 				65F48F271FE56095006951F7 /* Model */,
+				65343E8E1FFD969A002C5D39 /* Shared UI */,
 				655C979C1FCCCC210098D58D /* AppDelegate.swift */,
 				650024001FF67B4E001281EA /* MainSplitViewController.swift */,
 				6522F8B41FE9BBC7005686B6 /* MainUITabBarController.swift */,
@@ -353,11 +367,13 @@
 				65EEC4A11FF072BD00D638CD /* IncomeDetailDatePickerTableViewCell.swift in Sources */,
 				657693C11FDB8C9E00BFFB6B /* XYZFinance2U.xcdatamodeld in Sources */,
 				65EEC4A51FF1D6EB00D638CD /* ExpenseDetailLocationTableViewCell.swift in Sources */,
+				65343E8D1FFD93B1002C5D39 /* SelectionTableViewController.swift in Sources */,
 				653462191FD0FFB700F88218 /* XYZUtility.swift in Sources */,
 				650023FF1FF49D43001281EA /* LockScreenViewController.swift in Sources */,
 				65EEC4A91FF1EEEE00D638CD /* ExpenseDetailLocationViewController.swift in Sources */,
 				6576938D1FDA3ACB00BFFB6B /* ExpenseTableViewController.swift in Sources */,
 				658F735E1FE08F5E00AF7F8D /* ExpenseDetailImagePickerTableViewCell.swift in Sources */,
+				65343E901FFD9FC1002C5D39 /* SelectionItemTableViewCell.swift in Sources */,
 				65402D961FEE0B740051367F /* ExpenseDetailCommandTableViewCell.swift in Sources */,
 				65F48F211FE377EC006951F7 /* SettingTableViewCell.swift in Sources */,
 				655C97BF1FCCCF320098D58D /* IncomeTableViewController.swift in Sources */,
