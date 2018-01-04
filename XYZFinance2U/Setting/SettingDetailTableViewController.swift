@@ -92,12 +92,12 @@ class SettingDetailTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        if let _ = tableSectionCellList[section].title {
+        if section == 0 {
             
-            return ( tableSectionCellList.count - 1 ) == section ? 800 : 35
+            return 35
         } else {
             
-            return 0
+            return 17.5
         }
     }
 
