@@ -136,7 +136,7 @@ class SelectionTableViewController: UITableViewController {
         
         if let _ = tableSectionList[section].title {
             
-            return ( tableSectionList.count - 1 ) == section ? 700 : 35
+            return ( tableSectionList.count - 1 ) == section ? 400 : 35
         } else {
 
             return 0
