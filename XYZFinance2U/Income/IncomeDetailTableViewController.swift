@@ -45,6 +45,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 } else {
                     hasUpdateReminder = false
                     reminddate = nil // FIXME: we need to reload the original value from the core data
+                    repeatAction = "Never"
                 }
 
                 loadDataInTableSectionCell()

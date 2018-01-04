@@ -65,22 +65,6 @@ class SelectionTableViewController: UITableViewController {
     func setSelectedItem(_ item: String? ) {
         
         self.selectedItem = item
-        
-        var indexPath: IndexPath?
-        for (sectionIndex, section) in tableSectionList.enumerated() {
-            
-            for (rowIndex, cell) in section.cellList.enumerated() {
-                
-                if cell == item {
-                    
-                    indexPath = IndexPath(row: rowIndex, section: sectionIndex)
-                    break
-                }
-            }
-        }
-        
-        let cell = tableView.cellForRow(at: indexPath!)
-        cell?.accessoryType = .checkmark
     }
     
     func setSelections(_ sectionIdentifier: String, _ selection: [String]) {
@@ -110,14 +94,9 @@ class SelectionTableViewController: UITableViewController {
             let newSection = TableSectionCell(identifier: sectionIdentifier, title: "", cellList: [], data: nil)
             sectionIndex = tableSectionList.count - 1
             tableSectionList.insert(newSection, at: sectionIndex)
-            
-            //tableSectionList.append(newSection)
-            //sectionIndex = tableSectionList.count - 1
         }
     
         tableSectionList[sectionIndex].cellList = selection
-        
-        tableView.reloadData()
     }
     
 
@@ -129,7 +108,7 @@ class SelectionTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+                
         return tableSectionList[section].cellList.count
     }
 
@@ -137,10 +116,20 @@ class SelectionTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "selectionItemCell", for: indexPath) as? SelectionItemTableViewCell else {
             fatalError("Exception: selectionItemCell is expected")
         }
-
+        
         cell.label.text = tableSectionList[indexPath.section].cellList[indexPath.row]
 
+        if let item = self.selectedItem, item == cell.label.text {
+            
+            cell.accessoryType = .checkmark
+        }
+        
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        return tableSectionList[section].title
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -149,7 +138,7 @@ class SelectionTableViewController: UITableViewController {
             
             return ( tableSectionList.count - 1 ) == section ? 700 : 35
         } else {
-            
+
             return 0
         }
     }
