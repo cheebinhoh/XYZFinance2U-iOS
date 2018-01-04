@@ -132,6 +132,11 @@ class SelectionTableViewController: UITableViewController {
         return tableSectionList[section].title
     }
     
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+
+        return 0
+    }
+    
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         if let _ = tableSectionList[section].title {
@@ -159,6 +164,7 @@ class SelectionTableViewController: UITableViewController {
         cell?.accessoryType = .checkmark
         selectedItem = tableSectionList[indexPath.section].cellList[indexPath.row]
     }
+
     
     /*
     // Override to support conditional editing of the table view.
