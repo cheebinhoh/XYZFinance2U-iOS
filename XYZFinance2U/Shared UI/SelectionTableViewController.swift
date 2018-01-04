@@ -24,6 +24,7 @@ class SelectionTableViewController: UITableViewController {
     // MARK: - function
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         tableView.tableFooterView = UIView(frame: .zero)
@@ -37,6 +38,7 @@ class SelectionTableViewController: UITableViewController {
     }
 
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
@@ -137,8 +139,6 @@ class SelectionTableViewController: UITableViewController {
         }
 
         cell.label.text = tableSectionList[indexPath.section].cellList[indexPath.row]
-        
-        // Configure the cell...
 
         return cell
     }
