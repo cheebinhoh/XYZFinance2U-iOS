@@ -18,12 +18,16 @@ class XYZAccount : NSManagedObject
     static let amount = "amount"
     static let lastUpdate = "lastUpdate"
     static let sequenceNr = "sequenceNr"
+    static let repeatDate = "repeatDate"
+    static let repeatAction = "repeatAction"
     
     var bank: String = ""
     var accountNr: String = ""
     var amount: Double = 0.0
     var lastUpdate: Date = Date()
     var sequenceNr = 0
+    var repeatDate: Date = Date()
+    var repeatAction: String = ""
     
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("accounts")

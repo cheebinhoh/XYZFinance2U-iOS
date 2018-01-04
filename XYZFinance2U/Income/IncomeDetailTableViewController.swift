@@ -28,7 +28,7 @@ class IncomeDetailTableViewController: UITableViewController,
     SelectionDelegate {
     
     func selection(_ sender: SelectionTableViewController, item: String?) {
-        repeatselection = item
+        repeatAction = item
         tableView.reloadData()
     }
     
@@ -227,7 +227,7 @@ class IncomeDetailTableViewController: UITableViewController,
     var amount: Double?
     var date: Date?
     var reminddate: Date?
-    var repeatselection: String?
+    var repeatAction: String?
     
     var isCollapsed: Bool {
         
@@ -381,16 +381,14 @@ class IncomeDetailTableViewController: UITableViewController,
         income?.setValue(accountNr, forKey: XYZAccount.accountNr)
         income?.setValue(amount, forKey: XYZAccount.amount)
         income?.setValue(date, forKey: XYZAccount.lastUpdate)
-        
+        income?.setValue(repeatAction, forKey: XYZAccount.repeatAction)
+        income?.setValue(reminddate, forKey: XYZAccount.repeatDate)
+
         // setup local notification
         if hasUpdateReminder {
             let notificationCenter = UNUserNotificationCenter.current()
         
             let identifier = "income:\(bank):\(accountNr)"
-            
-            notificationCenter.getPendingNotificationRequests(completionHandler: { (request) in
-                    print("--- \(request)")
-            })
             
             notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
             notificationCenter.removeAllDeliveredNotifications()
@@ -403,30 +401,40 @@ class IncomeDetailTableViewController: UITableViewController,
             //content.categoryIdentifier = "Income"
             
             var units: Set<Calendar.Component> = [ .hour, .minute]
-            switch repeatselection ?? "Never" {
+            switch repeatAction ?? "Never" {
                 
                 case "Never":
                     units.insert(.year)
                     units.insert(.month)
                     units.insert(.day)
+                    units.insert(.hour)
+                    units.insert(.minute)
                 
                 case "Every Month":
                     units.insert(.month)
                     units.insert(.day)
+                    units.insert(.hour)
+                    units.insert(.minute)
                 
                 case "Every Week":
                     units.insert(.weekday)
+                    units.insert(.hour)
+                    units.insert(.minute)
                 
                 case "Every Day":
-                    break
+                    units.insert(.hour)
+                    units.insert(.minute)
+                
+                case "Every Hour":
+                    units.insert(.minute)
                 
                 default:
-                    fatalError("Exception: \(repeatselection!) is not expected")
+                    fatalError("Exception: \(repeatAction!) is not expected")
             }
             
             let dateInfo = Calendar.current.dateComponents(units, from: reminddate!)
 
-            let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: ( repeatselection ?? "Never" ) != "Never" )
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: ( repeatAction ?? "Never" ) != "Never" )
          
             let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
             
@@ -444,6 +452,8 @@ class IncomeDetailTableViewController: UITableViewController,
         accountNr = ""
         amount = 0.0
         date = Date()
+        reminddate = Date()
+        repeatAction = "Never"
         
         if nil != income {
             
@@ -451,6 +461,16 @@ class IncomeDetailTableViewController: UITableViewController,
             accountNr = (income?.value(forKey: XYZAccount.accountNr) as! String)
             date = (income?.value(forKey: XYZAccount.lastUpdate) as? Date) ?? Date()
             amount = (income?.value(forKey: XYZAccount.amount) as? Double) ?? 0.0
+            
+            if let setdate = (income?.value(forKey: XYZAccount.repeatDate) as? Date) {
+            
+                hasUpdateReminder = true
+                reminddate = setdate
+                repeatAction = (income?.value(forKey: XYZAccount.repeatAction) as? String)
+            } else {
+                
+                hasUpdateReminder = false
+            }
         }
         
         loadDataInTableSectionCell()
@@ -657,7 +677,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 }
                 
                 repeatcell.setLabel("Repeat")
-                repeatcell.setSelection(repeatselection ?? "Never")
+                repeatcell.setSelection(repeatAction ?? "Never")
                 repeatcell.selectionStyle = .none
                 
                 cell = repeatcell
@@ -699,7 +719,7 @@ class IncomeDetailTableViewController: UITableViewController,
             }
             
             selectionTableViewController.setSelections("repeat", ["Never", "Every Hour", "Every Day", "Every Week", "Every Month", "Every Year"])
-            selectionTableViewController.setSelectedItem(repeatselection ?? "Never")
+            selectionTableViewController.setSelectedItem(repeatAction ?? "Never")
             selectionTableViewController.delegate = self
             
             let nav = UINavigationController(rootViewController: selectionTableViewController)
