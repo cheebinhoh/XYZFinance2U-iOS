@@ -170,13 +170,51 @@ class IncomeTableViewController: UITableViewController,
     
     private func loadDataInTableSectionCell() {
         
+        var currencyList = [String]()
+        
+        for income in incomeList {
+            
+            let currency = income.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
+            
+            if let _ = currencyList.index(of: currency) {
+                
+            } else {
+                
+                currencyList.append(currency)
+            }
+        }
+        
+        if currencyList.isEmpty {
+            
+            currencyList.append(Locale.current.currencyCode!)
+        }
+        
         tableSectionCellList.removeAll()
      
-        let mainSection = TableSectionCell(identifier: "main", title: nil, cellList: [], data: incomeList)
-        tableSectionCellList.append(mainSection)
-        
-        let summarySection = TableSectionCell(identifier: "summary", title: nil, cellList: ["sum"], data: nil)
-        tableSectionCellList.append(summarySection)
+        for currency in currencyList {
+            
+            var sectionIncomeList = [XYZAccount]()
+            
+            for income in incomeList {
+                
+                if let setCurrency = income.value(forKey: XYZAccount.currencyCode) as? String {
+                    
+                    if setCurrency == currency {
+                        
+                        sectionIncomeList.append(income)
+                    }
+                } else if currency == Locale.current.currencyCode {
+                    
+                    sectionIncomeList.append(income)
+                }
+            }
+            
+            let mainSection = TableSectionCell(identifier: "main", title: currency, cellList: [], data: sectionIncomeList)
+            tableSectionCellList.append(mainSection)
+            
+            let summarySection = TableSectionCell(identifier: "summary", title: nil, cellList: ["sum"], data: nil)
+            tableSectionCellList.append(summarySection)
+        }
         
         for section in tableSectionCellList {
             
@@ -609,7 +647,7 @@ class IncomeTableViewController: UITableViewController,
                 }
 
                 totalCell = newTotalcell
-                totalCell?.setAmount(amount: totalOfSection(section: indexPath.section - 1))
+                totalCell?.setAmount(amount: totalOfSection(section: indexPath.section - 1), code: tableSectionCellList[indexPath.section - 1].title!)
                 cell = newTotalcell
             
             default:
@@ -642,11 +680,13 @@ class IncomeTableViewController: UITableViewController,
         if editingStyle == .delete {
             
             // Delete the row from the data source
+            let sectionIncomeList = tableSectionCellList[indexPath.section].data as? [XYZAccount]
+            let incomeToBeDeleted = sectionIncomeList![indexPath.row]
+            
             let aContext = managedContext()
-            let oldIncome = incomeList.remove(at: indexPath.row)
+            let oldIncome = incomeList.remove(at: incomeList.index(of: incomeToBeDeleted)!)   //incomeList.remove(at: indexPath.row)
             aContext?.delete(oldIncome)
             
-
             self.delegate?.incomeDeleted(deletedIncome: oldIncome)
             reloadData()
         } else if editingStyle == .insert {
@@ -688,6 +728,11 @@ class IncomeTableViewController: UITableViewController,
         }
         
         saveAccounts()
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        return tableSectionCellList[section].title
     }
 
     // MARK: - Navigation

@@ -30,8 +30,8 @@ class IncomeTotalTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func setAmount(amount: Double) {
+    func setAmount(amount: Double, code: String) {
         
-        self.amount.text = formattingCurrencyValue(input: amount, nil )
+        self.amount.text = formattingCurrencyValue(input: amount, code )
     }
 }
