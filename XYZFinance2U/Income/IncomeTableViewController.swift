@@ -212,7 +212,7 @@ class IncomeTableViewController: UITableViewController,
             let mainSection = TableSectionCell(identifier: "main", title: currency, cellList: [], data: sectionIncomeList)
             tableSectionCellList.append(mainSection)
             
-            let summarySection = TableSectionCell(identifier: "summary", title: nil, cellList: ["sum"], data: nil)
+            let summarySection = TableSectionCell(identifier: "summary", title: "Total", cellList: ["sum"], data: nil)
             tableSectionCellList.append(summarySection)
         }
         
@@ -439,7 +439,8 @@ class IncomeTableViewController: UITableViewController,
         navigationItem.setLeftBarButton(self.editButtonItem, animated: true)
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        loadDataInTableSectionCell()
+        //incomeList = self.loadAccounts()!
+        //loadDataInTableSectionCell()
 
         // Check for force touch feature, and add force touch/previewing capability.
         if traitCollection.forceTouchCapability == .available {
@@ -732,6 +733,18 @@ class IncomeTableViewController: UITableViewController,
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         return tableSectionCellList[section].title
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        print("-->\(section)")
+        if section == 0 {
+            
+            return 35
+        } else {
+            
+            return 17.5
+        }
     }
 
     // MARK: - Navigation
