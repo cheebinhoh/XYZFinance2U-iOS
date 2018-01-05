@@ -145,9 +145,21 @@ class IncomeTableViewController: UITableViewController,
     
     func incomeIndex(of income: XYZAccount) -> IndexPath? {
         
-        let incomeListStored = tableSectionCellList[mainSection].data as? [XYZAccount]
+        for (sectionIndex, section) in tableSectionCellList.enumerated() {
+            
+            if let sectionIncomeList = section.data as? [XYZAccount] {
+                
+                for (rowIndex, incomeStored) in sectionIncomeList.enumerated() {
+                    
+                    if income == incomeStored {
+                        
+                        return IndexPath(row: rowIndex, section: sectionIndex)
+                    }
+                }
+            }
+        }
         
-        return IndexPath(row: (incomeListStored?.index(of: income))!, section: mainSection)
+        return nil
     }
     
     func saveIncome(income: XYZAccount) {
