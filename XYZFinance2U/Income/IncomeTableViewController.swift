@@ -572,7 +572,10 @@ class IncomeTableViewController: UITableViewController,
             }
             
             incomeTableView.setPopover(delegate: self)
-            incomeTableView.income = incomeList[indexPath.row]
+            
+            let sectionIncomeList = tableSectionCellList[indexPath.section].data as? [XYZAccount]
+            
+            incomeTableView.income = sectionIncomeList![indexPath.row] //incomeList[indexPath.row]
             incomeDetailNavigationController.modalPresentationStyle = .popover
             self.present(incomeDetailNavigationController, animated: true, completion: nil)
             

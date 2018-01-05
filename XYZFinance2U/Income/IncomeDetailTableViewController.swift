@@ -463,8 +463,10 @@ class IncomeDetailTableViewController: UITableViewController,
         accountNr = ""
         amount = 0.0
         date = Date()
-        reminddate = Date()
         repeatAction = "Never"
+        hasUpdateReminder = false
+        
+        // we do not set reminddate as it is used to indicate if we have remind option checked
         
         if nil != income {
             
