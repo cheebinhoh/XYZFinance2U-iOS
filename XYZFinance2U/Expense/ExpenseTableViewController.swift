@@ -416,6 +416,18 @@ class ExpenseTableViewController: UITableViewController,
             delegate?.expenseSelected(newExpense: sectionExpenseList?[indexPath.row])
         }
     }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        if section == 0 {
+            
+            return 35
+        } else {
+            
+            return 17.5
+        }
+    }
+
 
     // MARK: - Navigation
 

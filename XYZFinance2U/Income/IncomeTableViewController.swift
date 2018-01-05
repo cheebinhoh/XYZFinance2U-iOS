@@ -212,7 +212,7 @@ class IncomeTableViewController: UITableViewController,
             let mainSection = TableSectionCell(identifier: "main", title: currency, cellList: [], data: sectionIncomeList)
             tableSectionCellList.append(mainSection)
             
-            let summarySection = TableSectionCell(identifier: "summary", title: "Total", cellList: ["sum"], data: nil)
+            let summarySection = TableSectionCell(identifier: "summary", title: nil, cellList: ["sum"], data: nil)
             tableSectionCellList.append(summarySection)
         }
         
@@ -735,15 +735,31 @@ class IncomeTableViewController: UITableViewController,
         return tableSectionCellList[section].title
     }
     
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    
+        if tableSectionCellList[section].identifier == "summary" {
+            
+            return 17.5
+        } else {
+            
+            return  CGFloat.leastNormalMagnitude
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        print("-->\(section)")
         if section == 0 {
             
             return 35
         } else {
             
-            return 17.5
+            if tableSectionCellList[section].identifier == "summary" {
+             
+                return CGFloat.leastNormalMagnitude
+            } else {
+                
+                return 17.5
+            }
         }
     }
 
