@@ -614,7 +614,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
                 textcell.enableMonetaryEditing(true)
-                print("--- \(String(describing: currencyCode))")
+
                 textcell.input.placeholder = formattingCurrencyValue(input: 0.0, currencyCode)
                 textcell.input.text = formattingCurrencyValue(input: amount ?? 0.0, currencyCode)
                 textcell.label.text = "Balance"
@@ -747,7 +747,34 @@ class IncomeDetailTableViewController: UITableViewController,
                     fatalError("Exception: SelectionNavigationController is expected")
                 }
                 
-                selectionTableViewController.setSelections("currency", Locale.isoCurrencyCodes)
+                selectionTableViewController.selectionIdentifier = "currency"
+                
+                var codeIndex: Character?
+                var codes = [String]()
+                for code in Locale.isoCurrencyCodes {
+                    
+                    if nil == codeIndex {
+                        
+                        codes.append(code)
+                        codeIndex = code.first
+                    } else if code.first == codeIndex {
+                        
+                        codes.append(code)
+                    } else {
+                        var identifier = ""
+                        identifier.append(codeIndex!)
+                        
+                        selectionTableViewController.setSelections(identifier, true, codes )
+                        codes.removeAll()
+                        codes.append(code)
+                        codeIndex = code.first
+                    }
+                }
+  
+                var identifier = ""
+                identifier.append(codeIndex!)
+                
+                selectionTableViewController.setSelections(identifier, true, codes )
                 selectionTableViewController.setSelectedItem(currencyCode ?? "USD")
                 selectionTableViewController.delegate = self
                 
@@ -761,7 +788,8 @@ class IncomeDetailTableViewController: UITableViewController,
                         fatalError("Exception: SelectionNavigationController is expected")
                 }
                 
-                selectionTableViewController.setSelections("repeat", ["Never", "Every Hour", "Every Day", "Every Week", "Every Month", "Every Year"])
+                selectionTableViewController.selectionIdentifier = "repeat"
+                selectionTableViewController.setSelections("", false, ["Never", "Every Hour", "Every Day", "Every Week", "Every Month", "Every Year"])
                 selectionTableViewController.setSelectedItem(repeatAction ?? "Never")
                 selectionTableViewController.delegate = self
                 

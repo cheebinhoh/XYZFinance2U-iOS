@@ -21,6 +21,8 @@ class SelectionTableViewController: UITableViewController {
     var tableSectionList = [TableSectionCell]()
     var selectedItem: String?
     var selectionIdentifier: String?
+    var hasIndexing: Bool = false
+    var sectionTitles = [String]()
     
     // MARK: - function
     
@@ -66,22 +68,18 @@ class SelectionTableViewController: UITableViewController {
     func setSelectedItem(_ item: String? ) {
         
         self.selectedItem = item
+        
+        navigationItem.title = "Selection: \(String(describing: selectedItem!))"
     }
     
-    func setSelections(_ sectionIdentifier: String, _ selection: [String]) {
+    func setSelections(_ sectionIdentifier: String, _ indexing: Bool, _ selection: [String]) {
         
-        selectionIdentifier = sectionIdentifier
+        if indexing {
+        
+            sectionTitles.append(sectionIdentifier)
+        }
         
         var sectionIndex = -1
-        
-        if tableSectionList.isEmpty {
-            
-            let footerSection = TableSectionCell(identifier: "footer",
-                                                 title: "",
-                                                 cellList: [String](),
-                                                 data: nil)
-            tableSectionList.append(footerSection)
-        }
         
         for (index, section) in tableSectionList.enumerated() {
             
@@ -94,8 +92,8 @@ class SelectionTableViewController: UITableViewController {
         
         if sectionIndex == -1 {
             
-            let newSection = TableSectionCell(identifier: sectionIdentifier, title: "", cellList: [], data: nil)
-            sectionIndex = tableSectionList.count - 1
+            let newSection = TableSectionCell(identifier: sectionIdentifier, title: sectionIdentifier, cellList: [], data: nil)
+            sectionIndex = tableSectionList.count
             tableSectionList.insert(newSection, at: sectionIndex)
         }
     
@@ -121,10 +119,13 @@ class SelectionTableViewController: UITableViewController {
         }
         
         cell.label.text = tableSectionList[indexPath.section].cellList[indexPath.row]
-
-        if let item = self.selectedItem, item == cell.label.text {
+        
+        if tableSectionList[indexPath.section].cellList[indexPath.row] == self.selectedItem {
             
             cell.accessoryType = .checkmark
+        } else {
+            
+            cell.accessoryType = .none
         }
         
         return cell
@@ -166,8 +167,24 @@ class SelectionTableViewController: UITableViewController {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.accessoryType = .checkmark
         selectedItem = tableSectionList[indexPath.section].cellList[indexPath.row]
+        
+        navigationItem.title = "Selection: \(String(describing: selectedItem!))"
     }
 
+    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        
+        return sectionTitles.isEmpty ? nil : sectionTitles
+    }
+    
+    override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+        
+        guard let index = sectionTitles.index(of: title) else {
+            
+            return -1;
+        }
+        
+        return index
+    }
     
     /*
     // Override to support conditional editing of the table view.
