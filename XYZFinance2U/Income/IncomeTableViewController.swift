@@ -581,10 +581,11 @@ class IncomeTableViewController: UITableViewController,
 
                 let incomeListStored = tableSectionCellList[indexPath.section].data as? [XYZAccount]
                 let account = incomeListStored![indexPath.row] //incomeList[indexPath.row]
-            
+                let currencyCode = account.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
+                
                 incomecell.bank.text = account.value(forKey: XYZAccount.bank) as? String
                 incomecell.account.text = account.value(forKey: XYZAccount.accountNr ) as? String
-                incomecell.amount.text = formattingCurrencyValue(input: (account.value(forKey: XYZAccount.amount) as? Double)!, nil)
+                incomecell.amount.text = formattingCurrencyValue(input: (account.value(forKey: XYZAccount.amount) as? Double)!, currencyCode)
                 incomecell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
                 
                 cell = incomecell

@@ -20,6 +20,7 @@ class XYZAccount : NSManagedObject
     static let sequenceNr = "sequenceNr"
     static let repeatDate = "repeatDate"
     static let repeatAction = "repeatAction"
+    static let currencyCode = "currencyCode"
     
     var bank: String = ""
     var accountNr: String = ""
@@ -28,6 +29,7 @@ class XYZAccount : NSManagedObject
     var sequenceNr = 0
     var repeatDate: Date = Date()
     var repeatAction: String = ""
+    var currencyCode: String = Locale.current.currencyCode!
     
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("accounts")

@@ -393,7 +393,8 @@ class IncomeDetailTableViewController: UITableViewController,
         income?.setValue(date, forKey: XYZAccount.lastUpdate)
         income?.setValue(repeatAction, forKey: XYZAccount.repeatAction)
         income?.setValue(reminddate, forKey: XYZAccount.repeatDate)
-
+        income?.setValue(currencyCode, forKey: XYZAccount.currencyCode)
+        
         // setup local notification
         if hasUpdateReminder {
             let notificationCenter = UNUserNotificationCenter.current()
@@ -471,6 +472,7 @@ class IncomeDetailTableViewController: UITableViewController,
             accountNr = (income?.value(forKey: XYZAccount.accountNr) as! String)
             date = (income?.value(forKey: XYZAccount.lastUpdate) as? Date) ?? Date()
             amount = (income?.value(forKey: XYZAccount.amount) as? Double) ?? 0.0
+            currencyCode = (income?.value(forKey: XYZAccount.currencyCode) as? String) ?? Locale.current.currencyCode!
             
             if let setdate = (income?.value(forKey: XYZAccount.repeatDate) as? Date) {
             
