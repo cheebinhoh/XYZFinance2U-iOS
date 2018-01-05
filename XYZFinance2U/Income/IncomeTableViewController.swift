@@ -116,7 +116,20 @@ class IncomeTableViewController: UITableViewController,
     }
     
     // MARK: - function
+    
+    func totalOfSection(section: Int) -> Double {
+    
+        var total = 0.0;
+        let sectionIncomeList = tableSectionCellList[section].data as? [XYZAccount]
         
+        for income in sectionIncomeList! {
+        
+            total = total + ((income.value(forKey: XYZAccount.amount) as? Double) ?? 0.0 )
+        }
+        
+        return total
+    }
+    
     override func didReceiveMemoryWarning() {
         
         super.didReceiveMemoryWarning()
@@ -596,13 +609,14 @@ class IncomeTableViewController: UITableViewController,
                 }
 
                 totalCell = newTotalcell
+                totalCell?.setAmount(amount: totalOfSection(section: indexPath.section - 1))
                 cell = newTotalcell
             
             default:
                 fatalError("Exception: section identifier \(identifier) not be handled" )
         }
  
-        totalCell?.setAmount(amount: total)
+        ///totalCell?.setAmount(amount: total)
         
         return cell!
     }
