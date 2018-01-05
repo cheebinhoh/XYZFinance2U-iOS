@@ -653,8 +653,6 @@ class IncomeTableViewController: UITableViewController,
             default:
                 fatalError("Exception: section identifier \(identifier) not be handled" )
         }
- 
-        ///totalCell?.setAmount(amount: total)
         
         return cell!
     }
@@ -700,7 +698,7 @@ class IncomeTableViewController: UITableViewController,
     }
 
     // Override to support rearranging the table view.
-
+    
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         
         return tableSectionCellList[indexPath.section].identifier == "main"
@@ -710,7 +708,8 @@ class IncomeTableViewController: UITableViewController,
         
         var indexPath = proposedDestinationIndexPath
         
-        if tableSectionCellList[proposedDestinationIndexPath.section].identifier != "main" {
+        if ( tableSectionCellList[proposedDestinationIndexPath.section].identifier != "main" )
+           || ( sourceIndexPath.section != proposedDestinationIndexPath.section ) {
             
             indexPath = sourceIndexPath
         }
