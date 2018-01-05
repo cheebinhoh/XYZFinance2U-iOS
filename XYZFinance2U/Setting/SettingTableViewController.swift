@@ -45,11 +45,18 @@ class SettingTableViewController: UITableViewController,
         let mainSection = TableSectionCell(identifier: "main", title: "", cellList: ["About"], data: nil)
         tableSectionCellList.append(mainSection)
 
+        let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export"], data: nil)
+        tableSectionCellList.append(exportSection)
+
+        
+        /*
         let footerSection = TableSectionCell(identifier: "footer",
                                              title: "",
                                              cellList: [String](),
                                              data: nil)
+ 
         tableSectionCellList.append(footerSection)
+         */
     }
 
     override func didReceiveMemoryWarning() {
@@ -83,6 +90,15 @@ class SettingTableViewController: UITableViewController,
                 
                 newcell.title.text = tableSectionCellList[indexPath.section].cellList[indexPath.row]
                 cell = newcell
+            
+            case "Export" :
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
+                    fatalError("Exception: settingTableCell is expected")
+                }
+                
+                newcell.title.text = "Export to icloud drive"
+                newcell.accessoryType = .none
+                cell = newcell
                 
             default:
                 fatalError("Exception: \(tableSectionCellList[indexPath.section].cellList[indexPath.row]) is not supported")
@@ -93,8 +109,9 @@ class SettingTableViewController: UITableViewController,
     
     func loadSettingDetailTableView(_ settingDetail: SettingDetailTableViewController, _ indexPath: IndexPath) {
         
-        let aboutSection = TableSectionCell(identifier: "about", title: "", cellList: ["about"], data: nil)
         settingDetail.tableSectionCellList.removeAll()
+
+        let aboutSection = TableSectionCell(identifier: "about", title: "", cellList: ["about"], data: nil)
         settingDetail.tableSectionCellList.append(aboutSection)
         settingDetail.navigationItem.title = "About"
         let footerSection = TableSectionCell(identifier: "footer",
@@ -107,37 +124,71 @@ class SettingTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let split = self.parent?.parent?.parent as? UISplitViewController else {
-            fatalError("Exception: locate split view")
-        }
+        if tableSectionCellList[indexPath.section].identifier == "export" {
         
-        if split.isCollapsed {
+            let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let deleteOption = UIAlertAction(title: "Export to icloud drive", style: .default, handler: { (action) in
+                
+                let file = "file.txt" //this is the file. we will write to and read from it
+                
+                let text = "some text" //just a text
+                
+                if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                    
+                    let fileURL = dir.appendingPathComponent(file)
+                    
+                    //writing
+                    do {
+                        try text.write(to: fileURL, atomically: false, encoding: .utf8)
+                    } catch {/* error handling here */
+                        
+                        fatalError("Exception: error \(error)")
+                    }
             
-            guard let settingDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingDetailNavigationController") as? UINavigationController else {
-                fatalError("Exception: SettingDetailNavigationController is expected")
-            }
+                    
+                }
+            })
             
-            guard let settingDetail = settingDetailNavigationController.viewControllers.first as? SettingDetailTableViewController else {
-                fatalError("Exception: SettingDetailTableViewController is expected" )
-            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:nil)
             
-            settingDetailNavigationController.modalPresentationStyle = .popover
-            settingDetail.setPopover(true)
-            loadSettingDetailTableView(settingDetail, indexPath)
-            self.present(settingDetailNavigationController, animated: false, completion: nil)
+            optionMenu.addAction(deleteOption)
+            optionMenu.addAction(cancelAction)
             
-            guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
-                fatalError("Exception: MainSplitViewController is expected")
-            }
-            
-            mainSplitView.popOverNavigatorController = settingDetailNavigationController
+            present(optionMenu, animated: true, completion: nil)
         } else {
             
-            guard let settingDetail = delegate else {
-                fatalError("Exception: SettingDetailTableViewController is expedted" )
+            guard let split = self.parent?.parent?.parent as? UISplitViewController else {
+                fatalError("Exception: locate split view")
             }
             
-            loadSettingDetailTableView(settingDetail, indexPath)
+            if split.isCollapsed {
+                
+                guard let settingDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingDetailNavigationController") as? UINavigationController else {
+                    fatalError("Exception: SettingDetailNavigationController is expected")
+                }
+                
+                guard let settingDetail = settingDetailNavigationController.viewControllers.first as? SettingDetailTableViewController else {
+                    fatalError("Exception: SettingDetailTableViewController is expected" )
+                }
+                
+                settingDetailNavigationController.modalPresentationStyle = .popover
+                settingDetail.setPopover(true)
+                loadSettingDetailTableView(settingDetail, indexPath)
+                self.present(settingDetailNavigationController, animated: false, completion: nil)
+                
+                guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+                    fatalError("Exception: MainSplitViewController is expected")
+                }
+                
+                mainSplitView.popOverNavigatorController = settingDetailNavigationController
+            } else {
+                
+                guard let settingDetail = delegate else {
+                    fatalError("Exception: SettingDetailTableViewController is expedted" )
+                }
+                
+                loadSettingDetailTableView(settingDetail, indexPath)
+            }
         }
         
         //let cell = tableView.cellForRow(at: indexPath)
