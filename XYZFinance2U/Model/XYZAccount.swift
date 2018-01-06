@@ -22,6 +22,8 @@ class XYZAccount : NSManagedObject
     static let repeatAction = "repeatAction"
     static let currencyCode = "currencyCode"
     static let lastRecordChange = "lastRecordChange"
+    static let lastRecordUpload = "lastRecordUpload"
+    static let lastRecordFetch = "lastRecordFetch"
     
     var bank: String = ""
     var accountNr: String = ""
@@ -32,6 +34,8 @@ class XYZAccount : NSManagedObject
     var repeatAction: String = ""
     var currencyCode: String = Locale.current.currencyCode!
     var lastRecordChange: Date = Date()
+    var lastRecordUpload: Date = Date()
+    var lastRecordFetch: Date = Date()
     
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("accounts")

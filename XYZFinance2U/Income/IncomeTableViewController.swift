@@ -221,11 +221,14 @@ class IncomeTableViewController: UITableViewController,
                 }
             }
             
-            let mainSection = TableSectionCell(identifier: "main", title: currency, cellList: [], data: sectionIncomeList)
-            tableSectionCellList.append(mainSection)
-            
-            let summarySection = TableSectionCell(identifier: "summary", title: nil, cellList: ["sum"], data: nil)
-            tableSectionCellList.append(summarySection)
+            if !sectionIncomeList.isEmpty {
+                
+                let mainSection = TableSectionCell(identifier: "main", title: currency, cellList: [], data: sectionIncomeList)
+                tableSectionCellList.append(mainSection)
+                
+                let summarySection = TableSectionCell(identifier: "summary", title: nil, cellList: ["sum"], data: nil)
+                tableSectionCellList.append(summarySection)
+            }
         }
         
         for section in tableSectionCellList {
@@ -256,6 +259,20 @@ class IncomeTableViewController: UITableViewController,
     }
     
     private func saveAccounts() {
+        
+        /* we do 3 things:
+         * - if there is a any record that its LastRecordChange is greater than LastRecordUpload, then we upload it to icloud
+         * - if the upload is success:
+         *      - then we tagged lastRecordUpload and lastRecordFetch
+         * - if the uploda is failed:
+         *      - if conflict:
+         *          - we will overwrite existing record with new record from icloud (which should overwrite all 3 timestamp:
+         *            lastRecordChange, lastRecordUpload and lastRecordFetch
+         *          - we then display alertpanel to user to notify that change failed
+         *      - if other error:
+         *          - then we will keep existing changed record and try to upload it again at different time.
+         *
+         */
         
         let aContext = managedContext()
         

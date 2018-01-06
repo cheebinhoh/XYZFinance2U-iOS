@@ -6,6 +6,8 @@
         <attribute name="bank" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="currencyCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastRecordChange" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lastRecordFetch" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lastRecordUpload" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="lastUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="repeatAction" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="repeatDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -34,7 +36,7 @@
         <relationship name="expense" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="XYZExpense" inverseName="receipts" inverseEntity="XYZExpense" syncable="YES"/>
     </entity>
     <elements>
-        <element name="XYZAccount" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="XYZAccount" positionX="-63" positionY="-18" width="128" height="210"/>
         <element name="XYZExpense" positionX="-63" positionY="18" width="128" height="180"/>
         <element name="XYZExpensePerson" positionX="-36" positionY="72" width="128" height="105"/>
         <element name="XYZExpenseReceipt" positionX="-9" positionY="99" width="128" height="90"/>
