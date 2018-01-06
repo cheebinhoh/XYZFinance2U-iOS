@@ -422,7 +422,7 @@ class IncomeDetailTableViewController: UITableViewController,
         if nil == income?.value(forKey: XYZAccount.lastRecordChange) as? Date
            || hasChanged {
             
-            print("-------- update last record change")
+
             income?.setValue(Date(), forKey: XYZAccount.lastRecordChange)
         }
         

@@ -63,6 +63,7 @@ class ExpenseDetailTextTableViewCell: UITableViewCell,
         
         if enanble {
             
+            input.addDoneToolbar(onDone: nil)
             input.clearButtonMode = .never
             input.keyboardType = .numberPad
             input.text = formattingCurrencyValue(input: 0.0, nil)
