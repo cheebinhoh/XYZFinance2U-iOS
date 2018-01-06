@@ -122,6 +122,42 @@ class SettingTableViewController: UITableViewController,
         settingDetail.tableView.reloadData()
     }
     
+    func showAbout(_ indexPath: IndexPath) {
+        
+        guard let split = self.parent?.parent?.parent as? UISplitViewController else {
+            fatalError("Exception: locate split view")
+        }
+        
+        if split.isCollapsed {
+            
+            guard let settingDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingDetailNavigationController") as? UINavigationController else {
+                fatalError("Exception: SettingDetailNavigationController is expected")
+            }
+            
+            guard let settingDetail = settingDetailNavigationController.viewControllers.first as? SettingDetailTableViewController else {
+                fatalError("Exception: SettingDetailTableViewController is expected" )
+            }
+            
+            settingDetailNavigationController.modalPresentationStyle = .popover
+            settingDetail.setPopover(true)
+            loadSettingDetailTableView(settingDetail, indexPath)
+            self.present(settingDetailNavigationController, animated: false, completion: nil)
+            
+            guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+                fatalError("Exception: MainSplitViewController is expected")
+            }
+            
+            mainSplitView.popOverNavigatorController = settingDetailNavigationController
+        } else {
+            
+            guard let settingDetail = delegate else {
+                fatalError("Exception: SettingDetailTableViewController is expedted" )
+            }
+            
+            loadSettingDetailTableView(settingDetail, indexPath)
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if tableSectionCellList[indexPath.section].identifier == "export" {
@@ -144,8 +180,6 @@ class SettingTableViewController: UITableViewController,
                         
                         fatalError("Exception: error \(error)")
                     }
-            
-                    
                 }
             })
             
@@ -157,38 +191,7 @@ class SettingTableViewController: UITableViewController,
             present(optionMenu, animated: true, completion: nil)
         } else {
             
-            guard let split = self.parent?.parent?.parent as? UISplitViewController else {
-                fatalError("Exception: locate split view")
-            }
-            
-            if split.isCollapsed {
-                
-                guard let settingDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingDetailNavigationController") as? UINavigationController else {
-                    fatalError("Exception: SettingDetailNavigationController is expected")
-                }
-                
-                guard let settingDetail = settingDetailNavigationController.viewControllers.first as? SettingDetailTableViewController else {
-                    fatalError("Exception: SettingDetailTableViewController is expected" )
-                }
-                
-                settingDetailNavigationController.modalPresentationStyle = .popover
-                settingDetail.setPopover(true)
-                loadSettingDetailTableView(settingDetail, indexPath)
-                self.present(settingDetailNavigationController, animated: false, completion: nil)
-                
-                guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
-                    fatalError("Exception: MainSplitViewController is expected")
-                }
-                
-                mainSplitView.popOverNavigatorController = settingDetailNavigationController
-            } else {
-                
-                guard let settingDetail = delegate else {
-                    fatalError("Exception: SettingDetailTableViewController is expedted" )
-                }
-                
-                loadSettingDetailTableView(settingDetail, indexPath)
-            }
+            showAbout(indexPath)
         }
         
         //let cell = tableView.cellForRow(at: indexPath)
