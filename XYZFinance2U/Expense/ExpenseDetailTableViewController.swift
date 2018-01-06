@@ -687,7 +687,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         if let _ = expense {
             
-            navigationItem.title = ""
+            navigationItem.title = "Expense"
         }
         
         // Uncomment the following line to preserve selection between presentations
