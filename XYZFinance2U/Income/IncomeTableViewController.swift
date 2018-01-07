@@ -274,6 +274,30 @@ class IncomeTableViewController: UITableViewController,
          *
          */
         
+        // preprocessing before saving it
+        for (sectionIndex, section) in tableSectionCellList.enumerated() {
+            
+            if let sectionIncomeList = section.data as? [XYZAccount] {
+                
+                for (rowIndex, income) in sectionIncomeList.enumerated() {
+                    
+                    let sequenceNr = 1000 * sectionIndex + rowIndex
+                    income.setValue(sequenceNr, forKey: XYZAccount.sequenceNr)
+                }
+            }
+        }
+        
+        for account in incomeList {
+            
+            let bank = account.value(forKey: XYZAccount.bank) as? String ?? ""
+            let accountNr = account.value(forKey: XYZAccount.accountNr) as? String ?? ""
+            let sequenceNr = account.value(forKey: XYZAccount.sequenceNr) as? Int ?? 0
+            
+            let recordId = "\(bank):\(accountNr):\(sequenceNr)"
+            
+            account.setValue(recordId, forKey: XYZAccount.recordId)
+        }
+        
         let aContext = managedContext()
         
         do {
@@ -752,11 +776,30 @@ class IncomeTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         
-        incomeList.insert(incomeList.remove(at: fromIndexPath.row), at: to.row)
-
-        for (index, account) in incomeList.enumerated() {
+        //incomeList.insert(incomeList.remove(at: fromIndexPath.row), at: to.row)
+        
+        if var sectionIncomeList = tableSectionCellList[to.section].data as? [XYZAccount] {
             
-            account.setValue(index, forKey: XYZAccount.sequenceNr)
+            sectionIncomeList.insert(sectionIncomeList.remove(at: fromIndexPath.row), at: to.row)
+            tableSectionCellList[to.section].data = sectionIncomeList
+        }
+
+        for (sectionIndex, section) in tableSectionCellList.enumerated() {
+            
+            if let sectionIncomeList = section.data as? [XYZAccount] {
+                
+                for (rowIndex, income) in sectionIncomeList.enumerated() {
+                    
+                    let sequenceNr = 1000 * sectionIndex + rowIndex
+                    income.setValue(sequenceNr, forKey: XYZAccount.sequenceNr)
+                }
+            }
+        }
+        
+        incomeList = incomeList.sorted() {
+            (acc1, acc2) in
+            
+            return ( acc1.value(forKey: XYZAccount.sequenceNr) as! Int ) < ( acc2.value(forKey: XYZAccount.sequenceNr) as! Int)
         }
         
         saveAccounts()
