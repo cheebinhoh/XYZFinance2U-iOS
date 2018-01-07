@@ -870,7 +870,6 @@ class ExpenseDetailTableViewController: UITableViewController,
                 locationpicker.delegate = self
                 
                 cell = locationpicker
-                // ExpenseDetailLocationPickerTableViewCell
             
             case "delete":
                 guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailCommandTextCell", for: indexPath) as? ExpenseDetailCommandTableViewCell else {
@@ -878,7 +877,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 }
                 
                 deletecell.delegate = self
-                deletecell.setCommand(command: "Delete expense")
+                deletecell.setCommand(command: "Delete Expense")
                 
                 cell = deletecell
             

@@ -753,7 +753,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 }
        
                 deletecell.delegate = self
-                deletecell.setCommand(command: "Delete income")
+                deletecell.setCommand(command: "Delete Income")
                 cell = deletecell
      
             default:
