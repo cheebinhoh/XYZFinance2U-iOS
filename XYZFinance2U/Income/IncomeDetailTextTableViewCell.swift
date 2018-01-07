@@ -20,6 +20,7 @@ class IncomeDetailTextTableViewCell: UITableViewCell,
 
     // MARK: - property
     weak var delegate: IncomeDetailTextTableViewCellDelegate?
+    var currencyCode: String = Locale.current.currencyCode!
     
     // MARK: - IBOutlet
     
@@ -59,14 +60,15 @@ class IncomeDetailTextTableViewCell: UITableViewCell,
         delegate?.textDidEndEditing(self)
     }
 
-    func enableMonetaryEditing(_ enanble: Bool) {
+    func enableMonetaryEditing(_ enanble: Bool, _ currencyCode: String) {
         
         if enanble {
             
+            self.currencyCode = currencyCode
             input.addDoneToolbar(onDone: nil)
             input.clearButtonMode = .never
             input.keyboardType = .numberPad
-            input.text = formattingCurrencyValue(input: 0.0, nil)
+            input.text = formattingCurrencyValue(input: 0.0, self.currencyCode)
             input.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         } else {
             
@@ -85,7 +87,7 @@ class IncomeDetailTextTableViewCell: UITableViewCell,
         
         text = formattingDoubleValue(input: text)
         text = formattingAndProcessDoubleValue(input: text)
-        text = formattingCurrencyValue(input: text, nil)
+        text = formattingCurrencyValue(input: text, currencyCode)
         textField.text = text
         delegate?.textDidEndEditing(self)
     }

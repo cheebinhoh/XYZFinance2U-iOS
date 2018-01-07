@@ -646,7 +646,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
-                textcell.enableMonetaryEditing(true)
+                textcell.enableMonetaryEditing(true, currencyCode!)
 
                 textcell.input.placeholder = formattingCurrencyValue(input: 0.0, currencyCode)
                 textcell.input.text = formattingCurrencyValue(input: amount ?? 0.0, currencyCode)
