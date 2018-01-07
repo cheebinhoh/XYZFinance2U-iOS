@@ -51,6 +51,7 @@ class IncomeDetailTableViewController: UITableViewController,
                     
                     hasUpdateReminder = true
                 } else {
+                    
                     hasUpdateReminder = false
                     reminddate = nil // FIXME: we need to reload the original value from the core data
                     repeatAction = "Never"
@@ -94,10 +95,12 @@ class IncomeDetailTableViewController: UITableViewController,
         if let split = self.parent?.parent as? UISplitViewController {
             
             guard let tabBarController = split.viewControllers.first as? UITabBarController else {
+                
                 fatalError("Exception: UITabBarController is expected")
             }
             
             guard let navController = tabBarController.selectedViewController as? UINavigationController else {
+                
                 fatalError("Exception: UINavigationController is expected")
             }
             
@@ -105,10 +108,12 @@ class IncomeDetailTableViewController: UITableViewController,
         } else if let split = self.parent?.parent?.parent as? UISplitViewController {
             
             guard let tabBarController = split.viewControllers.first as? UITabBarController else {
+                
                 fatalError("Exception: UITabBarController is expected")
             }
             
             guard let navController = tabBarController.selectedViewController as? UINavigationController else {
+                
                 fatalError("Exception: UINavigationController is expected")
             }
             
@@ -234,6 +239,7 @@ class IncomeDetailTableViewController: UITableViewController,
     var bank = "" {
         
         didSet {
+            
             navigationItem.rightBarButtonItem?.isEnabled = !bank.isEmpty
         }
     }
@@ -435,6 +441,7 @@ class IncomeDetailTableViewController: UITableViewController,
         
         // setup local notification
         if hasUpdateReminder {
+            
             let notificationCenter = UNUserNotificationCenter.current()
         
             let identifier = "income:\(bank):\(accountNr)"
@@ -447,7 +454,6 @@ class IncomeDetailTableViewController: UITableViewController,
             content.title = "Income update reminder"
             content.body = "Check income \(bank), \(accountNr) ..."
             content.sound = UNNotificationSound.default()
-            //content.categoryIdentifier = "Income"
             
             var units: Set<Calendar.Component> = [ .hour, .minute]
             switch repeatAction ?? "Never" {
@@ -488,7 +494,9 @@ class IncomeDetailTableViewController: UITableViewController,
             let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
             
             notificationCenter.add(request) { (error : Error?) in
+                
                 if let theError = error {
+                    
                     print("-------- notification scheduling error = \(theError.localizedDescription)")
                 }
             }
@@ -564,6 +572,7 @@ class IncomeDetailTableViewController: UITableViewController,
                                                    data: nil)
         
         if hasUpdateReminder {
+            
             updateRemindSection.cellList.append("reminddate")
             updateRemindSection.cellList.append("repeat")
         }
@@ -622,6 +631,7 @@ class IncomeDetailTableViewController: UITableViewController,
             
             case "bank":
                 guard let textcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailTextCell", for: indexPath) as? IncomeDetailTextTableViewCell else {
+                    
                     fatalError("Exception: incomeDetailTextCell is failed to be created")
                 }
                 
@@ -635,6 +645,7 @@ class IncomeDetailTableViewController: UITableViewController,
             
             case "accountNr":
                 guard let textcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailTextCell", for: indexPath) as? IncomeDetailTextTableViewCell else {
+                    
                     fatalError("Exception: incomeDetailTextCell is failed to be created")
                 }
                 
@@ -648,6 +659,7 @@ class IncomeDetailTableViewController: UITableViewController,
             
             case "amount":
                 guard let textcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailTextCell", for: indexPath) as? IncomeDetailTextTableViewCell else {
+                    
                     fatalError("Exception: incomeDetailTextCell is failed to be created")
                 }
                 
@@ -663,6 +675,7 @@ class IncomeDetailTableViewController: UITableViewController,
             
             case "date":
                 guard let datecell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailDateTextCell", for: indexPath) as? IncomeDetailDateTableViewCell else {
+                    
                     fatalError("Exception: incomeDetailDateTextCell is failed to be created")
                 }
                 
@@ -681,6 +694,7 @@ class IncomeDetailTableViewController: UITableViewController,
             
             case "datepicker":
                 guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailDatePickerCell", for: indexPath) as? IncomeDetailDatePickerTableViewCell else {
+                    
                     fatalError("Exception: incomeDetailDatePickerCell is failed to be created")
                 }
                 
@@ -690,6 +704,7 @@ class IncomeDetailTableViewController: UITableViewController,
             
             case "reminddatepicker":
                 guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailDatePickerCell", for: indexPath) as? IncomeDetailDatePickerTableViewCell else {
+                    
                     fatalError("Exception: incomeDetailDatePickerCell is failed to be created")
                 }
                 
@@ -699,6 +714,7 @@ class IncomeDetailTableViewController: UITableViewController,
             
             case "remind":
                 guard let remindOptionCell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailSwitchCell", for: indexPath) as? IncomeDetailSwitchTableViewCell else {
+                    
                     fatalError("Exception: incomeDetailSwitchCell is failed to be created")
                 }
                 
@@ -708,6 +724,7 @@ class IncomeDetailTableViewController: UITableViewController,
             
             case "reminddate":
                 guard let datecell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailDateTextCell", for: indexPath) as? IncomeDetailDateTableViewCell else {
+                    
                     fatalError("Exception: incomeDetailDateTextCell is failed to be created")
                 }
                 
@@ -726,6 +743,7 @@ class IncomeDetailTableViewController: UITableViewController,
             
             case "repeat":
                 guard let repeatcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailSelectionCell", for: indexPath) as? IncomeDetailSelectionTableViewCell else {
+                    
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
                 
@@ -737,6 +755,7 @@ class IncomeDetailTableViewController: UITableViewController,
             
             case "currency":
                 guard let currencycell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailSelectionCell", for: indexPath) as? IncomeDetailSelectionTableViewCell else {
+                    
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
                 
@@ -749,6 +768,7 @@ class IncomeDetailTableViewController: UITableViewController,
             
             case "delete":
                 guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailCommandTextCell", for: indexPath) as? IncomeDetailCommandTableViewCell else {
+                    
                     fatalError("Exception: incomeDetailCommandTextCell is failed to be created")
                 }
        
@@ -759,7 +779,6 @@ class IncomeDetailTableViewController: UITableViewController,
             default:
                 fatalError("Exception: \(indexPath.row) is not handled")
         }
-        // Configure the cell...
         
         return cell
     }
@@ -784,7 +803,8 @@ class IncomeDetailTableViewController: UITableViewController,
             if cellId == "currency" {
 
                 guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
-                    fatalError("Exception: SelectionNavigationController is expected")
+                    
+                    fatalError("Exception: error on instantiating SelectionNavigationController")
                 }
                 
                 selectionTableViewController.selectionIdentifier = "currency"
@@ -801,6 +821,7 @@ class IncomeDetailTableViewController: UITableViewController,
                         
                         codes.append(code)
                     } else {
+                        
                         var identifier = ""
                         identifier.append(codeIndex!)
                         
@@ -825,7 +846,8 @@ class IncomeDetailTableViewController: UITableViewController,
             } else {
                 
                 guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
-                        fatalError("Exception: SelectionNavigationController is expected")
+                    
+                        fatalError("Exception: error on instantiating SelectionNavigationController")
                 }
                 
                 selectionTableViewController.selectionIdentifier = "repeat"

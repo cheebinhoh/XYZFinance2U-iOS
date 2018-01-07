@@ -14,10 +14,12 @@ import CoreData
 class IncomeDetailViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate {
 
     // MARK: - property
+    
     var account: XYZAccount?
     var isPresentingInAddIncomeMode = false
     
     // MARK: - IBOutlet
+    
     @IBOutlet weak var bank: UITextField!
     @IBOutlet weak var accountNr: UITextField!
     @IBOutlet weak var amount: UITextField!
@@ -26,6 +28,7 @@ class IncomeDetailViewController: UIViewController, UITextFieldDelegate, UINavig
     @IBOutlet weak var dateInput: UILabel!
     
     // MARK: - IBAction
+    
     @IBAction func dateInputTouchUp(_ sender: UITapGestureRecognizer) {
         
         date.isHidden = !date.isHidden
@@ -108,6 +111,7 @@ class IncomeDetailViewController: UIViewController, UITextFieldDelegate, UINavig
         // Pass the selected object to the new view controller.
 
         guard let button = sender as? UIBarButtonItem, button === saveButton else {
+            
             os_log("The save button was not pressed, cancelling", log: OSLog.default, type: .debug)
             return
         }

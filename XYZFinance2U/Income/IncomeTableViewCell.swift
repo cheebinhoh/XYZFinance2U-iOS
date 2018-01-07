@@ -12,11 +12,13 @@ import UIKit
 class IncomeTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlet
+    
     @IBOutlet weak var bank: UILabel!
     @IBOutlet weak var account: UILabel!
     @IBOutlet weak var amount: UILabel!
     
     // MARK: - function
+    
     override func awakeFromNib() {
         
         super.awakeFromNib()
