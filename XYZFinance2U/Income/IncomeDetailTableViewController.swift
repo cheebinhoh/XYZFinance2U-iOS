@@ -231,7 +231,13 @@ class IncomeDetailTableViewController: UITableViewController,
     var incomeDelegate: IncomeDetailDelegate?
     var hasUpdateReminder = false
 
-    var bank = ""
+    var bank = "" {
+        
+        didSet {
+            navigationItem.rightBarButtonItem?.isEnabled = !bank.isEmpty
+        }
+    }
+    
     var accountNr = ""
     var amount: Double?
     var date: Date?
@@ -378,6 +384,7 @@ class IncomeDetailTableViewController: UITableViewController,
             navigationItem.title = "Income"
         }
         
+        navigationItem.rightBarButtonItem?.isEnabled = !bank.isEmpty
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
