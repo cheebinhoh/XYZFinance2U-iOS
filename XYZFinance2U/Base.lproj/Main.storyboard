@@ -1216,7 +1216,7 @@ Chee Bin HOH, 2017</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="re8-JO-ugY">
-                                            <rect key="frame" x="45" y="5" width="42" height="35"/>
+                                            <rect key="frame" x="16" y="5" width="42" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="elw-GD-1jw"/>
                                             </constraints>
@@ -1226,7 +1226,7 @@ Chee Bin HOH, 2017</string>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="re8-JO-ugY" firstAttribute="leading" secondItem="B02-ge-3JC" secondAttribute="leadingMargin" constant="29" id="LfQ-Bt-iIy"/>
+                                        <constraint firstItem="re8-JO-ugY" firstAttribute="leading" secondItem="B02-ge-3JC" secondAttribute="leadingMargin" id="LfQ-Bt-iIy"/>
                                         <constraint firstItem="re8-JO-ugY" firstAttribute="centerY" secondItem="B02-ge-3JC" secondAttribute="centerY" id="UOp-0e-DBY"/>
                                     </constraints>
                                 </tableViewCellContentView>
