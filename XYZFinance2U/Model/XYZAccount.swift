@@ -24,6 +24,7 @@ class XYZAccount : NSManagedObject
     static let lastRecordChange = "lastRecordChange"
     static let lastRecordUpload = "lastRecordUpload"
     static let lastRecordFetch = "lastRecordFetch"
+    static let recordId = "recordId"
     
     var bank: String = ""
     var accountNr: String = ""
@@ -36,6 +37,7 @@ class XYZAccount : NSManagedObject
     var lastRecordChange: Date = Date()
     var lastRecordUpload: Date = Date()
     var lastRecordFetch: Date = Date()
+    var recordId: String = ""
     
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("accounts")

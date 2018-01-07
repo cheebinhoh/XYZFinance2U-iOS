@@ -355,7 +355,7 @@ class IncomeTableViewController: UITableViewController,
                         }
                     }
                 }
-                
+            
                 laContext.evaluatePolicy(.deviceOwnerAuthentication,
                                          localizedReason: "Authenticate to use the app" )
                 { (success, error) in
