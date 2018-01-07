@@ -24,6 +24,7 @@ class IncomeDetailSwitchTableViewCell: UITableViewCell {
     weak var delegate: IncomeDetailSwitchDelegate?
     
     override func awakeFromNib() {
+        
         super.awakeFromNib()
         
         switchOption.addTarget(self, action: #selector(switchChanged(_:)), for: UIControlEvents.valueChanged)
@@ -31,6 +32,7 @@ class IncomeDetailSwitchTableViewCell: UITableViewCell {
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
+        
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

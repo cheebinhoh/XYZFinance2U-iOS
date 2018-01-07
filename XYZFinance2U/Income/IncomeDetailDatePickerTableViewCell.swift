@@ -17,6 +17,7 @@ protocol IncomeDetailDatePickerTableViewCellDelegate : class {
 class IncomeDetailDatePickerTableViewCell: UITableViewCell {
     
     // MARK: - IBOutlet
+    
     @IBOutlet weak var datePicker: UIDatePicker!
     
     // MARK: - property

@@ -19,6 +19,7 @@ class IncomeDetailTextTableViewCell: UITableViewCell,
     UITextFieldDelegate {
 
     // MARK: - property
+    
     weak var delegate: IncomeDetailTextTableViewCellDelegate?
     var currencyCode: String = Locale.current.currencyCode!
     
@@ -28,6 +29,7 @@ class IncomeDetailTextTableViewCell: UITableViewCell,
     @IBOutlet weak var label: UILabel!
     
     // MARK: - function
+    
     override func awakeFromNib() {
         
         super.awakeFromNib()

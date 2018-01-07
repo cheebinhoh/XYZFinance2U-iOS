@@ -17,12 +17,15 @@ protocol IncomeDetailCommandDelegate: class {
 class IncomeDetailCommandTableViewCell: UITableViewCell {
     
     // MARK: - property
+    
     weak var delegate: IncomeDetailCommandDelegate?
     
     // MARK: - IBOutlet
+    
     @IBOutlet weak var command: UILabel!
     
     // MARK: - function
+    
     override func awakeFromNib() {
         
         super.awakeFromNib()
