@@ -114,6 +114,7 @@ class SelectionTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "selectionItemCell", for: indexPath) as? SelectionItemTableViewCell else {
             fatalError("Exception: selectionItemCell is expected")
         }

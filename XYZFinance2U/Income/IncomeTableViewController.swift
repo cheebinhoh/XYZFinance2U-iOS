@@ -74,12 +74,14 @@ class IncomeTableViewController: UITableViewController,
  
     @IBAction func add(_ sender: UIBarButtonItem) {
         
-        guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier:    "IncomeDetailNavigationController") as? UINavigationController else {
-            fatalError("Exception: IncomeDetailNavigationController is expected")
+        guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "IncomeDetailNavigationController") as? UINavigationController else {
+            
+            fatalError("Exception: error on instantiating IncomeDetailNavigationController")
         }
         
         guard let incomeDetailTableView = incomeDetailNavigationController.viewControllers.first as? IncomeDetailTableViewController else {
-            fatalError("Exception: IncomeDetailTableViewController is expected" )
+            
+            fatalError("Exception: eror on casting first view controller to IncomeDetailTableViewController" )
         }
         
         incomeDetailTableView.setPopover(delegate: self)
@@ -246,7 +248,7 @@ class IncomeTableViewController: UITableViewController,
                     break;
                 
                 default:
-                    fatalError("Exception: execution should not be reached here")
+                    fatalError("Exception: execution should not be reached here, case = \(section.identifier)")
             }
         }
     }
@@ -335,9 +337,6 @@ class IncomeTableViewController: UITableViewController,
     
     func authenticate() {
         
-        incomeList = []
-        reloadData()
-        
         // authentication validation before doing other things
         let laContext = LAContext()
         var authError: NSError?
@@ -355,13 +354,15 @@ class IncomeTableViewController: UITableViewController,
                 if !lockScreenDisplayed {
                     
                     guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+                        
                         fatalError("Exception: MainSplitViewController is expected")
                     }
                     
                     if nil == mainSplitView.popOverNavigatorController {
 
                         guard let lockScreenView = self.storyboard?.instantiateViewController(withIdentifier: "lockScreenView") as? LockScreenViewController else {
-                            fatalError("Exception: lockScreenView is expected")
+                            
+                            fatalError("Exception: error on instantiating lockScreenView")
                         }
                         
                         lockScreenView.mainTableViewController = self
@@ -399,28 +400,18 @@ class IncomeTableViewController: UITableViewController,
                                 self.dismiss(animated: false, completion: nil)
                                 self.lockScreenDisplayed = false
                             }
-                            
-                            if let accounts = self.loadAccounts() {
-                                
-                                self.incomeList += accounts
-                            }
-                        
-                            self.reloadData()
-                            //self.navigationItem.leftBarButtonItem?.isEnabled = true
-                            //self.navigationItem.rightBarButtonItem?.isEnabled = true
                         }
                     } else {
                         
                         print("authentication fail = \(String(describing: error))")
-                        //self.navigationItem.leftBarButtonItem?.isEnabled = false
-                        //self.navigationItem.rightBarButtonItem?.isEnabled = false
                         
                         if !self.lockScreenDisplayed {
                             
                             self.dismiss(animated: false, completion: nil)
 
                             guard let lockScreenView = self.storyboard?.instantiateViewController(withIdentifier: "lockScreenView") as? LockScreenViewController else {
-                                fatalError("Exception: lockScreenView is expected")
+                                
+                                fatalError("Exception: error on instantiating lockScreenView")
                             }
                             
                             lockScreenView.mainTableViewController = self
@@ -442,7 +433,7 @@ class IncomeTableViewController: UITableViewController,
             } else {
                 
                 self.authenticatedOk = true
-                //self.navigationController?.popViewController(animated: true)
+
                 print("no auth support")
                 
                 if let accounts = self.loadAccounts() {
@@ -451,14 +442,10 @@ class IncomeTableViewController: UITableViewController,
                 }
                     
                 self.reloadData()
-                //self.navigationItem.leftBarButtonItem?.isEnabled = true
-                //self.navigationItem.rightBarButtonItem?.isEnabled = true
             }
         } else {
             
             self.authenticatedOk = true
-            //self.navigationItem.leftBarButtonItem?.isEnabled = false
-            //self.navigationItem.rightBarButtonItem?.isEnabled = false
         }
     }
     
@@ -473,7 +460,8 @@ class IncomeTableViewController: UITableViewController,
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         guard let split = self.parent?.parent?.parent as? UISplitViewController else {
-            fatalError("Exception: locate split view")
+            
+            fatalError("Exception: UISplitViewController is expected")
         }
         
         if split.isCollapsed {
@@ -484,6 +472,7 @@ class IncomeTableViewController: UITableViewController,
         if split.viewControllers.count > 1 {
             
             guard let _ = split.viewControllers.last as? UINavigationController else {
+                
                 fatalError( "Exception: navigation controller is expected" )
             }
         }
@@ -492,11 +481,12 @@ class IncomeTableViewController: UITableViewController,
         navigationItem.setLeftBarButton(self.editButtonItem, animated: true)
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        //incomeList = self.loadAccounts()!
-        //loadDataInTableSectionCell()
+        incomeList = self.loadAccounts()!
+        loadDataInTableSectionCell()
 
         // Check for force touch feature, and add force touch/previewing capability.
         if traitCollection.forceTouchCapability == .available {
+            
             /*
              Register for `UIViewControllerPreviewingDelegate` to enable
              "Peek" and "Pop".
@@ -537,6 +527,7 @@ class IncomeTableViewController: UITableViewController,
                     navigationController.modalPresentationStyle = .popover
                     
                     guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+                        
                         fatalError("Exception: MainSplitViewController is expected")
                     }
                     
@@ -574,11 +565,13 @@ class IncomeTableViewController: UITableViewController,
     
     func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {
         
-        guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier:    "IncomeDetailNavigationController") as? UINavigationController else {
-            fatalError("Exception: IncomeDetailNavigationController is expected")
+        guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "IncomeDetailNavigationController") as? UINavigationController else {
+            
+            fatalError("Exception: error on instantiating IncomeDetailNavigationController")
         }
         
         guard let incomeDetailTableViewController = incomeDetailNavigationController.viewControllers.first as? IncomeDetailTableViewController else {
+            
             fatalError("Exception: ExpenseDetailTableViewController is expected")
         }
         
@@ -593,7 +586,6 @@ class IncomeTableViewController: UITableViewController,
         return nil
     }
         
-
 
     // MARK: - Table view data source
     
@@ -611,16 +603,19 @@ class IncomeTableViewController: UITableViewController,
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         guard let split = self.parent?.parent?.parent as? UISplitViewController else {
-            fatalError("Exception: locate split view")
+            
+            fatalError("Exception: UISplitViewController is expected")
         }
         
         if split.isCollapsed  {
             
-            guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier:    "IncomeDetailNavigationController") as? UINavigationController else {
-                fatalError("Exception: ExpenseDetailNavigationController is expected")
+            guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "IncomeDetailNavigationController") as? UINavigationController else {
+                
+                fatalError("Exception: error on instantiating ExpenseDetailNavigationController")
             }
             
             guard let incomeTableView = incomeDetailNavigationController.viewControllers.first as? IncomeDetailTableViewController else {
+                
                 fatalError("Exception: IncomeDetailTableViewController is expected" )
             }
             
@@ -633,6 +628,7 @@ class IncomeTableViewController: UITableViewController,
             self.present(incomeDetailNavigationController, animated: true, completion: nil)
             
             guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+                
                 fatalError("Exception: MainSplitViewController is expected")
             }
             
@@ -640,6 +636,7 @@ class IncomeTableViewController: UITableViewController,
         } else {
             
             guard let detailTableViewController = delegate as? IncomeDetailTableViewController else {
+                
                 fatalError("Exception: IncomeDetailTableViewController is expedted" )
             }
             
@@ -669,8 +666,6 @@ class IncomeTableViewController: UITableViewController,
         }
         
         return nrOfRows
-        
-        //return incomeList.count + ( incomeList.count > 0 ? 1 : 0 )
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -684,6 +679,7 @@ class IncomeTableViewController: UITableViewController,
             
             case "main":
                 guard let incomecell = tableView.dequeueReusableCell(withIdentifier: "IncomeTableViewCell", for: indexPath) as? IncomeTableViewCell else {
+                    
                     fatalError("error on creating cell")
                 }
 
@@ -700,7 +696,8 @@ class IncomeTableViewController: UITableViewController,
        
             case "summary":
                 guard let newTotalcell = tableView.dequeueReusableCell(withIdentifier: "IncomeTotalTableViewCell", for: indexPath) as? IncomeTotalTableViewCell else {
-                    fatalError("error on creating total cell")
+                    
+                    fatalError("Exception: error on creating IncomeTotalTableViewCell")
                 }
 
                 totalCell = newTotalcell
@@ -734,7 +731,7 @@ class IncomeTableViewController: UITableViewController,
         
         if editingStyle == .delete {
             
-            // Delete the row from the data source
+            // Delete the row from the data source, the way we handle it is special, we delete it from incomelist, and then reload it in table section
             let sectionIncomeList = tableSectionCellList[indexPath.section].data as? [XYZAccount]
             let incomeToBeDeleted = sectionIncomeList![indexPath.row]
             
@@ -776,8 +773,6 @@ class IncomeTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         
-        //incomeList.insert(incomeList.remove(at: fromIndexPath.row), at: to.row)
-        
         if var sectionIncomeList = tableSectionCellList[to.section].data as? [XYZAccount] {
             
             sectionIncomeList.insert(sectionIncomeList.remove(at: fromIndexPath.row), at: to.row)
@@ -790,7 +785,7 @@ class IncomeTableViewController: UITableViewController,
                 
                 for (rowIndex, income) in sectionIncomeList.enumerated() {
                     
-                    let sequenceNr = 1000 * sectionIndex + rowIndex
+                    let sequenceNr = 1000 * sectionIndex + rowIndex // each section is allowed to have 999 records, which is pretty large number, consider the purpose of it.
                     income.setValue(sequenceNr, forKey: XYZAccount.sequenceNr)
                 }
             }
@@ -855,13 +850,15 @@ class IncomeTableViewController: UITableViewController,
 
             case "ShowIncomeDetail":
                 guard let incomeDetailView = segue.destination as? IncomeDetailViewController else {
-                    fatalError("Unexpected error on casting segue.destination for prepare from table view controller")
+                    
+                    fatalError("Exception: Unexpected error on casting segue.destination for prepare from table view controller")
                 }
                 
                 if let accountDetail = sender as? IncomeTableViewCell {
                     
                     guard let indexPath = tableView.indexPath(for: accountDetail) else {
-                        fatalError("Unexpeted error in getting indexPath for prepare from table view controller");
+                        
+                        fatalError("Exception: Unexpeted error in getting indexPath for prepare from table view controller");
                     }
 
                     let account = incomeList[indexPath.row]
@@ -871,7 +868,7 @@ class IncomeTableViewController: UITableViewController,
                     os_log("Adding a new income", log: OSLog.default, type: .debug)
                 } else {
                     
-                    fatalError("Exception: unknown sender")
+                    fatalError("Exception: unknown sender \(segue.identifier ?? "")")
                 }
 
             default:
