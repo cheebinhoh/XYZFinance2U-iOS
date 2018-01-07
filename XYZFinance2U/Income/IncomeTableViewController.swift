@@ -24,6 +24,7 @@ class IncomeTableViewController: UITableViewController,
     IncomeDetailDelegate {
     
     // MARK: - 3d touch delegate (peek & pop)
+    
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
         /*
