@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - static
     
-    static let appName = "XYZFinance2U"
+    static let appName: String = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? ""
     
     // MARK: - property
     
@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
+
         // Override point for customization after application launch.
         return true
     }

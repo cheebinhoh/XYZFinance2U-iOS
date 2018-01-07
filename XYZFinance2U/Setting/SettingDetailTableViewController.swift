@@ -81,7 +81,16 @@ class SettingDetailTableViewController: UITableViewController {
         switch  tableSectionCellList[indexPath.section].cellList[indexPath.row] {
             
             case "about":
-                cell = tableView.dequeueReusableCell(withIdentifier: "settingDetailAboutCell", for: indexPath)
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingDetailAboutCell", for: indexPath) as? SettingDetailAboutTableViewCell else {
+                    fatalError("Exception:")
+                }
+            
+                newcell.productAuthorCopyright.text = """
+                                                        \(AppDelegate.appName) was created by
+
+                                                        CB Hoh, 2017-2018
+                                                      """
+                cell = newcell
             
             default:
                 break
