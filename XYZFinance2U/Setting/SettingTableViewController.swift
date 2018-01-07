@@ -45,9 +45,8 @@ class SettingTableViewController: UITableViewController,
         let mainSection = TableSectionCell(identifier: "main", title: "", cellList: ["About"], data: nil)
         tableSectionCellList.append(mainSection)
 
-        let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export"], data: nil)
-        tableSectionCellList.append(exportSection)
-
+        //let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export"], data: nil)
+        //tableSectionCellList.append(exportSection)
         
         /*
         let footerSection = TableSectionCell(identifier: "footer",
