@@ -70,6 +70,18 @@ class SelectionTableViewController: UITableViewController {
         self.selectedItem = item
         
         navigationItem.title = "Selection: \(String(describing: selectedItem!))"
+        
+        for (sectionIndex, section) in tableSectionList.enumerated() {
+            
+            for (rowIndex, code) in section.cellList.enumerated() {
+                
+                if code == item {
+                    
+                    let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
+                    tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
+                }
+            }
+        }
     }
     
     func setSelections(_ sectionIdentifier: String, _ indexing: Bool, _ selection: [String]) {
