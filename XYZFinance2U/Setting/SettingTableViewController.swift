@@ -47,15 +47,6 @@ class SettingTableViewController: UITableViewController,
 
         //let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export"], data: nil)
         //tableSectionCellList.append(exportSection)
-        
-        /*
-        let footerSection = TableSectionCell(identifier: "footer",
-                                             title: "",
-                                             cellList: [String](),
-                                             data: nil)
- 
-        tableSectionCellList.append(footerSection)
-         */
     }
 
     override func didReceiveMemoryWarning() {
@@ -84,7 +75,8 @@ class SettingTableViewController: UITableViewController,
             
             case "About" :
                 guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
-                    fatalError("Exception: settingTableCell is expected")
+                    
+                    fatalError("Exception: error on creating settingTableCell")
                 }
                 
                 newcell.title.text = tableSectionCellList[indexPath.section].cellList[indexPath.row]
@@ -92,7 +84,8 @@ class SettingTableViewController: UITableViewController,
             
             case "Export" :
                 guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
-                    fatalError("Exception: settingTableCell is expected")
+                    
+                    fatalError("Exception: error on creating settingTableCell")
                 }
                 
                 newcell.title.text = "Export to icloud drive"
@@ -124,16 +117,19 @@ class SettingTableViewController: UITableViewController,
     func showAbout(_ indexPath: IndexPath) {
         
         guard let split = self.parent?.parent?.parent as? UISplitViewController else {
-            fatalError("Exception: locate split view")
+            
+            fatalError("Exception: UISplitViewController is expected")
         }
         
         if split.isCollapsed {
             
             guard let settingDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingDetailNavigationController") as? UINavigationController else {
-                fatalError("Exception: SettingDetailNavigationController is expected")
+                
+                fatalError("Exception: error on instantiating SettingDetailNavigationController")
             }
             
             guard let settingDetail = settingDetailNavigationController.viewControllers.first as? SettingDetailTableViewController else {
+                
                 fatalError("Exception: SettingDetailTableViewController is expected" )
             }
             
@@ -143,6 +139,7 @@ class SettingTableViewController: UITableViewController,
             self.present(settingDetailNavigationController, animated: false, completion: nil)
             
             guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+                
                 fatalError("Exception: MainSplitViewController is expected")
             }
             
@@ -150,6 +147,7 @@ class SettingTableViewController: UITableViewController,
         } else {
             
             guard let settingDetail = delegate else {
+                
                 fatalError("Exception: SettingDetailTableViewController is expedted" )
             }
             
@@ -174,6 +172,7 @@ class SettingTableViewController: UITableViewController,
                     
                     //writing
                     do {
+                        
                         try text.write(to: fileURL, atomically: false, encoding: .utf8)
                     } catch {/* error handling here */
                         
@@ -200,10 +199,12 @@ class SettingTableViewController: UITableViewController,
     func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {
         
         guard let settingDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingDetailNavigationController") as? UINavigationController else {
-            fatalError("Exception: ExpenseDetailNavigationController is expected")
+            
+            fatalError("Exception: error on instantiating ExpenseDetailNavigationController")
         }
 
         guard let settingDetailTableViewController = settingDetailNavigationController.viewControllers.first as? SettingDetailTableViewController else {
+            
             fatalError("Exception: SettingDetailTableViewController is expected")
         }
         

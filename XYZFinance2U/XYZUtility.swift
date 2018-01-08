@@ -173,6 +173,7 @@ func formattingCurrencyValue(input: String, _ code: String?) -> String {
     formatter.currencyCode = code
     
     guard let formattedAmount = formatter.string(from: amountASNSNumber) else {
+        
         return ""
     }
     
@@ -182,6 +183,7 @@ func formattingCurrencyValue(input: String, _ code: String?) -> String {
 func managedContext() -> NSManagedObjectContext? {
     
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+        
         fatalError("Exception: AppDelegate is expected")
     }
     
@@ -197,7 +199,7 @@ func saveManageContext() {
         try aContext?.save()
     } catch let nserror as NSError {
         
-        fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        fatalError("Exception: Unresolved error \(nserror), \(nserror.userInfo)")
     }
 }
 

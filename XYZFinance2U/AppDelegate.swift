@@ -51,18 +51,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         guard let split = self.window?.rootViewController as? UISplitViewController else {
+            
             fatalError("Exception: UISplitViewController is expected" )
         }
         
         guard let tabBarController = split.viewControllers.first as? UITabBarController else {
+            
             fatalError("Exception: UITabBarController is expected" )
         }
         
         guard let navController = tabBarController.viewControllers?.first as? UINavigationController else {
+            
             fatalError("Exception: UINavigationController is expected")
         }
         
         guard let tableViewController = navController.viewControllers.first as? IncomeTableViewController else {
+            
             fatalError("Exception: IncomeTableViewController is expected" )
         }
         
@@ -119,6 +123,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let context = persistentContainer.viewContext
         
         if context.hasChanges {
+            
             do {
                 
                 try context.save()

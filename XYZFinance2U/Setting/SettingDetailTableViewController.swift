@@ -82,7 +82,8 @@ class SettingDetailTableViewController: UITableViewController {
             
             case "about":
                 guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingDetailAboutCell", for: indexPath) as? SettingDetailAboutTableViewCell else {
-                    fatalError("Exception:")
+                    
+                    fatalError("Exception: errpr on creating settingDetailAboutCell")
                 }
             
                 newcell.productAuthorCopyright.text = """

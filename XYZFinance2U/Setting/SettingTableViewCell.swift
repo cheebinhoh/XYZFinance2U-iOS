@@ -11,9 +11,11 @@ import UIKit
 class SettingTableViewCell: UITableViewCell {
     
     // MARK: - outlet
+    
     @IBOutlet weak var title: UILabel!
     
     // MARK: - function
+    
     override func awakeFromNib() {
         
         super.awakeFromNib()

@@ -17,8 +17,8 @@ class MainUITabBarController: UITabBarController,
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
-                                withCompletionHandler completionHandler: @escaping () -> Void)
-    {
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        
         print("-------- notification action = \(response.actionIdentifier)")
         
         completionHandler()
@@ -27,6 +27,7 @@ class MainUITabBarController: UITabBarController,
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
         // we might want to display notification then silently ignore it, as we do not want to disturb user
         // activity.
         
@@ -43,11 +44,13 @@ class MainUITabBarController: UITabBarController,
         self.delegate = self
 
         guard let split = self.parent as? UISplitViewController else {
-            fatalError("Exception: locate split view")
+            
+            fatalError("Exception: UISplitViewController is expected")
         }
         
         guard let navController = self.viewControllers?.first as? UINavigationController else {
-            fatalError("Exception: navigation controller is expected")
+            
+            fatalError("Exception: UINavigationController is expected")
         }
         
         if let incomeRoot = navController.viewControllers.first as? IncomeTableViewController {
@@ -61,7 +64,9 @@ class MainUITabBarController: UITabBarController,
         let notificationCenter = UNUserNotificationCenter.current()
         notificationCenter.delegate = self
         notificationCenter.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+            
             if let theError = error {
+                
                 print("-------- requestAuthorization error = \(theError.localizedDescription)")
             }
         }
@@ -86,7 +91,8 @@ class MainUITabBarController: UITabBarController,
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         
         guard let split = self.parent as? UISplitViewController else {
-            fatalError("Exception: locate split view")
+            
+            fatalError("Exception: UISplitViewController is expected")
         }
     
         var masterViewNavController: UINavigationController?
@@ -96,11 +102,13 @@ class MainUITabBarController: UITabBarController,
             masterViewNavController = split.viewControllers.last as? UINavigationController
             
             guard nil != masterViewNavController else {
+                
                 fatalError("Exception: UINavigationController is expected")
             }
         }
         
         guard let navController = viewController as? UINavigationController else {
+            
             fatalError("Exception: UINavigationController is expected")
         }
         
@@ -117,10 +125,12 @@ class MainUITabBarController: UITabBarController,
             } else {
                 
                 guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "IncomeDetailNavigationController") as? UINavigationController else {
-                    fatalError("Exception: IncomeDetailNavigationController is expected")
+                    
+                    fatalError("Exception: error on instantiating IncomeDetailNavigationController")
                 }
                 
                 guard let incomeDetailTableViewController = incomeDetailNavigationController.viewControllers.first as? IncomeDetailTableViewController else {
+                    
                     fatalError("Exception: IncomeDetailTableViewController is expected")
                 }
                 
@@ -142,10 +152,12 @@ class MainUITabBarController: UITabBarController,
             } else {
                 
                 guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
-                    fatalError("Exception: ExpenseDetailNavigationController is expected")
+                    
+                    fatalError("Exception: error on instantiating ExpenseDetailNavigationController")
                 }
                 
                 guard let expenseDetailTableViewController = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
+                    
                     fatalError("Exception: ExpenseDetailTableViewController is expected")
                 }
                 
@@ -167,10 +179,12 @@ class MainUITabBarController: UITabBarController,
             } else {
                 
                 guard let settingDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingDetailNavigationController") as? UINavigationController else {
-                    fatalError("Exception: SettingDetailEmptyViewController is expected")
+                    
+                    fatalError("Exception: error on instantiating SettingDetailEmptyViewController")
                 }
                 
                 guard let settingDetailTableViewController = settingDetailNavigationController.viewControllers.first as? SettingDetailTableViewController else {
+                    
                     fatalError("Exception: SettingDetailTableViewController is expected")
                 }
                 
