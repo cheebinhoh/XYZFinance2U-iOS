@@ -17,6 +17,5 @@
 
 ### Who do I talk to? ###
 
-* email creator, cheebin hoh at hohcheebin@gmail.com
-* Repo owner or admin
-* Other community or team contact
+* Creator, cheebin hoh at hohcheebin@gmail.com
+* Admin, cheebin hoh at hohcheebin@gmail.com
