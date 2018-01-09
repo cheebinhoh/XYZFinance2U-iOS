@@ -9,6 +9,7 @@
 import UIKit
 
 protocol IncomeDetailSwitchDelegate : class {
+    
     func optionUpdate(_ sender: IncomeDetailSwitchTableViewCell, option: Bool)
 }
 
@@ -39,6 +40,7 @@ class IncomeDetailSwitchTableViewCell: UITableViewCell {
     }
 
     // MARK: - functions
+    
     func setOption(_ optionText: String, default option: Bool) {
         
         label.text = optionText
