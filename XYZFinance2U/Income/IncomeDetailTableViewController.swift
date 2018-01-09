@@ -200,6 +200,7 @@ class IncomeDetailTableViewController: UITableViewController,
         if modalEditing {
             
             guard let index = tableView.indexPath(for: sender) else {
+                
                 fatalError("Exception: index path is expected")
             }
             

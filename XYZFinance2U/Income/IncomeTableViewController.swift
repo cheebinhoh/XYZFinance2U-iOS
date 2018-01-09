@@ -793,6 +793,7 @@ class IncomeTableViewController: UITableViewController,
         }
         
         incomeList = incomeList.sorted() {
+            
             (acc1, acc2) in
             
             return ( acc1.value(forKey: XYZAccount.sequenceNr) as! Int ) < ( acc2.value(forKey: XYZAccount.sequenceNr) as! Int)
