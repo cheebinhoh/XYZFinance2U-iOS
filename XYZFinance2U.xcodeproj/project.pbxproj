@@ -25,6 +25,7 @@
 		655C97C11FCCD09C0098D58D /* IncomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C97C01FCCD09C0098D58D /* IncomeTableViewCell.swift */; };
 		655C97C31FCCD5140098D58D /* XYZAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C97C21FCCD5130098D58D /* XYZAccount.swift */; };
 		655C97C51FCCFC450098D58D /* IncomeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C97C41FCCFC450098D58D /* IncomeDetailViewController.swift */; };
+		657455BA200587D100AAB2E3 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657455B9200587D100AAB2E3 /* CloudKit.framework */; };
 		6576938B1FDA317F00BFFB6B /* XYZExpense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6576938A1FDA317F00BFFB6B /* XYZExpense.swift */; };
 		6576938D1FDA3ACB00BFFB6B /* ExpenseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6576938C1FDA3ACB00BFFB6B /* ExpenseTableViewController.swift */; };
 		6576938F1FDB841C00BFFB6B /* ExpenseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6576938E1FDB841C00BFFB6B /* ExpenseTableViewCell.swift */; };
@@ -89,6 +90,8 @@
 		655C97C01FCCD09C0098D58D /* IncomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeTableViewCell.swift; sourceTree = "<group>"; };
 		655C97C21FCCD5130098D58D /* XYZAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZAccount.swift; sourceTree = "<group>"; };
 		655C97C41FCCFC450098D58D /* IncomeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailViewController.swift; sourceTree = "<group>"; };
+		657455B6200585F500AAB2E3 /* XYZFinance2U.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XYZFinance2U.entitlements; sourceTree = "<group>"; };
+		657455B9200587D100AAB2E3 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		6576938A1FDA317F00BFFB6B /* XYZExpense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZExpense.swift; sourceTree = "<group>"; };
 		6576938C1FDA3ACB00BFFB6B /* ExpenseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTableViewController.swift; sourceTree = "<group>"; };
 		6576938E1FDB841C00BFFB6B /* ExpenseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTableViewCell.swift; sourceTree = "<group>"; };
@@ -124,6 +127,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65EEC4AC1FF2B9BD00D638CD /* CoreLocation.framework in Frameworks */,
+				657455BA200587D100AAB2E3 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +221,7 @@
 		655C979B1FCCCC210098D58D /* XYZFinance2U */ = {
 			isa = PBXGroup;
 			children = (
+				657455B6200585F500AAB2E3 /* XYZFinance2U.entitlements */,
 				65F48F271FE56095006951F7 /* Model */,
 				650024061FF6FEFE001281EA /* Expense */,
 				650024071FF6FF7E001281EA /* Income */,
@@ -247,6 +252,7 @@
 		65EEC4AA1FF2B9BC00D638CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				657455B9200587D100AAB2E3 /* CloudKit.framework */,
 				65EEC4AB1FF2B9BC00D638CD /* CoreLocation.framework */,
 			);
 			name = Frameworks;
@@ -315,6 +321,14 @@
 					655C97981FCCCC210098D58D = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					655C97AE1FCCCC210098D58D = {
 						CreatedOnToolsVersion = 9.2;
@@ -563,6 +577,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = XYZFinance2U/XYZFinance2U.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BKU6P4Y9G4;
@@ -580,6 +595,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = XYZFinance2U/XYZFinance2U.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BKU6P4Y9G4;
