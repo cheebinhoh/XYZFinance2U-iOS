@@ -163,7 +163,7 @@ class SettingTableViewController: UITableViewController,
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let deleteOption = UIAlertAction(title: "Export to icloud drive", style: .default, handler: { (action) in
                 
-                let file = AppDelegate.appName + "-export.txt"
+                let file = AppDelegate.appName + "-export.csv"
                 let text = self.incomeFileContent()
                 
                 if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
@@ -265,7 +265,7 @@ class SettingTableViewController: UITableViewController,
 
     func incomeFileContent() -> String {
 
-        var text = "Number\tBank\tAccountNr\tBalance\tCurrency\n"
+        var text = "Number\tBank\tAccountNr\tBalance\tCurrency\tLastUpdate\n"
         let incomeList = loadAccounts()!.sorted() {
             
             (acc1, acc2) in
@@ -278,8 +278,8 @@ class SettingTableViewController: UITableViewController,
             let accountNr = income.value(forKey: XYZAccount.accountNr) as? String ?? ""
             let amount = income.value(forKey: XYZAccount.amount) as? Double ?? 0.0
             let currency = income.value(forKey: XYZAccount.currencyCode) as? String ?? ""
-            
-            text = text + "\(index)\t\(bank)\t\(accountNr)\t\(amount)\t\(currency)\n"
+            let lastUpdate = formattingDate(date: income.value(forKey: XYZAccount.lastUpdate) as? Date ?? Date(), .short )
+            text = text + "\(index)\t\(bank)\t\(accountNr.isEmpty ? " " : accountNr)\t\(amount)\t\(currency)\t\(lastUpdate)\n"
         }
         
         return text
