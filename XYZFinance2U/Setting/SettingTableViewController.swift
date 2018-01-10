@@ -265,15 +265,21 @@ class SettingTableViewController: UITableViewController,
 
     func incomeFileContent() -> String {
 
-        var text = ""
-        let incomeList = loadAccounts()!
-        for income in incomeList {
+        var text = "Number\tBank\tAccountNr\tBalance\tCurrency\n"
+        let incomeList = loadAccounts()!.sorted() {
+            
+            (acc1, acc2) in
+            
+            return ( acc1.value(forKey: XYZAccount.sequenceNr) as! Int ) < ( acc2.value(forKey: XYZAccount.sequenceNr) as! Int)
+        }
+        
+        for (index, income) in incomeList.enumerated() {
             let bank = income.value(forKey: XYZAccount.bank) as? String ?? ""
             let accountNr = income.value(forKey: XYZAccount.accountNr) as? String ?? ""
             let amount = income.value(forKey: XYZAccount.amount) as? Double ?? 0.0
             let currency = income.value(forKey: XYZAccount.currencyCode) as? String ?? ""
             
-            text = text + "\(bank)\t\(accountNr)\t\(amount)\t\(currency)\n"
+            text = text + "\(index)\t\(bank)\t\(accountNr)\t\(amount)\t\(currency)\n"
         }
         
         return text
