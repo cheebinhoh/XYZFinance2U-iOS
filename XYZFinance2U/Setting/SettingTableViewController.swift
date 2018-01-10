@@ -274,11 +274,13 @@ class SettingTableViewController: UITableViewController,
         }
         
         for (index, income) in incomeList.enumerated() {
+            
             let bank = income.value(forKey: XYZAccount.bank) as? String ?? ""
             let accountNr = income.value(forKey: XYZAccount.accountNr) as? String ?? ""
             let amount = income.value(forKey: XYZAccount.amount) as? Double ?? 0.0
             let currency = income.value(forKey: XYZAccount.currencyCode) as? String ?? ""
             let lastUpdate = formattingDate(date: income.value(forKey: XYZAccount.lastUpdate) as? Date ?? Date(), .short )
+            
             text = text + "\(index)\t\(bank)\t\(accountNr.isEmpty ? " " : accountNr)\t\(amount)\t\(currency)\t\(lastUpdate)\n"
         }
         
