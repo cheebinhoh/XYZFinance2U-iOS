@@ -312,6 +312,7 @@ class IncomeTableViewController: UITableViewController,
         }
     }
 
+    /*
     private func loadAccounts() -> [XYZAccount]? {
         
         var output: [XYZAccount]?
@@ -335,6 +336,7 @@ class IncomeTableViewController: UITableViewController,
 
         return output
     }
+     */
     
     func authenticate() {
         
@@ -437,7 +439,7 @@ class IncomeTableViewController: UITableViewController,
 
                 print("no auth support")
                 
-                if let accounts = self.loadAccounts() {
+                if let accounts = loadAccounts() {
                     
                     self.incomeList += accounts
                 }
@@ -482,7 +484,7 @@ class IncomeTableViewController: UITableViewController,
         navigationItem.setLeftBarButton(self.editButtonItem, animated: true)
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        incomeList = self.loadAccounts()!
+        incomeList = loadAccounts()!
         loadDataInTableSectionCell()
 
         // Check for force touch feature, and add force touch/previewing capability.

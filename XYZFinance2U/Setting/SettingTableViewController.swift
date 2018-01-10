@@ -9,7 +9,8 @@
 import UIKit
 
 class SettingTableViewController: UITableViewController,
-    UISplitViewControllerDelegate {
+    UISplitViewControllerDelegate,
+    UIDocumentPickerDelegate {
     
     // MARK: - property
     
@@ -45,8 +46,8 @@ class SettingTableViewController: UITableViewController,
         let mainSection = TableSectionCell(identifier: "main", title: "", cellList: ["About"], data: nil)
         tableSectionCellList.append(mainSection)
 
-        //let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export"], data: nil)
-        //tableSectionCellList.append(exportSection)
+        let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export"], data: nil)
+        tableSectionCellList.append(exportSection)
     }
 
     override func didReceiveMemoryWarning() {
@@ -162,9 +163,8 @@ class SettingTableViewController: UITableViewController,
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let deleteOption = UIAlertAction(title: "Export to icloud drive", style: .default, handler: { (action) in
                 
-                let file = "file.txt" //this is the file. we will write to and read from it
-                
-                let text = "some text" //just a text
+                let file = AppDelegate.appName + "-export.txt"
+                let text = self.incomeFileContent()
                 
                 if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
                     
@@ -172,8 +172,12 @@ class SettingTableViewController: UITableViewController,
                     
                     //writing
                     do {
-                        
                         try text.write(to: fileURL, atomically: false, encoding: .utf8)
+                        
+                        let uiDocumentPicker = UIDocumentPickerViewController(urls: [fileURL], in: UIDocumentPickerMode.exportToService)
+                        uiDocumentPicker.delegate = self
+                        uiDocumentPicker.modalPresentationStyle = UIModalPresentationStyle.formSheet
+                        self.present(uiDocumentPicker, animated: true, completion: nil)
                     } catch {/* error handling here */
                         
                         fatalError("Exception: error \(error)")
@@ -259,6 +263,22 @@ class SettingTableViewController: UITableViewController,
         return tableSectionCellList[section].title
     }
 
+    func incomeFileContent() -> String {
+
+        var text = ""
+        let incomeList = loadAccounts()!
+        for income in incomeList {
+            let bank = income.value(forKey: XYZAccount.bank) as? String ?? ""
+            let accountNr = income.value(forKey: XYZAccount.accountNr) as? String ?? ""
+            let amount = income.value(forKey: XYZAccount.amount) as? Double ?? 0.0
+            let currency = income.value(forKey: XYZAccount.currencyCode) as? String ?? ""
+            
+            text = text + "\(bank)\t\(accountNr)\t\(amount)\t\(currency)\n"
+        }
+        
+        return text
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

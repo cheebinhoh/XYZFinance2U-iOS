@@ -203,3 +203,27 @@ func saveManageContext() {
     }
 }
 
+func loadAccounts() -> [XYZAccount]? {
+    
+    var output: [XYZAccount]?
+    
+    let aContext = managedContext()
+    let fetchRequest = NSFetchRequest<XYZAccount>(entityName: "XYZAccount")
+    
+    do {
+        
+        output = try aContext?.fetch(fetchRequest)
+        
+        output = output?.sorted() {
+            (acc1, acc2) in
+            
+            return ( acc1.value(forKey: XYZAccount.sequenceNr) as! Int ) < ( acc2.value(forKey: XYZAccount.sequenceNr) as! Int)
+        }
+    } catch let error as NSError {
+        
+        print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    
+    return output
+}
+
