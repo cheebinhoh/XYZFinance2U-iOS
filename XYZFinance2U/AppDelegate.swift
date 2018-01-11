@@ -31,12 +31,7 @@ class AppDelegate: UIResponder,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
-        // we might want to display notification then silently ignore it, as we do not want to disturb user
-        // activity.
-        if notification.request.content.title == "Income update" {
-            
-            
-        }
+        print("-------- notification = \(notification.request.content.title)")
         
         // Play a sound.
         completionHandler(UNNotificationPresentationOptions.sound)

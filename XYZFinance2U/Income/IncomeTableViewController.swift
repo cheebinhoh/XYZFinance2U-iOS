@@ -304,6 +304,7 @@ class IncomeTableViewController: UITableViewController,
         
         saveManageContext()
 
+        /*
         for account in incomeList {
             
             account.saveToiCloud()
@@ -356,6 +357,8 @@ class IncomeTableViewController: UITableViewController,
                 database.add(modifyOperation)
             }
         }
+ 
+        */
     }
 
     /*

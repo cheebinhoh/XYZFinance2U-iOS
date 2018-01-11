@@ -440,17 +440,16 @@ class IncomeDetailTableViewController: UITableViewController,
             income?.setValue(Date(), forKey: XYZAccount.lastRecordChange)
         }
         
+        let notificationCenter = UNUserNotificationCenter.current()
+        
+        let identifier = "income:\(bank):\(accountNr)"
+        
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
+        notificationCenter.removeAllDeliveredNotifications()
+        
         // setup local notification
         if hasUpdateReminder {
-            
-            let notificationCenter = UNUserNotificationCenter.current()
-        
-            let identifier = "income:\(bank):\(accountNr)"
-            
-            notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
-            notificationCenter.removeAllDeliveredNotifications()
-            notificationCenter.removeAllPendingNotificationRequests()
-
+    
             let content = UNMutableNotificationContent()
             content.title = "Income update reminder"
             content.body = "Check income \(bank), \(accountNr) ..."

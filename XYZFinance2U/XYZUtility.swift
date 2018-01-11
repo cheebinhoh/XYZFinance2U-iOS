@@ -228,7 +228,8 @@ func loadAccounts() -> [XYZAccount]? {
     let delegate = UIApplication.shared.delegate as? AppDelegate
     
     if (delegate?.icloudEnable)! {
-
+        
+        /*
         // process icloud records
         for income in output! {
             
@@ -279,7 +280,7 @@ func loadAccounts() -> [XYZAccount]? {
             }
         })
         
-        
+        */
     } else {
         
         // nothing here
