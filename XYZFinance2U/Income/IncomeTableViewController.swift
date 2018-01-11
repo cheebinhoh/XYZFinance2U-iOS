@@ -12,6 +12,8 @@ import LocalAuthentication
 import os.log
 import CoreData
 import CloudKit
+import UserNotifications
+import NotificationCenter
 
 protocol IncomeSelectionDelegate: class {
     
@@ -263,6 +265,75 @@ class IncomeTableViewController: UITableViewController,
         tableView.reloadData()
     }
     
+    func registerNotification(income: XYZAccount) {
+        
+        let notificationCenter = UNUserNotificationCenter.current()
+        let identifier = income.value(forKey: XYZAccount.recordId) as? String
+        
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier!])
+        notificationCenter.removeAllDeliveredNotifications()
+    
+        let bank = income.value(forKey: XYZAccount.bank) as? String
+        let accountNr = income.value(forKey: XYZAccount.accountNr) as? String
+        let repeatAction = income.value(forKey: XYZAccount.repeatAction) as? String
+        let reminddate = income.value(forKey: XYZAccount.repeatDate) as? Date
+        
+        // setup local notification
+        if nil != reminddate {
+            
+            let content = UNMutableNotificationContent()
+            content.title = "Income update reminder"
+            content.body = "Check income \(String(describing: bank)), \(String(describing: accountNr)) ..."
+            content.sound = UNNotificationSound.default()
+            
+            var units: Set<Calendar.Component> = [ .hour, .minute]
+            switch repeatAction ?? "Never" {
+                
+            case "Never":
+                units.insert(.year)
+                units.insert(.month)
+                units.insert(.day)
+                units.insert(.hour)
+                units.insert(.minute)
+                
+            case "Every Month":
+                units.insert(.month)
+                units.insert(.day)
+                units.insert(.hour)
+                units.insert(.minute)
+                
+            case "Every Week":
+                units.insert(.weekday)
+                units.insert(.hour)
+                units.insert(.minute)
+                
+            case "Every Day":
+                units.insert(.hour)
+                units.insert(.minute)
+                
+            case "Every Hour":
+                units.insert(.minute)
+                
+            default:
+                fatalError("Exception: \(repeatAction!) is not expected")
+            }
+            
+            let dateInfo = Calendar.current.dateComponents(units, from: reminddate!)
+            
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: ( repeatAction ?? "Never" ) != "Never" )
+            
+            let request = UNNotificationRequest(identifier: identifier!, content: content, trigger: trigger)
+            
+            notificationCenter.add(request) { (error : Error?) in
+                
+                if let theError = error {
+                    
+                    print("-------- notification scheduling error = \(theError.localizedDescription)")
+                }
+            }
+        }
+    }
+    
     private func saveAccounts() {
         
         /* we do 3 things:
@@ -304,6 +375,11 @@ class IncomeTableViewController: UITableViewController,
         
         saveManageContext()
 
+        for income in incomeList {
+            
+            registerNotification(income: income)
+        }
+        
         /*
         for account in incomeList {
             
@@ -809,6 +885,13 @@ class IncomeTableViewController: UITableViewController,
             let sectionIncomeList = tableSectionCellList[indexPath.section].data as? [XYZAccount]
             let incomeToBeDeleted = sectionIncomeList![indexPath.row]
             
+            let identifier = incomeToBeDeleted.value(forKey: XYZAccount.recordId) as? String
+            
+            let notificationCenter = UNUserNotificationCenter.current()
+  
+            notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier!])
+            notificationCenter.removeAllDeliveredNotifications()
+  
             let aContext = managedContext()
             let oldIncome = incomeList.remove(at: incomeList.index(of: incomeToBeDeleted)!)   //incomeList.remove(at: indexPath.row)
             aContext?.delete(oldIncome)

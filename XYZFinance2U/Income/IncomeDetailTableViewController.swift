@@ -439,68 +439,6 @@ class IncomeDetailTableViewController: UITableViewController,
 
             income?.setValue(Date(), forKey: XYZAccount.lastRecordChange)
         }
-        
-        let notificationCenter = UNUserNotificationCenter.current()
-        
-        let identifier = "income:\(bank):\(accountNr)"
-        
-        notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
-        notificationCenter.removeAllDeliveredNotifications()
-        
-        // setup local notification
-        if hasUpdateReminder {
-    
-            let content = UNMutableNotificationContent()
-            content.title = "Income update reminder"
-            content.body = "Check income \(bank), \(accountNr) ..."
-            content.sound = UNNotificationSound.default()
-            
-            var units: Set<Calendar.Component> = [ .hour, .minute]
-            switch repeatAction ?? "Never" {
-                
-                case "Never":
-                    units.insert(.year)
-                    units.insert(.month)
-                    units.insert(.day)
-                    units.insert(.hour)
-                    units.insert(.minute)
-                
-                case "Every Month":
-                    units.insert(.month)
-                    units.insert(.day)
-                    units.insert(.hour)
-                    units.insert(.minute)
-                
-                case "Every Week":
-                    units.insert(.weekday)
-                    units.insert(.hour)
-                    units.insert(.minute)
-                
-                case "Every Day":
-                    units.insert(.hour)
-                    units.insert(.minute)
-                
-                case "Every Hour":
-                    units.insert(.minute)
-                
-                default:
-                    fatalError("Exception: \(repeatAction!) is not expected")
-            }
-            
-            let dateInfo = Calendar.current.dateComponents(units, from: reminddate!)
-
-            let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: ( repeatAction ?? "Never" ) != "Never" )
-         
-            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-            
-            notificationCenter.add(request) { (error : Error?) in
-                
-                if let theError = error {
-                    
-                    print("-------- notification scheduling error = \(theError.localizedDescription)")
-                }
-            }
-        }
     }
 
     func loadData() {
