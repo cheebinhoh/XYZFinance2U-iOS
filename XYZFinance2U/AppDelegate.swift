@@ -18,6 +18,11 @@ class AppDelegate: UIResponder,
     UIApplicationDelegate,
     UNUserNotificationCenterDelegate {
     
+    
+    // MARK: - property
+    
+    var iCloudZones: [XYZiCloudZone]?
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
@@ -70,6 +75,120 @@ class AppDelegate: UIResponder,
         }
         
         application.registerForRemoteNotifications()
+        
+        iCloudZones = loadiCloudZone()
+        var incomeiCloudZone: XYZiCloudZone?
+        
+        print("==== \(iCloudZones!.count)")
+
+        for zone in iCloudZones! {
+            
+            let data = zone.value(forKey: XYZiCloudZone.changeToken) as? Data
+            guard let token = (NSKeyedUnarchiver.unarchiveObject(with: data!) as? CKServerChangeToken)  else {
+                
+                fatalError("Exception: unachive change token is failed")
+            }
+        }
+
+        
+        for zone in iCloudZones! {
+            
+            switch (zone.value(forKey: XYZiCloudZone.name) as? String )! {
+                
+                case XYZAccount.type:
+                    incomeiCloudZone = zone
+                
+                default:
+                    fatalError("Exception: zone type is not supported")
+            }
+        }
+        
+        var zonesToBeSaved = [CKRecordZone]()
+        
+        if incomeiCloudZone == nil {
+            
+            let customZone = CKRecordZone(zoneName: XYZAccount.type)
+            zonesToBeSaved.append(customZone)
+        }
+        
+        if !zonesToBeSaved.isEmpty {
+            
+            let op = CKModifyRecordZonesOperation(recordZonesToSave: zonesToBeSaved, recordZoneIDsToDelete: nil)
+            op.modifyRecordZonesCompletionBlock = { (saved, deleted, error) in
+                
+                if nil != error {
+                    print("-------- error on creating zone = \(String(describing: error))")
+                } else {
+                    
+                    OperationQueue.main.addOperation {
+                        var changedZoneIDs: [CKRecordZoneID] = []
+                        var optionsByRecordZoneID = [CKRecordZoneID: CKFetchRecordZoneChangesOptions]()
+                        
+                        for zone in saved! {
+                            
+                            let iCloudZone = XYZiCloudZone(name: zone.zoneID.zoneName, context: managedContext())
+                            self.iCloudZones?.append(iCloudZone)
+                            changedZoneIDs.append(zone.zoneID)
+                            
+                            let option = CKFetchRecordZoneChangesOptions()
+                            optionsByRecordZoneID[zone.zoneID] = option
+                        }
+                        
+                        saveManageContext()
+                        
+                        let op2 = CKFetchRecordZoneChangesOperation(recordZoneIDs: changedZoneIDs, optionsByRecordZoneID: optionsByRecordZoneID )
+                        
+                        op2.recordZoneChangeTokensUpdatedBlock = { (zoneId, token, data) in
+               
+                            print("----- token \(String(describing: token))")
+                        }
+                        
+                        op2.recordZoneFetchCompletionBlock = { (zoneId, changeToken, _, _, error) in
+   
+                            if let error = error {
+                                print("Error fetching zone changes for database:", error)
+                                return
+                            }
+   
+                            OperationQueue.main.addOperation {
+                            
+                                for zone in self.iCloudZones! {
+                                    
+                                    if let zName = zone.value(forKey: XYZiCloudZone.name) as? String, zName == zoneId.zoneName {
+                                        
+                                        let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: changeToken! )
+                                        zone.setValue(archivedChangeToken, forKey: XYZiCloudZone.changeToken)
+                                        saveManageContext()
+                                        
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                        
+                        op2.fetchRecordZoneChangesCompletionBlock = { (error) in
+                            
+                            if let error = error {
+                                
+                                print("Error fetching zone changes for database:", error)
+                            }
+                        }
+                        
+                        let container = CKContainer.default()
+                        let database = container.privateCloudDatabase
+                        
+                        database.add(op2)
+                    }
+                }
+            }
+            
+            let container = CKContainer.default()
+            let database = container.privateCloudDatabase
+            
+            database.add(op)
+        }
+        
+        saveManageContext()
         
         // Override point for customization after application launch.
         return true

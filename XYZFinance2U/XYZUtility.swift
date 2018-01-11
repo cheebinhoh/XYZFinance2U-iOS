@@ -204,6 +204,24 @@ func saveManageContext() {
     }
 }
 
+func loadiCloudZone() -> [XYZiCloudZone]? {
+    
+    var output: [XYZiCloudZone]?
+    
+    let aContext = managedContext()
+    let fetchRequest = NSFetchRequest<XYZiCloudZone>(entityName: XYZiCloudZone.type)
+    
+    do {
+        
+        output = try aContext?.fetch(fetchRequest)
+    } catch let error as NSError {
+        
+        print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    
+    return output
+}
+
 func loadAccounts() -> [XYZAccount]? {
     
     var output: [XYZAccount]?
