@@ -224,6 +224,20 @@ func loadAccounts() -> [XYZAccount]? {
         print("Could not fetch. \(error), \(error.userInfo)")
     }
     
+    let delegate = UIApplication.shared.delegate as? AppDelegate
+    
+    if (delegate?.icloudEnable)! {
+
+        // process icloud records
+        for income in output! {
+            
+            income.saveToiCloud()
+        }
+    
+    } else {
+        
+    }
+    
     return output
 }
 

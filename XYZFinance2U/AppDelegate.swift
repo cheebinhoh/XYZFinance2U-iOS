@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     var orientation = UIInterfaceOrientationMask.all
+    var icloudEnable = false
     
     // MARK: - function
     

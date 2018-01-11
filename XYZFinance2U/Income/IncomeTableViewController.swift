@@ -11,6 +11,7 @@ import UIKit
 import LocalAuthentication
 import os.log
 import CoreData
+import CloudKit
 
 protocol IncomeSelectionDelegate: class {
     
@@ -256,8 +257,9 @@ class IncomeTableViewController: UITableViewController,
     
     func reloadData() {
         
-        saveAccounts()
         loadDataInTableSectionCell()
+        saveAccounts()
+
         tableView.reloadData()
     }
     
@@ -297,18 +299,62 @@ class IncomeTableViewController: UITableViewController,
             let sequenceNr = account.value(forKey: XYZAccount.sequenceNr) as? Int ?? 0
             
             let recordId = "\(bank):\(accountNr):\(sequenceNr)"
-            
             account.setValue(recordId, forKey: XYZAccount.recordId)
         }
         
-        let aContext = managedContext()
+        saveManageContext()
+
+        for account in incomeList {
+            
+            account.saveToiCloud()
+        }
         
-        do {
-            
-            try aContext?.save()
-        } catch let nserror as NSError {
-            
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        let predicate = NSPredicate(value: true)
+        let query = CKQuery(recordType: XYZAccount.type, predicate: predicate)
+        
+        let container = CKContainer.default()
+        let database = container.privateCloudDatabase
+        
+        database.perform(query, inZoneWith: nil) { (records, error) in
+        
+            if nil != error {
+                
+                print("------- error on query = \(String(describing: error))")
+            } else {
+                
+                var recordIDsToBeDeleted = Set<CKRecordID>()
+                
+                for record in records! {
+                   
+                    recordIDsToBeDeleted.insert( record.recordID )
+                }
+                
+                for income in self.incomeList {
+                    
+                    if let recordId = income.value(forKey: XYZAccount.recordId) as? String {
+                    
+                        let ckrecordId = CKRecordID(recordName: recordId)
+
+                        recordIDsToBeDeleted.remove(ckrecordId)
+                    }
+                }
+                
+                let recordIDsToBeDeletedArray = Array<CKRecordID>( recordIDsToBeDeleted )
+                let modifyOperation = CKModifyRecordsOperation(recordsToSave: [], recordIDsToDelete: recordIDsToBeDeletedArray)
+                modifyOperation.savePolicy = .ifServerRecordUnchanged
+                modifyOperation.modifyRecordsCompletionBlock = { ( saveRecords, deleteRecords, error ) in
+                    
+                    if nil != error {
+                        
+                        print("-------- error on saving to icloud \(String(describing: error))")
+                    } else {
+                        
+                        print("-------- delete done")
+                    }
+                }
+
+                database.add(modifyOperation)
+            }
         }
     }
 
@@ -337,6 +383,26 @@ class IncomeTableViewController: UITableViewController,
         return output
     }
      */
+    
+    func validateiCloud() {
+        
+        let delegate = UIApplication.shared.delegate as? AppDelegate
+        
+        CKContainer.default().accountStatus { (status, error) in
+            
+            if status == CKAccountStatus.noAccount {
+                
+                delegate?.icloudEnable = false
+                let alert = UIAlertController(title: "Sign in to icloud",
+                                              message: "Sign in to your iCloud account to write records", preferredStyle: UIAlertControllerStyle.alert )
+                self.present(alert, animated: false, completion: nil)
+            } else {
+                
+    
+                delegate?.icloudEnable = true
+            }
+        }
+    }
     
     func authenticate() {
         
@@ -455,9 +521,11 @@ class IncomeTableViewController: UITableViewController,
     override func viewDidLoad() {
         
         super.viewDidLoad()
+    
+        validateiCloud()
         
         authenticate()
-        
+    
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
