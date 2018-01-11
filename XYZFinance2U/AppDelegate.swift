@@ -9,9 +9,39 @@
 
 import UIKit
 import CoreData
+import CloudKit
+import UserNotifications
+import NotificationCenter
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder,
+    UIApplicationDelegate,
+    UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        print("-------- notification action = \(response.actionIdentifier)")
+        
+        completionHandler()
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        // we might want to display notification then silently ignore it, as we do not want to disturb user
+        // activity.
+        if notification.request.content.title == "Income update" {
+            
+            
+        }
+        
+        // Play a sound.
+        completionHandler(UNNotificationPresentationOptions.sound)
+    }
+    
     
     // MARK: - static
     
@@ -32,6 +62,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.delegate = self
+        notificationCenter.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+            
+            if let theError = error {
+                
+                print("-------- requestAuthorization error = \(theError.localizedDescription)")
+            } else {
+                
+            }
+        }
+        
+        application.registerForRemoteNotifications()
+        
         // Override point for customization after application launch.
         return true
     }

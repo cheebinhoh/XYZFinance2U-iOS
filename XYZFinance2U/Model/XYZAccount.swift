@@ -114,7 +114,7 @@ class XYZAccount : NSManagedObject
                     print("-------- error on saving to icloud \(String(describing: error))")
                 } else {
                     
-                    print("-------- save done for records:" )
+                    print("-------- save done for records" )
                 }
             }
             

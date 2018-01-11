@@ -10,6 +10,7 @@
 import Foundation
 import CoreData
 import UIKit
+import CloudKit
 
 struct TableSectionCell {
     
@@ -234,8 +235,54 @@ func loadAccounts() -> [XYZAccount]? {
             income.saveToiCloud()
         }
     
+        // save subscription
+        
+        let container = CKContainer.default()
+        let database = container.privateCloudDatabase
+        
+        database.fetchAllSubscriptions(completionHandler: { (subscriptions, error) in
+        
+            if nil != error {
+                
+                print("-------- error on fetching subscriptions = \(String(describing: error))")
+            } else {
+                
+                if let subscriptions = subscriptions {
+                    
+                    for subscription in subscriptions {
+                        
+                        database.delete(withSubscriptionID: subscription.subscriptionID, completionHandler: { (str, error) in
+                        
+                            if nil != error {
+                                
+                                print("------- error on deleting subscription = \(String(describing: error))")
+                            }
+                        })
+                    }
+                }
+            }
+        })
+        
+        let predicate = NSPredicate(value: true)
+        let subscription = CKQuerySubscription(recordType: XYZAccount.type, predicate: predicate, options: .firesOnRecordUpdate)
+        let notification = CKNotificationInfo()
+        notification.title = "Income update"
+        notification.alertBody = "There is update to Incomes"
+        notification.soundName = "default"
+        subscription.notificationInfo = notification
+        
+        database.save(subscription, completionHandler: { (subscription, error) in
+            
+            if nil != error {
+                
+                print("------- error on saving subscription \(String(describing: error))")
+            }
+        })
+        
+        
     } else {
         
+        // nothing here
     }
     
     return output
