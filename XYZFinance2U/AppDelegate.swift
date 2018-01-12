@@ -150,7 +150,8 @@ class AppDelegate: UIResponder,
         }
         
         if !zonesToBeFetched.isEmpty {
-
+            print("----- fetch change" )
+            
             fetchiCloudZoneChange(zonesToBeFetched, self.iCloudZones!, {
          
                 print("-------- done fetching after startup")
