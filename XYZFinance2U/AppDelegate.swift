@@ -20,6 +20,7 @@ class AppDelegate: UIResponder,
     
     
     // MARK: - property
+    
     var incomeList = [XYZAccount]()
     
     var iCloudZones: [XYZiCloudZone]?
@@ -86,15 +87,15 @@ class AppDelegate: UIResponder,
         for zone in iCloudZones! {
             
             let data = zone.value(forKey: XYZiCloudZone.changeToken) as? Data
-            guard let _ = (NSKeyedUnarchiver.unarchiveObject(with: data!) as? CKServerChangeToken) else {
+            guard let chageToken = (NSKeyedUnarchiver.unarchiveObject(with: data!) as? CKServerChangeToken) else {
                 
                 fatalError("Exception: unachive change token is failed")
             }
+         
+            let fetchDate = zone.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date
             
-            //aContext?.delete(zone)
+            print("-------- last fetch change token = \(chageToken), last fetch = \(String(describing: fetchDate))")
         }
-        
-        //iCloudZones?.removeAll()
 
         for zone in iCloudZones! {
             
@@ -102,6 +103,7 @@ class AppDelegate: UIResponder,
                 
                 case XYZAccount.type:
                     incomeiCloudZone = zone
+                    zone.data = incomeList  // we do not keep it persistent in core data
                 
                 default:
                     fatalError("Exception: zone type is not supported")
@@ -152,29 +154,23 @@ class AppDelegate: UIResponder,
         }
         
         if !zonesToBeFetched.isEmpty {
-            print("----- fetch change" )
+            print("-------- fetch change" )
             
+            fetchAndUpdateiCloud(zonesToBeFetched, self.iCloudZones!)
+            
+            /*
             fetchiCloudZoneChange(zonesToBeFetched, self.iCloudZones!, {
          
                 print("-------- done fetching after startup")
-                /* we should only write to icloud if we do have changed after last token change
+                
+                //we should only write to icloud if we do have changed after last token change
                  
                 OperationQueue.main.addOperation {
                     
-                    saveAccountsToiCloud({
-                        
-                        print("-------- doen saving")
-                        
-                        OperationQueue.main.addOperation {
-                            fetchiCloudZoneChange([accountCustomZone], self.iCloudZones!, {
-                                
-                                print("-------- fetch change token after upload")
-                            })
-                        }
-                    })
+                    pushChangeToiCloudZone(zonesToBeFetched, self.iCloudZones!)
                 }
-                 */
             } )
+            */
         }
         
         // Override point for customization after application launch.

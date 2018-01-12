@@ -20,6 +20,7 @@ class XYZiCloudZone: NSManagedObject {
     var name = ""
     var changeToken = NSData()
     var changeTokenLastFetch = Date()
+    var data: Any?
     
     init(name: String, context: NSManagedObjectContext?)
     {

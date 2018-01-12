@@ -157,12 +157,12 @@ class IncomeTableViewController: UITableViewController,
     }
     
     func saveNewIncome(income: XYZAccount) {
-        
+
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
         income.setValue((appDelegate?.incomeList)!.count, forKey: XYZAccount.sequenceNr)
         appDelegate?.incomeList.append(income)
-        //delegate?.incomeList = (delegate?.incomeList)! + [income]
+
         reloadData()
     }
     
@@ -209,7 +209,7 @@ class IncomeTableViewController: UITableViewController,
         
         var currencyList = [String]()
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        
+
         for income in (appDelegate?.incomeList)! {
             
             let currency = income.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
@@ -402,6 +402,12 @@ class IncomeTableViewController: UITableViewController,
             
             registerNotification(income: income)
         }
+        
+        let ckrecordzone = CKRecordZone(zoneName: XYZAccount.type)
+        let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones!)!)
+        zone?.data = appDelegate?.incomeList
+        
+        fetchAndUpdateiCloud([ckrecordzone], (appDelegate?.iCloudZones!)!)
         
         /*
         for account in incomeList {
