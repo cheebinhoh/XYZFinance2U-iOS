@@ -15,9 +15,11 @@ class XYZiCloudZone: NSManagedObject {
     static let type = "XYZiCloudZone"
     static let changeToken = "changeToken"
     static let name = "name"
+    static let changeTokenLastFetch = "changeTokenLastFetch"
     
     var name = ""
     var changeToken = NSData()
+    var changeTokenLastFetch = Date()
     
     init(name: String, context: NSManagedObjectContext?)
     {

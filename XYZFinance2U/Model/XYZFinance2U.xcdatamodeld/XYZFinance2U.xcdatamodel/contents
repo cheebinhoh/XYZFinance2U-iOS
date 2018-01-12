@@ -38,6 +38,7 @@
     </entity>
     <entity name="XYZiCloudZone" representedClassName="XYZiCloudZone" syncable="YES">
         <attribute name="changeToken" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="changeTokenLastFetch" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
@@ -45,6 +46,6 @@
         <element name="XYZExpense" positionX="-63" positionY="18" width="128" height="180"/>
         <element name="XYZExpensePerson" positionX="-36" positionY="72" width="128" height="105"/>
         <element name="XYZExpenseReceipt" positionX="-9" positionY="99" width="128" height="90"/>
-        <element name="XYZiCloudZone" positionX="-36" positionY="72" width="128" height="75"/>
+        <element name="XYZiCloudZone" positionX="-36" positionY="72" width="128" height="90"/>
     </elements>
 </model>

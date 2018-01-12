@@ -292,6 +292,8 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                     print("-------- change token \(changeToken!)")
                     let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: changeToken! )
                     zone.setValue(archivedChangeToken, forKey: XYZiCloudZone.changeToken)
+                    zone.setValue(Date(), forKey: XYZiCloudZone.changeTokenLastFetch)
+                    
                     saveManageContext()
                     
                     break
@@ -341,7 +343,6 @@ func saveAccountsToiCloud(_ completionblock: @escaping () -> Void ) {
             let repeatDate = income.value(forKey: XYZAccount.repeatDate) as? Date
             let repeatAction = income.value(forKey: XYZAccount.repeatAction) as? String
 
-            print("---- bank = \(bank), amount = \(amount)")
             record.setValue(bank, forKey: XYZAccount.bank)
             record.setValue(accountNr, forKey: XYZAccount.accountNr)
             record.setValue(amount, forKey: XYZAccount.amount)
