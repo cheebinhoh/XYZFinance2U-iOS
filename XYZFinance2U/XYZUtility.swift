@@ -222,9 +222,9 @@ func loadiCloudZone() -> [XYZiCloudZone]? {
     return output
 }
 
-func fetchAccountZoneChange(_ zones: [CKRecordZone],
-                            _ icloudZone: [XYZiCloudZone],
-                            _ completionblock: @escaping () -> Void ) {
+func fetchiCloudZoneChange(_ zones: [CKRecordZone],
+                           _ icloudZones: [XYZiCloudZone],
+                           _ completionblock: @escaping () -> Void ) {
     
     let container = CKContainer.default()
     let database = container.privateCloudDatabase
@@ -233,11 +233,26 @@ func fetchAccountZoneChange(_ zones: [CKRecordZone],
     
     for zone in zones {
         
-        //let iCloudZone = XYZiCloudZone(name: zone.zoneID.zoneName, context: managedContext())
-        //self.iCloudZones?.append(iCloudZone)
+
         changedZoneIDs.append(zone.zoneID)
         
+        var changeToken: CKServerChangeToken? = nil
+        
+        for icloudzone in icloudZones {
+            
+            let name = icloudzone.value(forKey: XYZiCloudZone.name) as? String
+            if name == zone.zoneID.zoneName {
+                
+                let data = icloudzone.value(forKey: XYZiCloudZone.changeToken) as? Data
+                changeToken = (NSKeyedUnarchiver.unarchiveObject(with: data!) as? CKServerChangeToken)
+                
+                break
+            }
+        }
+        
         let option = CKFetchRecordZoneChangesOptions()
+        option.previousServerChangeToken = changeToken
+        
         optionsByRecordZoneID[zone.zoneID] = option
     }
     
@@ -270,10 +285,11 @@ func fetchAccountZoneChange(_ zones: [CKRecordZone],
         print("-------- success in fetching zone last change token")
         OperationQueue.main.addOperation {
             
-            for zone in icloudZone {
+            for zone in icloudZones {
                 
                 if let zName = zone.value(forKey: XYZiCloudZone.name) as? String, zName == zoneId.zoneName {
                     
+                    print("-------- change token \(changeToken!)")
                     let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: changeToken! )
                     zone.setValue(archivedChangeToken, forKey: XYZiCloudZone.changeToken)
                     saveManageContext()
@@ -300,7 +316,7 @@ func fetchAccountZoneChange(_ zones: [CKRecordZone],
     database.add(opZoneChange)
 }
 
-func saveAccountsToiCloud() {
+func saveAccountsToiCloud(_ completionblock: @escaping () -> Void ) {
     
     let container = CKContainer.default()
     let database = container.privateCloudDatabase
@@ -325,6 +341,7 @@ func saveAccountsToiCloud() {
             let repeatDate = income.value(forKey: XYZAccount.repeatDate) as? Date
             let repeatAction = income.value(forKey: XYZAccount.repeatAction) as? String
 
+            print("---- bank = \(bank), amount = \(amount)")
             record.setValue(bank, forKey: XYZAccount.bank)
             record.setValue(accountNr, forKey: XYZAccount.accountNr)
             record.setValue(amount, forKey: XYZAccount.amount)
@@ -336,17 +353,18 @@ func saveAccountsToiCloud() {
 
             if nil != repeatDate {
 
-            record.setValue(repeatDate, forKey: XYZAccount.repeatDate)
-            record.setValue(repeatAction, forKey: XYZAccount.repeatAction)
+                record.setValue(repeatDate, forKey: XYZAccount.repeatDate)
+                record.setValue(repeatAction, forKey: XYZAccount.repeatAction)
             }
 
             recordsToBeSaved.append(record)
         }
 
         let opToSaved = CKModifyRecordsOperation(recordsToSave: recordsToBeSaved, recordIDsToDelete: nil)
+        opToSaved.savePolicy = .allKeys
         opToSaved.completionBlock = {
 
-            print("-------- saving is complete")
+            completionblock()
         }
         
         database.add(opToSaved)

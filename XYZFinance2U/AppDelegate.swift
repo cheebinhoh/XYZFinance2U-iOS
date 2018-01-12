@@ -108,14 +108,14 @@ class AppDelegate: UIResponder,
         
         var zonesToBeFetched = [CKRecordZone]()
         var zonesToBeSaved = [CKRecordZone]()
-        let customZone = CKRecordZone(zoneName: XYZAccount.type)
+        let accountCustomZone = CKRecordZone(zoneName: XYZAccount.type)
 
         if incomeiCloudZone == nil {
             
-            zonesToBeSaved.append(customZone)
+            zonesToBeSaved.append(accountCustomZone)
         } else {
 
-            zonesToBeFetched.append(customZone)
+            zonesToBeFetched.append(accountCustomZone)
         }
         
         if !zonesToBeSaved.isEmpty {
@@ -135,7 +135,7 @@ class AppDelegate: UIResponder,
                             self.iCloudZones?.append(iCloudZone)
                         }
                         
-                        fetchAccountZoneChange(saved!, self.iCloudZones!, {
+                        fetchiCloudZoneChange(saved!, self.iCloudZones!, {
                             
                             print("---- done fetching 1")
                         })
@@ -150,15 +150,27 @@ class AppDelegate: UIResponder,
         }
         
         if !zonesToBeFetched.isEmpty {
-            
-            fetchAccountZoneChange(zonesToBeFetched, self.iCloudZones!, {
+
+            fetchiCloudZoneChange(zonesToBeFetched, self.iCloudZones!, {
          
-                print("---- done fetching 2")
-                
+                print("-------- done fetching after startup")
+                /* we should only write to icloud if we do have changed after last token change
+                 
                 OperationQueue.main.addOperation {
                     
-                    saveAccountsToiCloud()
+                    saveAccountsToiCloud({
+                        
+                        print("-------- doen saving")
+                        
+                        OperationQueue.main.addOperation {
+                            fetchiCloudZoneChange([accountCustomZone], self.iCloudZones!, {
+                                
+                                print("-------- fetch change token after upload")
+                            })
+                        }
+                    })
                 }
+                 */
             } )
         }
         
