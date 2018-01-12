@@ -20,6 +20,7 @@ class AppDelegate: UIResponder,
     
     
     // MARK: - property
+    var incomeList = [XYZAccount]()
     
     var iCloudZones: [XYZiCloudZone]?
     
@@ -75,11 +76,12 @@ class AppDelegate: UIResponder,
         }
         
         application.registerForRemoteNotifications()
+
+        incomeList = loadAccounts()!
         
         // process icloud zone ...
         iCloudZones = loadiCloudZone()
         var incomeiCloudZone: XYZiCloudZone?
-        //let aContext = managedContext()
         
         for zone in iCloudZones! {
             

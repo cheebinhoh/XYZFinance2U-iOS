@@ -51,12 +51,13 @@ class IncomeTableViewController: UITableViewController,
     var tableSectionCellList = [TableSectionCell]()
     var isPopover = false
     let mainSection = 0
-    var incomeList = [XYZAccount]()
+    //var incomeList = [XYZAccount]()
     var total: Double {
         
         var sum = 0.0
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
-        for account in incomeList {
+        for account in (appDelegate?.incomeList)! {
             
             sum = sum + ( account.value(forKey: XYZAccount.amount) as? Double )! 
         }
@@ -123,6 +124,19 @@ class IncomeTableViewController: UITableViewController,
     
     // MARK: - function
     
+    func getTotal() -> Double {
+        
+        var sum = 0.0
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        for account in (appDelegate?.incomeList)! {
+            
+            sum = sum + ( account.value(forKey: XYZAccount.amount) as? Double )!
+        }
+        
+        return sum
+    }
+    
     func totalOfSection(section: Int) -> Double {
     
         var total = 0.0;
@@ -144,8 +158,11 @@ class IncomeTableViewController: UITableViewController,
     
     func saveNewIncome(income: XYZAccount) {
         
-        income.setValue(incomeList.count, forKey: XYZAccount.sequenceNr)
-        incomeList.append(income)
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        income.setValue((appDelegate?.incomeList)!.count, forKey: XYZAccount.sequenceNr)
+        appDelegate?.incomeList.append(income)
+        //delegate?.incomeList = (delegate?.incomeList)! + [income]
         reloadData()
     }
     
@@ -171,26 +188,29 @@ class IncomeTableViewController: UITableViewController,
     func saveIncome(income: XYZAccount) {
         
         let selectedIndexPath = incomeIndex(of: income)
-        tableView.reloadRows(at: [selectedIndexPath!], with: .automatic)
+        let summaryIndex = IndexPath(row:0, section: (selectedIndexPath?.section)! + 1)
+        tableView.reloadRows(at: [selectedIndexPath!, summaryIndex], with: .automatic)
         saveAccounts()
     }
     
     func deleteIncome(income: XYZAccount) {
         
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let aContext = managedContext()
-        let index = incomeList.index(of: income)
-        let oldIncome = incomeList.remove(at: index!)
-        aContext?.delete(oldIncome)
+        let index = appDelegate?.incomeList.index(of: income)
+        let oldIncome = appDelegate?.incomeList.remove(at: index!)
+        aContext?.delete(oldIncome!)
         
-        self.delegate?.incomeDeleted(deletedIncome: oldIncome)
+        self.delegate?.incomeDeleted(deletedIncome: oldIncome!)
         reloadData()
     }
     
     private func loadDataInTableSectionCell() {
         
         var currencyList = [String]()
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
-        for income in incomeList {
+        for income in (appDelegate?.incomeList)! {
             
             let currency = income.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
             
@@ -212,8 +232,9 @@ class IncomeTableViewController: UITableViewController,
         for currency in currencyList {
             
             var sectionIncomeList = [XYZAccount]()
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
             
-            for income in incomeList {
+            for income in (appDelegate?.incomeList)! {
                 
                 if let setCurrency = income.value(forKey: XYZAccount.currencyCode) as? String {
                     
@@ -363,7 +384,9 @@ class IncomeTableViewController: UITableViewController,
             }
         }
         
-        for account in incomeList {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        for account in (appDelegate?.incomeList)! {
             
             let bank = account.value(forKey: XYZAccount.bank) as? String ?? ""
             let accountNr = account.value(forKey: XYZAccount.accountNr) as? String ?? ""
@@ -375,7 +398,7 @@ class IncomeTableViewController: UITableViewController,
         
         saveManageContext()
 
-        for income in incomeList {
+        for income in (appDelegate?.incomeList)! {
             
             registerNotification(income: income)
         }
@@ -465,20 +488,20 @@ class IncomeTableViewController: UITableViewController,
     
     func validateiCloud() {
         
-        let delegate = UIApplication.shared.delegate as? AppDelegate
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
         CKContainer.default().accountStatus { (status, error) in
             
             if status == CKAccountStatus.noAccount {
                 
-                delegate?.icloudEnable = false
+                appDelegate?.icloudEnable = false
                 let alert = UIAlertController(title: "Sign in to icloud",
                                               message: "Sign in to your iCloud account to write records", preferredStyle: UIAlertControllerStyle.alert )
                 self.present(alert, animated: false, completion: nil)
             } else {
                 
     
-                delegate?.icloudEnable = true
+                appDelegate?.icloudEnable = true
             }
         }
     }
@@ -490,9 +513,9 @@ class IncomeTableViewController: UITableViewController,
         var authError: NSError?
         authenticatedOk = false
         
-        if let delegate = UIApplication.shared.delegate as? AppDelegate {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             
-            delegate.orientation = .portrait
+            appDelegate.orientation = .portrait
         }
         
         if #available(iOS 8.0, macOS 10.12.1, *) {
@@ -516,14 +539,14 @@ class IncomeTableViewController: UITableViewController,
                         lockScreenView.mainTableViewController = self
                         let lockScreenViewNavigatorController = UINavigationController(rootViewController: lockScreenView)
                         
-                        if let delegate = UIApplication.shared.delegate as? AppDelegate {
+                        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
                             
                             lockScreenDisplayed = true
                 
                             // NOTE: to avoid warning "Unbalanced calls to begin/end appearance transitions for"
                             OperationQueue.main.addOperation {
                                 
-                                delegate.window?.rootViewController?.present(lockScreenViewNavigatorController, animated: false, completion: nil)
+                                appDelegate.window?.rootViewController?.present(lockScreenViewNavigatorController, animated: false, completion: nil)
                             }
                         }
                     }
@@ -538,9 +561,9 @@ class IncomeTableViewController: UITableViewController,
                         
                         OperationQueue.main.addOperation {
                             
-                            if let delegate = UIApplication.shared.delegate as? AppDelegate {
+                            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
                                 
-                                delegate.orientation = .all
+                                appDelegate.orientation = .all
                             }
                             
                             if self.lockScreenDisplayed {
@@ -565,14 +588,14 @@ class IncomeTableViewController: UITableViewController,
                             lockScreenView.mainTableViewController = self
                             let lockScreenViewNavigatorController = UINavigationController(rootViewController: lockScreenView)
                             
-                            if let delegate = UIApplication.shared.delegate as? AppDelegate {
+                            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
                                 
                                 self.lockScreenDisplayed = true
                                 
                                 // NOTE: to avoid warning "Unbalanced calls to begin/end appearance transitions for"
                                 OperationQueue.main.addOperation {
                                     
-                                    delegate.window?.rootViewController?.present(lockScreenViewNavigatorController, animated: false, completion: nil)
+                                    appDelegate.window?.rootViewController?.present(lockScreenViewNavigatorController, animated: false, completion: nil)
                                 }
                             }
                         }
@@ -583,10 +606,11 @@ class IncomeTableViewController: UITableViewController,
                 self.authenticatedOk = true
 
                 print("no auth support")
+                let appDelegate = UIApplication.shared.delegate as? AppDelegate
                 
                 if let accounts = loadAccounts() {
                     
-                    self.incomeList += accounts
+                    appDelegate?.incomeList += accounts
                 }
                     
                 self.reloadData()
@@ -631,7 +655,7 @@ class IncomeTableViewController: UITableViewController,
         navigationItem.setLeftBarButton(self.editButtonItem, animated: true)
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        incomeList = loadAccounts()!
+        //incomeList = loadAccounts()!
         loadDataInTableSectionCell()
 
         // Check for force touch feature, and add force touch/previewing capability.
@@ -653,7 +677,9 @@ class IncomeTableViewController: UITableViewController,
     
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         
-        for row in 0..<incomeList.count {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        for row in 0..<(appDelegate?.incomeList)!.count {
             
             let indexPath = IndexPath(row: row, section: 0)
             
@@ -790,8 +816,9 @@ class IncomeTableViewController: UITableViewController,
                 fatalError("Exception: IncomeDetailTableViewController is expedted" )
             }
             
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
             detailTableViewController.incomeDelegate = self
-            delegate?.incomeSelected(newIncome: incomeList[indexPath.row])
+            delegate?.incomeSelected(newIncome: appDelegate?.incomeList[indexPath.row])
         }
     }
     
@@ -892,11 +919,12 @@ class IncomeTableViewController: UITableViewController,
             notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier!])
             notificationCenter.removeAllDeliveredNotifications()
   
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
             let aContext = managedContext()
-            let oldIncome = incomeList.remove(at: incomeList.index(of: incomeToBeDeleted)!)   //incomeList.remove(at: indexPath.row)
-            aContext?.delete(oldIncome)
+            let oldIncome = appDelegate?.incomeList.remove(at: (appDelegate?.incomeList.index(of: incomeToBeDeleted)!)!)   //incomeList.remove(at: indexPath.row)
+            aContext?.delete(oldIncome!)
             
-            self.delegate?.incomeDeleted(deletedIncome: oldIncome)
+            self.delegate?.incomeDeleted(deletedIncome: oldIncome!)
             reloadData()
         } else if editingStyle == .insert {
             
@@ -948,12 +976,13 @@ class IncomeTableViewController: UITableViewController,
             }
         }
         
-        incomeList = incomeList.sorted() {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.incomeList = (appDelegate?.incomeList.sorted() {
             
             (acc1, acc2) in
             
             return ( acc1.value(forKey: XYZAccount.sequenceNr) as! Int ) < ( acc2.value(forKey: XYZAccount.sequenceNr) as! Int)
-        }
+            })!
         
         saveAccounts()
     }
@@ -1019,7 +1048,8 @@ class IncomeTableViewController: UITableViewController,
                         fatalError("Exception: Unexpeted error in getting indexPath for prepare from table view controller");
                     }
 
-                    let account = incomeList[indexPath.row]
+                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                    let account = appDelegate?.incomeList[indexPath.row]
                     incomeDetailView.account = account
                 } else if let addButtonSender = sender as? UIBarButtonItem, add === addButtonSender {
                     
