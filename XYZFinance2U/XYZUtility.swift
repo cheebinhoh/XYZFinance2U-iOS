@@ -222,6 +222,137 @@ func loadiCloudZone() -> [XYZiCloudZone]? {
     return output
 }
 
+func fetchAccountZoneChange(_ zones: [CKRecordZone],
+                            _ icloudZone: [XYZiCloudZone],
+                            _ completionblock: @escaping () -> Void ) {
+    
+    let container = CKContainer.default()
+    let database = container.privateCloudDatabase
+    var changedZoneIDs: [CKRecordZoneID] = []
+    var optionsByRecordZoneID = [CKRecordZoneID: CKFetchRecordZoneChangesOptions]()
+    
+    for zone in zones {
+        
+        //let iCloudZone = XYZiCloudZone(name: zone.zoneID.zoneName, context: managedContext())
+        //self.iCloudZones?.append(iCloudZone)
+        changedZoneIDs.append(zone.zoneID)
+        
+        let option = CKFetchRecordZoneChangesOptions()
+        optionsByRecordZoneID[zone.zoneID] = option
+    }
+    
+    saveManageContext()
+    
+    let opZoneChange = CKFetchRecordZoneChangesOperation(recordZoneIDs: changedZoneIDs, optionsByRecordZoneID: optionsByRecordZoneID )
+    
+    opZoneChange.recordChangedBlock = { (record) in
+        print("Record changed:", record)
+        
+    }
+    
+    opZoneChange.recordWithIDWasDeletedBlock = { (recordId, str) in
+        print("Record deleted:", recordId)
+        
+    }
+    
+    opZoneChange.recordZoneChangeTokensUpdatedBlock = { (zoneId, token, data) in
+        
+        print("----- token \(String(describing: token))")
+    }
+    
+    opZoneChange.recordZoneFetchCompletionBlock = { (zoneId, changeToken, _, _, error) in
+        
+        if let error = error {
+            print("Error fetching zone changes for database:", error)
+            return
+        }
+        
+        print("-------- success in fetching zone last change token")
+        OperationQueue.main.addOperation {
+            
+            for zone in icloudZone {
+                
+                if let zName = zone.value(forKey: XYZiCloudZone.name) as? String, zName == zoneId.zoneName {
+                    
+                    let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: changeToken! )
+                    zone.setValue(archivedChangeToken, forKey: XYZiCloudZone.changeToken)
+                    saveManageContext()
+                    
+                    break
+                }
+            }
+        }
+    }
+    
+    opZoneChange.fetchRecordZoneChangesCompletionBlock = { (error) in
+        
+        print("-------- fetch record zone complete")
+        
+        if let error = error {
+            
+            print("Error fetching zone changes for database:", error)
+            return
+        }
+        
+        completionblock()
+    }
+    
+    database.add(opZoneChange)
+}
+
+func saveAccountsToiCloud() {
+    
+    let container = CKContainer.default()
+    let database = container.privateCloudDatabase
+    
+    if let incomeList = loadAccounts() {
+     
+        var recordsToBeSaved = [CKRecord]()
+
+        for income in incomeList {
+
+            let recordName = income.value(forKey: XYZAccount.recordId) as? String
+            let customZone = CKRecordZone(zoneName: XYZAccount.type)
+            let ckrecordId = CKRecordID(recordName: recordName!, zoneID: customZone.zoneID)
+
+            let record = CKRecord(recordType: XYZAccount.type, recordID: ckrecordId)
+
+            let bank = income.value(forKey: XYZAccount.bank) as? String
+            let accountNr = income.value(forKey: XYZAccount.accountNr) as? String ?? ""
+            let amount = income.value(forKey: XYZAccount.amount) as? Double
+            let lastUpdate = income.value(forKey: XYZAccount.lastUpdate) as? Date
+            let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
+            let repeatDate = income.value(forKey: XYZAccount.repeatDate) as? Date
+            let repeatAction = income.value(forKey: XYZAccount.repeatAction) as? String
+
+            record.setValue(bank, forKey: XYZAccount.bank)
+            record.setValue(accountNr, forKey: XYZAccount.accountNr)
+            record.setValue(amount, forKey: XYZAccount.amount)
+            record.setValue(lastUpdate, forKey: XYZAccount.lastUpdate)
+            record.setValue(currencyCode, forKey: XYZAccount.currencyCode)
+
+            let uploadDate = Date()
+            record.setValue(uploadDate, forKey: XYZAccount.lastRecordUpload)
+
+            if nil != repeatDate {
+
+            record.setValue(repeatDate, forKey: XYZAccount.repeatDate)
+            record.setValue(repeatAction, forKey: XYZAccount.repeatAction)
+            }
+
+            recordsToBeSaved.append(record)
+        }
+
+        let opToSaved = CKModifyRecordsOperation(recordsToSave: recordsToBeSaved, recordIDsToDelete: nil)
+        opToSaved.completionBlock = {
+
+            print("-------- saving is complete")
+        }
+        
+        database.add(opToSaved)
+    }
+}
+
 func loadAccounts() -> [XYZAccount]? {
     
     var output: [XYZAccount]?
