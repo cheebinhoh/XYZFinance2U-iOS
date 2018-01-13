@@ -78,6 +78,26 @@ class AppDelegate: UIResponder,
         
         application.registerForRemoteNotifications()
 
+        guard let splitView = self.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: MainSplitViewController is expected")
+        }
+
+        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+            
+            fatalError("Exception: MainUITabBarController is expected")
+        }
+        
+        guard let navController = tabbarView.viewControllers?.first as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+        
+        guard let incomeView = navController.viewControllers.first as? IncomeTableViewController else {
+    
+            fatalError("Exception: IncomeTableViewController is expected")
+        }
+        
         // fetch global data list
         incomeList = loadAccounts()!
         iCloudZones = loadiCloudZone()!
@@ -160,14 +180,18 @@ class AppDelegate: UIResponder,
                         
                         fetchiCloudZoneChange(saved!, self.iCloudZones, {
                             
-                            print("---- done fetching changes after saving zone")
+                            print("-------- done fetching changes after saving zone")
                             for iCloudZone in self.iCloudZones {
                                 
                                 let zName = iCloudZone.value(forKey: XYZiCloudZone.name) as? String
                                 switch zName! {
                                     case XYZAccount.type:
                                         self.incomeList = (iCloudZone.data as? [XYZAccount])!
-                                    
+                                        
+                                        DispatchQueue.main.async {
+                                            incomeView.reloadData()
+                                        }
+                                        
                                         print("-------- fetch # of incomes = \(self.incomeList.count)")
                                     
                                     default:
