@@ -643,14 +643,15 @@ class IncomeTableViewController: UITableViewController,
                 self.authenticatedOk = true
 
                 print("no auth support")
-                let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                //FIXME: we have problem in multiple fetch
+                //let appDelegate = UIApplication.shared.delegate as? AppDelegate
                 
-                if let accounts = loadAccounts() {
+                //if let accounts = loadAccounts() {
                     
-                    appDelegate?.incomeList = accounts
-                }
+                //    appDelegate?.incomeList = accounts
+                //}
                     
-                self.reloadData()
+                //self.reloadData()
             }
         } else {
             
