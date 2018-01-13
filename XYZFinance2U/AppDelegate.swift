@@ -209,12 +209,32 @@ class AppDelegate: UIResponder,
             database.add(op)
         }
         
-        /*
-         if !zonesToBeFetched.isEmpty {
+    
+        if !zonesToBeFetched.isEmpty {
             print("-------- fetch change for zones" )
             
-            fetchAndUpdateiCloud(zonesToBeFetched, self.iCloudZones)
-        } */
+            fetchAndUpdateiCloud(zonesToBeFetched, self.iCloudZones, {
+                
+                print("-------- done fetching changes after saving zone")
+                for iCloudZone in self.iCloudZones {
+                    
+                    let zName = iCloudZone.value(forKey: XYZiCloudZone.name) as? String
+                    switch zName! {
+                    case XYZAccount.type:
+                        self.incomeList = (iCloudZone.data as? [XYZAccount])!
+                        
+                        DispatchQueue.main.async {
+                            incomeView.reloadData()
+                        }
+                        
+                        print("-------- fetch # of incomes = \(self.incomeList.count)")
+                        
+                    default:
+                        fatalError("Exception: \(iCloudZone.name) is not supported")
+                    }
+                }
+            })
+        }
         
         // Override point for customization after application launch.
         return true
