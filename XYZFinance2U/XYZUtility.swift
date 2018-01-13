@@ -296,8 +296,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
         var changeToken: CKServerChangeToken? = nil
         
         for icloudzone in icloudZones {
-            let incomeList = icloudzone.data as! [XYZAccount]
-            
+         
             let name = icloudzone.value(forKey: XYZiCloudZone.name) as? String
             if name == zone.zoneID.zoneName {
                 
@@ -338,16 +337,49 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
             
                 incomeList = createUpdateAccount(record, incomeList, aContext!)
                 icloudZone?.data = incomeList
-                //updatedIncomeList.append(income)
             
             default:
                 fatalError("Exception: zone type \(String(describing: zoneName)) is not supported")
         }
     }
     
-    opZoneChange.recordWithIDWasDeletedBlock = { (recordId, str) in
-        print("Record deleted:", recordId)
+    opZoneChange.recordWithIDWasDeletedBlock = { (recordId, recordType) in
+        print("-------- record deleted:", recordId)
         
+        for zone in icloudZones {
+            
+            if let zName = zone.value(forKey: XYZiCloudZone.name) as? String, zName == recordType {
+            
+                switch recordType {
+                    case XYZAccount.type:
+                        guard var incomeList = zone.data as? [XYZAccount] else {
+                            
+                            fatalError("Exception: [XYZAccount] is expected")
+                        }
+                    
+                        for (index, income) in incomeList.enumerated() {
+                            
+                            guard let recordName = income.value(forKey: XYZAccount.recordId) as? String else {
+                                fatalError("Exception: record id is expected")
+                            }
+                            
+                            if recordName == recordId.recordName {
+                                
+                                print("-------- record found and delete")
+                                aContext?.delete(income)
+                                incomeList.remove(at: index)
+                                
+                                break
+                            }
+                        }
+                    
+                        zone.data = incomeList
+                    
+                    default:
+                        fatalError("Exception: \(recordType) is not supported")
+                }
+            }
+        }
     }
     
     opZoneChange.recordZoneChangeTokensUpdatedBlock = { (zoneId, token, data) in

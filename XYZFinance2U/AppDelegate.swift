@@ -77,12 +77,20 @@ class AppDelegate: UIResponder,
         }
         
         application.registerForRemoteNotifications()
+        
+        syncWithiCloudAndCoreData()
+        
+        // Override point for customization after application launch.
+        return true
+    }
 
+    func syncWithiCloudAndCoreData() {
+        
         guard let splitView = self.window?.rootViewController as? MainSplitViewController else {
             
             fatalError("Exception: MainSplitViewController is expected")
         }
-
+        
         guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
             
             fatalError("Exception: MainUITabBarController is expected")
@@ -94,7 +102,7 @@ class AppDelegate: UIResponder,
         }
         
         guard let incomeView = navController.viewControllers.first as? IncomeTableViewController else {
-    
+            
             fatalError("Exception: IncomeTableViewController is expected")
         }
         
@@ -105,45 +113,45 @@ class AppDelegate: UIResponder,
         var incomeiCloudZone: XYZiCloudZone?
         
         /* debugging
-        for icloudZone in iCloudZones {
-            
-            let data = icloudZone.value(forKey: XYZiCloudZone.changeToken) as? Data
-            guard let chageToken = (NSKeyedUnarchiver.unarchiveObject(with: data!) as? CKServerChangeToken) else {
-                
-                print("Unachive change token is failed")
-                continue
-                
-                // fatalError("Exception: unachive change token is failed")
-            }
+         for icloudZone in iCloudZones {
          
-            let fetchDate = icloudZone.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date
-            
-            print("-------- last fetch change token = \(chageToken), last fetch = \(String(describing: fetchDate))")
-        }
+         let data = icloudZone.value(forKey: XYZiCloudZone.changeToken) as? Data
+         guard let chageToken = (NSKeyedUnarchiver.unarchiveObject(with: data!) as? CKServerChangeToken) else {
+         
+         print("Unachive change token is failed")
+         continue
+         
+         // fatalError("Exception: unachive change token is failed")
+         }
+         
+         let fetchDate = icloudZone.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date
+         
+         print("-------- last fetch change token = \(chageToken), last fetch = \(String(describing: fetchDate))")
+         }
          */
-
+        
         for icloudZone in iCloudZones {
             
             switch (icloudZone.value(forKey: XYZiCloudZone.name) as? String )! {
                 
-                case XYZAccount.type:
-                    incomeiCloudZone = icloudZone
-                    icloudZone.data = incomeList  // we do not keep it persistent in core data
+            case XYZAccount.type:
+                incomeiCloudZone = icloudZone
+                icloudZone.data = incomeList  // we do not keep it persistent in core data
                 
-                default:
-                    fatalError("Exception: zone type is not supported")
+            default:
+                fatalError("Exception: zone type is not supported")
             }
         }
         
         var zonesToBeFetched = [CKRecordZone]()
         var zonesToBeSaved = [CKRecordZone]()
         let accountCustomZone = CKRecordZone(zoneName: XYZAccount.type)
-
+        
         if incomeiCloudZone == nil {
             
             zonesToBeSaved.append(accountCustomZone)
         } else {
-
+            
             zonesToBeFetched.append(accountCustomZone)
         }
         
@@ -165,12 +173,12 @@ class AppDelegate: UIResponder,
                             let iCloudZone = XYZiCloudZone(name: zone.zoneID.zoneName, context: managedContext())
                             
                             switch zone.zoneID.zoneName {
-                               
-                                case XYZAccount.type:
-                                    iCloudZone.data = self.incomeList
-                               
-                                default:
-                                    fatalError("Exception: \(zone.zoneID.zoneName) is not supported")
+                                
+                            case XYZAccount.type:
+                                iCloudZone.data = self.incomeList
+                                
+                            default:
+                                fatalError("Exception: \(zone.zoneID.zoneName) is not supported")
                             }
                             
                             self.iCloudZones.append(iCloudZone)
@@ -185,17 +193,17 @@ class AppDelegate: UIResponder,
                                 
                                 let zName = iCloudZone.value(forKey: XYZiCloudZone.name) as? String
                                 switch zName! {
-                                    case XYZAccount.type:
-                                        self.incomeList = (iCloudZone.data as? [XYZAccount])!
-                                        
-                                        DispatchQueue.main.async {
-                                            incomeView.reloadData()
-                                        }
-                                        
-                                        print("-------- fetch # of incomes = \(self.incomeList.count)")
+                                case XYZAccount.type:
+                                    self.incomeList = (iCloudZone.data as? [XYZAccount])!
                                     
-                                    default:
-                                        fatalError("Exception: \(iCloudZone.name) is not supported")
+                                    DispatchQueue.main.async {
+                                        incomeView.reloadData()
+                                    }
+                                    
+                                    print("-------- fetch # of incomes = \(self.incomeList.count)")
+                                    
+                                default:
+                                    fatalError("Exception: \(iCloudZone.name) is not supported")
                                 }
                             }
                         })
@@ -209,7 +217,6 @@ class AppDelegate: UIResponder,
             database.add(op)
         }
         
-    
         if !zonesToBeFetched.isEmpty {
             print("-------- fetch and uppdate changes from/to zones")
             
@@ -235,11 +242,8 @@ class AppDelegate: UIResponder,
                 }
             })
         }
-        
-        // Override point for customization after application launch.
-        return true
     }
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
         
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -275,6 +279,7 @@ class AppDelegate: UIResponder,
             fatalError("Exception: IncomeTableViewController is expected" )
         }
         
+        syncWithiCloudAndCoreData()
         tableViewController.authenticate()
     }
 
