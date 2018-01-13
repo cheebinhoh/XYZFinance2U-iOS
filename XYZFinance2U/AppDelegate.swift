@@ -29,7 +29,7 @@ class AppDelegate: UIResponder,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         
-        print("-------- notification action = \(response.actionIdentifier)")
+        print("-------- notification action")
         
         completionHandler()
     }
@@ -38,12 +38,24 @@ class AppDelegate: UIResponder,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
-        print("-------- notification = \(notification.request.content.title)")
+        print("-------- notification")
         
         // Play a sound.
         completionHandler(UNNotificationPresentationOptions.sound)
     }
     
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+     
+        guard let notification:CKRecordZoneNotification = CKNotification(fromRemoteNotificationDictionary: userInfo) as? CKRecordZoneNotification else {
+            
+            return
+        }
+        
+        print("-------- notifiction \(String(describing: notification.recordZoneID?.zoneName))")
+        
+        syncWithiCloudAndCoreData()
+        completionHandler(.newData)
+    }
     
     // MARK: - static
     
@@ -81,9 +93,40 @@ class AppDelegate: UIResponder,
         syncWithiCloudAndCoreData()
         
         // Override point for customization after application launch.
+
         return true
     }
 
+    func registeriCloudSubscription() {
+        
+        for icloudZone in iCloudZones {
+            
+            guard let name = (icloudZone.value(forKey: XYZiCloudZone.name) as? String) else {
+                
+                fatalError("Exception: iCloud zone name is expected")
+            }
+            
+            let ckrecordzone = CKRecordZone(zoneName: name)
+            let subscription = CKRecordZoneSubscription.init(zoneID: ckrecordzone.zoneID)
+            let notificationInfo = CKNotificationInfo()
+            
+            notificationInfo.shouldSendContentAvailable = true
+            subscription.notificationInfo = notificationInfo
+            
+            let operation = CKModifySubscriptionsOperation(subscriptionsToSave: [subscription], subscriptionIDsToDelete: [])
+            operation.qualityOfService = .utility
+            operation.completionBlock = {
+            
+                print("-------- register subscription complete")
+            }
+            
+            let container = CKContainer.default()
+            let database = container.privateCloudDatabase
+            
+            database.add(operation)
+        }
+    }
+    
     func syncWithiCloudAndCoreData() {
         
         guard let splitView = self.window?.rootViewController as? MainSplitViewController else {
@@ -111,24 +154,6 @@ class AppDelegate: UIResponder,
         iCloudZones = loadiCloudZone()!
         
         var incomeiCloudZone: XYZiCloudZone?
-        
-        /* debugging
-         for icloudZone in iCloudZones {
-         
-         let data = icloudZone.value(forKey: XYZiCloudZone.changeToken) as? Data
-         guard let chageToken = (NSKeyedUnarchiver.unarchiveObject(with: data!) as? CKServerChangeToken) else {
-         
-         print("Unachive change token is failed")
-         continue
-         
-         // fatalError("Exception: unachive change token is failed")
-         }
-         
-         let fetchDate = icloudZone.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date
-         
-         print("-------- last fetch change token = \(chageToken), last fetch = \(String(describing: fetchDate))")
-         }
-         */
         
         for icloudZone in iCloudZones {
             
@@ -232,6 +257,8 @@ class AppDelegate: UIResponder,
                         
                         DispatchQueue.main.async {
                             incomeView.reloadData()
+                            
+                            self.registeriCloudSubscription()
                         }
                         
                         print("-------- fetch # of incomes = \(self.incomeList.count)")
