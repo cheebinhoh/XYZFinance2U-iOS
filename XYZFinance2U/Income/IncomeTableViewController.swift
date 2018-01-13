@@ -439,7 +439,7 @@ class IncomeTableViewController: UITableViewController,
             
             print("-------- done fetch and update icloud")
         })
-        
+
         /*
         for account in incomeList {
             
@@ -647,7 +647,7 @@ class IncomeTableViewController: UITableViewController,
                 
                 if let accounts = loadAccounts() {
                     
-                    appDelegate?.incomeList += accounts
+                    appDelegate?.incomeList = accounts
                 }
                     
                 self.reloadData()

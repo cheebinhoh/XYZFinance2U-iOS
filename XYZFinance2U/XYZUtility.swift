@@ -296,6 +296,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
         var changeToken: CKServerChangeToken? = nil
         
         for icloudzone in icloudZones {
+            let incomeList = icloudzone.data as! [XYZAccount]
             
             let name = icloudzone.value(forKey: XYZiCloudZone.name) as? String
             if name == zone.zoneID.zoneName {
@@ -435,6 +436,8 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                             _ icloudZones: [XYZiCloudZone],
                             _ completionblock: @escaping () -> Void) {
     
+    print("-------- push change to zone")
+    
     for zone in zones {
         
         let name = zone.zoneID.zoneName
@@ -451,12 +454,11 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                     
                     saveAccountsToiCloud(zone, iCloudZone, incomeList, {
                         
-                        print("-------- done saving")
-                        
+                        print("-------- done saving to iCloud")
                         OperationQueue.main.addOperation {
                             fetchiCloudZoneChange([zone], icloudZones, {
                                 
-                                print("-------- fetch change token after upload")
+                                print("-------- fetch change after upload to iCloud")
                             })
                             
                             completionblock()
@@ -475,9 +477,11 @@ func fetchAndUpdateiCloud(_ zones: [CKRecordZone],
                           _ completionblock: @escaping () -> Void) {
     
     if !iCloudZones.isEmpty {
+        print("-------- fetch changes from zones")
+        
         fetchiCloudZoneChange(zones, iCloudZones, {
             
-            print("-------- done fetching after startup")
+            print("-------- done fetching change from zone")
             
             //we should only write to icloud if we do have changed after last token change
             
@@ -535,7 +539,7 @@ func saveAccountsToiCloud(_ zone: CKRecordZone, _ iCloudZone: XYZiCloudZone, _ i
         recordIdsToBeDeleted.append(ckrecordId)
     }
 
-    print("-------- # of account to upload to iCloud is = \(String(describing: incomeListToBeSaved?.count))")
+    print("-------- # of changed accounts to upload to iCloud is = \(String(describing: incomeListToBeSaved?.count))")
     saveAccountsToiCloud(iCloudZone, incomeListToBeSaved!, recordIdsToBeDeleted, completionblock)
 }
 

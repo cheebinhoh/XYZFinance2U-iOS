@@ -211,7 +211,7 @@ class AppDelegate: UIResponder,
         
     
         if !zonesToBeFetched.isEmpty {
-            print("-------- fetch change for zones" )
+            print("-------- fetch and uppdate changes from/to zones")
             
             fetchAndUpdateiCloud(zonesToBeFetched, self.iCloudZones, {
                 
