@@ -47,10 +47,9 @@ class XYZAccount : NSManagedObject
     init(sequenceNr: Int, bank: String, accountNr: String, amount: Double, date: Date, context: NSManagedObjectContext?)
     {
         let aContext = context!
-        print("----- before entity")
+
         let entity = NSEntityDescription.entity(forEntityName: "XYZAccount",
                                                 in: aContext)!
-        print("----- after entity")
         super.init(entity: entity, insertInto: aContext)
         
         self.setValue(bank, forKey: XYZAccount.bank)

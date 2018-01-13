@@ -222,7 +222,7 @@ func loadiCloudZone() -> [XYZiCloudZone]? {
     return output
 }
 
-func createUpdateAccount(_ record: CKRecord, _ incomeList: [XYZAccount]) -> XYZAccount {
+func createUpdateAccount(_ record: CKRecord, _ incomeList: [XYZAccount], _ context: NSManagedObjectContext) -> XYZAccount {
     
     let recordName = record.recordID.recordName
     let bank = record[XYZAccount.bank] as? String
@@ -235,6 +235,7 @@ func createUpdateAccount(_ record: CKRecord, _ incomeList: [XYZAccount]) -> XYZA
     
     var incomeToBeUpdated: XYZAccount?
     
+    print("-------- recordname \(recordName)")
     for income in incomeList {
         
         guard let recordId = income.value(forKey: XYZAccount.recordId) as? String else {
@@ -254,12 +255,10 @@ func createUpdateAccount(_ record: CKRecord, _ incomeList: [XYZAccount]) -> XYZA
         let tokenStrings = recordName.split(separator: ":")
         let sequenceNr = Int(tokenStrings[tokenStrings.count - 1])!
         
-        print("---- before create")
         incomeToBeUpdated = XYZAccount(sequenceNr: sequenceNr,
                                        bank: bank!,
                                        accountNr: accountNr ?? "",
-                                       amount: amount!, date: lastUpdate!, context: managedContext())
-        print("---- after create")
+                                       amount: amount!, date: lastUpdate!, context: context)
     }
     
     incomeToBeUpdated?.setValue(amount!, forKey: XYZAccount.amount)
@@ -278,7 +277,7 @@ func createUpdateAccount(_ record: CKRecord, _ incomeList: [XYZAccount]) -> XYZA
 func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                            _ icloudZones: [XYZiCloudZone],
                            _ completionblock: @escaping () -> Void ) {
-    
+    let aContext = managedContext()
     var updatedIncomeList = [XYZAccount]()
     let container = CKContainer.default()
     let database = container.privateCloudDatabase
@@ -331,7 +330,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                     fatalError("Exception: incomeList is expected")
                 }
             
-                let income = createUpdateAccount(record, incomeList)
+                let income = createUpdateAccount(record, incomeList, aContext!)
                 updatedIncomeList.append(income)
             
             default:
@@ -363,8 +362,8 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                 
                 if let zName = zone.value(forKey: XYZiCloudZone.name) as? String, zName == zoneId.zoneName {
                     
-                    print("-------- update # of incomeList = \(updatedIncomeList.count)")
-                    
+                    zone.data = updatedIncomeList
+                    print("-------- # of changed income = \(updatedIncomeList.count)")
                     print("-------- change token \(changeToken!)")
                     var hasChangeToken = true;
               
