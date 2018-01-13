@@ -204,6 +204,8 @@ func saveManageContext() {
     }
 }
 
+// MARK: - iCloud
+
 func loadiCloudZone() -> [XYZiCloudZone]? {
     
     var output: [XYZiCloudZone]?
@@ -222,7 +224,9 @@ func loadiCloudZone() -> [XYZiCloudZone]? {
     return output
 }
 
-func createUpdateAccount(_ record: CKRecord, _ incomeList: [XYZAccount], _ context: NSManagedObjectContext) -> [XYZAccount] {
+func createUpdateAccount(_ record: CKRecord,
+                         _ incomeList: [XYZAccount],
+                         _ context: NSManagedObjectContext) -> [XYZAccount] {
     
     let recordName = record.recordID.recordName
     let bank = record[XYZAccount.bank] as? String
@@ -236,7 +240,7 @@ func createUpdateAccount(_ record: CKRecord, _ incomeList: [XYZAccount], _ conte
     var outputIncomeList: [XYZAccount] = incomeList
     var incomeToBeUpdated: XYZAccount?
     
-    print("-------- recordname \(recordName)")
+    print("-------- record name = \(recordName)")
     for income in outputIncomeList {
         
         guard let recordId = income.value(forKey: XYZAccount.recordId) as? String else {
@@ -259,7 +263,9 @@ func createUpdateAccount(_ record: CKRecord, _ incomeList: [XYZAccount], _ conte
         incomeToBeUpdated = XYZAccount(sequenceNr: sequenceNr,
                                        bank: bank!,
                                        accountNr: accountNr ?? "",
-                                       amount: amount!, date: lastUpdate!, context: context)
+                                       amount: amount!,
+                                       date: lastUpdate!,
+                                       context: context)
         outputIncomeList.append(incomeToBeUpdated!)
     }
     
@@ -282,8 +288,8 @@ func createUpdateAccount(_ record: CKRecord, _ incomeList: [XYZAccount], _ conte
 func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                            _ icloudZones: [XYZiCloudZone],
                            _ completionblock: @escaping () -> Void ) {
+ 
     let aContext = managedContext()
-    //var updatedIncomeList = [XYZAccount]()
     let container = CKContainer.default()
     let database = container.privateCloudDatabase
     var changedZoneIDs: [CKRecordZoneID] = []
@@ -315,11 +321,10 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
         optionsByRecordZoneID[zone.zoneID] = option
     }
     
-    saveManageContext()
-    
     let opZoneChange = CKFetchRecordZoneChangesOperation(recordZoneIDs: changedZoneIDs, optionsByRecordZoneID: optionsByRecordZoneID )
     
     opZoneChange.recordChangedBlock = { (record) in
+        
         print("Record changed...")
         
         let ckrecordzone = CKRecordZone(zoneName: record.recordID.zoneID.zoneName)
@@ -344,15 +349,17 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     }
     
     opZoneChange.recordWithIDWasDeletedBlock = { (recordId, recordType) in
+        
         print("-------- record deleted:", recordId)
         
-        for zone in icloudZones {
+        for icloudzone in icloudZones {
             
-            if let zName = zone.value(forKey: XYZiCloudZone.name) as? String, zName == recordType {
+            if let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String, zName == recordType {
             
                 switch recordType {
+                    
                     case XYZAccount.type:
-                        guard var incomeList = zone.data as? [XYZAccount] else {
+                        guard var incomeList = icloudzone.data as? [XYZAccount] else {
                             
                             fatalError("Exception: [XYZAccount] is expected")
                         }
@@ -373,7 +380,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                             }
                         }
                     
-                        zone.data = incomeList
+                        icloudzone.data = incomeList
                     
                     default:
                         fatalError("Exception: \(recordType) is not supported")
@@ -390,6 +397,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     opZoneChange.recordZoneFetchCompletionBlock = { (zoneId, changeToken, _, _, error) in
         
         if let error = error {
+            
             print("Error fetching zone changes for database:", error)
             return
         }
@@ -397,19 +405,19 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
         print("-------- success in fetching zone last change token")
         OperationQueue.main.addOperation {
             
-            for zone in icloudZones {
+            for icloudzone in icloudZones {
                 
-                if let zName = zone.value(forKey: XYZiCloudZone.name) as? String, zName == zoneId.zoneName {
+                if let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String, zName == zoneId.zoneName {
                     
                     //zone.data = updatedIncomeList
-                    let updatedIncomeList = zone.data as? [XYZAccount]
+                    let updatedIncomeList = icloudzone.data as? [XYZAccount]
                     print("-------- # of income = \(String(describing: updatedIncomeList?.count))")
                     
                     print("-------- change token \(changeToken!)")
                     
                     var hasChangeToken = true;
               
-                    if let data = zone.value(forKey: XYZiCloudZone.changeToken) as? Data {
+                    if let data = icloudzone.value(forKey: XYZiCloudZone.changeToken) as? Data {
                         
                         let previousChangeToken = (NSKeyedUnarchiver.unarchiveObject(with: data) as? CKServerChangeToken)
                         hasChangeToken = previousChangeToken != changeToken!
@@ -421,8 +429,8 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                         let lastTokenFetchDate = Date()
                         
                         let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: changeToken! )
-                        zone.setValue(archivedChangeToken, forKey: XYZiCloudZone.changeToken)
-                        zone.setValue(lastTokenFetchDate, forKey: XYZiCloudZone.changeTokenLastFetch)
+                        icloudzone.setValue(archivedChangeToken, forKey: XYZiCloudZone.changeToken)
+                        icloudzone.setValue(lastTokenFetchDate, forKey: XYZiCloudZone.changeTokenLastFetch)
                     
                         saveManageContext()
                     }
@@ -453,11 +461,11 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
 
 func iCloudZone(of zone: CKRecordZone, _ icloudZones: [XYZiCloudZone]) -> XYZiCloudZone? {
     
-    for icloudZone in icloudZones {
+    for icloudzone in icloudZones {
         
-        if let name = icloudZone.value(forKey: XYZiCloudZone.name) as? String, zone.zoneID.zoneName == name {
+        if let name = icloudzone.value(forKey: XYZiCloudZone.name) as? String, zone.zoneID.zoneName == name {
             
-            return icloudZone
+            return icloudzone
         }
     }
     
@@ -488,6 +496,7 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                         
                         print("-------- done saving to iCloud")
                         OperationQueue.main.addOperation {
+                            
                             fetchiCloudZoneChange([zone], icloudZones, {
                                 
                                 print("-------- fetch change after upload to iCloud")
@@ -509,6 +518,7 @@ func fetchAndUpdateiCloud(_ zones: [CKRecordZone],
                           _ completionblock: @escaping () -> Void) {
     
     if !iCloudZones.isEmpty {
+        
         print("-------- fetch changes from zones")
         
         fetchiCloudZoneChange(zones, iCloudZones, {
@@ -521,7 +531,7 @@ func fetchAndUpdateiCloud(_ zones: [CKRecordZone],
                 
                 pushChangeToiCloudZone(zones, iCloudZones, completionblock)
             }
-        } )
+        })
     }
 }
 
@@ -583,7 +593,6 @@ func saveAccountsToiCloud(_ iCloudZone: XYZiCloudZone,
     let container = CKContainer.default()
     let database = container.privateCloudDatabase
     
-
     var recordsToBeSaved = [CKRecord]()
 
     for income in incomeList {
@@ -610,9 +619,6 @@ func saveAccountsToiCloud(_ iCloudZone: XYZiCloudZone,
         record.setValue(lastUpdate, forKey: XYZAccount.lastUpdate)
         record.setValue(currencyCode, forKey: XYZAccount.currencyCode)
 
-        //let uploadDate = Date()
-        //record.setValue(uploadDate, forKey: XYZAccount.lastRecordUpload)
-
         if nil != repeatDate {
 
             record.setValue(repeatDate, forKey: XYZAccount.repeatDate)
@@ -623,13 +629,14 @@ func saveAccountsToiCloud(_ iCloudZone: XYZiCloudZone,
     }
 
     let opToSaved = CKModifyRecordsOperation(recordsToSave: recordsToBeSaved, recordIDsToDelete: recordIdsToBeDeleted)
-    opToSaved.savePolicy = .allKeys
+    opToSaved.savePolicy = .changedKeys
     opToSaved.completionBlock = {
     
         OperationQueue.main.addOperation {
 
-            let data = NSKeyedArchiver.archivedData(withRootObject: [String]() )
+            let data = NSKeyedArchiver.archivedData(withRootObject: [String]())
             iCloudZone.setValue(data, forKey: XYZiCloudZone.deleteRecordIdList)
+            
             saveManageContext()
             
             completionblock()
@@ -637,6 +644,14 @@ func saveAccountsToiCloud(_ iCloudZone: XYZiCloudZone,
     }
     
     database.add(opToSaved)
+}
+
+func sortAcounts(_ incomeList: [XYZAccount]) -> [XYZAccount] {
+    
+    return incomeList.sorted() { (acc1, acc2) in
+        
+        return ( acc1.value(forKey: XYZAccount.sequenceNr) as! Int ) < ( acc2.value(forKey: XYZAccount.sequenceNr) as! Int)
+    }
 }
 
 func loadAccounts() -> [XYZAccount]? {
@@ -650,75 +665,10 @@ func loadAccounts() -> [XYZAccount]? {
         
         output = try aContext?.fetch(fetchRequest)
         
-        output = output?.sorted() {
-            (acc1, acc2) in
-            
-            return ( acc1.value(forKey: XYZAccount.sequenceNr) as! Int ) < ( acc2.value(forKey: XYZAccount.sequenceNr) as! Int)
-        }
+        output = sortAcounts(output!)
     } catch let error as NSError {
         
         print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    
-    let delegate = UIApplication.shared.delegate as? AppDelegate
-    
-    if (delegate?.icloudEnable)! {
-        
-        /*
-        // process icloud records
-        for income in output! {
-            
-            income.saveToiCloud()
-        }
-    
-        // save subscription
-        
-        let container = CKContainer.default()
-        let database = container.privateCloudDatabase
-        
-        database.fetchAllSubscriptions(completionHandler: { (subscriptions, error) in
-        
-            if nil != error {
-                
-                print("-------- error on fetching subscriptions = \(String(describing: error))")
-            } else {
-                
-                if let subscriptions = subscriptions {
-                    
-                    for subscription in subscriptions {
-                        
-                        database.delete(withSubscriptionID: subscription.subscriptionID, completionHandler: { (str, error) in
-                        
-                            if nil != error {
-                                
-                                print("------- error on deleting subscription = \(String(describing: error))")
-                            }
-                        })
-                    }
-                }
-            }
-        })
-        
-        let predicate = NSPredicate(value: true)
-        let subscription = CKQuerySubscription(recordType: XYZAccount.type, predicate: predicate, options: .firesOnRecordUpdate)
-        let notification = CKNotificationInfo()
-        notification.title = "Income update"
-        notification.alertBody = "There is update to Incomes"
-        notification.soundName = "default"
-        subscription.notificationInfo = notification
-        
-        database.save(subscription, completionHandler: { (subscription, error) in
-            
-            if nil != error {
-                
-                print("------- error on saving subscription \(String(describing: error))")
-            }
-        })
-        
-        */
-    } else {
-        
-        // nothing here
     }
     
     return output

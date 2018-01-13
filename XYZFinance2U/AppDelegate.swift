@@ -46,15 +46,25 @@ class AppDelegate: UIResponder,
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
      
-        guard let notification:CKRecordZoneNotification = CKNotification(fromRemoteNotificationDictionary: userInfo) as? CKRecordZoneNotification else {
+        if UIApplication.shared.applicationState == .background {
             
-            return
+            print("-------- app is in background ignore, icloud push notification, we will process them when we are active again")
+            completionHandler(.noData)
+        } else {
+            
+            guard let notification:CKRecordZoneNotification = CKNotification(fromRemoteNotificationDictionary: userInfo) as? CKRecordZoneNotification else {
+                
+                print("-------- failed to get zone notification")
+                completionHandler(.failed)
+                
+                return
+            }
+            
+            print("-------- notifiction \(String(describing: notification.recordZoneID?.zoneName))")
+            
+            syncWithiCloudAndCoreData()
+            completionHandler(.newData)
         }
-        
-        print("-------- notifiction \(String(describing: notification.recordZoneID?.zoneName))")
-        
-        syncWithiCloudAndCoreData()
-        completionHandler(.newData)
     }
     
     // MARK: - static
@@ -84,7 +94,7 @@ class AppDelegate: UIResponder,
                 
                 print("-------- requestAuthorization error = \(theError.localizedDescription)")
             } else {
-                
+             
             }
         }
         
