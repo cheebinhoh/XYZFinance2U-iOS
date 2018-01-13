@@ -197,7 +197,7 @@ class IncomeTableViewController: UITableViewController,
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let ckrecordzone = CKRecordZone(zoneName: XYZAccount.type)
-        guard let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones!)!) else {
+        guard let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones)!) else {
             
             fatalError("Exception: iCloudZoen is expected")
         }
@@ -432,10 +432,10 @@ class IncomeTableViewController: UITableViewController,
         }
         
         let ckrecordzone = CKRecordZone(zoneName: XYZAccount.type)
-        let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones!)!)
+        let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones)!)
         zone?.data = appDelegate?.incomeList
         
-        fetchAndUpdateiCloud([ckrecordzone], (appDelegate?.iCloudZones!)!)
+        fetchAndUpdateiCloud([ckrecordzone], (appDelegate?.iCloudZones)!)
         
         /*
         for account in incomeList {

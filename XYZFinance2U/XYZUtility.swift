@@ -362,7 +362,7 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone], _ icloudZones: [XYZiCloudZo
                     
                     saveAccountsToiCloud(zone, iCloudZone, incomeList, {
                         
-                        print("-------- doen saving")
+                        print("-------- donn saving")
                         
                         OperationQueue.main.addOperation {
                             fetchiCloudZoneChange([zone], icloudZones, {

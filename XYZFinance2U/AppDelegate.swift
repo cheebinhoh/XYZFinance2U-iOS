@@ -23,7 +23,7 @@ class AppDelegate: UIResponder,
     
     var incomeList = [XYZAccount]()
     
-    var iCloudZones: [XYZiCloudZone]?
+    var iCloudZones = [XYZiCloudZone]()
     
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
@@ -78,32 +78,37 @@ class AppDelegate: UIResponder,
         
         application.registerForRemoteNotifications()
 
+        // fetch global data list
         incomeList = loadAccounts()!
+        iCloudZones = loadiCloudZone()!
         
-        // process icloud zone ...
-        iCloudZones = loadiCloudZone()
         var incomeiCloudZone: XYZiCloudZone?
         
-        for zone in iCloudZones! {
+        /* debugging
+        for icloudZone in iCloudZones {
             
-            let data = zone.value(forKey: XYZiCloudZone.changeToken) as? Data
+            let data = icloudZone.value(forKey: XYZiCloudZone.changeToken) as? Data
             guard let chageToken = (NSKeyedUnarchiver.unarchiveObject(with: data!) as? CKServerChangeToken) else {
                 
-                fatalError("Exception: unachive change token is failed")
+                print("Unachive change token is failed")
+                continue
+                
+                // fatalError("Exception: unachive change token is failed")
             }
          
-            let fetchDate = zone.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date
+            let fetchDate = icloudZone.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date
             
             print("-------- last fetch change token = \(chageToken), last fetch = \(String(describing: fetchDate))")
         }
+         */
 
-        for zone in iCloudZones! {
+        for icloudZone in iCloudZones {
             
-            switch (zone.value(forKey: XYZiCloudZone.name) as? String )! {
+            switch (icloudZone.value(forKey: XYZiCloudZone.name) as? String )! {
                 
                 case XYZAccount.type:
-                    incomeiCloudZone = zone
-                    zone.data = incomeList  // we do not keep it persistent in core data
+                    incomeiCloudZone = icloudZone
+                    icloudZone.data = incomeList  // we do not keep it persistent in core data
                 
                 default:
                     fatalError("Exception: zone type is not supported")
@@ -136,10 +141,10 @@ class AppDelegate: UIResponder,
                         for zone in saved! {
                             
                             let iCloudZone = XYZiCloudZone(name: zone.zoneID.zoneName, context: managedContext())
-                            self.iCloudZones?.append(iCloudZone)
+                            self.iCloudZones.append(iCloudZone)
                         }
                         
-                        fetchiCloudZoneChange(saved!, self.iCloudZones!, {
+                        fetchiCloudZoneChange(saved!, self.iCloudZones, {
                             
                             print("---- done fetching 1")
                         })
@@ -154,9 +159,9 @@ class AppDelegate: UIResponder,
         }
         
         if !zonesToBeFetched.isEmpty {
-            print("-------- fetch change" )
+            print("-------- fetch change for zones" )
             
-            fetchAndUpdateiCloud(zonesToBeFetched, self.iCloudZones!)
+            fetchAndUpdateiCloud(zonesToBeFetched, self.iCloudZones)
         }
         
         // Override point for customization after application launch.
