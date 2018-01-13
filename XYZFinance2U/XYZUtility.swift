@@ -222,19 +222,64 @@ func loadiCloudZone() -> [XYZiCloudZone]? {
     return output
 }
 
-func createUpdateAccount(_ record: CKRecord, _ incomeList: [XYZAccount]) -> [XYZAccount] {
+func createUpdateAccount(_ record: CKRecord, _ incomeList: [XYZAccount]) -> XYZAccount {
     
     let recordName = record.recordID.recordName
-    let bank = record[XYZAccount.bank]
+    let bank = record[XYZAccount.bank] as? String
+    let accountNr = record[XYZAccount.accountNr] as? String
+    let amount = record[XYZAccount.amount] as? Double
+    let lastUpdate = record[XYZAccount.lastUpdate] as? Date
+    let currencyCode = record[XYZAccount.currencyCode] as? String
+    let repeatDate = record[XYZAccount.repeatDate] as? Date
+    let repeatAction = record[XYZAccount.repeatAction] as? String
     
-    print("---- \(recordName), \(String(describing: bank))")
-    return incomeList
+    var incomeToBeUpdated: XYZAccount?
+    
+    for income in incomeList {
+        
+        guard let recordId = income.value(forKey: XYZAccount.recordId) as? String else {
+            
+            fatalError("Exception: record is expected")
+        }
+        
+        if recordId == recordName {
+            
+            incomeToBeUpdated = income
+            break
+        }
+    }
+
+    if nil == incomeToBeUpdated {
+        
+        let tokenStrings = recordName.split(separator: ":")
+        let sequenceNr = Int(tokenStrings[tokenStrings.count - 1])!
+        
+        print("---- before create")
+        incomeToBeUpdated = XYZAccount(sequenceNr: sequenceNr,
+                                       bank: bank!,
+                                       accountNr: accountNr ?? "",
+                                       amount: amount!, date: lastUpdate!, context: managedContext())
+        print("---- after create")
+    }
+    
+    incomeToBeUpdated?.setValue(amount!, forKey: XYZAccount.amount)
+    incomeToBeUpdated?.setValue(lastUpdate!, forKey: XYZAccount.lastUpdate)
+    incomeToBeUpdated?.setValue(currencyCode!, forKey: XYZAccount.currencyCode)
+    
+    if repeatDate != nil {
+        
+        incomeToBeUpdated?.setValue(repeatDate, forKey: XYZAccount.repeatDate)
+        incomeToBeUpdated?.setValue(repeatAction, forKey: XYZAccount.repeatAction)
+    }
+
+    return incomeToBeUpdated!
 }
 
 func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                            _ icloudZones: [XYZiCloudZone],
                            _ completionblock: @escaping () -> Void ) {
     
+    var updatedIncomeList = [XYZAccount]()
     let container = CKContainer.default()
     let database = container.privateCloudDatabase
     var changedZoneIDs: [CKRecordZoneID] = []
@@ -281,13 +326,13 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
         switch zoneName! {
             
             case XYZAccount.type:
-                guard var incomeList = icloudZone?.data as? [XYZAccount] else {
+                guard let incomeList = icloudZone?.data as? [XYZAccount] else {
                     
                     fatalError("Exception: incomeList is expected")
                 }
             
-                incomeList = createUpdateAccount(record, incomeList)
-                icloudZone?.data = incomeList
+                let income = createUpdateAccount(record, incomeList)
+                updatedIncomeList.append(income)
             
             default:
                 fatalError("Exception: zone type \(String(describing: zoneName)) is not supported")
@@ -318,9 +363,10 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                 
                 if let zName = zone.value(forKey: XYZiCloudZone.name) as? String, zName == zoneId.zoneName {
                     
+                    print("-------- update # of incomeList = \(updatedIncomeList.count)")
+                    
                     print("-------- change token \(changeToken!)")
                     var hasChangeToken = true;
-                    
               
                     if let data = zone.value(forKey: XYZiCloudZone.changeToken) as? Data {
                         
@@ -340,6 +386,8 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                     
                     break
                 }
+                
+                completionblock()
             }
         }
     }
@@ -510,8 +558,8 @@ func saveAccountsToiCloud(_ iCloudZone: XYZiCloudZone,
         record.setValue(lastUpdate, forKey: XYZAccount.lastUpdate)
         record.setValue(currencyCode, forKey: XYZAccount.currencyCode)
 
-        let uploadDate = Date()
-        record.setValue(uploadDate, forKey: XYZAccount.lastRecordUpload)
+        //let uploadDate = Date()
+        //record.setValue(uploadDate, forKey: XYZAccount.lastRecordUpload)
 
         if nil != repeatDate {
 
