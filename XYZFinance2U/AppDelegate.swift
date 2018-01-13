@@ -129,10 +129,12 @@ class AppDelegate: UIResponder,
         
         if !zonesToBeSaved.isEmpty {
             
+            print("-------- attempt to create zone")
             let op = CKModifyRecordZonesOperation(recordZonesToSave: zonesToBeSaved, recordZoneIDsToDelete: nil)
             op.modifyRecordZonesCompletionBlock = { (saved, deleted, error) in
                 
                 if nil != error {
+                    
                     print("-------- error on creating zone = \(String(describing: error))")
                 } else {
                     
@@ -141,12 +143,24 @@ class AppDelegate: UIResponder,
                         for zone in saved! {
                             
                             let iCloudZone = XYZiCloudZone(name: zone.zoneID.zoneName, context: managedContext())
+                            
+                            switch zone.zoneID.zoneName {
+                               
+                                case XYZAccount.type:
+                                    iCloudZone.data = self.incomeList
+                               
+                                default:
+                                    fatalError("Exception: \(zone.zoneID.zoneName) is not supported")
+                            }
+                            
                             self.iCloudZones.append(iCloudZone)
                         }
                         
+                        saveManageContext()
+                        
                         fetchiCloudZoneChange(saved!, self.iCloudZones, {
                             
-                            print("---- done fetching 1")
+                            print("---- done fetching changes after saving zone")
                         })
                     }
                 }

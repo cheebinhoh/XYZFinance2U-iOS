@@ -222,6 +222,15 @@ func loadiCloudZone() -> [XYZiCloudZone]? {
     return output
 }
 
+func createUpdateAccount(_ record: CKRecord, _ incomeList: [XYZAccount]) -> [XYZAccount] {
+    
+    let recordName = record.recordID.recordName
+    let bank = record[XYZAccount.bank]
+    
+    print("---- \(recordName), \(String(describing: bank))")
+    return incomeList
+}
+
 func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                            _ icloudZones: [XYZiCloudZone],
                            _ completionblock: @escaping () -> Void ) {
@@ -233,7 +242,6 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     
     for zone in zones {
         
-
         changedZoneIDs.append(zone.zoneID)
         
         var changeToken: CKServerChangeToken? = nil
@@ -243,8 +251,10 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
             let name = icloudzone.value(forKey: XYZiCloudZone.name) as? String
             if name == zone.zoneID.zoneName {
                 
-                let data = icloudzone.value(forKey: XYZiCloudZone.changeToken) as? Data
-                changeToken = (NSKeyedUnarchiver.unarchiveObject(with: data!) as? CKServerChangeToken)
+                if let data = icloudzone.value(forKey: XYZiCloudZone.changeToken) as? Data {
+                
+                    changeToken = (NSKeyedUnarchiver.unarchiveObject(with: data) as? CKServerChangeToken)
+                }
                 
                 break
             }
@@ -261,8 +271,27 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     let opZoneChange = CKFetchRecordZoneChangesOperation(recordZoneIDs: changedZoneIDs, optionsByRecordZoneID: optionsByRecordZoneID )
     
     opZoneChange.recordChangedBlock = { (record) in
-        print("Record changed:", record)
+        print("Record changed...")
         
+        let ckrecordzone = CKRecordZone(zoneName: record.recordID.zoneID.zoneName)
+        let icloudZone = iCloudZone(of: ckrecordzone, icloudZones)
+        
+        let zoneName = icloudZone?.value(forKey: XYZiCloudZone.name) as? String
+        
+        switch zoneName! {
+            
+            case XYZAccount.type:
+                guard var incomeList = icloudZone?.data as? [XYZAccount] else {
+                    
+                    fatalError("Exception: incomeList is expected")
+                }
+            
+                incomeList = createUpdateAccount(record, incomeList)
+                icloudZone?.data = incomeList
+            
+            default:
+                fatalError("Exception: zone type \(String(describing: zoneName)) is not supported")
+        }
     }
     
     opZoneChange.recordWithIDWasDeletedBlock = { (recordId, str) in
@@ -381,17 +410,19 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone], _ icloudZones: [XYZiCloudZo
 
 func fetchAndUpdateiCloud(_ zones: [CKRecordZone], _ iCloudZones: [XYZiCloudZone]) {
     
-    fetchiCloudZoneChange(zones, iCloudZones, {
-        
-        print("-------- done fetching after startup")
-        
-        //we should only write to icloud if we do have changed after last token change
-        
-        OperationQueue.main.addOperation {
+    if !iCloudZones.isEmpty {
+        fetchiCloudZoneChange(zones, iCloudZones, {
             
-            pushChangeToiCloudZone(zones, iCloudZones)
-        }
-    } )
+            print("-------- done fetching after startup")
+            
+            //we should only write to icloud if we do have changed after last token change
+            
+            OperationQueue.main.addOperation {
+                
+                pushChangeToiCloudZone(zones, iCloudZones)
+            }
+        } )
+    }
 }
 
 func saveAccountsToiCloud(_ zone: CKRecordZone, _ iCloudZone: XYZiCloudZone, _ incomeList: [XYZAccount], _ completionblock: @escaping () -> Void ) {
