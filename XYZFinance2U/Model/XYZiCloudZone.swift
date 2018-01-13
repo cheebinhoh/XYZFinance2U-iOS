@@ -16,11 +16,13 @@ class XYZiCloudZone: NSManagedObject {
     static let changeToken = "changeToken"
     static let name = "name"
     static let changeTokenLastFetch = "changeTokenLastFetch"
+    static let deleteRecordIdList = "deleteRecordIdList"
     
     var name = ""
     var changeToken = NSData()
     var changeTokenLastFetch = Date()
     var data: Any?
+    var deleteRecordIdList = NSData()
     
     init(name: String, context: NSManagedObjectContext?)
     {
@@ -30,6 +32,9 @@ class XYZiCloudZone: NSManagedObject {
         super.init(entity: entity, insertInto: aContext)
         
         self.setValue(name, forKey: XYZiCloudZone.name)
+        
+        let data = NSKeyedArchiver.archivedData(withRootObject: [String]() )
+        self.setValue(data, forKey: XYZiCloudZone.deleteRecordIdList)
     }
     
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {

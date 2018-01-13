@@ -193,7 +193,35 @@ class IncomeTableViewController: UITableViewController,
         saveAccounts()
     }
     
+    func softDeleteIncome(income: XYZAccount) {
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let ckrecordzone = CKRecordZone(zoneName: XYZAccount.type)
+        guard let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones!)!) else {
+            
+            fatalError("Exception: iCloudZoen is expected")
+        }
+        
+        guard let data = zone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
+            
+            fatalError("Exception: data is expected for deleteRecordIdList")
+        }
+        
+        guard var deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+            
+            fatalError("Exception: deleteRecordList is expected as [String]")
+        }
+        
+        let recordName = income.value(forKey: XYZAccount.recordId) as? String
+        deleteRecordLiset.append(recordName!)
+        
+        let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
+        zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
+    }
+    
     func deleteIncome(income: XYZAccount) {
+
+        softDeleteIncome(income: income)
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let aContext = managedContext()
@@ -918,6 +946,7 @@ class IncomeTableViewController: UITableViewController,
             let sectionIncomeList = tableSectionCellList[indexPath.section].data as? [XYZAccount]
             let incomeToBeDeleted = sectionIncomeList![indexPath.row]
             
+            softDeleteIncome(income: incomeToBeDeleted)
             let identifier = incomeToBeDeleted.value(forKey: XYZAccount.recordId) as? String
             
             let notificationCenter = UNUserNotificationCenter.current()

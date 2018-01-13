@@ -157,20 +157,6 @@ class AppDelegate: UIResponder,
             print("-------- fetch change" )
             
             fetchAndUpdateiCloud(zonesToBeFetched, self.iCloudZones!)
-            
-            /*
-            fetchiCloudZoneChange(zonesToBeFetched, self.iCloudZones!, {
-         
-                print("-------- done fetching after startup")
-                
-                //we should only write to icloud if we do have changed after last token change
-                 
-                OperationQueue.main.addOperation {
-                    
-                    pushChangeToiCloudZone(zonesToBeFetched, self.iCloudZones!)
-                }
-            } )
-            */
         }
         
         // Override point for customization after application launch.

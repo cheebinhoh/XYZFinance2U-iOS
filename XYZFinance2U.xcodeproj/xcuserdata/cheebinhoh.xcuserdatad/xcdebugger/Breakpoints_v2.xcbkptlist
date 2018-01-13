@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XYZFinance2U/Income/IncomeTableViewController.swift"
-            timestampString = "537490603.947818"
+            timestampString = "537494792.091949"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "880"
-            endingLineNumber = "880"
+            startingLineNumber = "908"
+            endingLineNumber = "908"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -403,12 +403,9 @@ func saveAccountsToiCloud(_ zone: CKRecordZone, _ iCloudZone: XYZiCloudZone, _ i
         incomeListToBeSaved = [XYZAccount]()
         
         for income in incomeList {
-            let bank = income.value(forKey: XYZAccount.bank) as? String
-            
-            print("---- check \(String(describing: bank))")
+    
             if let lastChanged = income.value(forKey: XYZAccount.lastRecordChange) as? Date {
                 
-                print("------ last changed \(lastChanged), \(lastChangeTokenFetch)")
                 if lastChanged > lastChangeTokenFetch {
                     
                     incomeListToBeSaved?.append(income)
@@ -423,64 +420,92 @@ func saveAccountsToiCloud(_ zone: CKRecordZone, _ iCloudZone: XYZiCloudZone, _ i
         incomeListToBeSaved = incomeList
     }
  
+    var recordIdsToBeDeleted = [CKRecordID]()
+    
+    guard let data = iCloudZone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
+        
+        fatalError("Exception: data is expected for deleteRecordIdList")
+    }
+    
+    guard let deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+        
+        fatalError("Exception: deleteRecordList is expected as [String]")
+    }
+    
+    for deleteRecordName in deleteRecordLiset {
+        
+        let customZone = CKRecordZone(zoneName: XYZAccount.type)
+        let ckrecordId = CKRecordID(recordName: deleteRecordName, zoneID: customZone.zoneID)
+        
+        recordIdsToBeDeleted.append(ckrecordId)
+    }
+
     print("-------- # of changed account is = \(String(describing: incomeListToBeSaved?.count))")
-    saveAccountsToiCloud(incomeListToBeSaved!, completionblock)
+    saveAccountsToiCloud(iCloudZone, incomeListToBeSaved!, recordIdsToBeDeleted, completionblock)
 }
 
-func saveAccountsToiCloud(_ incomeList: [XYZAccount], _ completionblock: @escaping () -> Void ) {
+func saveAccountsToiCloud(_ iCloudZone: XYZiCloudZone,
+                          _ incomeList: [XYZAccount],
+                          _ recordIdsToBeDeleted: [CKRecordID],
+                          _ completionblock: @escaping () -> Void ) {
     
     let container = CKContainer.default()
     let database = container.privateCloudDatabase
     
-    if !incomeList.isEmpty {
-     
-        var recordsToBeSaved = [CKRecord]()
 
-        for income in incomeList {
+    var recordsToBeSaved = [CKRecord]()
 
-            let recordName = income.value(forKey: XYZAccount.recordId) as? String
-            let customZone = CKRecordZone(zoneName: XYZAccount.type)
-            let ckrecordId = CKRecordID(recordName: recordName!, zoneID: customZone.zoneID)
+    for income in incomeList {
 
-            print("-------- saving record name = \(String(describing: recordName))")
-            
-            let record = CKRecord(recordType: XYZAccount.type, recordID: ckrecordId)
+        let recordName = income.value(forKey: XYZAccount.recordId) as? String
+        let customZone = CKRecordZone(zoneName: XYZAccount.type)
+        let ckrecordId = CKRecordID(recordName: recordName!, zoneID: customZone.zoneID)
 
-            let bank = income.value(forKey: XYZAccount.bank) as? String
-            let accountNr = income.value(forKey: XYZAccount.accountNr) as? String ?? ""
-            let amount = income.value(forKey: XYZAccount.amount) as? Double
-            let lastUpdate = income.value(forKey: XYZAccount.lastUpdate) as? Date
-            let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
-            let repeatDate = income.value(forKey: XYZAccount.repeatDate) as? Date
-            let repeatAction = income.value(forKey: XYZAccount.repeatAction) as? String
+        print("-------- saving record name = \(String(describing: recordName))")
+        
+        let record = CKRecord(recordType: XYZAccount.type, recordID: ckrecordId)
 
-            record.setValue(bank, forKey: XYZAccount.bank)
-            record.setValue(accountNr, forKey: XYZAccount.accountNr)
-            record.setValue(amount, forKey: XYZAccount.amount)
-            record.setValue(lastUpdate, forKey: XYZAccount.lastUpdate)
-            record.setValue(currencyCode, forKey: XYZAccount.currencyCode)
+        let bank = income.value(forKey: XYZAccount.bank) as? String
+        let accountNr = income.value(forKey: XYZAccount.accountNr) as? String ?? ""
+        let amount = income.value(forKey: XYZAccount.amount) as? Double
+        let lastUpdate = income.value(forKey: XYZAccount.lastUpdate) as? Date
+        let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
+        let repeatDate = income.value(forKey: XYZAccount.repeatDate) as? Date
+        let repeatAction = income.value(forKey: XYZAccount.repeatAction) as? String
 
-            let uploadDate = Date()
-            record.setValue(uploadDate, forKey: XYZAccount.lastRecordUpload)
+        record.setValue(bank, forKey: XYZAccount.bank)
+        record.setValue(accountNr, forKey: XYZAccount.accountNr)
+        record.setValue(amount, forKey: XYZAccount.amount)
+        record.setValue(lastUpdate, forKey: XYZAccount.lastUpdate)
+        record.setValue(currencyCode, forKey: XYZAccount.currencyCode)
 
-            if nil != repeatDate {
+        let uploadDate = Date()
+        record.setValue(uploadDate, forKey: XYZAccount.lastRecordUpload)
 
-                record.setValue(repeatDate, forKey: XYZAccount.repeatDate)
-                record.setValue(repeatAction, forKey: XYZAccount.repeatAction)
-            }
+        if nil != repeatDate {
 
-            recordsToBeSaved.append(record)
+            record.setValue(repeatDate, forKey: XYZAccount.repeatDate)
+            record.setValue(repeatAction, forKey: XYZAccount.repeatAction)
         }
 
-        let opToSaved = CKModifyRecordsOperation(recordsToSave: recordsToBeSaved, recordIDsToDelete: nil)
-        opToSaved.savePolicy = .allKeys
-        opToSaved.completionBlock = {
+        recordsToBeSaved.append(record)
+    }
 
+    let opToSaved = CKModifyRecordsOperation(recordsToSave: recordsToBeSaved, recordIDsToDelete: recordIdsToBeDeleted)
+    opToSaved.savePolicy = .allKeys
+    opToSaved.completionBlock = {
+    
+        OperationQueue.main.addOperation {
+
+            let data = NSKeyedArchiver.archivedData(withRootObject: [String]() )
+            iCloudZone.setValue(data, forKey: XYZiCloudZone.deleteRecordIdList)
+            saveManageContext()
+            
             completionblock()
         }
-        
-        database.add(opToSaved)
     }
+    
+    database.add(opToSaved)
 }
 
 func loadAccounts() -> [XYZAccount]? {
