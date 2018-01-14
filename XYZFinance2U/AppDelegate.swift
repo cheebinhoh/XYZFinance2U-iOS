@@ -12,24 +12,23 @@ import CoreData
 import CloudKit
 import UserNotifications
 import NotificationCenter
+import os.log
 
 @UIApplicationMain
 class AppDelegate: UIResponder,
     UIApplicationDelegate,
     UNUserNotificationCenterDelegate {
     
-    
     // MARK: - property
     
     var incomeList = [XYZAccount]()
-    
     var iCloudZones = [XYZiCloudZone]()
     
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         
-        print("-------- notification action")
+        os_log("-------- userNotificationCenter", log: OSLog.default, type: .default)
         
         completionHandler()
     }
@@ -38,9 +37,8 @@ class AppDelegate: UIResponder,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
-        print("-------- notification")
+        os_log("-------- userNotificationCenter", log: OSLog.default, type: .default)
         
-        // Play a sound.
         completionHandler(UNNotificationPresentationOptions.sound)
     }
     
@@ -48,19 +46,19 @@ class AppDelegate: UIResponder,
      
         if UIApplication.shared.applicationState == .background {
             
-            print("-------- app is in background ignore, icloud push notification, we will process them when we are active again")
+            os_log("-------- app is in background ignore, icloud push notification, we will process them when we are active again", log: OSLog.default, type: .default)
             completionHandler(.noData)
         } else {
             
             guard let notification:CKRecordZoneNotification = CKNotification(fromRemoteNotificationDictionary: userInfo) as? CKRecordZoneNotification else {
                 
-                print("-------- failed to get zone notification")
+                os_log("-------- failed to get zone notification", log: OSLog.default, type: .default)
                 completionHandler(.failed)
                 
                 return
             }
             
-            print("-------- notifiction \(String(describing: notification.recordZoneID?.zoneName))")
+            let _ = "-------- notifiction \(String(describing: notification.recordZoneID?.zoneName))"
             
             syncWithiCloudAndCoreData()
             completionHandler(.newData)
@@ -105,203 +103,6 @@ class AppDelegate: UIResponder,
         // Override point for customization after application launch.
 
         return true
-    }
-
-    func registeriCloudSubscription() {
-        
-        for icloudzone in iCloudZones {
-            
-            guard let name = (icloudzone.value(forKey: XYZiCloudZone.name) as? String) else {
-                
-                fatalError("Exception: iCloud zone name is expected")
-            }
-            
-            let container = CKContainer.default()
-            let database = container.privateCloudDatabase
-            
-            let ckrecordzone = CKRecordZone(zoneName: name)
-            
-            let fetchOp = CKFetchSubscriptionsOperation.init(subscriptionIDs: [ckrecordzone.zoneID.zoneName])
-
-            fetchOp.fetchSubscriptionCompletionBlock = {(subscriptionDict, error) -> Void in
-                
-                print("-------- fetch result of subscription")
-                    
-                if let _ = subscriptionDict?[ckrecordzone.zoneID.zoneName] {
-                    
-                    print("-------- subscription exist")
-                } else {
-                    
-                    print("-------- register new subscription")
-                    let subscription = CKRecordZoneSubscription.init(zoneID: ckrecordzone.zoneID, subscriptionID: ckrecordzone.zoneID.zoneName)
-                    let notificationInfo = CKNotificationInfo()
-                    
-                    notificationInfo.shouldSendContentAvailable = true
-                    subscription.notificationInfo = notificationInfo
-                    
-                    let operation = CKModifySubscriptionsOperation(subscriptionsToSave: [subscription], subscriptionIDsToDelete: [])
-                    operation.qualityOfService = .utility
-                    operation.completionBlock = {
-                        
-                        print("-------- register subscription complete")
-                    }
-                    
-                    database.add(operation)
-                }
-            }
-            
-            database.add(fetchOp)
-        }
-    }
-    
-    func syncWithiCloudAndCoreData() {
-        
-        guard let splitView = self.window?.rootViewController as? MainSplitViewController else {
-            
-            fatalError("Exception: MainSplitViewController is expected")
-        }
-        
-        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
-            
-            fatalError("Exception: MainUITabBarController is expected")
-        }
-        
-        guard let navController = tabbarView.viewControllers?.first as? UINavigationController else {
-            
-            fatalError("Exception: UINavigationController is expected")
-        }
-        
-        guard let incomeView = navController.viewControllers.first as? IncomeTableViewController else {
-            
-            fatalError("Exception: IncomeTableViewController is expected")
-        }
-        
-        // fetch global data list
-        incomeList = loadAccounts()!
-        iCloudZones = loadiCloudZone()!
-        
-        var incomeiCloudZone: XYZiCloudZone?
-        
-        for icloudzone in iCloudZones {
-            
-            switch (icloudzone.value(forKey: XYZiCloudZone.name) as? String )! {
-                
-            case XYZAccount.type:
-                incomeiCloudZone = icloudzone
-                icloudzone.data = incomeList  // We do not need to keep it in persistent state
-                
-            default:
-                fatalError("Exception: zone type is not supported")
-            }
-        }
-        
-        var zonesToBeFetched = [CKRecordZone]()
-        var zonesToBeSaved = [CKRecordZone]()
-        let accountCustomZone = CKRecordZone(zoneName: XYZAccount.type)
-        
-        if incomeiCloudZone == nil {
-            
-            zonesToBeSaved.append(accountCustomZone)
-        } else {
-            
-            zonesToBeFetched.append(accountCustomZone)
-        }
-        
-        if !zonesToBeSaved.isEmpty {
-            
-            print("-------- attempt to create zone")
-            let op = CKModifyRecordZonesOperation(recordZonesToSave: zonesToBeSaved, recordZoneIDsToDelete: nil)
-            op.modifyRecordZonesCompletionBlock = { (saved, deleted, error) in
-                
-                if nil != error {
-                    
-                    print("-------- error on creating zone = \(String(describing: error))")
-                } else {
-                    
-                    print("-------- success in create zone" )
-                    OperationQueue.main.addOperation {
-                        
-                        for zone in saved! {
-                            
-                            let icloudzone = XYZiCloudZone(name: zone.zoneID.zoneName, context: managedContext())
-                            
-                            switch zone.zoneID.zoneName {
-                                
-                                case XYZAccount.type:
-                                    icloudzone.data = self.incomeList
-                                
-                                default:
-                                    fatalError("Exception: \(zone.zoneID.zoneName) is not supported")
-                            }
-                            
-                            self.iCloudZones.append(icloudzone)
-                        }
-                        
-                        saveManageContext()
-                        
-                        fetchiCloudZoneChange(saved!, self.iCloudZones, {
-                            
-                            print("-------- done fetching changes after saving zone")
-                            for icloudzone in self.iCloudZones {
-                                
-                                let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
-                                switch zName! {
-                                    
-                                    case XYZAccount.type:
-                                        self.incomeList = (icloudzone.data as? [XYZAccount])!
-                                        
-                                        DispatchQueue.main.async {
-                                            
-                                            incomeView.reloadData()
-                                        }
-                                        
-                                        print("-------- fetch # of incomes = \(self.incomeList.count)")
-                                    
-                                    default:
-                                        fatalError("Exception: \(String(describing: zName)) is not supported")
-                                }
-                            }
-                        })
-                    }
-                }
-            }
-            
-            let container = CKContainer.default()
-            let database = container.privateCloudDatabase
-            
-            database.add(op)
-        }
-        
-        if !zonesToBeFetched.isEmpty {
-            
-            print("-------- fetch and uppdate changes from/to zones")
-            
-            fetchAndUpdateiCloud(zonesToBeFetched, self.iCloudZones, {
-                
-                print("-------- done fetching changes after saving zone")
-                for icloudzone in self.iCloudZones {
-                    
-                    let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
-                    switch zName! {
-                        
-                        case XYZAccount.type:
-                            self.incomeList = (icloudzone.data as? [XYZAccount])!
-                        
-                            DispatchQueue.main.async {
-                                
-                                incomeView.reloadData()
-                            
-                                self.registeriCloudSubscription()
-                            }
-                        
-                            print("-------- complete of fetch and update with icloud and core data")
-                        
-                        default:
-                            fatalError("Exception: \(String(describing: zName)) is not supported")
-                    }
-                }
-            })
-        }
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
@@ -379,7 +180,7 @@ class AppDelegate: UIResponder,
                  * The store could not be migrated to the current model version.
                  Check the error message to determine what the actual problem was.
                  */
-                fatalError("Exception: Unresolved error \(error), \(error.userInfo)")
+                fatalError("Exception: error on load core data persistent store, \(error), \(error.userInfo)")
             }
         })
         
@@ -402,8 +203,158 @@ class AppDelegate: UIResponder,
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
-                fatalError("Exception: Unresolved error \(nserror), \(nserror.userInfo)")
+                fatalError("Exception: error on save core data, \(nserror), \(nserror.userInfo)")
             }
+        }
+    }
+    
+    func syncWithiCloudAndCoreData() {
+        
+        guard let splitView = self.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: MainSplitViewController is expected")
+        }
+        
+        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+            
+            fatalError("Exception: MainUITabBarController is expected")
+        }
+        
+        guard let navController = tabbarView.viewControllers?.first as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+        
+        guard let incomeView = navController.viewControllers.first as? IncomeTableViewController else {
+            
+            fatalError("Exception: IncomeTableViewController is expected")
+        }
+        
+        // fetch global data list
+        incomeList = loadAccounts()!
+        iCloudZones = loadiCloudZone()!
+        
+        var incomeiCloudZone: XYZiCloudZone?
+        
+        for icloudzone in iCloudZones {
+            
+            switch (icloudzone.value(forKey: XYZiCloudZone.name) as? String )! {
+                
+            case XYZAccount.type:
+                incomeiCloudZone = icloudzone
+                icloudzone.data = incomeList  // We do not need to keep it in persistent state
+                
+            default:
+                fatalError("Exception: zone type is not supported")
+            }
+        }
+        
+        var zonesToBeFetched = [CKRecordZone]()
+        var zonesToBeSaved = [CKRecordZone]()
+        let accountCustomZone = CKRecordZone(zoneName: XYZAccount.type)
+        
+        if incomeiCloudZone == nil {
+            
+            zonesToBeSaved.append(accountCustomZone)
+        } else {
+            
+            zonesToBeFetched.append(accountCustomZone)
+        }
+        
+        if !zonesToBeSaved.isEmpty {
+            
+            //print("-------- attempt to create zone")
+            let op = CKModifyRecordZonesOperation(recordZonesToSave: zonesToBeSaved, recordZoneIDsToDelete: nil)
+            op.modifyRecordZonesCompletionBlock = { (saved, deleted, error) in
+                
+                if nil != error {
+                    
+                    ///print("-------- error on creating zone = \(String(describing: error))")
+                } else {
+                    
+                    //print("-------- success in create zone" )
+                    OperationQueue.main.addOperation {
+                        
+                        for zone in saved! {
+                            
+                            let icloudzone = XYZiCloudZone(name: zone.zoneID.zoneName, context: managedContext())
+                            
+                            switch zone.zoneID.zoneName {
+                                
+                            case XYZAccount.type:
+                                icloudzone.data = self.incomeList
+                                
+                            default:
+                                fatalError("Exception: \(zone.zoneID.zoneName) is not supported")
+                            }
+                            
+                            self.iCloudZones.append(icloudzone)
+                        }
+                        
+                        saveManageContext()
+                        
+                        fetchiCloudZoneChange(saved!, self.iCloudZones, {
+                            
+                            //print("-------- done fetching changes after saving zone")
+                            for icloudzone in self.iCloudZones {
+                                
+                                let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
+                                switch zName! {
+                                    
+                                case XYZAccount.type:
+                                    self.incomeList = (icloudzone.data as? [XYZAccount])!
+                                    
+                                    DispatchQueue.main.async {
+                                        
+                                        incomeView.reloadData()
+                                    }
+                                    
+                                    //print("-------- fetch # of incomes = \(self.incomeList.count)")
+                                    
+                                default:
+                                    fatalError("Exception: \(String(describing: zName)) is not supported")
+                                }
+                            }
+                        })
+                    }
+                }
+            }
+            
+            let container = CKContainer.default()
+            let database = container.privateCloudDatabase
+            
+            database.add(op)
+        }
+        
+        if !zonesToBeFetched.isEmpty {
+            
+            //print("-------- fetch and uppdate changes from/to zones")
+            
+            fetchAndUpdateiCloud(zonesToBeFetched, self.iCloudZones, {
+                
+                //print("-------- done fetching changes after saving zone")
+                for icloudzone in self.iCloudZones {
+                    
+                    let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
+                    switch zName! {
+                        
+                    case XYZAccount.type:
+                        self.incomeList = (icloudzone.data as? [XYZAccount])!
+                        
+                        DispatchQueue.main.async {
+                            
+                            incomeView.reloadData()
+                            
+                            registeriCloudSubscription(self.iCloudZones)
+                        }
+                        
+                        ///print("-------- complete of fetch and update with icloud and core data")
+                        
+                    default:
+                        fatalError("Exception: \(String(describing: zName)) is not supported")
+                    }
+                }
+            })
         }
     }
     
