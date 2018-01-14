@@ -409,7 +409,6 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                 
                 if let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String, zName == zoneId.zoneName {
                     
-                    //zone.data = updatedIncomeList
                     let updatedIncomeList = icloudzone.data as? [XYZAccount]
                     print("-------- # of income = \(String(describing: updatedIncomeList?.count))")
                     
@@ -431,14 +430,13 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                         let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: changeToken! )
                         icloudzone.setValue(archivedChangeToken, forKey: XYZiCloudZone.changeToken)
                         icloudzone.setValue(lastTokenFetchDate, forKey: XYZiCloudZone.changeTokenLastFetch)
-                    
-                        saveManageContext()
+
                     }
                     
                     break
                 }
                 
-                //completionblock()
+                saveManageContext() // save changed token and data
             }
         }
     }
@@ -633,11 +631,11 @@ func saveAccountsToiCloud(_ iCloudZone: XYZiCloudZone,
     opToSaved.completionBlock = {
     
         OperationQueue.main.addOperation {
-
+            
             let data = NSKeyedArchiver.archivedData(withRootObject: [String]())
             iCloudZone.setValue(data, forKey: XYZiCloudZone.deleteRecordIdList)
             
-            saveManageContext()
+            saveManageContext() // FIXME: I do not think we need that.
             
             completionblock()
         }

@@ -109,9 +109,9 @@ class AppDelegate: UIResponder,
 
     func registeriCloudSubscription() {
         
-        for icloudZone in iCloudZones {
+        for icloudzone in iCloudZones {
             
-            guard let name = (icloudZone.value(forKey: XYZiCloudZone.name) as? String) else {
+            guard let name = (icloudzone.value(forKey: XYZiCloudZone.name) as? String) else {
                 
                 fatalError("Exception: iCloud zone name is expected")
             }
