@@ -598,7 +598,8 @@ class IncomeTableViewController: UITableViewController,
                     
                     if self.authenticatedOk {
                         
-                        OperationQueue.main.addOperation {
+                        //OperationQueue.main.addOperation
+                        DispatchQueue.main.async {
                             
                             if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
                                 
@@ -632,7 +633,8 @@ class IncomeTableViewController: UITableViewController,
                                 self.lockScreenDisplayed = true
                                 
                                 // NOTE: to avoid warning "Unbalanced calls to begin/end appearance transitions for"
-                                OperationQueue.main.addOperation {
+                                //OperationQueue.main.addOperation
+                                DispatchQueue.main.async  {
                                     
                                     appDelegate.window?.rootViewController?.present(lockScreenViewNavigatorController, animated: false, completion: nil)
                                 }

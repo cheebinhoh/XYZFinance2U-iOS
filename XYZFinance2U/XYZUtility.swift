@@ -204,7 +204,46 @@ func saveManageContext() {
     }
 }
 
+func sortAcounts(_ incomeList: [XYZAccount]) -> [XYZAccount] {
+    
+    return incomeList.sorted() { (acc1, acc2) in
+        
+        return ( acc1.value(forKey: XYZAccount.sequenceNr) as! Int ) < ( acc2.value(forKey: XYZAccount.sequenceNr) as! Int)
+    }
+}
+
+func loadAccounts() -> [XYZAccount]? {
+    
+    var output: [XYZAccount]?
+    
+    let aContext = managedContext()
+    let fetchRequest = NSFetchRequest<XYZAccount>(entityName: "XYZAccount")
+    
+    do {
+        
+        output = try aContext?.fetch(fetchRequest)
+        
+        output = sortAcounts(output!)
+    } catch let error as NSError {
+        
+        print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    
+    return output
+}
+
 // MARK: - iCloud
+//
+// The high level interaction between iCloud and local core data is that:
+// on start up:
+//    - we check local icloud zone cache if zone exists.
+//    - if it is not, we try to create it
+//    - if it exists or after createc, we try to sync icloud state to local core dataset, that can either add or delete
+//      record
+//
+// after data manipulated on app:
+//    - we do a sync from icloud to local store
+//    - we then push changes from local store to icloud
 
 func loadiCloudZone() -> [XYZiCloudZone]? {
     
@@ -326,8 +365,6 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     
     opZoneChange.recordChangedBlock = { (record) in
         
-        //print("Record changed...")
-        
         let ckrecordzone = CKRecordZone(zoneName: record.recordID.zoneID.zoneName)
         let icloudZone = iCloudZone(of: ckrecordzone, icloudZones)
         
@@ -397,7 +434,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     
     opZoneChange.recordZoneFetchCompletionBlock = { (zoneId, changeToken, _, _, error) in
         
-        if let error = error {
+        if let _ = error {
             
             //print("Error fetching zone changes for database:", error)
             return
@@ -410,7 +447,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                 
                 if let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String, zName == zoneId.zoneName {
                     
-                    let updatedIncomeList = icloudzone.data as? [XYZAccount]
+                    //let updatedIncomeList = icloudzone.data as? [XYZAccount]
                     //print("-------- # of income = \(String(describing: updatedIncomeList?.count))")
                     
                     //print("-------- change token \(changeToken!)")
@@ -691,31 +728,4 @@ func registeriCloudSubscription(_ iCloudZones: [XYZiCloudZone]) {
     }
 }
 
-func sortAcounts(_ incomeList: [XYZAccount]) -> [XYZAccount] {
-    
-    return incomeList.sorted() { (acc1, acc2) in
-        
-        return ( acc1.value(forKey: XYZAccount.sequenceNr) as! Int ) < ( acc2.value(forKey: XYZAccount.sequenceNr) as! Int)
-    }
-}
-
-func loadAccounts() -> [XYZAccount]? {
-    
-    var output: [XYZAccount]?
-    
-    let aContext = managedContext()
-    let fetchRequest = NSFetchRequest<XYZAccount>(entityName: "XYZAccount")
-    
-    do {
-        
-        output = try aContext?.fetch(fetchRequest)
-        
-        output = sortAcounts(output!)
-    } catch let error as NSError {
-        
-        print("Could not fetch. \(error), \(error.userInfo)")
-    }
-    
-    return output
-}
 
