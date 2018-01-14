@@ -227,7 +227,7 @@ func loadiCloudZone() -> [XYZiCloudZone]? {
 func createUpdateAccount(_ record: CKRecord,
                          _ incomeList: [XYZAccount],
                          _ context: NSManagedObjectContext) -> [XYZAccount] {
-    
+
     let recordName = record.recordID.recordName
     let bank = record[XYZAccount.bank] as? String
     let accountNr = record[XYZAccount.accountNr] as? String
@@ -280,6 +280,7 @@ func createUpdateAccount(_ record: CKRecord,
         incomeToBeUpdated?.setValue(repeatAction, forKey: XYZAccount.repeatAction)
     }
 
+    // the record change is updated but we save the last token fetch after that, so we are in sanity state.
     incomeToBeUpdated?.setValue(Date(), forKey: XYZAccount.lastRecordChange)
 
     return outputIncomeList
@@ -430,7 +431,6 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                         let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: changeToken! )
                         icloudzone.setValue(archivedChangeToken, forKey: XYZiCloudZone.changeToken)
                         icloudzone.setValue(lastTokenFetchDate, forKey: XYZiCloudZone.changeTokenLastFetch)
-
                     }
                     
                     break
