@@ -435,10 +435,10 @@ class IncomeTableViewController: UITableViewController,
         let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones)!)
         zone?.data = appDelegate?.incomeList
         
-        print("-------- after save, petch and update icloud")
+        //print("-------- after save, petch and update icloud")
         fetchAndUpdateiCloud([ckrecordzone], (appDelegate?.iCloudZones)!, {
             
-            print("-------- done fetch and update icloud")
+            //print("-------- done fetch and update icloud")
         })
 
         /*
@@ -582,7 +582,8 @@ class IncomeTableViewController: UITableViewController,
                             lockScreenDisplayed = true
                 
                             // NOTE: to avoid warning "Unbalanced calls to begin/end appearance transitions for"
-                            OperationQueue.main.addOperation {
+                            //OperationQueue.main.addOperation
+                            DispatchQueue.main.async {
                                 
                                 appDelegate.window?.rootViewController?.present(lockScreenViewNavigatorController, animated: false, completion: nil)
                             }
