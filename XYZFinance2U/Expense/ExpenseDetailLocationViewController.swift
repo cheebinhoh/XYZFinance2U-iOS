@@ -184,8 +184,8 @@ class ExpenseDetailLocationViewController: UIViewController,
     private func addBackButton() {
         
         let backButton = UIButton(type: .custom)
-        backButton.setImage(UIImage(named: "BackButton.png"), for: .normal) // Image can be downloaded from here below link
-        backButton.setTitle("Back", for: .normal)
+        backButton.setImage(UIImage(named: "BackButton.png"), for: .normal)
+        backButton.setTitle(" Back", for: .normal)
         backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
         backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
         
