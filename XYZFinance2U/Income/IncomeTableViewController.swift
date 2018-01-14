@@ -332,7 +332,7 @@ class IncomeTableViewController: UITableViewController,
             
             let content = UNMutableNotificationContent()
             content.title = "Income update reminder"
-            content.body = "Check income \(String(describing: bank)), \(String(describing: accountNr)) ..."
+            content.body = "Check income \(String(describing: bank!)), \(String(describing: accountNr!)) ..."
             content.sound = UNNotificationSound.default()
             
             var units: Set<Calendar.Component> = [ .hour, .minute]
