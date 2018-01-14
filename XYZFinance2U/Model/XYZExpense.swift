@@ -10,8 +10,10 @@ import Foundation
 import CoreData
 
 @objc(XYZExpense)
-class XYZExpense: NSManagedObject
-{
+class XYZExpense: NSManagedObject {
+    
+    // MARK: - static property
+    
     static let type = "type"
     static let detail = "detail"
     static let amount = "amount"
@@ -25,6 +27,8 @@ class XYZExpense: NSManagedObject
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("expenses")
 
+    // MARK: - property
+    
     var type = ""
     var detail = ""
     var amount = 0.0
@@ -35,11 +39,15 @@ class XYZExpense: NSManagedObject
     var receipts: Set<XYZExpenseReceipt>?
     var hasgeolocation = false
     
+    // MARK: - function
+    
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        
         super.init(entity: entity, insertInto: context)
     }
     
     init(type: String, detail: String, amount: Double, date: Date, latitude: Double, longitude: Double, context: NSManagedObjectContext?) {
+        
         let aContext = context!
         let entity = NSEntityDescription.entity(forEntityName: "XYZExpense",
                                                 in: aContext)!
@@ -56,30 +64,29 @@ class XYZExpense: NSManagedObject
     }
     
     convenience init(detail: String, amount: Double, date: Date, context: NSManagedObjectContext?) {
+        
         self.init(type: "", detail: detail, amount: amount, date: date, latitude: 0.0, longitude: 0.0, context: context)
     }
     
-    func getPersons() -> Set<XYZExpensePerson>
-    {
-        guard let personList = self.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson>
-            else
-        {
+    func getPersons() -> Set<XYZExpensePerson> {
+        
+        guard let personList = self.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
+            
             fatalError("Exception: [XYZExpensePerson] is expected")
         }
         
         return personList
     }
     
-    func removeAllPersons()
-    {
-        guard let personList = self.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson>
-            else
-        {
+    func removeAllPersons() {
+        
+        guard let personList = self.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
+            
             fatalError("Exception: [XYZExpensePerson] is expected")
         }
         
-        for person in personList
-        {
+        for person in personList {
+            
             managedContext()?.delete(person)
         }
         
@@ -89,19 +96,18 @@ class XYZExpense: NSManagedObject
     }
     
     @discardableResult
-    func addPerson(sequenceNr: Int, name: String, email: String) -> XYZExpensePerson
-    {
+    func addPerson(sequenceNr: Int, name: String, email: String) -> XYZExpensePerson {
+        
         var person: XYZExpensePerson?
-        guard var personList = self.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson>
-            else
-        {
+        guard var personList = self.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
+            
             fatalError("Exception: [XYZExpensePerson] is expected")
         }
         
-        for existingPerson in personList
-        {
-            if let existingSequenceNr = existingPerson.value(forKey: XYZExpensePerson.sequenceNr) as? Int, existingSequenceNr == sequenceNr
-            {
+        for existingPerson in personList {
+            
+            if let existingSequenceNr = existingPerson.value(forKey: XYZExpensePerson.sequenceNr) as? Int, existingSequenceNr == sequenceNr {
+                
                 existingPerson.setValue(name, forKey: XYZExpensePerson.name)
                 existingPerson.setValue(email, forKey: XYZExpensePerson.email)
                 person = existingPerson
@@ -109,8 +115,8 @@ class XYZExpense: NSManagedObject
             }
         }
         
-        if nil == person
-        {
+        if nil == person {
+            
             person = XYZExpensePerson(expense: self, sequenceNr: sequenceNr, name: name, email: email, context: managedContext())
             
             personList.insert(person!)
@@ -120,26 +126,25 @@ class XYZExpense: NSManagedObject
     }
     
     @discardableResult
-    func addReceipt(sequenceNr: Int, image: NSData) -> XYZExpenseReceipt
-    {
+    func addReceipt(sequenceNr: Int, image: NSData) -> XYZExpenseReceipt {
+        
         var receipt: XYZExpenseReceipt?
-        guard var receiptList = self.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>
-            else
-        {
+        guard var receiptList = self.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>  else {
+            
             fatalError("Exception: [XYZExpenseReceipt] is expected")
         }
         
-        for existingReceipt in receiptList
-        {
-            if let existingSequenceNr = existingReceipt.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int, existingSequenceNr == sequenceNr
-            {
+        for existingReceipt in receiptList {
+            
+            if let existingSequenceNr = existingReceipt.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int, existingSequenceNr == sequenceNr {
+                
                 existingReceipt.setValue(image, forKey: XYZExpenseReceipt.image)
                 receipt = existingReceipt
             }
         }
     
-        if nil == receipt
-        {
+        if nil == receipt {
+            
             receipt = XYZExpenseReceipt(expense: self, sequenceNr: sequenceNr, image: image, context: managedContext())
             receiptList.insert(receipt!)
         }

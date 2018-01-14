@@ -12,8 +12,10 @@ import CoreData
 import CloudKit
 
 @objc(XYZAccount)
-class XYZAccount : NSManagedObject
-{
+class XYZAccount : NSManagedObject {
+    
+    // MARK: - static property
+    
     static let type = "XYZAccount"
     static let bank = "bank"
     static let accountNr = "accountNr"
@@ -27,6 +29,8 @@ class XYZAccount : NSManagedObject
     static let lastRecordUpload = "lastRecordUpload"
     static let lastRecordFetch = "lastRecordFetch"
     static let recordId = "recordId"
+    
+    // MARK: - property
     
     var bank: String = ""
     var accountNr: String = ""
@@ -44,8 +48,10 @@ class XYZAccount : NSManagedObject
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("accounts")
     
-    init(sequenceNr: Int, bank: String, accountNr: String, amount: Double, date: Date, context: NSManagedObjectContext?)
-    {
+    // MARK: - function
+    
+    init(sequenceNr: Int, bank: String, accountNr: String, amount: Double, date: Date, context: NSManagedObjectContext?) {
+        
         let aContext = context!
 
         let entity = NSEntityDescription.entity(forEntityName: "XYZAccount",
@@ -60,6 +66,7 @@ class XYZAccount : NSManagedObject
     }
     
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        
         super.init(entity: entity, insertInto: context)
     }
     

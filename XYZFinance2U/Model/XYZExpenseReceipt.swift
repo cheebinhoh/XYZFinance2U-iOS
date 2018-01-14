@@ -12,19 +12,27 @@ import CoreData
 @objc(XYZExpenseReceipt)
 class XYZExpenseReceipt: NSManagedObject
 {
+    // MARK: - static property
+    
     static let sequenceNr = "sequenceNr"
     static let image = "image"
     static let expense = "expense"
+    
+    // MARK: - property
     
     var sequenceNr = 0
     var image = NSData()
     var expense: XYZExpense?
     
+    // MARK: - function
+    
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        
         super.init(entity: entity, insertInto: context)
     }
     
     init(expense: XYZExpense, sequenceNr: Int, image: NSData, context: NSManagedObjectContext?) {
+        
         let aContext = context!
         let entity = NSEntityDescription.entity(forEntityName: "XYZExpenseReceipt",
                                                 in: aContext)!
