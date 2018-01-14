@@ -438,7 +438,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                     break
                 }
                 
-                completionblock()
+                //completionblock()
             }
         }
     }

@@ -116,24 +116,41 @@ class AppDelegate: UIResponder,
                 fatalError("Exception: iCloud zone name is expected")
             }
             
-            let ckrecordzone = CKRecordZone(zoneName: name)
-            let subscription = CKRecordZoneSubscription.init(zoneID: ckrecordzone.zoneID)
-            let notificationInfo = CKNotificationInfo()
-            
-            notificationInfo.shouldSendContentAvailable = true
-            subscription.notificationInfo = notificationInfo
-            
-            let operation = CKModifySubscriptionsOperation(subscriptionsToSave: [subscription], subscriptionIDsToDelete: [])
-            operation.qualityOfService = .utility
-            operation.completionBlock = {
-            
-                print("-------- register subscription complete")
-            }
-            
             let container = CKContainer.default()
             let database = container.privateCloudDatabase
             
-            database.add(operation)
+            let ckrecordzone = CKRecordZone(zoneName: name)
+            
+            let fetchOp = CKFetchSubscriptionsOperation.init(subscriptionIDs: [ckrecordzone.zoneID.zoneName])
+
+            fetchOp.fetchSubscriptionCompletionBlock = {(subscriptionDict, error) -> Void in
+                
+                print("-------- fetch result of subscription")
+                    
+                if let _ = subscriptionDict?[ckrecordzone.zoneID.zoneName] {
+                    
+                    print("-------- subscription exist")
+                } else {
+                    
+                    print("-------- register new subscription")
+                    let subscription = CKRecordZoneSubscription.init(zoneID: ckrecordzone.zoneID, subscriptionID: ckrecordzone.zoneID.zoneName)
+                    let notificationInfo = CKNotificationInfo()
+                    
+                    notificationInfo.shouldSendContentAvailable = true
+                    subscription.notificationInfo = notificationInfo
+                    
+                    let operation = CKModifySubscriptionsOperation(subscriptionsToSave: [subscription], subscriptionIDsToDelete: [])
+                    operation.qualityOfService = .utility
+                    operation.completionBlock = {
+                        
+                        print("-------- register subscription complete")
+                    }
+                    
+                    database.add(operation)
+                }
+            }
+            
+            database.add(fetchOp)
         }
     }
     
@@ -165,13 +182,13 @@ class AppDelegate: UIResponder,
         
         var incomeiCloudZone: XYZiCloudZone?
         
-        for icloudZone in iCloudZones {
+        for icloudzone in iCloudZones {
             
-            switch (icloudZone.value(forKey: XYZiCloudZone.name) as? String )! {
+            switch (icloudzone.value(forKey: XYZiCloudZone.name) as? String )! {
                 
             case XYZAccount.type:
-                incomeiCloudZone = icloudZone
-                icloudZone.data = incomeList  // we do not keep it persistent in core data
+                incomeiCloudZone = icloudzone
+                icloudzone.data = incomeList  // We do not need to keep it in persistent state
                 
             default:
                 fatalError("Exception: zone type is not supported")
@@ -203,20 +220,21 @@ class AppDelegate: UIResponder,
                     
                     print("-------- success in create zone" )
                     OperationQueue.main.addOperation {
+                        
                         for zone in saved! {
                             
-                            let iCloudZone = XYZiCloudZone(name: zone.zoneID.zoneName, context: managedContext())
+                            let icloudzone = XYZiCloudZone(name: zone.zoneID.zoneName, context: managedContext())
                             
                             switch zone.zoneID.zoneName {
                                 
-                            case XYZAccount.type:
-                                iCloudZone.data = self.incomeList
+                                case XYZAccount.type:
+                                    icloudzone.data = self.incomeList
                                 
-                            default:
-                                fatalError("Exception: \(zone.zoneID.zoneName) is not supported")
+                                default:
+                                    fatalError("Exception: \(zone.zoneID.zoneName) is not supported")
                             }
                             
-                            self.iCloudZones.append(iCloudZone)
+                            self.iCloudZones.append(icloudzone)
                         }
                         
                         saveManageContext()
@@ -224,21 +242,23 @@ class AppDelegate: UIResponder,
                         fetchiCloudZoneChange(saved!, self.iCloudZones, {
                             
                             print("-------- done fetching changes after saving zone")
-                            for iCloudZone in self.iCloudZones {
+                            for icloudzone in self.iCloudZones {
                                 
-                                let zName = iCloudZone.value(forKey: XYZiCloudZone.name) as? String
+                                let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
                                 switch zName! {
-                                case XYZAccount.type:
-                                    self.incomeList = (iCloudZone.data as? [XYZAccount])!
                                     
-                                    DispatchQueue.main.async {
-                                        incomeView.reloadData()
-                                    }
+                                    case XYZAccount.type:
+                                        self.incomeList = (icloudzone.data as? [XYZAccount])!
+                                        
+                                        DispatchQueue.main.async {
+                                            
+                                            incomeView.reloadData()
+                                        }
+                                        
+                                        print("-------- fetch # of incomes = \(self.incomeList.count)")
                                     
-                                    print("-------- fetch # of incomes = \(self.incomeList.count)")
-                                    
-                                default:
-                                    fatalError("Exception: \(iCloudZone.name) is not supported")
+                                    default:
+                                        fatalError("Exception: \(String(describing: zName)) is not supported")
                                 }
                             }
                         })
@@ -253,28 +273,31 @@ class AppDelegate: UIResponder,
         }
         
         if !zonesToBeFetched.isEmpty {
+            
             print("-------- fetch and uppdate changes from/to zones")
             
             fetchAndUpdateiCloud(zonesToBeFetched, self.iCloudZones, {
                 
                 print("-------- done fetching changes after saving zone")
-                for iCloudZone in self.iCloudZones {
+                for icloudzone in self.iCloudZones {
                     
-                    let zName = iCloudZone.value(forKey: XYZiCloudZone.name) as? String
+                    let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
                     switch zName! {
-                    case XYZAccount.type:
-                        self.incomeList = (iCloudZone.data as? [XYZAccount])!
                         
-                        DispatchQueue.main.async {
-                            incomeView.reloadData()
+                        case XYZAccount.type:
+                            self.incomeList = (icloudzone.data as? [XYZAccount])!
+                        
+                            DispatchQueue.main.async {
+                                
+                                incomeView.reloadData()
                             
-                            self.registeriCloudSubscription()
-                        }
+                                self.registeriCloudSubscription()
+                            }
                         
-                        print("-------- fetch # of incomes = \(self.incomeList.count)")
+                            print("-------- complete of fetch and update with icloud and core data")
                         
-                    default:
-                        fatalError("Exception: \(iCloudZone.name) is not supported")
+                        default:
+                            fatalError("Exception: \(String(describing: zName)) is not supported")
                     }
                 }
             })
@@ -315,9 +338,9 @@ class AppDelegate: UIResponder,
             
             fatalError("Exception: IncomeTableViewController is expected" )
         }
-        
-        syncWithiCloudAndCoreData()
+
         tableViewController.authenticate()
+        syncWithiCloudAndCoreData()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

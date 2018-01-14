@@ -417,6 +417,9 @@ class IncomeDetailTableViewController: UITableViewController,
         } else if let existingRepeatAction = income?.value(forKey: XYZAccount.repeatAction) as? String, existingRepeatAction != repeatAction {
             
             hasChanged = true
+        } else if nil == income?.value(forKey: XYZAccount.repeatDate) as? Date && nil != reminddate {
+            
+            hasChanged = true
         } else if let existingRemindDate = income?.value(forKey: XYZAccount.repeatDate) as? Date, existingRemindDate != reminddate {
             
             hasChanged = true
