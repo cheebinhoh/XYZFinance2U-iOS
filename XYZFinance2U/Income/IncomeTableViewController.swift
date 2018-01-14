@@ -751,7 +751,8 @@ class IncomeTableViewController: UITableViewController,
                     
                     mainSplitView.popOverNavigatorController = navigationController
                     
-                    OperationQueue.main.addOperation {
+                    //OperationQueue.main.addOperation
+                    DispatchQueue.main.async {
                         
                         self.present(navigationController, animated: true, completion: nil)
                     }
