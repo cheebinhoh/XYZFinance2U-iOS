@@ -19,11 +19,6 @@ class AppDelegate: UIResponder,
     UIApplicationDelegate,
     UNUserNotificationCenterDelegate {
     
-    // MARK: - property
-    
-    var incomeList = [XYZAccount]()
-    var iCloudZones = [XYZiCloudZone]()
-    
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
@@ -71,9 +66,11 @@ class AppDelegate: UIResponder,
     
     // MARK: - property
     
+    var incomeList = [XYZAccount]()
+    var iCloudZones = [XYZiCloudZone]()
+    var iCloudEnable = false
     var window: UIWindow?
     var orientation = UIInterfaceOrientationMask.all
-    var icloudEnable = false
     
     // MARK: - function
     
@@ -97,7 +94,7 @@ class AppDelegate: UIResponder,
         }
         
         application.registerForRemoteNotifications()
-        
+                
         syncWithiCloudAndCoreData()
         
         // Override point for customization after application launch.

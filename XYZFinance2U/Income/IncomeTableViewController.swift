@@ -532,14 +532,14 @@ class IncomeTableViewController: UITableViewController,
             
             if status == CKAccountStatus.noAccount {
                 
-                appDelegate?.icloudEnable = false
+                appDelegate?.iCloudEnable = false
                 let alert = UIAlertController(title: "Sign in to icloud",
                                               message: "Sign in to your iCloud account to write records", preferredStyle: UIAlertControllerStyle.alert )
                 self.present(alert, animated: false, completion: nil)
             } else {
                 
     
-                appDelegate?.icloudEnable = true
+                appDelegate?.iCloudEnable = true
             }
         }
     }
