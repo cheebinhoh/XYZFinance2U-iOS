@@ -664,7 +664,7 @@ func saveAccountsToiCloud(_ iCloudZone: XYZiCloudZone,
     }
 
     let opToSaved = CKModifyRecordsOperation(recordsToSave: recordsToBeSaved, recordIDsToDelete: recordIdsToBeDeleted)
-    opToSaved.savePolicy = .changedKeys
+    opToSaved.savePolicy = .allKeys
     opToSaved.completionBlock = {
     
         OperationQueue.main.addOperation {
