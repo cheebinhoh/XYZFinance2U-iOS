@@ -94,7 +94,7 @@ class AppDelegate: UIResponder,
         }
         
         application.registerForRemoteNotifications()
-                
+        
         syncWithiCloudAndCoreData()
         
         // Override point for customization after application launch.
@@ -138,6 +138,7 @@ class AppDelegate: UIResponder,
         }
 
         tableViewController.authenticate()
+        
         syncWithiCloudAndCoreData()
     }
 
@@ -262,6 +263,8 @@ class AppDelegate: UIResponder,
             
             //print("-------- attempt to create zone")
             let op = CKModifyRecordZonesOperation(recordZonesToSave: zonesToBeSaved, recordZoneIDsToDelete: nil)
+            
+            
             op.modifyRecordZonesCompletionBlock = { (saved, deleted, error) in
                 
                 if nil != error {
