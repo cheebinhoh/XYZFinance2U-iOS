@@ -137,6 +137,8 @@ class AppDelegate: UIResponder,
             fatalError("Exception: IncomeTableViewController is expected" )
         }
 
+        application.registerForRemoteNotifications()
+        
         tableViewController.authenticate()
         
         syncWithiCloudAndCoreData()
