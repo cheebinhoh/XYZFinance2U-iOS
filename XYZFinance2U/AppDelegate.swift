@@ -60,6 +60,32 @@ class AppDelegate: UIResponder,
         }
     }
     
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+
+        /*
+        let alert = UIAlertController(title: "Failed to register notification",
+                                      message: "Failed to register notification for icloud push notification",
+                                      preferredStyle: UIAlertControllerStyle.actionSheet )
+        guard let splitView = self.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: MainSplitViewController is expected")
+        }
+        
+        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+            
+            fatalError("Exception: MainUITabBarController is expected")
+        }
+        
+        guard let navController = tabbarView.viewControllers?.first as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+        
+        navController.present(alert, animated: false, completion: nil)
+         */
+    }
+
+    
     // MARK: - static
     
     static let appName: String = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? ""
@@ -265,7 +291,6 @@ class AppDelegate: UIResponder,
             
             //print("-------- attempt to create zone")
             let op = CKModifyRecordZonesOperation(recordZonesToSave: zonesToBeSaved, recordZoneIDsToDelete: nil)
-            
             
             op.modifyRecordZonesCompletionBlock = { (saved, deleted, error) in
                 
