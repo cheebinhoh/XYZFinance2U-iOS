@@ -298,7 +298,8 @@ func createUpdateAccount(_ record: CKRecord,
         
         let sequenceNr = record[XYZAccount.sequenceNr] as? Int
         
-        incomeToBeUpdated = XYZAccount(sequenceNr: sequenceNr!,
+        incomeToBeUpdated = XYZAccount(recordName,
+                                       sequenceNr: sequenceNr!,
                                        bank: bank!,
                                        accountNr: accountNr ?? "",
                                        amount: amount!,

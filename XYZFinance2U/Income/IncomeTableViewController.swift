@@ -1024,6 +1024,8 @@ class IncomeTableViewController: UITableViewController,
                     
                     let sequenceNr = 1000 * sectionIndex + rowIndex // each section is allowed to have 999 records, which is pretty large number, consider the purpose of it.
                     income.setValue(sequenceNr, forKey: XYZAccount.sequenceNr)
+                    
+                    income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
                 }
             }
         }

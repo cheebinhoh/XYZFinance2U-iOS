@@ -50,7 +50,7 @@ class XYZAccount : NSManagedObject {
     
     // MARK: - function
     
-    init(sequenceNr: Int, bank: String, accountNr: String, amount: Double, date: Date, context: NSManagedObjectContext?) {
+    init(_ id: String?, sequenceNr: Int, bank: String, accountNr: String, amount: Double, date: Date, context: NSManagedObjectContext?) {
         
         let aContext = context!
 
@@ -58,9 +58,17 @@ class XYZAccount : NSManagedObject {
                                                 in: aContext)!
         super.init(entity: entity, insertInto: aContext)
         
-        let id = UUID.init().uuidString
+        var recordid = ""
         
-        self.setValue(id, forKey: XYZAccount.recordId)
+        if nil == id {
+            
+            recordid = UUID.init().uuidString
+        } else {
+            
+            recordId = id!
+        }
+        
+        self.setValue(recordid, forKey: XYZAccount.recordId)
         self.setValue(bank, forKey: XYZAccount.bank)
         self.setValue(amount, forKey:XYZAccount.amount)
         self.setValue(accountNr, forKey: XYZAccount.accountNr)

@@ -124,7 +124,7 @@ class IncomeDetailViewController: UIViewController, UITextFieldDelegate, UINavig
         
         if account == nil {
             
-            account = XYZAccount(sequenceNr: 0, bank: bankText, accountNr: accountNrText, amount: amountValue, date: lastupdate, context:managedContext() )
+            account = XYZAccount(nil, sequenceNr: 0, bank: bankText, accountNr: accountNrText, amount: amountValue, date: lastupdate, context:managedContext() )
         } else {
             
             account?.setValue(bankText, forKey: XYZAccount.bank)
