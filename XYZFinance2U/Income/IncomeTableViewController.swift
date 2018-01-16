@@ -89,6 +89,13 @@ class IncomeTableViewController: UITableViewController,
             fatalError("Exception: eror on casting first view controller to IncomeDetailTableViewController" )
         }
         
+        guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+            
+            fatalError("Exception: MainSplitViewController is expected")
+        }
+        
+        mainSplitView.popOverNavigatorController = incomeDetailNavigationController
+        
         incomeDetailTableView.setPopover(delegate: self)
         isPopover = true
         
@@ -568,7 +575,7 @@ class IncomeTableViewController: UITableViewController,
                         
                         fatalError("Exception: MainSplitViewController is expected")
                     }
-                    
+                
                     if nil == mainSplitView.popOverNavigatorController {
 
                         guard let lockScreenView = self.storyboard?.instantiateViewController(withIdentifier: "lockScreenView") as? LockScreenViewController else {
@@ -584,7 +591,6 @@ class IncomeTableViewController: UITableViewController,
                             lockScreenDisplayed = true
                 
                             // NOTE: to avoid warning "Unbalanced calls to begin/end appearance transitions for"
-                            //OperationQueue.main.addOperation
                             DispatchQueue.main.async {
                                 
                                 appDelegate.window?.rootViewController?.present(lockScreenViewNavigatorController, animated: false, completion: nil)
