@@ -58,6 +58,9 @@ class XYZAccount : NSManagedObject {
                                                 in: aContext)!
         super.init(entity: entity, insertInto: aContext)
         
+        let id = UUID.init().uuidString
+        
+        self.setValue(id, forKey: XYZAccount.recordId)
         self.setValue(bank, forKey: XYZAccount.bank)
         self.setValue(amount, forKey:XYZAccount.amount)
         self.setValue(accountNr, forKey: XYZAccount.accountNr)

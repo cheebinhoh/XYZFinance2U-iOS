@@ -296,7 +296,7 @@ class AppDelegate: UIResponder,
                 
                 if nil != error {
                     
-                    ///print("-------- error on creating zone = \(String(describing: error))")
+                    //print("-------- error on creating zone = \(String(describing: error))")
                 } else {
                     
                     //print("-------- success in create zone" )

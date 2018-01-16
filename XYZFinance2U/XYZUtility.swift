@@ -296,10 +296,9 @@ func createUpdateAccount(_ record: CKRecord,
 
     if nil == incomeToBeUpdated {
         
-        let tokenStrings = recordName.split(separator: ":")
-        let sequenceNr = Int(tokenStrings[tokenStrings.count - 1])!
+        let sequenceNr = record[XYZAccount.sequenceNr] as? Int
         
-        incomeToBeUpdated = XYZAccount(sequenceNr: sequenceNr,
+        incomeToBeUpdated = XYZAccount(sequenceNr: sequenceNr!,
                                        bank: bank!,
                                        accountNr: accountNr ?? "",
                                        amount: amount!,
@@ -647,7 +646,9 @@ func saveAccountsToiCloud(_ iCloudZone: XYZiCloudZone,
         let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
         let repeatDate = income.value(forKey: XYZAccount.repeatDate) as? Date
         let repeatAction = income.value(forKey: XYZAccount.repeatAction) as? String
-
+        let sequencNr = income.value(forKey: XYZAccount.sequenceNr) as? Int
+        
+        record.setValue(sequencNr, forKey: XYZAccount.sequenceNr)
         record.setValue(bank, forKey: XYZAccount.bank)
         record.setValue(accountNr, forKey: XYZAccount.accountNr)
         record.setValue(amount, forKey: XYZAccount.amount)

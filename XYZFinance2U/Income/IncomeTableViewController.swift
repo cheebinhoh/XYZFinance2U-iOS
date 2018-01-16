@@ -414,6 +414,7 @@ class IncomeTableViewController: UITableViewController,
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
+        /*
         for account in (appDelegate?.incomeList)! {
             
             let bank = account.value(forKey: XYZAccount.bank) as? String ?? ""
@@ -423,6 +424,7 @@ class IncomeTableViewController: UITableViewController,
             let recordId = "\(bank):\(accountNr):\(sequenceNr)"
             account.setValue(recordId, forKey: XYZAccount.recordId)
         }
+         */
         
         saveManageContext()
 
