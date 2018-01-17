@@ -195,9 +195,19 @@ class IncomeTableViewController: UITableViewController,
     func saveIncome(income: XYZAccount) {
         
         let selectedIndexPath = incomeIndex(of: income)
-        let summaryIndex = IndexPath(row:0, section: (selectedIndexPath?.section)! + 1)
-        tableView.reloadRows(at: [selectedIndexPath!, summaryIndex], with: .automatic)
-        saveAccounts()
+        let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
+        
+        if tableSectionCellList[(selectedIndexPath?.section)!].title == currencyCode! {
+    
+            let summaryIndex = IndexPath(row:0, section: (selectedIndexPath?.section)! + 1)
+            tableView.reloadRows(at: [selectedIndexPath!, summaryIndex], with: .automatic)
+            
+            saveAccounts()
+        } else {
+        
+            reloadData()
+            saveAccounts()
+        }
     }
     
     func softDeleteIncome(income: XYZAccount) {
