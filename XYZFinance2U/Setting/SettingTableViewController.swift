@@ -92,7 +92,7 @@ class SettingTableViewController: UITableViewController,
                     fatalError("Exception: error on creating settingTableCell")
                 }
                 
-                newcell.title.text = "Export to icloud drive"
+                newcell.title.text = "Export to iCloud drive"
                 newcell.accessoryType = .none
                 cell = newcell
             
