@@ -46,8 +46,11 @@ class SettingTableViewController: UITableViewController,
         let mainSection = TableSectionCell(identifier: "main", title: "", cellList: ["About"], data: nil)
         tableSectionCellList.append(mainSection)
 
-        let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export"], data: nil)
+        let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export", "SynciCloud"], data: nil)
         tableSectionCellList.append(exportSection)
+        
+        let logoutSection = TableSectionCell(identifier: "lockout", title: "", cellList: ["lockout"], data: nil)
+        tableSectionCellList.append(logoutSection)
     }
 
     override func didReceiveMemoryWarning() {
@@ -92,7 +95,27 @@ class SettingTableViewController: UITableViewController,
                 newcell.title.text = "Export to icloud drive"
                 newcell.accessoryType = .none
                 cell = newcell
+            
+            case "SynciCloud" :
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
+                    
+                    fatalError("Exception: error on creating settingTableCell")
+                }
                 
+                newcell.title.text = "Sync with iCloud"
+                newcell.accessoryType = .none
+                cell = newcell
+            
+        case "lockout" :
+            guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
+                
+                fatalError("Exception: error on creating settingTableCell")
+            }
+            
+            newcell.title.text = "lock out"
+            newcell.accessoryType = .none
+            cell = newcell
+
             default:
                 fatalError("Exception: \(tableSectionCellList[indexPath.section].cellList[indexPath.row]) is not supported")
         }
@@ -158,7 +181,7 @@ class SettingTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if tableSectionCellList[indexPath.section].identifier == "export" {
+        if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "Export" {
         
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let deleteOption = UIAlertAction(title: "Export to icloud drive", style: .default, handler: { (action) in
@@ -191,6 +214,47 @@ class SettingTableViewController: UITableViewController,
             optionMenu.addAction(cancelAction)
             
             present(optionMenu, animated: true, completion: nil)
+        } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "SynciCloud" {
+            
+            let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let deleteOption = UIAlertAction(title: "Sync with iCloud", style: .default, handler: { (action) in
+                
+                let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                
+                appDelegate?.syncWithiCloudAndCoreData()
+            })
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:nil)
+            
+            optionMenu.addAction(deleteOption)
+            optionMenu.addAction(cancelAction)
+            
+            present(optionMenu, animated: true, completion: nil)
+        } else if tableSectionCellList[indexPath.section].identifier == "lockout" {
+            
+             let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            
+            guard let split = appDelegate?.window?.rootViewController as? UISplitViewController else {
+                
+                fatalError("Exception: UISplitViewController is expected" )
+            }
+            
+            guard let tabBarController = split.viewControllers.first as? UITabBarController else {
+                
+                fatalError("Exception: UITabBarController is expected" )
+            }
+            
+            guard let navController = tabBarController.viewControllers?.first as? UINavigationController else {
+                
+                fatalError("Exception: UINavigationController is expected")
+            }
+            
+            guard let tableViewController = navController.viewControllers.first as? IncomeTableViewController else {
+                
+                fatalError("Exception: IncomeTableViewController is expected" )
+            }
+            
+            tableViewController.lockout()
         } else {
             
             showAbout(indexPath)

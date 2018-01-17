@@ -563,6 +563,36 @@ class IncomeTableViewController: UITableViewController,
         }
     }
     
+    func lockout() {
+        
+        guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+            
+            fatalError("Exception: MainSplitViewController is expected")
+        }
+        
+        if nil == mainSplitView.popOverNavigatorController {
+            
+            guard let lockScreenView = self.storyboard?.instantiateViewController(withIdentifier: "lockScreenView") as? LockScreenViewController else {
+                
+                fatalError("Exception: error on instantiating lockScreenView")
+            }
+            
+            lockScreenView.mainTableViewController = self
+            let lockScreenViewNavigatorController = UINavigationController(rootViewController: lockScreenView)
+            
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                
+                lockScreenDisplayed = true
+                
+                // NOTE: to avoid warning "Unbalanced calls to begin/end appearance transitions for"
+                DispatchQueue.main.async {
+                    
+                    appDelegate.window?.rootViewController?.present(lockScreenViewNavigatorController, animated: false, completion: nil)
+                }
+            }
+        }
+    }
+    
     func authenticate() {
         
         // authentication validation before doing other things
