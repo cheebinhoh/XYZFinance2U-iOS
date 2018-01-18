@@ -565,30 +565,22 @@ class IncomeTableViewController: UITableViewController,
     
     func lockout() {
         
-        guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+        guard let lockScreenView = self.storyboard?.instantiateViewController(withIdentifier: "lockScreenView") as? LockScreenViewController else {
             
-            fatalError("Exception: MainSplitViewController is expected")
+            fatalError("Exception: error on instantiating lockScreenView")
         }
         
-        if nil == mainSplitView.popOverNavigatorController {
+        lockScreenView.mainTableViewController = self
+        let lockScreenViewNavigatorController = UINavigationController(rootViewController: lockScreenView)
+        
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             
-            guard let lockScreenView = self.storyboard?.instantiateViewController(withIdentifier: "lockScreenView") as? LockScreenViewController else {
-                
-                fatalError("Exception: error on instantiating lockScreenView")
-            }
+            lockScreenDisplayed = true
             
-            lockScreenView.mainTableViewController = self
-            let lockScreenViewNavigatorController = UINavigationController(rootViewController: lockScreenView)
-            
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            // NOTE: to avoid warning "Unbalanced calls to begin/end appearance transitions for"
+            DispatchQueue.main.async {
                 
-                lockScreenDisplayed = true
-                
-                // NOTE: to avoid warning "Unbalanced calls to begin/end appearance transitions for"
-                DispatchQueue.main.async {
-                    
-                    appDelegate.window?.rootViewController?.present(lockScreenViewNavigatorController, animated: false, completion: nil)
-                }
+                appDelegate.window?.rootViewController?.present(lockScreenViewNavigatorController, animated: false, completion: nil)
             }
         }
     }
@@ -615,27 +607,10 @@ class IncomeTableViewController: UITableViewController,
                         
                         fatalError("Exception: MainSplitViewController is expected")
                     }
-                
+                    
                     if nil == mainSplitView.popOverNavigatorController {
-
-                        guard let lockScreenView = self.storyboard?.instantiateViewController(withIdentifier: "lockScreenView") as? LockScreenViewController else {
-                            
-                            fatalError("Exception: error on instantiating lockScreenView")
-                        }
                         
-                        lockScreenView.mainTableViewController = self
-                        let lockScreenViewNavigatorController = UINavigationController(rootViewController: lockScreenView)
-                        
-                        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                            
-                            lockScreenDisplayed = true
-                
-                            // NOTE: to avoid warning "Unbalanced calls to begin/end appearance transitions for"
-                            DispatchQueue.main.async {
-                                
-                                appDelegate.window?.rootViewController?.present(lockScreenViewNavigatorController, animated: false, completion: nil)
-                            }
-                        }
+                        lockout()
                     }
                 }
             
@@ -668,25 +643,7 @@ class IncomeTableViewController: UITableViewController,
                             
                             self.dismiss(animated: false, completion: nil)
 
-                            guard let lockScreenView = self.storyboard?.instantiateViewController(withIdentifier: "lockScreenView") as? LockScreenViewController else {
-                                
-                                fatalError("Exception: error on instantiating lockScreenView")
-                            }
-                            
-                            lockScreenView.mainTableViewController = self
-                            let lockScreenViewNavigatorController = UINavigationController(rootViewController: lockScreenView)
-                            
-                            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                                
-                                self.lockScreenDisplayed = true
-                                
-                                // NOTE: to avoid warning "Unbalanced calls to begin/end appearance transitions for"
-                                //OperationQueue.main.addOperation
-                                DispatchQueue.main.async  {
-                                    
-                                    appDelegate.window?.rootViewController?.present(lockScreenViewNavigatorController, animated: false, completion: nil)
-                                }
-                            }
+                            self.lockout()
                         }
                     }
                 }
