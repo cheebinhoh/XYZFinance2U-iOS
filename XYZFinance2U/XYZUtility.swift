@@ -294,9 +294,9 @@ func createUpdateAccount(_ record: CKRecord,
         }
     }
 
+    let sequenceNr = record[XYZAccount.sequenceNr] as? Int
+    
     if nil == incomeToBeUpdated {
-        
-        let sequenceNr = record[XYZAccount.sequenceNr] as? Int
         
         incomeToBeUpdated = XYZAccount(recordName,
                                        sequenceNr: sequenceNr!,
@@ -308,6 +308,7 @@ func createUpdateAccount(_ record: CKRecord,
         outputIncomeList.append(incomeToBeUpdated!)
     }
     
+    incomeToBeUpdated?.setValue(sequenceNr, forKey: XYZAccount.sequenceNr)
     incomeToBeUpdated?.setValue(amount!, forKey: XYZAccount.amount)
     incomeToBeUpdated?.setValue(lastUpdate!, forKey: XYZAccount.lastUpdate)
     incomeToBeUpdated?.setValue(currencyCode!, forKey: XYZAccount.currencyCode)
@@ -365,6 +366,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     
     opZoneChange.recordChangedBlock = { (record) in
         
+        print("-------- fetch change record")
         let ckrecordzone = CKRecordZone(zoneName: record.recordID.zoneID.zoneName)
         let icloudZone = iCloudZone(of: ckrecordzone, icloudZones)
         
@@ -554,11 +556,11 @@ func fetchAndUpdateiCloud(_ zones: [CKRecordZone],
     
     if !iCloudZones.isEmpty {
         
-        //print("-------- fetch changes from zones")
+        print("-------- fetch changes from zones")
         
         fetchiCloudZoneChange(zones, iCloudZones, {
             
-            //print("-------- done fetching change from zone")
+            print("-------- done fetching change from zone")
             
             //we should only write to icloud if we do have changed after last token change
             

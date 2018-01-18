@@ -295,6 +295,13 @@ class IncomeTableViewController: UITableViewController,
             
             if !sectionIncomeList.isEmpty {
                 
+                sectionIncomeList = sectionIncomeList.sorted() {
+                    
+                    (acc1, acc2) in
+                    
+                    return ( acc1.value(forKey: XYZAccount.sequenceNr) as! Int ) < ( acc2.value(forKey: XYZAccount.sequenceNr) as! Int)
+                }
+                
                 let mainSection = TableSectionCell(identifier: "main", title: currency, cellList: [], data: sectionIncomeList)
                 tableSectionCellList.append(mainSection)
                 
