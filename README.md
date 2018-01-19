@@ -23,3 +23,14 @@
 
 * Creator, cheebin hoh at hohcheebin@gmail.com
 * Admin, cheebin hoh at hohcheebin@gmail.com
+
+### Road map
+
+* complete integration of Expenses tab with iCloudKit
+* Adding sharing via iCloudKit
+
+### Todos
+
+* fix bugs: 3d Touch preview crashes on total cell
+* adding preview via 3d Touch for Incomes list
+* adding 3d Touch preview shortcut menus: 
