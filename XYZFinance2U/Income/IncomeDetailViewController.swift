@@ -28,6 +28,20 @@ class IncomeDetailViewController: UIViewController, UITextFieldDelegate, UINavig
     
     // MARK: - IBAction
     
+    func previewActionItems() -> [UIPreviewActionItem] {
+        
+        let likeAction = UIPreviewAction(title: "Like", style: .default) { (action, viewController) -> Void in
+            print("You liked the photo")
+        }
+        
+        let deleteAction = UIPreviewAction(title: "Delete", style: .selected) { (action, viewController) -> Void in
+            print("You deleted the photo")
+        }
+        
+        return [likeAction, deleteAction]
+        
+    }
+    
     @IBAction func pickDate(_ sender: UIDatePicker) {
         
         dateInput.text = formattingDate(date: sender.date, .medium)

@@ -51,7 +51,7 @@ class IncomeTableViewController: UITableViewController,
         }
         
         viewController.account = sectionIncomeList[(indexPath?.row)!]
-        
+        viewController.preferredContentSize = CGSize(width: 0.0, height: 250)
         previewingContext.sourceRect = (cell?.frame)!
         
         return viewController

@@ -194,7 +194,7 @@
         <scene sceneID="3Cq-a4-Yga">
             <objects>
                 <viewController storyboardIdentifier="IncomeDetailViewController" id="8FP-ZR-QmJ" userLabel="IncomeDetailViewController" customClass="IncomeDetailViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="3tf-nB-B2L">
+                    <view key="view" contentMode="scaleAspectFit" id="3tf-nB-B2L">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
