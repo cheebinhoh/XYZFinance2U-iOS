@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import CoreLocation
 
 @objc(XYZExpense)
 class XYZExpense: NSManagedObject {
@@ -18,8 +19,9 @@ class XYZExpense: NSManagedObject {
     static let detail = "detail"
     static let amount = "amount"
     static let date = "date"
-    static let latitude = "latitude"
-    static let longitude = "longitude"
+    //static let latitude = "latitude"
+    //static let longitude = "longitude"
+    static let loction = "location"
     static let persons = "persons"
     static let receipts = "receipts"
     static let hasgeolocation = "hasgeolocation"
@@ -38,6 +40,7 @@ class XYZExpense: NSManagedObject {
     var persons: Set<XYZExpensePerson>?
     var receipts: Set<XYZExpenseReceipt>?
     var hasgeolocation = false
+    var location = CLLocation()
     
     // MARK: - function
     
@@ -57,8 +60,8 @@ class XYZExpense: NSManagedObject {
         self.setValue(detail, forKey: XYZExpense.detail)
         self.setValue(amount, forKey: XYZExpense.amount)
         self.setValue(date, forKey: XYZExpense.date)
-        self.setValue(latitude, forKey: XYZExpense.latitude)
-        self.setValue(longitude, forKey: XYZExpense.longitude)
+        //self.setValue(latitude, forKey: XYZExpense.latitude)
+        //self.setValue(longitude, forKey: XYZExpense.longitude)
         self.setValue(Set<XYZExpensePerson>(), forKey: XYZExpense.persons)
         self.setValue(Set<XYZExpenseReceipt>(), forKey: XYZExpense.receipts)
     }

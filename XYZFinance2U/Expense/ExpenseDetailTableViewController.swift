@@ -41,8 +41,16 @@ class ExpenseDetailTableViewController: UITableViewController,
     // MARK: - protocol implementation
     func newlocation(coordinte: CLLocationCoordinate2D?) {
         
-        locationCoordinate = coordinte
-        hasgeolocation = nil != coordinte
+        if nil == coordinte {
+            
+            cllocation = nil
+        } else {
+            
+            cllocation = CLLocation(latitude: (coordinte?.latitude)!, longitude: (coordinte?.longitude)!)
+        }
+        
+        //locationCoordinate = coordinte
+        hasgeolocation = nil != cllocation //nil != coordinte
     }
 
     func locationTouchUp(_ sender: ExpenseDetailLocationPickerTableViewCell) {
@@ -196,14 +204,19 @@ class ExpenseDetailTableViewController: UITableViewController,
         expense?.setValue(date, forKey: XYZExpense.date)
         expense?.setValue(hasgeolocation, forKey: XYZExpense.hasgeolocation)
         
-        if hasgeolocation, let _ = locationCoordinate {
+        if hasLocation, let _ = cllocation {
             
-            expense?.setValue(locationCoordinate?.longitude, forKey: XYZExpense.longitude)
-            expense?.setValue(locationCoordinate?.latitude, forKey: XYZExpense.latitude)
+            //expense?.setValue(cllocation?.coordinate.longitude, forKey: XYZExpense.longitude)
+            //expense?.setValue(cllocation?.coordinate.latitude, forKey: XYZExpense.latitude)
+            
+            let data = NSKeyedArchiver.archivedData(withRootObject: cllocation!)
+            expense?.setValue(data, forKey: XYZExpense.loction)
         } else {
             
-            expense?.setValue(1000.0, forKey: XYZExpense.longitude)
-            expense?.setValue(1000.0, forKey: XYZExpense.latitude)
+            expense?.setValue(nil, forKey: XYZExpense.loction)
+            
+            //expense?.setValue(1000.0, forKey: XYZExpense.longitude)
+            //expense?.setValue(1000.0, forKey: XYZExpense.latitude)
         }
         
         for (index, image) in imageSet!.enumerated() {
@@ -239,8 +252,10 @@ class ExpenseDetailTableViewController: UITableViewController,
         date = Date()
         emails = [String]()
         imageSet = Array(repeating: ImageSet(image: UIImage(named:"defaultPhoto")!, seleted: false ), count: imageSetCount)
-        locationCoordinate = nil
+        //locationCoordinate = nil
+        cllocation = nil
         hasgeolocation = false
+        hasLocation = false
         
         if nil != expense {
             
@@ -251,13 +266,23 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             if hasgeolocation {
                 
+                /*
                 if let lat = (expense?.value(forKey: XYZExpense.latitude) as? Double) {
                     
                     let long = (expense?.value(forKey: XYZExpense.longitude) as? Double) ?? 1000.0
                 
-                    locationCoordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                    //locationCoordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                    cllocation = CLLocation(latitude: lat, longitude: long)
                     hasLocation = true
                 }
+                 */
+                
+                if let data = expense?.value(forKey: XYZExpense.loction) as? Data {
+                    
+                    cllocation = NSKeyedUnarchiver.unarchiveObject(with: data) as? CLLocation
+                }
+                
+                hasLocation = nil != cllocation
             }
             
             guard let receiptList = expense?.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt> else {
@@ -484,7 +509,8 @@ class ExpenseDetailTableViewController: UITableViewController,
     
     // MARK: - property
     var location = "Location"
-    var locationCoordinate: CLLocationCoordinate2D?
+    //var locationCoordinate: CLLocationCoordinate2D?
+    var cllocation: CLLocation?
     var hasLocation = false
     var detail = ""
     var amount: Double?
@@ -527,9 +553,9 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         expenseDetailLocationViewController.delegate = self
         
-        if let _ = locationCoordinate {
+        if let _ = cllocation {
             
-            expenseDetailLocationViewController.setCoordinate(locationCoordinate!)
+            expenseDetailLocationViewController.setCoordinate((cllocation?.coordinate)!)
         }
         
         let nav = UINavigationController(rootViewController: expenseDetailLocationViewController)
