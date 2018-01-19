@@ -165,11 +165,29 @@ class IncomeTableViewController: UITableViewController,
     
     func saveNewIncome(income: XYZAccount) {
 
+        let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
+        
+        for (index, section) in tableSectionCellList.enumerated() {
+            
+            if currencyCode == section.title {
+                
+                guard var sectionIncomeList = section.data as? [XYZAccount] else {
+                    
+                    fatalError("Exception: [XYZAccount] is expected")
+                }
+                
+                sectionIncomeList.append(income)
+                
+                tableSectionCellList[index].data = sectionIncomeList
+                break
+            }
+        }
+        
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
         income.setValue((appDelegate?.incomeList)!.count, forKey: XYZAccount.sequenceNr)
         appDelegate?.incomeList.append(income)
-
+        
         reloadData()
     }
     
@@ -332,8 +350,9 @@ class IncomeTableViewController: UITableViewController,
     
     func reloadData() {
         
-        loadDataInTableSectionCell()
         saveAccounts()
+        loadDataInTableSectionCell()
+        //saveAccounts()
 
         tableView.reloadData()
     }
@@ -854,7 +873,7 @@ class IncomeTableViewController: UITableViewController,
             
             let sectionIncomeList = tableSectionCellList[indexPath.section].data as? [XYZAccount]
             
-            incomeTableView.income = sectionIncomeList![indexPath.row] //incomeList[indexPath.row]
+            incomeTableView.income = sectionIncomeList![indexPath.row]
             incomeDetailNavigationController.modalPresentationStyle = .popover
             self.present(incomeDetailNavigationController, animated: true, completion: nil)
             
@@ -871,9 +890,9 @@ class IncomeTableViewController: UITableViewController,
                 fatalError("Exception: IncomeDetailTableViewController is expedted" )
             }
             
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            let sectionIncomeList = tableSectionCellList[indexPath.section].data as? [XYZAccount]
             detailTableViewController.incomeDelegate = self
-            delegate?.incomeSelected(newIncome: appDelegate?.incomeList[indexPath.row])
+            delegate?.incomeSelected(newIncome: sectionIncomeList?[indexPath.row])
         }
     }
     
@@ -966,6 +985,25 @@ class IncomeTableViewController: UITableViewController,
             // Delete the row from the data source, the way we handle it is special, we delete it from incomelist, and then reload it in table section
             let sectionIncomeList = tableSectionCellList[indexPath.section].data as? [XYZAccount]
             let incomeToBeDeleted = sectionIncomeList![indexPath.row]
+            
+            guard let split = self.parent?.parent?.parent as? UISplitViewController else {
+                
+                fatalError("Exception: UISplitViewController is expected")
+            }
+            
+            if !split.isCollapsed  {
+                
+                guard let detailTableViewController = delegate as? IncomeDetailTableViewController else {
+                    
+                    fatalError("Exception: IncomeDetailTableViewController is expedted" )
+                }
+                
+                if detailTableViewController.income == incomeToBeDeleted {
+                    
+                    detailTableViewController.income = nil
+                    detailTableViewController.reloadData()
+                }
+            }
             
             softDeleteIncome(income: incomeToBeDeleted)
             let identifier = incomeToBeDeleted.value(forKey: XYZAccount.recordId) as? String

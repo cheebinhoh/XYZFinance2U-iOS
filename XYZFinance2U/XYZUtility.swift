@@ -366,7 +366,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     
     opZoneChange.recordChangedBlock = { (record) in
         
-        print("-------- fetch change record")
+        //print("-------- fetch change record")
         let ckrecordzone = CKRecordZone(zoneName: record.recordID.zoneID.zoneName)
         let icloudZone = iCloudZone(of: ckrecordzone, icloudZones)
         
@@ -556,11 +556,11 @@ func fetchAndUpdateiCloud(_ zones: [CKRecordZone],
     
     if !iCloudZones.isEmpty {
         
-        print("-------- fetch changes from zones")
+        //print("-------- fetch changes from zones")
         
         fetchiCloudZoneChange(zones, iCloudZones, {
             
-            print("-------- done fetching change from zone")
+            //print("-------- done fetching change from zone")
             
             //we should only write to icloud if we do have changed after last token change
             
