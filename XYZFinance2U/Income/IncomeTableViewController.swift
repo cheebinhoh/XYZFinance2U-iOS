@@ -32,7 +32,7 @@ class IncomeTableViewController: UITableViewController,
         
         show(viewControllerToCommit, sender: self)
     }
-    
+        
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
         let indexPath = tableView.indexPathForRow(at: location)
