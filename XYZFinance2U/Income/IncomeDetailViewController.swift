@@ -24,15 +24,9 @@ class IncomeDetailViewController: UIViewController, UITextFieldDelegate, UINavig
     @IBOutlet weak var accountNr: UITextField!
     @IBOutlet weak var amount: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
-    @IBOutlet weak var date: UIDatePicker!
     @IBOutlet weak var dateInput: UILabel!
     
     // MARK: - IBAction
-    
-    @IBAction func dateInputTouchUp(_ sender: UITapGestureRecognizer) {
-        
-        date.isHidden = !date.isHidden
-    }
     
     @IBAction func pickDate(_ sender: UIDatePicker) {
         
@@ -55,16 +49,15 @@ class IncomeDetailViewController: UIViewController, UITextFieldDelegate, UINavig
             amount.text = formattingCurrencyValue(input: "\((account.value(forKey: XYZAccount.amount) as? Double)!)", nil)
             bank.text = account.value(forKey: XYZAccount.bank) as? String
             accountNr.text = account.value(forKey: XYZAccount.accountNr) as? String
-            date.date = ( account.value(forKey: XYZAccount.lastUpdate) as? Date )!
-            dateInput.text = formattingDate(date: date.date, .medium)
+            
+            dateInput.text = formattingDate(date: (account.value(forKey: XYZAccount.lastUpdate) as? Date)!, .medium)
         } else {
             
             isPresentingInAddIncomeMode = true;
             amount.text = formattingCurrencyValue(input: 0.0, nil)
-            dateInput.text = formattingDate(date: date.date, .medium)
+            dateInput.text = formattingDate(date: Date(), .medium)
         }
         
-        date.isHidden = true
         amount.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         navigationItem.largeTitleDisplayMode = .never
@@ -105,6 +98,7 @@ class IncomeDetailViewController: UIViewController, UITextFieldDelegate, UINavig
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
+    /*
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         // Get the new view controller using segue.destinationViewController.
@@ -120,7 +114,6 @@ class IncomeDetailViewController: UIViewController, UITextFieldDelegate, UINavig
         let accountNrText = accountNr.text ?? ""
         let amountText = formattingDoubleValue(input: amount.text ?? "0")
         let amountValue = Double(amountText) ?? 0.0
-        let lastupdate = date.date
         
         if account == nil {
             
@@ -133,5 +126,6 @@ class IncomeDetailViewController: UIViewController, UITextFieldDelegate, UINavig
             account?.setValue(lastupdate, forKey: XYZAccount.lastUpdate)
         }
     }
+     */
 }
 

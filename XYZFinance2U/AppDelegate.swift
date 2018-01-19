@@ -355,11 +355,11 @@ class AppDelegate: UIResponder,
         
         if !zonesToBeFetched.isEmpty {
             
-            print("-------- fetch and uppdate changes from/to zones")
+            //print("-------- fetch and uppdate changes from/to zones")
             
             fetchAndUpdateiCloud(zonesToBeFetched, self.iCloudZones, {
                 
-                print("-------- done fetching changes after saving zone")
+                //print("-------- done fetching changes after saving zone")
                 for icloudzone in self.iCloudZones {
                     
                     let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String

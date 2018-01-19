@@ -28,17 +28,33 @@ class IncomeTableViewController: UITableViewController,
     
     // MARK: - 3d touch delegate (peek & pop)
     
+    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+        
+        show(viewControllerToCommit, sender: self)
+    }
+    
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
-        /*
-        guard let incomeDetailViewController = self.storyboard?.instantiateViewController(withIdentifier:    "IncomeDetailViewController") as? IncomeDetailViewController else {
+        let indexPath = tableView.indexPathForRow(at: location)
+        print("-------- indexpath section = \(String(describing: indexPath?.section)), row = \(String(describing: indexPath?.row))")
+        
+        let cell = tableView.cellForRow(at: indexPath!)
+        
+        guard let viewController = storyboard?.instantiateViewController(withIdentifier: "IncomeDetailViewController") as? IncomeDetailViewController else  {
+            
             fatalError("Exception: IncomeDetailViewController is expected")
         }
         
-        return incomeDetailViewController
-         */
+        guard let sectionIncomeList = tableSectionCellList[(indexPath?.section)!].data as? [XYZAccount] else {
+            
+            fatalError("Exception: [XYZAccount] is expected")
+        }
         
-        return nil
+        viewController.account = sectionIncomeList[(indexPath?.row)!]
+        
+        previewingContext.sourceRect = (cell?.frame)!
+        
+        return viewController
     }
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
@@ -51,7 +67,7 @@ class IncomeTableViewController: UITableViewController,
     var tableSectionCellList = [TableSectionCell]()
     var isPopover = false
     let mainSection = 0
-    //var incomeList = [XYZAccount]()
+
     var total: Double {
         
         var sum = 0.0

@@ -199,7 +199,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="TZy-qf-gQK">
-                                <rect key="frame" x="20" y="84" width="280" height="429"/>
+                                <rect key="frame" x="20" y="84" width="280" height="203"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="bank" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bbD-a6-qzE">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="35"/>
@@ -263,15 +263,6 @@
                                             <outletCollection property="gestureRecognizers" destination="tKr-Iy-OY5" appends="YES" id="Q8E-HM-LkM"/>
                                         </connections>
                                     </label>
-                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="fjv-yg-G4o">
-                                        <rect key="frame" x="0.0" y="213" width="280" height="216"/>
-                                        <date key="date" timeIntervalSinceReferenceDate="534292922.48710603">
-                                            <!--2017-12-06 22:42:02 +0000-->
-                                        </date>
-                                        <connections>
-                                            <action selector="pickDate:" destination="8FP-ZR-QmJ" eventType="valueChanged" id="oZa-Ao-8Go"/>
-                                        </connections>
-                                    </datePicker>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -299,7 +290,6 @@
                         <outlet property="accountNr" destination="ytQ-tF-wyG" id="ciU-Em-aQs"/>
                         <outlet property="amount" destination="Owp-tV-45q" id="aOq-WL-NO4"/>
                         <outlet property="bank" destination="bbD-a6-qzE" id="XGT-9p-JR8"/>
-                        <outlet property="date" destination="fjv-yg-G4o" id="Wqe-Jt-20p"/>
                         <outlet property="dateInput" destination="sle-ro-GGq" id="JNq-Re-8u0"/>
                         <outlet property="saveButton" destination="WWG-jU-nxM" id="im3-ro-AH7"/>
                     </connections>
