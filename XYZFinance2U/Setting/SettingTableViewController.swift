@@ -271,6 +271,10 @@ class SettingTableViewController: UITableViewController,
                 }
             }
             
+            settingDetail?.exchangeRates = exchangeRatesNeed
+            settingDetail?.currencyCodes = currencyCodes
+            settingDetail?.loadDataInTableSectionCell()
+            
             saveManageContext()
         }
     }

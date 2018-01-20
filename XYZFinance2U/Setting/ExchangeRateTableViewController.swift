@@ -14,6 +14,8 @@ class ExchangeRateTableViewController: UITableViewController {
     
     var isPopover = false
     var tableSectionCellList = [TableSectionCell]()
+    var exchangeRates: [XYZExchangeRate]?
+    var currencyCodes: [String]?
     
     func setPopover(_ isPopover: Bool) {
         
@@ -39,6 +41,37 @@ class ExchangeRateTableViewController: UITableViewController {
         
         dismiss(animated: true, completion: nil)
         //let _ = self.navigationController?.popViewController(animated: true)
+    }
+    
+    func loadDataInTableSectionCell() {
+        
+        tableSectionCellList.removeAll()
+        
+        if let _ = exchangeRates, let _ = currencyCodes {
+        
+            for currencyCode in currencyCodes! {
+                
+                var sectionExchangeRates = [XYZExchangeRate]()
+                
+                for exchangeRate in exchangeRates! {
+                    
+                    let base = exchangeRate.value(forKey: XYZExchangeRate.base) as? String
+                    
+                    if base == currencyCode {
+                        
+                        sectionExchangeRates.append(exchangeRate)
+                    }
+                }
+                
+                let section = TableSectionCell(identifier: currencyCode,
+                                               title: currencyCode,
+                                               cellList: [],
+                                               data: sectionExchangeRates)
+                tableSectionCellList.append(section)
+            }
+        }
+        
+        print("--- \(tableSectionCellList)")
     }
     
     override func viewDidLoad() {
