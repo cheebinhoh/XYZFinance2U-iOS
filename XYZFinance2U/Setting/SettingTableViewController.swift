@@ -178,6 +178,7 @@ class SettingTableViewController: UITableViewController,
             
             if splitView.isCollapsed {
                 
+                splitView.popOverNavigatorController = exDetailNavigationController
                 settingDetail?.setPopover(true)
                 popoverView = settingDetail
                 self.present(exDetailNavigationController, animated: false, completion: nil)
@@ -325,6 +326,7 @@ class SettingTableViewController: UITableViewController,
             
             if splitView.isCollapsed {
                 
+                splitView.popOverNavigatorController = settingDetailNavigationController
                 settingDetail?.setPopover(true)
                 popoverView = settingDetail
                 self.present(settingDetailNavigationController, animated: false, completion: nil)
