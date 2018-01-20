@@ -233,10 +233,32 @@ class SettingTableViewController: UITableViewController,
                             exchangeRates?.append(exchangeRateToBeUpdated!)
                         } else {
                             
-                            exchangeRateToBeUpdated?.setValue(0.0, forKey: XYZExchangeRate.rate)
+                            // do nothing
                         }
                         
                         exchangeRatesNeed.append(exchangeRateToBeUpdated!)
+                        
+                        /*
+                        let url = URL(string: "https://api.fixer.io/latest?base=\(currencyCodeFrom)&symbols=\(currencyCodeTo)")
+                        
+                        let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
+                            
+                            do {
+                                
+                                let dictResult = try JSONSerialization.jsonObject(with: data!,
+                                                                                  options: JSONSerialization.ReadingOptions.mutableContainers) as! [String: Any]
+                                let rates = dictResult["rates"] as! [String: Double]
+                                let value = rates[currencyCodeTo]
+                                
+                                exchangeRateToBeUpdated?.setValue(value, forKey: XYZExchangeRate.rate)
+                            } catch {
+                                
+                                print("-------- error in JSONSerialization = \(error)")
+                            }
+                        }
+                        
+                        task.resume()
+                        */
                     }
                 }
             }
