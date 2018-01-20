@@ -248,16 +248,22 @@ class SettingTableViewController: UITableViewController,
                             
                             do {
                                 
-                                let dictResult = try JSONSerialization.jsonObject(with: data!,
-                                                                                  options: JSONSerialization.ReadingOptions.mutableContainers) as! [String: Any]
-                                let rates = dictResult["rates"] as! [String: Double]
-                                let value = rates[currencyCodeTo]
-                                
-                                exchangeRateToBeUpdated?.setValue(value, forKey: XYZExchangeRate.rate)
-                                
-                                DispatchQueue.main.async {
+                                if nil != error {
                                     
-                                    settingDetail?.reloadExchangeRate( exchangeRateToBeUpdated! )
+                                    print("-------- error = \(String(describing: error))")
+                                } else {
+                                    
+                                    let dictResult = try JSONSerialization.jsonObject(with: data!,
+                                                                                      options: JSONSerialization.ReadingOptions.mutableContainers) as! [String: Any]
+                                    let rates = dictResult["rates"] as! [String: Double]
+                                    let value = rates[currencyCodeTo]
+                                    
+                                    exchangeRateToBeUpdated?.setValue(value, forKey: XYZExchangeRate.rate)
+                                    
+                                    DispatchQueue.main.async {
+                                        
+                                        settingDetail?.reloadExchangeRate( exchangeRateToBeUpdated! )
+                                    }
                                 }
                             } catch {
                                 
