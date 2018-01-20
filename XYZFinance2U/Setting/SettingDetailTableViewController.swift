@@ -87,9 +87,9 @@ class SettingDetailTableViewController: UITableViewController {
                 }
             
                 newcell.content.text = """
-                                        \(AppDelegate.appName) was created by
-
-                                        CB Hoh, 2017-2018
+                                        \(AppDelegate.appName) was created by CheeBin Hoh
+                                         
+                                        \u{A9} 2017-2018 ALL RIGHTS RESERVED
                                       """
                 
                 cell = newcell
