@@ -355,6 +355,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Am8-0M-WYB"/>
                     </view>
+                    <connections>
+                        <outlet property="accountNr" destination="Ojl-1W-I0N" id="P4i-5N-sEC"/>
+                        <outlet property="amount" destination="gMq-aW-5oO" id="FPg-7a-tIh"/>
+                        <outlet property="bank" destination="arb-2Y-1TS" id="Qin-9Q-38w"/>
+                        <outlet property="date" destination="UjH-Xu-Coh" id="ifa-g2-NsL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oCZ-6p-Tsr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

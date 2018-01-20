@@ -34,32 +34,32 @@ class IncomeTableViewController: UITableViewController,
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
+        guard let viewController = storyboard?.instantiateViewController(withIdentifier: "IncomeDetailViewController") as? IncomeDetailViewController else  {
+            
+            fatalError("Exception: IncomeDetailViewController is expected")
+        }
+
         let indexPath = tableView.indexPathForRow(at: location)
-        print("-------- indexpath section = \(String(describing: indexPath?.section)), row = \(String(describing: indexPath?.row))")
+        let cell = tableView.cellForRow(at: indexPath!)
+        
+        viewController.preferredContentSize = CGSize(width: 0.0, height: 140)
+        previewingContext.sourceRect = (cell?.frame)!
         
         if tableSectionCellList[indexPath!.section].identifier == "main" {
-            
-            let cell = tableView.cellForRow(at: indexPath!)
-            
-            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "IncomeDetailViewController") as? IncomeDetailViewController else  {
-                
-                fatalError("Exception: IncomeDetailViewController is expected")
-            }
             
             guard let sectionIncomeList = tableSectionCellList[(indexPath?.section)!].data as? [XYZAccount] else {
                 
                 fatalError("Exception: [XYZAccount] is expected")
             }
             
-            //viewController.account = sectionIncomeList[(indexPath?.row)!]
-            viewController.preferredContentSize = CGSize(width: 0.0, height: 140)
-            previewingContext.sourceRect = (cell?.frame)!
-            
-            return viewController
+            viewController.income = sectionIncomeList[(indexPath?.row)!]
         } else {
          
-            return nil
+            viewController.total = totalOfSection(section: indexPath!.section - 1)
+            viewController.currencyCode = tableSectionCellList[indexPath!.section].title
         }
+
+        return viewController
     }
     
     

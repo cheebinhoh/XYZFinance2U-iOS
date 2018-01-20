@@ -11,7 +11,15 @@ import UIKit
 class IncomeDetailViewController: UIViewController {
 
     // MARK: property
-    var income: [XYZAccount]?
+    var income: XYZAccount?
+    var total: Double?
+    var currencyCode: String?
+    
+    @IBOutlet weak var bank: UILabel!
+    @IBOutlet weak var accountNr: UILabel!
+    @IBOutlet weak var amount: UILabel!
+    @IBOutlet weak var date: UILabel!
+    
     
     // MARK: 3d touch
     
@@ -24,6 +32,19 @@ class IncomeDetailViewController: UIViewController {
 
         let copyAction = UIPreviewAction(title: "Copy", style: .default, handler: { (action, viewcontroller) in
             
+            var balance = 0.0
+            
+            if let _ = self.income {
+            
+                balance = (self.income?.value(forKey: XYZAccount.amount) as? Double)!
+            } else {
+                
+                balance = self.total!
+            }
+            
+            UIPasteboard.general.string = "\(balance)"
+            
+            print("---- here")
         })
         
         return [copyAction]
@@ -34,6 +55,25 @@ class IncomeDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if let _ = income {
+            
+            bank.text = income?.value(forKey: XYZAccount.bank) as? String
+            accountNr.text = income?.value(forKey: XYZAccount.accountNr) as? String
+            
+            let currencyCode = income?.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode
+            let balance = income?.value(forKey: XYZAccount.amount) as? Double
+            
+            amount.text = formattingCurrencyValue(input: balance!, currencyCode)
+            date.text = formattingDate(date: (income?.value(forKey: XYZAccount.lastUpdate) as? Date )!, .medium)
+        } else if let _ = total {
+            
+            bank.text = "-"
+            accountNr.text = "-"
+            date.text = "-"
+            
+            amount.text = formattingCurrencyValue(input: total!, currencyCode ?? Locale.current.currencyCode)
+        }
+        
         // Do any additional setup after loading the view.
     }
 
