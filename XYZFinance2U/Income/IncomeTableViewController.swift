@@ -30,6 +30,16 @@ class IncomeTableViewController: UITableViewController,
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         // Reuse the "Peek" view controller for presentation.
+        
+        guard let viewController = viewControllerToCommit as? IncomeDetailViewController else {
+            
+            fatalError("Exception: IncomeDetailViewController is expected")
+        }
+        
+        if let _ = viewController.income {
+            
+            tableView(tableView, didSelectRowAt: viewController.indexPath!)
+        }
     }
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
@@ -53,6 +63,7 @@ class IncomeTableViewController: UITableViewController,
             }
             
             viewController.income = sectionIncomeList[(indexPath?.row)!]
+            viewController.indexPath = indexPath
         } else {
          
             viewController.total = totalOfSection(section: indexPath!.section - 1)

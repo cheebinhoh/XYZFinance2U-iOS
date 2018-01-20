@@ -14,6 +14,7 @@ class IncomeDetailViewController: UIViewController {
     var income: XYZAccount?
     var total: Double?
     var currencyCode: String?
+    var indexPath: IndexPath?
     
     @IBOutlet weak var bank: UILabel!
     @IBOutlet weak var accountNr: UILabel!
