@@ -1091,7 +1091,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="productAuthorCopyright" destination="YCA-iu-JJU" id="pSi-1Q-R46"/>
+                                    <outlet property="content" destination="YCA-iu-JJU" id="T8o-yB-O1f"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

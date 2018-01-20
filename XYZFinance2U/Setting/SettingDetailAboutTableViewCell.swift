@@ -12,7 +12,7 @@ class SettingDetailAboutTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlet
     
-    @IBOutlet weak var productAuthorCopyright: UILabel!
+    @IBOutlet weak var content: UILabel!
     
     override func awakeFromNib() {
         

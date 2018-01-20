@@ -86,12 +86,25 @@ class SettingDetailTableViewController: UITableViewController {
                     fatalError("Exception: errpr on creating settingDetailAboutCell")
                 }
             
-                newcell.productAuthorCopyright.text = """
-                                                        \(AppDelegate.appName) was created by
+                newcell.content.text = """
+                                        \(AppDelegate.appName) was created by
 
-                                                        CB Hoh, 2017-2018
-                                                      """
+                                        CB Hoh, 2017-2018
+                                      """
                 cell = newcell
+            
+        case "disclaimer":
+            guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingDetailAboutCell", for: indexPath) as? SettingDetailAboutTableViewCell else {
+                
+                fatalError("Exception: errpr on creating settingDetailAboutCell")
+            }
+            
+            newcell.content.text = """
+              The foreign exchange rates are from http://fixer.io
+            
+              It does not come with warranty of any sort
+            """
+            cell = newcell
             
             default:
                 break
