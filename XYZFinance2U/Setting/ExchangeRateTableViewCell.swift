@@ -14,6 +14,7 @@ class ExchangeRateTableViewCell: UITableViewCell {
     
     @IBOutlet weak var base2target: UILabel!
     @IBOutlet weak var rate: UILabel!
+    @IBOutlet weak var date: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

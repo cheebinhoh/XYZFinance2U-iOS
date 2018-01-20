@@ -296,36 +296,45 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="exchangeRateCell" id="8CT-uM-T2a" customClass="ExchangeRateTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="320" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="exchangeRateCell" rowHeight="65" id="8CT-uM-T2a" customClass="ExchangeRateTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="320" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8CT-uM-T2a" id="SMz-og-LVg">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="64.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1JT-KP-6vt">
-                                            <rect key="frame" x="16" y="12" width="171.5" height="21"/>
+                                            <rect key="frame" x="16" y="11" width="171" height="11"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rate" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ay2-KR-0uS">
-                                            <rect key="frame" x="256.5" y="8.5" width="47.5" height="27"/>
+                                            <rect key="frame" x="256" y="19" width="48" height="27"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tiZ-sD-Hke">
+                                            <rect key="frame" x="16" y="33" width="187" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="1JT-KP-6vt" secondAttribute="bottom" constant="32" id="Y1U-Da-SzH"/>
                                         <constraint firstItem="ay2-KR-0uS" firstAttribute="trailing" secondItem="SMz-og-LVg" secondAttribute="trailingMargin" id="af8-h5-dyF"/>
                                         <constraint firstItem="ay2-KR-0uS" firstAttribute="leading" secondItem="1JT-KP-6vt" secondAttribute="trailing" constant="69" id="enL-j6-97g"/>
-                                        <constraint firstItem="1JT-KP-6vt" firstAttribute="centerY" secondItem="SMz-og-LVg" secondAttribute="centerY" id="xqZ-2S-fO1"/>
+                                        <constraint firstItem="1JT-KP-6vt" firstAttribute="top" secondItem="SMz-og-LVg" secondAttribute="topMargin" id="w1H-rw-OxC"/>
                                         <constraint firstItem="1JT-KP-6vt" firstAttribute="leading" secondItem="SMz-og-LVg" secondAttribute="leadingMargin" id="yZE-NF-n8y"/>
                                         <constraint firstItem="ay2-KR-0uS" firstAttribute="centerY" secondItem="SMz-og-LVg" secondAttribute="centerY" id="zNg-om-ESy"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="base2target" destination="1JT-KP-6vt" id="7Rc-w8-eGZ"/>
+                                    <outlet property="date" destination="tiZ-sD-Hke" id="hKc-Wt-MHF"/>
                                     <outlet property="rate" destination="ay2-KR-0uS" id="b38-V1-9Zr"/>
                                 </connections>
                             </tableViewCell>

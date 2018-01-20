@@ -162,9 +162,11 @@ class ExchangeRateTableViewController: UITableViewController {
         let exchangeRate = sectionExchangeRates![indexPath.row]
         let target = exchangeRate.value(forKey: XYZExchangeRate.target) as? String
         let rate = exchangeRate.value(forKey: XYZExchangeRate.rate) as? Double
+        let date = exchangeRate.value(forKey: XYZExchangeRate.date) as? Date
         
         cell.base2target.text = target
         cell.rate.text = formattingCurrencyValue(input: rate!, target)
+        cell.date.text = "Last update: " + formattingDate(date: date!, .short)
         
         return cell
     }
