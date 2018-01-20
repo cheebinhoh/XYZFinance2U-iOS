@@ -28,37 +28,38 @@ class IncomeTableViewController: UITableViewController,
     
     // MARK: - 3d touch delegate (peek & pop)
     
-    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
-        
-        show(viewControllerToCommit, sender: self)
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        // Reuse the "Peek" view controller for presentation.
     }
-        
+    
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
         let indexPath = tableView.indexPathForRow(at: location)
         print("-------- indexpath section = \(String(describing: indexPath?.section)), row = \(String(describing: indexPath?.row))")
         
-        let cell = tableView.cellForRow(at: indexPath!)
-        
-        guard let viewController = storyboard?.instantiateViewController(withIdentifier: "IncomeDetailViewController") as? IncomeDetailViewController else  {
+        if tableSectionCellList[indexPath!.section].identifier == "main" {
             
-            fatalError("Exception: IncomeDetailViewController is expected")
-        }
-        
-        guard let sectionIncomeList = tableSectionCellList[(indexPath?.section)!].data as? [XYZAccount] else {
+            let cell = tableView.cellForRow(at: indexPath!)
             
-            fatalError("Exception: [XYZAccount] is expected")
+            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "IncomeDetailViewController") as? IncomeDetailViewController else  {
+                
+                fatalError("Exception: IncomeDetailViewController is expected")
+            }
+            
+            guard let sectionIncomeList = tableSectionCellList[(indexPath?.section)!].data as? [XYZAccount] else {
+                
+                fatalError("Exception: [XYZAccount] is expected")
+            }
+            
+            //viewController.account = sectionIncomeList[(indexPath?.row)!]
+            viewController.preferredContentSize = CGSize(width: 0.0, height: 250)
+            previewingContext.sourceRect = (cell?.frame)!
+            
+            return viewController
+        } else {
+         
+            return nil
         }
-        
-        viewController.account = sectionIncomeList[(indexPath?.row)!]
-        viewController.preferredContentSize = CGSize(width: 0.0, height: 250)
-        previewingContext.sourceRect = (cell?.frame)!
-        
-        return viewController
-    }
-    
-    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-
     }
     
     
@@ -1135,6 +1136,7 @@ class IncomeTableViewController: UITableViewController,
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
+    /*
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         // Get the new view controller using segue.destinationViewController.
@@ -1174,5 +1176,5 @@ class IncomeTableViewController: UITableViewController,
             default:
                 fatalError("Unexpected error on default for prepare from table view controller")
         }
-    }
+    } */
 }
