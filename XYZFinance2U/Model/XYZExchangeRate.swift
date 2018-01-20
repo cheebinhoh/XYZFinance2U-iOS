@@ -19,13 +19,20 @@ class XYZExchangeRate : NSManagedObject {
     static let base = "base"
     static let target = "target"
     static let rate = "rate"
+    static let date = "date"
     
     var recordId: String = ""
     var base: String = ""
     var target: String = ""
     var rate: Double = 0.0
+    var date: Date = Date()
     
-    init(_ recordId: String, _ base: String, _ target: String, _ rate: Double, context: NSManagedObjectContext?) {
+    init(_ recordId: String,
+         _ base: String,
+         _ target: String,
+         _ rate: Double,
+         _ date: Date,
+         context: NSManagedObjectContext?) {
         
         let aContext = context!
         
@@ -37,6 +44,7 @@ class XYZExchangeRate : NSManagedObject {
         self.setValue(base, forKey: XYZExchangeRate.base)
         self.setValue(target, forKey: XYZExchangeRate.target)
         self.setValue(rate, forKey: XYZExchangeRate.rate)
+        self.setValue(date, forKey: XYZExchangeRate.date)
     }
     
     override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {

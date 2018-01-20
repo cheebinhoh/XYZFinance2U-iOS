@@ -17,6 +17,8 @@ class ExchangeRateTableViewController: UITableViewController {
     var exchangeRates: [XYZExchangeRate]?
     var currencyCodes: [String]?
     
+    // MARK: - function
+    
     func setPopover(_ isPopover: Bool) {
         
         self.isPopover = isPopover
@@ -40,7 +42,6 @@ class ExchangeRateTableViewController: UITableViewController {
     @IBAction func backAction(_ sender: UIButton) {
         
         dismiss(animated: true, completion: nil)
-        //let _ = self.navigationController?.popViewController(animated: true)
     }
     
     func loadDataInTableSectionCell() {
@@ -118,12 +119,11 @@ class ExchangeRateTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+        
         return tableSectionCellList.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         
         let sectionExchangeRates = tableSectionCellList[section].data as? [XYZExchangeRate]
         

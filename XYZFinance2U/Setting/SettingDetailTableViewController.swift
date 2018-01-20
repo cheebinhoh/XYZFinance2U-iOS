@@ -10,6 +10,8 @@ import UIKit
 
 class SettingDetailTableViewController: UITableViewController {
 
+    // MARK: - property
+    
     var isPopover = false
     var tableSectionCellList = [TableSectionCell]()
     
@@ -18,6 +20,8 @@ class SettingDetailTableViewController: UITableViewController {
         self.isPopover = isPopover
         showBarButtons()
     }
+    
+    // MARK: - function
     
     func showBarButtons() {
         
@@ -51,26 +55,22 @@ class SettingDetailTableViewController: UITableViewController {
     @IBAction func backAction(_ sender: UIButton) {
         
         dismiss(animated: true, completion: nil)
-        //let _ = self.navigationController?.popViewController(animated: true)
     }
     
     override func didReceiveMemoryWarning() {
         
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         
-        // #warning Incomplete implementation, return the number of sections
         return tableSectionCellList.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        // #warning Incomplete implementation, return the number of rows
         return tableSectionCellList[section].cellList.count
     }
 
@@ -91,6 +91,7 @@ class SettingDetailTableViewController: UITableViewController {
 
                                         CB Hoh, 2017-2018
                                       """
+                
                 cell = newcell
             
         case "disclaimer":
@@ -104,6 +105,7 @@ class SettingDetailTableViewController: UITableViewController {
             
               It does not come with warranty of any sort
             """
+            
             cell = newcell
             
             default:

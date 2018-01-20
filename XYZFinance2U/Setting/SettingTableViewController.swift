@@ -232,6 +232,7 @@ class SettingTableViewController: UITableViewController,
                                                                       currencyCodeFrom,
                                                                       currencyCodeTo,
                                                                       0.0,
+                                                                      Date(),
                                                                       context: aContext)
                             
                             exchangeRates?.append(exchangeRateToBeUpdated!)
@@ -256,10 +257,19 @@ class SettingTableViewController: UITableViewController,
                                     let dictResult = try JSONSerialization.jsonObject(with: data!,
                                                                                   options: JSONSerialization.ReadingOptions.mutableContainers) as! [String: Any]
                                     let rates = dictResult["rates"] as! [String: Double]
+                                    let dateString = dictResult["date"] as? String
                                     let value = rates[currencyCodeTo]
+                                    
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                                    guard let date = dateFormatter.date(from: dateString!) else {
+                                        
+                                        fatalError("Exception: string to date failed")
+                                    }
 
                                     exchangeRateToBeUpdated?.setValue(value, forKey: XYZExchangeRate.rate)
-
+                                    exchangeRateToBeUpdated?.setValue(date, forKey: XYZExchangeRate.date)
+                                    
                                     DispatchQueue.main.async {
 
                                         settingDetail?.reloadExchangeRate( exchangeRateToBeUpdated! )
@@ -408,26 +418,10 @@ class SettingTableViewController: UITableViewController,
         } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "ExchangeRate" {
             
             showExchangeRate(indexPath)
-            
-            // we either provide a way to fetch the rate and then update income table, or we enhance
-            // income table to allow us to fetch the rate.
-            /*
-            let url = URL(string: "https://api.fixer.io/latest?base=USD&symbols=MYR")
-            
-            let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
-                
-                print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue) ?? "-")
-            }
-
-            task.resume()
-             */
         } else {
             
             showAbout(indexPath)
         }
-        
-        //let cell = tableView.cellForRow(at: indexPath)
-        //performSegue(withIdentifier: settingList[indexPath.row].segueIdentifier, sender:cell)
     }
     
     func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {

@@ -10,9 +10,10 @@ import UIKit
 
 class ExchangeRateTableViewCell: UITableViewCell {
 
+    // MARK: - IBOutlet
+    
     @IBOutlet weak var base2target: UILabel!
     @IBOutlet weak var rate: UILabel!
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
