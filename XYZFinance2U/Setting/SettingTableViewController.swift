@@ -96,7 +96,7 @@ class SettingTableViewController: UITableViewController,
                     fatalError("Exception: error on creating settingTableCell")
                 }
                 
-                newcell.title.text = "Exchange rate"
+                newcell.title.text = "Foreign exchange rate"
                 cell = newcell
             
             case "Export" :
