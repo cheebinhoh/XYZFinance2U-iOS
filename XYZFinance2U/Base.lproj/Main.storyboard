@@ -287,6 +287,35 @@
             </objects>
             <point key="canvasLocation" x="2592.8000000000002" y="34.632683658170919"/>
         </scene>
+        <!--Exchange rates-->
+        <scene sceneID="3Mj-Qf-NbD">
+            <objects>
+                <tableViewController id="umg-Nm-OQ6" customClass="ExchangeRateTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="rZy-qu-EGo">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="exchangeRateCell" id="8CT-uM-T2a">
+                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8CT-uM-T2a" id="SMz-og-LVg">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="umg-Nm-OQ6" id="qvh-x5-bJL"/>
+                            <outlet property="delegate" destination="umg-Nm-OQ6" id="nZu-bp-kGI"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Exchange rates" id="xoE-B3-fAP"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tyn-cG-cbr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2591" y="786"/>
+        </scene>
         <!--Income Detail View Controller-->
         <scene sceneID="moN-AA-wde">
             <objects>
@@ -898,7 +927,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="4410" y="811.26760563380287"/>
+            <point key="canvasLocation" x="5141" y="786"/>
         </scene>
         <!--Image-->
         <scene sceneID="o3a-Ws-fSG">
@@ -1235,6 +1264,24 @@ Chee Bin HOH, 2017</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sn9-9o-3Yk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4410" y="-769"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="TWB-8a-7rm">
+            <objects>
+                <navigationController storyboardIdentifier="ExchangeRateNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="gTl-aa-IoE" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="OXJ-cl-3X2">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="umg-Nm-OQ6" kind="relationship" relationship="rootViewController" id="aFm-da-TLc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mWt-z9-kee" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1836" y="786"/>
         </scene>
     </scenes>
     <resources>

@@ -38,6 +38,7 @@
 		658F735E1FE08F5E00AF7F8D /* ExpenseDetailImagePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F735D1FE08F5E00AF7F8D /* ExpenseDetailImagePickerTableViewCell.swift */; };
 		658F73601FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F735F1FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift */; };
 		6590AFAA1FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6590AFA91FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift */; };
+		65D8BA7B201391D500944C2D /* ExchangeRateTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D8BA7A201391D500944C2D /* ExchangeRateTableViewController.swift */; };
 		65EE339D20013F4600DEA680 /* UITextField-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE339C20013F4600DEA680 /* UITextField-Extension.swift */; };
 		65EE339F2001A5EF00DEA680 /* SettingDetailAboutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE339E2001A5EF00DEA680 /* SettingDetailAboutTableViewCell.swift */; };
 		65EEC49B1FF05ED500D638CD /* IncomeDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EEC49A1FF05ED500D638CD /* IncomeDetailTableViewController.swift */; };
@@ -105,6 +106,7 @@
 		658F735D1FE08F5E00AF7F8D /* ExpenseDetailImagePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailImagePickerTableViewCell.swift; sourceTree = "<group>"; };
 		658F735F1FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailImageViewController.swift; sourceTree = "<group>"; };
 		6590AFA91FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailSwitchTableViewCell.swift; sourceTree = "<group>"; };
+		65D8BA7A201391D500944C2D /* ExchangeRateTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateTableViewController.swift; sourceTree = "<group>"; };
 		65EE339C20013F4600DEA680 /* UITextField-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField-Extension.swift"; sourceTree = "<group>"; };
 		65EE339E2001A5EF00DEA680 /* SettingDetailAboutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDetailAboutTableViewCell.swift; sourceTree = "<group>"; };
 		65EEC49A1FF05ED500D638CD /* IncomeDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				65F48F201FE377EC006951F7 /* SettingTableViewCell.swift */,
 				650024041FF6B423001281EA /* SettingDetailTableViewController.swift */,
 				65EE339E2001A5EF00DEA680 /* SettingDetailAboutTableViewCell.swift */,
+				65D8BA7A201391D500944C2D /* ExchangeRateTableViewController.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -413,6 +416,7 @@
 				65EEC49B1FF05ED500D638CD /* IncomeDetailTableViewController.swift in Sources */,
 				65F48F1F1FE370A1006951F7 /* SettingTableViewController.swift in Sources */,
 				658F73561FDD98D700AF7F8D /* ExpenseDetailTextTableViewCell.swift in Sources */,
+				65D8BA7B201391D500944C2D /* ExchangeRateTableViewController.swift in Sources */,
 				65F48F2B1FE5828E006951F7 /* XYZExpenseReceipt.swift in Sources */,
 				658F735A1FDE145D00AF7F8D /* ExpenseDetailDateTableViewCell.swift in Sources */,
 				655C979D1FCCCC210098D58D /* AppDelegate.swift in Sources */,

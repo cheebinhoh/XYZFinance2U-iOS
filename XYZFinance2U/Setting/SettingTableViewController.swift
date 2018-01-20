@@ -15,7 +15,8 @@ class SettingTableViewController: UITableViewController,
     // MARK: - property
     
     var tableSectionCellList = [TableSectionCell]()
-    var delegate: SettingDetailTableViewController?
+    var delegate: UIViewController?
+    var popoverView: UIViewController?
     var isCollapsed: Bool {
         
         if let split = self.parent?.parent as? UISplitViewController {
@@ -150,45 +151,77 @@ class SettingTableViewController: UITableViewController,
         settingDetail.tableView.reloadData()
     }
     
+    func showExchangeRate(_ indexPath: IndexPath) {
+        
+        var settingDetail: ExchangeRateTableViewController?
+        
+        if let _ = delegate, delegate is ExchangeRateTableViewController {
+            
+            settingDetail = delegate as? ExchangeRateTableViewController
+        } else {
+            
+            guard let exDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExchangeRateNavigationController") as? UINavigationController else {
+                
+                fatalError("Exception: error on instantiating SettingDetailNavigationController")
+            }
+            
+            settingDetail = exDetailNavigationController.viewControllers.first as? ExchangeRateTableViewController
+            
+            guard let splitView = self.parent?.parent?.parent as? MainSplitViewController else {
+                
+                fatalError("Exception: MainSplitViewController is expected")
+            }
+            
+            if splitView.isCollapsed {
+                
+                settingDetail?.setPopover(true)
+                popoverView = settingDetail
+                self.present(exDetailNavigationController, animated: false, completion: nil)
+            } else {
+                
+                delegate = settingDetail!
+                splitView.viewControllers.remove(at: 1)
+                splitView.viewControllers.insert(exDetailNavigationController, at: 1)
+            }
+            
+        }
+    }
+    
     func showAbout(_ indexPath: IndexPath) {
         
-        guard let split = self.parent?.parent?.parent as? UISplitViewController else {
-            
-            fatalError("Exception: UISplitViewController is expected")
-        }
+        var settingDetail: SettingDetailTableViewController?
         
-        if split.isCollapsed {
+        if let _ = delegate, delegate is SettingDetailTableViewController {
+            
+            settingDetail = delegate as? SettingDetailTableViewController
+        } else {
             
             guard let settingDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingDetailNavigationController") as? UINavigationController else {
                 
                 fatalError("Exception: error on instantiating SettingDetailNavigationController")
             }
             
-            guard let settingDetail = settingDetailNavigationController.viewControllers.first as? SettingDetailTableViewController else {
-                
-                fatalError("Exception: SettingDetailTableViewController is expected" )
-            }
-            
-            settingDetailNavigationController.modalPresentationStyle = .popover
-            settingDetail.setPopover(true)
-            loadSettingDetailTableView(settingDetail, indexPath)
-            self.present(settingDetailNavigationController, animated: false, completion: nil)
-            
-            guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+            settingDetail = settingDetailNavigationController.viewControllers.first as? SettingDetailTableViewController
+
+            guard let splitView = self.parent?.parent?.parent as? MainSplitViewController else {
                 
                 fatalError("Exception: MainSplitViewController is expected")
             }
             
-            mainSplitView.popOverNavigatorController = settingDetailNavigationController
-        } else {
-            
-            guard let settingDetail = delegate else {
+            if splitView.isCollapsed {
                 
-                fatalError("Exception: SettingDetailTableViewController is expedted" )
+                settingDetail?.setPopover(true)
+                popoverView = settingDetail
+                self.present(settingDetailNavigationController, animated: false, completion: nil)
+            } else {
+                
+                delegate = settingDetail!
+                splitView.viewControllers.remove(at: 1)
+                splitView.viewControllers.insert(settingDetailNavigationController, at: 1)
             }
-            
-            loadSettingDetailTableView(settingDetail, indexPath)
         }
+        
+        loadSettingDetailTableView(settingDetail!, indexPath)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -267,7 +300,9 @@ class SettingTableViewController: UITableViewController,
             }
             
             tableViewController.lockout()
-        } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "GetExchangeRate" {
+        } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "ExchangeRate" {
+            
+            showExchangeRate(indexPath)
             
             // we either provide a way to fetch the rate and then update income table, or we enhance
             // income table to allow us to fetch the rate.
@@ -292,6 +327,12 @@ class SettingTableViewController: UITableViewController,
     
     func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {
         
+        if let _ = popoverView {
+            
+            dismiss(animated: false, completion: nil)
+            popoverView = nil
+        }
+        
         guard let settingDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingDetailNavigationController") as? UINavigationController else {
             
             fatalError("Exception: error on instantiating ExpenseDetailNavigationController")
@@ -309,6 +350,7 @@ class SettingTableViewController: UITableViewController,
     
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         
+        /* DEPRECATED
         for (sectionIndex, section) in tableSectionCellList.enumerated() {
             
             for (rowIndex, _) in section.cellList.enumerated() {
@@ -334,6 +376,11 @@ class SettingTableViewController: UITableViewController,
             }
         }
     
+        return true
+        */
+        
+        delegate = nil
+        
         return true
     }
     
