@@ -183,7 +183,73 @@ class SettingTableViewController: UITableViewController,
                 splitView.viewControllers.remove(at: 1)
                 splitView.viewControllers.insert(exDetailNavigationController, at: 1)
             }
+        }
+        
+        if nil != settingDetail {
             
+            let aContext = managedContext()
+            var exchangeRates = loadExchangeRates()
+            var exchangeRatesNeed = [XYZExchangeRate]()
+            let incomeList = loadAccounts()
+            var currencyCodes = [String]()
+            
+            for income in incomeList! {
+                
+                let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
+                
+                if !currencyCodes.contains(currencyCode!) {
+                    
+                    currencyCodes.append(currencyCode!)
+                }
+            }
+            
+            for currencyCodeFrom in currencyCodes {
+                
+                for currencyCodeTo in currencyCodes {
+                    
+                    if currencyCodeFrom != currencyCodeTo {
+                        
+                        let id = "\(currencyCodeFrom)-\(currencyCodeTo)"
+                        
+                        var exchangeRateToBeUpdated: XYZExchangeRate?
+                        
+                        for exchangeRate in exchangeRates! {
+                            
+                            if id == ( exchangeRate.value(forKey: XYZExchangeRate.recordId) as? String ?? "") {
+                                
+                                exchangeRateToBeUpdated = exchangeRate
+                                break
+                            }
+                        }
+                        
+                        if nil == exchangeRateToBeUpdated {
+                            
+                            exchangeRateToBeUpdated = XYZExchangeRate(id,
+                                                                      currencyCodeFrom,
+                                                                      currencyCodeTo,
+                                                                      0.0,
+                                                                      context: aContext)
+                            
+                            exchangeRates?.append(exchangeRateToBeUpdated!)
+                        } else {
+                            
+                            exchangeRateToBeUpdated?.setValue(0.0, forKey: XYZExchangeRate.rate)
+                        }
+                        
+                        exchangeRatesNeed.append(exchangeRateToBeUpdated!)
+                    }
+                }
+            }
+            
+            for exchangeRate in exchangeRates! {
+                
+                if !exchangeRatesNeed.contains(exchangeRate) {
+                    
+                    aContext?.delete(exchangeRate)
+                }
+            }
+            
+            saveManageContext()
         }
     }
     

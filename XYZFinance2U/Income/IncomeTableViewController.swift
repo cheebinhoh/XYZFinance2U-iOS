@@ -35,7 +35,7 @@ class IncomeTableViewController: UITableViewController,
             
             fatalError("Exception: IncomeDetailViewController is expected")
         }
-        
+ 
         if let _ = viewController.income {
             
             tableView(tableView, didSelectRowAt: viewController.indexPath!)

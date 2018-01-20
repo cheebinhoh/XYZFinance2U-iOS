@@ -30,6 +30,7 @@ class XYZAccount : NSManagedObject {
     static let lastRecordFetch = "lastRecordFetch"
     static let recordId = "recordId"
     
+
     // MARK: - property
     
     var bank: String = ""
@@ -45,8 +46,6 @@ class XYZAccount : NSManagedObject {
     var lastRecordFetch: Date = Date()
     var recordId: String = ""
     
-    static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
-    static let ArchiveURL = DocumentsDirectory.appendingPathComponent("accounts")
     
     // MARK: - function
     
@@ -81,6 +80,7 @@ class XYZAccount : NSManagedObject {
         super.init(entity: entity, insertInto: context)
     }
     
+    /* DEPRECATED
     func saveToiCloud() {
         
         let recordName = self.value(forKey: XYZAccount.recordId) as? String
@@ -149,4 +149,5 @@ class XYZAccount : NSManagedObject {
             database.add(modifyOperation)
         })
     }
+     */
 }

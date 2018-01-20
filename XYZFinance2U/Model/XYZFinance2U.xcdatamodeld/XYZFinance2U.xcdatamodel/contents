@@ -14,6 +14,12 @@
         <attribute name="repeatDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="sequenceNr" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
+    <entity name="XYZExchangeRate" representedClassName="XYZExchangeRate" syncable="YES">
+        <attribute name="base" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rate" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="recordId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="target" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="XYZExpense" representedClassName="XYZExpense" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -49,5 +55,6 @@
         <element name="XYZExpensePerson" positionX="-36" positionY="72" width="128" height="105"/>
         <element name="XYZExpenseReceipt" positionX="-9" positionY="99" width="128" height="90"/>
         <element name="XYZiCloudZone" positionX="-36" positionY="72" width="128" height="105"/>
+        <element name="XYZExchangeRate" positionX="-36" positionY="81" width="128" height="105"/>
     </elements>
 </model>

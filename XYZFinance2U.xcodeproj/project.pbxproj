@@ -39,6 +39,7 @@
 		658F73601FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F735F1FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift */; };
 		6590AFAA1FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6590AFA91FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift */; };
 		65D8BA7B201391D500944C2D /* ExchangeRateTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D8BA7A201391D500944C2D /* ExchangeRateTableViewController.swift */; };
+		65D8BA7F2013ADD200944C2D /* XYZExchangeRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D8BA7E2013ADD200944C2D /* XYZExchangeRate.swift */; };
 		65EE339D20013F4600DEA680 /* UITextField-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE339C20013F4600DEA680 /* UITextField-Extension.swift */; };
 		65EE339F2001A5EF00DEA680 /* SettingDetailAboutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE339E2001A5EF00DEA680 /* SettingDetailAboutTableViewCell.swift */; };
 		65EEC49B1FF05ED500D638CD /* IncomeDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EEC49A1FF05ED500D638CD /* IncomeDetailTableViewController.swift */; };
@@ -107,6 +108,7 @@
 		658F735F1FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailImageViewController.swift; sourceTree = "<group>"; };
 		6590AFA91FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		65D8BA7A201391D500944C2D /* ExchangeRateTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateTableViewController.swift; sourceTree = "<group>"; };
+		65D8BA7E2013ADD200944C2D /* XYZExchangeRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZExchangeRate.swift; sourceTree = "<group>"; };
 		65EE339C20013F4600DEA680 /* UITextField-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField-Extension.swift"; sourceTree = "<group>"; };
 		65EE339E2001A5EF00DEA680 /* SettingDetailAboutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDetailAboutTableViewCell.swift; sourceTree = "<group>"; };
 		65EEC49A1FF05ED500D638CD /* IncomeDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				655C97C21FCCD5130098D58D /* XYZAccount.swift */,
+				65D8BA7E2013ADD200944C2D /* XYZExchangeRate.swift */,
 				6576938A1FDA317F00BFFB6B /* XYZExpense.swift */,
 				65F48F281FE56137006951F7 /* XYZExpensePerson.swift */,
 				65F48F2A1FE5828E006951F7 /* XYZExpenseReceipt.swift */,
@@ -406,6 +409,7 @@
 				65343E901FFD9FC1002C5D39 /* SelectionItemTableViewCell.swift in Sources */,
 				65402D961FEE0B740051367F /* ExpenseDetailCommandTableViewCell.swift in Sources */,
 				65F48F211FE377EC006951F7 /* SettingTableViewCell.swift in Sources */,
+				65D8BA7F2013ADD200944C2D /* XYZExchangeRate.swift in Sources */,
 				655C97BF1FCCCF320098D58D /* IncomeTableViewController.swift in Sources */,
 				650024011FF67B4F001281EA /* MainSplitViewController.swift in Sources */,
 				650068FE200814F8003B6469 /* XYZiCloudZone.swift in Sources */,

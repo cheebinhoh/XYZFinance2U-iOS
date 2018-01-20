@@ -232,6 +232,24 @@ func loadAccounts() -> [XYZAccount]? {
     return output
 }
 
+func loadExchangeRates() -> [XYZExchangeRate]? {
+    
+    var output: [XYZExchangeRate]?
+    
+    let aContext = managedContext()
+    let fetchRequest = NSFetchRequest<XYZExchangeRate>(entityName: XYZExchangeRate.type)
+    
+    do {
+        
+        output = try aContext?.fetch(fetchRequest)
+    } catch let error as NSError {
+        
+        print("Could not fetch. \(error), \(error.userInfo)")
+    }
+    
+    return output
+}
+
 // MARK: - iCloud
 //
 // The high level interaction between iCloud and local core data is that:
