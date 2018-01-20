@@ -46,7 +46,7 @@ class SettingTableViewController: UITableViewController,
         let mainSection = TableSectionCell(identifier: "main", title: "", cellList: ["About"], data: nil)
         tableSectionCellList.append(mainSection)
         
-        let helperSection = TableSectionCell(identifier: "helper", title: "", cellList: ["GetExchangeRate"], data: nil)
+        let helperSection = TableSectionCell(identifier: "ex", title: "", cellList: ["ExchangeRate"], data: nil)
         tableSectionCellList.append(helperSection)
 
         let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export", "SynciCloud"], data: nil)
@@ -89,14 +89,13 @@ class SettingTableViewController: UITableViewController,
                 newcell.title.text = tableSectionCellList[indexPath.section].cellList[indexPath.row]
                 cell = newcell
             
-            case "GetExchangeRate" :
+            case "ExchangeRate" :
                 guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
                     
                     fatalError("Exception: error on creating settingTableCell")
                 }
                 
-                newcell.title.text = "Get exchange rate"
-                newcell.accessoryType = .none
+                newcell.title.text = "Exchange rate"
                 cell = newcell
             
             case "Export" :
