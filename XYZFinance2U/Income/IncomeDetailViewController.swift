@@ -10,6 +10,11 @@ import UIKit
 
 class IncomeDetailViewController: UIViewController {
 
+    // MARK: property
+    var income: [XYZAccount]?
+    
+    // MARK: 3d touch
+    
     override var previewActionItems : [UIPreviewActionItem] {
         
         return previewActions
@@ -23,6 +28,8 @@ class IncomeDetailViewController: UIViewController {
         
         return [copyAction]
     }()
+    
+    // MARK: function
     
     override func viewDidLoad() {
         super.viewDidLoad()
