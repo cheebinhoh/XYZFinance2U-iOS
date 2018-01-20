@@ -45,6 +45,9 @@ class SettingTableViewController: UITableViewController,
         
         let mainSection = TableSectionCell(identifier: "main", title: "", cellList: ["About"], data: nil)
         tableSectionCellList.append(mainSection)
+        
+        let helperSection = TableSectionCell(identifier: "helper", title: "", cellList: ["GetExchangeRate"], data: nil)
+        tableSectionCellList.append(helperSection)
 
         let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export", "SynciCloud"], data: nil)
         tableSectionCellList.append(exportSection)
@@ -84,6 +87,16 @@ class SettingTableViewController: UITableViewController,
                 }
                 
                 newcell.title.text = tableSectionCellList[indexPath.section].cellList[indexPath.row]
+                cell = newcell
+            
+            case "GetExchangeRate" :
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
+                    
+                    fatalError("Exception: error on creating settingTableCell")
+                }
+                
+                newcell.title.text = "Get exchange rate"
+                newcell.accessoryType = .none
                 cell = newcell
             
             case "Export" :
@@ -255,6 +268,20 @@ class SettingTableViewController: UITableViewController,
             }
             
             tableViewController.lockout()
+        } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "GetExchangeRate" {
+            
+            // we either provide a way to fetch the rate and then update income table, or we enhance
+            // income table to allow us to fetch the rate.
+            /*
+            let url = URL(string: "https://api.fixer.io/latest?base=USD&symbols=MYR")
+            
+            let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
+                
+                print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue) ?? "-")
+            }
+
+            task.resume()
+             */
         } else {
             
             showAbout(indexPath)

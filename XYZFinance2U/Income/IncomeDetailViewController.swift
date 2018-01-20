@@ -44,8 +44,6 @@ class IncomeDetailViewController: UIViewController {
             }
             
             UIPasteboard.general.string = "\(balance)"
-            
-            print("---- here")
         })
         
         let cancelAction = UIPreviewAction(title: "Cancel", style: .default, handler: { (action, viewcontroller) in
