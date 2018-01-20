@@ -254,14 +254,14 @@ class SettingTableViewController: UITableViewController,
                                 } else {
                                     
                                     let dictResult = try JSONSerialization.jsonObject(with: data!,
-                                                                                      options: JSONSerialization.ReadingOptions.mutableContainers) as! [String: Any]
+                                                                                  options: JSONSerialization.ReadingOptions.mutableContainers) as! [String: Any]
                                     let rates = dictResult["rates"] as! [String: Double]
                                     let value = rates[currencyCodeTo]
-                                    
+
                                     exchangeRateToBeUpdated?.setValue(value, forKey: XYZExchangeRate.rate)
-                                    
+
                                     DispatchQueue.main.async {
-                                        
+
                                         settingDetail?.reloadExchangeRate( exchangeRateToBeUpdated! )
                                     }
                                 }
