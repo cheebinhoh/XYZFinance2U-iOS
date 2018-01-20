@@ -238,7 +238,6 @@ class SettingTableViewController: UITableViewController,
                         
                         exchangeRatesNeed.append(exchangeRateToBeUpdated!)
                         
-                        /*
                         let url = URL(string: "https://api.fixer.io/latest?base=\(currencyCodeFrom)&symbols=\(currencyCodeTo)")
                         
                         let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
@@ -251,6 +250,11 @@ class SettingTableViewController: UITableViewController,
                                 let value = rates[currencyCodeTo]
                                 
                                 exchangeRateToBeUpdated?.setValue(value, forKey: XYZExchangeRate.rate)
+                                
+                                DispatchQueue.main.async {
+                                    
+                                    settingDetail?.reloadExchangeRate( exchangeRateToBeUpdated! )
+                                }
                             } catch {
                                 
                                 print("-------- error in JSONSerialization = \(error)")
@@ -258,7 +262,6 @@ class SettingTableViewController: UITableViewController,
                         }
                         
                         task.resume()
-                        */
                     }
                 }
             }

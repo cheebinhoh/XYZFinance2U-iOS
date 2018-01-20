@@ -70,8 +70,30 @@ class ExchangeRateTableViewController: UITableViewController {
                 tableSectionCellList.append(section)
             }
         }
+    }
+    
+    func reloadExchangeRate(_ exchangeRate: XYZExchangeRate) {
         
-        print("--- \(tableSectionCellList)")
+        var indexPath: IndexPath?
+        
+        for (sectionIndex, section) in tableSectionCellList.enumerated() {
+            
+            let sectionExchangeRates = section.data as? [XYZExchangeRate]
+
+            for (rowIndex, ex) in sectionExchangeRates!.enumerated() {
+                
+                if ex == exchangeRate {
+
+                    indexPath = IndexPath(row: rowIndex, section: sectionIndex)
+                    break
+                }
+            }
+        }
+        
+        if let _ = indexPath {
+            
+            tableView.reloadRows(at: [indexPath!], with: .none)
+        }
     }
     
     override func viewDidLoad() {
@@ -97,23 +119,55 @@ class ExchangeRateTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return tableSectionCellList.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        
+        let sectionExchangeRates = tableSectionCellList[section].data as? [XYZExchangeRate]
+        
+        return (sectionExchangeRates?.count)!
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        return tableSectionCellList[section].title
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        
         return 0
     }
-
-    /*
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        if section == 0 {
+            
+            return 35
+        } else {
+            
+            return 17.5
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "exchangeRateCell", for: indexPath) as? ExchangeRateTableViewCell else {
+            
+            fatalError("Exception: errpt on creating selectionItemCell")
+        }
 
-        // Configure the cell...
-
+        let sectionExchangeRates = tableSectionCellList[indexPath.section].data as? [XYZExchangeRate]
+        let exchangeRate = sectionExchangeRates![indexPath.row]
+        let target = exchangeRate.value(forKey: XYZExchangeRate.target) as? String
+        let rate = exchangeRate.value(forKey: XYZExchangeRate.rate) as? Double
+        
+        cell.base2target.text = target
+        cell.rate.text = formattingCurrencyValue(input: rate!, target)
+        
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
