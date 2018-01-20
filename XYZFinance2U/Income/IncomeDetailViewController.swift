@@ -31,7 +31,7 @@ class IncomeDetailViewController: UIViewController {
     
     lazy var previewActions: [UIPreviewActionItem] = {
 
-        let copyAction = UIPreviewAction(title: "Copy", style: .default, handler: { (action, viewcontroller) in
+        let copyAction = UIPreviewAction(title: "Copy balance", style: .default, handler: { (action, viewcontroller) in
             
             var balance = 0.0
             
@@ -48,7 +48,11 @@ class IncomeDetailViewController: UIViewController {
             print("---- here")
         })
         
-        return [copyAction]
+        let cancelAction = UIPreviewAction(title: "Cancel", style: .default, handler: { (action, viewcontroller) in
+            
+        })
+        
+        return [copyAction, cancelAction]
     }()
     
     // MARK: function
