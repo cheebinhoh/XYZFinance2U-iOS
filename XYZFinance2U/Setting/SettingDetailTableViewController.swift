@@ -87,10 +87,10 @@ class SettingDetailTableViewController: UITableViewController {
                 }
             
                 newcell.content.text = """
-                                        \(AppDelegate.appName) was created by CheeBin Hoh
+                                       \(AppDelegate.appName) was created by CheeBin Hoh
                                          
-                                        \u{A9} 2017-2018 ALL RIGHTS RESERVED
-                                      """
+                                       \u{A9} 2017-2018 ALL RIGHTS RESERVED
+                                       """
                 
                 cell = newcell
             
@@ -101,9 +101,9 @@ class SettingDetailTableViewController: UITableViewController {
             }
             
             newcell.content.text = """
-              The foreign exchange rates are from http://fixer.io
+            The foreign exchange rates are from http://fixer.io
             
-              It does not come with warranty of any sort
+            It does not come with warranty of any sort
             """
             
             cell = newcell

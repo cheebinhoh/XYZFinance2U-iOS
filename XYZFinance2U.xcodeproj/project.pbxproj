@@ -74,7 +74,6 @@
 		650024001FF67B4E001281EA /* MainSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitViewController.swift; sourceTree = "<group>"; };
 		650024041FF6B423001281EA /* SettingDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDetailTableViewController.swift; sourceTree = "<group>"; };
 		650068FD200814F8003B6469 /* XYZiCloudZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZiCloudZone.swift; sourceTree = "<group>"; };
-		650125781FD6130900018513 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		650125791FD6130900018513 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		6522F8B41FE9BBC7005686B6 /* MainUITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUITabBarController.swift; sourceTree = "<group>"; };
 		65343E8A1FFD8898002C5D39 /* IncomeDetailSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailSelectionTableViewCell.swift; sourceTree = "<group>"; };
@@ -111,6 +110,7 @@
 		65D8BA7A201391D500944C2D /* ExchangeRateTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateTableViewController.swift; sourceTree = "<group>"; };
 		65D8BA7E2013ADD200944C2D /* XYZExchangeRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZExchangeRate.swift; sourceTree = "<group>"; };
 		65D8BA802013BD9300944C2D /* ExchangeRateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateTableViewCell.swift; sourceTree = "<group>"; };
+		65D8BA8320140B9000944C2D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		65EE339C20013F4600DEA680 /* UITextField-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField-Extension.swift"; sourceTree = "<group>"; };
 		65EE339E2001A5EF00DEA680 /* SettingDetailAboutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDetailAboutTableViewCell.swift; sourceTree = "<group>"; };
 		65EEC49A1FF05ED500D638CD /* IncomeDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -359,6 +359,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 655C97901FCCCC210098D58D;
 			productRefGroup = 655C979A1FCCCC210098D58D /* Products */;
@@ -466,7 +467,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				655C97A31FCCCC210098D58D /* Base */,
-				650125781FD6130900018513 /* zh-Hans */,
+				65D8BA8320140B9000944C2D /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

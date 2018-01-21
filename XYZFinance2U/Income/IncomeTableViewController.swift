@@ -604,10 +604,14 @@ class IncomeTableViewController: UITableViewController,
         CKContainer.default().accountStatus { (status, error) in
             
             if status == CKAccountStatus.noAccount {
-                
+
                 appDelegate?.iCloudEnable = false
                 let alert = UIAlertController(title: "Sign in to icloud",
                                               message: "Sign in to your iCloud account to write records", preferredStyle: UIAlertControllerStyle.alert )
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (action) in
+                    
+                    alert.dismiss(animated: false, completion: nil)
+                }))
                 self.present(alert, animated: false, completion: nil)
             } else {
                 
