@@ -1080,24 +1080,28 @@
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bYA-dM-YhX" id="5XJ-SI-iWE">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="119.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YCA-iu-JJU">
-                                            <rect key="frame" x="16" y="21" width="288" height="77.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <textView multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YPQ-k2-nft">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="120"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="6XI-8b-1sR"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                        </textView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="YCA-iu-JJU" firstAttribute="trailing" secondItem="5XJ-SI-iWE" secondAttribute="trailingMargin" id="RKo-Ws-Ppk"/>
-                                        <constraint firstItem="YCA-iu-JJU" firstAttribute="top" secondItem="5XJ-SI-iWE" secondAttribute="topMargin" constant="10" id="UQy-SM-sZd"/>
-                                        <constraint firstItem="YCA-iu-JJU" firstAttribute="leading" secondItem="5XJ-SI-iWE" secondAttribute="leadingMargin" id="caS-aP-dTA"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="YCA-iu-JJU" secondAttribute="bottom" constant="10" id="mbR-yV-3yT"/>
+                                        <constraint firstAttribute="trailing" secondItem="YPQ-k2-nft" secondAttribute="trailing" constant="10" id="Sb9-tC-Dbb"/>
+                                        <constraint firstItem="YPQ-k2-nft" firstAttribute="leading" secondItem="5XJ-SI-iWE" secondAttribute="leading" constant="10" id="Sg5-Bd-40z"/>
+                                        <constraint firstItem="YPQ-k2-nft" firstAttribute="top" secondItem="5XJ-SI-iWE" secondAttribute="top" id="aUo-gy-28w"/>
+                                        <constraint firstAttribute="bottom" secondItem="YPQ-k2-nft" secondAttribute="bottom" id="hhC-4W-VgD"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="content" destination="YCA-iu-JJU" id="T8o-yB-O1f"/>
+                                    <outlet property="content" destination="YPQ-k2-nft" id="luc-v0-Xz0"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1110,7 +1114,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JcY-DL-9yh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="954" y="786"/>
+            <point key="canvasLocation" x="952.5" y="785.91549295774644"/>
         </scene>
         <!--About-->
         <scene sceneID="48B-zW-arA">

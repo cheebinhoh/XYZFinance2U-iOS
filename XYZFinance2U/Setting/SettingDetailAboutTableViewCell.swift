@@ -12,7 +12,8 @@ class SettingDetailAboutTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlet
     
-    @IBOutlet weak var content: UILabel!
+    //@IBOutlet weak var content: UILabel!
+    @IBOutlet weak var content: UITextView!
     
     override func awakeFromNib() {
         
