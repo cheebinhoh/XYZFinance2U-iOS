@@ -274,6 +274,7 @@ class SettingTableViewController: UITableViewController,
                                     DispatchQueue.main.async {
 
                                         settingDetail?.reloadExchangeRate( exchangeRateToBeUpdated! )
+                                        saveManageContext()
                                     }
                                 }
                             } catch {
@@ -394,7 +395,7 @@ class SettingTableViewController: UITableViewController,
             present(optionMenu, animated: true, completion: nil)
         } else if tableSectionCellList[indexPath.section].identifier == "lockout" {
             
-             let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
             
             guard let split = appDelegate?.window?.rootViewController as? UISplitViewController else {
                 
