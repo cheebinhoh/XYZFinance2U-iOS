@@ -346,7 +346,7 @@ class SettingTableViewController: UITableViewController,
         if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "Export" {
         
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let deleteOption = UIAlertAction(title: "Export to icloud drive", style: .default, handler: { (action) in
+            let deleteOption = UIAlertAction(title: "Export to iCloud drive", style: .default, handler: { (action) in
                 
                 let file = AppDelegate.appName + "-export.csv"
                 let text = self.incomeFileContent()
@@ -504,12 +504,7 @@ class SettingTableViewController: UITableViewController,
     func incomeFileContent() -> String {
 
         var text = "Number\tBank\tAccountNr\tBalance\tCurrency\tLastUpdate\n"
-        let incomeList = loadAccounts()!.sorted() {
-            
-            (acc1, acc2) in
-            
-            return ( acc1.value(forKey: XYZAccount.sequenceNr) as! Int ) < ( acc2.value(forKey: XYZAccount.sequenceNr) as! Int)
-        }
+        let incomeList = sortAcounts(loadAccounts()!)
         
         for (index, income) in incomeList.enumerated() {
             
