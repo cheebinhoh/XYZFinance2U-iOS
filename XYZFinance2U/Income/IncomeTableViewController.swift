@@ -341,12 +341,7 @@ class IncomeTableViewController: UITableViewController,
             
             if !sectionIncomeList.isEmpty {
                 
-                sectionIncomeList = sectionIncomeList.sorted() {
-                    
-                    (acc1, acc2) in
-                    
-                    return ( acc1.value(forKey: XYZAccount.sequenceNr) as! Int ) < ( acc2.value(forKey: XYZAccount.sequenceNr) as! Int)
-                }
+                sectionIncomeList = sortAcounts(sectionIncomeList)
                 
                 let mainSection = TableSectionCell(identifier: "main", title: currency, cellList: [], data: sectionIncomeList)
                 tableSectionCellList.append(mainSection)
@@ -1105,13 +1100,8 @@ class IncomeTableViewController: UITableViewController,
         }
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        appDelegate?.incomeList = (appDelegate?.incomeList.sorted() {
-            
-            (acc1, acc2) in
-            
-            return ( acc1.value(forKey: XYZAccount.sequenceNr) as! Int ) < ( acc2.value(forKey: XYZAccount.sequenceNr) as! Int)
-            })!
-        
+        appDelegate?.incomeList = sortAcounts((appDelegate?.incomeList)!)
+ 
         saveAccounts()
     }
     

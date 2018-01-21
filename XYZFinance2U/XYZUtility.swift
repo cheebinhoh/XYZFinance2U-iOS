@@ -5,13 +5,15 @@
 //  Created by Chee Bin Hoh on 11/30/17.
 //  Copyright © 2017 CB Hoh. All rights reserved.
 //
-//  QA status: checked on dec-29, 2017
 
 import Foundation
 import CoreData
-import UIKit
 import CloudKit
+import UIKit
 
+// MARK: - type
+
+// generic structure to support UITableView section and cell
 struct TableSectionCell {
     
     let identifier: String
@@ -20,7 +22,10 @@ struct TableSectionCell {
     var data: Any?
 }
 
-func formattingDate(date: Date, _ style: DateFormatter.Style) -> String {
+// MARK: - formatting
+
+func formattingDate(date: Date,
+                    _ style: DateFormatter.Style) -> String {
     
     let dateFormatter = DateFormatter();
     
@@ -37,7 +42,6 @@ func formattingDateTime(date: Date) -> String {
     
     return dateFormatter.string(from: date)
 }
-
 
 func formattingAndProcessDoubleValue(input: String) -> String {
     
@@ -155,14 +159,16 @@ func formattingDoubleValue(input: String) -> String {
     return processedInput
 }
 
-func formattingCurrencyValue(input: Double, _ code: String?) -> String {
+func formattingCurrencyValue(input: Double,
+                             _ code: String?) -> String {
     
     let value = "\(input)"
     
     return formattingCurrencyValue(input: value, code)
 }
 
-func formattingCurrencyValue(input: String, _ code: String?) -> String {
+func formattingCurrencyValue(input: String,
+                             _ code: String?) -> String {
     
     let processedInput = formattingDoubleValue(input: input)
     let formatter = NumberFormatter()
@@ -180,6 +186,8 @@ func formattingCurrencyValue(input: String, _ code: String?) -> String {
     
     return formattedAmount
 }
+
+// MARK: - core data
 
 func managedContext() -> NSManagedObjectContext? {
     
@@ -254,10 +262,11 @@ func loadExchangeRates() -> [XYZExchangeRate]? {
 //
 // The high level interaction between iCloud and local core data is that:
 // on start up:
-//    - we check local icloud zone cache if zone exists.
+//    - we check local iCloud zone cache if zone exists.
 //    - if it is not, we try to create it
-//    - if it exists or after createc, we try to sync icloud state to local core dataset, that can either add or delete
+//    - after created, we sync iCloud state to local core dataset, that can either add or delete
 //      record
+//    - if it does exist, then we sync iCloud state to local core dataset, then we push pending update to iCloud change to iCloud
 //
 // after data manipulated on app:
 //    - we do a sync from icloud to local store
