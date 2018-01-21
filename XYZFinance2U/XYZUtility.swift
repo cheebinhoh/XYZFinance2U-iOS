@@ -297,7 +297,6 @@ func createUpdateAccount(_ record: CKRecord,
     var outputIncomeList: [XYZAccount] = incomeList
     var incomeToBeUpdated: XYZAccount?
     
-    //print("-------- record name = \(recordName)")
     for income in outputIncomeList {
         
         guard let recordId = income.value(forKey: XYZAccount.recordId) as? String else {
@@ -384,7 +383,6 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     
     opZoneChange.recordChangedBlock = { (record) in
         
-        //print("-------- fetch change record")
         let ckrecordzone = CKRecordZone(zoneName: record.recordID.zoneID.zoneName)
         let icloudZone = iCloudZone(of: ckrecordzone, icloudZones)
         
@@ -408,8 +406,6 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     
     opZoneChange.recordWithIDWasDeletedBlock = { (recordId, recordType) in
         
-        //print("-------- record deleted:", recordId)
-        
         for icloudzone in icloudZones {
             
             if let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String, zName == recordType {
@@ -430,7 +426,6 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                             
                             if recordName == recordId.recordName {
                                 
-                                //print("-------- record found and delete")
                                 aContext?.delete(income)
                                 incomeList.remove(at: index)
                                 
@@ -460,17 +455,11 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
             return
         }
         
-        //print("-------- success in fetching zone last change token")
         OperationQueue.main.addOperation {
             
             for icloudzone in icloudZones {
                 
                 if let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String, zName == zoneId.zoneName {
-                    
-                    //let updatedIncomeList = icloudzone.data as? [XYZAccount]
-                    //print("-------- # of income = \(String(describing: updatedIncomeList?.count))")
-                    
-                    //print("-------- change token \(changeToken!)")
                     
                     var hasChangeToken = true;
               
@@ -482,7 +471,6 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                     
                     if hasChangeToken {
                         
-                        //print("-------- has new changeToken")
                         let lastTokenFetchDate = Date()
                         
                         let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: changeToken! )
@@ -499,8 +487,6 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     }
     
     opZoneChange.fetchRecordZoneChangesCompletionBlock = { (error) in
-        
-        //print("-------- fetch record zone complete")
         
         if let error = error {
             
@@ -531,8 +517,6 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                             _ icloudZones: [XYZiCloudZone],
                             _ completionblock: @escaping () -> Void) {
     
-    //print("-------- push change to zone")
-    
     for zone in zones {
         
         let name = zone.zoneID.zoneName
@@ -549,12 +533,10 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                     
                     saveAccountsToiCloud(zone, iCloudZone, incomeList, {
                         
-                        //print("-------- done saving to iCloud")
                         OperationQueue.main.addOperation {
                             
                             fetchiCloudZoneChange([zone], icloudZones, {
                                 
-                                //print("-------- fetch change after upload to iCloud")
                             })
                             
                             completionblock()
@@ -574,11 +556,7 @@ func fetchAndUpdateiCloud(_ zones: [CKRecordZone],
     
     if !iCloudZones.isEmpty {
         
-        //print("-------- fetch changes from zones")
-        
         fetchiCloudZoneChange(zones, iCloudZones, {
-            
-            //print("-------- done fetching change from zone")
             
             //we should only write to icloud if we do have changed after last token change
             
@@ -636,7 +614,6 @@ func saveAccountsToiCloud(_ zone: CKRecordZone, _ iCloudZone: XYZiCloudZone, _ i
         recordIdsToBeDeleted.append(ckrecordId)
     }
 
-    ///print("-------- # of changed accounts to upload to iCloud is = \(String(describing: incomeListToBeSaved?.count))")
     saveAccountsToiCloud(iCloudZone, incomeListToBeSaved!, recordIdsToBeDeleted, completionblock)
 }
 
@@ -656,8 +633,6 @@ func saveAccountsToiCloud(_ iCloudZone: XYZiCloudZone,
         let customZone = CKRecordZone(zoneName: XYZAccount.type)
         let ckrecordId = CKRecordID(recordName: recordName!, zoneID: customZone.zoneID)
 
-        //print("-------- saving record name = \(String(describing: recordName))")
-        
         let record = CKRecord(recordType: XYZAccount.type, recordID: ckrecordId)
 
         let bank = income.value(forKey: XYZAccount.bank) as? String
