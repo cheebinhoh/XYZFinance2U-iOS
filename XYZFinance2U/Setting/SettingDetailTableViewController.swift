@@ -87,33 +87,33 @@ class SettingDetailTableViewController: UITableViewController {
                 }
             
                 newcell.content.text = """
-                                        
-                                       \(AppDelegate.appName) was created by CB Hoh.
-                                         
-                                       \u{A9} 2017-2018 CB Hoh. All rights reserved.
-                                        
-                                       """
+ 
+\(AppDelegate.appName) was created by CB Hoh.
+
+\u{A9} 2017-2018 CB Hoh. All rights reserved.
+
+"""
                 
                 cell = newcell
             
-        case "disclaimer":
-            guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingDetailAboutCell", for: indexPath) as? SettingDetailAboutTableViewCell else {
+            case "disclaimer":
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingDetailAboutCell", for: indexPath) as? SettingDetailAboutTableViewCell else {
+                    
+                    fatalError("Exception: errpr on creating settingDetailAboutCell")
+                }
                 
-                fatalError("Exception: errpr on creating settingDetailAboutCell")
-            }
+                newcell.content.text = """
+                
+The foreign exchange rates are from http://fixer.io.
+
+It does not come with warranty of any sort.
+
+"""
+                
+                cell = newcell
             
-            newcell.content.text = """
-            
-            The foreign exchange rates are from http://fixer.io.
-            
-            It does not come with warranty of any sort.
-            
-            """
-            
-            cell = newcell
-            
-            default:
-                break
+                default:
+                    break
         }
         
         return cell!
