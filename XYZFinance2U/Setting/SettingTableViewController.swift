@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import os.log
 
 class SettingTableViewController: UITableViewController,
     UISplitViewControllerDelegate,
@@ -72,7 +73,7 @@ class SettingTableViewController: UITableViewController,
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return tableSectionCellList[section].cellList.count //settingList.count
+        return tableSectionCellList[section].cellList.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -276,7 +277,7 @@ class SettingTableViewController: UITableViewController,
                                 }
                             } catch {
                                 
-                                print("-------- error in JSONSerialization = \(error)")
+                                print("-------- error in JSONSerialization = \(String(describing: error))")
                             }
                         }
                         

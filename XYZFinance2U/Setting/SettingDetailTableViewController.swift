@@ -87,7 +87,7 @@ class SettingDetailTableViewController: UITableViewController {
                 }
             
                 newcell.content.text = """
-                                       \(AppDelegate.appName) was created by CB Hoh
+                                       \(AppDelegate.appName) was created by CB Hoh.
                                          
                                        \u{A9} 2017-2018 CB Hoh. All rights reserved.
                                        """
@@ -101,9 +101,9 @@ class SettingDetailTableViewController: UITableViewController {
             }
             
             newcell.content.text = """
-            The foreign exchange rates are from http://fixer.io
+            The foreign exchange rates are from http://fixer.io.
             
-            It does not come with warranty of any sort
+            It does not come with warranty of any sort.
             """
             
             cell = newcell
