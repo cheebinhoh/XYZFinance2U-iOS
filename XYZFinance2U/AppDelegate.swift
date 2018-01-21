@@ -62,27 +62,7 @@ class AppDelegate: UIResponder,
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
 
-        /*
-        let alert = UIAlertController(title: "Failed to register notification",
-                                      message: "Failed to register notification for icloud push notification",
-                                      preferredStyle: UIAlertControllerStyle.actionSheet )
-        guard let splitView = self.window?.rootViewController as? MainSplitViewController else {
-            
-            fatalError("Exception: MainSplitViewController is expected")
-        }
-        
-        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
-            
-            fatalError("Exception: MainUITabBarController is expected")
-        }
-        
-        guard let navController = tabbarView.viewControllers?.first as? UINavigationController else {
-            
-            fatalError("Exception: UINavigationController is expected")
-        }
-        
-        navController.present(alert, animated: false, completion: nil)
-         */
+        // FIXME: throw alert to user
     }
 
     
@@ -213,26 +193,7 @@ class AppDelegate: UIResponder,
         return container
     }()
     
-    // MARK: - Core Data Saving support
-    
-    func saveContext() {
-        
-        let context = persistentContainer.viewContext
-        
-        if context.hasChanges {
-            
-            do {
-                
-                try context.save()
-            } catch {
-                
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Exception: error on save core data, \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
+    // MARK: - iCloud
     
     func syncWithiCloudAndCoreData() {
         
@@ -268,7 +229,7 @@ class AppDelegate: UIResponder,
                 
             case XYZAccount.type:
                 incomeiCloudZone = icloudzone
-                icloudzone.data = incomeList  // We do not need to keep it in persistent state
+                icloudzone.data = incomeList  // We do not need to keep it in persistent state as it is already stored core data
                 
             default:
                 fatalError("Exception: zone type is not supported")
@@ -277,29 +238,26 @@ class AppDelegate: UIResponder,
         
         var zonesToBeFetched = [CKRecordZone]()
         var zonesToBeSaved = [CKRecordZone]()
-        let accountCustomZone = CKRecordZone(zoneName: XYZAccount.type)
+        let incomeCustomZone = CKRecordZone(zoneName: XYZAccount.type)
         
         if incomeiCloudZone == nil {
             
-            zonesToBeSaved.append(accountCustomZone)
+            zonesToBeSaved.append(incomeCustomZone)
         } else {
             
-            zonesToBeFetched.append(accountCustomZone)
+            zonesToBeFetched.append(incomeCustomZone)
         }
         
         if !zonesToBeSaved.isEmpty {
             
-            //print("-------- attempt to create zone")
             let op = CKModifyRecordZonesOperation(recordZonesToSave: zonesToBeSaved, recordZoneIDsToDelete: nil)
             
             op.modifyRecordZonesCompletionBlock = { (saved, deleted, error) in
                 
                 if nil != error {
                     
-                    //print("-------- error on creating zone = \(String(describing: error))")
                 } else {
                     
-                    //print("-------- success in create zone" )
                     OperationQueue.main.addOperation {
                         
                         for zone in saved! {
@@ -322,7 +280,6 @@ class AppDelegate: UIResponder,
                         
                         fetchiCloudZoneChange(saved!, self.iCloudZones, {
                             
-                            //print("-------- done fetching changes after saving zone")
                             for icloudzone in self.iCloudZones {
                                 
                                 let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
@@ -335,8 +292,6 @@ class AppDelegate: UIResponder,
                                         
                                         incomeView.reloadData()
                                     }
-                                    
-                                    //print("-------- fetch # of incomes = \(self.incomeList.count)")
                                     
                                 default:
                                     fatalError("Exception: \(String(describing: zName)) is not supported")
@@ -355,11 +310,8 @@ class AppDelegate: UIResponder,
         
         if !zonesToBeFetched.isEmpty {
             
-            //print("-------- fetch and uppdate changes from/to zones")
-            
             fetchAndUpdateiCloud(zonesToBeFetched, self.iCloudZones, {
                 
-                //print("-------- done fetching changes after saving zone")
                 for icloudzone in self.iCloudZones {
                     
                     let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
@@ -374,9 +326,7 @@ class AppDelegate: UIResponder,
                             
                             registeriCloudSubscription(self.iCloudZones)
                         }
-                        
-                        ///print("-------- complete of fetch and update with icloud and core data")
-                        
+            
                     default:
                         fatalError("Exception: \(String(describing: zName)) is not supported")
                     }
@@ -384,6 +334,5 @@ class AppDelegate: UIResponder,
             })
         }
     }
-    
 }
 

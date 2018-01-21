@@ -258,20 +258,6 @@ func loadExchangeRates() -> [XYZExchangeRate]? {
     return output
 }
 
-// MARK: - iCloud
-//
-// The high level interaction between iCloud and local core data is that:
-// on start up:
-//    - we check local iCloud zone cache if zone exists.
-//    - if it is not, we try to create it
-//    - after created, we sync iCloud state to local core dataset, that can either add or delete
-//      record
-//    - if it does exist, then we sync iCloud state to local core dataset, then we push pending update to iCloud change to iCloud
-//
-// after data manipulated on app:
-//    - we do a sync from icloud to local store
-//    - we then push changes from local store to icloud
-
 func loadiCloudZone() -> [XYZiCloudZone]? {
     
     var output: [XYZiCloudZone]?
@@ -289,6 +275,20 @@ func loadiCloudZone() -> [XYZiCloudZone]? {
     
     return output
 }
+
+// MARK: - iCloud
+//
+// The high level interaction between iCloud and local core data is that:
+// on start up:
+//    - we check local iCloud zone cache if zone exists.
+//    - if it is not, we try to create it
+//    - after created, we sync iCloud state to local core dataset, that can either add or delete
+//      record
+//    - if it does exist, then we sync iCloud state to local core dataset, then we push pending update to iCloud change to iCloud
+//
+// after data manipulated on app:
+//    - we do a sync from icloud to local store
+//    - we then push changes from local store to icloud
 
 func createUpdateAccount(_ record: CKRecord,
                          _ incomeList: [XYZAccount],
@@ -577,7 +577,10 @@ func fetchAndUpdateiCloud(_ zones: [CKRecordZone],
     }
 }
 
-func saveAccountsToiCloud(_ zone: CKRecordZone, _ iCloudZone: XYZiCloudZone, _ incomeList: [XYZAccount], _ completionblock: @escaping () -> Void ) {
+func saveAccountsToiCloud(_ zone: CKRecordZone,
+                          _ iCloudZone: XYZiCloudZone,
+                          _ incomeList: [XYZAccount],
+                          _ completionblock: @escaping () -> Void ) {
     
     var incomeListToBeSaved: [XYZAccount]?
     
@@ -678,7 +681,7 @@ func saveAccountsToiCloud(_ iCloudZone: XYZiCloudZone,
             let data = NSKeyedArchiver.archivedData(withRootObject: [String]())
             iCloudZone.setValue(data, forKey: XYZiCloudZone.deleteRecordIdList)
             
-            saveManageContext() // FIXME: I do not think we need that.
+            saveManageContext() // save the iCloudZone to indicate that deleteRecordIdList is executed.
             
             completionblock()
         }
