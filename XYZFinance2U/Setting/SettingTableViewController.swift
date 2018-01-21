@@ -147,10 +147,7 @@ class SettingTableViewController: UITableViewController,
         settingDetail.tableSectionCellList.append(disclaimerSection)
         
         settingDetail.navigationItem.title = "About"
-        let footerSection = TableSectionCell(identifier: "footer",
-                                             title: "",
-                                             cellList: [String](),
-                                             data: nil)
+        let footerSection = TableSectionCell(identifier: "footer", title: "", cellList: [String](), data: nil)
         settingDetail.tableSectionCellList.append(footerSection)
         settingDetail.tableView.reloadData()
     }
