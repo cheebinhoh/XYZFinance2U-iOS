@@ -338,7 +338,7 @@ func createUpdateAccount(_ record: CKRecord,
         incomeToBeUpdated?.setValue(repeatAction, forKey: XYZAccount.repeatAction)
     }
 
-    // the record change is updated but we save the last token fetch after that, so we are in sanity state.
+    // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
     incomeToBeUpdated?.setValue(Date(), forKey: XYZAccount.lastRecordChange)
 
     return outputIncomeList
@@ -456,7 +456,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
         
         if let _ = error {
             
-            //print("Error fetching zone changes for database:", error)
+            print("Error fetching zone changes for database:", error!)
             return
         }
         
@@ -721,14 +721,10 @@ func registeriCloudSubscription(_ iCloudZones: [XYZiCloudZone]) {
         
         fetchOp.fetchSubscriptionCompletionBlock = {(subscriptionDict, error) -> Void in
             
-            //print("-------- fetch result of subscription")
-            
             if let _ = subscriptionDict?[ckrecordzone.zoneID.zoneName] {
                 
-                //print("-------- subscription exist")
             } else {
-                
-                //print("-------- register new subscription")
+
                 let subscription = CKRecordZoneSubscription.init(zoneID: ckrecordzone.zoneID, subscriptionID: ckrecordzone.zoneID.zoneName)
                 let notificationInfo = CKNotificationInfo()
                 
@@ -739,7 +735,6 @@ func registeriCloudSubscription(_ iCloudZones: [XYZiCloudZone]) {
                 operation.qualityOfService = .utility
                 operation.completionBlock = {
                     
-                    //print("-------- register subscription complete")
                 }
                 
                 database.add(operation)
