@@ -19,10 +19,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5OT-fp-RtJ">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Master your own finance" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRZ-jt-LLP">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -37,7 +37,7 @@
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5OT-fp-RtJ" secondAttribute="trailing" id="Y5K-oS-f7R"/>
                             <constraint firstItem="5OT-fp-RtJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="rFf-wu-zdL"/>
-                            <constraint firstItem="5OT-fp-RtJ" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="20" id="sqS-JS-Nls"/>
+                            <constraint firstItem="5OT-fp-RtJ" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="sqS-JS-Nls"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="5OT-fp-RtJ" secondAttribute="bottom" id="zkm-7m-Z7M"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
