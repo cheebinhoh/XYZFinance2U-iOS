@@ -199,6 +199,13 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
+		650BAE192014DC5D00733903 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		65343E8E1FFD969A002C5D39 /* Shared UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,6 +253,7 @@
 				655C97A51FCCCC210098D58D /* Assets.xcassets */,
 				655C97A71FCCCC210098D58D /* LaunchScreen.storyboard */,
 				655C97AA1FCCCC210098D58D /* Info.plist */,
+				650BAE192014DC5D00733903 /* Resource */,
 			);
 			path = XYZFinance2U;
 			sourceTree = "<group>";
