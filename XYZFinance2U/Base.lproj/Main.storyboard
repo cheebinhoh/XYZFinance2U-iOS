@@ -146,8 +146,8 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lvN-dn-FNt">
-                                            <rect key="frame" x="16" y="23.5" width="41.5" height="23"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lvN-dn-FNt">
+                                            <rect key="frame" x="16" y="35" width="0.0" height="0.0"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1022,7 +1022,7 @@
         <scene sceneID="Cud-J6-JnH">
             <objects>
                 <tableViewController id="vW8-DY-qcd" customClass="SettingTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="8pt-Wx-DBo">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="8pt-Wx-DBo">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -1035,7 +1035,10 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEy-AC-c1k">
-                                            <rect key="frame" x="16" y="14.5" width="34" height="21"/>
+                                            <rect key="frame" x="16" y="0.0" width="270" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="B79-1b-dYa"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1044,6 +1047,7 @@
                                     <constraints>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="WEy-AC-c1k" secondAttribute="trailingMargin" id="2gd-RY-Hrs"/>
                                         <constraint firstItem="WEy-AC-c1k" firstAttribute="leading" secondItem="L83-Kc-5tb" secondAttribute="leadingMargin" id="46p-F7-WP8"/>
+                                        <constraint firstAttribute="trailing" secondItem="WEy-AC-c1k" secondAttribute="trailing" id="MVT-Ux-X54"/>
                                         <constraint firstItem="WEy-AC-c1k" firstAttribute="centerY" secondItem="L83-Kc-5tb" secondAttribute="centerY" id="awG-6T-WJc"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -1064,7 +1068,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NY9-vS-J4X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-111" y="35"/>
+            <point key="canvasLocation" x="-112.5" y="34.859154929577464"/>
         </scene>
         <!--Setting Detail Table View Controller-->
         <scene sceneID="Ve1-Mk-VKM">
@@ -1083,7 +1087,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <textView multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YPQ-k2-nft">
-                                            <rect key="frame" x="10" y="0.0" width="300" height="120"/>
+                                            <rect key="frame" x="15" y="0.0" width="295" height="120"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="110" id="6XI-8b-1sR"/>
@@ -1095,7 +1099,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="YPQ-k2-nft" secondAttribute="trailing" constant="10" id="Sb9-tC-Dbb"/>
-                                        <constraint firstItem="YPQ-k2-nft" firstAttribute="leading" secondItem="5XJ-SI-iWE" secondAttribute="leading" constant="10" id="Sg5-Bd-40z"/>
+                                        <constraint firstItem="YPQ-k2-nft" firstAttribute="leading" secondItem="5XJ-SI-iWE" secondAttribute="leading" constant="15" id="Sg5-Bd-40z"/>
                                         <constraint firstItem="YPQ-k2-nft" firstAttribute="top" secondItem="5XJ-SI-iWE" secondAttribute="top" id="aUo-gy-28w"/>
                                         <constraint firstAttribute="bottom" secondItem="YPQ-k2-nft" secondAttribute="bottom" id="hhC-4W-VgD"/>
                                     </constraints>
