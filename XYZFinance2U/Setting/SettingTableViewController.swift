@@ -54,7 +54,7 @@ class SettingTableViewController: UITableViewController,
         let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export", "SynciCloud"], data: nil)
         tableSectionCellList.append(exportSection)
         
-        let logoutSection = TableSectionCell(identifier: "lockout", title: "", cellList: ["lockout"], data: nil)
+        let logoutSection = TableSectionCell(identifier: "lockout", title: "", cellList: ["Lockout"], data: nil)
         tableSectionCellList.append(logoutSection)
     }
 
@@ -120,13 +120,13 @@ class SettingTableViewController: UITableViewController,
                 newcell.accessoryType = .none
                 cell = newcell
             
-        case "lockout" :
+        case "Lockout" :
             guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
                 
                 fatalError("Exception: error on creating settingTableCell")
             }
             
-            newcell.title.text = "lock out"
+            newcell.title.text = "Lock out"
             newcell.accessoryType = .none
             cell = newcell
 
