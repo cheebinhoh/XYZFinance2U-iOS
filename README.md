@@ -26,13 +26,7 @@
 
 ### Road map
 
-* complete integration of Expenses tab with iCloudKit
-* Adding sharing via iCloudKit
+* complete integration of Expenses tab with iCloudKit: End of Feb-2018
+* Adding sharing via iCloudKit: End of March-2018
+* submit app for testflight: End of April-2018
 
-### Todos
-
-* complete adding chinese language translation to whole app
-* support retrievel of foreign exchange rate [Done]
-* fix bugs: 3d Touch preview crashes on total cell [Done]
-* adding preview via 3d Touch for Incomes list [Done]
-* adding 3d Touch preview shortcut menus in income List [Done]
