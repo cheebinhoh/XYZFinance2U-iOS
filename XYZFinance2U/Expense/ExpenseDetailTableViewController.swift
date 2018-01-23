@@ -490,12 +490,6 @@ class ExpenseDetailTableViewController: UITableViewController,
                         fatalError("Exception: ExpenseDetailTextTableViewCell is expected")
                     }
                     
-                    /*let cgpoint = CGPoint(x: 0.0, y: 0.0)
-                    let frame = CGRect(origin: cgpoint , size: CGSize(width: 20, height: 35))
-                    let payswitch = UISwitch(frame: frame)
-                    payswitch.isOn = paids[index.row]
-                    textcell.stack.addArrangedSubview(payswitch)
-                    */
                     if nil == textcell.optionSwitch {
                         
                         textcell.addUISwitch()
@@ -890,9 +884,10 @@ class ExpenseDetailTableViewController: UITableViewController,
                 textcell.input.translatesAutoresizingMaskIntoConstraints = false
                 textcell.input.leadingAnchor.constraint(equalTo: textcell.leadingAnchor, constant: 45.0).isActive = true
             
-                if let uiswitch = textcell.optionSwitch {
+                if let _ = textcell.optionSwitch {
                     
-                    uiswitch.isOn = false 
+                    textcell.stack.removeArrangedSubview(textcell.optionSwitch)
+                    textcell.optionSwitch.removeFromSuperview()
                 }
                 
                 cell = textcell
