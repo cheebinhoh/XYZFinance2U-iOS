@@ -496,8 +496,10 @@ class ExpenseDetailTableViewController: UITableViewController,
                     payswitch.isOn = paids[index.row]
                     textcell.stack.addArrangedSubview(payswitch)
                     */
-                    
-                    textcell.addUISwitch()
+                    if nil == textcell.optionSwitch {
+                        
+                        textcell.addUISwitch()
+                    }
                     
                     let newIndexPath = IndexPath(row: tableSectionCellList[index.section].cellList.count - 1,
                                                  section: index.section)
@@ -859,8 +861,11 @@ class ExpenseDetailTableViewController: UITableViewController,
                 textcell.input.translatesAutoresizingMaskIntoConstraints = false
                 textcell.input.leadingAnchor.constraint(equalTo: textcell.leadingAnchor, constant: 45.0).isActive = true
                 
-                textcell.addUISwitch()
-                textcell.optionSwitch.isOn = paids[indexPath.row]
+                if nil == textcell.optionSwitch {
+                    
+                    textcell.addUISwitch()
+                    textcell.optionSwitch.isOn = paids[indexPath.row]
+                }
                 
                 cell = textcell
             
@@ -885,6 +890,11 @@ class ExpenseDetailTableViewController: UITableViewController,
                 textcell.input.translatesAutoresizingMaskIntoConstraints = false
                 textcell.input.leadingAnchor.constraint(equalTo: textcell.leadingAnchor, constant: 45.0).isActive = true
             
+                if let uiswitch = textcell.optionSwitch {
+                    
+                    uiswitch.isOn = false 
+                }
+                
                 cell = textcell
             
             case "image":
