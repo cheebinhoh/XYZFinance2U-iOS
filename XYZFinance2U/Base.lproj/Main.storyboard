@@ -776,7 +776,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="191.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="20" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jer-JM-SOE">
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="20" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jer-JM-SOE">
                                             <rect key="frame" x="46" y="21" width="320" height="150"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="150" placeholderIntrinsicHeight="150" layoutMarginsFollowReadableWidth="YES" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="Ax4-C2-Agk">

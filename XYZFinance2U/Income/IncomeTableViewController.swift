@@ -503,10 +503,8 @@ class IncomeTableViewController: UITableViewController,
         let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones)!)
         zone?.data = appDelegate?.incomeList
         
-        //print("-------- after save, petch and update icloud")
         fetchAndUpdateiCloud([ckrecordzone], (appDelegate?.iCloudZones)!, {
             
-            //print("-------- done fetch and update icloud")
         })
 
         /*
