@@ -26,6 +26,7 @@
 
 ### Road map
 
-* complete integration of Expenses tab with iCloudKit
-* Adding sharing via iCloudKit
+* complete integration of Expenses tab with iCloudKit: End of Feb-2018
+* Adding sharing via iCloudKit: End of March-2018
+* submit app for testflight: End of April-2018
 
