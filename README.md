@@ -29,16 +29,3 @@
 * complete integration of Expenses tab with iCloudKit
 * Adding sharing via iCloudKit
 
-### Todos
-
-* adding ckzone for expense
-* saving ckrecord for expense
-* synchronize ckrecord for expense
-* subscribe to change to expense
-* complete adding chinese language translation to whole app 
-
-### Completed Todos
-* support retrievel of foreign exchange rate [Done]
-* fix bugs: 3d Touch preview crashes on total cell [Done]
-* adding preview via 3d Touch for Incomes list [Done]
-* adding 3d Touch preview shortcut menus in income List [Done]
