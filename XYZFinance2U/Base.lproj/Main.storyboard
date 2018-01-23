@@ -549,8 +549,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qDS-1l-Ky4" userLabel="Command">
-                                            <rect key="frame" x="16" y="29.5" width="45" height="21.5"/>
+                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qDS-1l-Ky4" userLabel="Command">
+                                            <rect key="frame" x="16" y="29.5" width="288" height="21.5"/>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                             <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -558,6 +558,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="qDS-1l-Ky4" firstAttribute="centerY" secondItem="qpd-Fy-Tug" secondAttribute="centerY" id="OOJ-Hv-hyN"/>
+                                        <constraint firstItem="qDS-1l-Ky4" firstAttribute="centerX" secondItem="qpd-Fy-Tug" secondAttribute="centerX" id="Ocr-S1-RsG"/>
                                         <constraint firstItem="qDS-1l-Ky4" firstAttribute="leading" secondItem="qpd-Fy-Tug" secondAttribute="leadingMargin" id="TBO-Yf-3a7"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -598,7 +599,7 @@
                                 <rect key="frame" x="0.0" y="640.5" width="320" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YaX-RK-lUZ" id="qwM-kl-Jqy">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="79.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="286" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4e5-q3-Ybb">
@@ -687,7 +688,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="lXA-Ed-2cL">
-                                            <rect key="frame" x="45" y="10" width="275" height="35"/>
+                                            <rect key="frame" x="45" y="10" width="270" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="YUQ-S8-qLx"/>
                                             </constraints>
@@ -698,7 +699,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="lXA-Ed-2cL" firstAttribute="leading" relation="lessThanOrEqual" secondItem="QsZ-tI-XN9" secondAttribute="leading" constant="45" id="g5S-7N-cjD"/>
-                                        <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="lXA-Ed-2cL" secondAttribute="trailing" id="prL-TI-9lH"/>
+                                        <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="lXA-Ed-2cL" secondAttribute="trailing" constant="5" id="prL-TI-9lH"/>
                                         <constraint firstItem="lXA-Ed-2cL" firstAttribute="top" secondItem="QsZ-tI-XN9" secondAttribute="top" constant="10" id="tbm-aj-5s8"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -806,8 +807,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HtK-nY-joS" userLabel="Command">
-                                            <rect key="frame" x="37" y="5" width="283" height="35"/>
+                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HtK-nY-joS" userLabel="Command">
+                                            <rect key="frame" x="37" y="5" width="238" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="zF5-Sr-6uZ"/>
                                             </constraints>
@@ -817,7 +818,7 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="HtK-nY-joS" secondAttribute="trailing" id="GWG-jm-JXL"/>
+                                        <constraint firstAttribute="trailing" secondItem="HtK-nY-joS" secondAttribute="trailing" constant="45" id="GWG-jm-JXL"/>
                                         <constraint firstItem="HtK-nY-joS" firstAttribute="leading" secondItem="Ril-0t-baW" secondAttribute="leadingMargin" constant="29" id="kzz-tR-RzI"/>
                                         <constraint firstItem="HtK-nY-joS" firstAttribute="centerY" secondItem="Ril-0t-baW" secondAttribute="centerY" id="rDK-mM-2hJ"/>
                                     </constraints>
@@ -862,7 +863,7 @@
                                 <rect key="frame" x="0.0" y="727.5" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XC4-PS-hna" id="Q1K-1u-qBP">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="45.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="286" height="45.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="location..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IOq-bn-NVL" userLabel="Label">
