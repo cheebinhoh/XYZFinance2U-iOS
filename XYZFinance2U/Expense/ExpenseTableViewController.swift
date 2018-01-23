@@ -48,6 +48,13 @@ class ExpenseTableViewController: UITableViewController,
             fatalError("Exception: ExpenseDetailTableViewController is expected" )
         }
         
+        guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+            
+            fatalError("Exception: MainSplitViewController is expected")
+        }
+        
+        mainSplitView.popOverNavigatorController = expenseDetailNavigationController
+        
         expenseDetailTableView.setPopover(delegate: self)
         isPopover = true
         
