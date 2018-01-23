@@ -99,7 +99,7 @@ class XYZExpense: NSManagedObject {
     }
     
     @discardableResult
-    func addPerson(sequenceNr: Int, name: String, email: String) -> XYZExpensePerson {
+    func addPerson(sequenceNr: Int, name: String, email: String, paid: Bool) -> XYZExpensePerson {
         
         var person: XYZExpensePerson?
         guard var personList = self.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
@@ -113,6 +113,7 @@ class XYZExpense: NSManagedObject {
                 
                 existingPerson.setValue(name, forKey: XYZExpensePerson.name)
                 existingPerson.setValue(email, forKey: XYZExpensePerson.email)
+                existingPerson.setValue(paid, forKey: XYZExpensePerson.paid)
                 person = existingPerson
                 break
             }
@@ -121,6 +122,7 @@ class XYZExpense: NSManagedObject {
         if nil == person {
             
             person = XYZExpensePerson(expense: self, sequenceNr: sequenceNr, name: name, email: email, context: managedContext())
+            person?.setValue(paid, forKey: XYZExpensePerson.paid)
             
             personList.insert(person!)
         }

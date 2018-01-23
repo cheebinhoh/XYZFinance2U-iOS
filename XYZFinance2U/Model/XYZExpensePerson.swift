@@ -19,13 +19,15 @@ class XYZExpensePerson: NSManagedObject
     static let email = "email"
     static let expense = "expense"
     static let sequenceNr = "sequenceNr"
-
+    static let paid = "paid"
+    
     // MARK: - property
     
     var sequenceNr = 0
     var name  = ""
     var email = ""
     var expense: XYZExpense?
+    var paid = false
     
     // MARK: - function
     

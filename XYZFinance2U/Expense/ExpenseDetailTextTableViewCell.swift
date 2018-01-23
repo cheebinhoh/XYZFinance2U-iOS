@@ -13,17 +13,39 @@ protocol ExpenseDetailTextTableViewCellDelegate: class {
     
     func textDidEndEditing(_ sender:ExpenseDetailTextTableViewCell)
     func textDidBeginEditing(_ sender:ExpenseDetailTextTableViewCell)
+    func switchChanged(_ yesno: Bool, _ sender: ExpenseDetailTextTableViewCell)
 }
 
 class ExpenseDetailTextTableViewCell: UITableViewCell,
     UITextFieldDelegate {
     
     // MARK: - property
-    
+    @IBOutlet weak var optionSwitch: UISwitch!
+    @IBOutlet weak var stack: UIStackView!
     @IBOutlet weak var input: UITextField!
     weak var delegate: ExpenseDetailTextTableViewCellDelegate?
 
     // MARK: - function
+    func addUISwitch() {
+        
+        let cgpoint = CGPoint(x: 0.0, y: 0.0)
+        let frame = CGRect(origin: cgpoint , size: CGSize(width: 20, height: 35))
+        let uiswitch = UISwitch(frame: frame)
+        
+        uiswitch.addTarget(self, action: #selector(switchChanged(_:)), for: UIControlEvents.valueChanged)
+        
+        optionSwitch = uiswitch
+        self.stack.addArrangedSubview(uiswitch)
+    }
+    
+    @objc
+    func switchChanged(_ locationSwitch: UISwitch) {
+        
+        let value = locationSwitch.isOn
+        
+        delegate?.switchChanged(value, self)
+        // Do something
+    }
     
     override func awakeFromNib() {
         

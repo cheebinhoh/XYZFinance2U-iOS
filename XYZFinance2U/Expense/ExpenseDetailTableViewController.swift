@@ -30,6 +30,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     ExpenseDetailLocationDelegate,
     ExpenseDetailLocationPickerDelegate,
     ExpenseDetailLocationViewDelegate {
+ 
     
     // MARK: - nested type
     struct ImageSet {
@@ -241,7 +242,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         for (index, email) in emails.enumerated() {
             
-            expense?.addPerson(sequenceNr: index, name: email, email: email)
+            expense?.addPerson(sequenceNr: index, name: email, email: email, paid: paids[index])
         }
     }
     
@@ -251,6 +252,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         amount = 0.0
         date = Date()
         emails = [String]()
+        paids = [Bool]()
         imageSet = Array(repeating: ImageSet(image: UIImage(named:"defaultPhoto")!, seleted: false ), count: imageSetCount)
         //locationCoordinate = nil
         cllocation = nil
@@ -311,7 +313,10 @@ class ExpenseDetailTableViewController: UITableViewController,
             }) {
                 
                 let email = person.value(forKey: XYZExpensePerson.email) as? String
+                let paid = person.value(forKey: XYZExpensePerson.paid) as? Bool
                 emails.append( email! )
+                
+                paids.append( paid! )
             }
         }
         
@@ -454,6 +459,15 @@ class ExpenseDetailTableViewController: UITableViewController,
     }
     
     // MARK: - text mamipulation
+    func switchChanged(_ yesno: Bool, _ sender: ExpenseDetailTextTableViewCell) {
+        
+        guard let index = tableView.indexPath(for: sender) else {
+            fatalError("Exception: index path is expected")
+        }
+        
+        paids[index.row] = yesno
+    }
+    
     func textDidBeginEditing(_ sender:ExpenseDetailTextTableViewCell) {
         
         guard let index = tableView.indexPath(for: sender) else {
@@ -469,6 +483,21 @@ class ExpenseDetailTableViewController: UITableViewController,
                     tableSectionCellList[index.section].cellList.insert("email",
                                                                         at: tableSectionCellList[index.section].cellList.count - 1)
                     emails.append("")
+                    paids.append(false)
+                    
+                    guard let textcell = tableView.cellForRow(at: index) as? ExpenseDetailTextTableViewCell else {
+                    
+                        fatalError("Exception: ExpenseDetailTextTableViewCell is expected")
+                    }
+                    
+                    /*let cgpoint = CGPoint(x: 0.0, y: 0.0)
+                    let frame = CGRect(origin: cgpoint , size: CGSize(width: 20, height: 35))
+                    let payswitch = UISwitch(frame: frame)
+                    payswitch.isOn = paids[index.row]
+                    textcell.stack.addArrangedSubview(payswitch)
+                    */
+                    
+                    textcell.addUISwitch()
                     
                     let newIndexPath = IndexPath(row: tableSectionCellList[index.section].cellList.count - 1,
                                                  section: index.section)
@@ -515,6 +544,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     var detail = ""
     var amount: Double?
     var emails = [String]()
+    var paids = [Bool]()
     var imageSet: [ImageSet]?
     var date: Date?
     let imageSetCount = 2
@@ -825,9 +855,12 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 textcell.delegate = self
                 textcell.input.isEnabled = true
-                
+                textcell.input.clearButtonMode = .never
                 textcell.input.translatesAutoresizingMaskIntoConstraints = false
                 textcell.input.leadingAnchor.constraint(equalTo: textcell.leadingAnchor, constant: 45.0).isActive = true
+                
+                textcell.addUISwitch()
+                textcell.optionSwitch.isOn = paids[indexPath.row]
                 
                 cell = textcell
             
@@ -941,6 +974,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         if editingStyle == .delete {
             
             emails.remove(at: indexPath.row)
+            paids.remove(at: indexPath.row)
             tableSectionCellList[indexPath.section].cellList.remove(at: indexPath.row)
             tableView.reloadData()
         } else if editingStyle == .insert {
