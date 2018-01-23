@@ -512,7 +512,8 @@ class ExpenseDetailTableViewController: UITableViewController,
         if modalEditing {
             
             guard let index = tableView.indexPath(for: sender) else {
-                fatalError("Exception: index path is expected")
+                
+                return // case where I click on a textcell and then click on email toward bottom of the table view list, then textcell is not longer available
             }
             
             switch tableSectionCellList[index.section].cellList[index.row] {
@@ -525,6 +526,9 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 case "email":
                     emails[index.row] = sender.input.text!
+                
+                case "newemail":
+                    break // case where we do not yet end editing but then delete the cell
                 
                 default:
                     fatalError("Exception: \(tableSectionCellList[index.section].cellList[index.row]) is not expected")
@@ -889,7 +893,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     textcell.stack.removeArrangedSubview(textcell.optionSwitch)
                     textcell.optionSwitch.removeFromSuperview()
                 }
-                
+
                 cell = textcell
             
             case "image":
