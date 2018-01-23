@@ -655,7 +655,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             if nil == expense {
                 
-                expense = XYZExpense(type: "", detail: detail, amount: amount!, date: date!, latitude: 0.0, longitude: 0.0, context: managedContext())
+                expense = XYZExpense(id: nil, detail: detail, amount: amount!, date: date!, context: managedContext())
             
                 saveData()
                 expenseDelegate?.saveNewExpense(expense: expense!)
@@ -1043,6 +1043,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             case "ShowExpenseDetailImage"?:
                 guard let detailView = segue.destination as? ExpenseDetailImageViewController else {
+                    
                     fatalError("Exception: destination is not ExpenseDetailImageViewController")
                 }
         
@@ -1058,7 +1059,8 @@ class ExpenseDetailTableViewController: UITableViewController,
                 if let button = sender as? UIBarButtonItem, button === saveButton {
                     
                     if nil == expense {
-                        expense = XYZExpense(type: "", detail: detail, amount: amount!, date: date!, latitude: 0.0, longitude: 0.0, context: managedContext())
+                        
+                        expense = XYZExpense(id: nil, detail: detail, amount: amount!, date: date!, context: managedContext())
                     }
       
                     saveData()

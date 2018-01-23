@@ -15,32 +15,29 @@ class XYZExpense: NSManagedObject {
     
     // MARK: - static property
     
-    static let type = "type"
+    static let type = "XYZExpense"
     static let detail = "detail"
     static let amount = "amount"
     static let date = "date"
-    //static let latitude = "latitude"
-    //static let longitude = "longitude"
     static let loction = "location"
     static let persons = "persons"
     static let receipts = "receipts"
     static let hasgeolocation = "hasgeolocation"
+    static let recordId = "recordId"
     
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("expenses")
 
     // MARK: - property
     
-    var type = ""
     var detail = ""
     var amount = 0.0
     var date: Date = Date()
-    var latitude = 0.0
-    var longitude = 0.0
     var persons: Set<XYZExpensePerson>?
     var receipts: Set<XYZExpenseReceipt>?
     var hasgeolocation = false
     var location = CLLocation()
+    var recordId: String = ""
     
     // MARK: - function
     
@@ -49,26 +46,29 @@ class XYZExpense: NSManagedObject {
         super.init(entity: entity, insertInto: context)
     }
     
-    init(type: String, detail: String, amount: Double, date: Date, latitude: Double, longitude: Double, context: NSManagedObjectContext?) {
+    init(id: String?, detail: String, amount: Double, date: Date, context: NSManagedObjectContext?) {
         
         let aContext = context!
         let entity = NSEntityDescription.entity(forEntityName: "XYZExpense",
                                                 in: aContext)!
         super.init(entity: entity, insertInto: aContext)
+    
+        var recordid = ""
         
-        self.setValue(type, forKey: XYZExpense.type)
+        if nil == id {
+            
+            recordid = UUID.init().uuidString
+        } else {
+            
+            recordId = id!
+        }
+        
+        self.setValue(recordid, forKey: XYZExpense.recordId)
         self.setValue(detail, forKey: XYZExpense.detail)
         self.setValue(amount, forKey: XYZExpense.amount)
         self.setValue(date, forKey: XYZExpense.date)
-        //self.setValue(latitude, forKey: XYZExpense.latitude)
-        //self.setValue(longitude, forKey: XYZExpense.longitude)
         self.setValue(Set<XYZExpensePerson>(), forKey: XYZExpense.persons)
         self.setValue(Set<XYZExpenseReceipt>(), forKey: XYZExpense.receipts)
-    }
-    
-    convenience init(detail: String, amount: Double, date: Date, context: NSManagedObjectContext?) {
-        
-        self.init(type: "", detail: detail, amount: amount, date: date, latitude: 0.0, longitude: 0.0, context: context)
     }
     
     func getPersons() -> Set<XYZExpensePerson> {
