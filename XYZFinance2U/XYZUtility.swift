@@ -802,8 +802,10 @@ func registeriCloudSubscription(_ iCloudZones: [XYZiCloudZone]) {
             
             if let _ = subscriptionDict?[ckrecordzone.zoneID.zoneName] {
                 
+                print("-------- has subscription")
             } else {
 
+                print("-------- create new subscription")
                 let subscription = CKRecordZoneSubscription.init(zoneID: ckrecordzone.zoneID, subscriptionID: ckrecordzone.zoneID.zoneName)
                 let notificationInfo = CKNotificationInfo()
                 

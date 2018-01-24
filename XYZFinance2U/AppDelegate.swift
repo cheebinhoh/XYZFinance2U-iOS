@@ -23,7 +23,8 @@ class AppDelegate: UIResponder,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         
-        os_log("-------- userNotificationCenter", log: OSLog.default, type: .default)
+        print("-------- userNotificationCenter")
+        //os_log("-------- userNotificationCenter", log: OSLog.default, type: .default)
         
         completionHandler()
     }
@@ -32,13 +33,15 @@ class AppDelegate: UIResponder,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
-        os_log("-------- userNotificationCenter", log: OSLog.default, type: .default)
+        print("-------- userNotificationCenter")
+        //os_log("-------- userNotificationCenter", log: OSLog.default, type: .default)
         
         completionHandler(UNNotificationPresentationOptions.sound)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
      
+        print("-------- application")
         if UIApplication.shared.applicationState == .background {
             
             os_log("-------- app is in background ignore, icloud push notification, we will process them when we are active again", log: OSLog.default, type: .default)
@@ -363,7 +366,7 @@ class AppDelegate: UIResponder,
                             
                             incomeView.reloadData()
                             
-                            registeriCloudSubscription(self.iCloudZones)
+                            registeriCloudSubscription([icloudzone])
                         }
                         
                     case XYZExpense.type:
