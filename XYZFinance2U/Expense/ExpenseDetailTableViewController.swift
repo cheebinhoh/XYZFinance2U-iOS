@@ -739,18 +739,18 @@ class ExpenseDetailTableViewController: UITableViewController,
             if nil == expense {
                 
                 expense = XYZExpense(id: nil, detail: detail, amount: amount!, date: date!, context: managedContext())
-            
+        
                 saveData()
                 expenseDelegate?.saveNewExpense(expense: expense!)
             } else {
-                
+               
                 saveData()
                 expenseDelegate?.saveExpense(expense: expense!)
             }
             
             dismiss(animated: true, completion: nil)
         } else {
-            
+           
             saveData()
             navigationItem.leftBarButtonItem?.isEnabled = false
             modalEditing = false

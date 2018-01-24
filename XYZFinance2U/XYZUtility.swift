@@ -467,7 +467,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                 }
             
                 // TODO
-                fatalError("Exception: TODO")
+                
                 icloudZone?.data = expenseList
             
             default:
@@ -612,6 +612,8 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                             _ icloudZones: [XYZiCloudZone],
                             _ completionblock: @escaping () -> Void) {
     
+    print("------- pushChangeToiCloudZone being called");
+    
     for zone in zones {
         
         let name = zone.zoneID.zoneName
@@ -640,9 +642,26 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                 }
             
         case XYZExpense.type:
+            print("-------- pushChangeToiCloudZone expense")
+            
             if let iCloudZone = iCloudZone(of: zone, icloudZones) {
+                print("-------- call saveExpensesToiCloud")
+                guard let expenseList = iCloudZone.data as? [XYZExpense] else {
+                    
+                    fatalError("Exception: [XYZAccount] is expected")
+                }
                 
-                print("TODO save change to icloud")
+                saveExpensesToiCloud(zone, iCloudZone, expenseList, {
+                    
+                    //OperationQueue.main.addOperation {
+                        
+                    //    fetchiCloudZoneChange([zone], icloudZones, {
+                            
+                    //    })
+                        
+                    //    completionblock()
+                    //}
+                })
             }
             
             default:
@@ -660,13 +679,113 @@ func fetchAndUpdateiCloud(_ zones: [CKRecordZone],
         fetchiCloudZoneChange(zones, iCloudZones, {
             
             //we should only write to icloud if we do have changed after last token change
-            
+            print("-------- pushChangeToiCloudZone")
             OperationQueue.main.addOperation {
                 
                 pushChangeToiCloudZone(zones, iCloudZones, completionblock)
             }
         })
     }
+}
+
+func saveExpensesToiCloud(_ zone: CKRecordZone,
+                          _ iCloudZone: XYZiCloudZone,
+                          _ expenseList: [XYZExpense],
+                          _ completionblock: @escaping () -> Void ) {
+    
+    var expenseListToBeSaved: [XYZExpense]?
+    
+    if let lastChangeTokenFetch = iCloudZone.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date {
+        
+        expenseListToBeSaved = [XYZExpense]()
+        
+        for expense in expenseList {
+            
+            if let lastChanged = expense.value(forKey: XYZExpense.lastRecordChange) as? Date {
+                
+                if lastChanged > lastChangeTokenFetch {
+                    
+                    expenseListToBeSaved?.append(expense)
+                }
+            } else {
+                
+                expenseListToBeSaved?.append(expense)
+            }
+        }
+    } else {
+        
+        expenseListToBeSaved = expenseList
+    }
+    
+    var recordIdsToBeDeleted = [CKRecordID]()
+    
+    guard let data = iCloudZone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
+        
+        fatalError("Exception: data is expected for deleteRecordIdList")
+    }
+    
+    guard let deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+        
+        fatalError("Exception: deleteRecordList is expected as [String]")
+    }
+    
+    for deleteRecordName in deleteRecordLiset {
+        
+        let customZone = CKRecordZone(zoneName: XYZExpense.type)
+        let ckrecordId = CKRecordID(recordName: deleteRecordName, zoneID: customZone.zoneID)
+        
+        recordIdsToBeDeleted.append(ckrecordId)
+    }
+    
+    saveExpensesToiCloud(iCloudZone, expenseListToBeSaved!, recordIdsToBeDeleted, completionblock)
+}
+
+func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
+                          _ expenseList: [XYZExpense],
+                          _ recordIdsToBeDeleted: [CKRecordID],
+                          _ completionblock: @escaping () -> Void ) {
+    
+    print("---------- saveExpensesToiCloud")
+    let container = CKContainer.default()
+    let database = container.privateCloudDatabase
+    
+    var recordsToBeSaved = [CKRecord]()
+    
+    for expense in expenseList {
+        
+        let recordName = expense.value(forKey: XYZExpense.recordId) as? String
+        let customZone = CKRecordZone(zoneName: XYZExpense.type)
+        let ckrecordId = CKRecordID(recordName: recordName!, zoneID: customZone.zoneID)
+        
+        let record = CKRecord(recordType: XYZExpense.type, recordID: ckrecordId)
+        
+        let detail = expense.value(forKey: XYZExpense.detail) as? String
+        let amount = expense.value(forKey: XYZExpense.amount) as? Double
+        let date = expense.value(forKey: XYZExpense.date) as? Date
+        
+        record.setValue(detail, forKey: XYZExpense.detail)
+        record.setValue(amount, forKey: XYZExpense.amount)
+        record.setValue(date, forKey: XYZExpense.date)
+        
+        recordsToBeSaved.append(record)
+    }
+    
+    let opToSaved = CKModifyRecordsOperation(recordsToSave: recordsToBeSaved, recordIDsToDelete: recordIdsToBeDeleted)
+    opToSaved.savePolicy = .allKeys
+    opToSaved.completionBlock = {
+        
+        OperationQueue.main.addOperation {
+            
+            let data = NSKeyedArchiver.archivedData(withRootObject: [String]())
+            iCloudZone.setValue(data, forKey: XYZiCloudZone.deleteRecordIdList)
+            
+            saveManageContext() // save the iCloudZone to indicate that deleteRecordIdList is executed.
+            
+            completionblock()
+        }
+    }
+    
+    database.add(opToSaved)
 }
 
 func saveAccountsToiCloud(_ zone: CKRecordZone,
