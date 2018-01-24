@@ -72,6 +72,7 @@ class AppDelegate: UIResponder,
     
     // MARK: - property
     
+    var expenseList = [XYZExpense]()
     var incomeList = [XYZAccount]()
     var iCloudZones = [XYZiCloudZone]()
     var iCloudEnable = false
@@ -217,19 +218,35 @@ class AppDelegate: UIResponder,
             fatalError("Exception: IncomeTableViewController is expected")
         }
         
+        guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+        
+        guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+            
+            fatalError("Exception: ExpenseTableViewController is expected")
+        }
+        
         // fetch global data list
         incomeList = loadAccounts()!
+        expenseList = loadExpenses()!
         iCloudZones = loadiCloudZone()!
         
         var incomeiCloudZone: XYZiCloudZone?
+        var expenseiCloudZone: XYZiCloudZone?
         
         for icloudzone in iCloudZones {
             
             switch (icloudzone.value(forKey: XYZiCloudZone.name) as? String )! {
                 
             case XYZAccount.type:
-                incomeiCloudZone = icloudzone
                 icloudzone.data = incomeList  // We do not need to keep it in persistent state as it is already stored core data
+                incomeiCloudZone = icloudzone
+                
+            case XYZExpense.type:
+                icloudzone.data = expenseList
+                expenseiCloudZone = icloudzone
                 
             default:
                 fatalError("Exception: zone type is not supported")
@@ -248,8 +265,18 @@ class AppDelegate: UIResponder,
             zonesToBeFetched.append(incomeCustomZone)
         }
         
+        let expenseCustomZone = CKRecordZone(zoneName: XYZExpense.type)
+        if let _ = expenseiCloudZone {
+            
+            zonesToBeFetched.append(expenseCustomZone)
+        } else {
+            
+            zonesToBeSaved.append(expenseCustomZone)
+        }
+        
         if !zonesToBeSaved.isEmpty {
             
+            print("-------- # of zones to be saved = \(zonesToBeSaved.count)")
             let op = CKModifyRecordZonesOperation(recordZonesToSave: zonesToBeSaved, recordZoneIDsToDelete: nil)
             
             op.modifyRecordZonesCompletionBlock = { (saved, deleted, error) in
@@ -268,6 +295,9 @@ class AppDelegate: UIResponder,
                                 
                             case XYZAccount.type:
                                 icloudzone.data = self.incomeList
+                                
+                            case XYZExpense.type:
+                                icloudzone.data = self.expenseList
                                 
                             default:
                                 fatalError("Exception: \(zone.zoneID.zoneName) is not supported")
@@ -293,6 +323,14 @@ class AppDelegate: UIResponder,
                                         incomeView.reloadData()
                                     }
                                     
+                                case XYZExpense.type:
+                                    self.expenseList = (icloudzone.data as? [XYZExpense])!
+                                    
+                                    DispatchQueue.main.async {
+                                        
+                                        expenseView.reloadData()
+                                    }
+                                    
                                 default:
                                     fatalError("Exception: \(String(describing: zName)) is not supported")
                                 }
@@ -310,6 +348,7 @@ class AppDelegate: UIResponder,
         
         if !zonesToBeFetched.isEmpty {
             
+            print("-------- # of zones to be saved = \(zonesToBeFetched.count)")
             fetchAndUpdateiCloud(zonesToBeFetched, self.iCloudZones, {
                 
                 for icloudzone in self.iCloudZones {
@@ -325,6 +364,16 @@ class AppDelegate: UIResponder,
                             incomeView.reloadData()
                             
                             registeriCloudSubscription(self.iCloudZones)
+                        }
+                        
+                    case XYZExpense.type:
+                        self.expenseList = (icloudzone.data as? [XYZExpense])!
+                        
+                        DispatchQueue.main.async {
+                            
+                            expenseView.reloadData()
+                            
+                            //registeriCloudSubscription(self.iCloudZones)
                         }
             
                     default:

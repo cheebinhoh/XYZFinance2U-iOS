@@ -22,7 +22,6 @@ class ExpenseTableViewController: UITableViewController,
     ExpenseDetailDelegate {
     
     // MARK: - property
-    var expenseList = [XYZExpense]()
     var sectionList = [TableSectionCell]()  
     var delegate: ExpenseTableViewDelegate?
     var isPopover = false
@@ -134,7 +133,8 @@ class ExpenseTableViewController: UITableViewController,
     
     func saveNewExpense(expense: XYZExpense) {
         
-        expenseList.append(expense)
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.expenseList.append(expense)
 
         saveManageContext()
 
@@ -145,27 +145,18 @@ class ExpenseTableViewController: UITableViewController,
         delegate?.expenseSelected(newExpense: expense)
     }
     
-    private func reloadData() {
+    func reloadData() {
         
-        expenseList = sortExpenses(expenses: expenseList)
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+
+        appDelegate?.expenseList = sortExpenses(expenses: (appDelegate?.expenseList)!)
         loadExpensesIntoSections()
         tableView.reloadData()
     }
     
-    private func sortExpenses(expenses: [XYZExpense]) -> [XYZExpense] {
-        
-        return expenses.sorted(by: { (exp1, exp2) -> Bool in
-            
-            let date1 = exp1.value(forKey: XYZExpense.date) as! Date
-            let date2 = exp2.value(forKey: XYZExpense.date) as! Date
-            
-            return date1 > date2
-        })
-    }
-    
     private func loadExpensesFromSections() {
         
-        expenseList.removeAll()
+        var expenseList = [XYZExpense]()
         
         for section in sectionList {
             
@@ -177,6 +168,9 @@ class ExpenseTableViewController: UITableViewController,
         }
         
         expenseList = sortExpenses(expenses: expenseList)
+
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.expenseList = expenseList
     }
     
     private func loadExpensesIntoSections() {
@@ -186,8 +180,9 @@ class ExpenseTableViewController: UITableViewController,
         // FIXME to improve performance
         sectionList = [TableSectionCell]()
         var sectionExpenseList: [XYZExpense]?
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
-        for expense in expenseList {
+        for expense in (appDelegate?.expenseList)! {
             
             guard let date = expense.value(forKey: XYZExpense.date) as? Date else {
                 continue
@@ -232,44 +227,6 @@ class ExpenseTableViewController: UITableViewController,
         }
     }
     
-    private func loadExpenses() -> [XYZExpense]? {
-        
-        var expenses: [XYZExpense]?
-        
-        let aContext = managedContext()
-        let fetchRequest = NSFetchRequest<XYZExpense>(entityName: "XYZExpense")
-        
-        do {
-            
-            expenses = try aContext?.fetch(fetchRequest)
-        } catch let error as NSError {
-            
-            print("******** Could not fetch. \(error), \(error.userInfo)")
-        }
-        
-        let fetchRequestExpPerson = NSFetchRequest<XYZExpensePerson>(entityName: "XYZExpensePerson")
-        
-        do {
-            
-            _ = try aContext?.fetch(fetchRequestExpPerson)
-        } catch let error as NSError {
-            
-            print("******** Could not fetch. \(error), \(error.userInfo)")
-        }
-        
-        let fetchRequestExpReceipt = NSFetchRequest<XYZExpenseReceipt>(entityName: "XYZExpenseReceipt")
-        
-        do {
-        
-            _ = try aContext?.fetch(fetchRequestExpReceipt)
-        } catch let error as NSError {
-            
-            print("******** Could not fetch. \(error), \(error.userInfo)")
-        }
-        
-        return sortExpenses(expenses: expenses!)
-    }
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -282,7 +239,6 @@ class ExpenseTableViewController: UITableViewController,
         navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.setLeftBarButton(self.editButtonItem, animated: true)
         
-        expenseList = loadExpenses()!
         loadExpensesIntoSections()
     }
 
@@ -503,8 +459,9 @@ class ExpenseTableViewController: UITableViewController,
         
         self.delegate = nil
         secondaryViewController.navigationItem.title = "New"
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
-        for expense in expenseList {
+        for expense in (appDelegate?.expenseList)! {
             
             let indexPath = self.indexPath(of: expense)
             tableView.deselectRow(at: indexPath!, animated: false)

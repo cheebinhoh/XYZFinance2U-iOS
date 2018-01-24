@@ -240,6 +240,55 @@ func loadAccounts() -> [XYZAccount]? {
     return output
 }
 
+func loadExpenses() -> [XYZExpense]? {
+    
+    var expenses: [XYZExpense]?
+    
+    let aContext = managedContext()
+    let fetchRequest = NSFetchRequest<XYZExpense>(entityName: "XYZExpense")
+    
+    do {
+        
+        expenses = try aContext?.fetch(fetchRequest)
+    } catch let error as NSError {
+        
+        print("******** Could not fetch. \(error), \(error.userInfo)")
+    }
+    
+    let fetchRequestExpPerson = NSFetchRequest<XYZExpensePerson>(entityName: "XYZExpensePerson")
+    
+    do {
+        
+        _ = try aContext?.fetch(fetchRequestExpPerson)
+    } catch let error as NSError {
+        
+        print("******** Could not fetch. \(error), \(error.userInfo)")
+    }
+    
+    let fetchRequestExpReceipt = NSFetchRequest<XYZExpenseReceipt>(entityName: "XYZExpenseReceipt")
+    
+    do {
+        
+        _ = try aContext?.fetch(fetchRequestExpReceipt)
+    } catch let error as NSError {
+        
+        print("******** Could not fetch. \(error), \(error.userInfo)")
+    }
+    
+    return sortExpenses(expenses: expenses!)
+}
+
+func sortExpenses(expenses: [XYZExpense]) -> [XYZExpense] {
+    
+    return expenses.sorted(by: { (exp1, exp2) -> Bool in
+        
+        let date1 = exp1.value(forKey: XYZExpense.date) as! Date
+        let date2 = exp2.value(forKey: XYZExpense.date) as! Date
+        
+        return date1 > date2
+    })
+}
+
 func loadExchangeRates() -> [XYZExchangeRate]? {
     
     var output: [XYZExchangeRate]?
@@ -376,6 +425,8 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                 if let data = icloudzone.value(forKey: XYZiCloudZone.changeToken) as? Data {
                 
                     changeToken = (NSKeyedUnarchiver.unarchiveObject(with: data) as? CKServerChangeToken)
+                } else {
+                    
                 }
                 
                 break
@@ -392,6 +443,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     
     opZoneChange.recordChangedBlock = { (record) in
         
+        print("-------- record change")
         let ckrecordzone = CKRecordZone(zoneName: record.recordID.zoneID.zoneName)
         let icloudZone = iCloudZone(of: ckrecordzone, icloudZones)
         
@@ -408,6 +460,16 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                 incomeList = createUpdateAccount(record, incomeList, aContext!)
                 icloudZone?.data = incomeList
             
+            case XYZExpense.type:
+                guard var expenseList = icloudZone?.data as? [XYZExpense] else {
+                    
+                    fatalError("Exception: expense is expected")
+                }
+            
+                // TODO
+                fatalError("Exception: TODO")
+                icloudZone?.data = expenseList
+            
             default:
                 fatalError("Exception: zone type \(String(describing: zoneName)) is not supported")
         }
@@ -415,14 +477,14 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     
     opZoneChange.recordWithIDWasDeletedBlock = { (recordId, recordType) in
         
-        for icloudzone in icloudZones {
+        for icloudZone in icloudZones {
             
-            if let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String, zName == recordType {
+            if let zName = icloudZone.value(forKey: XYZiCloudZone.name) as? String, zName == recordType {
             
                 switch recordType {
                     
                     case XYZAccount.type:
-                        guard var incomeList = icloudzone.data as? [XYZAccount] else {
+                        guard var incomeList = icloudZone.data as? [XYZAccount] else {
                             
                             fatalError("Exception: [XYZAccount] is expected")
                         }
@@ -442,7 +504,30 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                             }
                         }
                     
-                        icloudzone.data = incomeList
+                        icloudZone.data = incomeList
+                    
+                    case XYZExpense.type:
+                        guard var expenseList = icloudZone.data as? [XYZExpense] else {
+                            
+                            fatalError("Exception: expense is expected")
+                        }
+                    
+                        for (index, expense) in expenseList.enumerated() {
+                            
+                            guard let recordName = expense.value(forKey: XYZExpense.recordId) as? String else {
+                                fatalError("Exception: record id is expected")
+                            }
+                            
+                            if recordName == recordId.recordName {
+                                
+                                aContext?.delete(expense)
+                                expenseList.remove(at: index)
+                                
+                                break
+                            }
+                        }
+                    
+                        icloudZone.data = expenseList
                     
                     default:
                         fatalError("Exception: \(recordType) is not supported")
@@ -480,6 +565,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                     
                     if hasChangeToken {
                         
+                        print("---- save change token")
                         let lastTokenFetchDate = Date()
                         
                         let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: changeToken! )
@@ -552,6 +638,12 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                         }
                     })
                 }
+            
+        case XYZExpense.type:
+            if let iCloudZone = iCloudZone(of: zone, icloudZones) {
+                
+                print("TODO save change to icloud")
+            }
             
             default:
                 fatalError("Exception: zone \(name) is not supported")
