@@ -130,8 +130,9 @@ class XYZExpense: NSManagedObject {
     }
     
     @discardableResult
-    func addReceipt(sequenceNr: Int, image: NSData) -> XYZExpenseReceipt {
+    func addReceipt(sequenceNr: Int, image: NSData) -> ( XYZExpenseReceipt, Bool ) {
         
+        var hasChangeImage = true
         var receipt: XYZExpenseReceipt?
         guard var receiptList = self.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>  else {
             
@@ -141,6 +142,10 @@ class XYZExpense: NSManagedObject {
         for existingReceipt in receiptList {
             
             if let existingSequenceNr = existingReceipt.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int, existingSequenceNr == sequenceNr {
+                
+                let imageData = existingReceipt.value(forKey: XYZExpenseReceipt.image) as? NSData
+                hasChangeImage = imageData != image // this is not 100% accurate as data might be different
+                                                    // at various time of compress image.
                 
                 existingReceipt.setValue(image, forKey: XYZExpenseReceipt.image)
                 receipt = existingReceipt
@@ -153,6 +158,6 @@ class XYZExpense: NSManagedObject {
             receiptList.insert(receipt!)
         }
         
-        return receipt!
+        return (receipt!, hasChangeImage)
     }
 }

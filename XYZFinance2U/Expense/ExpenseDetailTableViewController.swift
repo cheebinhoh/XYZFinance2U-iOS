@@ -36,7 +36,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     struct ImageSet {
         
         var image: UIImage?
-        var seleted = false
+        var selected = false
     }
     
     // MARK: - protocol implementation
@@ -200,6 +200,22 @@ class ExpenseDetailTableViewController: UITableViewController,
     
     func saveData() {
         
+        var hasChanged = false
+        
+        if let existingDetail = expense?.value(forKey: XYZExpense.detail) as? String, existingDetail != detail {
+            
+            hasChanged = true
+        } else if let existingAmount = expense?.value(forKey: XYZExpense.amount) as? Double, existingAmount != amount {
+            
+            hasChanged = true
+        } else if let existingDate = expense?.value(forKey: XYZExpense.date) as? Date, existingDate != date {
+            
+            hasChanged = true
+        } else if let existingHasLocation = expense?.value(forKey: XYZExpense.hasgeolocation) as? Bool, existingHasLocation != hasLocation {
+            
+            hasChanged = true
+        }
+        
         expense?.setValue(detail, forKey: XYZExpense.detail)
         expense?.setValue(amount, forKey: XYZExpense.amount)
         expense?.setValue(date, forKey: XYZExpense.date)
@@ -207,22 +223,31 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         if hasLocation, let _ = cllocation {
             
-            //expense?.setValue(cllocation?.coordinate.longitude, forKey: XYZExpense.longitude)
-            //expense?.setValue(cllocation?.coordinate.latitude, forKey: XYZExpense.latitude)
-            
             let data = NSKeyedArchiver.archivedData(withRootObject: cllocation!)
+            
+            if let existingData = expense?.value(forKey: XYZExpense.loction) as? Data, existingData != data {
+                
+                hasChanged = true
+            }
+            
             expense?.setValue(data, forKey: XYZExpense.loction)
         } else {
             
-            expense?.setValue(nil, forKey: XYZExpense.loction)
+            if let _ = expense?.value(forKey: XYZExpense.loction) as? Data {
+                
+                hasChanged = true
+            }
             
-            //expense?.setValue(1000.0, forKey: XYZExpense.longitude)
-            //expense?.setValue(1000.0, forKey: XYZExpense.latitude)
+            expense?.setValue(nil, forKey: XYZExpense.loction)
         }
         
         for (index, image) in imageSet!.enumerated() {
             
-            if image.seleted {
+            guard var receiptList = expense?.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt> else {
+                fatalError("Exception: [XYZExpenseReceipt] is expected")
+            }
+            
+            if image.selected {
                 
                 var data: NSData?
                 
@@ -234,7 +259,36 @@ class ExpenseDetailTableViewController: UITableViewController,
                     data = pngdata
                 }
                 
-                expense?.addReceipt(sequenceNr: index, image: data!)
+                let (_, hasImageChanged) = (expense?.addReceipt(sequenceNr: index, image: data!))!
+                
+                if hasImageChanged {
+                    
+                    hasChanged = true
+                }
+                
+            } else {
+                
+                var receiptToBeDeleted: XYZExpenseReceipt?
+                
+                for receipt in receiptList {
+                    
+                    if let sequenceNr = receipt.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int, sequenceNr == index {
+                        
+                        receiptToBeDeleted = receipt;
+                        break
+                    }
+                }
+                
+                if let _ = receiptToBeDeleted {
+                    
+                    if !hasChanged {
+
+                        hasChanged = true
+                    }
+                    
+                    receiptList.remove(receiptToBeDeleted!)
+                    expense?.setValue(receiptList, forKey: XYZExpense.receipts)
+                }
             }
         }
         
@@ -243,6 +297,13 @@ class ExpenseDetailTableViewController: UITableViewController,
         for (index, email) in emails.enumerated() {
             
             expense?.addPerson(sequenceNr: index, name: email, email: email, paid: paids[index])
+        }
+        
+        if nil == expense?.value(forKey: XYZExpense.lastRecordChange) as? Date
+            || hasChanged {
+            
+            print("--- has change")
+            expense?.setValue(Date(), forKey: XYZExpense.lastRecordChange)
         }
     }
     
@@ -253,7 +314,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         date = Date()
         emails = [String]()
         paids = [Bool]()
-        imageSet = Array(repeating: ImageSet(image: UIImage(named:"defaultPhoto")!, seleted: false ), count: imageSetCount)
+        imageSet = Array(repeating: ImageSet(image: UIImage(named:"defaultPhoto")!, selected: false ), count: imageSetCount)
         //locationCoordinate = nil
         cllocation = nil
         hasgeolocation = false
@@ -301,6 +362,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 let seqNr = receipt.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int
                 imageSet?[seqNr!].image = image
+                imageSet?[seqNr!].selected = true
             }
             
             let personList = expense?.getPersons()
@@ -345,11 +407,11 @@ class ExpenseDetailTableViewController: UITableViewController,
         if let image = sender.image {
             
             imageSet![newImageIndex!].image =  image
-            imageSet![newImageIndex!].seleted = true
+            imageSet![newImageIndex!].selected = true
         } else {
             
             imageSet![newImageIndex!].image =  UIImage(named:"defaultPhoto")!
-            imageSet![newImageIndex!].seleted = false
+            imageSet![newImageIndex!].selected = false
         }
         
         if let indexPath = tableView.indexPath(for: imagecell!) {
@@ -370,7 +432,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         }
     
         imageSet![newImageIndex!].image = image
-        imageSet![newImageIndex!].seleted = true
+        imageSet![newImageIndex!].selected = true
         
         imagecell?.setImage(image: image, at: newImageIndex!)
 
@@ -903,7 +965,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 if imageSet == nil {
                     
-                    imageSet = Array(repeating: ImageSet(image: UIImage(named:"defaultPhoto")!, seleted: false ), count: imagepickercell.imageViewList.count)
+                    imageSet = Array(repeating: ImageSet(image: UIImage(named:"defaultPhoto")!, selected: false ), count: imagepickercell.imageViewList.count)
                 }
                 
                 for index in 0..<(imageSet?.count)! {

@@ -376,7 +376,7 @@ class AppDelegate: UIResponder,
                             
                             expenseView.reloadData()
                             
-                            //registeriCloudSubscription(self.iCloudZones)
+                            registeriCloudSubscription([icloudzone])
                         }
             
                     default:
