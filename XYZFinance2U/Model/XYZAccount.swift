@@ -26,8 +26,6 @@ class XYZAccount : NSManagedObject {
     static let repeatAction = "repeatAction"
     static let currencyCode = "currencyCode"
     static let lastRecordChange = "lastRecordChange"
-    static let lastRecordUpload = "lastRecordUpload"
-    static let lastRecordFetch = "lastRecordFetch"
     static let recordId = "recordId"
     
 
@@ -42,8 +40,6 @@ class XYZAccount : NSManagedObject {
     var repeatAction: String = ""
     var currencyCode: String = Locale.current.currencyCode!
     var lastRecordChange: Date = Date()
-    var lastRecordUpload: Date = Date()
-    var lastRecordFetch: Date = Date()
     var recordId: String = ""
     
     

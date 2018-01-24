@@ -24,9 +24,7 @@ class XYZExpense: NSManagedObject {
     static let receipts = "receipts"
     static let hasgeolocation = "hasgeolocation"
     static let recordId = "recordId"
-    
-    static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
-    static let ArchiveURL = DocumentsDirectory.appendingPathComponent("expenses")
+    static let lastRecordChange = "lastRecordChange"
 
     // MARK: - property
     
@@ -38,6 +36,7 @@ class XYZExpense: NSManagedObject {
     var hasgeolocation = false
     var location = CLLocation()
     var recordId: String = ""
+    var lastRecordChange = Date()
     
     // MARK: - function
     
