@@ -401,6 +401,48 @@ func createUpdateAccount(_ record: CKRecord,
     return outputIncomeList
 }
 
+func createUpdateExpense(_ record: CKRecord,
+                         _ expenseList: [XYZExpense],
+                         _ context: NSManagedObjectContext) -> [XYZExpense] {
+    
+    let recordName = record.recordID.recordName
+    let detail = record[XYZExpense.detail] as? String
+    let amount = record[XYZExpense.amount] as? Double
+    let date = record[XYZExpense.date] as? Date
+    
+    var outputExpenseList: [XYZExpense] = expenseList
+    var expenseToBeUpdated: XYZExpense?
+    
+    for expense in outputExpenseList {
+        
+        guard let recordId = expense.value(forKey: XYZExpense.recordId) as? String else {
+            
+            fatalError("Exception: record is expected")
+        }
+        
+        if recordId == recordName {
+            
+            expenseToBeUpdated = expense
+            break
+        }
+    }
+    
+    if nil == expenseToBeUpdated {
+    
+        expenseToBeUpdated = XYZExpense(id: recordName, detail: detail!, amount: amount!, date: date!, context: context)
+        outputExpenseList.append(expenseToBeUpdated!)
+    }
+    
+    expenseToBeUpdated?.setValue(detail, forKey: XYZExpense.detail)
+    expenseToBeUpdated?.setValue(amount, forKey: XYZExpense.amount)
+    expenseToBeUpdated?.setValue(date, forKey: XYZExpense.date)
+    
+    // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
+    expenseToBeUpdated?.setValue(Date(), forKey: XYZExpense.lastRecordChange)
+    
+    return outputExpenseList
+}
+
 func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                            _ icloudZones: [XYZiCloudZone],
                            _ completionblock: @escaping () -> Void ) {
@@ -465,9 +507,8 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                     
                     fatalError("Exception: expense is expected")
                 }
-            
-                // TODO
-                
+         
+                expenseList = createUpdateExpense(record, expenseList, aContext!)
                 icloudZone?.data = expenseList
             
             default:
@@ -564,8 +605,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                     }
                     
                     if hasChangeToken {
-                        
-                        print("---- save change token")
+
                         let lastTokenFetchDate = Date()
                         
                         let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: changeToken! )
@@ -612,8 +652,6 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                             _ icloudZones: [XYZiCloudZone],
                             _ completionblock: @escaping () -> Void) {
     
-    print("------- pushChangeToiCloudZone being called");
-    
     for zone in zones {
         
         let name = zone.zoneID.zoneName
@@ -642,10 +680,8 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                 }
             
         case XYZExpense.type:
-            print("-------- pushChangeToiCloudZone expense")
-            
             if let iCloudZone = iCloudZone(of: zone, icloudZones) {
-                print("-------- call saveExpensesToiCloud")
+            
                 guard let expenseList = iCloudZone.data as? [XYZExpense] else {
                     
                     fatalError("Exception: [XYZAccount] is expected")
@@ -653,14 +689,14 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                 
                 saveExpensesToiCloud(zone, iCloudZone, expenseList, {
                     
-                    //OperationQueue.main.addOperation {
+                    OperationQueue.main.addOperation {
                         
-                    //    fetchiCloudZoneChange([zone], icloudZones, {
+                        fetchiCloudZoneChange([zone], icloudZones, {
                             
-                    //    })
+                        })
                         
-                    //    completionblock()
-                    //}
+                        completionblock()
+                    }
                 })
             }
             
@@ -679,7 +715,6 @@ func fetchAndUpdateiCloud(_ zones: [CKRecordZone],
         fetchiCloudZoneChange(zones, iCloudZones, {
             
             //we should only write to icloud if we do have changed after last token change
-            print("-------- pushChangeToiCloudZone")
             OperationQueue.main.addOperation {
                 
                 pushChangeToiCloudZone(zones, iCloudZones, completionblock)
@@ -745,7 +780,6 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
                           _ recordIdsToBeDeleted: [CKRecordID],
                           _ completionblock: @escaping () -> Void ) {
     
-    print("---------- saveExpensesToiCloud")
     let container = CKContainer.default()
     let database = container.privateCloudDatabase
     

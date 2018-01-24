@@ -323,7 +323,6 @@ class ExpenseDetailTableViewController: UITableViewController,
         if nil == expense?.value(forKey: XYZExpense.lastRecordChange) as? Date
             || hasChanged {
             
-            print("--- has change")
             expense?.setValue(Date(), forKey: XYZExpense.lastRecordChange)
         }
     }
