@@ -292,11 +292,32 @@ class ExpenseDetailTableViewController: UITableViewController,
             }
         }
         
-        expense?.removeAllPersons()
+        guard let personList = expense?.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
+            
+            fatalError("Exception: [XYZExpensePerson] is expected")
+        }
+        
+        var toBeRemovedRange = personList.count..<personList.count
+        
+        if emails.count < personList.count {
+            
+            toBeRemovedRange = emails.count..<personList.count
+        }
         
         for (index, email) in emails.enumerated() {
             
-            expense?.addPerson(sequenceNr: index, name: email, email: email, paid: paids[index])
+            let (_, hasChangePerson) = (expense?.addPerson(sequenceNr: index, name: email, email: email, paid: paids[index]))!
+            
+            if hasChangePerson {
+                
+                hasChanged = true
+            }
+        }
+        
+        for index in toBeRemovedRange {
+            
+            hasChanged = true
+            expense?.removePerson(sequenceNr: index)
         }
         
         if nil == expense?.value(forKey: XYZExpense.lastRecordChange) as? Date

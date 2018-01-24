@@ -98,8 +98,38 @@ class XYZExpense: NSManagedObject {
     }
     
     @discardableResult
-    func addPerson(sequenceNr: Int, name: String, email: String, paid: Bool) -> XYZExpensePerson {
+    func removePerson(sequenceNr: Int) -> XYZExpensePerson? {
         
+        var personRemoved: XYZExpensePerson?
+        
+        guard var personList = self.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
+            
+            fatalError("Exception: [XYZExpensePerson] is expected")
+        }
+        
+        for person in personList {
+            
+            let personSequenceNr = person.value(forKey: XYZExpensePerson.sequenceNr) as? Int
+            
+            if personSequenceNr == sequenceNr {
+                
+                personRemoved = person
+                personList.remove(person)
+                managedContext()?.delete(personRemoved!)
+                
+                self.setValue(personList, forKey: XYZExpense.persons)
+                
+                break
+            }
+        }
+        
+        return personRemoved
+    }
+    
+    @discardableResult
+    func addPerson(sequenceNr: Int, name: String, email: String, paid: Bool) -> ( XYZExpensePerson, Bool ) {
+        
+        var hasChange = false
         var person: XYZExpensePerson?
         guard var personList = self.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
             
@@ -109,6 +139,17 @@ class XYZExpense: NSManagedObject {
         for existingPerson in personList {
             
             if let existingSequenceNr = existingPerson.value(forKey: XYZExpensePerson.sequenceNr) as? Int, existingSequenceNr == sequenceNr {
+                
+                if let existingName = existingPerson.value(forKey: XYZExpensePerson.name) as? String, existingName != name {
+                    
+                    hasChange = true
+                } else if let existingEmail = existingPerson.value(forKey: XYZExpensePerson.email) as? String, existingEmail != email {
+                    
+                    hasChange = true
+                } else if let existingPaid = existingPerson.value(forKey: XYZExpensePerson.paid) as? Bool, existingPaid != paid {
+                
+                    hasChange = true
+                }
                 
                 existingPerson.setValue(name, forKey: XYZExpensePerson.name)
                 existingPerson.setValue(email, forKey: XYZExpensePerson.email)
@@ -120,13 +161,16 @@ class XYZExpense: NSManagedObject {
         
         if nil == person {
             
+            hasChange = true
             person = XYZExpensePerson(expense: self, sequenceNr: sequenceNr, name: name, email: email, context: managedContext())
             person?.setValue(paid, forKey: XYZExpensePerson.paid)
             
             personList.insert(person!)
+            
+            self.setValue(personList, forKey: XYZExpense.persons)
         }
         
-        return person!
+        return ( person!, hasChange )
     }
     
     @discardableResult
@@ -156,6 +200,8 @@ class XYZExpense: NSManagedObject {
             
             receipt = XYZExpenseReceipt(expense: self, sequenceNr: sequenceNr, image: image, context: managedContext())
             receiptList.insert(receipt!)
+            
+            self.setValue(receiptList, forKey: XYZExpense.receipts)
         }
         
         return (receipt!, hasChangeImage)

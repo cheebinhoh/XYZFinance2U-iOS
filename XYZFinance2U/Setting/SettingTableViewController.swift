@@ -254,7 +254,7 @@ class SettingTableViewController: UITableViewController,
                                 } else {
                                     
                                     let dictResult = try JSONSerialization.jsonObject(with: data!,
-                                                                                  options: JSONSerialization.ReadingOptions.mutableContainers) as! [String: Any]
+                                                                                      options: JSONSerialization.ReadingOptions.mutableContainers) as! [String: Any]
                                     let rates = dictResult["rates"] as! [String: Double]
                                     let dateString = dictResult["date"] as? String
                                     let value = rates[currencyCodeTo]
