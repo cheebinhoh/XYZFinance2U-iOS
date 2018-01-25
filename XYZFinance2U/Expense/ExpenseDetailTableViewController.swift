@@ -345,7 +345,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             detail = (expense?.value(forKey: XYZExpense.detail) as! String)
             date = (expense?.value(forKey: XYZExpense.date) as? Date) ?? Date()
             amount = (expense?.value(forKey: XYZExpense.amount) as? Double) ?? 0.0
-            hasgeolocation = (expense?.value(forKey: XYZExpense.hasgeolocation) as? Bool)!
+            hasgeolocation = (expense?.value(forKey: XYZExpense.hasgeolocation) as? Bool ?? false )
             
             if hasgeolocation {
                 

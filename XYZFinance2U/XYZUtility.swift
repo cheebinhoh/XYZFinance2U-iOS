@@ -437,6 +437,31 @@ func createUpdateExpense(_ record: CKRecord,
     expenseToBeUpdated?.setValue(amount, forKey: XYZExpense.amount)
     expenseToBeUpdated?.setValue(date, forKey: XYZExpense.date)
     
+    let nrOfReceipt = record[XYZExpense.nrOfReceipts] as? Int
+    for index in 0..<nrOfReceipt! {
+        
+        let image = "image\(index)"
+        let ckasset = record[image] as? CKAsset
+        let fileURL = ckasset?.fileURL
+        
+        let task = URLSession.shared.dataTask(with: fileURL!) {(data, response, error) in
+            
+            if nil != error {
+                
+                print("-------- \(String(describing: error))")
+            } else {
+                
+                OperationQueue.main.addOperation {
+                
+                    print("-------- download data")
+                    expenseToBeUpdated?.addReceipt(sequenceNr: index, image: data! as NSData)
+                }
+            }
+        }
+        
+        task.resume()
+    }
+    
     // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
     expenseToBeUpdated?.setValue(Date(), forKey: XYZExpense.lastRecordChange)
     
