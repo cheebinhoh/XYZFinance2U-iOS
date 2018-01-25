@@ -485,7 +485,6 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     
     opZoneChange.recordChangedBlock = { (record) in
         
-        print("-------- record change")
         let ckrecordzone = CKRecordZone(zoneName: record.recordID.zoneID.zoneName)
         let icloudZone = iCloudZone(of: ckrecordzone, icloudZones)
         
@@ -690,7 +689,7 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                 saveExpensesToiCloud(zone, iCloudZone, expenseList, {
                     
                     OperationQueue.main.addOperation {
-                        
+
                         fetchiCloudZoneChange([zone], icloudZones, {
                             
                         })
@@ -763,15 +762,18 @@ func saveExpensesToiCloud(_ zone: CKRecordZone,
         
         fatalError("Exception: deleteRecordList is expected as [String]")
     }
-    
+
     for deleteRecordName in deleteRecordLiset {
         
-        let customZone = CKRecordZone(zoneName: XYZExpense.type)
-        let ckrecordId = CKRecordID(recordName: deleteRecordName, zoneID: customZone.zoneID)
-        
-        recordIdsToBeDeleted.append(ckrecordId)
+        if deleteRecordName != "" {
+            
+            let customZone = CKRecordZone(zoneName: XYZExpense.type)
+            let ckrecordId = CKRecordID(recordName: deleteRecordName, zoneID: customZone.zoneID)
+            
+            recordIdsToBeDeleted.append(ckrecordId)
+        }
     }
-    
+
     saveExpensesToiCloud(iCloudZone, expenseListToBeSaved!, recordIdsToBeDeleted, completionblock)
 }
 
@@ -800,6 +802,36 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
         record.setValue(detail, forKey: XYZExpense.detail)
         record.setValue(amount, forKey: XYZExpense.amount)
         record.setValue(date, forKey: XYZExpense.date)
+        
+        guard let receiptList = expense.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>  else {
+            
+            fatalError("Exception: [XYZExpenseReceipt] is expected")
+        }
+        
+        let sortedReceiptList = receiptList.sorted(by: { (p1, p2) -> Bool in
+        
+            ( p1.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int)! < (p2.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int)!
+        })
+        
+        for receipt in sortedReceiptList {
+
+            let file = "image\((receipt.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int)!)"
+            let text = receipt.value(forKey: XYZExpenseReceipt.image) as? NSData
+            
+            if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            
+                let fileURL = dir.appendingPathComponent(file)
+                text?.write(to: fileURL, atomically: true)
+                
+                let ckasset = CKAsset(fileURL: fileURL)
+                record.setValue(ckasset, forKey: file)
+            } else {
+                
+                fatalError("Exception: fail to get dir")
+            }
+        }
+        
+        record.setValue(sortedReceiptList.count, forKey: XYZExpense.nrOfReceipts)
         
         recordsToBeSaved.append(record)
     }
@@ -866,8 +898,9 @@ func saveAccountsToiCloud(_ zone: CKRecordZone,
     for deleteRecordName in deleteRecordLiset {
         
         let customZone = CKRecordZone(zoneName: XYZAccount.type)
+
         let ckrecordId = CKRecordID(recordName: deleteRecordName, zoneID: customZone.zoneID)
-        
+
         recordIdsToBeDeleted.append(ckrecordId)
     }
 

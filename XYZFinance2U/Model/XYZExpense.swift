@@ -25,6 +25,7 @@ class XYZExpense: NSManagedObject {
     static let hasgeolocation = "hasgeolocation"
     static let recordId = "recordId"
     static let lastRecordChange = "lastRecordChange"
+    static let nrOfReceipts = "nrOfReceipts"
 
     // MARK: - property
     
