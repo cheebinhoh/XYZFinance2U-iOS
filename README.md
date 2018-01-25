@@ -8,12 +8,12 @@
 
 ### What the app is? ###
 
-* The app is a finance app that allows us to keep track of our incoming income and outgoing expense.
+* The app is a finance app that allows us to keep track of our incoming income and outgoing expenses. 
+  I build this app to fullfill my need and help me manage my finance.
 
 ### How do I get set up? ###
 
 * You will need Xcode 9 and onward
-
 
 ### Contribution guidelines ###
 
