@@ -462,6 +462,14 @@ func createUpdateExpense(_ record: CKRecord,
         task.resume()
     }
     
+    if let locationData = record[XYZExpense.loction] as? CLLocation {
+        
+        let data = NSKeyedArchiver.archivedData(withRootObject: locationData)
+        
+        expenseToBeUpdated?.setValue(data, forKey: XYZExpense.loction)
+        expenseToBeUpdated?.setValue(true, forKey: XYZExpense.hasgeolocation)
+    }
+    
     // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
     expenseToBeUpdated?.setValue(Date(), forKey: XYZExpense.lastRecordChange)
     
@@ -857,6 +865,17 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
         }
         
         record.setValue(sortedReceiptList.count, forKey: XYZExpense.nrOfReceipts)
+        
+        if let data = expense.value(forKey: XYZExpense.loction) as? Data {
+            
+            guard let cllocation = NSKeyedUnarchiver.unarchiveObject(with: data) as? CLLocation else {
+            
+                fatalError("Exception: CLLocation is expected")
+            }
+            
+            record.setValue(cllocation, forKey: XYZExpense.loction)
+        }
+        
         
         recordsToBeSaved.append(record)
     }
