@@ -349,17 +349,6 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             if hasgeolocation {
                 
-                /*
-                if let lat = (expense?.value(forKey: XYZExpense.latitude) as? Double) {
-                    
-                    let long = (expense?.value(forKey: XYZExpense.longitude) as? Double) ?? 1000.0
-                
-                    //locationCoordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                    cllocation = CLLocation(latitude: lat, longitude: long)
-                    hasLocation = true
-                }
-                 */
-                
                 if let data = expense?.value(forKey: XYZExpense.loction) as? Data {
                     
                     cllocation = NSKeyedUnarchiver.unarchiveObject(with: data) as? CLLocation
