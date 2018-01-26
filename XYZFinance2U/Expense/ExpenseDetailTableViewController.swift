@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import CloudKit
 
 // MARK: - protocol
 protocol ExpenseDetailDelegate: class {
@@ -318,6 +319,29 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             hasChanged = true
             expense?.removePerson(sequenceNr: index)
+            
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
+            guard let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones)!) else {
+                
+                fatalError("Exception: iCloudZoen is expected")
+            }
+            
+            guard let data = zone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
+                
+                fatalError("Exception: data is expected for deleteRecordIdList")
+            }
+            
+            guard var deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+                
+                fatalError("Exception: deleteRecordList is expected as [String]")
+            }
+            
+            let recordName = "\((expense?.value(forKey: XYZExpense.recordId) as? String)!)-\(index)"
+            deleteRecordLiset.append(recordName)
+            
+            let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
+            zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
         }
         
         if nil == expense?.value(forKey: XYZExpense.lastRecordChange) as? Date
