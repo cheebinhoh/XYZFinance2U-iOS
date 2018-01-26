@@ -250,6 +250,7 @@ func loadExpenses() -> [XYZExpense]? {
     do {
         
         expenses = try aContext?.fetch(fetchRequest)
+        
     } catch let error as NSError {
         
         print("******** Could not fetch. \(error), \(error.userInfo)")
@@ -429,6 +430,7 @@ func createUpdateExpense(_ record: CKRecord,
     
     if nil == expenseToBeUpdated {
     
+        print("---- new recordName = \(recordName)")
         expenseToBeUpdated = XYZExpense(id: recordName, detail: detail!, amount: amount!, date: date!, context: context)
         outputExpenseList.append(expenseToBeUpdated!)
     }
@@ -444,22 +446,25 @@ func createUpdateExpense(_ record: CKRecord,
         let ckasset = record[image] as? CKAsset
         let fileURL = ckasset?.fileURL
         
-        let task = URLSession.shared.dataTask(with: fileURL!) {(data, response, error) in
-            
-            if nil != error {
+        if let _ = fileURL {
+        
+            let task = URLSession.shared.dataTask(with: fileURL!) {(data, response, error) in
                 
-                print("-------- \(String(describing: error))")
-            } else {
-                
-                OperationQueue.main.addOperation {
-                
-                    print("-------- download data")
-                    expenseToBeUpdated?.addReceipt(sequenceNr: index, image: data! as NSData)
+                if nil != error {
+                    
+                    print("-------- \(String(describing: error))")
+                } else {
+                    
+                    OperationQueue.main.addOperation {
+                    
+                        print("-------- download data")
+                        expenseToBeUpdated?.addReceipt(sequenceNr: index, image: data! as NSData)
+                    }
                 }
             }
+            
+            task.resume()
         }
-        
-        task.resume()
     }
     
     if let locationData = record[XYZExpense.loction] as? CLLocation {
@@ -553,7 +558,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
         for icloudZone in icloudZones {
             
             if let zName = icloudZone.value(forKey: XYZiCloudZone.name) as? String, zName == recordType {
-            
+
                 switch recordType {
                     
                     case XYZAccount.type:
@@ -580,6 +585,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                         icloudZone.data = incomeList
                     
                     case XYZExpense.type:
+
                         guard var expenseList = icloudZone.data as? [XYZExpense] else {
                             
                             fatalError("Exception: expense is expected")
@@ -654,7 +660,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     }
     
     opZoneChange.fetchRecordZoneChangesCompletionBlock = { (error) in
-        
+
         if let error = error {
             
             print("Error fetching zone changes for database:", error)
@@ -846,9 +852,14 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
             ( p1.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int)! < (p2.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int)!
         })
         
+        var maxSequenceNr = 0
         for receipt in sortedReceiptList {
 
-            let file = "image\((receipt.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int)!)"
+            let sequenceNr = receipt.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int
+            
+            maxSequenceNr = max(sequenceNr!, maxSequenceNr)
+            
+            let file = "image\(sequenceNr!)"
             let text = receipt.value(forKey: XYZExpenseReceipt.image) as? NSData
             
             if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
@@ -864,7 +875,7 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
             }
         }
         
-        record.setValue(sortedReceiptList.count, forKey: XYZExpense.nrOfReceipts)
+        record.setValue(maxSequenceNr + 1, forKey: XYZExpense.nrOfReceipts)
         
         if let data = expense.value(forKey: XYZExpense.loction) as? Data {
             

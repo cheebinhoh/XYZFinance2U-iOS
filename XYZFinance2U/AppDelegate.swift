@@ -348,10 +348,11 @@ class AppDelegate: UIResponder,
         if !zonesToBeFetched.isEmpty {
             
             fetchAndUpdateiCloud(zonesToBeFetched, self.iCloudZones, {
-                
+
                 for icloudzone in self.iCloudZones {
-                    
+
                     let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
+                    
                     switch zName! {
                         
                     case XYZAccount.type:
