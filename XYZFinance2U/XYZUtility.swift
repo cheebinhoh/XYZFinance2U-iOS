@@ -949,7 +949,6 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
         
         for person in personList {
             
-            print("---- save person")
             let sequenceNr = person.value(forKey: XYZExpensePerson.sequenceNr) as? Int
             let personRecordName = "\(recordName!)-\(sequenceNr!)"
             let personckrecordId = CKRecordID(recordName: personRecordName, zoneID: customZone.zoneID)
