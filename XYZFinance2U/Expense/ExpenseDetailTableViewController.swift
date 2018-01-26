@@ -318,7 +318,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         for index in toBeRemovedRange {
             
             hasChanged = true
-            expense?.removePerson(sequenceNr: index)
+            expense?.removePerson(sequenceNr: index, context: managedContext())
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)

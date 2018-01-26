@@ -19,6 +19,32 @@ class AppDelegate: UIResponder,
     UIApplicationDelegate,
     UNUserNotificationCenterDelegate {
     
+    func application(_ application: UIApplication,
+                     userDidAcceptCloudKitShareWith cloudKitShareMetadata: CKShareMetadata) {
+        
+        let aContext = managedContext()
+        
+        if let record = cloudKitShareMetadata.rootRecord {
+            
+            let recordZone = CKRecordZone(zoneName: record.recordType)
+            let icloudZone = iCloudZone(of: recordZone, self.iCloudZones)
+            
+            switch record.recordType {
+                case XYZExpense.type:
+                    guard var expenseList = icloudZone?.data as? [XYZExpense] else {
+                        
+                        fatalError("Exception: expense is expected")
+                    }
+                    
+                    expenseList = createUpdateExpense(record, expenseList, aContext!)
+                    icloudZone?.data = expenseList
+                
+                default:
+                    fatalError("Exception: \(record.recordType) is not supported")
+            }
+        }
+    }
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {

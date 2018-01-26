@@ -427,7 +427,7 @@ func createUpdateExpense(_ record: CKRecord,
                 break
             }
         }
-    } else {
+    } else if record.recordType == XYZExpense.type {
     
         let recordName = record.recordID.recordName
         let detail = record[XYZExpense.detail] as? String
@@ -532,6 +532,9 @@ func createUpdateExpense(_ record: CKRecord,
         
         // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
         expenseToBeUpdated?.setValue(Date(), forKey: XYZExpense.lastRecordChange)
+    } else {
+        
+        fatalError("Exception: \(record.recordType) is not supported")
     }
     
     return outputExpenseList
@@ -610,10 +613,10 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     }
     
     opZoneChange.recordWithIDWasDeletedBlock = { (recordId, recordType) in
-        
+    
         for icloudZone in icloudZones {
             
-            if let zName = icloudZone.value(forKey: XYZiCloudZone.name) as? String, zName == recordType {
+            if let zName = icloudZone.value(forKey: XYZiCloudZone.name) as? String, zName == recordId.zoneID.zoneName {
 
                 switch recordType {
                     
@@ -664,6 +667,42 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                     
                         icloudZone.data = expenseList
                     
+                    case XYZExpensePerson.type:
+                        guard let expenseList = icloudZone.data as? [XYZExpense] else {
+                            
+                            fatalError("Exception: expense is expected")
+                        }
+                        
+                        let tokens = recordId.recordName.split(separator: "-")
+                        var parentRecordName = ""
+                        
+                        for index in 0..<(tokens.count - 1) {
+                            
+                            if parentRecordName != "" {
+                                
+                                parentRecordName = parentRecordName + "-" + String(tokens[index])
+                            } else {
+                             
+                                parentRecordName = String(tokens[index])
+                            }
+                        }
+                        
+                        for expense in expenseList {
+                            
+                            let recordId = expense.value(forKey: XYZExpense.recordId) as? String
+                            
+                            if recordId! == parentRecordName {
+                                
+                                let sequenceNr = Int(tokens[tokens.count - 1])
+                                expense.removePerson(sequenceNr: sequenceNr!, context: aContext)
+                                
+                                break
+                            }
+                        }
+                    
+                    case "cloudkit.share":
+                        break
+                    
                     default:
                         fatalError("Exception: \(recordType) is not supported")
                 }
@@ -674,6 +713,35 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     opZoneChange.recordZoneChangeTokensUpdatedBlock = { (zoneId, token, data) in
         
         print("----- token \(String(describing: token))")
+        OperationQueue.main.addOperation {
+            
+            for icloudzone in icloudZones {
+                
+                if let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String, zName == zoneId.zoneName {
+                    
+                    var hasChangeToken = true;
+                    
+                    if let data = icloudzone.value(forKey: XYZiCloudZone.changeToken) as? Data {
+                        
+                        let previousChangeToken = (NSKeyedUnarchiver.unarchiveObject(with: data) as? CKServerChangeToken)
+                        hasChangeToken = previousChangeToken != token!
+                    }
+                    
+                    if hasChangeToken {
+                        
+                        let lastTokenFetchDate = Date()
+                        
+                        let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: token!)
+                        icloudzone.setValue(archivedChangeToken, forKey: XYZiCloudZone.changeToken)
+                        icloudzone.setValue(lastTokenFetchDate, forKey: XYZiCloudZone.changeTokenLastFetch)
+                    }
+                    
+                    break
+                }
+                
+                saveManageContext() // save changed token and data
+            }
+        }
     }
     
     opZoneChange.recordZoneFetchCompletionBlock = { (zoneId, changeToken, _, _, error) in
@@ -973,6 +1041,12 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
         record.setValue(personList.count, forKey: XYZExpense.nrOfPersons)
         
         recordsToBeSaved.append(record)
+        
+        if personList.count > 0 {
+            
+            let ckshare = CKShare(rootRecord: record)
+            recordsToBeSaved.append(ckshare)
+        }
     }
     
     let opToSaved = CKModifyRecordsOperation(recordsToSave: recordsToBeSaved, recordIDsToDelete: recordIdsToBeDeleted)

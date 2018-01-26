@@ -100,7 +100,7 @@ class XYZExpense: NSManagedObject {
     }
     
     @discardableResult
-    func removePerson(sequenceNr: Int) -> XYZExpensePerson? {
+    func removePerson(sequenceNr: Int, context: NSManagedObjectContext?) -> XYZExpensePerson? {
         
         var personRemoved: XYZExpensePerson?
         
@@ -117,7 +117,7 @@ class XYZExpense: NSManagedObject {
                 
                 personRemoved = person
                 personList.remove(person)
-                managedContext()?.delete(personRemoved!)
+                context?.delete(personRemoved!)
                 
                 self.setValue(personList, forKey: XYZExpense.persons)
                 
