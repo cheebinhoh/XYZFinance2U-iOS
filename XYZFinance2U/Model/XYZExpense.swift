@@ -26,6 +26,7 @@ class XYZExpense: NSManagedObject {
     static let recordId = "recordId"
     static let lastRecordChange = "lastRecordChange"
     static let nrOfReceipts = "nrOfReceipts"
+    static let nrOfPersons = "nrOfPersons"
 
     // MARK: - property
     
@@ -130,6 +131,12 @@ class XYZExpense: NSManagedObject {
     @discardableResult
     func addPerson(sequenceNr: Int, name: String, email: String, paid: Bool) -> ( XYZExpensePerson, Bool ) {
         
+        return addPerson(sequenceNr: sequenceNr, name: name, email: email, paid: paid, context: managedContext()!)
+    }
+    
+    @discardableResult
+    func addPerson(sequenceNr: Int, name: String, email: String, paid: Bool, context: NSManagedObjectContext?) -> ( XYZExpensePerson, Bool ) {
+        
         var hasChange = false
         var person: XYZExpensePerson?
         guard var personList = self.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
@@ -163,7 +170,7 @@ class XYZExpense: NSManagedObject {
         if nil == person {
             
             hasChange = true
-            person = XYZExpensePerson(expense: self, sequenceNr: sequenceNr, name: name, email: email, context: managedContext())
+            person = XYZExpensePerson(expense: self, sequenceNr: sequenceNr, name: name, email: email, context: context)
             person?.setValue(paid, forKey: XYZExpensePerson.paid)
             
             personList.insert(person!)

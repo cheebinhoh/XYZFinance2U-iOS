@@ -14,7 +14,7 @@ class XYZExpensePerson: NSManagedObject
 {
     
     // MARK: - static property
-    
+    static let type = "XYZExpensePerson"
     static let name = "name"
     static let email = "email"
     static let expense = "expense"

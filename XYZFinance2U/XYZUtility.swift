@@ -406,77 +406,133 @@ func createUpdateExpense(_ record: CKRecord,
                          _ expenseList: [XYZExpense],
                          _ context: NSManagedObjectContext) -> [XYZExpense] {
     
-    let recordName = record.recordID.recordName
-    let detail = record[XYZExpense.detail] as? String
-    let amount = record[XYZExpense.amount] as? Double
-    let date = record[XYZExpense.date] as? Date
-    
     var outputExpenseList: [XYZExpense] = expenseList
-    var expenseToBeUpdated: XYZExpense?
     
-    for expense in outputExpenseList {
+    if record.recordType == XYZExpensePerson.type {
         
-        guard let recordId = expense.value(forKey: XYZExpense.recordId) as? String else {
+        let parentckreference = record[XYZExpense.type] as? CKReference
+      
+        for expense in expenseList {
             
-            fatalError("Exception: record is expected")
-        }
-        
-        if recordId == recordName {
-            
-            expenseToBeUpdated = expense
-            break
-        }
-    }
-    
-    if nil == expenseToBeUpdated {
-    
-        print("---- new recordName = \(recordName)")
-        expenseToBeUpdated = XYZExpense(id: recordName, detail: detail!, amount: amount!, date: date!, context: context)
-        outputExpenseList.append(expenseToBeUpdated!)
-    }
-    
-    expenseToBeUpdated?.setValue(detail, forKey: XYZExpense.detail)
-    expenseToBeUpdated?.setValue(amount, forKey: XYZExpense.amount)
-    expenseToBeUpdated?.setValue(date, forKey: XYZExpense.date)
-    
-    let nrOfReceipt = record[XYZExpense.nrOfReceipts] as? Int
-    for index in 0..<nrOfReceipt! {
-        
-        let image = "image\(index)"
-        let ckasset = record[image] as? CKAsset
-        let fileURL = ckasset?.fileURL
-        
-        if let _ = fileURL {
-        
-            let task = URLSession.shared.dataTask(with: fileURL!) {(data, response, error) in
+            let recordid = expense.value(forKey: XYZExpense.recordId) as? String
+            if recordid == parentckreference?.recordID.recordName {
                 
-                if nil != error {
-                    
-                    print("-------- \(String(describing: error))")
-                } else {
-                    
-                    OperationQueue.main.addOperation {
-                    
-                        print("-------- download data")
-                        expenseToBeUpdated?.addReceipt(sequenceNr: index, image: data! as NSData)
-                    }
-                }
+                let sequenceNr = record[XYZExpensePerson.sequenceNr] as? Int
+                let name = record[XYZExpensePerson.name] as? String
+                let email = record[XYZExpensePerson.email] as? String
+                let paid = record[XYZExpensePerson.paid] as? Bool
+                
+                expense.addPerson(sequenceNr: sequenceNr!, name: name!, email: email!, paid: paid!, context: context)
+                
+                break
+            }
+        }
+    } else {
+    
+        let recordName = record.recordID.recordName
+        let detail = record[XYZExpense.detail] as? String
+        let amount = record[XYZExpense.amount] as? Double
+        let date = record[XYZExpense.date] as? Date
+        
+        var expenseToBeUpdated: XYZExpense?
+        
+        for expense in outputExpenseList {
+            
+            guard let recordId = expense.value(forKey: XYZExpense.recordId) as? String else {
+                
+                fatalError("Exception: record is expected")
             }
             
-            task.resume()
+            if recordId == recordName {
+                
+                expenseToBeUpdated = expense
+                break
+            }
         }
-    }
-    
-    if let locationData = record[XYZExpense.loction] as? CLLocation {
         
-        let data = NSKeyedArchiver.archivedData(withRootObject: locationData)
+        if nil == expenseToBeUpdated {
         
-        expenseToBeUpdated?.setValue(data, forKey: XYZExpense.loction)
-        expenseToBeUpdated?.setValue(true, forKey: XYZExpense.hasgeolocation)
+            expenseToBeUpdated = XYZExpense(id: recordName, detail: detail!, amount: amount!, date: date!, context: context)
+            outputExpenseList.append(expenseToBeUpdated!)
+        }
+        
+        expenseToBeUpdated?.setValue(detail, forKey: XYZExpense.detail)
+        expenseToBeUpdated?.setValue(amount, forKey: XYZExpense.amount)
+        expenseToBeUpdated?.setValue(date, forKey: XYZExpense.date)
+        
+        let nrOfReceipt = record[XYZExpense.nrOfReceipts] as? Int
+        for index in 0..<nrOfReceipt! {
+            
+            let image = "image\(index)"
+            let ckasset = record[image] as? CKAsset
+            let fileURL = ckasset?.fileURL
+            
+            if let _ = fileURL {
+            
+                let task = URLSession.shared.dataTask(with: fileURL!) {(data, response, error) in
+                    
+                    if nil != error {
+                        
+                        print("-------- \(String(describing: error))")
+                    } else {
+                        
+                        OperationQueue.main.addOperation {
+                        
+                            print("-------- download data")
+                            expenseToBeUpdated?.addReceipt(sequenceNr: index, image: data! as NSData)
+                        }
+                    }
+                }
+                
+                task.resume()
+            }
+        }
+        
+        if let locationData = record[XYZExpense.loction] as? CLLocation {
+            
+            let data = NSKeyedArchiver.archivedData(withRootObject: locationData)
+            
+            expenseToBeUpdated?.setValue(data, forKey: XYZExpense.loction)
+            expenseToBeUpdated?.setValue(true, forKey: XYZExpense.hasgeolocation)
+        }
+        
+        /* OLD
+        if let nrOfPersons = record[XYZExpense.nrOfPersons] as? Int, nrOfPersons > 0 {
+         
+            let customZone = CKRecordZone(zoneName: XYZExpense.type)
+            let ckrecordId = CKRecordID(recordName: recordName, zoneID: customZone.zoneID)
+         
+            let predicate = NSPredicate(format: "\(XYZExpense.type) = %@", ckrecordId)
+            let query = CKQuery(recordType: XYZExpensePerson.type, predicate: predicate)
+         
+            let container = CKContainer.default()
+            let database = container.privateCloudDatabase
+         
+            database.perform(query, inZoneWith: customZone.zoneID, completionHandler: { (records, error) in
+         
+                if nil != error {
+         
+                    print("-------- error = \(String(describing: error))")
+                } else {
+         
+                    expenseToBeUpdated?.removeAllPersons()
+                    for record in records! {
+         
+                        let sequenceNr = record[XYZExpensePerson.sequenceNr] as? Int
+                        let name = record[XYZExpensePerson.name] as? String
+                        let email = record[XYZExpensePerson.email] as? String
+                        let paid = record[XYZExpensePerson.paid] as? Bool
+         
+                        expenseToBeUpdated?.addPerson(sequenceNr: sequenceNr!, name: name!, email: email!, paid: paid!)
+                    }
+                }
+            })
+        }
+        */
+        
+        // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
+        expenseToBeUpdated?.setValue(Date(), forKey: XYZExpense.lastRecordChange)
     }
-    
-    // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
-    expenseToBeUpdated?.setValue(Date(), forKey: XYZExpense.lastRecordChange)
     
     return outputExpenseList
 }
@@ -823,7 +879,6 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
     
     let container = CKContainer.default()
     let database = container.privateCloudDatabase
-    
     var recordsToBeSaved = [CKRecord]()
     
     for expense in expenseList {
@@ -887,6 +942,36 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
             record.setValue(cllocation, forKey: XYZExpense.loction)
         }
         
+        guard let personList = expense.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
+            
+            fatalError("Exception: [XYZExpensePerson] is expected")
+        }
+        
+        for person in personList {
+            
+            print("---- save person")
+            let sequenceNr = person.value(forKey: XYZExpensePerson.sequenceNr) as? Int
+            let personRecordName = "\(recordName!)-\(sequenceNr!)"
+            let personckrecordId = CKRecordID(recordName: personRecordName, zoneID: customZone.zoneID)
+         
+            let personRecord = CKRecord(recordType: XYZExpensePerson.type, recordID: personckrecordId)
+            
+            let email = person.value(forKey: XYZExpensePerson.email) as? String
+            let name = person.value(forKey: XYZExpensePerson.name) as? String
+            let paid = person.value(forKey: XYZExpensePerson.paid) as? Bool
+            
+            personRecord.setValue(email, forKey: XYZExpensePerson.email)
+            personRecord.setValue(name, forKey: XYZExpensePerson.name)
+            personRecord.setValue(paid, forKey: XYZExpensePerson.paid)
+            personRecord.setValue(sequenceNr, forKey: XYZExpensePerson.sequenceNr)
+            
+            let ckreference = CKReference(recordID: ckrecordId, action: .deleteSelf)
+            personRecord.setValue(ckreference, forKey: XYZExpense.type)
+            
+            recordsToBeSaved.append(personRecord)
+        }
+        
+        record.setValue(personList.count, forKey: XYZExpense.nrOfPersons)
         
         recordsToBeSaved.append(record)
     }
