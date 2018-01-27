@@ -130,10 +130,9 @@ class ExpenseTableViewController: UITableViewController,
         let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
         let icloudzone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones)!)
         icloudzone?.data = appDelegate?.expenseList
-        
+    
         let lastTokenChangeFetch = icloudzone?.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date
-        
-        print("---- before push \(String(describing: lastTokenChangeFetch))")
+
         fetchAndUpdateiCloud([ckrecordzone], (appDelegate?.iCloudZones)!, {
             
             if let _ = expense {
