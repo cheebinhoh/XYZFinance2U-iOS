@@ -30,6 +30,32 @@ class SettingTableViewController: UITableViewController,
     }
     
     // MARK: - function
+    func getMainTableView() -> IncomeTableViewController {
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        guard let split = appDelegate?.window?.rootViewController as? UISplitViewController else {
+            
+            fatalError("Exception: UISplitViewController is expected" )
+        }
+        
+        guard let tabBarController = split.viewControllers.first as? UITabBarController else {
+            
+            fatalError("Exception: UITabBarController is expected" )
+        }
+        
+        guard let navController = tabBarController.viewControllers?.first as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+        
+        guard let tableViewController = navController.viewControllers.first as? IncomeTableViewController else {
+            
+            fatalError("Exception: IncomeTableViewController is expected" )
+        }
+        
+        return tableViewController
+    }
     
     override func viewDidLoad() {
         
@@ -54,8 +80,13 @@ class SettingTableViewController: UITableViewController,
         let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export", "SynciCloud"], data: nil)
         tableSectionCellList.append(exportSection)
         
-        let logoutSection = TableSectionCell(identifier: "lockout", title: "", cellList: ["Lockout"], data: nil)
-        tableSectionCellList.append(logoutSection)
+        let tableViewController = getMainTableView()
+        
+        if tableViewController.authenticatedMechanismExist {
+            
+            let logoutSection = TableSectionCell(identifier: "lockout", title: "", cellList: ["Lockout"], data: nil)
+            tableSectionCellList.append(logoutSection)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -393,27 +424,7 @@ class SettingTableViewController: UITableViewController,
             present(optionMenu, animated: true, completion: nil)
         } else if tableSectionCellList[indexPath.section].identifier == "lockout" {
             
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            
-            guard let split = appDelegate?.window?.rootViewController as? UISplitViewController else {
-                
-                fatalError("Exception: UISplitViewController is expected" )
-            }
-            
-            guard let tabBarController = split.viewControllers.first as? UITabBarController else {
-                
-                fatalError("Exception: UITabBarController is expected" )
-            }
-            
-            guard let navController = tabBarController.viewControllers?.first as? UINavigationController else {
-                
-                fatalError("Exception: UINavigationController is expected")
-            }
-            
-            guard let tableViewController = navController.viewControllers.first as? IncomeTableViewController else {
-                
-                fatalError("Exception: IncomeTableViewController is expected" )
-            }
+            let tableViewController = getMainTableView()
             
             tableViewController.lockout()
         } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "ExchangeRate" {

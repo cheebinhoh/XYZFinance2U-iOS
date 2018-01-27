@@ -18,6 +18,10 @@ class SettingDetailAboutTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         
         super.awakeFromNib()
+        
+        content.textContainer.maximumNumberOfLines = 0
+        content.isScrollEnabled = false
+        content.sizeToFit()
         // Initialization code
     }
 

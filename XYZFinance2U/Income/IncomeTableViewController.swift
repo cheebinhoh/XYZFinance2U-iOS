@@ -93,6 +93,7 @@ class IncomeTableViewController: UITableViewController,
         return sum
     }
     
+    var authenticatedMechanismExist = false
     var authenticatedOk = false
     var lockScreenDisplayed = false
     weak var delegate: IncomeSelectionDelegate?
@@ -660,6 +661,8 @@ class IncomeTableViewController: UITableViewController,
         if #available(iOS 8.0, macOS 10.12.1, *) {
             
             if laContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
+                
+                self.authenticatedMechanismExist = true
                 
                 if !lockScreenDisplayed {
                     

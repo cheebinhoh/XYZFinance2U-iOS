@@ -93,7 +93,6 @@ class SettingDetailTableViewController: UITableViewController {
 \u{A9} 2017-2018 CB Hoh. All rights reserved.
 
 """
-                
                 cell = newcell
             
             case "disclaimer":
@@ -109,7 +108,6 @@ The foreign exchange rates are from http://fixer.io.
 It does not come with warranty of any sort.
 
 """
-                
                 cell = newcell
             
                 default:
