@@ -27,7 +27,8 @@ class XYZExpense: NSManagedObject {
     static let lastRecordChange = "lastRecordChange"
     static let nrOfReceipts = "nrOfReceipts"
     static let nrOfPersons = "nrOfPersons"
-
+    static let shareRecordId = "shareRecordId"
+    
     // MARK: - property
     
     var detail = ""
@@ -39,6 +40,7 @@ class XYZExpense: NSManagedObject {
     var location = CLLocation()
     var recordId: String = ""
     var lastRecordChange = Date()
+    var shareRecordId: String = ""
     
     // MARK: - function
     
