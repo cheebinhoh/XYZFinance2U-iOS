@@ -212,15 +212,15 @@ class ExpenseDetailTableViewController: UITableViewController,
         } else if let existingDate = expense?.value(forKey: XYZExpense.date) as? Date, existingDate != date {
             
             hasChanged = true
-        } else if let existingHasLocation = expense?.value(forKey: XYZExpense.hasgeolocation) as? Bool, existingHasLocation != hasLocation {
+        }/* else if let existingHasLocation = expense?.value(forKey: XYZExpense.hasgeolocation) as? Bool, existingHasLocation != hasLocation {
             
             hasChanged = true
-        }
+        }*/
         
         expense?.setValue(detail, forKey: XYZExpense.detail)
         expense?.setValue(amount, forKey: XYZExpense.amount)
         expense?.setValue(date, forKey: XYZExpense.date)
-        expense?.setValue(hasgeolocation, forKey: XYZExpense.hasgeolocation)
+        //expense?.setValue(hasgeolocation, forKey: XYZExpense.hasgeolocation)
         
         if hasLocation, let _ = cllocation {
             
@@ -369,9 +369,9 @@ class ExpenseDetailTableViewController: UITableViewController,
             detail = (expense?.value(forKey: XYZExpense.detail) as! String)
             date = (expense?.value(forKey: XYZExpense.date) as? Date) ?? Date()
             amount = (expense?.value(forKey: XYZExpense.amount) as? Double) ?? 0.0
-            hasgeolocation = (expense?.value(forKey: XYZExpense.hasgeolocation) as? Bool ?? false )
+            //hasgeolocation = (expense?.value(forKey: XYZExpense.hasgeolocation) as? Bool ?? false )
             
-            if hasgeolocation {
+            //if hasgeolocation {
                 
                 if let data = expense?.value(forKey: XYZExpense.loction) as? Data {
                     
@@ -379,7 +379,8 @@ class ExpenseDetailTableViewController: UITableViewController,
                 }
                 
                 hasLocation = nil != cllocation
-            }
+                hasgeolocation = hasLocation
+            //}
             
             guard let receiptList = expense?.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt> else {
                 fatalError("Exception: [XYZExpenseReceipt] is expected")

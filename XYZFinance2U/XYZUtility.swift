@@ -492,7 +492,7 @@ func createUpdateExpense(_ record: CKRecord,
             let data = NSKeyedArchiver.archivedData(withRootObject: locationData)
             
             expenseToBeUpdated?.setValue(data, forKey: XYZExpense.loction)
-            expenseToBeUpdated?.setValue(true, forKey: XYZExpense.hasgeolocation)
+            //expenseToBeUpdated?.setValue(true, forKey: XYZExpense.hasgeolocation)
         }
         
         /* OLD
@@ -551,7 +551,7 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     let database = container.privateCloudDatabase
     var changedZoneIDs: [CKRecordZoneID] = []
     var optionsByRecordZoneID = [CKRecordZoneID: CKFetchRecordZoneChangesOptions]()
-    
+
     for zone in zones {
         
         changedZoneIDs.append(zone.zoneID)
@@ -731,7 +731,6 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                     
                     if hasChangeToken {
                         
-                        print("-------- has new change token")
                         let lastTokenFetchDate = Date()
                         
                         let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: token! )
@@ -857,10 +856,9 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                     OperationQueue.main.addOperation {
 
                         fetchiCloudZoneChange([zone], icloudZones, {
-                            
+                    
+                            completionblock()
                         })
-                        
-                        completionblock()
                     }
                 })
             }

@@ -22,7 +22,7 @@ class XYZExpense: NSManagedObject {
     static let loction = "location"
     static let persons = "persons"
     static let receipts = "receipts"
-    static let hasgeolocation = "hasgeolocation"
+    //static let hasgeolocation = "hasgeolocation"
     static let recordId = "recordId"
     static let lastRecordChange = "lastRecordChange"
     static let nrOfReceipts = "nrOfReceipts"
@@ -36,7 +36,7 @@ class XYZExpense: NSManagedObject {
     var date: Date = Date()
     var persons: Set<XYZExpensePerson>?
     var receipts: Set<XYZExpenseReceipt>?
-    var hasgeolocation = false
+    //var hasgeolocation = false
     var location = CLLocation()
     var recordId: String = ""
     var lastRecordChange = Date()

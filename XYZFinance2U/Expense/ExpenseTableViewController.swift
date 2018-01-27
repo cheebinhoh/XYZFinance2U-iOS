@@ -128,19 +128,26 @@ class ExpenseTableViewController: UITableViewController,
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
-        let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones)!)
-        zone?.data = appDelegate?.expenseList
+        let icloudzone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones)!)
+        icloudzone?.data = appDelegate?.expenseList
         
+        let lastTokenChangeFetch = icloudzone?.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date
+        
+        print("---- before push \(String(describing: lastTokenChangeFetch))")
         fetchAndUpdateiCloud([ckrecordzone], (appDelegate?.iCloudZones)!, {
             
             if let _ = expense {
                 
-                if let shareRecordId = expense?.value(forKey: XYZExpense.shareRecordId) as? String, shareRecordId != "" {
+                let newLastTokenChangeFetch = icloudzone?.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date
+
+                if let shareRecordId = expense?.value(forKey: XYZExpense.shareRecordId) as? String,
+                    shareRecordId != "",
+                    lastTokenChangeFetch != newLastTokenChangeFetch
+                {
                     
                     let ckrecordid = CKRecordID(recordName: shareRecordId, zoneID: ckrecordzone.zoneID)
                     let database = CKContainer.default().privateCloudDatabase
                     
-                    print("-------- fetch share record")
                     database.fetch(withRecordID: ckrecordid , completionHandler: { (ckrecord, error) in
                         
                         // after fetching share record
@@ -149,7 +156,6 @@ class ExpenseTableViewController: UITableViewController,
                             print("-------- error in getting shared record = \(String(describing: error))")
                         } else {
                             
-                            print("-------- done fetch share record")
                             guard let ckshare = ckrecord as? CKShare else {
                                 
                                 fatalError("Exception: CKShare is expected")
@@ -177,7 +183,6 @@ class ExpenseTableViewController: UITableViewController,
                                 let fetchsharedparticipantOp = CKFetchShareParticipantsOperation(userIdentityLookupInfos: userIdentityLookupInfos)
                                 fetchsharedparticipantOp.fetchShareParticipantsCompletionBlock = { error in
                                     
-                                    print("-------- fetchShareParticipantsCompletionBlock" )
                                     if let _ = error {
                                         
                                         print("-------- fetchShareParticipantsCompletionBlock error = \(String(describing: error))")
@@ -189,7 +194,6 @@ class ExpenseTableViewController: UITableViewController,
                                                 
                                                 if existingParticipant.type != .owner {
                                                     
-                                                    print("-------- remove participant")
                                                     ckshare.removeParticipant(existingParticipant)
                                                 }
                                             }
@@ -198,7 +202,6 @@ class ExpenseTableViewController: UITableViewController,
                                         let modifyoperation = CKModifyRecordsOperation(recordsToSave: [ckshare], recordIDsToDelete: [])
                                         modifyoperation.modifyRecordsCompletionBlock = {records, recordIDs, error in
                                             
-                                            print("------- modifyRecordsCompletionBlock")
                                             if let _ = error {
                                                 
                                                 print("-------- \(String(describing: error))")
@@ -208,7 +211,6 @@ class ExpenseTableViewController: UITableViewController,
                                                     
                                                     fetchiCloudZoneChange([ckrecordzone], (appDelegate?.iCloudZones)!) {
                                                         
-                                                        print("-------- done update")
                                                     }
                                                 }
                                             }
@@ -221,7 +223,6 @@ class ExpenseTableViewController: UITableViewController,
                                 fetchsharedparticipantOp.shareParticipantFetchedBlock = { participant in
                                     
                                     // fetch one participant
-                                    print("-------- shareParticipantFetchedBlock")
                                     for (index, existingParticipant) in existingParticipants.enumerated() {
                                         
                                         if existingParticipant.userIdentity == participant.userIdentity {
@@ -233,22 +234,6 @@ class ExpenseTableViewController: UITableViewController,
                                     
                                     participant.permission = .readWrite
                                     ckshare.addParticipant(participant)
-                                    
-                                    /*
-                                    let modifyoperation = CKModifyRecordsOperation(recordsToSave: [ckshare], recordIDsToDelete: [])
-                                    modifyoperation.modifyRecordsCompletionBlock = {records, recordIDs, error in
-                                        
-                                        if let _ = error {
-                                            
-                                            print("-------- \(String(describing: error))")
-                                        } else {
-                                            
-                                            // do nothing, we do not sync latest change until whole is complete
-                                        }
-                                    }
-                                    
-                                    CKContainer.default().privateCloudDatabase.add(modifyoperation)
-                                     */
                                 }
                                 
                                 CKContainer.default().add(fetchsharedparticipantOp)
@@ -260,7 +245,6 @@ class ExpenseTableViewController: UITableViewController,
                                         
                                         if existingParticipant.type != .owner {
                                             
-                                            print("-------- remove participant")
                                             ckshare.removeParticipant(existingParticipant)
                                         }
                                     }
@@ -269,7 +253,6 @@ class ExpenseTableViewController: UITableViewController,
                                 let modifyoperation = CKModifyRecordsOperation(recordsToSave: [ckshare], recordIDsToDelete: [])
                                 modifyoperation.modifyRecordsCompletionBlock = {records, recordIDs, error in
                                     
-                                    print("------- modifyRecordsCompletionBlock")
                                     if let _ = error {
                                         
                                         print("-------- \(String(describing: error))")
@@ -279,7 +262,6 @@ class ExpenseTableViewController: UITableViewController,
                                             
                                             fetchiCloudZoneChange([ckrecordzone], (appDelegate?.iCloudZones)!) {
                                                 
-                                                print("-------- done update")
                                             }
                                         }
                                     }
@@ -291,99 +273,6 @@ class ExpenseTableViewController: UITableViewController,
                     })
                 }
             }
-            
-            /*
-            if let _ = expense, ckshares.count > 0  {
-                
-                guard let personList = expense?.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
-                    
-                    fatalError("Exception: [XYZExpensePerson] is expected")
-                }
-                
-                var existingParticipants = ckshares[0].participants
-                var userIdentityLookupInfos = [CKUserIdentityLookupInfo]()
-                
-                for person in personList {
-                    
-                    let email = person.value(forKey: XYZExpensePerson.email) as? String
-                    
-                    let useridentitylookup = CKUserIdentityLookupInfo(emailAddress: email!)
-                    userIdentityLookupInfos.append(useridentitylookup)
-                }
-                
-                if !userIdentityLookupInfos.isEmpty {
-                    
-                    let fetchsharedparticipantOp = CKFetchShareParticipantsOperation(userIdentityLookupInfos: userIdentityLookupInfos)
-                    fetchsharedparticipantOp.fetchShareParticipantsCompletionBlock = { error in
-                        
-                        if let _ = error {
-                            
-                            print("-------- fetchShareParticipantsCompletionBlock error = \(String(describing: error))")
-                        } else {
-                        
-                            if !existingParticipants.isEmpty {
-                                
-                                for existingParticipant in existingParticipants {
-                                    
-                                    if existingParticipant.type != .owner {
-                                        
-                                        ckshares[0].removeParticipant(existingParticipant)
-                                    }
-                                }
-                                
-                                let modifyoperation = CKModifyRecordsOperation(recordsToSave: [ckshares[0]], recordIDsToDelete: [])
-                                modifyoperation.modifyRecordsCompletionBlock = {records, recordIDs, error in
-                                    
-                                    if let _ = error {
-                                        
-                                        print("-------- \(String(describing: error))")
-                                    } else {
-                                        
-                                    }
-                                }
-                                
-                                CKContainer.default().privateCloudDatabase.add(modifyoperation)
-                            }
-                        }
-                    }
-                    
-                    fetchsharedparticipantOp.shareParticipantFetchedBlock = { participant in
-                        
-                        for (index, existingParticipant) in existingParticipants.enumerated() {
-                            
-                            if existingParticipant.userIdentity == participant.userIdentity {
-                                
-                                existingParticipants.remove(at: index)
-                                break
-                            }
-                        }
-                        
-                        participant.permission = .readWrite
-                        ckshares[0].addParticipant(participant)
-                        
-                        let modifyoperation = CKModifyRecordsOperation(recordsToSave: [ckshares[0]], recordIDsToDelete: [])
-                        modifyoperation.modifyRecordsCompletionBlock = {records, recordIDs, error in
-                            
-                            if let _ = error {
-                                
-                                print("-------- \(String(describing: error))")
-                            } else {
-                                
-                                DispatchQueue.main.async {
-                                    
-                                    fetchiCloudZoneChange([ckrecordzone], (appDelegate?.iCloudZones)!) {
-                                    
-                                    }
-                                }
-                            }
-                        }
-                        
-                        CKContainer.default().privateCloudDatabase.add(modifyoperation)
-                    }
-                    
-                    CKContainer.default().add(fetchsharedparticipantOp)
-                }
-            } */
         })
     }
     
