@@ -22,6 +22,8 @@ class AppDelegate: UIResponder,
     func application(_ application: UIApplication,
                      userDidAcceptCloudKitShareWith cloudKitShareMetadata: CKShareMetadata) {
         
+        print("---- receive shared")
+        /*
         let aContext = managedContext()
         
         if let record = cloudKitShareMetadata.rootRecord {
@@ -43,6 +45,7 @@ class AppDelegate: UIResponder,
                     fatalError("Exception: \(record.recordType) is not supported")
             }
         }
+         */
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter,

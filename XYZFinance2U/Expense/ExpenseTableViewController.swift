@@ -209,7 +209,13 @@ class ExpenseTableViewController: UITableViewController,
                                                 DispatchQueue.main.async {
                                                     
                                                     fetchiCloudZoneChange([ckrecordzone], (appDelegate?.iCloudZones)!) {
-                                                        
+                                                    
+                                                        DispatchQueue.main.async {
+                                                         
+                                                           let sharingUI = UICloudSharingController(share: ckshare, container: CKContainer.default())
+                                                           self.present(sharingUI, animated: false, completion:{
+                                                            })
+                                                        }
                                                     }
                                                 }
                                             }
