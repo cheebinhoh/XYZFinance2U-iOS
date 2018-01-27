@@ -532,6 +532,9 @@ func createUpdateExpense(_ record: CKRecord,
         
         // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
         expenseToBeUpdated?.setValue(Date(), forKey: XYZExpense.lastRecordChange)
+    } else if record.recordType == "cloudkit.share" {
+        
+        // do nothing
     } else {
         
         fatalError("Exception: \(record.recordType) is not supported")
@@ -812,7 +815,7 @@ func iCloudZone(of zone: CKRecordZone, _ icloudZones: [XYZiCloudZone]) -> XYZiCl
 
 func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                             _ icloudZones: [XYZiCloudZone],
-                            _ completionblock: @escaping () -> Void) {
+                            _ completionblock: @escaping ([CKShare]) -> Void) {
     
     for zone in zones {
         
@@ -836,7 +839,7 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                                 
                             })
                             
-                            completionblock()
+                            completionblock([CKShare]())
                         }
                     })
                 }
@@ -849,7 +852,7 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                     fatalError("Exception: [XYZAccount] is expected")
                 }
                 
-                saveExpensesToiCloud(zone, iCloudZone, expenseList, {
+                saveExpensesToiCloud(zone, iCloudZone, expenseList, { ckshares in
                     
                     OperationQueue.main.addOperation {
 
@@ -857,7 +860,7 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                             
                         })
                         
-                        completionblock()
+                        completionblock(ckshares)
                     }
                 })
             }
@@ -870,7 +873,7 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
 
 func fetchAndUpdateiCloud(_ zones: [CKRecordZone],
                           _ iCloudZones: [XYZiCloudZone],
-                          _ completionblock: @escaping () -> Void) {
+                          _ completionblock: @escaping ([CKShare]) -> Void) {
     
     if !iCloudZones.isEmpty {
         
@@ -888,7 +891,7 @@ func fetchAndUpdateiCloud(_ zones: [CKRecordZone],
 func saveExpensesToiCloud(_ zone: CKRecordZone,
                           _ iCloudZone: XYZiCloudZone,
                           _ expenseList: [XYZExpense],
-                          _ completionblock: @escaping () -> Void ) {
+                          _ completionblock: @escaping ([CKShare]) -> Void ) {
     
     var expenseListToBeSaved: [XYZExpense]?
     
@@ -943,11 +946,12 @@ func saveExpensesToiCloud(_ zone: CKRecordZone,
 func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
                           _ expenseList: [XYZExpense],
                           _ recordIdsToBeDeleted: [CKRecordID],
-                          _ completionblock: @escaping () -> Void ) {
+                          _ completionblock: @escaping ([CKShare]) -> Void ) {
     
     let container = CKContainer.default()
     let database = container.privateCloudDatabase
     var recordsToBeSaved = [CKRecord]()
+    var ckshares = [CKShare]()
     
     for expense in expenseList {
         
@@ -1046,6 +1050,7 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
             
             let ckshare = CKShare(rootRecord: record)
             recordsToBeSaved.append(ckshare)
+            ckshares.append(ckshare)
         }
     }
     
@@ -1060,7 +1065,7 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
             
             saveManageContext() // save the iCloudZone to indicate that deleteRecordIdList is executed.
             
-            completionblock()
+            completionblock(ckshares)
         }
     }
     

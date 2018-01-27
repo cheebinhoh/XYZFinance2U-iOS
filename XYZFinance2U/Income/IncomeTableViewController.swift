@@ -503,7 +503,7 @@ class IncomeTableViewController: UITableViewController,
         let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones)!)
         zone?.data = appDelegate?.incomeList
         
-        fetchAndUpdateiCloud([ckrecordzone], (appDelegate?.iCloudZones)!, {
+        fetchAndUpdateiCloud([ckrecordzone], (appDelegate?.iCloudZones)!, { ckshares in
             
         })
 

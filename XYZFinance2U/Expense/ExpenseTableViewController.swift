@@ -120,18 +120,57 @@ class ExpenseTableViewController: UITableViewController,
             saveManageContext()
             loadExpensesFromSections()
             reloadData()
+            updateToiCloud(nil)
         }
     }
     
-    func updateToiCloud() {
+    func updateToiCloud(_ expense: XYZExpense?) {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
         let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones)!)
         zone?.data = appDelegate?.expenseList
         
-        fetchAndUpdateiCloud([ckrecordzone], (appDelegate?.iCloudZones)!, {
+        fetchAndUpdateiCloud([ckrecordzone], (appDelegate?.iCloudZones)!, {ckshares in 
             
+            if let _ = expense, ckshares.count > 0  {
+                
+                var useridentities = [CKUserIdentityLookupInfo]()
+                
+                guard let personList = expense?.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
+                    
+                    fatalError("Exception: [XYZExpensePerson] is expected")
+                }
+                
+                for person in personList {
+                 
+                    let email = person.value(forKey: XYZExpensePerson.email) as? String
+                    
+                    let useridentity = CKUserIdentityLookupInfo(emailAddress: email!)
+                    useridentities.append(useridentity)
+                }
+                
+                let op = CKFetchShareParticipantsOperation(userIdentityLookupInfos: useridentities)
+                op.shareParticipantFetchedBlock = { sharedparticipant in
+                   
+                    print("-------- fetch participant")
+                    ckshares[0].addParticipant(sharedparticipant)
+                }
+                
+                let container = CKContainer.default()
+                container.add(op)
+                
+                /*
+                DispatchQueue.main.async {
+                    
+                    let sharingController = UICloudSharingController(share: ckshares[0], container: CKContainer.default())
+                    
+                    self.present(sharingController, animated: false, completion: {
+
+                    })
+                }
+                */
+            }
         })
     }
     
@@ -139,6 +178,7 @@ class ExpenseTableViewController: UITableViewController,
         
         saveManageContext()
     
+        updateToiCloud(expense)
         reloadData()
         
         let indexPath = self.indexPath(of: expense)
@@ -183,8 +223,6 @@ class ExpenseTableViewController: UITableViewController,
     func reloadData() {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-
-        updateToiCloud()
         
         appDelegate?.expenseList = sortExpenses(expenses: (appDelegate?.expenseList)!)
         loadExpensesIntoSections()
@@ -345,6 +383,8 @@ class ExpenseTableViewController: UITableViewController,
             delegate?.expenseDeleted(deletedExpense: oldExpense!)
             aContext?.delete(oldExpense!)
             loadExpensesFromSections()
+            
+            updateToiCloud(nil)
         } else if editingStyle == .insert {
             
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view

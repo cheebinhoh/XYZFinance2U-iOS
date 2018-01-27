@@ -373,7 +373,7 @@ class AppDelegate: UIResponder,
         
         if !zonesToBeFetched.isEmpty {
             
-            fetchAndUpdateiCloud(zonesToBeFetched, self.iCloudZones, {
+            fetchAndUpdateiCloud(zonesToBeFetched, self.iCloudZones, { ckshares in
 
                 for icloudzone in self.iCloudZones {
 
