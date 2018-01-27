@@ -77,10 +77,13 @@ class SettingTableViewController: UITableViewController,
         let helperSection = TableSectionCell(identifier: "ex", title: "", cellList: ["ExchangeRate"], data: nil)
         tableSectionCellList.append(helperSection)
 
-        let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export", "SynciCloud"], data: nil)
-        tableSectionCellList.append(exportSection)
-        
         let tableViewController = getMainTableView()
+        
+        if tableViewController.iCloudEnable {
+            
+            let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export", "SynciCloud"], data: nil)
+            tableSectionCellList.append(exportSection)
+        }
         
         if tableViewController.authenticatedMechanismExist {
             

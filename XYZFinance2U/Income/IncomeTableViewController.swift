@@ -95,6 +95,7 @@ class IncomeTableViewController: UITableViewController,
     
     var authenticatedMechanismExist = false
     var authenticatedOk = false
+    var iCloudEnable = false
     var lockScreenDisplayed = false
     weak var delegate: IncomeSelectionDelegate?
     weak var detailViewController: UIViewController?
@@ -593,13 +594,11 @@ class IncomeTableViewController: UITableViewController,
     
     func validateiCloud() {
         
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        
         CKContainer.default().accountStatus { (status, error) in
             
             if status == CKAccountStatus.noAccount {
 
-                appDelegate?.iCloudEnable = false
+                self.iCloudEnable = false
                 let alert = UIAlertController(title: "Sign in to icloud",
                                               message: "Sign in to your iCloud account to write records", preferredStyle: UIAlertControllerStyle.alert )
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (action) in
@@ -610,7 +609,7 @@ class IncomeTableViewController: UITableViewController,
             } else {
                 
     
-                appDelegate?.iCloudEnable = true
+                self.iCloudEnable = true
                 
                 CKContainer.default().requestApplicationPermission(CKApplicationPermissions.userDiscoverability, completionHandler: { (status, error) in
                     

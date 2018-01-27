@@ -104,7 +104,7 @@ class AppDelegate: UIResponder,
     var expenseList = [XYZExpense]()
     var incomeList = [XYZAccount]()
     var iCloudZones = [XYZiCloudZone]()
-    var iCloudEnable = false
+    //var iCloudEnable = false
     var window: UIWindow?
     var orientation = UIInterfaceOrientationMask.all
     
