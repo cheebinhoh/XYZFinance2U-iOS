@@ -305,26 +305,30 @@ class ExpenseTableViewController: UITableViewController,
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
-        guard let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones)!) else {
+        
+        if !(appDelegate?.iCloudZones.isEmpty)! {
+        
+            guard let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones)!) else {
+                
+                fatalError("Exception: iCloudZoen is expected")
+            }
             
-            fatalError("Exception: iCloudZoen is expected")
-        }
-        
-        guard let data = zone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
+            guard let data = zone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
+                
+                fatalError("Exception: data is expected for deleteRecordIdList")
+            }
             
-            fatalError("Exception: data is expected for deleteRecordIdList")
-        }
-        
-        guard var deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+            guard var deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+                
+                fatalError("Exception: deleteRecordList is expected as [String]")
+            }
             
-            fatalError("Exception: deleteRecordList is expected as [String]")
+            let recordName = expense.value(forKey: XYZExpense.recordId) as? String
+            deleteRecordLiset.append(recordName!)
+            
+            let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
+            zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
         }
-        
-        let recordName = expense.value(forKey: XYZExpense.recordId) as? String
-        deleteRecordLiset.append(recordName!)
-        
-        let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
-        zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
     }
     
     func reloadData() {

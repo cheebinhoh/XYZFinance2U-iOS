@@ -85,14 +85,29 @@ class SettingDetailTableViewController: UITableViewController {
                     
                     fatalError("Exception: errpr on creating settingDetailAboutCell")
                 }
-            
-                newcell.content.text = """
- 
-\(AppDelegate.appName) was created by CB Hoh.
+                
+                let textHeading = """
+                
+\(AppDelegate.appName)
+"""
+                let headingAttributes: [NSAttributedStringKey: Any]? = [NSAttributedStringKey.font: newcell.content.font!,
+                                                                        NSAttributedStringKey.link: "https://twitter.com/XYZFinance2U"]
+                let headingAttributeText = NSMutableAttributedString(string: textHeading, attributes: headingAttributes)
+                
+                let text = """
+ was created by CB Hoh.
 
 \u{A9} 2017-2018 CB Hoh. All rights reserved.
 
 """
+                
+                
+                let attributes: [NSAttributedStringKey: Any]? = [NSAttributedStringKey.font: newcell.content.font!]
+                let attributeText = NSAttributedString(string: text, attributes: attributes)
+                
+                headingAttributeText.append(attributeText)
+                newcell.content.attributedText = headingAttributeText
+
                 cell = newcell
             
             case "disclaimer":
@@ -100,14 +115,17 @@ class SettingDetailTableViewController: UITableViewController {
                     
                     fatalError("Exception: errpr on creating settingDetailAboutCell")
                 }
-                
-                newcell.content.text = """
+            
+                let text = """
                 
 The foreign exchange rates are from http://fixer.io.
 
 It does not come with warranty of any sort.
 
 """
+                let attributes: [NSAttributedStringKey: Any]? = [NSAttributedStringKey.font: newcell.content.font!]
+                let attributeText = NSAttributedString(string: text, attributes: attributes)
+                newcell.content.attributedText = attributeText
                 cell = newcell
             
                 default:
