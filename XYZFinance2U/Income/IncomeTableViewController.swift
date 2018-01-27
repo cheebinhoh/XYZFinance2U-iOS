@@ -610,6 +610,15 @@ class IncomeTableViewController: UITableViewController,
                 
     
                 appDelegate?.iCloudEnable = true
+                
+                CKContainer.default().requestApplicationPermission(CKApplicationPermissions.userDiscoverability, completionHandler: { (status, error) in
+                    
+                    if nil != error {
+                        
+                        print("-------- request application permission error = \(String(describing: error))")
+                    }
+                })
+                
             }
         }
     }

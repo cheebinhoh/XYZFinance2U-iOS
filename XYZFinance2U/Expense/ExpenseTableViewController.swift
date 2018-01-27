@@ -135,8 +135,6 @@ class ExpenseTableViewController: UITableViewController,
             
             if let _ = expense, ckshares.count > 0  {
                 
-                var useridentities = [CKUserIdentityLookupInfo]()
-                
                 guard let personList = expense?.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
                     
                     fatalError("Exception: [XYZExpensePerson] is expected")
@@ -146,19 +144,7 @@ class ExpenseTableViewController: UITableViewController,
                  
                     let email = person.value(forKey: XYZExpensePerson.email) as? String
                     
-                    let useridentity = CKUserIdentityLookupInfo(emailAddress: email!)
-                    useridentities.append(useridentity)
                 }
-                
-                let op = CKFetchShareParticipantsOperation(userIdentityLookupInfos: useridentities)
-                op.shareParticipantFetchedBlock = { sharedparticipant in
-                   
-                    print("-------- fetch participant")
-                    ckshares[0].addParticipant(sharedparticipant)
-                }
-                
-                let container = CKContainer.default()
-                container.add(op)
                 
                 /*
                 DispatchQueue.main.async {
