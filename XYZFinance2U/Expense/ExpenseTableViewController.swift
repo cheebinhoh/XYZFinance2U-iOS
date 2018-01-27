@@ -144,6 +144,40 @@ class ExpenseTableViewController: UITableViewController,
                  
                     let email = person.value(forKey: XYZExpensePerson.email) as? String
                     
+                    let useridentitylookup = CKUserIdentityLookupInfo(emailAddress: email!)
+                    let fetchsharedparticipantOp = CKFetchShareParticipantsOperation(userIdentityLookupInfos: [useridentitylookup])
+                    fetchsharedparticipantOp.fetchShareParticipantsCompletionBlock = { error in
+                        
+                        if let _ = error {
+                            
+                            print("-------- fetchShareParticipantsCompletionBlock error = \(String(describing: error))")
+                        } else {
+                            
+                            print("-------- fetchShareParticipantsCompletionBlock complete")
+                        }
+                    }
+                    
+                    fetchsharedparticipantOp.shareParticipantFetchedBlock = { participant in
+                        
+                        participant.permission = .readWrite
+                        ckshares[0].addParticipant(participant)
+                        
+                        let modifyoperation = CKModifyRecordsOperation(recordsToSave: [ckshares[0]], recordIDsToDelete: [])
+                        modifyoperation.modifyRecordsCompletionBlock = {records, recordIDs, error in
+                         
+                            if let _ = error {
+                                
+                                print("-------- \(String(describing: error))")
+                            } else {
+                                
+                                print("-------- modify share complete")
+                            }
+                        }
+                        
+                        CKContainer.default().privateCloudDatabase.add(modifyoperation)
+                    }
+                    
+                    CKContainer.default().add(fetchsharedparticipantOp)
                 }
                 
                 /*
