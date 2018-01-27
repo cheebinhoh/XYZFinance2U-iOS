@@ -478,7 +478,6 @@ func createUpdateExpense(_ record: CKRecord,
                         
                         OperationQueue.main.addOperation {
                         
-                            print("-------- download data")
                             expenseToBeUpdated?.addReceipt(sequenceNr: index, image: data! as NSData)
                         }
                     }
@@ -716,35 +715,6 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     opZoneChange.recordZoneChangeTokensUpdatedBlock = { (zoneId, token, data) in
         
         print("----- token \(String(describing: token))")
-        OperationQueue.main.addOperation {
-            
-            for icloudzone in icloudZones {
-                
-                if let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String, zName == zoneId.zoneName {
-                    
-                    var hasChangeToken = true;
-                    
-                    if let data = icloudzone.value(forKey: XYZiCloudZone.changeToken) as? Data {
-                        
-                        let previousChangeToken = (NSKeyedUnarchiver.unarchiveObject(with: data) as? CKServerChangeToken)
-                        hasChangeToken = previousChangeToken != token!
-                    }
-                    
-                    if hasChangeToken {
-                        
-                        let lastTokenFetchDate = Date()
-                        
-                        let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: token!)
-                        icloudzone.setValue(archivedChangeToken, forKey: XYZiCloudZone.changeToken)
-                        icloudzone.setValue(lastTokenFetchDate, forKey: XYZiCloudZone.changeTokenLastFetch)
-                    }
-                    
-                    break
-                }
-                
-                saveManageContext() // save changed token and data
-            }
-        }
     }
     
     opZoneChange.recordZoneFetchCompletionBlock = { (zoneId, changeToken, _, _, error) in
@@ -1046,12 +1016,9 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
         
         recordsToBeSaved.append(record)
         
-        if personList.count > 0 {
-            
-            let ckshare = CKShare(rootRecord: record)
-            recordsToBeSaved.append(ckshare)
-            ckshares.append(ckshare)
-        }
+        let ckshare = CKShare(rootRecord: record)
+        recordsToBeSaved.append(ckshare)
+        ckshares.append(ckshare)
     }
     
     let opToSaved = CKModifyRecordsOperation(recordsToSave: recordsToBeSaved, recordIDsToDelete: recordIdsToBeDeleted)
