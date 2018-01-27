@@ -435,7 +435,7 @@ func createUpdateExpense(_ record: CKRecord,
         let date = record[XYZExpense.date] as? Date
         
         var expenseToBeUpdated: XYZExpense?
-        
+
         for expense in outputExpenseList {
             
             guard let recordId = expense.value(forKey: XYZExpense.recordId) as? String else {
@@ -1035,7 +1035,7 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
             
             let ckreference = CKReference(recordID: ckrecordId, action: .deleteSelf)
             personRecord.setValue(ckreference, forKey: XYZExpense.type)
-            
+
             recordsToBeSaved.append(personRecord)
         }
         
