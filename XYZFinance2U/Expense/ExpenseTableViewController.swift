@@ -494,6 +494,65 @@ class ExpenseTableViewController: UITableViewController,
     }
 
     // MARK: - Table view data source
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]?
+    {
+        print("--- hello")
+        
+        return nil
+    }
+        
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, handler in
+            
+            // Delete the row from the data source
+            let aContext = managedContext()
+            
+            var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
+            
+            let oldExpense = sectionExpenseList?.remove(at: indexPath.row)
+            self.sectionList[indexPath.section].data = sectionExpenseList
+            
+            self.softDeleteIncome(expense: oldExpense!)
+            self.delegate?.expenseDeleted(deletedExpense: oldExpense!)
+            aContext?.delete(oldExpense!)
+            self.loadExpensesFromSections()
+            
+            self.updateToiCloud(nil)
+            
+            handler(true)
+        }
+        
+        let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
+            let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let copyUrlOption = UIAlertAction(title: "Copy share url", style: .default, handler: { (action) in
+      
+                guard let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense] else {
+                    
+                    fatalError("Exception: [XYZExpense] is expected")
+                }
+            
+                let expense = sectionExpenseList[indexPath.row]
+                
+                if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
+                    
+                    UIPasteboard.general.string = "\(url)"
+                }
+            })
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:nil)
+            
+            optionMenu.addAction(copyUrlOption)
+            optionMenu.addAction(cancelAction)
+            
+            self.present(optionMenu, animated: true, completion: nil)
+            
+            handler(true)
+        }
+        
+        return UISwipeActionsConfiguration(actions: [delete, more])
+    }
+    
     override func setEditing(_ editing: Bool, animated: Bool) {
         
         navigationItem.rightBarButtonItem?.isEnabled = !editing
