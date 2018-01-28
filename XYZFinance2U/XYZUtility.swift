@@ -947,6 +947,8 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
     let database = container.privateCloudDatabase
     var recordsToBeSaved = [CKRecord]()
     var shareRecordIds = [String]()
+    var shareUrls = [String]()
+    
     for expense in expenseList {
         
         let recordName = expense.value(forKey: XYZExpense.recordId) as? String
@@ -1046,7 +1048,7 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
             
             let ckshare = CKShare(rootRecord: record)
             recordsToBeSaved.append(ckshare)
-            
+        
             shareRecordIds.append(ckshare.recordID.recordName)
         } else {
             

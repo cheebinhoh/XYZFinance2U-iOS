@@ -160,6 +160,8 @@ class ExpenseTableViewController: UITableViewController,
                                 fatalError("Exception: CKShare is expected")
                             }
                             
+                            print("------ ckshare url \(String(describing: ckshare.url))")
+                            
                             guard let personList = expense?.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
                                 
                                 fatalError("Exception: [XYZExpensePerson] is expected")
@@ -378,7 +380,7 @@ class ExpenseTableViewController: UITableViewController,
             let month = calendar.component(.month, from: date)
             let year = calendar.component(.year, from: date)
             let yearMonth = "\(year), \(dateFormatter.shortMonthSymbols[month - 1])"
-
+            
             var foundIndex = -1
             for (index, section) in sectionList.enumerated() {
                 
