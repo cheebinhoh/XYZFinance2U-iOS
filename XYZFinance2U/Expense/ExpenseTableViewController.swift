@@ -20,6 +20,7 @@ protocol ExpenseTableViewDelegate: class {
 
 class ExpenseTableViewController: UITableViewController,
     UISplitViewControllerDelegate,
+    UIViewControllerPreviewingDelegate,
     ExpenseDetailDelegate {
     
     // MARK: - property
@@ -82,7 +83,50 @@ class ExpenseTableViewController: UITableViewController,
     }
      */
     
+    // MARK: - 3d touch delegate (peek & pop)
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        // Reuse the "Peek" view controller for presentation.
+        
+        /*
+        guard let viewController = viewControllerToCommit as? IncomeDetailViewController else {
+            
+            fatalError("Exception: IncomeDetailViewController is expected")
+        }
+        
+        if let _ = viewController.income {
+            
+            tableView(tableView, didSelectRowAt: viewController.indexPath!)
+        }
+         */
+    }
+    
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        
+        guard let viewController = storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailViewController") as? ExpenseDetailViewController else  {
+            
+            fatalError("Exception: IncomeDetailViewController is expected")
+        }
+        
+        let indexPath = tableView.indexPathForRow(at: location)
+        let cell = tableView.cellForRow(at: indexPath!)
+        
+        viewController.preferredContentSize = CGSize(width: 0.0, height: 140)
+        previewingContext.sourceRect = (cell?.frame)!
+        
+        guard let sectionExpenseList = sectionList[(indexPath?.section)!].data as? [XYZExpense] else {
+            
+            fatalError("Exception: [XYZAccount] is expected")
+        }
+        
+        viewController.expense = sectionExpenseList[(indexPath?.row)!]
+        //viewController.indexPath = indexPath
+
+        return viewController
+    }
+    
     //MARK: - function
+    
     func indexPath(of expense:XYZExpense) -> IndexPath? {
         
         for (sectionIndex, section) in sectionList.enumerated() {
@@ -159,8 +203,6 @@ class ExpenseTableViewController: UITableViewController,
                                 
                                 fatalError("Exception: CKShare is expected")
                             }
-                            
-                            print("------ ckshare url \(String(describing: ckshare.url))")
                             
                             guard let personList = expense?.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
                                 
@@ -426,7 +468,21 @@ class ExpenseTableViewController: UITableViewController,
         
         navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.setLeftBarButton(self.editButtonItem, animated: true)
-        
+
+        // Check for force touch feature, and add force touch/previewing capability.
+        if traitCollection.forceTouchCapability == .available {
+            
+            /*
+             Register for `UIViewControllerPreviewingDelegate` to enable
+             "Peek" and "Pop".
+             (see: MasterViewController+UIViewControllerPreviewing.swift)
+             
+             The view controller will be automatically unregistered when it is
+             deallocated.
+             */
+            registerForPreviewing(with: self, sourceView: view)
+        }
+
         loadExpensesIntoSections()
     }
 

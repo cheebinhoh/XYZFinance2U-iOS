@@ -411,7 +411,6 @@ func createUpdateExpense(_ record: CKRecord,
     var outputUnprocessedCkrecords: [CKRecord] = unprocessedCKrecords
     var unprocessedCkrecord: CKRecord?
     
-    print("***************** \(record.recordType)")
     if record.recordType == XYZExpensePerson.type {
         
         let parentckreference = record[XYZExpense.type] as? CKReference
@@ -947,8 +946,7 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
     let database = container.privateCloudDatabase
     var recordsToBeSaved = [CKRecord]()
     var shareRecordIds = [String]()
-    var shareUrls = [String]()
-    
+
     for expense in expenseList {
         
         let recordName = expense.value(forKey: XYZExpense.recordId) as? String
