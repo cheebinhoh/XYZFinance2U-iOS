@@ -423,7 +423,7 @@ class ExpenseTableViewController: UITableViewController,
             let month = calendar.component(.month, from: date)
             let year = calendar.component(.year, from: date)
             let yearMonth = "\(year), \(dateFormatter.shortMonthSymbols[month - 1])"
-            
+          
             var foundIndex = -1
             for (index, section) in sectionList.enumerated() {
                 

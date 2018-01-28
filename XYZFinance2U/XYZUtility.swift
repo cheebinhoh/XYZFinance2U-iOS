@@ -444,6 +444,7 @@ func createUpdateExpense(_ record: CKRecord,
         let detail = record[XYZExpense.detail] as? String
         let amount = record[XYZExpense.amount] as? Double
         let date = record[XYZExpense.date] as? Date
+        let shareRecordId = record[XYZExpense.shareRecordId] as? String
         
         var expenseToBeUpdated: XYZExpense?
 
@@ -487,6 +488,7 @@ func createUpdateExpense(_ record: CKRecord,
         expenseToBeUpdated?.setValue(detail, forKey: XYZExpense.detail)
         expenseToBeUpdated?.setValue(amount, forKey: XYZExpense.amount)
         expenseToBeUpdated?.setValue(date, forKey: XYZExpense.date)
+        expenseToBeUpdated?.setValue(shareRecordId, forKey: XYZExpense.shareRecordId)
         
         let nrOfReceipt = record[XYZExpense.nrOfReceipts] as? Int
         for index in 0..<nrOfReceipt! {
@@ -527,7 +529,25 @@ func createUpdateExpense(_ record: CKRecord,
         expenseToBeUpdated?.setValue(Date(), forKey: XYZExpense.lastRecordChange)
     } else if record.recordType == "cloudkit.share" {
         
-        // do nothing
+        let recordName = record.recordID.recordName
+        
+        for expense in expenseList {
+            
+            if let shareRecordId = expense.value(forKey: XYZExpense.shareRecordId) as? String, shareRecordId == recordName {
+
+                guard let ckshare = record as? CKShare else {
+                    
+                    fatalError("Exception: CKShare is expected")
+                }
+                
+                if let shareUrl = ckshare.url?.absoluteString {
+                
+                    expense.setValue(shareUrl, forKey: XYZExpense.shareUrl)
+                }
+                
+                break
+            }
+        }
     } else {
         
         fatalError("Exception: \(record.recordType) is not supported")
@@ -1039,8 +1059,6 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
         
         record.setValue(personList.count, forKey: XYZExpense.nrOfPersons)
         
-        recordsToBeSaved.append(record)
-        
         let shareRecordId = expense.value(forKey: XYZExpense.shareRecordId) as? String
         
         if nil == shareRecordId || shareRecordId == "" {
@@ -1050,11 +1068,15 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
         
             ckshares.append(ckshare)
             shareRecordIds.append(ckshare.recordID.recordName)
+            
+            record.setValue(ckshare.recordID.recordName, forKey: XYZExpense.shareRecordId)
         } else {
             
             ckshares.append(nil)
             shareRecordIds.append("")
         }
+        
+        recordsToBeSaved.append(record)
     }
     
     let opToSaved = CKModifyRecordsOperation(recordsToSave: recordsToBeSaved, recordIDsToDelete: recordIdsToBeDeleted)
