@@ -11,10 +11,32 @@ import UIKit
 class ExpenseDetailViewController: UIViewController {
 
     var expense: XYZExpense?
+    var indexPath: IndexPath?
     
     @IBOutlet weak var detail: UILabel!
     @IBOutlet weak var amount: UILabel!
     @IBOutlet weak var date: UILabel!
+    
+    // MARK: 3d touch
+    
+    override var previewActionItems : [UIPreviewActionItem] {
+        
+        return previewActions
+    }
+    
+    lazy var previewActions: [UIPreviewActionItem] = {
+        
+        let copyAction = UIPreviewAction(title: "Copy share link", style: .default, handler: { (action, viewcontroller) in
+            
+            print("---- copy share link")
+        })
+        
+        let cancelAction = UIPreviewAction(title: "Cancel", style: .default, handler: { (action, viewcontroller) in
+            
+        })
+        
+        return [copyAction, cancelAction]
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()

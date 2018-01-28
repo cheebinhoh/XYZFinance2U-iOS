@@ -88,17 +88,18 @@ class ExpenseTableViewController: UITableViewController,
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         // Reuse the "Peek" view controller for presentation.
         
-        /*
-        guard let viewController = viewControllerToCommit as? IncomeDetailViewController else {
+        guard let viewController = viewControllerToCommit as? ExpenseDetailViewController else {
             
             fatalError("Exception: IncomeDetailViewController is expected")
         }
         
-        if let _ = viewController.income {
+        if let _ = viewController.expense {
+            
+            
+            //tableView(tableView, didSelectRowAt: viewController.indexPath!)
             
             tableView(tableView, didSelectRowAt: viewController.indexPath!)
         }
-         */
     }
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
@@ -120,7 +121,7 @@ class ExpenseTableViewController: UITableViewController,
         }
         
         viewController.expense = sectionExpenseList[(indexPath?.row)!]
-        //viewController.indexPath = indexPath
+        viewController.indexPath = indexPath
 
         return viewController
     }
