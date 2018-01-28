@@ -27,6 +27,7 @@ class XYZExpense: NSManagedObject {
     static let nrOfReceipts = "nrOfReceipts"
     static let nrOfPersons = "nrOfPersons"
     static let shareRecordId = "shareRecordId"
+    static let shareUrl = "shareUrl"
     
     // MARK: - property
     
@@ -39,6 +40,7 @@ class XYZExpense: NSManagedObject {
     var recordId: String = ""
     var lastRecordChange = Date()
     var shareRecordId: String = ""
+    var shareUrl: String = ""
     
     // MARK: - function
     

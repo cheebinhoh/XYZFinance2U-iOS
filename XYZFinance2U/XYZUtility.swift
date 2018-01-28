@@ -945,8 +945,9 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
     let container = CKContainer.default()
     let database = container.privateCloudDatabase
     var recordsToBeSaved = [CKRecord]()
+    var ckshares = [CKShare?]()
     var shareRecordIds = [String]()
-
+    
     for expense in expenseList {
         
         let recordName = expense.value(forKey: XYZExpense.recordId) as? String
@@ -1047,10 +1048,12 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
             let ckshare = CKShare(rootRecord: record)
             recordsToBeSaved.append(ckshare)
         
+            ckshares.append(ckshare)
             shareRecordIds.append(ckshare.recordID.recordName)
         } else {
             
-            shareRecordIds.append(shareRecordId!)
+            ckshares.append(nil)
+            shareRecordIds.append("")
         }
     }
     
@@ -1065,7 +1068,19 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
             
             for (index, expense) in expenseList.enumerated() {
                 
-                expense.setValue(shareRecordIds[index], forKey: XYZExpense.shareRecordId)
+                if shareRecordIds[index] != "" {
+                    
+                    guard let ckshare = ckshares[index] else {
+                        
+                        fatalError("Exception: CKShare is expected")
+                    }
+                    
+                    let url = ckshare.url?.absoluteString
+                    
+                    print("---- url = \(String(describing: url))")
+                    expense.setValue(url, forKey: XYZExpense.shareUrl)
+                    expense.setValue(shareRecordIds[index], forKey: XYZExpense.shareRecordId)
+                }
             }
             
             saveManageContext() // save the iCloudZone to indicate that deleteRecordIdList is executed.

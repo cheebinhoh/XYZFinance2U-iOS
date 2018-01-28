@@ -30,6 +30,7 @@
         <attribute name="location" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="recordId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shareRecordId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shareUrl" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="persons" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="XYZExpensePerson" inverseName="expense" inverseEntity="XYZExpensePerson" syncable="YES"/>
         <relationship name="receipts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="XYZExpenseReceipt" inverseName="expense" inverseEntity="XYZExpenseReceipt" syncable="YES"/>
     </entity>
@@ -54,7 +55,7 @@
     <elements>
         <element name="XYZAccount" positionX="-63" positionY="-18" width="128" height="225"/>
         <element name="XYZExchangeRate" positionX="-36" positionY="81" width="128" height="120"/>
-        <element name="XYZExpense" positionX="-63" positionY="18" width="128" height="195"/>
+        <element name="XYZExpense" positionX="-63" positionY="18" width="128" height="210"/>
         <element name="XYZExpensePerson" positionX="-36" positionY="72" width="128" height="120"/>
         <element name="XYZExpenseReceipt" positionX="-9" positionY="99" width="128" height="90"/>
         <element name="XYZiCloudZone" positionX="-36" positionY="72" width="128" height="105"/>

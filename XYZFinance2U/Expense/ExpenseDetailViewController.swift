@@ -28,7 +28,13 @@ class ExpenseDetailViewController: UIViewController {
         
         let copyAction = UIPreviewAction(title: "Copy share link", style: .default, handler: { (action, viewcontroller) in
             
-            print("---- copy share link")
+            if let expense = self.expense {
+                
+                if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
+                    
+                    UIPasteboard.general.string = "\(url)"
+                }
+            }
         })
         
         let cancelAction = UIPreviewAction(title: "Cancel", style: .default, handler: { (action, viewcontroller) in
