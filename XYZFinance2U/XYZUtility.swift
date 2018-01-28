@@ -1099,7 +1099,6 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
                     
                     let url = ckshare.url?.absoluteString
                     
-                    print("---- url = \(String(describing: url))")
                     expense.setValue(url, forKey: XYZExpense.shareUrl)
                     expense.setValue(shareRecordIds[index], forKey: XYZExpense.shareRecordId)
                 }

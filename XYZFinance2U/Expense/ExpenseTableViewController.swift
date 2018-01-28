@@ -112,7 +112,7 @@ class ExpenseTableViewController: UITableViewController,
         let indexPath = tableView.indexPathForRow(at: location)
         let cell = tableView.cellForRow(at: indexPath!)
         
-        viewController.preferredContentSize = CGSize(width: 0.0, height: 140)
+        viewController.preferredContentSize = CGSize(width: 0.0, height: 110)
         previewingContext.sourceRect = (cell?.frame)!
         
         guard let sectionExpenseList = sectionList[(indexPath?.section)!].data as? [XYZExpense] else {
@@ -127,6 +127,23 @@ class ExpenseTableViewController: UITableViewController,
     }
     
     //MARK: - function
+    
+    func delete(of indexPath:IndexPath) {
+        
+        let aContext = managedContext()
+        
+        var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
+        
+        let oldExpense = sectionExpenseList?.remove(at: indexPath.row)
+        self.sectionList[indexPath.section].data = sectionExpenseList
+        
+        self.softDeleteIncome(expense: oldExpense!)
+        self.delegate?.expenseDeleted(deletedExpense: oldExpense!)
+        aContext?.delete(oldExpense!)
+        self.loadExpensesFromSections()
+        
+        self.updateToiCloud(nil)
+    }
     
     func indexPath(of expense:XYZExpense) -> IndexPath? {
         
@@ -506,19 +523,7 @@ class ExpenseTableViewController: UITableViewController,
         let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, handler in
             
             // Delete the row from the data source
-            let aContext = managedContext()
-            
-            var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
-            
-            let oldExpense = sectionExpenseList?.remove(at: indexPath.row)
-            self.sectionList[indexPath.section].data = sectionExpenseList
-            
-            self.softDeleteIncome(expense: oldExpense!)
-            self.delegate?.expenseDeleted(deletedExpense: oldExpense!)
-            aContext?.delete(oldExpense!)
-            self.loadExpensesFromSections()
-            
-            self.updateToiCloud(nil)
+            self.delete(of: indexPath)
             
             handler(true)
         }
@@ -601,19 +606,7 @@ class ExpenseTableViewController: UITableViewController,
         if editingStyle == .delete {
             
             // Delete the row from the data source
-            let aContext = managedContext()
-            
-            var sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
-            
-            let oldExpense = sectionExpenseList?.remove(at: indexPath.row)
-            sectionList[indexPath.section].data = sectionExpenseList
-            
-            softDeleteIncome(expense: oldExpense!)
-            delegate?.expenseDeleted(deletedExpense: oldExpense!)
-            aContext?.delete(oldExpense!)
-            loadExpensesFromSections()
-            
-            updateToiCloud(nil)
+            delete(of: indexPath)
         } else if editingStyle == .insert {
             
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
