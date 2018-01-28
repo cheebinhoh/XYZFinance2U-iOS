@@ -404,14 +404,20 @@ func createUpdateAccount(_ record: CKRecord,
 
 func createUpdateExpense(_ record: CKRecord,
                          _ expenseList: [XYZExpense],
-                         _ context: NSManagedObjectContext) -> [XYZExpense] {
+                         _ unprocessedCKrecords: [CKRecord],
+                         _ context: NSManagedObjectContext) -> ([XYZExpense], [CKRecord]) {
     
     var outputExpenseList: [XYZExpense] = expenseList
+    var outputUnprocessedCkrecords: [CKRecord] = unprocessedCKrecords
+    var unprocessedCkrecord: CKRecord?
     
+    print("***************** \(record.recordType)")
     if record.recordType == XYZExpensePerson.type {
         
         let parentckreference = record[XYZExpense.type] as? CKReference
       
+        unprocessedCkrecord = record
+        
         for expense in expenseList {
             
             let recordid = expense.value(forKey: XYZExpense.recordId) as? String
@@ -423,9 +429,15 @@ func createUpdateExpense(_ record: CKRecord,
                 let paid = record[XYZExpensePerson.paid] as? Bool
                 
                 expense.addPerson(sequenceNr: sequenceNr!, name: name!, email: email!, paid: paid!, context: context)
+                unprocessedCkrecord = nil
                 
                 break
             }
+        }
+        
+        if let _ = unprocessedCkrecord {
+            
+            outputUnprocessedCkrecords.append(unprocessedCkrecord!)
         }
     } else if record.recordType == XYZExpense.type {
     
@@ -454,6 +466,23 @@ func createUpdateExpense(_ record: CKRecord,
         
             expenseToBeUpdated = XYZExpense(id: recordName, detail: detail!, amount: amount!, date: date!, context: context)
             outputExpenseList.append(expenseToBeUpdated!)
+        }
+        
+        for (index, pendingCkrecord) in unprocessedCKrecords.enumerated() {
+            
+            let parentckreference = pendingCkrecord[XYZExpense.type] as? CKReference
+            
+            if recordName == parentckreference?.recordID.recordName {
+                
+                let sequenceNr = pendingCkrecord[XYZExpensePerson.sequenceNr] as? Int
+                let name = pendingCkrecord[XYZExpensePerson.name] as? String
+                let email = pendingCkrecord[XYZExpensePerson.email] as? String
+                let paid = pendingCkrecord[XYZExpensePerson.paid] as? Bool
+                
+                expenseToBeUpdated?.addPerson(sequenceNr: sequenceNr!, name: name!, email: email!, paid: paid!, context: context)
+
+                outputUnprocessedCkrecords.remove(at: index)
+            }
         }
         
         expenseToBeUpdated?.setValue(detail, forKey: XYZExpense.detail)
@@ -495,40 +524,6 @@ func createUpdateExpense(_ record: CKRecord,
             //expenseToBeUpdated?.setValue(true, forKey: XYZExpense.hasgeolocation)
         }
         
-        /* OLD
-        if let nrOfPersons = record[XYZExpense.nrOfPersons] as? Int, nrOfPersons > 0 {
-         
-            let customZone = CKRecordZone(zoneName: XYZExpense.type)
-            let ckrecordId = CKRecordID(recordName: recordName, zoneID: customZone.zoneID)
-         
-            let predicate = NSPredicate(format: "\(XYZExpense.type) = %@", ckrecordId)
-            let query = CKQuery(recordType: XYZExpensePerson.type, predicate: predicate)
-         
-            let container = CKContainer.default()
-            let database = container.privateCloudDatabase
-         
-            database.perform(query, inZoneWith: customZone.zoneID, completionHandler: { (records, error) in
-         
-                if nil != error {
-         
-                    print("-------- error = \(String(describing: error))")
-                } else {
-         
-                    expenseToBeUpdated?.removeAllPersons()
-                    for record in records! {
-         
-                        let sequenceNr = record[XYZExpensePerson.sequenceNr] as? Int
-                        let name = record[XYZExpensePerson.name] as? String
-                        let email = record[XYZExpensePerson.email] as? String
-                        let paid = record[XYZExpensePerson.paid] as? Bool
-         
-                        expenseToBeUpdated?.addPerson(sequenceNr: sequenceNr!, name: name!, email: email!, paid: paid!)
-                    }
-                }
-            })
-        }
-        */
-        
         // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
         expenseToBeUpdated?.setValue(Date(), forKey: XYZExpense.lastRecordChange)
     } else if record.recordType == "cloudkit.share" {
@@ -539,7 +534,7 @@ func createUpdateExpense(_ record: CKRecord,
         fatalError("Exception: \(record.recordType) is not supported")
     }
     
-    return outputExpenseList
+    return (outputExpenseList, outputUnprocessedCkrecords)
 }
 
 func fetchiCloudZoneChange(_ zones: [CKRecordZone],
@@ -551,7 +546,8 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     let database = container.privateCloudDatabase
     var changedZoneIDs: [CKRecordZoneID] = []
     var optionsByRecordZoneID = [CKRecordZoneID: CKFetchRecordZoneChangesOptions]()
-
+    var unprocessedCkrecords = [CKRecord]()
+    
     for zone in zones {
         
         changedZoneIDs.append(zone.zoneID)
@@ -606,7 +602,8 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
                     fatalError("Exception: expense is expected")
                 }
          
-                expenseList = createUpdateExpense(record, expenseList, aContext!)
+                (expenseList, unprocessedCkrecords) = createUpdateExpense(record, expenseList, unprocessedCkrecords, aContext!)
+                
                 icloudZone?.data = expenseList
             
             default:
