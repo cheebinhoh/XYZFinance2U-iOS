@@ -141,6 +141,7 @@ class ExpenseTableViewController: UITableViewController,
         self.delegate?.expenseDeleted(deletedExpense: oldExpense!)
         aContext?.delete(oldExpense!)
         self.loadExpensesFromSections()
+        self.reloadData()
         
         self.updateToiCloud(nil)
     }
