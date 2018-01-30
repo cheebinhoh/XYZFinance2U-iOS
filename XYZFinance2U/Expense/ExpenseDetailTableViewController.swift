@@ -322,7 +322,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
-            guard let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones)!) else {
+            guard let zone = iCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
                 
                 fatalError("Exception: iCloudZoen is expected")
             }

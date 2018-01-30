@@ -265,7 +265,7 @@ class IncomeTableViewController: UITableViewController,
         
         if !(appDelegate?.iCloudZones.isEmpty)! {
             
-            guard let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones)!) else {
+            guard let zone = iCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
                 
                 fatalError("Exception: iCloudZoen is expected")
             }
@@ -506,10 +506,11 @@ class IncomeTableViewController: UITableViewController,
         }
         
         let ckrecordzone = CKRecordZone(zoneName: XYZAccount.type)
-        let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones)!)
+        let zone = iCloudZone(of: ckrecordzone, share: false, (appDelegate?.privateiCloudZones)!)
         zone?.data = appDelegate?.incomeList
         
-        fetchAndUpdateiCloud([ckrecordzone], (appDelegate?.iCloudZones)!, { 
+        fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
+                             [ckrecordzone], (appDelegate?.privateiCloudZones)!, {
             
         })
 

@@ -190,12 +190,14 @@ class ExpenseTableViewController: UITableViewController,
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
-        let icloudzone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones)!)
+        let icloudzone = iCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!)
         icloudzone?.data = appDelegate?.expenseList
     
         let lastTokenChangeFetch = icloudzone?.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date
 
-        fetchAndUpdateiCloud([ckrecordzone], (appDelegate?.iCloudZones)!, {
+        fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
+                             [ckrecordzone],
+                             (appDelegate?.privateiCloudZones)!, {
             
             if let _ = expense {
                 
@@ -270,7 +272,8 @@ class ExpenseTableViewController: UITableViewController,
                                                 
                                                 DispatchQueue.main.async {
                                                     
-                                                    fetchiCloudZoneChange([ckrecordzone], (appDelegate?.iCloudZones)!) {
+                                                    fetchiCloudZoneChange(CKContainer.default().privateCloudDatabase,
+                                                                          [ckrecordzone], (appDelegate?.privateiCloudZones)!) {
                                                     
                                                         //We do not need UICloudSharingController
                                                         DispatchQueue.main.async {
@@ -329,7 +332,8 @@ class ExpenseTableViewController: UITableViewController,
                                         
                                         DispatchQueue.main.async {
                                             
-                                            fetchiCloudZoneChange([ckrecordzone], (appDelegate?.iCloudZones)!) {
+                                            fetchiCloudZoneChange(CKContainer.default().privateCloudDatabase,
+                                                                  [ckrecordzone], (appDelegate?.privateiCloudZones)!) {
                                                 
                                             }
                                         }
@@ -372,7 +376,7 @@ class ExpenseTableViewController: UITableViewController,
         
         if !(appDelegate?.iCloudZones.isEmpty)! {
         
-            guard let zone = iCloudZone(of: ckrecordzone, (appDelegate?.iCloudZones)!) else {
+            guard let zone = iCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
                 
                 fatalError("Exception: iCloudZoen is expected")
             }

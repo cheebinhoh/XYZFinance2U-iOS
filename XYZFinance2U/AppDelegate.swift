@@ -25,6 +25,33 @@ class AppDelegate: UIResponder,
         let acceptSharesOp = CKAcceptSharesOperation(shareMetadatas: [cloudKitShareMetadata])
         acceptSharesOp.acceptSharesCompletionBlock = { error in
             
+            let database = CKContainer.default().sharedCloudDatabase
+            var zones = [CKRecordZone]()
+            
+            print("----- \(self.shareiCloudZones.count)")
+            for icloudZone in self.shareiCloudZones {
+                
+                if let name = icloudZone.value(forKey: XYZiCloudZone.name) as? String {
+                    
+                    for privateiCloudZone in self.privateiCloudZones {
+                    
+                        if let privateName = privateiCloudZone.value(forKey: XYZiCloudZone.name) as? String, name == privateName {
+                            
+                            icloudZone.data = privateiCloudZone.data
+                            break
+                        }
+                    }
+                    
+                    print("---- \(name)")
+                    let newZone = CKRecordZone(zoneName: name)
+                    zones.append(newZone)
+                }
+            }
+            
+            //fetchiCloudZoneChange(database, zones, self.shareiCloudZones, {
+                
+            //    print("----- done fetching share database")
+            //})
         }
         
         CKContainer.default().add(acceptSharesOp)
@@ -309,7 +336,9 @@ class AppDelegate: UIResponder,
         incomeList = loadAccounts()!
         expenseList = loadExpenses()!
         iCloudZones = loadiCloudZone()!
-        
+        shareiCloudZones = [XYZiCloudZone]()
+        privateiCloudZones = [XYZiCloudZone]()
+
         var incomeiCloudZone: XYZiCloudZone?
         var expenseiCloudZone: XYZiCloudZone?
         var expenseShareiCloudZone: XYZiCloudZone?
@@ -362,7 +391,6 @@ class AppDelegate: UIResponder,
             zonesToBeSaved.append(expenseCustomZone)
         }
         
-        let expenseShareCustomZone = CKRecordZone(zoneName: XYZExpense.type)
         if let _ = expenseShareiCloudZone {
             
             
@@ -370,6 +398,9 @@ class AppDelegate: UIResponder,
             
             expenseShareiCloudZone = XYZiCloudZone(name: XYZExpense.type, context: managedContext())
             expenseShareiCloudZone?.setValue(true, forKey: XYZiCloudZone.inShareDB)
+            iCloudZones.append(expenseShareiCloudZone!)
+            shareiCloudZones.append(expenseShareiCloudZone!)
+            
             saveManageContext()
         }
         
@@ -407,7 +438,9 @@ class AppDelegate: UIResponder,
                         
                         saveManageContext()
                         
-                        fetchiCloudZoneChange(saved!, self.privateiCloudZones, {
+                        fetchiCloudZoneChange(CKContainer.default().privateCloudDatabase,
+                                              saved!,
+                                              self.privateiCloudZones, {
                             
                             for icloudzone in self.privateiCloudZones {
                                 
@@ -447,7 +480,7 @@ class AppDelegate: UIResponder,
         
         if !zonesToBeFetched.isEmpty {
             
-            fetchAndUpdateiCloud(zonesToBeFetched, self.privateiCloudZones, {
+            fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase, zonesToBeFetched, self.privateiCloudZones, {
 
                 for icloudzone in self.privateiCloudZones {
 
@@ -462,7 +495,7 @@ class AppDelegate: UIResponder,
                             
                             incomeView.reloadData()
                             
-                            registeriCloudSubscription([icloudzone])
+                            registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
                         }
                         
                     case XYZExpense.type:
@@ -472,7 +505,7 @@ class AppDelegate: UIResponder,
                             
                             expenseView.reloadData()
                             
-                            registeriCloudSubscription([icloudzone])
+                            registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
                         }
             
                     default:

@@ -556,13 +556,12 @@ func createUpdateExpense(_ record: CKRecord,
     return (outputExpenseList, outputUnprocessedCkrecords)
 }
 
-func fetchiCloudZoneChange(_ zones: [CKRecordZone],
+func fetchiCloudZoneChange(_ database: CKDatabase,
+                           _ zones: [CKRecordZone],
                            _ icloudZones: [XYZiCloudZone],
                            _ completionblock: @escaping () -> Void ) {
  
     let aContext = managedContext()
-    let container = CKContainer.default()
-    let database = container.privateCloudDatabase
     var changedZoneIDs: [CKRecordZoneID] = []
     var optionsByRecordZoneID = [CKRecordZoneID: CKFetchRecordZoneChangesOptions]()
     var unprocessedCkrecords = [CKRecord]()
@@ -600,7 +599,9 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     opZoneChange.recordChangedBlock = { (record) in
         
         let ckrecordzone = CKRecordZone(zoneName: record.recordID.zoneID.zoneName)
-        let icloudZone = iCloudZone(of: ckrecordzone, icloudZones)
+        let icloudZone = iCloudZone(of: ckrecordzone,
+                                    share: CKContainer.default().sharedCloudDatabase == database,
+                                    icloudZones)
         
         let zoneName = icloudZone?.value(forKey: XYZiCloudZone.name) as? String
         
@@ -815,20 +816,28 @@ func fetchiCloudZoneChange(_ zones: [CKRecordZone],
     database.add(opZoneChange)
 }
 
-func iCloudZone(of zone: CKRecordZone, _ icloudZones: [XYZiCloudZone]) -> XYZiCloudZone? {
+func iCloudZone(of zone: CKRecordZone,
+                share inShare: Bool,
+                _ icloudZones: [XYZiCloudZone]) -> XYZiCloudZone? {
     
     for icloudzone in icloudZones {
         
         if let name = icloudzone.value(forKey: XYZiCloudZone.name) as? String, zone.zoneID.zoneName == name {
             
-            return icloudzone
+            let isInShare = icloudzone.value(forKey: XYZiCloudZone.inShareDB) as? Bool ?? false
+            
+            if isInShare == inShare {
+            
+                return icloudzone
+            }
         }
     }
     
     return nil
 }
 
-func pushChangeToiCloudZone(_ zones: [CKRecordZone],
+func pushChangeToiCloudZone(_ database: CKDatabase,
+                            _ zones: [CKRecordZone],
                             _ icloudZones: [XYZiCloudZone],
                             _ completionblock: @escaping () -> Void) {
     
@@ -839,18 +848,20 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
         switch name {
             
             case XYZAccount.type:
-                if let iCloudZone = iCloudZone(of: zone, icloudZones) {
+                if let iCloudZone = iCloudZone(of: zone,
+                                               share: CKContainer.default().sharedCloudDatabase == database,
+                                               icloudZones) {
                     
                     guard let incomeList = iCloudZone.data as? [XYZAccount] else {
                         
                         fatalError("Exception: [XYZAccount] is expected")
                     }
                     
-                    saveAccountsToiCloud(zone, iCloudZone, incomeList, {
+                    saveAccountsToiCloud(database, zone, iCloudZone, incomeList, {
                         
                         OperationQueue.main.addOperation {
                             
-                            fetchiCloudZoneChange([zone], icloudZones, {
+                            fetchiCloudZoneChange(database, [zone], icloudZones, {
                                 
                             })
                             
@@ -860,18 +871,20 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
                 }
             
         case XYZExpense.type:
-            if let iCloudZone = iCloudZone(of: zone, icloudZones) {
+            if let iCloudZone = iCloudZone(of: zone,
+                                           share: CKContainer.default().sharedCloudDatabase == database,
+                                           icloudZones) {
             
                 guard let expenseList = iCloudZone.data as? [XYZExpense] else {
                     
                     fatalError("Exception: [XYZAccount] is expected")
                 }
                 
-                saveExpensesToiCloud(zone, iCloudZone, expenseList, { 
+                saveExpensesToiCloud(database, zone, iCloudZone, expenseList, {
                     
                     OperationQueue.main.addOperation {
 
-                        fetchiCloudZoneChange([zone], icloudZones, {
+                        fetchiCloudZoneChange(database, [zone], icloudZones, {
                     
                             completionblock()
                         })
@@ -885,24 +898,26 @@ func pushChangeToiCloudZone(_ zones: [CKRecordZone],
     }
 }
 
-func fetchAndUpdateiCloud(_ zones: [CKRecordZone],
+func fetchAndUpdateiCloud(_ database: CKDatabase,
+                          _ zones: [CKRecordZone],
                           _ iCloudZones: [XYZiCloudZone],
                           _ completionblock: @escaping () -> Void) {
     
     if !iCloudZones.isEmpty {
         
-        fetchiCloudZoneChange(zones, iCloudZones, {
+        fetchiCloudZoneChange(database, zones, iCloudZones, {
             
             //we should only write to icloud if we do have changed after last token change
             OperationQueue.main.addOperation {
                 
-                pushChangeToiCloudZone(zones, iCloudZones, completionblock)
+                pushChangeToiCloudZone(database, zones, iCloudZones, completionblock)
             }
         })
     }
 }
 
-func saveExpensesToiCloud(_ zone: CKRecordZone,
+func saveExpensesToiCloud(_ database: CKDatabase,
+                          _ zone: CKRecordZone,
                           _ iCloudZone: XYZiCloudZone,
                           _ expenseList: [XYZExpense],
                           _ completionblock: @escaping () -> Void ) {
@@ -954,16 +969,15 @@ func saveExpensesToiCloud(_ zone: CKRecordZone,
         }
     }
 
-    saveExpensesToiCloud(iCloudZone, expenseListToBeSaved!, recordIdsToBeDeleted, completionblock)
+    saveExpensesToiCloud(database, iCloudZone, expenseListToBeSaved!, recordIdsToBeDeleted, completionblock)
 }
 
-func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
+func saveExpensesToiCloud(_ database: CKDatabase,
+                          _ iCloudZone: XYZiCloudZone,
                           _ expenseList: [XYZExpense],
                           _ recordIdsToBeDeleted: [CKRecordID],
                           _ completionblock: @escaping () -> Void ) {
     
-    let container = CKContainer.default()
-    let database = container.privateCloudDatabase
     var recordsToBeSaved = [CKRecord]()
     var ckshares = [CKShare?]()
     var shareRecordIds = [String]()
@@ -1113,7 +1127,8 @@ func saveExpensesToiCloud(_ iCloudZone: XYZiCloudZone,
     database.add(opToSaved)
 }
 
-func saveAccountsToiCloud(_ zone: CKRecordZone,
+func saveAccountsToiCloud(_ database: CKDatabase,
+                          _ zone: CKRecordZone,
                           _ iCloudZone: XYZiCloudZone,
                           _ incomeList: [XYZAccount],
                           _ completionblock: @escaping () -> Void ) {
@@ -1163,16 +1178,14 @@ func saveAccountsToiCloud(_ zone: CKRecordZone,
         recordIdsToBeDeleted.append(ckrecordId)
     }
 
-    saveAccountsToiCloud(iCloudZone, incomeListToBeSaved!, recordIdsToBeDeleted, completionblock)
+    saveAccountsToiCloud(database, iCloudZone, incomeListToBeSaved!, recordIdsToBeDeleted, completionblock)
 }
 
-func saveAccountsToiCloud(_ iCloudZone: XYZiCloudZone,
+func saveAccountsToiCloud(_ database: CKDatabase,
+                          _ iCloudZone: XYZiCloudZone,
                           _ incomeList: [XYZAccount],
                           _ recordIdsToBeDeleted: [CKRecordID],
                           _ completionblock: @escaping () -> Void ) {
-    
-    let container = CKContainer.default()
-    let database = container.privateCloudDatabase
     
     var recordsToBeSaved = [CKRecord]()
 
@@ -1227,7 +1240,8 @@ func saveAccountsToiCloud(_ iCloudZone: XYZiCloudZone,
     database.add(opToSaved)
 }
 
-func registeriCloudSubscription(_ iCloudZones: [XYZiCloudZone]) {
+func registeriCloudSubscription(_ database: CKDatabase,
+                                _ iCloudZones: [XYZiCloudZone]) {
     
     for icloudzone in iCloudZones {
         
@@ -1235,9 +1249,6 @@ func registeriCloudSubscription(_ iCloudZones: [XYZiCloudZone]) {
             
             fatalError("Exception: iCloud zone name is expected")
         }
-        
-        let container = CKContainer.default()
-        let database = container.privateCloudDatabase
         
         let ckrecordzone = CKRecordZone(zoneName: name)
         
