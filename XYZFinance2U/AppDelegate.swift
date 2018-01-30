@@ -134,7 +134,8 @@ class AppDelegate: UIResponder,
     var expenseList = [XYZExpense]()
     var incomeList = [XYZAccount]()
     var iCloudZones = [XYZiCloudZone]()
-    //var iCloudEnable = false
+    var shareiCloudZones = [XYZiCloudZone]()
+    var privateiCloudZones = [XYZiCloudZone]()
     var window: UIWindow?
     var orientation = UIInterfaceOrientationMask.all
     
@@ -163,6 +164,7 @@ class AppDelegate: UIResponder,
         
         syncWithiCloudAndCoreData()
         
+        /*
         let sharedData = CKContainer.default().sharedCloudDatabase
         sharedData.fetchAllRecordZones { (recordzones, error) in
         
@@ -178,7 +180,7 @@ class AppDelegate: UIResponder,
                 }
             }
         }
-        
+        */
         // Override point for customization after application launch.
 
         return true
@@ -310,21 +312,32 @@ class AppDelegate: UIResponder,
         
         var incomeiCloudZone: XYZiCloudZone?
         var expenseiCloudZone: XYZiCloudZone?
+        var expenseShareiCloudZone: XYZiCloudZone?
         
         for icloudzone in iCloudZones {
             
             switch (icloudzone.value(forKey: XYZiCloudZone.name) as? String )! {
                 
-            case XYZAccount.type:
-                icloudzone.data = incomeList  // We do not need to keep it in persistent state as it is already stored core data
-                incomeiCloudZone = icloudzone
+                case XYZAccount.type:
+                    icloudzone.data = incomeList  // We do not need to keep it in persistent state as it is already stored core data
+                    incomeiCloudZone = icloudzone
+                    privateiCloudZones.append(icloudzone)
                 
-            case XYZExpense.type:
-                icloudzone.data = expenseList
-                expenseiCloudZone = icloudzone
+                case XYZExpense.type:
+                    if let inShareDB = icloudzone.value(forKey: XYZiCloudZone.inShareDB) as? Bool, inShareDB {
+                        
+                        expenseShareiCloudZone = icloudzone
+                        shareiCloudZones.append(icloudzone)
+                        
+                    } else {
+                        
+                        icloudzone.data = expenseList
+                        expenseiCloudZone = icloudzone
+                        privateiCloudZones.append(icloudzone)
+                    }
                 
-            default:
-                fatalError("Exception: zone type is not supported")
+                default:
+                    fatalError("Exception: zone type is not supported")
             }
         }
         
@@ -349,6 +362,17 @@ class AppDelegate: UIResponder,
             zonesToBeSaved.append(expenseCustomZone)
         }
         
+        let expenseShareCustomZone = CKRecordZone(zoneName: XYZExpense.type)
+        if let _ = expenseShareiCloudZone {
+            
+            
+        } else {
+            
+            expenseShareiCloudZone = XYZiCloudZone(name: XYZExpense.type, context: managedContext())
+            expenseShareiCloudZone?.setValue(true, forKey: XYZiCloudZone.inShareDB)
+            saveManageContext()
+        }
+        
         if !zonesToBeSaved.isEmpty {
             
             let op = CKModifyRecordZonesOperation(recordZonesToSave: zonesToBeSaved, recordZoneIDsToDelete: nil)
@@ -367,24 +391,25 @@ class AppDelegate: UIResponder,
                             
                             switch zone.zoneID.zoneName {
                                 
-                            case XYZAccount.type:
-                                icloudzone.data = self.incomeList
+                                case XYZAccount.type:
+                                    icloudzone.data = self.incomeList
                                 
-                            case XYZExpense.type:
-                                icloudzone.data = self.expenseList
+                                case XYZExpense.type:
+                                    icloudzone.data = self.expenseList
                                 
-                            default:
-                                fatalError("Exception: \(zone.zoneID.zoneName) is not supported")
+                                default:
+                                    fatalError("Exception: \(zone.zoneID.zoneName) is not supported")
                             }
                             
                             self.iCloudZones.append(icloudzone)
+                            self.privateiCloudZones.append(icloudzone)
                         }
                         
                         saveManageContext()
                         
-                        fetchiCloudZoneChange(saved!, self.iCloudZones, {
+                        fetchiCloudZoneChange(saved!, self.privateiCloudZones, {
                             
-                            for icloudzone in self.iCloudZones {
+                            for icloudzone in self.privateiCloudZones {
                                 
                                 let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
                                 switch zName! {
@@ -422,9 +447,9 @@ class AppDelegate: UIResponder,
         
         if !zonesToBeFetched.isEmpty {
             
-            fetchAndUpdateiCloud(zonesToBeFetched, self.iCloudZones, {
+            fetchAndUpdateiCloud(zonesToBeFetched, self.privateiCloudZones, {
 
-                for icloudzone in self.iCloudZones {
+                for icloudzone in self.privateiCloudZones {
 
                     let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
                     

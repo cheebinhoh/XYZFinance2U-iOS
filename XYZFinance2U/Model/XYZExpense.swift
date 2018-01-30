@@ -14,7 +14,7 @@ import CoreLocation
 class XYZExpense: NSManagedObject {
     
     // MARK: - static property
-    
+
     static let type = "XYZExpense"
     static let detail = "detail"
     static let amount = "amount"

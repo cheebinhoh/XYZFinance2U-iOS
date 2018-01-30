@@ -22,10 +22,12 @@ class XYZiCloudZone: NSManagedObject {
     static let name = "name"
     static let changeTokenLastFetch = "changeTokenLastFetch"
     static let deleteRecordIdList = "deleteRecordIdList"
+    static let inShareDB = "inShareDB"
     
      // MARK: - property
     
     var name = ""
+    var inShareDB = false
     var changeToken = NSData()
     var changeTokenLastFetch = Date()
     
