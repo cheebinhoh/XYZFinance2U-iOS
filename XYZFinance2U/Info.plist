@@ -63,6 +63,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>CKSharingSupported</key>
-	<string></string>
+	<true/>
 </dict>
 </plist>

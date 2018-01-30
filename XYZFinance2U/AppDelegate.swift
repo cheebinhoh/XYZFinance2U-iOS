@@ -22,30 +22,60 @@ class AppDelegate: UIResponder,
     func application(_ application: UIApplication,
                      userDidAcceptCloudKitShareWith cloudKitShareMetadata: CKShareMetadata) {
         
-        print("---- receive shared")
-        /*
-        let aContext = managedContext()
+        let acceptSharesOp = CKAcceptSharesOperation(shareMetadatas: [cloudKitShareMetadata])
+        acceptSharesOp.acceptSharesCompletionBlock = { error in
+            
+        }
         
+        CKContainer.default().add(acceptSharesOp)
+        
+        //TopicLocalCache.share.container.add(acceptSharesOp)
+        
+        /*
         if let record = cloudKitShareMetadata.rootRecord {
             
             let recordZone = CKRecordZone(zoneName: record.recordType)
             let icloudZone = iCloudZone(of: recordZone, self.iCloudZones)
             
             switch record.recordType {
+         
                 case XYZExpense.type:
                     guard var expenseList = icloudZone?.data as? [XYZExpense] else {
                         
                         fatalError("Exception: expense is expected")
                     }
                     
-                    expenseList = createUpdateExpense(record, expenseList, aContext!)
+                    let unprocessedRecords = [CKRecord]()
+                    (expenseList, _) = createUpdateExpense(record, expenseList, unprocessedRecords, aContext!)
                     icloudZone?.data = expenseList
+                
+                    guard let splitView = self.window?.rootViewController as? MainSplitViewController else {
+                        
+                        fatalError("Exception: MainSplitViewController is expected")
+                    }
+                    
+                    guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+                        
+                        fatalError("Exception: MainUITabBarController is expected")
+                    }
+                    
+                    guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
+                        
+                        fatalError("Exception: UINavigationController is expected")
+                    }
+                    
+                    guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+                        
+                        fatalError("Exception: ExpenseTableViewController is expected")
+                    }
+                
+                    expenseView.reloadData()
                 
                 default:
                     fatalError("Exception: \(record.recordType) is not supported")
             }
         }
-         */
+        */
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter,
@@ -132,6 +162,22 @@ class AppDelegate: UIResponder,
         application.registerForRemoteNotifications()
         
         syncWithiCloudAndCoreData()
+        
+        let sharedData = CKContainer.default().sharedCloudDatabase
+        sharedData.fetchAllRecordZones { (recordzones, error) in
+        
+            print("-------- fetch shared zone")
+            if let _ = error {
+                
+                print("-------- error in fetch shared database zone = \(String(describing: error))")
+            } else {
+                
+                for zone in recordzones! {
+                    
+                    print("----- \(zone.zoneID.zoneName)")
+                }
+            }
+        }
         
         // Override point for customization after application launch.
 
