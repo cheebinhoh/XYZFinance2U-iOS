@@ -402,7 +402,8 @@ func createUpdateAccount(_ record: CKRecord,
     return outputIncomeList
 }
 
-func createUpdateExpense(_ record: CKRecord,
+func createUpdateExpense(_ isShared: Bool,
+                         _ record: CKRecord,
                          _ expenseList: [XYZExpense],
                          _ unprocessedCKrecords: [CKRecord],
                          _ context: NSManagedObjectContext) -> ([XYZExpense], [CKRecord]) {
@@ -489,6 +490,8 @@ func createUpdateExpense(_ record: CKRecord,
         expenseToBeUpdated?.setValue(amount, forKey: XYZExpense.amount)
         expenseToBeUpdated?.setValue(date, forKey: XYZExpense.date)
         expenseToBeUpdated?.setValue(shareRecordId, forKey: XYZExpense.shareRecordId)
+        expenseToBeUpdated?.setValue(isShared, forKey: XYZExpense.isShared)
+        print("****************** \(isShared)")
         
         let nrOfReceipt = record[XYZExpense.nrOfReceipts] as? Int
         for index in 0..<nrOfReceipt! {
@@ -622,7 +625,11 @@ func fetchiCloudZoneChange(_ database: CKDatabase,
                     fatalError("Exception: expense is expected")
                 }
          
-                (expenseList, unprocessedCkrecords) = createUpdateExpense(record, expenseList, unprocessedCkrecords, aContext!)
+                (expenseList, unprocessedCkrecords) = createUpdateExpense(CKContainer.default().sharedCloudDatabase == database,
+                                                                          record,
+                                                                          expenseList,
+                                                                          unprocessedCkrecords,
+                                                                          aContext!)
                 
                 icloudZone?.data = expenseList
             
@@ -930,7 +937,9 @@ func saveExpensesToiCloud(_ database: CKDatabase,
         
         for expense in expenseList {
             
-            if let lastChanged = expense.value(forKey: XYZExpense.lastRecordChange) as? Date {
+            if let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool, isShared {
+            
+            } else if let lastChanged = expense.value(forKey: XYZExpense.lastRecordChange) as? Date {
                 
                 if lastChanged > lastChangeTokenFetch {
                     

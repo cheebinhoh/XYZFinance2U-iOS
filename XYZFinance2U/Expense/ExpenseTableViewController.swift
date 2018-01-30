@@ -305,7 +305,7 @@ class ExpenseTableViewController: UITableViewController,
                                         }
                                     }
                                     
-                                    participant.permission = .readWrite
+                                    participant.permission = .readOnly
                                     ckshare.addParticipant(participant)
                                 }
                                 

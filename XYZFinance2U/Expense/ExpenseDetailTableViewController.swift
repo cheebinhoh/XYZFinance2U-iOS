@@ -220,8 +220,8 @@ class ExpenseDetailTableViewController: UITableViewController,
         expense?.setValue(detail, forKey: XYZExpense.detail)
         expense?.setValue(amount, forKey: XYZExpense.amount)
         expense?.setValue(date, forKey: XYZExpense.date)
-        //expense?.setValue(hasgeolocation, forKey: XYZExpense.hasgeolocation)
-        
+        expense?.setValue(false, forKey: XYZExpense.isShared) // if we can save it, it means it is not readonly
+    
         if hasLocation, let _ = cllocation {
             
             let data = NSKeyedArchiver.archivedData(withRootObject: cllocation!)

@@ -28,6 +28,7 @@ class XYZExpense: NSManagedObject {
     static let nrOfPersons = "nrOfPersons"
     static let shareRecordId = "shareRecordId"
     static let shareUrl = "shareUrl"
+    static let isShared = "isShared"
     
     // MARK: - property
     
@@ -41,6 +42,7 @@ class XYZExpense: NSManagedObject {
     var lastRecordChange = Date()
     var shareRecordId: String = ""
     var shareUrl: String = ""
+    var isShared = false
     
     // MARK: - function
     
