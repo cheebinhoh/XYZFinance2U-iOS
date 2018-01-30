@@ -190,7 +190,7 @@ class ExpenseTableViewController: UITableViewController,
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
-        let icloudzone = iCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!)
+        let icloudzone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!)
         icloudzone?.data = appDelegate?.expenseList
     
         let lastTokenChangeFetch = icloudzone?.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date
@@ -376,7 +376,7 @@ class ExpenseTableViewController: UITableViewController,
         
         if !(appDelegate?.iCloudZones.isEmpty)! {
         
-            guard let zone = iCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
+            guard let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
                 
                 fatalError("Exception: iCloudZoen is expected")
             }

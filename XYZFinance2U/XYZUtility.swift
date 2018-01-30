@@ -599,9 +599,9 @@ func fetchiCloudZoneChange(_ database: CKDatabase,
     opZoneChange.recordChangedBlock = { (record) in
         
         let ckrecordzone = CKRecordZone(zoneName: record.recordID.zoneID.zoneName)
-        let icloudZone = iCloudZone(of: ckrecordzone,
-                                    share: CKContainer.default().sharedCloudDatabase == database,
-                                    icloudZones)
+        let icloudZone = GetiCloudZone(of: ckrecordzone,
+                                       share: CKContainer.default().sharedCloudDatabase == database,
+                                       icloudZones)
         
         let zoneName = icloudZone?.value(forKey: XYZiCloudZone.name) as? String
         
@@ -816,7 +816,7 @@ func fetchiCloudZoneChange(_ database: CKDatabase,
     database.add(opZoneChange)
 }
 
-func iCloudZone(of zone: CKRecordZone,
+func GetiCloudZone(of zone: CKRecordZone,
                 share inShare: Bool,
                 _ icloudZones: [XYZiCloudZone]) -> XYZiCloudZone? {
     
@@ -848,9 +848,9 @@ func pushChangeToiCloudZone(_ database: CKDatabase,
         switch name {
             
             case XYZAccount.type:
-                if let iCloudZone = iCloudZone(of: zone,
-                                               share: CKContainer.default().sharedCloudDatabase == database,
-                                               icloudZones) {
+                if let iCloudZone = GetiCloudZone(of: zone,
+                                                  share: CKContainer.default().sharedCloudDatabase == database,
+                                                  icloudZones) {
                     
                     guard let incomeList = iCloudZone.data as? [XYZAccount] else {
                         
@@ -871,9 +871,9 @@ func pushChangeToiCloudZone(_ database: CKDatabase,
                 }
             
         case XYZExpense.type:
-            if let iCloudZone = iCloudZone(of: zone,
-                                           share: CKContainer.default().sharedCloudDatabase == database,
-                                           icloudZones) {
+            if let iCloudZone = GetiCloudZone(of: zone,
+                                              share: CKContainer.default().sharedCloudDatabase == database,
+                                              icloudZones) {
             
                 guard let expenseList = iCloudZone.data as? [XYZExpense] else {
                     

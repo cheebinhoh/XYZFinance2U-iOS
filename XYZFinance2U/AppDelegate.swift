@@ -25,10 +25,14 @@ class AppDelegate: UIResponder,
         let acceptSharesOp = CKAcceptSharesOperation(shareMetadatas: [cloudKitShareMetadata])
         acceptSharesOp.acceptSharesCompletionBlock = { error in
             
+            if let _ = error {
+                
+                print("-------- error in accept share = \(String(describing: error))")
+            }
+            
             let database = CKContainer.default().sharedCloudDatabase
             var zones = [CKRecordZone]()
             
-            print("----- \(self.shareiCloudZones.count)")
             for icloudZone in self.shareiCloudZones {
                 
                 if let name = icloudZone.value(forKey: XYZiCloudZone.name) as? String {
@@ -41,17 +45,58 @@ class AppDelegate: UIResponder,
                             break
                         }
                     }
-                    
-                    print("---- \(name)")
-                    let newZone = CKRecordZone(zoneName: name)
+
+                    let newZone = CKRecordZone(zoneID: cloudKitShareMetadata.share.recordID.zoneID)
                     zones.append(newZone)
                 }
             }
             
-            //fetchiCloudZoneChange(database, zones, self.shareiCloudZones, {
+            DispatchQueue.main.async {
                 
-            //    print("----- done fetching share database")
-            //})
+                fetchiCloudZoneChange(database, zones, self.shareiCloudZones, {
+                    
+                    DispatchQueue.main.async {
+                        
+                        for iCloudZone in self.shareiCloudZones {
+                            
+                            let name = iCloudZone.value(forKey: XYZiCloudZone.name) as? String
+                        
+                            switch name! {
+                                case XYZExpense.type:
+                                    guard let splitView = self.window?.rootViewController as? MainSplitViewController else {
+                                        
+                                        fatalError("Exception: MainSplitViewController is expected")
+                                    }
+                                    
+                                    guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+                                        
+                                        fatalError("Exception: MainUITabBarController is expected")
+                                    }
+                            
+                                    guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
+                                        
+                                        fatalError("Exception: UINavigationController is expected")
+                                    }
+                                    
+                                    guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+                                        
+                                        fatalError("Exception: ExpenseTableViewController is expected")
+                                    }
+                                
+                                    let zone = CKRecordZone(zoneName: XYZExpense.type)
+                                    let privateiCloudZone = GetiCloudZone(of: zone, share: false, self.privateiCloudZones)
+                                
+                                    privateiCloudZone?.data = iCloudZone.data
+                                    self.expenseList = (iCloudZone.data as? [XYZExpense])!
+                                    expenseView.reloadData()
+                                
+                                default:
+                                    fatalError("Exception: \(String(describing: name)) is not supported")
+                            }
+                        }
+                    }
+                })
+            }
         }
         
         CKContainer.default().add(acceptSharesOp)
