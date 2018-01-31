@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MlQ-tP-LrG">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -29,11 +29,11 @@
             <objects>
                 <viewController storyboardIdentifier="lockScreenView" id="ho8-Yj-zuC" customClass="LockScreenViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zvC-Ic-M8f">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lId-0z-eBX">
-                                <rect key="frame" x="93" y="256" width="189" height="155.5"/>
+                                <rect key="frame" x="65.5" y="206.5" width="189" height="155.5"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" translatesAutoresizingMaskIntoConstraints="NO" id="Cjo-OQ-P7h">
                                         <rect key="frame" x="0.0" y="0.0" width="189" height="135"/>
@@ -86,15 +86,15 @@
             <objects>
                 <tableViewController id="f2j-x7-CLG" userLabel="IncomeListTableView" customClass="IncomeTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="DOy-6q-Sit">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="IncomeTableViewCell" rowHeight="70" id="j7T-3u-Niu" userLabel="IncomeTableViewCell" customClass="IncomeTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="70"/>
+                                <rect key="frame" x="0.0" y="55.5" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="j7T-3u-Niu" id="eLK-LZ-xE9">
-                                    <rect key="frame" x="0.0" y="0.0" width="341" height="69.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="286" height="69.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CMI-F5-8uV">
@@ -110,7 +110,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6U1-rC-2b9">
-                                            <rect key="frame" x="251" y="21.5" width="82" height="26.5"/>
+                                            <rect key="frame" x="196" y="21.5" width="82" height="26.5"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -135,14 +135,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="IncomeTotalTableViewCell" rowHeight="70" id="4Xn-4a-N0D" userLabel="IncomeTotalTableViewCell" customClass="IncomeTotalTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="125.5" width="375" height="70"/>
+                                <rect key="frame" x="0.0" y="125.5" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4Xn-4a-N0D" id="kSB-Oh-7wh">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="69.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oqt-fr-z7l">
-                                            <rect key="frame" x="252" y="22" width="82" height="26.5"/>
+                                            <rect key="frame" x="197" y="22" width="82" height="26.5"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -197,7 +197,7 @@
                     <tabBarItem key="tabBarItem" title="Incomes" image="plus" id="RqA-tQ-dzY"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1kI-jh-OGb">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -214,19 +214,19 @@
             <objects>
                 <tableViewController id="NFk-oL-P9f" customClass="ExpenseTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="CLy-VR-T8h">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="expenseTableViewCell" rowHeight="70" id="2Mj-ez-myH" userLabel="ExpenseTableViewCell" customClass="ExpenseTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="70"/>
+                                <rect key="frame" x="0.0" y="55.5" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2Mj-ez-myH" id="Rt8-ns-G36">
-                                    <rect key="frame" x="0.0" y="0.0" width="341" height="69.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="286" height="69.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ll3-uL-fct">
-                                            <rect key="frame" x="252" y="23" width="82" height="23"/>
+                                            <rect key="frame" x="197" y="23" width="82" height="23"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -238,7 +238,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tfB-lJ-RhK">
-                                            <rect key="frame" x="16" y="11" width="212" height="21"/>
+                                            <rect key="frame" x="16" y="11" width="157" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="Xaf-gw-y6l"/>
                                             </constraints>
@@ -293,7 +293,7 @@
             <objects>
                 <viewController storyboardIdentifier="ExpenseDetailViewController" id="te8-Fa-622" customClass="ExpenseDetailViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AnI-Pb-w9k">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1MI-gi-dtv">
@@ -357,25 +357,25 @@
             <objects>
                 <tableViewController id="umg-Nm-OQ6" customClass="ExchangeRateTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="rZy-qu-EGo">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="exchangeRateCell" rowHeight="65" id="8CT-uM-T2a" customClass="ExchangeRateTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="65"/>
+                                <rect key="frame" x="0.0" y="55.5" width="320" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8CT-uM-T2a" id="SMz-og-LVg">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="64.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="64.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1JT-KP-6vt">
-                                            <rect key="frame" x="16" y="11" width="226" height="11"/>
+                                            <rect key="frame" x="16" y="11" width="171" height="11"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rate" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ay2-KR-0uS">
-                                            <rect key="frame" x="311" y="19" width="48" height="27"/>
+                                            <rect key="frame" x="256" y="19" width="48" height="27"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -420,7 +420,7 @@
             <objects>
                 <viewController storyboardIdentifier="IncomeDetailViewController" id="FT0-su-8qQ" customClass="IncomeDetailViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ODs-R5-d3T">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Bank" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DSv-AJ-3xO">
@@ -499,19 +499,19 @@
             <objects>
                 <tableViewController id="zzE-10-YcG" customClass="IncomeDetailTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="nXX-J0-4SF">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="incomeDetailTextCell" rowHeight="80" id="tYI-qA-rAC" customClass="IncomeDetailTextTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="55.5" width="320" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tYI-qA-rAC" id="IHt-j0-EB1">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="dYP-SP-vAL">
-                                            <rect key="frame" x="16" y="35" width="349" height="35"/>
+                                            <rect key="frame" x="16" y="35" width="294" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="4LR-Tk-aax"/>
                                             </constraints>
@@ -520,7 +520,7 @@
                                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                         </textField>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M1a-nl-R47">
-                                            <rect key="frame" x="16" y="11" width="343" height="20"/>
+                                            <rect key="frame" x="16" y="11" width="288" height="20"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -542,14 +542,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="incomeDetailDateTextCell" rowHeight="80" id="liG-zw-pa8" userLabel="expenseDetailDateTextCell" customClass="IncomeDetailDateTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="135.5" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="135.5" width="320" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="liG-zw-pa8" id="3hr-fv-0ca">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pPk-r4-yKq">
-                                            <rect key="frame" x="16" y="35" width="359" height="35"/>
+                                            <rect key="frame" x="16" y="35" width="304" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="UGB-FJ-u1g"/>
                                             </constraints>
@@ -580,14 +580,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="incomeDetailDatePickerCell" rowHeight="300" id="4Am-P5-1k1" userLabel="expenseDetailDatePickerCell" customClass="IncomeDetailDatePickerTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="215.5" width="375" height="300"/>
+                                <rect key="frame" x="0.0" y="215.5" width="320" height="300"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4Am-P5-1k1" id="Bbx-2K-C80">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="299.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="299.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="nEV-42-Iqx">
-                                            <rect key="frame" x="16" y="0.0" width="359" height="289"/>
+                                            <rect key="frame" x="16" y="0.0" width="304" height="289"/>
                                             <date key="date" timeIntervalSinceReferenceDate="534744362.618038">
                                                 <!--2017-12-12 04:06:02 +0000-->
                                             </date>
@@ -608,10 +608,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="incomeDetailCommandTextCell" rowHeight="80" id="cxo-31-Gd4" userLabel="expenseDetailCommandTextCell" customClass="IncomeDetailCommandTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="515.5" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="515.5" width="320" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cxo-31-Gd4" id="qpd-Fy-Tug">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qDS-1l-Ky4" userLabel="Command">
@@ -632,10 +632,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="incomeDetailSwitchCell" rowHeight="45" id="CpF-Fj-TY1" userLabel="expenseDetailSwitchCell" customClass="IncomeDetailSwitchTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="595.5" width="375" height="45"/>
+                                <rect key="frame" x="0.0" y="595.5" width="320" height="45"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CpF-Fj-TY1" id="Mse-1O-yeL">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mg8-Y8-6Ha">
@@ -661,10 +661,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="incomeDetailSelectionCell" rowHeight="80" id="YaX-RK-lUZ" customClass="IncomeDetailSelectionTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="640.5" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="640.5" width="320" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YaX-RK-lUZ" id="qwM-kl-Jqy">
-                                    <rect key="frame" x="0.0" y="0.0" width="341" height="79.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4e5-q3-Ybb">
@@ -725,7 +725,7 @@
             <objects>
                 <navigationController storyboardIdentifier="ExpenseDetailNavigationController" id="PvD-tW-xPv" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Wh7-Vh-kXb">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -741,22 +741,22 @@
             <objects>
                 <tableViewController id="Gx4-Cx-7iY" customClass="ExpenseDetailTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="KGv-uw-D67">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseDetailTextCell" rowHeight="45" id="7ZH-Tx-63y" customClass="ExpenseDetailTextTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="45"/>
+                                <rect key="frame" x="0.0" y="55.5" width="320" height="45"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7ZH-Tx-63y" id="QsZ-tI-XN9">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N0q-eN-DLE">
-                                            <rect key="frame" x="45" y="10" width="320" height="35"/>
+                                            <rect key="frame" x="45" y="10" width="265" height="35"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="lXA-Ed-2cL">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="265" height="35"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="YUQ-S8-qLx"/>
                                                     </constraints>
@@ -782,14 +782,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseDetailDateTextCell" rowHeight="45" id="yUP-oJ-uxD" userLabel="expenseDetailDateTextCell" customClass="ExpenseDetailDateTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="100.5" width="375" height="45"/>
+                                <rect key="frame" x="0.0" y="100.5" width="320" height="45"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yUP-oJ-uxD" id="fl0-XW-sjP">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AUe-LX-3CZ">
-                                            <rect key="frame" x="45" y="10" width="330" height="35"/>
+                                            <rect key="frame" x="45" y="10" width="275" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="pIS-nD-e14"/>
                                             </constraints>
@@ -809,14 +809,14 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseDetailDatePickerCell" rowHeight="300" id="WW6-GR-tT4" userLabel="expenseDetailDatePickerCell" customClass="ExpenseDetailDatePickerTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="145.5" width="375" height="300"/>
+                                <rect key="frame" x="0.0" y="145.5" width="320" height="300"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WW6-GR-tT4" id="ias-5L-sdU">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="299.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="299.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ggf-Ds-SYx">
-                                            <rect key="frame" x="45" y="0.0" width="330" height="289"/>
+                                            <rect key="frame" x="45" y="0.0" width="275" height="289"/>
                                             <date key="date" timeIntervalSinceReferenceDate="534744362.618038">
                                                 <!--2017-12-12 04:06:02 +0000-->
                                             </date>
@@ -837,13 +837,13 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseDetailImagePickerCell" rowHeight="192" id="o7c-jU-16B" customClass="ExpenseDetailImagePickerTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="445.5" width="375" height="192"/>
+                                <rect key="frame" x="0.0" y="445.5" width="320" height="192"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="o7c-jU-16B" id="cHw-9y-WZh">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="191.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="191.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="20" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jer-JM-SOE">
+                                        <stackView opaque="NO" contentMode="scaleAspectFit" distribution="equalCentering" spacing="20" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jer-JM-SOE">
                                             <rect key="frame" x="46" y="21" width="320" height="150"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="150" placeholderIntrinsicHeight="150" layoutMarginsFollowReadableWidth="YES" image="defaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="Ax4-C2-Agk">
@@ -866,6 +866,7 @@
                                         </stackView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="jer-JM-SOE" secondAttribute="trailing" priority="998" constant="9" id="cUW-NZ-LDY"/>
                                         <constraint firstItem="jer-JM-SOE" firstAttribute="leading" secondItem="cHw-9y-WZh" secondAttribute="leadingMargin" constant="30" id="dfD-0v-A6T"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="jer-JM-SOE" secondAttribute="bottom" constant="10" id="juX-jP-0CJ"/>
                                         <constraint firstItem="jer-JM-SOE" firstAttribute="top" secondItem="cHw-9y-WZh" secondAttribute="topMargin" constant="10" id="skH-5X-Ana"/>
@@ -877,10 +878,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseDetailCommandTextCell" id="Tjk-9B-3vc" userLabel="expenseDetailCommandTextCell" customClass="ExpenseDetailCommandTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="637.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="637.5" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Tjk-9B-3vc" id="Ril-0t-baW">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HtK-nY-joS" userLabel="Command">
@@ -904,11 +905,11 @@
                                     <outlet property="command" destination="HtK-nY-joS" id="jk3-hp-9F9"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseDetailLocationTextCell" rowHeight="46" id="kd8-3P-hDH" userLabel="expenseDetailLocationTextCell" customClass="ExpenseDetailLocationTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="681.5" width="375" height="46"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseDetailLocationTextCell" rowHeight="46" id="kd8-3P-hDH" userLabel="expenseDetailLocationTextCell" customClass="ExpenseDetailLocationTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="681.5" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kd8-3P-hDH" id="AZh-ct-Bwh">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="45.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="45.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark it at a location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ik9-sI-i9T" userLabel="Label">
@@ -937,10 +938,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="expenseDetailLocationPickerTextCell" rowHeight="46" id="XC4-PS-hna" userLabel="expenseDetailLocationPickerTextCell" customClass="ExpenseDetailLocationPickerTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="727.5" width="375" height="46"/>
+                                <rect key="frame" x="0.0" y="727.5" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XC4-PS-hna" id="Q1K-1u-qBP">
-                                    <rect key="frame" x="0.0" y="0.0" width="342" height="45.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="286" height="45.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="location..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IOq-bn-NVL" userLabel="Label">
@@ -999,11 +1000,11 @@
             <objects>
                 <viewController storyboardIdentifier="ExpenseDetailLocationViewController" id="ibw-Ip-Vg5" customClass="ExpenseDetailLocationViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ROW-dV-0Cj">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="N5E-ct-ZyE">
-                                <rect key="frame" x="0.0" y="64" width="375" height="510"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="411"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1047,14 +1048,14 @@
             <objects>
                 <viewController storyboardIdentifier="ExpenseDetailImageViewController" id="FHL-b3-PJb" customClass="ExpenseDetailImageViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="haS-Sk-fRv">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SfN-xw-rth">
-                                <rect key="frame" x="0.0" y="64" width="375" height="510"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="411"/>
                                 <subviews>
                                     <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="65b-9C-Wat">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="510"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="411"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="ANL-Bn-bhJ" appends="YES" id="rC4-iu-7AU"/>
@@ -1102,19 +1103,19 @@
             <objects>
                 <tableViewController id="vW8-DY-qcd" customClass="SettingTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="8pt-Wx-DBo">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="settingTableCell" rowHeight="50" id="fDn-An-pxj" customClass="SettingTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="55.5" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fDn-An-pxj" id="L83-Kc-5tb">
-                                    <rect key="frame" x="0.0" y="0.0" width="341" height="49.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="286" height="49.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEy-AC-c1k">
-                                            <rect key="frame" x="16" y="0.0" width="325" height="50"/>
+                                            <rect key="frame" x="16" y="0.0" width="270" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="B79-1b-dYa"/>
                                             </constraints>
@@ -1154,19 +1155,19 @@
             <objects>
                 <tableViewController id="ubu-7T-6xI" customClass="SettingDetailTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="UPT-PC-2xT">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingDetailAboutCell" id="bYA-dM-YhX" customClass="SettingDetailAboutTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bYA-dM-YhX" id="5XJ-SI-iWE">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <textView multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="350" placeholderIntrinsicHeight="299.5" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YPQ-k2-nft">
-                                            <rect key="frame" x="15" y="0.0" width="350" height="43.5"/>
+                                            <rect key="frame" x="15" y="0.0" width="295" height="43.5"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -1201,11 +1202,11 @@
             <objects>
                 <viewController id="Xe7-R8-DjY" customClass="AboutViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0KS-E6-a7F">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5P9-Ea-pOH">
-                                <rect key="frame" x="16" y="126" width="343" height="100"/>
+                                <rect key="frame" x="16" y="126" width="288" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="qEh-BH-4ok"/>
                                 </constraints>
@@ -1217,7 +1218,7 @@ Chee Bin HOH, 2017</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XYZFinance2U" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lcd-SV-3xf">
-                                <rect key="frame" x="16" y="84" width="119.5" height="21"/>
+                                <rect key="frame" x="16" y="84" width="64.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1251,7 +1252,7 @@ Chee Bin HOH, 2017</string>
                     <tabBarItem key="tabBarItem" title="Expenses" image="minus" id="RJq-1N-ash"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="rjI-3a-qk9">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1270,7 +1271,7 @@ Chee Bin HOH, 2017</string>
                     <tabBarItem key="tabBarItem" title="Settings" image="settings" id="yjz-8M-Awz"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="fJY-Xc-B9r">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1288,7 +1289,7 @@ Chee Bin HOH, 2017</string>
                 <navigationController storyboardIdentifier="IncomeDetailNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="qE7-Wb-Nt1" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4KR-W4-1Pb">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1305,15 +1306,15 @@ Chee Bin HOH, 2017</string>
             <objects>
                 <tableViewController storyboardIdentifier="SelectionTableViewController" id="qMP-z0-vPH" customClass="SelectionTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="jdF-D9-k3i">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="selectionItemCell" id="Toc-ZZ-uBG" customClass="SelectionItemTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Toc-ZZ-uBG" id="B02-ge-3JC">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="re8-JO-ugY">
@@ -1353,7 +1354,7 @@ Chee Bin HOH, 2017</string>
                 <navigationController storyboardIdentifier="SettingDetailNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="qDJ-Cv-NAd" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="byk-GT-EsY">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1371,7 +1372,7 @@ Chee Bin HOH, 2017</string>
                 <navigationController storyboardIdentifier="SelectionNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="omO-iR-F1i" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3Bq-eL-DSr">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1389,7 +1390,7 @@ Chee Bin HOH, 2017</string>
                 <navigationController storyboardIdentifier="ExchangeRateNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="gTl-aa-IoE" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="OXJ-cl-3X2">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
