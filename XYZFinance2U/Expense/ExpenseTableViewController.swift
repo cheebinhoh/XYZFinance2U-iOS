@@ -527,6 +527,16 @@ class ExpenseTableViewController: UITableViewController,
         
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
+        var commands = [UIContextualAction]()
+        
+        guard let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense] else {
+            
+            fatalError("Exception: [XYZExpense] is expected")
+        }
+        
+        let expense = sectionExpenseList[indexPath.row]
+        let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
+ 
         let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, handler in
             
             // Delete the row from the data source
@@ -535,34 +545,34 @@ class ExpenseTableViewController: UITableViewController,
             handler(true)
         }
         
-        let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
-            let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let copyUrlOption = UIAlertAction(title: "Copy share url", style: .default, handler: { (action) in
-      
-                guard let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense] else {
-                    
-                    fatalError("Exception: [XYZExpense] is expected")
-                }
+        commands.append(delete)
+        
+        if !(isShared!) {
             
-                let expense = sectionExpenseList[indexPath.row]
+            let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
+                let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                let copyUrlOption = UIAlertAction(title: "Copy share url", style: .default, handler: { (action) in
+                    
+                    if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
+                        
+                        UIPasteboard.general.string = "\(url)"
+                    }
+                })
                 
-                if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
-                    
-                    UIPasteboard.general.string = "\(url)"
-                }
-            })
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:nil)
+                
+                optionMenu.addAction(copyUrlOption)
+                optionMenu.addAction(cancelAction)
+                
+                self.present(optionMenu, animated: true, completion: nil)
+                
+                handler(true)
+            }
             
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:nil)
-            
-            optionMenu.addAction(copyUrlOption)
-            optionMenu.addAction(cancelAction)
-            
-            self.present(optionMenu, animated: true, completion: nil)
-            
-            handler(true)
+            commands.append(more)
         }
         
-        return UISwipeActionsConfiguration(actions: [delete, more])
+        return UISwipeActionsConfiguration(actions: commands)
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {

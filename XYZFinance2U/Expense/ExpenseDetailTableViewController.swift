@@ -115,7 +115,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         if isShared {
             
-            navigationItem.title = "Shared (read-only)"
+            navigationItem.title = "Shared"
         } else {
             
             navigationItem.title = ""
@@ -174,7 +174,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             }
         }
         
-        if ( modalEditing ) && nil != expense {
+        if ( modalEditing || isShared ) && nil != expense {
             
             let deleteSection = TableSectionCell(identifier: "delete",
                                                  title: "",
@@ -849,7 +849,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         if isShared {
         
-            navigationItem.title = "Shared (read-only)"
+            navigationItem.title = "Shared"
         } else if let _ = expense {
             
             navigationItem.title = "Expense"
