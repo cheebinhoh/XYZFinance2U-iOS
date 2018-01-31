@@ -491,7 +491,6 @@ func createUpdateExpense(_ isShared: Bool,
         expenseToBeUpdated?.setValue(date, forKey: XYZExpense.date)
         expenseToBeUpdated?.setValue(shareRecordId, forKey: XYZExpense.shareRecordId)
         expenseToBeUpdated?.setValue(isShared, forKey: XYZExpense.isShared)
-        print("****************** \(isShared)")
         
         let nrOfReceipt = record[XYZExpense.nrOfReceipts] as? Int
         for index in 0..<nrOfReceipt! {

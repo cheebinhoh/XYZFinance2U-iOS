@@ -23,10 +23,12 @@ class XYZiCloudZone: NSManagedObject {
     static let changeTokenLastFetch = "changeTokenLastFetch"
     static let deleteRecordIdList = "deleteRecordIdList"
     static let inShareDB = "inShareDB"
+    static let ownerName = "ownerName"
     
      // MARK: - property
     
     var name = ""
+    var ownerName = ""
     var inShareDB = false
     var changeToken = NSData()
     var changeTokenLastFetch = Date()
@@ -40,7 +42,7 @@ class XYZiCloudZone: NSManagedObject {
     
     // MARK: - function
     
-    init(name: String, context: NSManagedObjectContext?) {
+    init(name: String, owner: String, context: NSManagedObjectContext?) {
         
         let aContext = context!
         let entity = NSEntityDescription.entity(forEntityName: XYZiCloudZone.type,
@@ -48,6 +50,7 @@ class XYZiCloudZone: NSManagedObject {
         super.init(entity: entity, insertInto: aContext)
         
         self.setValue(name, forKey: XYZiCloudZone.name)
+        self.setValue(owner, forKey: XYZiCloudZone.ownerName)
         
         let data = NSKeyedArchiver.archivedData(withRootObject: [String]() )
         self.setValue(data, forKey: XYZiCloudZone.deleteRecordIdList)

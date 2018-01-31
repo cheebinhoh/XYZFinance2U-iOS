@@ -53,6 +53,7 @@
         <attribute name="deleteRecordIdList" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="inShareDB" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ownerName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="XYZAccount" positionX="-63" positionY="-18" width="128" height="225"/>
@@ -60,6 +61,6 @@
         <element name="XYZExpense" positionX="-63" positionY="18" width="128" height="225"/>
         <element name="XYZExpensePerson" positionX="-36" positionY="72" width="128" height="120"/>
         <element name="XYZExpenseReceipt" positionX="-9" positionY="99" width="128" height="90"/>
-        <element name="XYZiCloudZone" positionX="-36" positionY="72" width="128" height="120"/>
+        <element name="XYZiCloudZone" positionX="-36" positionY="72" width="128" height="135"/>
     </elements>
 </model>
