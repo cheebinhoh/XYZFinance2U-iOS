@@ -25,7 +25,7 @@ class AppDelegate: UIResponder,
         var zones = [CKRecordZone]()
         
         for icloudZone in self.shareiCloudZones {
-            
+
             if let name = icloudZone.value(forKey: XYZiCloudZone.name) as? String {
                 
                 for privateiCloudZone in self.privateiCloudZones {
