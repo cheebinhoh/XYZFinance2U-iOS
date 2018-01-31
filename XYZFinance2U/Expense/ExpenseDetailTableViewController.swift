@@ -174,7 +174,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             }
         }
         
-        if modalEditing && nil != expense {
+        if ( modalEditing ) && nil != expense {
             
             let deleteSection = TableSectionCell(identifier: "delete",
                                                  title: "",
@@ -361,7 +361,11 @@ class ExpenseDetailTableViewController: UITableViewController,
             date = (expense?.value(forKey: XYZExpense.date) as? Date) ?? Date()
             amount = (expense?.value(forKey: XYZExpense.amount) as? Double) ?? 0.0
             isShared = (expense?.value(forKey: XYZExpense.isShared) as? Bool) ?? false
-            modalEditing = !isShared
+            
+            if isShared {
+                
+                modalEditing = false
+            }
             
             if let data = expense?.value(forKey: XYZExpense.loction) as? Data {
                 

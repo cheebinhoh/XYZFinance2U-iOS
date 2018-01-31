@@ -809,7 +809,7 @@ class IncomeTableViewController: UITableViewController,
                 
                 incomeDetailTableViewController.incomeDelegate = self
                 incomeDetailTableViewController.isPushinto = true
-                
+
                 if !isPopover && incomeDetailTableViewController.modalEditing {
                     
                     incomeDetailTableViewController.isPushinto = false
