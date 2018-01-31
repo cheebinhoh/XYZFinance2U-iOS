@@ -664,7 +664,7 @@
                                 <rect key="frame" x="0.0" y="640.5" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YaX-RK-lUZ" id="qwM-kl-Jqy">
-                                    <rect key="frame" x="0.0" y="0.0" width="342" height="79.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4e5-q3-Ybb">
@@ -761,16 +761,19 @@
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="YUQ-S8-qLx"/>
                                                     </constraints>
                                                     <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                 </textField>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="lXA-Ed-2cL" secondAttribute="trailing" priority="998" constant="50" id="gni-8N-M36"/>
+                                            </constraints>
                                         </stackView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="N0q-eN-DLE" firstAttribute="top" secondItem="QsZ-tI-XN9" secondAttribute="top" constant="10" id="Q18-v2-daA"/>
-                                        <constraint firstItem="N0q-eN-DLE" firstAttribute="leading" relation="lessThanOrEqual" secondItem="QsZ-tI-XN9" secondAttribute="leading" constant="45" id="et4-XJ-FQ2"/>
-                                        <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="N0q-eN-DLE" secondAttribute="trailing" constant="10" id="jJW-7d-y8b"/>
+                                        <constraint firstItem="N0q-eN-DLE" firstAttribute="leading" relation="lessThanOrEqual" secondItem="QsZ-tI-XN9" secondAttribute="leading" priority="998" constant="45" id="et4-XJ-FQ2"/>
+                                        <constraint firstAttribute="trailing" secondItem="N0q-eN-DLE" secondAttribute="trailing" constant="10" id="jJW-7d-y8b"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>

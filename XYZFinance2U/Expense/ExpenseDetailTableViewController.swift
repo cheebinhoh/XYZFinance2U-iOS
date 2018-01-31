@@ -907,6 +907,8 @@ class ExpenseDetailTableViewController: UITableViewController,
                     fatalError("Exception: expenseDetailTextCell is failed to be created")
                 }
                 
+                textcell.input.translatesAutoresizingMaskIntoConstraints = false
+                textcell.input.leadingAnchor.constraint(equalTo: textcell.leadingAnchor, constant: 45.0).isActive = true
                 textcell.isEditable = !isShared
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
