@@ -24,6 +24,7 @@ class ExpenseDetailImageViewController: UIViewController,
     var delegate: ExpenseDetailImageViewTableViewCellDelegate?
     var image: UIImage?
     var imagePickerModalPresentationStyle: UIModalPresentationStyle?
+    var isEditable = true
     
     // MARK: - IBOutlet
     
@@ -51,6 +52,11 @@ class ExpenseDetailImageViewController: UIViewController,
         addBackButton()
         addSlideRightToUnwind()
         addSingleAndDoubleTapToZoomAndSelectOtherImage()
+        
+        if !isEditable {
+            
+            navigationItem.setRightBarButton(nil, animated: true)
+        }
         // Do any additional setup after loading the view.
     }
 
@@ -70,10 +76,13 @@ class ExpenseDetailImageViewController: UIViewController,
         let tapDouble = UITapGestureRecognizer(target: self, action: #selector(zoomIn(_:)))
         tapDouble.numberOfTapsRequired = 2
         imageView.addGestureRecognizer(tapDouble)
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(selectImage(_:)))
-        tap.require(toFail: tapDouble)
-        imageView.addGestureRecognizer(tap)
+     
+        if !isEditable {
+            
+            let tap = UITapGestureRecognizer(target: self, action: #selector(selectImage(_:)))
+            tap.require(toFail: tapDouble)
+            imageView.addGestureRecognizer(tap)
+        }
     }
     
     private func addSlideRightToUnwind() {

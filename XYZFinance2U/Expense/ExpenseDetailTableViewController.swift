@@ -105,13 +105,21 @@ class ExpenseDetailTableViewController: UITableViewController,
     
     func expenseSelected(newExpense: XYZExpense?) {
         
+        let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit(_:)))
+        navigationItem.setRightBarButton(editButton, animated: true)
+        navigationItem.setLeftBarButton(nil, animated: true)
+        
         modalEditing = false
         expense = newExpense
         reloadData()
         
-        let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit(_:)))
-        navigationItem.setRightBarButton(editButton, animated: true)
-        navigationItem.leftBarButtonItem = nil
+        if isShared {
+            
+            navigationItem.title = "Shared (read-only)"
+        } else {
+            
+            navigationItem.title = ""
+        }
     }
     
     func expenseDeleted(deletedExpense: XYZExpense) {
@@ -145,41 +153,25 @@ class ExpenseDetailTableViewController: UITableViewController,
                                              data: nil)
         tableSectionCellList.append(imageSecteion)
         
-        /*
-        var emailList = [String]()
-        if let _ = expense {
+        if !isShared {
             
-            let personList = expense?.getPersons()
-            emailList = Array(repeating: "email", count: (personList?.count)!)
-        }
-        
-        var needEmail = modalEditing
-        if !needEmail {
+            let needEmail = !emails.isEmpty
+                            || modalEditing
             
-            if nil != expense {
+            if needEmail {
                 
-                let persons = expense?.getPersons()
-                needEmail = !(persons?.isEmpty)!
-            }
-        }
-        */
-        
-        let needEmail = !emails.isEmpty
-                        || modalEditing
-        
-        if needEmail {
-            
-            var emailList = Array(repeating: "email", count: emails.count)
-            if modalEditing {
+                var emailList = Array(repeating: "email", count: emails.count)
+                if modalEditing {
+                    
+                    emailList.append("newemail")
+                }
                 
-                emailList.append("newemail")
+                let emailSection = TableSectionCell(identifier: "email",
+                                                    title: "",
+                                                    cellList: emailList,
+                                                    data: nil)
+                tableSectionCellList.append(emailSection)
             }
-            
-            let emailSection = TableSectionCell(identifier: "email",
-                                                title: "",
-                                                cellList: emailList,
-                                                data: nil)
-            tableSectionCellList.append(emailSection)
         }
         
         if modalEditing && nil != expense {
@@ -359,7 +351,6 @@ class ExpenseDetailTableViewController: UITableViewController,
         emails = [String]()
         paids = [Bool]()
         imageSet = Array(repeating: ImageSet(image: UIImage(named:"defaultPhoto")!, selected: false ), count: imageSetCount)
-        //locationCoordinate = nil
         cllocation = nil
         hasgeolocation = false
         hasLocation = false
@@ -369,18 +360,16 @@ class ExpenseDetailTableViewController: UITableViewController,
             detail = (expense?.value(forKey: XYZExpense.detail) as! String)
             date = (expense?.value(forKey: XYZExpense.date) as? Date) ?? Date()
             amount = (expense?.value(forKey: XYZExpense.amount) as? Double) ?? 0.0
-            //hasgeolocation = (expense?.value(forKey: XYZExpense.hasgeolocation) as? Bool ?? false )
+            isShared = (expense?.value(forKey: XYZExpense.isShared) as? Bool) ?? false
+            modalEditing = !isShared
             
-            //if hasgeolocation {
+            if let data = expense?.value(forKey: XYZExpense.loction) as? Data {
                 
-                if let data = expense?.value(forKey: XYZExpense.loction) as? Data {
-                    
-                    cllocation = NSKeyedUnarchiver.unarchiveObject(with: data) as? CLLocation
-                }
-                
-                hasLocation = nil != cllocation
-                hasgeolocation = hasLocation
-            //}
+                cllocation = NSKeyedUnarchiver.unarchiveObject(with: data) as? CLLocation
+            }
+            
+            hasLocation = nil != cllocation
+            hasgeolocation = hasLocation
             
             guard let receiptList = expense?.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt> else {
                 fatalError("Exception: [XYZExpenseReceipt] is expected")
@@ -414,6 +403,22 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 paids.append( paid! )
             }
+            
+            if isShared {
+           
+                navigationItem.setRightBarButton(nil, animated: true)
+                
+                if isPopover {
+                
+                    let backButton = UIBarButtonItem(title: " Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.cancel(_:)))
+                    navigationItem.setLeftBarButton(backButton, animated: true)
+                }
+                //let backButton = UIButton(type: .custom)
+                //backButton.setImage(UIImage(named: "BackButton.png"), for: .normal)
+                //backButton.setTitle(" Back", for: .normal)
+                //backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
+                //backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
+            }
         }
         
         loadDataInTableSectionCell()
@@ -428,6 +433,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             fatalError("Exception: ExpenseDetailImageViewController is expected")
         }
         
+        expenseDetailImageNavigationController.isEditable = modalEditing
         expenseDetailImageNavigationController.delegate = self
         expenseDetailImageNavigationController.image = imageSet?[newImageIndex!].image
         
@@ -634,7 +640,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     
     // MARK: - property
     var location = "Location"
-    //var locationCoordinate: CLLocationCoordinate2D?
+    var isShared = false
     var cllocation: CLLocation?
     var hasLocation = false
     var detail = ""
@@ -837,7 +843,10 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         loadData()
         
-        if let _ = expense {
+        if isShared {
+        
+            navigationItem.title = "Shared (read-only)"
+        } else if let _ = expense {
             
             navigationItem.title = "Expense"
         }
@@ -894,6 +903,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     fatalError("Exception: expenseDetailTextCell is failed to be created")
                 }
                 
+                textcell.isEditable = !isShared
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
                 textcell.input.placeholder = "description"
@@ -908,6 +918,7 @@ class ExpenseDetailTableViewController: UITableViewController,
               
                 amount = amount ?? 0.0
                 
+                textcell.isEditable = modalEditing
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
                 textcell.enableMonetaryEditing(true)
@@ -1008,7 +1019,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 imagepickercell.imageView?.contentMode = .scaleAspectFit
                 imagepickercell.imageView?.clipsToBounds = true
-                imagepickercell.enableEditing = modalEditing
+                imagepickercell.isEditable = modalEditing
                 
                 imagepickercell.delegate = self
                 imagecell = imagepickercell

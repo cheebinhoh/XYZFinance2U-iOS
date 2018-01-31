@@ -23,7 +23,7 @@ class ExpenseDetailImagePickerTableViewCell: UITableViewCell,
     
     weak var delegate: ExpenseDetailImagePickerTableViewCellDelegate?
     var imageViewList = [UIImageView]()
-    var enableEditing = false
+    var isEditable = false
     
     // MARK: - IBOutlet
     
@@ -69,20 +69,17 @@ class ExpenseDetailImagePickerTableViewCell: UITableViewCell,
     @objc
     @IBAction func newImageDoubleTouchUp(_ sender: UITapGestureRecognizer) {
         
-        if enableEditing {
-            
-            guard let imageView = sender.view as? UIImageView else {
-                fatalError("Exception: UIImageView is expected for UITapGestureRecognizer")
-            }
-            
-            delegate?.viewImage(self, imageView, imageViewList.index(of: imageView)! )
+        guard let imageView = sender.view as? UIImageView else {
+            fatalError("Exception: UIImageView is expected for UITapGestureRecognizer")
         }
+        
+        delegate?.viewImage(self, imageView, imageViewList.index(of: imageView)! )
     }
     
     @objc
     @IBAction func newImageTouchUp(_ sender: UITapGestureRecognizer) {
         
-        if enableEditing {
+        if isEditable {
             
             guard let imageView = sender.view as? UIImageView else {
                 fatalError("Exception: UIImageView is expected for UITapGestureRecognizer")

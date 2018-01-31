@@ -24,6 +24,7 @@ class ExpenseDetailTextTableViewCell: UITableViewCell,
     @IBOutlet weak var stack: UIStackView!
     @IBOutlet weak var input: UITextField!
     weak var delegate: ExpenseDetailTextTableViewCellDelegate?
+    var isEditable = true
 
     // MARK: - function
     func addUISwitch() {
@@ -63,6 +64,11 @@ class ExpenseDetailTextTableViewCell: UITableViewCell,
     }
     
     // MARK: - textfield delegate
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        
+        return isEditable
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
