@@ -183,6 +183,7 @@ class ExpenseTableViewController: UITableViewController,
             saveManageContext()
             loadExpensesFromSections()
             reloadData()
+            
             updateToiCloud(nil)
         }
     }
