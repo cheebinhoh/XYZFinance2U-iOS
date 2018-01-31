@@ -19,6 +19,11 @@ class AppDelegate: UIResponder,
     UIApplicationDelegate,
     UNUserNotificationCenterDelegate {
     
+    func fetchSharediCloudZone() {
+
+        // to do
+    }
+    
     func application(_ application: UIApplication,
                      userDidAcceptCloudKitShareWith cloudKitShareMetadata: CKShareMetadata) {
         
@@ -100,54 +105,6 @@ class AppDelegate: UIResponder,
         }
         
         CKContainer.default().add(acceptSharesOp)
-        
-        //TopicLocalCache.share.container.add(acceptSharesOp)
-        
-        /*
-        if let record = cloudKitShareMetadata.rootRecord {
-            
-            let recordZone = CKRecordZone(zoneName: record.recordType)
-            let icloudZone = iCloudZone(of: recordZone, self.iCloudZones)
-            
-            switch record.recordType {
-         
-                case XYZExpense.type:
-                    guard var expenseList = icloudZone?.data as? [XYZExpense] else {
-                        
-                        fatalError("Exception: expense is expected")
-                    }
-                    
-                    let unprocessedRecords = [CKRecord]()
-                    (expenseList, _) = createUpdateExpense(record, expenseList, unprocessedRecords, aContext!)
-                    icloudZone?.data = expenseList
-                
-                    guard let splitView = self.window?.rootViewController as? MainSplitViewController else {
-                        
-                        fatalError("Exception: MainSplitViewController is expected")
-                    }
-                    
-                    guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
-                        
-                        fatalError("Exception: MainUITabBarController is expected")
-                    }
-                    
-                    guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
-                        
-                        fatalError("Exception: UINavigationController is expected")
-                    }
-                    
-                    guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
-                        
-                        fatalError("Exception: ExpenseTableViewController is expected")
-                    }
-                
-                    expenseView.reloadData()
-                
-                default:
-                    fatalError("Exception: \(record.recordType) is not supported")
-            }
-        }
-        */
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter,
