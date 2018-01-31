@@ -49,7 +49,6 @@ class AppDelegate: UIResponder,
         
         fetchiCloudZoneChange(database, zones, self.shareiCloudZones, {
             
-            print("--- done fetch private")
             DispatchQueue.main.async {
                 
                 for iCloudZone in self.shareiCloudZones {
@@ -358,7 +357,7 @@ class AppDelegate: UIResponder,
         
         syncWithiCloudAndCoreData()
         
-        //fetchSharediCloudZone()
+        fetchSharediCloudZone()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
