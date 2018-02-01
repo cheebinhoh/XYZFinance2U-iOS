@@ -446,6 +446,7 @@ func createUpdateExpense(_ isShared: Bool,
         let amount = record[XYZExpense.amount] as? Double
         let date = record[XYZExpense.date] as? Date
         let shareRecordId = record[XYZExpense.shareRecordId] as? String
+        let hasLocation = record[XYZExpense.hasLocation] as? Bool
         
         var expenseToBeUpdated: XYZExpense?
 
@@ -491,6 +492,7 @@ func createUpdateExpense(_ isShared: Bool,
         expenseToBeUpdated?.setValue(date, forKey: XYZExpense.date)
         expenseToBeUpdated?.setValue(shareRecordId, forKey: XYZExpense.shareRecordId)
         expenseToBeUpdated?.setValue(isShared, forKey: XYZExpense.isShared)
+        expenseToBeUpdated?.setValue(hasLocation, forKey: XYZExpense.hasLocation)
         
         let nrOfReceipt = record[XYZExpense.nrOfReceipts] as? Int
         for index in 0..<nrOfReceipt! {
@@ -677,6 +679,7 @@ func fetchiCloudZoneChange(_ database: CKDatabase,
                     
                         for (index, expense) in expenseList.enumerated() {
                             
+                            // TODO: there are case that we do not get recordName
                             guard let recordName = expense.value(forKey: XYZExpense.recordId) as? String else {
                                 fatalError("Exception: record id is expected")
                             }
@@ -773,7 +776,44 @@ func fetchiCloudZoneChange(_ database: CKDatabase,
         
         if let _ = error {
             
+            let ckerror = error as? CKError
+            
+            switch ckerror! {
+                
+                case CKError.zoneNotFound:
+                    
+                    if CKContainer.default().sharedCloudDatabase == database {
+                        
+                        DispatchQueue.main.async {
+                            
+                            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                            var shareiCloudZones = appDelegate?.shareiCloudZones
+                        
+                            for (index, icloudZone) in (shareiCloudZones?.enumerated())! {
+                                
+                                if let name = icloudZone.value(forKey: XYZiCloudZone.name) as? String, name == zoneId.zoneName {
+                                    
+                                    if let inShare = icloudZone.value(forKey: XYZiCloudZone.inShareDB) as? Bool, inShare && database == CKContainer.default().sharedCloudDatabase {
+                                        
+                                        aContext?.delete(icloudZone)
+                                        shareiCloudZones?.remove(at: index)
+                                        saveManageContext()
+                                        
+                                        break
+                                    }
+                                }
+                            }
+                            
+                            appDelegate?.shareiCloudZones = shareiCloudZones!
+                        }
+                    }
+                
+                default:
+                    break
+            }
+            
             print("Error fetching zone changes for database:", error!)
+            
             return
         }
         
@@ -1041,14 +1081,16 @@ func saveExpensesToiCloud(_ database: CKDatabase,
         
         record.setValue(maxSequenceNr + 1, forKey: XYZExpense.nrOfReceipts)
         
-        if let data = expense.value(forKey: XYZExpense.loction) as? Data {
+        let hasLocation = expense.value(forKey: XYZExpense.hasLocation) as? Bool ?? false
+        
+        record.setValue(hasLocation, forKey: XYZExpense.hasLocation)
+        
+        if hasLocation, let data = expense.value(forKey: XYZExpense.loction) as? Data {
             
-            guard let cllocation = NSKeyedUnarchiver.unarchiveObject(with: data) as? CLLocation else {
+            if let cllocation = NSKeyedUnarchiver.unarchiveObject(with: data) as? CLLocation {
             
-                fatalError("Exception: CLLocation is expected")
+                record.setValue(cllocation, forKey: XYZExpense.loction)
             }
-            
-            record.setValue(cllocation, forKey: XYZExpense.loction)
         }
         
         guard let personList = expense.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {

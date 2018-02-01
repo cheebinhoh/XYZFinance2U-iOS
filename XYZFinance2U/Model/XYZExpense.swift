@@ -20,6 +20,7 @@ class XYZExpense: NSManagedObject {
     static let amount = "amount"
     static let date = "date"
     static let loction = "location"
+    static let hasLocation = "hasLocation"
     static let persons = "persons"
     static let receipts = "receipts"
     static let recordId = "recordId"
@@ -38,6 +39,7 @@ class XYZExpense: NSManagedObject {
     var persons: Set<XYZExpensePerson>?
     var receipts: Set<XYZExpenseReceipt>?
     var location = CLLocation()
+    var hasLocation = false
     var recordId: String = ""
     var lastRecordChange = Date()
     var shareRecordId: String = ""

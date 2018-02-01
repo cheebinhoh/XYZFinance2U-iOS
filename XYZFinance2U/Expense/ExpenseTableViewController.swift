@@ -209,7 +209,7 @@ class ExpenseTableViewController: UITableViewController,
                     shareRecordId != "",
                     lastTokenChangeFetch != newLastTokenChangeFetch
                 {
-                    
+                
                     let ckrecordid = CKRecordID(recordName: shareRecordId, zoneID: ckrecordzone.zoneID)
                     let database = CKContainer.default().privateCloudDatabase
                     
@@ -238,8 +238,22 @@ class ExpenseTableViewController: UITableViewController,
                                 
                                 let email = person.value(forKey: XYZExpensePerson.email) as? String
                                 
-                                let useridentitylookup = CKUserIdentityLookupInfo(emailAddress: email!)
-                                userIdentityLookupInfos.append(useridentitylookup)
+                                var found = false
+
+                                for participant in ckshare.participants {
+                                   
+                                    if let lookupEmail = participant.userIdentity.lookupInfo?.emailAddress, lookupEmail == email {
+                                        
+                                        found = true
+                                        break
+                                    }
+                                }
+                                
+                                if !found {
+                                    
+                                    let useridentitylookup = CKUserIdentityLookupInfo(emailAddress: email!)
+                                    userIdentityLookupInfos.append(useridentitylookup)
+                                }
                             }
                             
                             if !userIdentityLookupInfos.isEmpty {
@@ -307,6 +321,7 @@ class ExpenseTableViewController: UITableViewController,
                                     }
                                     
                                     participant.permission = .readOnly
+                                    print("---- \(participant)")
                                     ckshare.addParticipant(participant)
                                 }
                                 

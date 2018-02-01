@@ -204,34 +204,29 @@ class ExpenseDetailTableViewController: UITableViewController,
         } else if let existingDate = expense?.value(forKey: XYZExpense.date) as? Date, existingDate != date {
             
             hasChanged = true
-        }/* else if let existingHasLocation = expense?.value(forKey: XYZExpense.hasgeolocation) as? Bool, existingHasLocation != hasLocation {
+        } else if let existingHasLocation = expense?.value(forKey: XYZExpense.hasLocation) as? Bool, existingHasLocation != hasLocation {
             
             hasChanged = true
-        }*/
+        }
         
         expense?.setValue(detail, forKey: XYZExpense.detail)
         expense?.setValue(amount, forKey: XYZExpense.amount)
         expense?.setValue(date, forKey: XYZExpense.date)
         expense?.setValue(false, forKey: XYZExpense.isShared) // if we can save it, it means it is not readonly
-    
+        expense?.setValue(hasLocation, forKey: XYZExpense.hasLocation)
+        
         if hasLocation, let _ = cllocation {
             
             let data = NSKeyedArchiver.archivedData(withRootObject: cllocation!)
             
-            if let existingData = expense?.value(forKey: XYZExpense.loction) as? Data, existingData != data {
+            if let existingData = expense?.value(forKey: XYZExpense.loction) as? Data, existingData == data {
+                
+            } else {
                 
                 hasChanged = true
             }
             
             expense?.setValue(data, forKey: XYZExpense.loction)
-        } else {
-            
-            if let _ = expense?.value(forKey: XYZExpense.loction) as? Data {
-                
-                hasChanged = true
-            }
-            
-            expense?.setValue(nil, forKey: XYZExpense.loction)
         }
         
         for (index, image) in imageSet!.enumerated() {
@@ -366,13 +361,13 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 modalEditing = false
             }
-            
+
             if let data = expense?.value(forKey: XYZExpense.loction) as? Data {
                 
                 cllocation = NSKeyedUnarchiver.unarchiveObject(with: data) as? CLLocation
             }
-            
-            hasLocation = nil != cllocation
+
+            hasLocation = expense?.value(forKey: XYZExpense.hasLocation) as? Bool ?? false
             hasgeolocation = hasLocation
             
             guard let receiptList = expense?.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt> else {

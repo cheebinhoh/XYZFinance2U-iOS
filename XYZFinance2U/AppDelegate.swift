@@ -47,49 +47,52 @@ class AppDelegate: UIResponder,
             }
         }
         
-        fetchiCloudZoneChange(database, zones, self.shareiCloudZones, {
+        if !zones.isEmpty {
             
-            DispatchQueue.main.async {
+            fetchiCloudZoneChange(database, zones, self.shareiCloudZones, {
                 
-                for iCloudZone in self.shareiCloudZones {
+                DispatchQueue.main.async {
                     
-                    let name = iCloudZone.value(forKey: XYZiCloudZone.name) as? String
-                    
-                    switch name! {
-                    case XYZExpense.type:
-                        guard let splitView = self.window?.rootViewController as? MainSplitViewController else {
+                    for iCloudZone in self.shareiCloudZones {
+                        
+                        let name = iCloudZone.value(forKey: XYZiCloudZone.name) as? String
+                        
+                        switch name! {
+                        case XYZExpense.type:
+                            guard let splitView = self.window?.rootViewController as? MainSplitViewController else {
+                                
+                                fatalError("Exception: MainSplitViewController is expected")
+                            }
                             
-                            fatalError("Exception: MainSplitViewController is expected")
-                        }
-                        
-                        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+                            guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+                                
+                                fatalError("Exception: MainUITabBarController is expected")
+                            }
                             
-                            fatalError("Exception: MainUITabBarController is expected")
-                        }
-                        
-                        guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
+                            guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
+                                
+                                fatalError("Exception: UINavigationController is expected")
+                            }
                             
-                            fatalError("Exception: UINavigationController is expected")
-                        }
-                        
-                        guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+                            guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+                                
+                                fatalError("Exception: ExpenseTableViewController is expected")
+                            }
                             
-                            fatalError("Exception: ExpenseTableViewController is expected")
+                            let zone = CKRecordZone(zoneName: XYZExpense.type)
+                            let privateiCloudZone = GetiCloudZone(of: zone, share: false, self.privateiCloudZones)
+                            
+                            privateiCloudZone?.data = iCloudZone.data
+                            self.expenseList = (iCloudZone.data as? [XYZExpense])!
+                            expenseView.reloadData()
+                            
+                        default:
+                            fatalError("Exception: \(String(describing: name)) is not supported")
                         }
-                        
-                        let zone = CKRecordZone(zoneName: XYZExpense.type)
-                        let privateiCloudZone = GetiCloudZone(of: zone, share: false, self.privateiCloudZones)
-                        
-                        privateiCloudZone?.data = iCloudZone.data
-                        self.expenseList = (iCloudZone.data as? [XYZExpense])!
-                        expenseView.reloadData()
-                        
-                    default:
-                        fatalError("Exception: \(String(describing: name)) is not supported")
                     }
                 }
-            }
-        })
+            })
+        }
     }
     
     func application(_ application: UIApplication,
