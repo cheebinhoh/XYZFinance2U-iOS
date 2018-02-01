@@ -250,7 +250,6 @@ func loadExpenses() -> [XYZExpense]? {
     do {
         
         expenses = try aContext?.fetch(fetchRequest)
-        
     } catch let error as NSError {
         
         print("******** Could not fetch. \(error), \(error.userInfo)")

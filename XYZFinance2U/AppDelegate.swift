@@ -433,7 +433,7 @@ class AppDelegate: UIResponder,
         var incomeiCloudZone: XYZiCloudZone?
         var expenseiCloudZone: XYZiCloudZone?
         var expenseShareiCloudZone: XYZiCloudZone?
-        
+      
         for icloudzone in iCloudZones {
             
             switch (icloudzone.value(forKey: XYZiCloudZone.name) as? String )! {
