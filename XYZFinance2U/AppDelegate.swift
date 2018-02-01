@@ -294,24 +294,7 @@ class AppDelegate: UIResponder,
         
         syncWithiCloudAndCoreData()
         
-        /*
-        let sharedData = CKContainer.default().sharedCloudDatabase
-        sharedData.fetchAllRecordZones { (recordzones, error) in
-        
-            print("-------- fetch shared zone")
-            if let _ = error {
-                
-                print("-------- error in fetch shared database zone = \(String(describing: error))")
-            } else {
-                
-                for zone in recordzones! {
-                    
-                    print("----- \(zone.zoneID.zoneName)")
-                }
-            }
-        }
-        */
-        // Override point for customization after application launch.
+        fetchSharediCloudZone()
 
         return true
     }
