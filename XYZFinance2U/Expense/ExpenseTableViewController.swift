@@ -142,7 +142,7 @@ class ExpenseTableViewController: UITableViewController,
         aContext?.delete(oldExpense!)
         self.loadExpensesFromSections()
         self.reloadData()
-        
+    
         self.updateToiCloud(nil)
     }
     
@@ -197,6 +197,15 @@ class ExpenseTableViewController: UITableViewController,
     
         let lastTokenChangeFetch = icloudzone?.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date
 
+        for icloud in (appDelegate?.privateiCloudZones)! {
+            
+            let name = icloud.value(forKey: XYZiCloudZone.name) as? String
+            if name == XYZExpense.type {
+                
+                let expenseL = icloud.data as? [XYZExpense]
+            }
+        }
+        
         fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
                              [ckrecordzone],
                              (appDelegate?.privateiCloudZones)!, {
