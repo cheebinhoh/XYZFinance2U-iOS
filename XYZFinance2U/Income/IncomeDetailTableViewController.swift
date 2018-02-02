@@ -576,6 +576,7 @@ class IncomeDetailTableViewController: UITableViewController,
                     fatalError("Exception: incomeDetailTextCell is failed to be created")
                 }
                 
+                textcell.input.translatesAutoresizingMaskIntoConstraints = false
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
                 textcell.input.placeholder = "bank"
@@ -590,6 +591,7 @@ class IncomeDetailTableViewController: UITableViewController,
                     fatalError("Exception: incomeDetailTextCell is failed to be created")
                 }
                 
+                textcell.input.translatesAutoresizingMaskIntoConstraints = false
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
                 textcell.input.placeholder = "accountNr"
