@@ -508,6 +508,8 @@ class ExpenseDetailTableViewController: UITableViewController,
             }
         })
         
+        optionMenu.addAction(cameraOption)
+        
         let photoOption = UIAlertAction(title: "Choose photo", style: .default, handler: { (action) in
             
             let imagePicker = UIImagePickerController()
@@ -526,10 +528,20 @@ class ExpenseDetailTableViewController: UITableViewController,
             }
         })
         
+        optionMenu.addAction(photoOption)
+        
+        if imageSet![index].selected {
+            
+            let saveOption = UIAlertAction(title: "Save photo", style: .default, handler: { (action) in
+                
+                UIImageWriteToSavedPhotosAlbum(self.imageSet![index].image!, nil, nil, nil)
+            })
+            
+            optionMenu.addAction(saveOption)
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        optionMenu.addAction(cameraOption)
-        optionMenu.addAction(photoOption)
         optionMenu.addAction(cancelAction)
         
         present(optionMenu, animated: true, completion: nil)

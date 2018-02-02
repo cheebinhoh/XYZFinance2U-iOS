@@ -76,8 +76,8 @@ class ExpenseDetailImageViewController: UIViewController,
         let tapDouble = UITapGestureRecognizer(target: self, action: #selector(zoomIn(_:)))
         tapDouble.numberOfTapsRequired = 2
         imageView.addGestureRecognizer(tapDouble)
-     
-        if !isEditable {
+
+        if isEditable {
             
             let tap = UITapGestureRecognizer(target: self, action: #selector(selectImage(_:)))
             tap.require(toFail: tapDouble)
