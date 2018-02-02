@@ -880,6 +880,58 @@ class IncomeTableViewController: UITableViewController,
 
     // MARK: - Table view data source
     
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        var commands = [UIContextualAction]()
+        var amount = 0.0
+        
+        if tableSectionCellList[indexPath.section].identifier == "main" {
+            
+            let incomeList = tableSectionCellList[indexPath.section].data as? [XYZAccount]
+            let income = incomeList![indexPath.row]
+            
+            amount = income.value(forKey: XYZExpense.amount) as? Double ?? 0.0
+            
+            let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, handler in
+                
+                // Delete the row from the data source
+                //self.delete(of: indexPath)
+                self.deleteIncome(income: income)
+                
+                handler(true)
+            }
+            
+            commands.append(delete)
+        } else {
+            
+            amount = totalOfSection(section: indexPath.section - 1)
+        }
+        
+        let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
+            let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let copyUrlOption = UIAlertAction(title: "Copy amount", style: .default, handler: { (action) in
+                
+                UIPasteboard.general.string = "\(amount)"
+                handler(true)
+            })
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                
+                
+                handler(true)
+            })
+            
+            optionMenu.addAction(copyUrlOption)
+            optionMenu.addAction(cancelAction)
+            
+            self.present(optionMenu, animated: true, completion: nil)
+        }
+        
+        commands.append(more)
+        
+        return UISwipeActionsConfiguration(actions: commands)
+    }
+    
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         
         if tableSectionCellList[indexPath.section].identifier == "main" {
