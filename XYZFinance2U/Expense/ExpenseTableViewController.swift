@@ -190,27 +190,31 @@ class ExpenseTableViewController: UITableViewController,
     
     func updateToiCloud(_ expense: XYZExpense?) {
         
-
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
-        let icloudzone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!)
-        icloudzone?.data = appDelegate?.expenseList
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let iCloudZone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!)
+        iCloudZone?.data = appDelegate?.expenseList
     
-        let lastTokenChangeFetch = icloudzone?.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date
+        let lastTokenChangeFetch = iCloudZone?.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date
         
         fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
                              [ckrecordzone],
-                             (appDelegate?.privateiCloudZones)!, {
+                             [iCloudZone!], {
             
-
+            // if we implement synchronization of content, then time to refresh it.
+            DispatchQueue.main.async {
+                
+                appDelegate?.expenseList = (iCloudZone?.data as? [XYZExpense])!
+                self.reloadData()
+            }
+                                
             if let _ = expense {
                 
-                let newLastTokenChangeFetch = icloudzone?.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date
+                let newLastTokenChangeFetch = iCloudZone?.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date
 
                 if let shareRecordId = expense?.value(forKey: XYZExpense.shareRecordId) as? String,
                     shareRecordId != "",
-                    lastTokenChangeFetch != newLastTokenChangeFetch
-                {
+                    lastTokenChangeFetch != newLastTokenChangeFetch {
                 
                     let ckrecordid = CKRecordID(recordName: shareRecordId, zoneID: ckrecordzone.zoneID)
                     let database = CKContainer.default().privateCloudDatabase
@@ -291,16 +295,22 @@ class ExpenseTableViewController: UITableViewController,
                                                 DispatchQueue.main.async {
                                                     
                                                     fetchiCloudZoneChange(CKContainer.default().privateCloudDatabase,
-                                                                          [ckrecordzone], (appDelegate?.privateiCloudZones)!) {
+                                                                          [ckrecordzone], [iCloudZone!]) {
                                                     
-                                                        //We do not need UICloudSharingController
                                                         DispatchQueue.main.async {
-                                                         
-                                                            let sharingUI = UICloudSharingController(share: ckshare, container: CKContainer.default())
-                                                            self.present(sharingUI, animated: false, completion:{
                                                             
-                                                            })
+                                                            appDelegate?.expenseList = (iCloudZone?.data as? [XYZExpense])!
+                                                            self.reloadData()
                                                         }
+                                                                            
+                                                        //We do not need UICloudSharingController
+                                                        //    DispatchQueue.main.async {
+                                                         
+                                                        //      let sharingUI = UICloudSharingController(share: ckshare, container: CKContainer.default())
+                                                        //      self.present(sharingUI, animated: false, completion:{
+                                                            
+                                                        //    })
+                                                        //}
                                                     }
                                                 }
                                             }
@@ -352,8 +362,13 @@ class ExpenseTableViewController: UITableViewController,
                                         DispatchQueue.main.async {
                                             
                                             fetchiCloudZoneChange(CKContainer.default().privateCloudDatabase,
-                                                                  [ckrecordzone], (appDelegate?.privateiCloudZones)!) {
+                                                                  [ckrecordzone], [iCloudZone!]) {
                                                 
+                                                DispatchQueue.main.async {
+                                                    
+                                                    appDelegate?.expenseList = (iCloudZone?.data as? [XYZExpense])!
+                                                    self.reloadData()
+                                                }
                                             }
                                         }
                                     }
@@ -574,16 +589,20 @@ class ExpenseTableViewController: UITableViewController,
                         
                         UIPasteboard.general.string = "\(url)"
                     }
+                    
+                    handler(true)
                 })
                 
-                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:nil)
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                    
+
+                    handler(true)
+                })
                 
                 optionMenu.addAction(copyUrlOption)
                 optionMenu.addAction(cancelAction)
                 
                 self.present(optionMenu, animated: true, completion: nil)
-                
-                handler(true)
             }
             
             commands.append(more)
