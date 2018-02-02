@@ -17,7 +17,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>3</string>
 	<key>CKSharingSupported</key>
 	<true/>
 	<key>LSApplicationCategoryType</key>
@@ -28,6 +28,8 @@
 	<string>Allow access to camera?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allow access to location?</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Allow access to save photo?</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
@@ -64,7 +66,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Allow access to save photo?</string>
 </dict>
 </plist>
