@@ -275,10 +275,10 @@ func loadExpenses() -> [XYZExpense]? {
         print("******** Could not fetch. \(error), \(error.userInfo)")
     }
     
-    return sortExpenses(expenses: expenses!)
+    return sortExpenses(expenses!)
 }
 
-func sortExpenses(expenses: [XYZExpense]) -> [XYZExpense] {
+func sortExpenses(_ expenses: [XYZExpense]) -> [XYZExpense] {
     
     return expenses.sorted(by: { (exp1, exp2) -> Bool in
         

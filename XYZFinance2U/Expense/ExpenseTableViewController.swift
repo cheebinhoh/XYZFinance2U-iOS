@@ -452,7 +452,7 @@ class ExpenseTableViewController: UITableViewController,
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
-        appDelegate?.expenseList = sortExpenses(expenses: (appDelegate?.expenseList)!)
+        appDelegate?.expenseList = sortExpenses((appDelegate?.expenseList)!)
         loadExpensesIntoSections()
         tableView.reloadData()
     }
@@ -470,7 +470,7 @@ class ExpenseTableViewController: UITableViewController,
             }
         }
         
-        expenseList = sortExpenses(expenses: expenseList)
+        expenseList = sortExpenses(expenseList)
 
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         appDelegate?.expenseList = expenseList

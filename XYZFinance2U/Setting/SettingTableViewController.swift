@@ -140,7 +140,7 @@ class SettingTableViewController: UITableViewController,
                     fatalError("Exception: error on creating settingTableCell")
                 }
                 
-                newcell.title.text = "Export to iCloud drive"
+                newcell.title.text = "Save as file"
                 newcell.accessoryType = .none
                 cell = newcell
             
@@ -150,7 +150,7 @@ class SettingTableViewController: UITableViewController,
                     fatalError("Exception: error on creating settingTableCell")
                 }
                 
-                newcell.title.text = "Sync with iCloud"
+                newcell.title.text = "Update to iCloud"
                 newcell.accessoryType = .none
                 cell = newcell
             
@@ -374,45 +374,60 @@ class SettingTableViewController: UITableViewController,
         loadSettingDetailTableView(settingDetail!, indexPath)
     }
     
+    func saveContent(_ content: String, file: String) {
+        
+        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            
+            let fileURL = dir.appendingPathComponent(file)
+            
+            //writing
+            do {
+                try content.write(to: fileURL, atomically: false, encoding: .utf8)
+                
+                let uiDocumentPicker = UIDocumentPickerViewController(urls: [fileURL], in: UIDocumentPickerMode.exportToService)
+                uiDocumentPicker.delegate = self
+                uiDocumentPicker.modalPresentationStyle = UIModalPresentationStyle.formSheet
+                self.present(uiDocumentPicker, animated: true, completion: nil)
+            } catch {/* error handling here */
+                
+                fatalError("Exception: error \(error)")
+            }
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "Export" {
         
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let deleteOption = UIAlertAction(title: "Export to iCloud drive", style: .default, handler: { (action) in
+            let saveIncomeOption = UIAlertAction(title: "Save income", style: .default, handler: { (action) in
                 
-                let file = AppDelegate.appName + "-export.csv"
+                let file = AppDelegate.appName + "-income.csv"
                 let text = self.incomeFileContent()
                 
-                if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-                  
-                    let fileURL = dir.appendingPathComponent(file)
-                    
-                    //writing
-                    do {
-                        try text.write(to: fileURL, atomically: false, encoding: .utf8)
-                        
-                        let uiDocumentPicker = UIDocumentPickerViewController(urls: [fileURL], in: UIDocumentPickerMode.exportToService)
-                        uiDocumentPicker.delegate = self
-                        uiDocumentPicker.modalPresentationStyle = UIModalPresentationStyle.formSheet
-                        self.present(uiDocumentPicker, animated: true, completion: nil)
-                    } catch {/* error handling here */
-                        
-                        fatalError("Exception: error \(error)")
-                    }
-                }
+                self.saveContent(text, file: file)
+            })
+
+            optionMenu.addAction(saveIncomeOption)
+            
+            let saveExpenseOption = UIAlertAction(title: "Save expense", style: .default, handler: { (action) in
+                
+                let file = AppDelegate.appName + "-expense.csv"
+                let text = self.expenseFileContent()
+                
+                self.saveContent(text, file: file)
             })
             
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:nil)
+            optionMenu.addAction(saveExpenseOption)
             
-            optionMenu.addAction(deleteOption)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:nil)
             optionMenu.addAction(cancelAction)
             
             present(optionMenu, animated: true, completion: nil)
         } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "SynciCloud" {
             
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let deleteOption = UIAlertAction(title: "Sync with iCloud", style: .default, handler: { (action) in
+            let deleteOption = UIAlertAction(title: "Update to iCloud", style: .default, handler: { (action) in
                 
                 let appDelegate = UIApplication.shared.delegate as? AppDelegate
                 
@@ -528,6 +543,24 @@ class SettingTableViewController: UITableViewController,
             let lastUpdate = formattingDate(date: income.value(forKey: XYZAccount.lastUpdate) as? Date ?? Date(), .short )
             
             text = text + "\(index)\t\(bank)\t\(accountNr.isEmpty ? " " : accountNr)\t\(amount)\t\(currency)\t\(lastUpdate)\n"
+        }
+        
+        return text
+    }
+    
+    func expenseFileContent() -> String {
+        
+        var text = "Number\tDetail\tDate\tCurrency\tAmount\n"
+        let expenseList = sortExpenses(loadExpenses()!)
+
+        for (index, expense) in expenseList.enumerated() {
+            
+            let detail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
+            let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
+            let date = formattingDate(date: expense.value(forKey: XYZExpense.date) as? Date ?? Date(), .short )
+            let currencyCode = Locale.current.currencyCode!
+            
+            text = text + "\(index)\t\(detail)\t\(date)\t\(currencyCode)\t\(amount)\n"
         }
         
         return text
