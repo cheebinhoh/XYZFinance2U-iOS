@@ -25,6 +25,12 @@ class ExpenseDetailViewController: UIViewController {
     }
     
     lazy var previewActions: [UIPreviewActionItem] = {
+
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: UISplitViewController is expected" )
+        }
         
         let copyAction = UIPreviewAction(title: "Copy share link", style: .default, handler: { (action, viewcontroller) in
             
@@ -35,11 +41,16 @@ class ExpenseDetailViewController: UIViewController {
                     UIPasteboard.general.string = "\(url)"
                 }
             }
+
+            mainSplitView.popOverAlertController = nil
         })
         
         let cancelAction = UIPreviewAction(title: "Cancel", style: .default, handler: { (action, viewcontroller) in
             
+            mainSplitView.popOverAlertController = nil
         })
+        
+        mainSplitView.popOverAlertController = self
         
         return [copyAction, cancelAction]
     }()

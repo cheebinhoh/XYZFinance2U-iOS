@@ -484,10 +484,13 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         var isCollapsed = true
         
-        if let split = self.parent?.parent as? UISplitViewController {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
             
-            isCollapsed = split.isCollapsed
+            fatalError("Exception: UISplitViewController is expected" )
         }
+        
+        isCollapsed = mainSplitView.isCollapsed
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let cameraOption = UIAlertAction(title: "Take photo", style: .default, handler: { (action) in

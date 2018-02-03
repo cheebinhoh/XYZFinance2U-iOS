@@ -95,8 +95,13 @@ class ExpenseTableViewController: UITableViewController,
         
         if let _ = viewController.expense {
             
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                
+                fatalError("Exception: UISplitViewController is expected" )
+            }
             
-            //tableView(tableView, didSelectRowAt: viewController.indexPath!)
+            mainSplitView.popOverAlertController = nil
             
             tableView(tableView, didSelectRowAt: viewController.indexPath!)
         }
@@ -597,6 +602,13 @@ class ExpenseTableViewController: UITableViewController,
         if !(isShared!) {
             
             let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
+                
+                let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                    
+                    fatalError("Exception: UISplitViewController is expected" )
+                }
+                
                 let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 let copyUrlOption = UIAlertAction(title: "Copy share url", style: .default, handler: { (action) in
                     
@@ -605,18 +617,20 @@ class ExpenseTableViewController: UITableViewController,
                         UIPasteboard.general.string = "\(url)"
                     }
                     
+                    mainSplitView.popOverAlertController = nil
                     handler(true)
                 })
                 
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
                     
-
+                    mainSplitView.popOverAlertController = nil
                     handler(true)
                 })
                 
                 optionMenu.addAction(copyUrlOption)
                 optionMenu.addAction(cancelAction)
                 
+                mainSplitView.popOverAlertController = optionMenu
                 self.present(optionMenu, animated: true, completion: nil)
             }
             

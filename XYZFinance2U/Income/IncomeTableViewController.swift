@@ -729,9 +729,12 @@ class IncomeTableViewController: UITableViewController,
                         
                         if !self.lockScreenDisplayed {
                             
-                            self.dismiss(animated: false, completion: nil)
+                            DispatchQueue.main.async {
+                                
+                                self.dismiss(animated: false, completion: nil)
 
-                            self.lockout()
+                                self.lockout()
+                            }
                         }
                     }
                 }
