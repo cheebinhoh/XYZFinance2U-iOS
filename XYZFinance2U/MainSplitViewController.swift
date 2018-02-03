@@ -15,7 +15,7 @@ class MainSplitViewController: UISplitViewController {
     // MARK: - property
     
     weak var popOverNavigatorController: UINavigationController?
-    
+    weak var popOverAlertController: UIViewController?
     
     // MARK: - function
 

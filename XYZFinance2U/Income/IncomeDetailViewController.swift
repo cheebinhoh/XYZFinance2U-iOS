@@ -31,6 +31,12 @@ class IncomeDetailViewController: UIViewController {
     
     lazy var previewActions: [UIPreviewActionItem] = {
 
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: UISplitViewController is expected" )
+        }
+        
         let copyAction = UIPreviewAction(title: "Copy balance", style: .default, handler: { (action, viewcontroller) in
             
             var balance = 0.0
@@ -43,12 +49,16 @@ class IncomeDetailViewController: UIViewController {
                 balance = self.total!
             }
             
+            mainSplitView.popOverAlertController  = nil
             UIPasteboard.general.string = "\(balance)"
         })
         
         let cancelAction = UIPreviewAction(title: "Cancel", style: .default, handler: { (action, viewcontroller) in
             
+            mainSplitView.popOverAlertController  = nil
         })
+
+        mainSplitView.popOverAlertController = self
         
         return [copyAction, cancelAction]
     }()
@@ -80,12 +90,16 @@ class IncomeDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    /*
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
 
+        print("************* didReceiveMemoryWarning")
+    }
+    */
+    
     /*
     // MARK: - Navigation
 

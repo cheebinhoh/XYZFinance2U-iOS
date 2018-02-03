@@ -38,6 +38,14 @@ class IncomeTableViewController: UITableViewController,
  
         if let _ = viewController.income {
             
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                
+                fatalError("Exception: UISplitViewController is expected" )
+            }
+            
+            mainSplitView.popOverAlertController = nil
+            
             tableView(tableView, didSelectRowAt: viewController.indexPath!)
         }
     }
@@ -680,6 +688,14 @@ class IncomeTableViewController: UITableViewController,
                         fatalError("Exception: MainSplitViewController is expected")
                     }
                     
+                    if let _ = mainSplitView.popOverAlertController {
+                        
+                        dismiss(animated: false, completion: {
+                        
+                            mainSplitView.popOverAlertController = nil
+                        })
+                    }
+                    
                     if nil == mainSplitView.popOverNavigatorController {
                         
                         lockout()
@@ -913,23 +929,33 @@ class IncomeTableViewController: UITableViewController,
         }
         
         let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
+            
+            guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+                
+                fatalError("Exception: MainSplitViewController is expected")
+            }
+            
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let copyUrlOption = UIAlertAction(title: "Copy amount", style: .default, handler: { (action) in
                 
+                mainSplitView.popOverAlertController = nil
                 UIPasteboard.general.string = "\(amount)"
                 handler(true)
             })
             
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
                 
-                
+                mainSplitView.popOverAlertController = nil
                 handler(true)
             })
             
             optionMenu.addAction(copyUrlOption)
             optionMenu.addAction(cancelAction)
             
-            self.present(optionMenu, animated: true, completion: nil)
+            self.present(optionMenu, animated: true, completion: {
+              
+                mainSplitView.popOverAlertController = optionMenu
+            })
         }
         
         commands.append(more)
