@@ -146,16 +146,29 @@ class ExpenseDetailImageViewController: UIViewController,
             self.present( imagePickerController, animated: true, completion: nil)
         })
         
+        optionMenu.addAction(cameraOption)
+        
         let photoOption = UIAlertAction(title: "Choose photo", style: .default, handler: { (action) in
             imagePickerController.sourceType = .photoLibrary
             imagePickerController.modalPresentationStyle = UIModalPresentationStyle.popover
             self.present( imagePickerController, animated: true, completion: nil)
         })
+
+        optionMenu.addAction(photoOption)
+        
+        
+        if let _ = image {
+            
+            let saveOption = UIAlertAction(title: "Save photo", style: .default, handler: { (action) in
+                
+                UIImageWriteToSavedPhotosAlbum(self.image!, nil, nil, nil)
+            })
+            
+            optionMenu.addAction(saveOption)
+        }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        optionMenu.addAction(cameraOption)
-        optionMenu.addAction(photoOption)
+
         optionMenu.addAction(cancelAction)
         
         present(optionMenu, animated: true, completion: nil)

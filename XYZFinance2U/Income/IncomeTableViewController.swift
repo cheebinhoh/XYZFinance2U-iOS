@@ -66,7 +66,7 @@ class IncomeTableViewController: UITableViewController,
             viewController.indexPath = indexPath
         } else {
          
-            viewController.total = totalOfSection(section: indexPath!.section - 1)
+            viewController.total = sectionTotal(section: indexPath!.section - 1)
             viewController.currencyCode = tableSectionCellList[indexPath!.section].title
         }
 
@@ -174,7 +174,7 @@ class IncomeTableViewController: UITableViewController,
         return sum
     }
     
-    func totalOfSection(section: Int) -> Double {
+    func sectionTotal(section: Int) -> Double {
     
         var total = 0.0;
         let sectionIncomeList = tableSectionCellList[section].data as? [XYZAccount]
@@ -352,8 +352,8 @@ class IncomeTableViewController: UITableViewController,
                 let mainSection = TableSectionCell(identifier: "main", title: currency, cellList: [], data: sectionIncomeList)
                 tableSectionCellList.append(mainSection)
                 
-                let summarySection = TableSectionCell(identifier: "summary", title: nil, cellList: ["sum"], data: nil)
-                tableSectionCellList.append(summarySection)
+                //let summarySection = TableSectionCell(identifier: "summary", title: nil, cellList: ["sum"], data: nil)
+                //tableSectionCellList.append(summarySection)
             }
         }
         
@@ -904,7 +904,7 @@ class IncomeTableViewController: UITableViewController,
             commands.append(delete)
         } else {
             
-            amount = totalOfSection(section: indexPath.section - 1)
+            amount = sectionTotal(section: indexPath.section - 1)
         }
         
         let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
@@ -1045,7 +1045,7 @@ class IncomeTableViewController: UITableViewController,
                 }
 
                 totalCell = newTotalcell
-                totalCell?.setAmount(amount: totalOfSection(section: indexPath.section - 1), code: tableSectionCellList[indexPath.section - 1].title!)
+                totalCell?.setAmount(amount: sectionTotal(section: indexPath.section - 1), code: tableSectionCellList[indexPath.section - 1].title!)
                 cell = newTotalcell
             
             default:
@@ -1171,6 +1171,44 @@ class IncomeTableViewController: UITableViewController,
         saveAccounts()
     }
     
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let stackView = UIStackView()
+        let title = UILabel()
+        let subtotal = UILabel()
+        let amount = sectionTotal(section: section)
+        
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 45)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        
+        title.text = tableSectionCellList[section].title
+        title.textColor = UIColor.gray
+        stackView.axis = .horizontal
+        stackView.addArrangedSubview(title)
+        
+        subtotal.text = formattingCurrencyValue(input: amount, Locale.current.currencyCode)
+        subtotal.textColor = UIColor.gray
+        stackView.addArrangedSubview(subtotal)
+        
+        return stackView
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        return UIView(frame: .zero)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        return 35
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        
+        return CGFloat.leastNormalMagnitude
+    }
+    
+    /*
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
         return tableSectionCellList[section].title
@@ -1203,6 +1241,7 @@ class IncomeTableViewController: UITableViewController,
             }
         }
     }
+     */
 
     // MARK: - Navigation
 
