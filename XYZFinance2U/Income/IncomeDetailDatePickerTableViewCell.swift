@@ -27,8 +27,8 @@ class IncomeDetailDatePickerTableViewCell: UITableViewCell {
     
     // MARK: - function
     
-    func setDate(_ date: Date)
-    {
+    func setDate(_ date: Date) {
+        
         self.date = date
         datePicker.date = date
     }

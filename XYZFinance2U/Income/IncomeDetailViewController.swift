@@ -11,6 +11,7 @@ import UIKit
 class IncomeDetailViewController: UIViewController {
 
     // MARK: property
+    
     var income: XYZAccount?
     var total: Double?
     var currencyCode: String?
@@ -20,7 +21,6 @@ class IncomeDetailViewController: UIViewController {
     @IBOutlet weak var accountNr: UILabel!
     @IBOutlet weak var amount: UILabel!
     @IBOutlet weak var date: UILabel!
-    
     
     // MARK: 3d touch
     
@@ -66,6 +66,7 @@ class IncomeDetailViewController: UIViewController {
     // MARK: function
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         if let _ = income {

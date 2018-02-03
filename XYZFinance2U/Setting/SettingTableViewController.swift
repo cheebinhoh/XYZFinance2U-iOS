@@ -20,14 +20,13 @@ class SettingTableViewController: UITableViewController,
     var popoverView: UIViewController?
     var isCollapsed: Bool {
         
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        
-        guard let split = appDelegate?.window?.rootViewController as? UISplitViewController else {
+        if let split = self.parent?.parent as? UISplitViewController {
             
-            fatalError("Exception: UISplitViewController is expected" )
+            return split.isCollapsed
+        } else {
+            
+            return true
         }
-        
-        return split.isCollapsed
     }
     
     // MARK: - function
@@ -205,23 +204,24 @@ class SettingTableViewController: UITableViewController,
             }
             
             settingDetail = exDetailNavigationController.viewControllers.first as? ExchangeRateTableViewController
-            
-            guard let splitView = self.parent?.parent?.parent as? MainSplitViewController else {
+
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
                 
-                fatalError("Exception: MainSplitViewController is expected")
+                fatalError("Exception: UISplitViewController is expected" )
             }
             
-            if splitView.isCollapsed {
+            if mainSplitView.isCollapsed {
                 
-                splitView.popOverAlertController = exDetailNavigationController
+                mainSplitView.popOverAlertController = exDetailNavigationController
                 settingDetail?.setPopover(true)
                 popoverView = settingDetail
                 self.present(exDetailNavigationController, animated: false, completion: nil)
             } else {
                 
                 delegate = settingDetail!
-                splitView.viewControllers.remove(at: 1)
-                splitView.viewControllers.insert(exDetailNavigationController, at: 1)
+                mainSplitView.viewControllers.remove(at: 1)
+                mainSplitView.viewControllers.insert(exDetailNavigationController, at: 1)
             }
         }
         
@@ -355,22 +355,23 @@ class SettingTableViewController: UITableViewController,
             
             settingDetail = settingDetailNavigationController.viewControllers.first as? SettingDetailTableViewController
 
-            guard let splitView = self.parent?.parent?.parent as? MainSplitViewController else {
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
                 
-                fatalError("Exception: MainSplitViewController is expected")
+                fatalError("Exception: UISplitViewController is expected" )
             }
             
-            if splitView.isCollapsed {
+            if mainSplitView.isCollapsed {
                 
-                splitView.popOverAlertController = settingDetailNavigationController
+                mainSplitView.popOverAlertController = settingDetailNavigationController
                 settingDetail?.setPopover(true)
                 popoverView = settingDetail
                 self.present(settingDetailNavigationController, animated: false, completion: nil)
             } else {
                 
                 delegate = settingDetail!
-                splitView.viewControllers.remove(at: 1)
-                splitView.viewControllers.insert(settingDetailNavigationController, at: 1)
+                mainSplitView.viewControllers.remove(at: 1)
+                mainSplitView.viewControllers.insert(settingDetailNavigationController, at: 1)
             }
         }
         
