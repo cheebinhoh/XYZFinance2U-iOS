@@ -128,6 +128,21 @@ class ExpenseTableViewController: UITableViewController,
     
     //MARK: - function
     
+    func sectionTotal(_ section: Int) -> Double {
+        
+        var total = 0.0
+        let expenseList = sectionList[section].data as? [XYZExpense]
+        
+        for expense in expenseList! {
+        
+            let amount = expense.value(forKey: XYZExpense.amount) as? Double
+            
+            total = total + amount!
+        }
+        
+        return total
+    }
+    
     func delete(of indexPath:IndexPath) {
         
         let aContext = managedContext()
@@ -686,9 +701,24 @@ class ExpenseTableViewController: UITableViewController,
     }
     */
 
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
-    {
-        return sectionList[section].title
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    
+        let stackView = UIStackView()
+        let title = UILabel()
+        let subtotal = UILabel()
+        let amount = sectionTotal(section)
+        
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 45)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        
+        title.text = sectionList[section].title
+        stackView.axis = .horizontal
+        stackView.addArrangedSubview(title)
+        
+        subtotal.text = formattingCurrencyValue(input: amount, Locale.current.currencyCode)
+        stackView.addArrangedSubview(subtotal)
+        
+        return stackView
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
