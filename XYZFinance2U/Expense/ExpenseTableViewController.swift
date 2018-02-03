@@ -721,6 +721,11 @@ class ExpenseTableViewController: UITableViewController,
         return stackView
     }
     
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        return UIView(frame: .zero)
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         guard let split = self.parent?.parent?.parent as? UISplitViewController else {
@@ -765,15 +770,13 @@ class ExpenseTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        if section == 0 {
-            
-            return 35
-        } else {
-            
-            return 17.5
-        }
+        return 35
     }
 
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        
+        return CGFloat.leastNormalMagnitude
+    }
 
     // MARK: - Navigation
 
