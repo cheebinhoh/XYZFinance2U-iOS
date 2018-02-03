@@ -404,8 +404,10 @@ class IncomeTableViewController: UITableViewController,
             
             let content = UNMutableNotificationContent()
             content.title = "Income update reminder"
-            content.body = "Check income \(String(describing: bank!)), \(String(describing: accountNr!)) ..."
+            content.body = "\(String(describing: bank!)), \(String(describing: accountNr!)) ..."
             content.sound = UNNotificationSound.default()
+            content.userInfo[XYZAccount.type] = true
+            content.userInfo[XYZAccount.recordId] = income.value(forKey: XYZAccount.recordId) as? String
             
             var units: Set<Calendar.Component> = [ .hour, .minute]
             switch repeatAction ?? "Never" {
@@ -450,6 +452,9 @@ class IncomeTableViewController: UITableViewController,
                 if let theError = error {
                     
                     print("-------- notification scheduling error = \(theError.localizedDescription)")
+                } else {
+                    
+                    print("-------- success in register notification")
                 }
             }
         }

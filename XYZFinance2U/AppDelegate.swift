@@ -216,6 +216,24 @@ class AppDelegate: UIResponder,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         
         os_log("-------- userNotificationCenter", log: OSLog.default, type: .default)
+        print("--- here")
+        
+        let userinfo = response.notification.request.content.userInfo
+        
+        if userinfo[XYZAccount.type] != nil {
+            
+            guard let split = self.window?.rootViewController as? UISplitViewController else {
+                
+                fatalError("Exception: UISplitViewController is expected" )
+            }
+            
+            guard let tabBarController = split.viewControllers.first as? UITabBarController else {
+                
+                fatalError("Exception: UITabBarController is expected" )
+            }
+            
+            tabBarController.selectedIndex = 0
+        }
         
         completionHandler()
     }
