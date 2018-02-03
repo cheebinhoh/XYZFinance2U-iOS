@@ -387,6 +387,15 @@ class SettingTableViewController: UITableViewController,
                 let uiDocumentPicker = UIDocumentPickerViewController(urls: [fileURL], in: UIDocumentPickerMode.exportToService)
                 uiDocumentPicker.delegate = self
                 uiDocumentPicker.modalPresentationStyle = UIModalPresentationStyle.formSheet
+                
+                let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                    
+                    fatalError("Exception: UISplitViewController is expected" )
+                }
+                
+                mainSplitView.popOverAlertController = uiDocumentPicker
+                
                 self.present(uiDocumentPicker, animated: true, completion: nil)
             } catch {/* error handling here */
                 
@@ -396,6 +405,12 @@ class SettingTableViewController: UITableViewController,
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: UISplitViewController is expected" )
+        }
         
         if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "Export" {
         
@@ -420,8 +435,13 @@ class SettingTableViewController: UITableViewController,
             
             optionMenu.addAction(saveExpenseOption)
             
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:nil)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:{ (action) in
+                
+                mainSplitView.popOverAlertController = nil
+            })
+            
             optionMenu.addAction(cancelAction)
+            mainSplitView.popOverAlertController = optionMenu
             
             present(optionMenu, animated: true, completion: nil)
         } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "SynciCloud" {
@@ -429,16 +449,21 @@ class SettingTableViewController: UITableViewController,
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let deleteOption = UIAlertAction(title: "Update to iCloud", style: .default, handler: { (action) in
                 
+                mainSplitView.popOverAlertController = nil
                 let appDelegate = UIApplication.shared.delegate as? AppDelegate
                 
                 appDelegate?.syncWithiCloudAndCoreData()
             })
             
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:nil)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:{ (action) in
+             
+                mainSplitView.popOverAlertController = nil
+            })
             
             optionMenu.addAction(deleteOption)
             optionMenu.addAction(cancelAction)
             
+            mainSplitView.popOverAlertController = optionMenu
             present(optionMenu, animated: true, completion: nil)
         } else if tableSectionCellList[indexPath.section].identifier == "lockout" {
             
