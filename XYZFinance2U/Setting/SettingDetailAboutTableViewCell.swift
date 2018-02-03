@@ -11,9 +11,10 @@ import UIKit
 class SettingDetailAboutTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlet
-    
-    //@IBOutlet weak var content: UILabel!
+
     @IBOutlet weak var content: UITextView!
+
+    // MARK: - function
     
     override func awakeFromNib() {
         
@@ -22,6 +23,7 @@ class SettingDetailAboutTableViewCell: UITableViewCell {
         content.textContainer.maximumNumberOfLines = 0
         content.isScrollEnabled = false
         content.sizeToFit()
+        
         // Initialization code
     }
 

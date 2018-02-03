@@ -20,16 +20,18 @@ class SettingTableViewController: UITableViewController,
     var popoverView: UIViewController?
     var isCollapsed: Bool {
         
-        if let split = self.parent?.parent as? UISplitViewController {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        guard let split = appDelegate?.window?.rootViewController as? UISplitViewController else {
             
-            return split.isCollapsed
-        } else {
-            
-            return true
+            fatalError("Exception: UISplitViewController is expected" )
         }
+        
+        return split.isCollapsed
     }
     
     // MARK: - function
+    
     func getMainTableView() -> IncomeTableViewController {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -95,6 +97,7 @@ class SettingTableViewController: UITableViewController,
     override func didReceiveMemoryWarning() {
         
         super.didReceiveMemoryWarning()
+        
         // Dispose of any resources that can be recreated.
     }
 
@@ -380,8 +383,8 @@ class SettingTableViewController: UITableViewController,
             
             let fileURL = dir.appendingPathComponent(file)
             
-            //writing
             do {
+                
                 try content.write(to: fileURL, atomically: false, encoding: .utf8)
                 
                 let uiDocumentPicker = UIDocumentPickerViewController(urls: [fileURL], in: UIDocumentPickerMode.exportToService)
