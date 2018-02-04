@@ -269,23 +269,9 @@ class ExpenseTableViewController: UITableViewController,
                                 for person in personList {
                                 
                                     let email = person.value(forKey: XYZExpensePerson.email) as? String
-                                
-                                    var found = false
-
-                                    for participant in ckshare.participants {
-                                   
-                                        if let lookupEmail = participant.userIdentity.lookupInfo?.emailAddress, lookupEmail == email {
-                                        
-                                            found = true
-                                            break
-                                        }
-                                    }
-                                
-                                    if !found {
-                                    
-                                        let useridentitylookup = CKUserIdentityLookupInfo(emailAddress: email!)
-                                        userIdentityLookupInfos.append(useridentitylookup)
-                                    }
+                                                                    
+                                    let useridentitylookup = CKUserIdentityLookupInfo(emailAddress: email!)
+                                    userIdentityLookupInfos.append(useridentitylookup)
                                 }
                             
                                 if !userIdentityLookupInfos.isEmpty {
