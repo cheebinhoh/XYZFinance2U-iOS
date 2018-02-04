@@ -94,7 +94,7 @@ class ExpenseDetailTextTableViewCell: UITableViewCell,
             input.addDoneToolbar(onDone: nil)
             input.clearButtonMode = .never
             input.keyboardType = .numberPad
-            input.text = formattingCurrencyValue(input: 0.0, nil)
+            input.text = formattingCurrencyValue(input: 0.0, code: nil)
             input.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         } else {
             
@@ -110,7 +110,7 @@ class ExpenseDetailTextTableViewCell: UITableViewCell,
         
         text = formattingDoubleValue(input: text)
         text = formattingAndProcessDoubleValue(input: text)
-        text = formattingCurrencyValue(input: text, nil)
+        text = formattingCurrencyValue(input: text, code: nil)
         textField.text = text
         delegate?.textDidEndEditing(self)
     }

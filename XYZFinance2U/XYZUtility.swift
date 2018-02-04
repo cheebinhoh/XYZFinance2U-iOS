@@ -25,11 +25,12 @@ struct TableSectionCell {
 // MARK: - formatting
 
 func formattingDate(date: Date,
-                    _ style: DateFormatter.Style) -> String {
+                    style: DateFormatter.Style) -> String {
     
     let dateFormatter = DateFormatter();
     
     dateFormatter.dateStyle = style
+    
     return dateFormatter.string(from: date)
 }
 
@@ -160,15 +161,15 @@ func formattingDoubleValue(input: String) -> String {
 }
 
 func formattingCurrencyValue(input: Double,
-                             _ code: String?) -> String {
+                             code: String?) -> String {
     
     let value = "\(input)"
     
-    return formattingCurrencyValue(input: value, code)
+    return formattingCurrencyValue(input: value, code: code)
 }
 
 func formattingCurrencyValue(input: String,
-                             _ code: String?) -> String {
+                             code: String?) -> String {
     
     let processedInput = formattingDoubleValue(input: input)
     let formatter = NumberFormatter()

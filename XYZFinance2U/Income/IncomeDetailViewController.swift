@@ -77,15 +77,15 @@ class IncomeDetailViewController: UIViewController {
             let currencyCode = income?.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode
             let balance = income?.value(forKey: XYZAccount.amount) as? Double
             
-            amount.text = formattingCurrencyValue(input: balance!, currencyCode)
-            date.text = formattingDate(date: (income?.value(forKey: XYZAccount.lastUpdate) as? Date )!, .medium)
+            amount.text = formattingCurrencyValue(input: balance!, code:currencyCode)
+            date.text = formattingDate(date: (income?.value(forKey: XYZAccount.lastUpdate) as? Date )!, style: .medium)
         } else if let _ = total {
             
             bank.text = "-"
             accountNr.text = "-"
             date.text = "-"
             
-            amount.text = formattingCurrencyValue(input: total!, currencyCode ?? Locale.current.currencyCode)
+            amount.text = formattingCurrencyValue(input: total!, code: currencyCode ?? Locale.current.currencyCode)
         }
         
         // Do any additional setup after loading the view.

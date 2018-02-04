@@ -63,8 +63,8 @@ class ExpenseDetailViewController: UIViewController {
             detail.text = expense?.value(forKey: XYZExpense.detail) as? String
             let amountValue = expense?.value(forKey: XYZExpense.amount) as? Double
             
-            amount.text = formattingCurrencyValue(input: amountValue!, Locale.current.currencyCode)
-            date.text = formattingDate(date: (expense?.value(forKey: XYZExpense.date) as? Date )!, .medium)
+            amount.text = formattingCurrencyValue(input: amountValue!, code: Locale.current.currencyCode)
+            date.text = formattingDate(date: (expense?.value(forKey: XYZExpense.date) as? Date )!, style: .medium)
         }
         
         // Do any additional setup after loading the view.

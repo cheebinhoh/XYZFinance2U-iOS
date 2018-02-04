@@ -165,7 +165,7 @@ class IncomeDetailTableViewController: UITableViewController,
         switch tableSectionCellList[indexPath!.section].identifier {
             
             case "balance":
-                datecell?.dateInput.text = formattingDate(date: sender.date ?? Date(), .medium)
+                datecell?.dateInput.text = formattingDate(date: sender.date ?? Date(), style: .medium)
                 date = sender.date ?? Date()
 
             case "remind":
@@ -610,8 +610,8 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.delegate = self
                 textcell.enableMonetaryEditing(true, currencyCode!)
 
-                textcell.input.placeholder = formattingCurrencyValue(input: 0.0, currencyCode)
-                textcell.input.text = formattingCurrencyValue(input: amount ?? 0.0, currencyCode)
+                textcell.input.placeholder = formattingCurrencyValue(input: 0.0, code: currencyCode)
+                textcell.input.text = formattingCurrencyValue(input: amount ?? 0.0, code: currencyCode)
                 textcell.label.text = "Balance"
                 
                 cell = textcell
@@ -627,7 +627,7 @@ class IncomeDetailTableViewController: UITableViewController,
                     date = Date()
                 }
                 
-                datecell.dateInput.text = formattingDate(date: date ?? Date(), .medium)
+                datecell.dateInput.text = formattingDate(date: date ?? Date(), style: .medium)
                 datecell.delegate = self
                 datecell.label.text = "Last update"
                 datecell.enableEditing = modalEditing

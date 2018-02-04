@@ -32,6 +32,6 @@ class IncomeTotalTableViewCell: UITableViewCell {
 
     func setAmount(amount: Double, code: String) {
         
-        self.amount.text = formattingCurrencyValue(input: amount, code )
+        self.amount.text = formattingCurrencyValue(input: amount, code: code )
     }
 }

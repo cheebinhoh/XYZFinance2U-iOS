@@ -1067,7 +1067,7 @@ class IncomeTableViewController: UITableViewController,
                 
                 incomecell.bank.text = account.value(forKey: XYZAccount.bank) as? String
                 incomecell.account.text = account.value(forKey: XYZAccount.accountNr ) as? String
-                incomecell.amount.text = formattingCurrencyValue(input: (account.value(forKey: XYZAccount.amount) as? Double)!, currencyCode)
+                incomecell.amount.text = formattingCurrencyValue(input: (account.value(forKey: XYZAccount.amount) as? Double)!, code: currencyCode)
                 incomecell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
                 
                 cell = incomecell
@@ -1220,7 +1220,7 @@ class IncomeTableViewController: UITableViewController,
         stackView.axis = .horizontal
         stackView.addArrangedSubview(title)
         
-        subtotal.text = formattingCurrencyValue(input: amount, Locale.current.currencyCode)
+        subtotal.text = formattingCurrencyValue(input: amount, code: Locale.current.currencyCode)
         subtotal.textColor = UIColor.gray
         stackView.addArrangedSubview(subtotal)
         

@@ -553,7 +553,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     // MARK: - date mamipulation
     func dateDidPick(_ sender: ExpenseDetailDatePickerTableViewCell) {
         
-        datecell?.dateInput.text = formattingDate(date: sender.date ?? Date(), .medium )
+        datecell?.dateInput.text = formattingDate(date: sender.date ?? Date(), style: .medium )
         date = sender.date ?? Date()
     }
     
@@ -938,8 +938,8 @@ class ExpenseDetailTableViewController: UITableViewController,
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
                 textcell.enableMonetaryEditing(true)
-                textcell.input.placeholder = formattingCurrencyValue(input: 0.0, nil)
-                textcell.input.text = formattingCurrencyValue(input: amount ?? 0.0, nil)
+                textcell.input.placeholder = formattingCurrencyValue(input: 0.0, code: nil)
+                textcell.input.text = formattingCurrencyValue(input: amount ?? 0.0, code: nil)
                 
                 cell = textcell
             
@@ -952,7 +952,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     date = Date()
                 }
                 
-                datecell.dateInput.text = formattingDate(date: date ?? Date(), .medium)
+                datecell.dateInput.text = formattingDate(date: date ?? Date(), style: .medium)
                 datecell.delegate = self
                 
                 datecell.enableEditing = modalEditing

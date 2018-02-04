@@ -730,7 +730,7 @@ class ExpenseTableViewController: UITableViewController,
         stackView.axis = .horizontal
         stackView.addArrangedSubview(title)
         
-        subtotal.text = formattingCurrencyValue(input: amount, Locale.current.currencyCode)
+        subtotal.text = formattingCurrencyValue(input: amount, code: Locale.current.currencyCode)
         subtotal.textColor = UIColor.gray
         stackView.addArrangedSubview(subtotal)
         
