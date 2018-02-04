@@ -127,9 +127,10 @@ class IncomeTableViewController: UITableViewController,
             fatalError("Exception: eror on casting first view controller to IncomeDetailTableViewController" )
         }
         
-        guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
             
-            fatalError("Exception: MainSplitViewController is expected")
+            fatalError("Exception: UISplitViewController is expected" )
         }
         
         mainSplitView.popOverNavigatorController = incomeDetailNavigationController
@@ -699,9 +700,10 @@ class IncomeTableViewController: UITableViewController,
                 
                 if !lockScreenDisplayed {
                     
-                    guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                    guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
                         
-                        fatalError("Exception: MainSplitViewController is expected")
+                        fatalError("Exception: UISplitViewController is expected" )
                     }
                     
                     if let _ = mainSplitView.popOverAlertController {
@@ -787,19 +789,20 @@ class IncomeTableViewController: UITableViewController,
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        guard let split = self.parent?.parent?.parent as? UISplitViewController else {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
             
-            fatalError("Exception: UISplitViewController is expected")
+            fatalError("Exception: UISplitViewController is expected" )
         }
         
-        if split.isCollapsed {
+        if mainSplitView.isCollapsed {
             
             self.navigationItem.setLeftBarButton(self.editButtonItem, animated: true)
         }
         
-        if split.viewControllers.count > 1 {
+        if mainSplitView.viewControllers.count > 1 {
             
-            guard let _ = split.viewControllers.last as? UINavigationController else {
+            guard let _ = mainSplitView.viewControllers.last as? UINavigationController else {
                 
                 fatalError( "Exception: navigation controller is expected" )
             }
@@ -856,9 +859,10 @@ class IncomeTableViewController: UITableViewController,
                     incomeDetailTableViewController.isPopover = true
                     navigationController.modalPresentationStyle = .popover
                     
-                    guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                    guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
                         
-                        fatalError("Exception: MainSplitViewController is expected")
+                        fatalError("Exception: UISplitViewController is expected" )
                     }
                     
                     mainSplitView.popOverNavigatorController = navigationController
@@ -949,9 +953,10 @@ class IncomeTableViewController: UITableViewController,
         
         let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
             
-            guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
                 
-                fatalError("Exception: MainSplitViewController is expected")
+                fatalError("Exception: UISplitViewController is expected" )
             }
             
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -995,12 +1000,13 @@ class IncomeTableViewController: UITableViewController,
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let split = self.parent?.parent?.parent as? UISplitViewController else {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
             
-            fatalError("Exception: UISplitViewController is expected")
+            fatalError("Exception: UISplitViewController is expected" )
         }
         
-        if split.isCollapsed  {
+        if mainSplitView.isCollapsed  {
             
             guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "IncomeDetailNavigationController") as? UINavigationController else {
                 
@@ -1020,9 +1026,10 @@ class IncomeTableViewController: UITableViewController,
             incomeDetailNavigationController.modalPresentationStyle = .popover
             self.present(incomeDetailNavigationController, animated: true, completion: nil)
             
-            guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
                 
-                fatalError("Exception: MainSplitViewController is expected")
+                fatalError("Exception: UISplitViewController is expected" )
             }
             
             mainSplitView.popOverNavigatorController = incomeDetailNavigationController
@@ -1129,12 +1136,13 @@ class IncomeTableViewController: UITableViewController,
             let sectionIncomeList = tableSectionCellList[indexPath.section].data as? [XYZAccount]
             let incomeToBeDeleted = sectionIncomeList![indexPath.row]
             
-            guard let split = self.parent?.parent?.parent as? UISplitViewController else {
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
                 
-                fatalError("Exception: UISplitViewController is expected")
+                fatalError("Exception: UISplitViewController is expected" )
             }
             
-            if !split.isCollapsed  {
+            if !mainSplitView.isCollapsed  {
                 
                 guard let detailTableViewController = delegate as? IncomeDetailTableViewController else {
                     
@@ -1156,7 +1164,6 @@ class IncomeTableViewController: UITableViewController,
             notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier!])
             notificationCenter.removeAllDeliveredNotifications()
   
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate
             let aContext = managedContext()
             let oldIncome = appDelegate?.incomeList.remove(at: (appDelegate?.incomeList.index(of: incomeToBeDeleted)!)!)   //incomeList.remove(at: indexPath.row)
             aContext?.delete(oldIncome!)
