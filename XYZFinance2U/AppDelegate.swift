@@ -584,6 +584,7 @@ class AppDelegate: UIResponder,
             
             fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase, zonesToBeFetched, self.privateiCloudZones, {
 
+                print("******** done fetchAndUpdateiCloud")
                 for icloudzone in self.privateiCloudZones {
 
                     let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
