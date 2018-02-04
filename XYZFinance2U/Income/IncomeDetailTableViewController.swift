@@ -241,7 +241,8 @@ class IncomeDetailTableViewController: UITableViewController,
         
         didSet {
             
-            navigationItem.rightBarButtonItem?.isEnabled = !bank.isEmpty
+            // DEPRECATED: we do not longer disable Save button
+            // navigationItem.rightBarButtonItem?.isEnabled = !bank.isEmpty
         }
     }
     
@@ -314,6 +315,7 @@ class IncomeDetailTableViewController: UITableViewController,
             } else {
                 
                 saveData()
+                
                 incomeDelegate?.saveIncome(income: income!)
             }
             
@@ -391,7 +393,8 @@ class IncomeDetailTableViewController: UITableViewController,
             navigationItem.title = "Income"
         }
         
-        navigationItem.rightBarButtonItem?.isEnabled = !bank.isEmpty
+        // DEPRECATED: we do not disable Save when it is empty, let user decide what to save
+        // navigationItem.rightBarButtonItem?.isEnabled = !bank.isEmpty
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

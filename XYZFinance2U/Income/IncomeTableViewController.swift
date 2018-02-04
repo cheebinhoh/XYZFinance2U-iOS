@@ -250,7 +250,11 @@ class IncomeTableViewController: UITableViewController,
     }
     
     func saveIncome(income: XYZAccount) {
+
+        reloadData()
+        saveAccounts()
         
+        /* DEPRECATED: we do not need that when we have 
         let selectedIndexPath = incomeIndex(of: income)
         let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
         
@@ -265,6 +269,7 @@ class IncomeTableViewController: UITableViewController,
             reloadData()
             saveAccounts()
         }
+        */
     }
     
     func softDeleteIncome(income: XYZAccount) {
@@ -1133,7 +1138,7 @@ class IncomeTableViewController: UITableViewController,
         
         if editingStyle == .delete {
             
-            // Delete the row from the data source, the way we handle it is special, we delete it from incomelist, and then reload it in table section
+            // Delete the row from the data source, the way we handsaveIncomele it is special, we delete it from incomelist, and then reload it in table section
             let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
             let incomeToBeDeleted = sectionIncomeList![indexPath.row]
             
