@@ -14,6 +14,7 @@ class XYZExpenseReceipt: NSManagedObject
 {
     // MARK: - static property
     
+    static let type = "XYZExpenseReceipt"
     static let sequenceNr = "sequenceNr"
     static let image = "image"
     static let expense = "expense"
@@ -26,15 +27,19 @@ class XYZExpenseReceipt: NSManagedObject
     
     // MARK: - function
     
-    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+    override init(entity: NSEntityDescription,
+                  insertInto context: NSManagedObjectContext?) {
         
         super.init(entity: entity, insertInto: context)
     }
     
-    init(expense: XYZExpense, sequenceNr: Int, image: NSData, context: NSManagedObjectContext?) {
+    init(expense: XYZExpense,
+         sequenceNr: Int,
+         image: NSData,
+         context: NSManagedObjectContext?) {
         
         let aContext = context!
-        let entity = NSEntityDescription.entity(forEntityName: "XYZExpenseReceipt",
+        let entity = NSEntityDescription.entity(forEntityName: XYZExpenseReceipt.type,
                                                 in: aContext)!
         
         super.init(entity: entity, insertInto: aContext)

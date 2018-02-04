@@ -18,13 +18,13 @@ class XYZiCloudZone: NSManagedObject {
     // MARK: - static property
     
     static let type = "XYZiCloudZone"
-    static let changeToken = "changeToken"
     static let name = "name"
+    static let ownerName = "ownerName"
+    static let inShareDB = "inShareDB"
+    static let changeToken = "changeToken"
     static let changeTokenLastFetch = "changeTokenLastFetch"
     static let deleteRecordIdList = "deleteRecordIdList"
-    static let inShareDB = "inShareDB"
-    static let ownerName = "ownerName"
-    
+
      // MARK: - property
     
     var name = ""
@@ -42,7 +42,9 @@ class XYZiCloudZone: NSManagedObject {
     
     // MARK: - function
     
-    init(name: String, owner: String, context: NSManagedObjectContext?) {
+    init(name: String,
+         owner: String,
+         context: NSManagedObjectContext?) {
         
         let aContext = context!
         let entity = NSEntityDescription.entity(forEntityName: XYZiCloudZone.type,
@@ -56,7 +58,8 @@ class XYZiCloudZone: NSManagedObject {
         self.setValue(data, forKey: XYZiCloudZone.deleteRecordIdList)
     }
     
-    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+    override init(entity: NSEntityDescription,
+                  insertInto context: NSManagedObjectContext?) {
         
         super.init(entity: entity, insertInto: context)
     }

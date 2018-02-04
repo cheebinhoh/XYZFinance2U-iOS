@@ -373,7 +373,7 @@ func createUpdateAccount(_ record: CKRecord,
     
     if nil == incomeToBeUpdated {
         
-        incomeToBeUpdated = XYZAccount(recordName,
+        incomeToBeUpdated = XYZAccount(id: recordName,
                                        sequenceNr: sequenceNr!,
                                        bank: bank!,
                                        accountNr: accountNr ?? "",

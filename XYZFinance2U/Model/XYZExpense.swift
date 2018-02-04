@@ -36,10 +36,10 @@ class XYZExpense: NSManagedObject {
     var detail = ""
     var amount = 0.0
     var date: Date = Date()
-    var persons: Set<XYZExpensePerson>?
-    var receipts: Set<XYZExpenseReceipt>?
     var location = CLLocation()
     var hasLocation = false
+    var persons: Set<XYZExpensePerson>?
+    var receipts: Set<XYZExpenseReceipt>?
     var recordId: String = ""
     var lastRecordChange = Date()
     var shareRecordId: String = ""
@@ -48,15 +48,20 @@ class XYZExpense: NSManagedObject {
     
     // MARK: - function
     
-    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+    override init(entity: NSEntityDescription,
+                  insertInto context: NSManagedObjectContext?) {
         
         super.init(entity: entity, insertInto: context)
     }
     
-    init(id: String?, detail: String, amount: Double, date: Date, context: NSManagedObjectContext?) {
+    init(id: String?,
+         detail: String,
+         amount: Double,
+         date: Date,
+         context: NSManagedObjectContext?) {
         
         let aContext = context!
-        let entity = NSEntityDescription.entity(forEntityName: "XYZExpense",
+        let entity = NSEntityDescription.entity(forEntityName: XYZExpense.type,
                                                 in: aContext)!
         super.init(entity: entity, insertInto: aContext)
     
@@ -101,12 +106,13 @@ class XYZExpense: NSManagedObject {
         }
         
         // for some reason, deleting individual items from set does not empty them, some where are reference them or because
-        // the hashable is not working, so i do not able to just use deletall
+        // the hashable is not working, so i do not able to just use deleteall
         self.setValue(Set<XYZExpensePerson>(), forKey: XYZExpense.persons)
     }
     
     @discardableResult
-    func removePerson(sequenceNr: Int, context: NSManagedObjectContext?) -> XYZExpensePerson? {
+    func removePerson(sequenceNr: Int,
+                      context: NSManagedObjectContext?) -> XYZExpensePerson? {
         
         var personRemoved: XYZExpensePerson?
         
@@ -135,13 +141,20 @@ class XYZExpense: NSManagedObject {
     }
     
     @discardableResult
-    func addPerson(sequenceNr: Int, name: String, email: String, paid: Bool) -> ( XYZExpensePerson, Bool ) {
+    func addPerson(sequenceNr: Int,
+                   name: String,
+                   email: String,
+                   paid: Bool) -> ( XYZExpensePerson, Bool ) {
         
         return addPerson(sequenceNr: sequenceNr, name: name, email: email, paid: paid, context: managedContext()!)
     }
     
     @discardableResult
-    func addPerson(sequenceNr: Int, name: String, email: String, paid: Bool, context: NSManagedObjectContext?) -> ( XYZExpensePerson, Bool ) {
+    func addPerson(sequenceNr: Int,
+                   name: String,
+                   email: String,
+                   paid: Bool,
+                   context: NSManagedObjectContext?) -> ( XYZExpensePerson, Bool ) {
         
         var hasChange = false
         var person: XYZExpensePerson?
@@ -169,6 +182,7 @@ class XYZExpense: NSManagedObject {
                 existingPerson.setValue(email, forKey: XYZExpensePerson.email)
                 existingPerson.setValue(paid, forKey: XYZExpensePerson.paid)
                 person = existingPerson
+                
                 break
             }
         }
@@ -188,10 +202,12 @@ class XYZExpense: NSManagedObject {
     }
     
     @discardableResult
-    func addReceipt(sequenceNr: Int, image: NSData) -> ( XYZExpenseReceipt, Bool ) {
+    func addReceipt(sequenceNr: Int,
+                    image: NSData) -> ( XYZExpenseReceipt, Bool ) {
         
         var hasChangeImage = true
         var receipt: XYZExpenseReceipt?
+        
         guard var receiptList = self.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>  else {
             
             fatalError("Exception: [XYZExpenseReceipt] is expected")
@@ -202,6 +218,7 @@ class XYZExpense: NSManagedObject {
             if let existingSequenceNr = existingReceipt.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int, existingSequenceNr == sequenceNr {
                 
                 let imageData = existingReceipt.value(forKey: XYZExpenseReceipt.image) as? NSData
+                
                 hasChangeImage = imageData != image // this is not 100% accurate as data might be different
                                                     // at various time of compress image.
                 

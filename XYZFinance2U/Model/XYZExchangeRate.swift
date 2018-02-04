@@ -33,11 +33,11 @@ class XYZExchangeRate : NSManagedObject {
     
     // MARK: - function
     
-    init(_ recordId: String,
-         _ base: String,
-         _ target: String,
-         _ rate: Double,
-         _ date: Date,
+    init(recordId: String,
+         base: String,
+         target: String,
+         rate: Double,
+         date: Date,
          context: NSManagedObjectContext?) {
         
         let aContext = context!
@@ -53,7 +53,8 @@ class XYZExchangeRate : NSManagedObject {
         self.setValue(date, forKey: XYZExchangeRate.date)
     }
     
-    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+    override init(entity: NSEntityDescription,
+                  insertInto context: NSManagedObjectContext?) {
         
         super.init(entity: entity, insertInto: context)
     }

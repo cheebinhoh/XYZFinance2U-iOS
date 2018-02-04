@@ -45,11 +45,15 @@ class XYZAccount : NSManagedObject {
     
     // MARK: - function
     
-    init(_ id: String?, sequenceNr: Int, bank: String, accountNr: String, amount: Double, date: Date, context: NSManagedObjectContext?) {
+    init(id: String?, sequenceNr: Int,
+         bank: String, accountNr: String,
+         amount: Double,
+         date: Date,
+         context: NSManagedObjectContext?) {
         
         let aContext = context!
 
-        let entity = NSEntityDescription.entity(forEntityName: "XYZAccount",
+        let entity = NSEntityDescription.entity(forEntityName: XYZAccount.type,
                                                 in: aContext)!
         super.init(entity: entity, insertInto: aContext)
         
@@ -71,7 +75,8 @@ class XYZAccount : NSManagedObject {
         self.setValue(sequenceNr, forKey: XYZAccount.sequenceNr)
     }
     
-    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+    override init(entity: NSEntityDescription,
+                  insertInto context: NSManagedObjectContext?) {
         
         super.init(entity: entity, insertInto: context)
     }

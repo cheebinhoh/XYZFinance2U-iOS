@@ -264,11 +264,11 @@ class SettingTableViewController: UITableViewController,
                         
                         if nil == exchangeRateToBeUpdated {
                             
-                            exchangeRateToBeUpdated = XYZExchangeRate(id,
-                                                                      currencyCodeFrom,
-                                                                      currencyCodeTo,
-                                                                      0.0,
-                                                                      Date(),
+                            exchangeRateToBeUpdated = XYZExchangeRate(recordId: id,
+                                                                      base: currencyCodeFrom,
+                                                                      target: currencyCodeTo,
+                                                                      rate: 0.0,
+                                                                      date: Date(),
                                                                       context: aContext)
                             
                             exchangeRates?.append(exchangeRateToBeUpdated!)

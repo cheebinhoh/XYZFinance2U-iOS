@@ -23,23 +23,28 @@ class XYZExpensePerson: NSManagedObject
     
     // MARK: - property
     
-    var sequenceNr = 0
     var name  = ""
     var email = ""
     var expense: XYZExpense?
+    var sequenceNr = 0
     var paid = false
     
     // MARK: - function
     
-    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+    override init(entity: NSEntityDescription,
+                  insertInto context: NSManagedObjectContext?) {
         
         super.init(entity: entity, insertInto: context)
     }
     
-    init(expense: XYZExpense, sequenceNr: Int, name: String, email: String, context: NSManagedObjectContext?) {
+    init(expense: XYZExpense,
+         sequenceNr: Int,
+         name: String,
+         email: String,
+         context: NSManagedObjectContext?) {
         
         let aContext = context!
-        let entity = NSEntityDescription.entity(forEntityName: "XYZExpensePerson",
+        let entity = NSEntityDescription.entity(forEntityName: XYZExpensePerson.type,
                                                 in: aContext)!
         
         super.init(entity: entity, insertInto: aContext)

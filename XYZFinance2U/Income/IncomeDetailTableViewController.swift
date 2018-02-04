@@ -307,7 +307,7 @@ class IncomeDetailTableViewController: UITableViewController,
             
             if nil == income {
                 
-                income = XYZAccount(nil, sequenceNr: 0, bank: bank, accountNr: accountNr, amount: amount!, date: date!, context: managedContext())
+                income = XYZAccount(id: nil, sequenceNr: 0, bank: bank, accountNr: accountNr, amount: amount!, date: date!, context: managedContext())
                 
                 saveData()
                 incomeDelegate?.saveNewIncome(income: income!)
