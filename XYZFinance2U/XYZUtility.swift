@@ -1300,17 +1300,29 @@ func registeriCloudSubscription(_ database: CKDatabase,
             fatalError("Exception: iCloud zone name is expected")
         }
         
-        let ckrecordzone = CKRecordZone(zoneName: name)
+        let ownerName = icloudzone.value(forKey: XYZiCloudZone.ownerName) as? String ?? ""
         
-        let fetchOp = CKFetchSubscriptionsOperation.init(subscriptionIDs: [ckrecordzone.zoneID.zoneName])
+        var ckrecordzone: CKRecordZone?
+        
+        if ownerName == "" {
+            
+            ckrecordzone = CKRecordZone(zoneName: name)
+        } else {
+            
+            ckrecordzone = CKRecordZone(zoneID: CKRecordZoneID(zoneName: name, ownerName: ownerName))
+        }
+        
+        let id = "\((ckrecordzone?.zoneID.zoneName)!)-\((ckrecordzone?.zoneID.ownerName)!)"
+        let fetchOp = CKFetchSubscriptionsOperation.init(subscriptionIDs: [id])
         
         fetchOp.fetchSubscriptionCompletionBlock = {(subscriptionDict, error) -> Void in
             
-            if let _ = subscriptionDict?[ckrecordzone.zoneID.zoneName] {
+            //if let _ = subscriptionDict?[(ckrecordzone?.zoneID.zoneName)!]  {
+            if let _ = subscriptionDict![id] {
                 
             } else {
 
-                let subscription = CKRecordZoneSubscription.init(zoneID: ckrecordzone.zoneID, subscriptionID: ckrecordzone.zoneID.zoneName)
+                let subscription = CKRecordZoneSubscription.init(zoneID: (ckrecordzone?.zoneID)!, subscriptionID: id)
                 let notificationInfo = CKNotificationInfo()
                 
                 notificationInfo.shouldSendContentAvailable = true
@@ -1320,6 +1332,14 @@ func registeriCloudSubscription(_ database: CKDatabase,
                 operation.qualityOfService = .utility
                 operation.completionBlock = {
                     
+                }
+                
+                operation.modifySubscriptionsCompletionBlock = { subscriptions, strings, error in
+                    
+                    if let _ = error {
+                        
+                        print("******** modify subscription completion error = \(String(describing: error))")
+                    }
                 }
                 
                 database.add(operation)

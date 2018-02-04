@@ -211,6 +211,9 @@ class AppDelegate: UIResponder,
                                         self.expenseList = (iCloudZone.data as? [XYZExpense])!
                                         expenseView.reloadData()
                                     
+                                        // subscription is not supported in shared DB
+                                        //registeriCloudSubscription(CKContainer.default().sharedCloudDatabase, [shareicloudZone!])
+                                    
                                     default:
                                         fatalError("Exception: \(String(describing: name)) is not supported")
                                 }
@@ -279,6 +282,7 @@ class AppDelegate: UIResponder,
             let _ = "-------- notifiction \(String(describing: notification.recordZoneID?.zoneName))"
             
             syncWithiCloudAndCoreData()
+            fetchSharediCloudZone()
             completionHandler(.newData)
         }
     }
