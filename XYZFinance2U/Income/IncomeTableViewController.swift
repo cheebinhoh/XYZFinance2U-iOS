@@ -612,18 +612,34 @@ class IncomeTableViewController: UITableViewController,
     
     func validateiCloud() {
         
+        print("---- enter validateiCloud")
         CKContainer.default().accountStatus { (status, error) in
             
+            print("---- enter validateiCloud cb = \(status)")
             if status == CKAccountStatus.noAccount {
 
-                self.iCloudEnable = false
-                let alert = UIAlertController(title: "Sign in to icloud",
-                                              message: "Sign in to your iCloud account to write records", preferredStyle: UIAlertControllerStyle.alert )
-                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (action) in
+                DispatchQueue.main.async {
                     
-                    alert.dismiss(animated: false, completion: nil)
-                }))
-                self.present(alert, animated: false, completion: nil)
+                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                    guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                        
+                        fatalError("Exception: UISplitViewController is expected" )
+                    }
+                    
+                    self.iCloudEnable = false
+                    let alert = UIAlertController(title: "Sign in to icloud",
+                                                  message: "Sign in to your iCloud account to keep records in iCloud", preferredStyle: UIAlertControllerStyle.alert )
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (action) in
+                        
+                        alert.dismiss(animated: false, completion: {
+                        
+                            mainSplitView.popOverAlertController = nil
+                        })
+                    }))
+                    
+                    mainSplitView.popOverAlertController = alert
+                    self.present(alert, animated: false, completion: nil)
+                }
             } else {
                 
     
