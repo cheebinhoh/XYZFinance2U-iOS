@@ -70,6 +70,7 @@ class ExpenseDetailImagePickerTableViewCell: UITableViewCell,
     @IBAction func newImageDoubleTouchUp(_ sender: UITapGestureRecognizer) {
         
         guard let imageView = sender.view as? UIImageView else {
+            
             fatalError("Exception: UIImageView is expected for UITapGestureRecognizer")
         }
         
@@ -82,6 +83,7 @@ class ExpenseDetailImagePickerTableViewCell: UITableViewCell,
         if isEditable {
             
             guard let imageView = sender.view as? UIImageView else {
+                
                 fatalError("Exception: UIImageView is expected for UITapGestureRecognizer")
             }
             

@@ -63,9 +63,9 @@ class IncomeTableViewController: UITableViewController,
         viewController.preferredContentSize = CGSize(width: 0.0, height: 140)
         previewingContext.sourceRect = (cell?.frame)!
         
-        if tableSectionCellList[indexPath!.section].identifier == "main" {
+        if sectionList[indexPath!.section].identifier == "main" {
             
-            guard let sectionIncomeList = tableSectionCellList[(indexPath?.section)!].data as? [XYZAccount] else {
+            guard let sectionIncomeList = sectionList[(indexPath?.section)!].data as? [XYZAccount] else {
                 
                 fatalError("Exception: [XYZAccount] is expected")
             }
@@ -75,7 +75,7 @@ class IncomeTableViewController: UITableViewController,
         } else {
          
             viewController.total = sectionTotal(section: indexPath!.section - 1)
-            viewController.currencyCode = tableSectionCellList[indexPath!.section].title
+            viewController.currencyCode = sectionList[indexPath!.section].title
         }
 
         return viewController
@@ -84,7 +84,7 @@ class IncomeTableViewController: UITableViewController,
     
     // MARK: - property
     
-    var tableSectionCellList = [TableSectionCell]()
+    var sectionList = [TableSectionCell]()
     var isPopover = false
     let mainSection = 0
 
@@ -186,7 +186,7 @@ class IncomeTableViewController: UITableViewController,
     func sectionTotal(section: Int) -> Double {
     
         var total = 0.0;
-        let sectionIncomeList = tableSectionCellList[section].data as? [XYZAccount]
+        let sectionIncomeList = sectionList[section].data as? [XYZAccount]
         
         for income in sectionIncomeList! {
         
@@ -206,7 +206,7 @@ class IncomeTableViewController: UITableViewController,
 
         let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
         
-        for (index, section) in tableSectionCellList.enumerated() {
+        for (index, section) in sectionList.enumerated() {
             
             if currencyCode == section.title {
                 
@@ -217,7 +217,7 @@ class IncomeTableViewController: UITableViewController,
                 
                 sectionIncomeList.append(income)
                 
-                tableSectionCellList[index].data = sectionIncomeList
+                sectionList[index].data = sectionIncomeList
                 break
             }
         }
@@ -232,7 +232,7 @@ class IncomeTableViewController: UITableViewController,
     
     func incomeIndex(of income: XYZAccount) -> IndexPath? {
         
-        for (sectionIndex, section) in tableSectionCellList.enumerated() {
+        for (sectionIndex, section) in sectionList.enumerated() {
             
             if let sectionIncomeList = section.data as? [XYZAccount] {
                 
@@ -254,7 +254,7 @@ class IncomeTableViewController: UITableViewController,
         let selectedIndexPath = incomeIndex(of: income)
         let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
         
-        if tableSectionCellList[(selectedIndexPath?.section)!].title == currencyCode! {
+        if sectionList[(selectedIndexPath?.section)!].title == currencyCode! {
     
             let summaryIndex = IndexPath(row:0, section: (selectedIndexPath?.section)! + 1)
             tableView.reloadRows(at: [selectedIndexPath!, summaryIndex], with: .automatic)
@@ -333,7 +333,7 @@ class IncomeTableViewController: UITableViewController,
             currencyList.append(Locale.current.currencyCode!)
         }
         
-        tableSectionCellList.removeAll()
+        sectionList.removeAll()
      
         for currency in currencyList {
             
@@ -359,14 +359,14 @@ class IncomeTableViewController: UITableViewController,
                 sectionIncomeList = sortAcounts(sectionIncomeList)
                 
                 let mainSection = TableSectionCell(identifier: "main", title: currency, cellList: [], data: sectionIncomeList)
-                tableSectionCellList.append(mainSection)
+                sectionList.append(mainSection)
                 
                 //let summarySection = TableSectionCell(identifier: "summary", title: nil, cellList: ["sum"], data: nil)
                 //tableSectionCellList.append(summarySection)
             }
         }
         
-        for section in tableSectionCellList {
+        for section in sectionList {
             
             switch section.identifier {
                 
@@ -486,7 +486,7 @@ class IncomeTableViewController: UITableViewController,
          */
         
         // preprocessing before saving it
-        for (sectionIndex, section) in tableSectionCellList.enumerated() {
+        for (sectionIndex, section) in sectionList.enumerated() {
             
             if let sectionIncomeList = section.data as? [XYZAccount] {
                 
@@ -695,7 +695,7 @@ class IncomeTableViewController: UITableViewController,
         if #available(iOS 8.0, macOS 10.12.1, *) {
             
             if laContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
-                
+
                 self.authenticatedMechanismExist = true
                 
                 if !lockScreenDisplayed {
@@ -723,6 +723,7 @@ class IncomeTableViewController: UITableViewController,
                 laContext.evaluatePolicy(.deviceOwnerAuthentication,
                                          localizedReason: "Authenticate to use the app" )
                 { (success, error) in
+            
                     self.authenticatedOk = success
                     
                     if self.authenticatedOk {
@@ -929,9 +930,9 @@ class IncomeTableViewController: UITableViewController,
         var commands = [UIContextualAction]()
         var amount = 0.0
         
-        if tableSectionCellList[indexPath.section].identifier == "main" {
+        if sectionList[indexPath.section].identifier == "main" {
             
-            let incomeList = tableSectionCellList[indexPath.section].data as? [XYZAccount]
+            let incomeList = sectionList[indexPath.section].data as? [XYZAccount]
             let income = incomeList![indexPath.row]
             
             amount = income.value(forKey: XYZExpense.amount) as? Double ?? 0.0
@@ -989,7 +990,7 @@ class IncomeTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         
-        if tableSectionCellList[indexPath.section].identifier == "main" {
+        if sectionList[indexPath.section].identifier == "main" {
         
             return indexPath
         } else {
@@ -1020,7 +1021,7 @@ class IncomeTableViewController: UITableViewController,
             
             incomeTableView.setPopover(delegate: self)
             
-            let sectionIncomeList = tableSectionCellList[indexPath.section].data as? [XYZAccount]
+            let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
             
             incomeTableView.income = sectionIncomeList![indexPath.row]
             incomeDetailNavigationController.modalPresentationStyle = .popover
@@ -1040,7 +1041,7 @@ class IncomeTableViewController: UITableViewController,
                 fatalError("Exception: IncomeDetailTableViewController is expedted" )
             }
             
-            let sectionIncomeList = tableSectionCellList[indexPath.section].data as? [XYZAccount]
+            let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
             detailTableViewController.incomeDelegate = self
             delegate?.incomeSelected(newIncome: sectionIncomeList?[indexPath.row])
         }
@@ -1048,21 +1049,21 @@ class IncomeTableViewController: UITableViewController,
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         
-        return tableSectionCellList.count
+        return sectionList.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         var nrOfRows = 0
         
-        switch tableSectionCellList[section].identifier {
+        switch sectionList[section].identifier {
             
             case "main":
-                let incomeListStored = tableSectionCellList[section].data as? [XYZAccount]
+                let incomeListStored = sectionList[section].data as? [XYZAccount]
                 nrOfRows = (incomeListStored?.count)!
             
             default:
-                let incomeListStored = tableSectionCellList[0].data as? [XYZAccount]
+                let incomeListStored = sectionList[0].data as? [XYZAccount]
                 nrOfRows = (incomeListStored?.count)! > 0 ? 1 : 0
         }
         
@@ -1074,7 +1075,7 @@ class IncomeTableViewController: UITableViewController,
         // Configure the cell...
         var cell: UITableViewCell?
         
-        let identifier = tableSectionCellList[indexPath.section].identifier
+        let identifier = sectionList[indexPath.section].identifier
        
         switch identifier {
             
@@ -1084,7 +1085,7 @@ class IncomeTableViewController: UITableViewController,
                     fatalError("error on creating cell")
                 }
 
-                let incomeListStored = tableSectionCellList[indexPath.section].data as? [XYZAccount]
+                let incomeListStored = sectionList[indexPath.section].data as? [XYZAccount]
                 let account = incomeListStored![indexPath.row] //incomeList[indexPath.row]
                 let currencyCode = account.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
                 
@@ -1102,7 +1103,7 @@ class IncomeTableViewController: UITableViewController,
                 }
 
                 totalCell = newTotalcell
-                totalCell?.setAmount(amount: sectionTotal(section: indexPath.section - 1), code: tableSectionCellList[indexPath.section - 1].title!)
+                totalCell?.setAmount(amount: sectionTotal(section: indexPath.section - 1), code: sectionList[indexPath.section - 1].title!)
                 cell = newTotalcell
             
             default:
@@ -1124,7 +1125,7 @@ class IncomeTableViewController: UITableViewController,
         
         // Return false if you do not want the specified item to be editable.
         
-        return tableSectionCellList[indexPath.section].identifier == "main" //indexPath.row < incomeList.count
+        return sectionList[indexPath.section].identifier == "main" //indexPath.row < incomeList.count
     }
 
     // Override to support editing the table view.
@@ -1133,7 +1134,7 @@ class IncomeTableViewController: UITableViewController,
         if editingStyle == .delete {
             
             // Delete the row from the data source, the way we handle it is special, we delete it from incomelist, and then reload it in table section
-            let sectionIncomeList = tableSectionCellList[indexPath.section].data as? [XYZAccount]
+            let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
             let incomeToBeDeleted = sectionIncomeList![indexPath.row]
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -1184,14 +1185,14 @@ class IncomeTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         
-        return tableSectionCellList[indexPath.section].identifier == "main"
+        return sectionList[indexPath.section].identifier == "main"
     }
     
     override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         
         var indexPath = proposedDestinationIndexPath
         
-        if ( tableSectionCellList[proposedDestinationIndexPath.section].identifier != "main" )
+        if ( sectionList[proposedDestinationIndexPath.section].identifier != "main" )
            || ( sourceIndexPath.section != proposedDestinationIndexPath.section ) {
             
             indexPath = sourceIndexPath
@@ -1202,13 +1203,13 @@ class IncomeTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         
-        if var sectionIncomeList = tableSectionCellList[to.section].data as? [XYZAccount] {
+        if var sectionIncomeList = sectionList[to.section].data as? [XYZAccount] {
             
             sectionIncomeList.insert(sectionIncomeList.remove(at: fromIndexPath.row), at: to.row)
-            tableSectionCellList[to.section].data = sectionIncomeList
+            sectionList[to.section].data = sectionIncomeList
         }
 
-        for (sectionIndex, section) in tableSectionCellList.enumerated() {
+        for (sectionIndex, section) in sectionList.enumerated() {
             
             if let sectionIncomeList = section.data as? [XYZAccount] {
                 
@@ -1238,7 +1239,7 @@ class IncomeTableViewController: UITableViewController,
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 45)
         stackView.isLayoutMarginsRelativeArrangement = true
         
-        title.text = tableSectionCellList[section].title
+        title.text = sectionList[section].title
         title.textColor = UIColor.gray
         stackView.axis = .horizontal
         stackView.addArrangedSubview(title)

@@ -29,29 +29,32 @@ class ExpenseTableViewController: UITableViewController,
     var isPopover = false
     var isCollapsed: Bool {
         
-        if let split = self.parent?.parent as? UISplitViewController {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
             
-            return split.isCollapsed
-        } else {
-            
-            return true
+            fatalError("Exception: UISplitViewController is expected" )
         }
+        
+        return mainSplitView.isCollapsed
     }
     
     // MARK: - IBAction
     @IBAction func add(_ sender: UIBarButtonItem) {
         
         guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+            
             fatalError("Exception: ExpenseDetailNavigationController is expected")
         }
         
         guard let expenseDetailTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
+            
             fatalError("Exception: ExpenseDetailTableViewController is expected" )
         }
         
-        guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
             
-            fatalError("Exception: MainSplitViewController is expected")
+            fatalError("Exception: UISplitViewController is expected" )
         }
         
         mainSplitView.popOverNavigatorController = expenseDetailNavigationController
@@ -194,6 +197,7 @@ class ExpenseTableViewController: UITableViewController,
             sectionList[selectedIndexPath.section].data = sectionExpenseList
             
             guard oldExpense == expense else {
+                
                 fatalError("Exception: expense selectedd is not what is to be deleted")
             }
 
@@ -496,6 +500,7 @@ class ExpenseTableViewController: UITableViewController,
         for expense in (appDelegate?.expenseList)! {
             
             guard let date = expense.value(forKey: XYZExpense.date) as? Date else {
+                
                 continue
             }
             
@@ -667,6 +672,7 @@ class ExpenseTableViewController: UITableViewController,
         var cell: UITableViewCell?
         
         guard let expenseCell = tableView.dequeueReusableCell(withIdentifier: "expenseTableViewCell", for: indexPath) as? ExpenseTableViewCell else {
+            
             fatalError("error on ExpenseTableViewCell cell")
         }
         
@@ -747,17 +753,15 @@ class ExpenseTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let split = self.parent?.parent?.parent as? UISplitViewController else {
-            fatalError("Exception: locate split view")
-        }
-        
-        if split.isCollapsed {
+        if self.isCollapsed {
             
             guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+                
                 fatalError("Exception: ExpenseDetailNavigationController is expected")
             }
             
             guard let expenseTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
+                
                 fatalError("Exception: ExpenseDetailTableViewController is expected" )
             }
             
@@ -768,14 +772,17 @@ class ExpenseTableViewController: UITableViewController,
             expenseDetailNavigationController.modalPresentationStyle = .popover
             self.present(expenseDetailNavigationController, animated: true, completion: nil)
             
-            guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
-                fatalError("Exception: MainSplitViewController is expected")
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                
+                fatalError("Exception: UISplitViewController is expected" )
             }
             
             mainSplitView.popOverNavigatorController = expenseDetailNavigationController
         } else {
             
             guard let detailTableViewController = delegate as? ExpenseDetailTableViewController else {
+                
                 fatalError("Exception: ExpenseDetailTableViewController is expedted" )
             }
             
@@ -847,10 +854,12 @@ class ExpenseTableViewController: UITableViewController,
     func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {
         
         guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+            
             fatalError("Exception: ExpenseDetailNavigationController is expected")
         }
         
         guard let expenseDetailTableViewController = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
+            
             fatalError("Exception: ExpenseDetailTableViewController is expected")
         }
         
@@ -885,8 +894,10 @@ class ExpenseTableViewController: UITableViewController,
                     expenseDetailTableViewController.isPopover = true
                     navigationController.modalPresentationStyle = .popover
 
-                    guard let mainSplitView = self.parent?.parent?.parent as? MainSplitViewController else {
-                        fatalError("Exception: MainSplitViewController is expected")
+                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                    guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                        
+                        fatalError("Exception: UISplitViewController is expected" )
                     }
                     
                     mainSplitView.popOverNavigatorController = navigationController

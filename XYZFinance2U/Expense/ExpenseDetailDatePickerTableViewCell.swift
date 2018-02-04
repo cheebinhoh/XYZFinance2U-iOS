@@ -33,8 +33,8 @@ class ExpenseDetailDatePickerTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    func setDate(_ date: Date)
-    {
+    func setDate(_ date: Date) {
+        
         self.date = date
         datePicker.date = date
     }

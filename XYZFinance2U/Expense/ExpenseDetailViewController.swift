@@ -10,8 +10,12 @@ import UIKit
 
 class ExpenseDetailViewController: UIViewController {
 
+    // MARK: - property
+    
     var expense: XYZExpense?
     var indexPath: IndexPath?
+    
+    // MARK: - IBOutlet
     
     @IBOutlet weak var detail: UILabel!
     @IBOutlet weak var amount: UILabel!
@@ -56,6 +60,7 @@ class ExpenseDetailViewController: UIViewController {
     }()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         if let _ = expense {
@@ -71,11 +76,11 @@ class ExpenseDetailViewController: UIViewController {
     }
 
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
     /*
     // MARK: - Navigation
 

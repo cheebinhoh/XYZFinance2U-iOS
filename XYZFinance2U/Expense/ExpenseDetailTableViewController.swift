@@ -32,7 +32,6 @@ class ExpenseDetailTableViewController: UITableViewController,
     ExpenseDetailLocationPickerDelegate,
     ExpenseDetailLocationViewDelegate {
  
-    
     // MARK: - nested type
     struct ImageSet {
         
@@ -131,7 +130,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     // MARK: - data mamipulation
     private func loadDataInTableSectionCell() {
         
-        tableSectionCellList.removeAll()
+        sectionList.removeAll()
         
         var mainSectionCellList = ["text", "amount", "date", "location"]
         
@@ -145,13 +144,13 @@ class ExpenseDetailTableViewController: UITableViewController,
                                            title: "",
                                            cellList: mainSectionCellList,
                                            data: nil)
-        tableSectionCellList.append(mainSection)
+        sectionList.append(mainSection)
         
         let imageSecteion = TableSectionCell(identifier: "image",
                                              title: "",
                                              cellList: ["image"],
                                              data: nil)
-        tableSectionCellList.append(imageSecteion)
+        sectionList.append(imageSecteion)
         
         if !isShared {
             
@@ -170,7 +169,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                                                     title: "",
                                                     cellList: emailList,
                                                     data: nil)
-                tableSectionCellList.append(emailSection)
+                sectionList.append(emailSection)
             }
         }
         
@@ -180,7 +179,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                                                  title: "",
                                                  cellList: ["delete"],
                                                  data: nil)
-            tableSectionCellList.append(deleteSection)
+            sectionList.append(deleteSection)
         }
     }
     
@@ -232,6 +231,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         for (index, image) in imageSet!.enumerated() {
             
             guard var receiptList = expense?.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt> else {
+                
                 fatalError("Exception: [XYZExpenseReceipt] is expected")
             }
             
@@ -253,7 +253,6 @@ class ExpenseDetailTableViewController: UITableViewController,
                     
                     hasChanged = true
                 }
-                
             } else {
                 
                 var receiptToBeDeleted: XYZExpenseReceipt?
@@ -371,6 +370,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             hasgeolocation = hasLocation
             
             guard let receiptList = expense?.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt> else {
+                
                 fatalError("Exception: [XYZExpenseReceipt] is expected")
             }
             
@@ -379,6 +379,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 let data = receipt.value(forKey: XYZExpenseReceipt.image) as? NSData
                 
                 guard let image = UIImage(data: data! as Data ) else {
+                    
                     fatalError("Exception: ui image is expected")
                 }
                 
@@ -412,11 +413,6 @@ class ExpenseDetailTableViewController: UITableViewController,
                     let backButton = UIBarButtonItem(title: " Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.cancel(_:)))
                     navigationItem.setLeftBarButton(backButton, animated: true)
                 }
-                //let backButton = UIButton(type: .custom)
-                //backButton.setImage(UIImage(named: "BackButton.png"), for: .normal)
-                //backButton.setTitle(" Back", for: .normal)
-                //backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
-                //backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
             }
         }
         
@@ -429,6 +425,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         newImageIndex = index
         
         guard let expenseDetailImageNavigationController = self.storyboard?.instantiateViewController(withIdentifier:    "ExpenseDetailImageViewController") as? ExpenseDetailImageViewController else {
+            
             fatalError("Exception: ExpenseDetailImageViewController is expected")
         }
         
@@ -467,6 +464,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+            
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
         }
     
@@ -482,16 +480,6 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         newImageIndex = index
         
-        var isCollapsed = true
-        
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
-            
-            fatalError("Exception: UISplitViewController is expected" )
-        }
-        
-        isCollapsed = mainSplitView.isCollapsed
-        
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let cameraOption = UIAlertAction(title: "Take photo", style: .default, handler: { (action) in
             
@@ -500,12 +488,11 @@ class ExpenseDetailTableViewController: UITableViewController,
             imagePicker.sourceType = .camera
             imagePicker.delegate = self
     
-            if isCollapsed
-            {
+            if self.isCollapsed {
+                
                 self.present( imagePicker, animated: true, completion: nil)
-            }
-            else
-            {
+            } else {
+                
                 imagePicker.modalPresentationStyle = UIModalPresentationStyle.popover
                 self.navigationController?.present(imagePicker, animated: true, completion: nil)
             }
@@ -520,12 +507,11 @@ class ExpenseDetailTableViewController: UITableViewController,
             imagePicker.sourceType = .photoLibrary
             imagePicker.delegate = self
             
-            if isCollapsed
-            {
+            if self.isCollapsed {
+                
                 self.present( imagePicker, animated: true, completion: nil)
-            }
-            else
-            {
+            } else {
+                
                 imagePicker.modalPresentationStyle = UIModalPresentationStyle.popover
                 self.navigationController?.present(imagePicker, animated: true, completion: nil)
             }
@@ -563,10 +549,10 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         if !showDatePicker {
             
-            tableSectionCellList[(indexPath?.section)!].cellList.insert("datepicker", at: (indexPath?.row)! + 1)
+            sectionList[(indexPath?.section)!].cellList.insert("datepicker", at: (indexPath?.row)! + 1)
         } else {
             
-            tableSectionCellList[(indexPath?.section)!].cellList.remove(at: (indexPath?.row)! + 1)
+            sectionList[(indexPath?.section)!].cellList.remove(at: (indexPath?.row)! + 1)
         }
         
         showDatePicker = !showDatePicker
@@ -578,6 +564,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     func switchChanged(_ yesno: Bool, _ sender: ExpenseDetailTextTableViewCell) {
         
         guard let index = tableView.indexPath(for: sender) else {
+            
             fatalError("Exception: index path is expected")
         }
         
@@ -587,17 +574,18 @@ class ExpenseDetailTableViewController: UITableViewController,
     func textDidBeginEditing(_ sender:ExpenseDetailTextTableViewCell) {
         
         guard let index = tableView.indexPath(for: sender) else {
+            
             fatalError("Exception: index path is expected")
         }
         
-        switch tableSectionCellList[index.section].cellList[index.row] {
+        switch sectionList[index.section].cellList[index.row] {
             
             case "newemail":
                 if index.row >= emails.count {
                     
                     sender.input.becomeFirstResponder()
-                    tableSectionCellList[index.section].cellList.insert("email",
-                                                                        at: tableSectionCellList[index.section].cellList.count - 1)
+                    sectionList[index.section].cellList.insert("email",
+                                                                        at: sectionList[index.section].cellList.count - 1)
                     emails.append("")
                     paids.append(false)
                     
@@ -611,7 +599,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                         textcell.addUISwitch()
                     }
                     
-                    let newIndexPath = IndexPath(row: tableSectionCellList[index.section].cellList.count - 1,
+                    let newIndexPath = IndexPath(row: sectionList[index.section].cellList.count - 1,
                                                  section: index.section)
                     tableView.insertRows(at: [newIndexPath], with: .fade)
                 }
@@ -632,7 +620,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 return // case where I click on a textcell and then click on email toward bottom of the table view list, then textcell is not longer available
             }
             
-            switch tableSectionCellList[index.section].cellList[index.row] {
+            switch sectionList[index.section].cellList[index.row] {
                 
                 case "text":
                     detail = sender.input.text!
@@ -647,7 +635,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     break // case where we do not yet end editing but then delete the cell
                 
                 default:
-                    fatalError("Exception: \(tableSectionCellList[index.section].cellList[index.row]) is not expected")
+                    fatalError("Exception: \(sectionList[index.section].cellList[index.row]) is not expected")
             }
         }
     }
@@ -673,19 +661,19 @@ class ExpenseDetailTableViewController: UITableViewController,
     var expense: XYZExpense?
     var isCollapsed: Bool {
         
-        if let split = self.parent?.parent as? UISplitViewController {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
             
-            return split.isCollapsed
-        } else {
-            
-            return true
+            fatalError("Exception: UISplitViewController is expected" )
         }
+        
+        return mainSplitView.isCollapsed
     }
     
     var isPushinto = false
     var isPopover = false
     var expenseDelegate: ExpenseDetailDelegate?
-    var tableSectionCellList = [TableSectionCell]()
+    var sectionList = [TableSectionCell]()
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
@@ -694,6 +682,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         guard let expenseDetailLocationViewController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailLocationViewController") as? ExpenseDetailLocationViewController
             else {
+                
             fatalError("Exception: ExpenseDetailImageViewController is expected")
         }
         
@@ -720,17 +709,19 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         var masterViewController: ExpenseTableViewController?
         
-        var split = self.parent?.parent as? UISplitViewController
-        if nil == split {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
             
-            split = self.parent?.parent?.parent as? UISplitViewController
+            fatalError("Exception: UISplitViewController is expected" )
         }
         
-        guard let tabBarController = split?.viewControllers.first as? UITabBarController else {
+        guard let tabBarController = mainSplitView.viewControllers.first as? UITabBarController else {
+            
             fatalError("Exception: UITabBarController is expected")
         }
         
         guard let navController = tabBarController.selectedViewController as? UINavigationController else {
+            
             fatalError("Exception: UINavigationController is expected")
         }
         
@@ -822,7 +813,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                                              title: "",
                                              cellList: ["delete"],
                                              data: nil)
-        tableSectionCellList.insert(deleteSection, at: tableSectionCellList.count - 1)
+        sectionList.insert(deleteSection, at: sectionList.count - 1)
 
         loadDataInTableSectionCell()
         tableView.reloadData()
@@ -838,15 +829,12 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         navigationItem.largeTitleDisplayMode = .never
         
-        if let split = self.parent?.parent as? UISplitViewController {
-            
-            if !split.isCollapsed {
+        if !self.isCollapsed {
                 
-                navigationItem.rightBarButtonItem = nil
-                navigationItem.leftBarButtonItem = nil
-               
-                modalEditing = false
-            }
+            navigationItem.rightBarButtonItem = nil
+            navigationItem.leftBarButtonItem = nil
+           
+            modalEditing = false
         }
         
         if isPopover {
@@ -893,27 +881,28 @@ class ExpenseDetailTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        return tableSectionCellList[section].title
+        return sectionList[section].title
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         
-        return tableSectionCellList.count
+        return sectionList.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return tableSectionCellList[section].cellList.count
+        return sectionList[section].cellList.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell: UITableViewCell
 
-        switch  tableSectionCellList[indexPath.section].cellList[indexPath.row] {
+        switch  sectionList[indexPath.section].cellList[indexPath.row] {
             
             case "text":
                 guard let textcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailTextCell", for: indexPath) as? ExpenseDetailTextTableViewCell else {
+                    
                     fatalError("Exception: expenseDetailTextCell is failed to be created")
                 }
                 
@@ -929,6 +918,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             case "amount":
                 guard let textcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailTextCell", for: indexPath) as? ExpenseDetailTextTableViewCell else {
+                    
                     fatalError("Exception: expenseDetailTextCell is failed to be created")
                 }
               
@@ -945,10 +935,12 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             case "date":
                 guard let datecell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailDateTextCell", for: indexPath) as? ExpenseDetailDateTableViewCell else {
+                    
                     fatalError("Exception: expenseDetailDateTextCell is failed to be created")
                 }
                 
                 if nil == date  {
+                    
                     date = Date()
                 }
                 
@@ -962,6 +954,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             case "datepicker":
                 guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailDatePickerCell", for: indexPath) as? ExpenseDetailDatePickerTableViewCell else {
+                    
                     fatalError("Exception: expenseDetailDatePickerCell is failed to be created")
                 }
                 
@@ -971,6 +964,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             case "email":
                 guard let textcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailTextCell", for: indexPath) as? ExpenseDetailTextTableViewCell else {
+                    
                     fatalError("Exception: expenseDetailTextCell is failed to be created")
                 }
 
@@ -992,6 +986,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             case "newemail":
                 guard let textcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailTextCell", for: indexPath) as? ExpenseDetailTextTableViewCell else {
+                    
                     fatalError("Exception: expenseDetailTextCell is failed to be created")
                 }
                 
@@ -1021,6 +1016,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             case "image":
                 guard let imagepickercell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailImagePickerCell", for: indexPath) as? ExpenseDetailImagePickerTableViewCell else {
+                    
                     fatalError("Exception: expenseDetailImagePickerCell is failed to be created")
                 }
                 
@@ -1030,6 +1026,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 }
                 
                 for index in 0..<(imageSet?.count)! {
+                    
                     imagepickercell.setImage(image: imageSet![index].image!, at: index)
                 }
                 
@@ -1043,6 +1040,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             case "location":
                 guard let locationcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailLocationTextCell", for: indexPath) as? ExpenseDetailLocationTableViewCell else {
+                    
                     fatalError("Exception: expenseDetailLocationTextCell is failed to be created")
                 }
                 
@@ -1053,6 +1051,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             case "locationPicker":
                 guard let locationpicker = tableView.dequeueReusableCell(withIdentifier: "expenseDetailLocationPickerTextCell", for: indexPath) as? ExpenseDetailLocationPickerTableViewCell else {
+                    
                     fatalError("Exception: expenseDetailLocationPickerTextCell is failed to be created")
                 }
                 
@@ -1064,6 +1063,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             case "delete":
                 guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailCommandTextCell", for: indexPath) as? ExpenseDetailCommandTableViewCell else {
+                    
                     fatalError("Exception: expenseDetailCommandTextCell is failed to be created")
                 }
                 
@@ -1096,7 +1096,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         
         return modalEditing
-               && tableSectionCellList[indexPath.section].identifier == "email" //indexPath.row >= emailListStart
+               && sectionList[indexPath.section].identifier == "email" //indexPath.row >= emailListStart
         
     }
 
@@ -1107,11 +1107,12 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             emails.remove(at: indexPath.row)
             paids.remove(at: indexPath.row)
-            tableSectionCellList[indexPath.section].cellList.remove(at: indexPath.row)
+            sectionList[indexPath.section].cellList.remove(at: indexPath.row)
             tableView.reloadData()
         } else if editingStyle == .insert {
             
             guard let textcell = tableView.cellForRow(at: indexPath) as? ExpenseDetailTextTableViewCell else {
+                
                 fatalError("Exception: ExpenseDetailTextTableViewCell is expected")
             }
             
@@ -1126,7 +1127,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         
-        if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "locationPicker" {
+        if sectionList[indexPath.section].cellList[indexPath.row] == "locationPicker" {
             
             return indexPath
         } else {

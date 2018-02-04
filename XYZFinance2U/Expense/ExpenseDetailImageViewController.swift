@@ -141,6 +141,7 @@ class ExpenseDetailImageViewController: UIViewController,
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let cameraOption = UIAlertAction(title: "Take photo", style: .default, handler: { (action) in
+            
             imagePickerController.sourceType = .camera
             imagePickerController.modalPresentationStyle = UIModalPresentationStyle.popover
             self.present( imagePickerController, animated: true, completion: nil)
@@ -149,13 +150,13 @@ class ExpenseDetailImageViewController: UIViewController,
         optionMenu.addAction(cameraOption)
         
         let photoOption = UIAlertAction(title: "Choose photo", style: .default, handler: { (action) in
+            
             imagePickerController.sourceType = .photoLibrary
             imagePickerController.modalPresentationStyle = UIModalPresentationStyle.popover
             self.present( imagePickerController, animated: true, completion: nil)
         })
 
         optionMenu.addAction(photoOption)
-        
         
         if let _ = image {
             
@@ -181,6 +182,7 @@ class ExpenseDetailImageViewController: UIViewController,
     }
     
     // MARK: - Image picker delegate
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         
         dismiss(animated: true, completion: nil)
@@ -189,6 +191,7 @@ class ExpenseDetailImageViewController: UIViewController,
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else  {
+            
             fatalError("Exceptin: expect a dictionary containing an image, but was provided the following: \(info)")
         }
 

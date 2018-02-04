@@ -112,6 +112,7 @@ class ExpenseDetailLocationViewController: UIViewController,
     @IBAction func touchUpAnnotation(_ sender: UITapGestureRecognizer) {
         
         guard let annotationView = sender.view as? MKPinAnnotationView else {
+            
             fatalError("Exception: MKPinAnnotationView is expected")
         }
         
@@ -122,6 +123,7 @@ class ExpenseDetailLocationViewController: UIViewController,
         if annotation?.title == "Selected location" {
             
             let unselectOption = UIAlertAction(title: "Unselect it", style: .default, handler: { (action) in
+                
                 annotation?.title = "Location"
                 
                 self.delegate?.newlocation(coordinte: nil)
@@ -131,6 +133,7 @@ class ExpenseDetailLocationViewController: UIViewController,
         } else {
             
             let useOption = UIAlertAction(title: "Select it", style: .default, handler: { (action) in
+                
                 annotation?.title = "Selected location"
             
                 self.delegate?.newlocation(coordinte: (annotationView.annotation?.coordinate)!)

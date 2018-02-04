@@ -109,6 +109,7 @@ class AppDelegate: UIResponder,
             {
                 let database = CKContainer.default().sharedCloudDatabase
                 var zones = [CKRecordZone]()
+                var shareicloudZone: XYZiCloudZone?
                 
                 for icloudZone in self.shareiCloudZones {
                     
@@ -128,6 +129,8 @@ class AppDelegate: UIResponder,
                                     break
                                 }
                             }
+
+                            shareicloudZone = icloudZone
                             
                             break
                         }
@@ -149,6 +152,8 @@ class AppDelegate: UIResponder,
                         
                         saveManageContext()
                         
+                        shareicloudZone = icloudZone
+                        
                         for privateiCloudZone in self.privateiCloudZones {
                             
                             if let privateName = privateiCloudZone.value(forKey: XYZiCloudZone.name) as? String,
@@ -160,12 +165,20 @@ class AppDelegate: UIResponder,
                             }
                         }
                     }
-         
-                    fetchiCloudZoneChange(database, zones, self.shareiCloudZones, {
+     
+                    // we always fetch all from the share zone if we accept any, TODO: we need to provide
+                    // a way to keep track of change token per url link
+                    let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: "" )
+                    shareicloudZone!.setValue(archivedChangeToken, forKey: XYZiCloudZone.changeToken)
+                    shareicloudZone!.setValue(Date(), forKey: XYZiCloudZone.changeTokenLastFetch)
+                    
+                    saveManageContext()
+                    
+                    fetchiCloudZoneChange(database, zones, [shareicloudZone!], {
                         
                         DispatchQueue.main.async {
                             
-                            for iCloudZone in self.shareiCloudZones {
+                            for iCloudZone in [shareicloudZone!]{
                                 
                                 let name = iCloudZone.value(forKey: XYZiCloudZone.name) as? String
                             
