@@ -30,6 +30,7 @@ class XYZExpense: NSManagedObject {
     static let shareRecordId = "shareRecordId"
     static let shareUrl = "shareUrl"
     static let isShared = "isShared"
+    static let preChangeToken = "preChangeToken"
     
     // MARK: - property
     
@@ -45,6 +46,7 @@ class XYZExpense: NSManagedObject {
     var shareRecordId: String = ""
     var shareUrl: String = ""
     var isShared = false
+    var preChangeToken = NSData()
     
     // MARK: - function
     
@@ -81,6 +83,7 @@ class XYZExpense: NSManagedObject {
         self.setValue(date, forKey: XYZExpense.date)
         self.setValue(Set<XYZExpensePerson>(), forKey: XYZExpense.persons)
         self.setValue(Set<XYZExpenseReceipt>(), forKey: XYZExpense.receipts)
+        self.setValue(NSData(), forKey: XYZExpense.preChangeToken)
     }
     
     func getPersons() -> Set<XYZExpensePerson> {

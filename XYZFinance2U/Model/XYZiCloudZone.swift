@@ -60,6 +60,7 @@ class XYZiCloudZone: NSManagedObject {
         self.setValue(data, forKey: XYZiCloudZone.deleteRecordIdList)
         
         self.setValue(data, forKey: XYZiCloudZone.deleteShareRecordIdList)
+        setValue(NSData(), forKey: XYZiCloudZone.changeToken)
     }
     
     override init(entity: NSEntityDescription,

@@ -402,7 +402,8 @@ func createUpdateAccount(_ record: CKRecord,
     return outputIncomeList
 }
 
-func createUpdateExpense(_ isShared: Bool,
+func createUpdateExpense(_ oldChangeToken: Data,
+                         _ isShared: Bool,
                          _ record: CKRecord,
                          _ expenseList: [XYZExpense],
                          _ unprocessedCKrecords: [CKRecord],
@@ -501,6 +502,7 @@ func createUpdateExpense(_ isShared: Bool,
         expenseToBeUpdated?.setValue(shareRecordId, forKey: XYZExpense.shareRecordId)
         expenseToBeUpdated?.setValue(isShared, forKey: XYZExpense.isShared)
         expenseToBeUpdated?.setValue(hasLocation, forKey: XYZExpense.hasLocation)
+        expenseToBeUpdated?.setValue(oldChangeToken, forKey: XYZExpense.preChangeToken)
         
         let nrOfReceipt = record[XYZExpense.nrOfReceipts] as? Int
         for index in 0..<nrOfReceipt! {
@@ -634,7 +636,10 @@ func fetchiCloudZoneChange(_ database: CKDatabase,
                     fatalError("Exception: expense is expected")
                 }
          
-                (expenseList, unprocessedCkrecords) = createUpdateExpense(CKContainer.default().sharedCloudDatabase == database,
+                let changeToken = icloudZone?.value(forKey: XYZiCloudZone.changeToken) as? Data
+                
+                (expenseList, unprocessedCkrecords) = createUpdateExpense(changeToken!,
+                                                                          CKContainer.default().sharedCloudDatabase == database,
                                                                           record,
                                                                           expenseList,
                                                                           unprocessedCkrecords,
@@ -871,8 +876,8 @@ func fetchiCloudZoneChange(_ database: CKDatabase,
 }
 
 func GetiCloudZone(of zone: CKRecordZone,
-                share inShare: Bool,
-                _ icloudZones: [XYZiCloudZone]) -> XYZiCloudZone? {
+                   share inShare: Bool,
+                   _ icloudZones: [XYZiCloudZone]) -> XYZiCloudZone? {
     
     for icloudzone in icloudZones {
         

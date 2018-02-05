@@ -424,6 +424,23 @@ class ExpenseTableViewController: UITableViewController,
         
         if !(appDelegate?.iCloudZones.isEmpty)! {
         
+            /* TODO: we need to decline the ckshare
+            if let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool, isShared {
+            
+                guard let icloudZone = GetiCloudZone(of: ckrecordzone, share: true, (appDelegate?.shareiCloudZones)!) else {
+                    
+                    fatalError("Exception: iCloudZoen is expected")
+                }
+                
+                guard let preChangeToken = expense.value(forKey: XYZExpense.preChangeToken) as? Data else {
+                    
+                    fatalError("Exception: preChangeToken is expected")
+                }
+                
+                icloudZone.setValue(preChangeToken, forKey: XYZiCloudZone.changeToken)
+            }
+             */
+            
             guard let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
                 
                 fatalError("Exception: iCloudZoen is expected")
