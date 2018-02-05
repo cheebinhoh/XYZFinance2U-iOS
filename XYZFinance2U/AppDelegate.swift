@@ -168,9 +168,9 @@ class AppDelegate: UIResponder,
      
                     // we always fetch all from the share zone if we accept any, TODO: we need to provide
                     // a way to keep track of change token per url link
-                    let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: "" )
-                    shareicloudZone!.setValue(archivedChangeToken, forKey: XYZiCloudZone.changeToken)
-                    shareicloudZone!.setValue(Date(), forKey: XYZiCloudZone.changeTokenLastFetch)
+                    //let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: "" )
+                    //shareicloudZone!.setValue(archivedChangeToken, forKey: XYZiCloudZone.changeToken)
+                    //shareicloudZone!.setValue(Date(), forKey: XYZiCloudZone.changeTokenLastFetch)
                     
                     saveManageContext()
                     

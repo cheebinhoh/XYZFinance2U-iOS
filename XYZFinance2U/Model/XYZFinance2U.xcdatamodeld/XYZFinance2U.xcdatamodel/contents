@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17D47" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14094.4" systemVersion="17E139j" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="XYZAccount" representedClassName="XYZAccount" syncable="YES">
         <attribute name="accountNr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
@@ -52,6 +52,7 @@
         <attribute name="changeToken" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="changeTokenLastFetch" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="deleteRecordIdList" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="deleteShareRecordIdList" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="inShareDB" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ownerName" optional="YES" attributeType="String" syncable="YES"/>
@@ -62,6 +63,6 @@
         <element name="XYZExpense" positionX="-63" positionY="18" width="128" height="240"/>
         <element name="XYZExpensePerson" positionX="-36" positionY="72" width="128" height="120"/>
         <element name="XYZExpenseReceipt" positionX="-9" positionY="99" width="128" height="90"/>
-        <element name="XYZiCloudZone" positionX="-36" positionY="72" width="128" height="135"/>
+        <element name="XYZiCloudZone" positionX="-36" positionY="72" width="128" height="150"/>
     </elements>
 </model>

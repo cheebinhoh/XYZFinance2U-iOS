@@ -344,6 +344,7 @@ class ExpenseTableViewController: UITableViewController,
                                             }
                                         }
                                     
+                                        print("*********** add participant")
                                         participant.permission = .readOnly
 
                                         ckshare.addParticipant(participant)
@@ -443,6 +444,22 @@ class ExpenseTableViewController: UITableViewController,
             
             let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
             zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
+            
+            guard let shareRecordNameData = zone.value(forKey: XYZiCloudZone.deleteShareRecordIdList) as? Data else {
+                
+                fatalError("Exception: data is expected for deleteRecordIdList")
+            }
+            
+            guard var deleteShareRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: shareRecordNameData) as? [String]) else {
+                
+                fatalError("Exception: deleteRecordList is expected as [String]")
+            }
+
+            let shareRecordName = expense.value(forKey: XYZExpense.shareRecordId) as? String
+            deleteShareRecordLiset.append(shareRecordName!)
+            
+            let savedDeleteShareRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteShareRecordLiset )
+            zone.setValue(savedDeleteShareRecordLiset, forKey: XYZiCloudZone.deleteShareRecordIdList)
         }
     }
     

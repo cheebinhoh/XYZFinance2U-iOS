@@ -24,7 +24,8 @@ class XYZiCloudZone: NSManagedObject {
     static let changeToken = "changeToken"
     static let changeTokenLastFetch = "changeTokenLastFetch"
     static let deleteRecordIdList = "deleteRecordIdList"
-
+    static let deleteShareRecordIdList = "deleteShareRecordIdList"
+    
      // MARK: - property
     
     var name = ""
@@ -39,6 +40,7 @@ class XYZiCloudZone: NSManagedObject {
     
     // it stores non-persistent list of record id for XYZAccount that is deleted.
     var deleteRecordIdList = NSData()
+    var deleteShareRecordIdList = NSData()
     
     // MARK: - function
     
@@ -56,6 +58,8 @@ class XYZiCloudZone: NSManagedObject {
         
         let data = NSKeyedArchiver.archivedData(withRootObject: [String]() )
         self.setValue(data, forKey: XYZiCloudZone.deleteRecordIdList)
+        
+        self.setValue(data, forKey: XYZiCloudZone.deleteShareRecordIdList)
     }
     
     override init(entity: NSEntityDescription,

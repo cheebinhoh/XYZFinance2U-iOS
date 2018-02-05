@@ -470,6 +470,8 @@ func createUpdateExpense(_ isShared: Bool,
             outputExpenseList.append(expenseToBeUpdated!)
         }
         
+        var indexToBeRemoved = [Int]()
+        
         for (index, pendingCkrecord) in unprocessedCKrecords.enumerated() {
             
             let parentckreference = pendingCkrecord[XYZExpense.type] as? CKReference
@@ -483,8 +485,14 @@ func createUpdateExpense(_ isShared: Bool,
                 
                 expenseToBeUpdated?.addPerson(sequenceNr: sequenceNr!, name: name!, email: email!, paid: paid!, context: context)
 
-                outputUnprocessedCkrecords.remove(at: index)
+                indexToBeRemoved.append(index)
+                //outputUnprocessedCkrecords.remove(at: index)
             }
+        }
+
+        for index in indexToBeRemoved.reversed() {
+            
+            outputUnprocessedCkrecords.remove(at: index)
         }
         
         expenseToBeUpdated?.setValue(detail, forKey: XYZExpense.detail)
@@ -1016,6 +1024,28 @@ func saveExpensesToiCloud(_ database: CKDatabase,
             recordIdsToBeDeleted.append(ckrecordId)
         }
     }
+    
+    // delete share record
+    guard let shareData = iCloudZone.value(forKey: XYZiCloudZone.deleteShareRecordIdList) as? Data else {
+        
+        fatalError("Exception: data is expected for deleteRecordIdList")
+    }
+    
+    guard let deleteShareRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: shareData) as? [String]) else {
+        
+        fatalError("Exception: deleteRecordList is expected as [String]")
+    }
+    
+    for deleteRecordName in deleteShareRecordLiset {
+        
+        if deleteRecordName != "" {
+            
+            let customZone = CKRecordZone(zoneName: XYZExpense.type)
+            let ckrecordId = CKRecordID(recordName: deleteRecordName, zoneID: customZone.zoneID)
+            
+            recordIdsToBeDeleted.append(ckrecordId)
+        }
+    }
 
     saveExpensesToiCloud(database, iCloudZone, expenseListToBeSaved!, recordIdsToBeDeleted, completionblock)
 }
@@ -1280,6 +1310,7 @@ func saveAccountsToiCloud(_ database: CKDatabase,
             
             let data = NSKeyedArchiver.archivedData(withRootObject: [String]())
             iCloudZone.setValue(data, forKey: XYZiCloudZone.deleteRecordIdList)
+            iCloudZone.setValue(data, forKey: XYZiCloudZone.deleteShareRecordIdList)
             
             saveManageContext() // save the iCloudZone to indicate that deleteRecordIdList is executed.
             
