@@ -227,6 +227,21 @@ class AppDelegate: UIResponder,
                                             }
                                         }
                                         
+                                        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                                        let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
+                    
+                                        fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
+                                                             [ckrecordzone],
+                                                             [privateiCloudZone!], {
+                                                                
+                                            // if we implement synchronization of content, then time to refresh it.
+                                            DispatchQueue.main.async {
+                                                
+                                                appDelegate?.expenseList = (privateiCloudZone?.data as? [XYZExpense])!
+                                                expenseView.reloadData()
+                                            }
+                                        })
+                                    
                                         expenseView.reloadData()
                                     
                                         // subscription is not supported in shared DB

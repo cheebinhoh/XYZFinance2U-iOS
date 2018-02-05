@@ -352,7 +352,7 @@ func createUpdateAccount(_ record: CKRecord,
     let currencyCode = record[XYZAccount.currencyCode] as? String
     let repeatDate = record[XYZAccount.repeatDate] as? Date
     let repeatAction = record[XYZAccount.repeatAction] as? String
-    
+
     var outputIncomeList: [XYZAccount] = incomeList
     var incomeToBeUpdated: XYZAccount?
     
@@ -448,6 +448,8 @@ func createUpdateExpense(_ oldChangeToken: Data,
         let date = record[XYZExpense.date] as? Date
         let shareRecordId = record[XYZExpense.shareRecordId] as? String
         let hasLocation = record[XYZExpense.hasLocation] as? Bool
+        let isSoftDelete = record[XYZExpense.isSoftDelete] as? Bool
+        let isSharedRecord = record[XYZExpense.isShared] as? Bool
         
         var expenseToBeUpdated: XYZExpense?
 
@@ -500,9 +502,10 @@ func createUpdateExpense(_ oldChangeToken: Data,
         expenseToBeUpdated?.setValue(amount, forKey: XYZExpense.amount)
         expenseToBeUpdated?.setValue(date, forKey: XYZExpense.date)
         expenseToBeUpdated?.setValue(shareRecordId, forKey: XYZExpense.shareRecordId)
-        expenseToBeUpdated?.setValue(isShared, forKey: XYZExpense.isShared)
+        expenseToBeUpdated?.setValue(isShared || isSharedRecord!, forKey: XYZExpense.isShared)
         expenseToBeUpdated?.setValue(hasLocation, forKey: XYZExpense.hasLocation)
         expenseToBeUpdated?.setValue(oldChangeToken, forKey: XYZExpense.preChangeToken)
+        expenseToBeUpdated?.setValue(isSoftDelete, forKey: XYZExpense.isSoftDelete)
         
         let nrOfReceipt = record[XYZExpense.nrOfReceipts] as? Int
         for index in 0..<nrOfReceipt! {
@@ -989,9 +992,10 @@ func saveExpensesToiCloud(_ database: CKDatabase,
         
         for expense in expenseList {
             
-            if let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool, isShared {
+            //if let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool, isShared {
             
-            } else if let lastChanged = expense.value(forKey: XYZExpense.lastRecordChange) as? Date {
+            //} else
+            if let lastChanged = expense.value(forKey: XYZExpense.lastRecordChange) as? Date {
                 
                 if lastChanged > lastChangeTokenFetch {
                     
@@ -1076,10 +1080,14 @@ func saveExpensesToiCloud(_ database: CKDatabase,
         let detail = expense.value(forKey: XYZExpense.detail) as? String
         let amount = expense.value(forKey: XYZExpense.amount) as? Double
         let date = expense.value(forKey: XYZExpense.date) as? Date
+        let isSoftDelete = expense.value(forKey: XYZExpense.isSoftDelete) as? Bool
+        let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
         
         record.setValue(detail, forKey: XYZExpense.detail)
         record.setValue(amount, forKey: XYZExpense.amount)
         record.setValue(date, forKey: XYZExpense.date)
+        record.setValue(isSoftDelete, forKey: XYZExpense.isSoftDelete)
+        record.setValue(isShared, forKey: XYZExpense.isShared)
         
         guard let receiptList = expense.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>  else {
             
