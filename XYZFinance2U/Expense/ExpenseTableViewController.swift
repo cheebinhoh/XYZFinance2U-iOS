@@ -160,9 +160,16 @@ class ExpenseTableViewController: UITableViewController,
         let oldExpense = sectionExpenseList?.remove(at: indexPath.row)
         self.sectionList[indexPath.section].data = sectionExpenseList
         
-        self.softDeleteIncome(expense: oldExpense!)
-        self.delegate?.expenseDeleted(deletedExpense: oldExpense!)
-        aContext?.delete(oldExpense!)
+        let isSoftDelete = self.softDeleteIncome(expense: oldExpense!)
+        
+        if !isSoftDelete {
+            
+            self.delegate?.expenseDeleted(deletedExpense: oldExpense!)
+            aContext?.delete(oldExpense!)
+        }
+        
+        saveManageContext()
+        
         self.loadExpensesFromSections()
         self.reloadData()
 
@@ -201,9 +208,14 @@ class ExpenseTableViewController: UITableViewController,
                 fatalError("Exception: expense selectedd is not what is to be deleted")
             }
 
-            softDeleteIncome(expense: oldExpense!)
-            delegate?.expenseDeleted(deletedExpense: oldExpense!)
-            aContext?.delete(oldExpense!)
+            let isSoftDelete = softDeleteIncome(expense: oldExpense!)
+            
+            if !isSoftDelete {
+                
+                delegate?.expenseDeleted(deletedExpense: oldExpense!)
+                aContext?.delete(oldExpense!)
+            }
+            
             saveManageContext()
             loadExpensesFromSections()
             reloadData()
@@ -417,12 +429,13 @@ class ExpenseTableViewController: UITableViewController,
         saveExpense(expense: expense)
     }
     
-    func softDeleteIncome(expense: XYZExpense) {
+    func softDeleteIncome(expense: XYZExpense) -> Bool {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
+        let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool ?? false
         
-        if !(appDelegate?.iCloudZones.isEmpty)! {
+        if !(appDelegate?.iCloudZones.isEmpty)! && !isShared {
         
             /* TODO: we need to decline the ckshare
             if let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool, isShared {
@@ -477,7 +490,12 @@ class ExpenseTableViewController: UITableViewController,
             
             let savedDeleteShareRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteShareRecordLiset )
             zone.setValue(savedDeleteShareRecordLiset, forKey: XYZiCloudZone.deleteShareRecordIdList)
+        } else {
+            
+            expense.setValue(true, forKey: XYZExpense.isSoftDelete)
         }
+        
+        return isShared // if it is shared, then we softdelete it
     }
     
     func reloadData() {
@@ -520,6 +538,13 @@ class ExpenseTableViewController: UITableViewController,
         for expense in (appDelegate?.expenseList)! {
             
             guard let date = expense.value(forKey: XYZExpense.date) as? Date else {
+                
+                continue
+            }
+            
+            let isSoftDelete = expense.value(forKey: XYZExpense.isSoftDelete) as? Bool ?? false
+            
+            if isSoftDelete {
                 
                 continue
             }

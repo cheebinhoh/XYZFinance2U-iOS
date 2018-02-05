@@ -107,6 +107,8 @@ class AppDelegate: UIResponder,
             }
             else
             {
+                let recordName = cloudKitShareMetadata.rootRecordID.recordName
+                
                 let database = CKContainer.default().sharedCloudDatabase
                 var zones = [CKRecordZone]()
                 var shareicloudZone: XYZiCloudZone?
@@ -209,6 +211,22 @@ class AppDelegate: UIResponder,
                                     
                                         privateiCloudZone?.data = iCloudZone.data
                                         self.expenseList = (iCloudZone.data as? [XYZExpense])!
+                                        
+                                        for expense in self.expenseList {
+                                            
+                                            if let expRecordId = expense.value(forKey: XYZExpense.recordId) as? String, expRecordId == recordName {
+                                                
+                                                if let isShare = expense.value(forKey: XYZExpense.isShared) as? Bool, isShare {
+                                                    
+                                                    expense.setValue(false, forKey: XYZExpense.isSoftDelete)
+                                                    
+                                                    saveManageContext()
+                                                    
+                                                    break
+                                                }
+                                            }
+                                        }
+                                        
                                         expenseView.reloadData()
                                     
                                         // subscription is not supported in shared DB

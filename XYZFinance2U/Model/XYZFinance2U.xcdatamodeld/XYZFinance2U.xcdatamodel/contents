@@ -28,6 +28,7 @@
         <attribute name="hasgeolocation" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="hasLocation" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isShared" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isSoftDelete" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="lastRecordChange" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="preChangeToken" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -61,7 +62,7 @@
     <elements>
         <element name="XYZAccount" positionX="-63" positionY="-18" width="128" height="225"/>
         <element name="XYZExchangeRate" positionX="-36" positionY="81" width="128" height="120"/>
-        <element name="XYZExpense" positionX="-63" positionY="18" width="128" height="255"/>
+        <element name="XYZExpense" positionX="-63" positionY="18" width="128" height="270"/>
         <element name="XYZExpensePerson" positionX="-36" positionY="72" width="128" height="120"/>
         <element name="XYZExpenseReceipt" positionX="-9" positionY="99" width="128" height="90"/>
         <element name="XYZiCloudZone" positionX="-36" positionY="72" width="128" height="150"/>

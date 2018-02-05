@@ -31,6 +31,7 @@ class XYZExpense: NSManagedObject {
     static let shareUrl = "shareUrl"
     static let isShared = "isShared"
     static let preChangeToken = "preChangeToken"
+    static let isSoftDelete = "isSoftDelete"
     
     // MARK: - property
     
@@ -47,6 +48,7 @@ class XYZExpense: NSManagedObject {
     var shareUrl: String = ""
     var isShared = false
     var preChangeToken = NSData()
+    var isSoftDelete = false
     
     // MARK: - function
     
@@ -84,6 +86,7 @@ class XYZExpense: NSManagedObject {
         self.setValue(Set<XYZExpensePerson>(), forKey: XYZExpense.persons)
         self.setValue(Set<XYZExpenseReceipt>(), forKey: XYZExpense.receipts)
         self.setValue(NSData(), forKey: XYZExpense.preChangeToken)
+        self.setValue(false, forKey: XYZExpense.isSoftDelete)
     }
     
     func getPersons() -> Set<XYZExpensePerson> {
