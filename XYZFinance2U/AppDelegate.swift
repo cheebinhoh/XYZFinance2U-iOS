@@ -227,6 +227,8 @@ class AppDelegate: UIResponder,
                                             }
                                         }
                                         
+                                        expenseView.reloadData()
+                                        
                                         let appDelegate = UIApplication.shared.delegate as? AppDelegate
                                         let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
                     
@@ -241,9 +243,7 @@ class AppDelegate: UIResponder,
                                                 expenseView.reloadData()
                                             }
                                         })
-                                    
-                                        expenseView.reloadData()
-                                    
+
                                         // subscription is not supported in shared DB
                                         //registeriCloudSubscription(CKContainer.default().sharedCloudDatabase, [shareicloudZone!])
                                     
