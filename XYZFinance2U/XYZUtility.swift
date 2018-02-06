@@ -906,7 +906,7 @@ func pushChangeToiCloudZone(_ database: CKDatabase,
     for zone in zones {
         
         let name = zone.zoneID.zoneName
-        
+
         switch name {
             
             case XYZAccount.type:
@@ -941,7 +941,7 @@ func pushChangeToiCloudZone(_ database: CKDatabase,
                     
                     fatalError("Exception: [XYZAccount] is expected")
                 }
-                
+            
                 saveExpensesToiCloud(database, zone, iCloudZone, expenseList, {
                     
                     OperationQueue.main.addOperation {
@@ -1086,6 +1086,7 @@ func saveExpensesToiCloud(_ database: CKDatabase,
         record.setValue(detail, forKey: XYZExpense.detail)
         record.setValue(amount, forKey: XYZExpense.amount)
         record.setValue(date, forKey: XYZExpense.date)
+        
         record.setValue(isSoftDelete, forKey: XYZExpense.isSoftDelete)
         record.setValue(isShared, forKey: XYZExpense.isShared)
         

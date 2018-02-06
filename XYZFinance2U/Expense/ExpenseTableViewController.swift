@@ -160,20 +160,21 @@ class ExpenseTableViewController: UITableViewController,
         let oldExpense = sectionExpenseList?.remove(at: indexPath.row)
         self.sectionList[indexPath.section].data = sectionExpenseList
         
-        let isSoftDelete = self.softDeleteIncome(expense: oldExpense!)
+        let isSoftDelete = self.softDeleteExpense(expense: oldExpense!)
+        
+        saveManageContext()
         
         if !isSoftDelete {
             
             self.delegate?.expenseDeleted(deletedExpense: oldExpense!)
             aContext?.delete(oldExpense!)
+    
+            self.loadExpensesFromSections()
+            self.reloadData()
+        } else {
+            
+            self.updateToiCloud(oldExpense!)
         }
-        
-        saveManageContext()
-        
-        self.loadExpensesFromSections()
-        self.reloadData()
-
-        self.updateToiCloud(nil)
     }
     
     func indexPath(of expense:XYZExpense) -> IndexPath? {
@@ -208,7 +209,7 @@ class ExpenseTableViewController: UITableViewController,
                 fatalError("Exception: expense selectedd is not what is to be deleted")
             }
 
-            let isSoftDelete = softDeleteIncome(expense: oldExpense!)
+            let isSoftDelete = softDeleteExpense(expense: oldExpense!)
             
             if !isSoftDelete {
                 
@@ -356,7 +357,7 @@ class ExpenseTableViewController: UITableViewController,
                                             }
                                         }
                                     
-                                        print("*********** add participant")
+
                                         participant.permission = .readOnly
 
                                         ckshare.addParticipant(participant)
@@ -429,14 +430,20 @@ class ExpenseTableViewController: UITableViewController,
         saveExpense(expense: expense)
     }
     
-    func softDeleteIncome(expense: XYZExpense) -> Bool {
+    func softDeleteExpense(expense: XYZExpense) -> Bool {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
         let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool ?? false
         
-        if !(appDelegate?.iCloudZones.isEmpty)! && !isShared {
+        if isShared {
+            
+            expense.setValue(true, forKey: XYZExpense.isSoftDelete)
+            expense.setValue(Date(), forKey: XYZExpense.lastRecordChange)
+        }
         
+        if !((appDelegate?.iCloudZones.isEmpty)!) {
+            
             /* TODO: we need to decline the ckshare
             if let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool, isShared {
             
@@ -454,45 +461,47 @@ class ExpenseTableViewController: UITableViewController,
             }
              */
             
-            guard let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
+            if isShared {
                 
-                fatalError("Exception: iCloudZoen is expected")
-            }
-            
-            guard let data = zone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
+            } else {
                 
-                fatalError("Exception: data is expected for deleteRecordIdList")
-            }
-            
-            guard var deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+                guard let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
+                    
+                    fatalError("Exception: iCloudZoen is expected")
+                }
                 
-                fatalError("Exception: deleteRecordList is expected as [String]")
-            }
-            
-            let recordName = expense.value(forKey: XYZExpense.recordId) as? String
-            deleteRecordLiset.append(recordName!)
-            
-            let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
-            zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
-            
-            guard let shareRecordNameData = zone.value(forKey: XYZiCloudZone.deleteShareRecordIdList) as? Data else {
+                guard let data = zone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
+                    
+                    fatalError("Exception: data is expected for deleteRecordIdList")
+                }
                 
-                fatalError("Exception: data is expected for deleteRecordIdList")
-            }
-            
-            guard var deleteShareRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: shareRecordNameData) as? [String]) else {
+                guard var deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+                    
+                    fatalError("Exception: deleteRecordList is expected as [String]")
+                }
                 
-                fatalError("Exception: deleteRecordList is expected as [String]")
-            }
+                let recordName = expense.value(forKey: XYZExpense.recordId) as? String
+                deleteRecordLiset.append(recordName!)
+                
+                let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
+                zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
+                
+                guard let shareRecordNameData = zone.value(forKey: XYZiCloudZone.deleteShareRecordIdList) as? Data else {
+                    
+                    fatalError("Exception: data is expected for deleteRecordIdList")
+                }
+                
+                guard var deleteShareRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: shareRecordNameData) as? [String]) else {
+                    
+                    fatalError("Exception: deleteRecordList is expected as [String]")
+                }
 
-            let shareRecordName = expense.value(forKey: XYZExpense.shareRecordId) as? String
-            deleteShareRecordLiset.append(shareRecordName!)
-            
-            let savedDeleteShareRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteShareRecordLiset )
-            zone.setValue(savedDeleteShareRecordLiset, forKey: XYZiCloudZone.deleteShareRecordIdList)
-        } else {
-            
-            expense.setValue(true, forKey: XYZExpense.isSoftDelete)
+                let shareRecordName = expense.value(forKey: XYZExpense.shareRecordId) as? String
+                deleteShareRecordLiset.append(shareRecordName!)
+                
+                let savedDeleteShareRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteShareRecordLiset )
+                zone.setValue(savedDeleteShareRecordLiset, forKey: XYZiCloudZone.deleteShareRecordIdList)
+            }
         }
         
         return isShared // if it is shared, then we softdelete it

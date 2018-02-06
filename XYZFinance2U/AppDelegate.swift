@@ -219,6 +219,7 @@ class AppDelegate: UIResponder,
                                                 if let isShare = expense.value(forKey: XYZExpense.isShared) as? Bool, isShare {
                                                     
                                                     expense.setValue(false, forKey: XYZExpense.isSoftDelete)
+                                                    expense.setValue(Date(), forKey: XYZExpense.lastRecordChange)
                                                     
                                                     saveManageContext()
                                                     
@@ -636,7 +637,6 @@ class AppDelegate: UIResponder,
             
             fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase, zonesToBeFetched, self.privateiCloudZones, {
 
-                print("******** done fetchAndUpdateiCloud")
                 for icloudzone in self.privateiCloudZones {
 
                     let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
