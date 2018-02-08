@@ -841,7 +841,7 @@ class ExpenseTableViewController: UITableViewController,
             }
             
             detailTableViewController.expenseDelegate = self
-            
+           
             let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
             
             delegate?.expenseSelected(newExpense: sectionExpenseList?[indexPath.row])

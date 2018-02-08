@@ -758,7 +758,7 @@ class IncomeDetailTableViewController: UITableViewController,
     
                 if !(currencyCodes?.isEmpty)! {
                     
-                    selectionTableViewController.setSelections("Favorites", false, currencyCodes!)
+                    selectionTableViewController.setSelections("", false, currencyCodes!)
                 }
                 
                 var codeIndex: Character?

@@ -1034,6 +1034,7 @@ class IncomeTableViewController: UITableViewController,
             
             incomeTableView.income = sectionIncomeList![indexPath.row]
             incomeDetailNavigationController.modalPresentationStyle = .popover
+            incomeTableView.currencyCodes = currencyCodes
             self.present(incomeDetailNavigationController, animated: true, completion: nil)
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -1052,6 +1053,7 @@ class IncomeTableViewController: UITableViewController,
             
             let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
             detailTableViewController.incomeDelegate = self
+            detailTableViewController.currencyCodes = currencyCodes
             delegate?.incomeSelected(newIncome: sectionIncomeList?[indexPath.row])
         }
     }
