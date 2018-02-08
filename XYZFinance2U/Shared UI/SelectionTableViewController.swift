@@ -72,17 +72,20 @@ class SelectionTableViewController: UITableViewController {
         
         navigationItem.title = "Selection: \(String(describing: selectedItem!))"
         
-        for (sectionIndex, section) in tableSectionList.enumerated() {
+        found:
+            for (sectionIndex, section) in tableSectionList.enumerated() {
             
-            for (rowIndex, code) in section.cellList.enumerated() {
-                
-                if code == item {
+                for (rowIndex, code) in section.cellList.enumerated() {
                     
-                    let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
-                    tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
+                    if code == item {
+                        
+                        let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
+                        tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
+                        
+                        break found
+                    }
                 }
             }
-        }
     }
     
     func setSelections(_ sectionIdentifier: String, _ indexing: Bool, _ selection: [String]) {
@@ -107,6 +110,7 @@ class SelectionTableViewController: UITableViewController {
             
             let newSection = TableSectionCell(identifier: sectionIdentifier, title: sectionIdentifier, cellList: [], data: nil)
             sectionIndex = tableSectionList.count
+            
             tableSectionList.insert(newSection, at: sectionIndex)
         }
     
@@ -117,7 +121,7 @@ class SelectionTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        
+
         return tableSectionList.count
     }
 
@@ -127,7 +131,7 @@ class SelectionTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "selectionItemCell", for: indexPath) as? SelectionItemTableViewCell else {
             
             fatalError("Exception: errpt on creating selectionItemCell")

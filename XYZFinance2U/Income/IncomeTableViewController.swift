@@ -87,7 +87,8 @@ class IncomeTableViewController: UITableViewController,
     var sectionList = [TableSectionCell]()
     var isPopover = false
     let mainSection = 0
-
+    var currencyCodes = [String]()
+    
     var total: Double {
         
         var sum = 0.0
@@ -135,6 +136,7 @@ class IncomeTableViewController: UITableViewController,
         
         mainSplitView.popOverNavigatorController = incomeDetailNavigationController
         
+        incomeDetailTableView.currencyCodes = currencyCodes
         incomeDetailTableView.setPopover(delegate: self)
         isPopover = true
         
@@ -332,6 +334,8 @@ class IncomeTableViewController: UITableViewController,
                 currencyList.append(currency)
             }
         }
+        
+        currencyCodes = currencyList
         
         if currencyList.isEmpty {
             

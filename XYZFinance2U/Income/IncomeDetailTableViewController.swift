@@ -236,7 +236,8 @@ class IncomeDetailTableViewController: UITableViewController,
     var isPushinto = false
     var incomeDelegate: IncomeDetailDelegate?
     var hasUpdateReminder = false
-
+    var currencyCodes: [String]?
+    
     var bank = "" {
         
         didSet {
@@ -754,6 +755,11 @@ class IncomeDetailTableViewController: UITableViewController,
                 }
                 
                 selectionTableViewController.selectionIdentifier = "currency"
+    
+                if !(currencyCodes?.isEmpty)! {
+                    
+                    selectionTableViewController.setSelections("Favorites", false, currencyCodes!)
+                }
                 
                 var codeIndex: Character?
                 var codes = [String]()
