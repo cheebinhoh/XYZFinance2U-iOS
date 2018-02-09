@@ -553,6 +553,7 @@ class ExpenseTableViewController: UITableViewController,
         let calendar = Calendar.current
 
         // FIXME to improve performance
+        currencyCodes = [String]()
         sectionList = [TableSectionCell]()
         var sectionExpenseList: [XYZExpense]?
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
