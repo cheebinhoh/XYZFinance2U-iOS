@@ -31,7 +31,7 @@ class ExpenseTableViewCell: UITableViewCell {
 
     func setExpense(expense: XYZExpense) {
         
-        amount.text = formattingCurrencyValue(input: (expense.value(forKey: XYZExpense.amount) as? Double) ?? 0.0, code: nil )
+        amount.text = formattingCurrencyValue(input: (expense.value(forKey: XYZExpense.amount) as? Double) ?? 0.0, code: expense.value(forKey: XYZExpense.currencyCode) as? String )
         date.text = formattingDate(date: (expense.value(forKey: XYZExpense.date) as? Date) ?? Date(), style: .medium )
         detail.text = ( expense.value(forKey: XYZExpense.detail) as? String ) ?? ""
     }

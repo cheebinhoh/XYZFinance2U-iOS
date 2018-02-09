@@ -70,7 +70,7 @@ class SelectionTableViewController: UITableViewController {
         
         self.selectedItem = item
         
-        navigationItem.title = "Selection: \(String(describing: selectedItem!))"
+        navigationItem.title = "\(String(describing: selectedItem!))"
         
         found:
             for (sectionIndex, section) in tableSectionList.enumerated() {

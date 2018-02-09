@@ -32,8 +32,16 @@ class ExpenseDetailTableViewController: UITableViewController,
     ExpenseDetailLocationDelegate,
     ExpenseDetailLocationPickerDelegate,
     ExpenseDetailLocationViewDelegate,
+    SelectionDelegate,
     CNContactPickerDelegate {
  
+    func selection(_ sender: SelectionTableViewController, item: String?) {
+        
+        currencyCode = item
+        
+        tableView.reloadData()
+    }
+    
     // MARK: - nested type
     struct ImageSet {
         
@@ -134,7 +142,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         sectionList.removeAll()
         
-        var mainSectionCellList = ["text", "amount", "date", "location"]
+        var mainSectionCellList = ["text", "amount", "currency", "date", "location"]
         
         if hasLocation {
             
@@ -208,6 +216,9 @@ class ExpenseDetailTableViewController: UITableViewController,
         } else if let existingHasLocation = expense?.value(forKey: XYZExpense.hasLocation) as? Bool, existingHasLocation != hasLocation {
             
             hasChanged = true
+        } else if let existingCurrencCode = expense?.value(forKey: XYZExpense.currencyCode) as? String, existingCurrencCode != currencyCode {
+            
+            hasChanged = true
         }
         
         expense?.setValue(detail, forKey: XYZExpense.detail)
@@ -215,6 +226,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         expense?.setValue(date, forKey: XYZExpense.date)
         expense?.setValue(false, forKey: XYZExpense.isShared) // if we can save it, it means it is not readonly
         expense?.setValue(hasLocation, forKey: XYZExpense.hasLocation)
+        expense?.setValue(currencyCode, forKey: XYZExpense.currencyCode)
         
         if hasLocation, let _ = cllocation {
             
@@ -350,6 +362,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         cllocation = nil
         hasgeolocation = false
         hasLocation = false
+        currencyCode = Locale.current.currencyCode
         
         if nil != expense {
             
@@ -357,6 +370,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             date = (expense?.value(forKey: XYZExpense.date) as? Date) ?? Date()
             amount = (expense?.value(forKey: XYZExpense.amount) as? Double) ?? 0.0
             isShared = (expense?.value(forKey: XYZExpense.isShared) as? Bool) ?? false
+            currencyCode = (expense?.value(forKey: XYZExpense.currencyCode) as? String) ?? Locale.current.currencyCode
             
             if isShared {
                 
@@ -683,6 +697,8 @@ class ExpenseDetailTableViewController: UITableViewController,
     }
     
     // MARK: - property
+    var currencyCode = Locale.current.currencyCode
+    var currencyCodes: [String]?
     var location = "Location"
     var isShared = false
     var cllocation: CLLocation?
@@ -970,11 +986,22 @@ class ExpenseDetailTableViewController: UITableViewController,
                 textcell.isEditable = modalEditing
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
-                textcell.enableMonetaryEditing(true)
-                textcell.input.placeholder = formattingCurrencyValue(input: 0.0, code: nil)
-                textcell.input.text = formattingCurrencyValue(input: amount ?? 0.0, code: nil)
+                textcell.enableMonetaryEditing(true, currencyCode!)
+                textcell.input.placeholder = formattingCurrencyValue(input: 0.0, code: currencyCode)
+                textcell.input.text = formattingCurrencyValue(input: amount ?? 0.0, code: currencyCode)
                 
                 cell = textcell
+            
+            case "currency":
+                guard let currencycell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailSelectionCell", for: indexPath) as? ExpenseDetailSelectionTableViewCell else {
+                    
+                    fatalError("Exception: incomeDetailSelectionCell is failed to be created")
+                }
+                
+                currencycell.setSelection(currencyCode ?? "USD")
+                currencycell.selectionStyle = .none
+                
+                cell = currencycell
             
             case "date":
                 guard let datecell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailDateTextCell", for: indexPath) as? ExpenseDetailDateTableViewCell else {
@@ -1177,12 +1204,67 @@ class ExpenseDetailTableViewController: UITableViewController,
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        showLocationView()
+        if let _ = tableView.cellForRow(at: indexPath) as? ExpenseDetailSelectionTableViewCell {
+            
+        guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+            
+            fatalError("Exception: error on instantiating SelectionNavigationController")
+        }
+        
+        selectionTableViewController.selectionIdentifier = "currency"
+        
+        if currencyCodes?.isEmpty ?? false {
+            
+            selectionTableViewController.setSelections("", false, currencyCodes!)
+        }
+        
+        var codeIndex: Character?
+        var codes = [String]()
+        for code in Locale.isoCurrencyCodes {
+            
+            if nil == codeIndex {
+                
+                codes.append(code)
+                codeIndex = code.first
+            } else if code.first == codeIndex {
+                
+                codes.append(code)
+            } else {
+                
+                var identifier = ""
+                identifier.append(codeIndex!)
+                
+                selectionTableViewController.setSelections(identifier, true, codes )
+                codes.removeAll()
+                codes.append(code)
+                codeIndex = code.first
+            }
+        }
+        
+        var identifier = ""
+        identifier.append(codeIndex!)
+        
+        selectionTableViewController.setSelections(identifier, true, codes )
+        selectionTableViewController.setSelectedItem(currencyCode ?? "USD")
+        selectionTableViewController.delegate = self
+        
+        let nav = UINavigationController(rootViewController: selectionTableViewController)
+        nav.modalPresentationStyle = .popover
+        
+        self.present(nav, animated: true, completion: nil)
+        }
+        else {
+            
+            showLocationView()
+        }
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         
         if sectionList[indexPath.section].cellList[indexPath.row] == "locationPicker" {
+            
+            return indexPath
+        } else if sectionList[indexPath.section].cellList[indexPath.row] == "currency" {
             
             return indexPath
         } else {

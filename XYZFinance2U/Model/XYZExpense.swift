@@ -32,6 +32,7 @@ class XYZExpense: NSManagedObject {
     static let isShared = "isShared"
     static let preChangeToken = "preChangeToken"
     static let isSoftDelete = "isSoftDelete"
+    static let currencyCode = "currencyCode"
     
     // MARK: - property
     
@@ -49,6 +50,7 @@ class XYZExpense: NSManagedObject {
     var isShared = false
     var preChangeToken = NSData()
     var isSoftDelete = false
+    var currencyCode: String = Locale.current.currencyCode!
     
     // MARK: - function
     
@@ -87,6 +89,7 @@ class XYZExpense: NSManagedObject {
         self.setValue(Set<XYZExpenseReceipt>(), forKey: XYZExpense.receipts)
         self.setValue(NSData(), forKey: XYZExpense.preChangeToken)
         self.setValue(false, forKey: XYZExpense.isSoftDelete)
+        self.setValue(Locale.current.currencyCode, forKey: XYZExpense.currencyCode)
     }
     
     func getPersons() -> Set<XYZExpensePerson> {

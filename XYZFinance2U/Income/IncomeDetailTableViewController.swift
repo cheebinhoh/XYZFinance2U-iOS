@@ -756,7 +756,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 
                 selectionTableViewController.selectionIdentifier = "currency"
     
-                if !(currencyCodes?.isEmpty)! {
+                if currencyCodes?.isEmpty ?? false {
                     
                     selectionTableViewController.setSelections("", false, currencyCodes!)
                 }

@@ -24,6 +24,7 @@ class ExpenseTableViewController: UITableViewController,
     ExpenseDetailDelegate {
     
     // MARK: - property
+    var currencyCodes = [String]()
     var sectionList = [TableSectionCell]()  
     var delegate: ExpenseTableViewDelegate?
     var isPopover = false

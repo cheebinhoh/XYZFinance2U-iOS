@@ -12,6 +12,7 @@
 		650024051FF6B423001281EA /* SettingDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650024041FF6B423001281EA /* SettingDetailTableViewController.swift */; };
 		650068FE200814F8003B6469 /* XYZiCloudZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650068FD200814F8003B6469 /* XYZiCloudZone.swift */; };
 		6522F8B51FE9BBC7005686B6 /* MainUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6522F8B41FE9BBC7005686B6 /* MainUITabBarController.swift */; };
+		653111E8202E382E002560A0 /* ExpenseDetailSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653111E7202E382E002560A0 /* ExpenseDetailSelectionTableViewCell.swift */; };
 		65343E8B1FFD8898002C5D39 /* IncomeDetailSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65343E8A1FFD8898002C5D39 /* IncomeDetailSelectionTableViewCell.swift */; };
 		65343E8D1FFD93B1002C5D39 /* SelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65343E8C1FFD93B1002C5D39 /* SelectionTableViewController.swift */; };
 		65343E901FFD9FC1002C5D39 /* SelectionItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65343E8F1FFD9FC1002C5D39 /* SelectionItemTableViewCell.swift */; };
@@ -76,6 +77,7 @@
 		650024041FF6B423001281EA /* SettingDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDetailTableViewController.swift; sourceTree = "<group>"; };
 		650068FD200814F8003B6469 /* XYZiCloudZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZiCloudZone.swift; sourceTree = "<group>"; };
 		6522F8B41FE9BBC7005686B6 /* MainUITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUITabBarController.swift; sourceTree = "<group>"; };
+		653111E7202E382E002560A0 /* ExpenseDetailSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailSelectionTableViewCell.swift; sourceTree = "<group>"; };
 		65343E8A1FFD8898002C5D39 /* IncomeDetailSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailSelectionTableViewCell.swift; sourceTree = "<group>"; };
 		65343E8C1FFD93B1002C5D39 /* SelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionTableViewController.swift; sourceTree = "<group>"; };
 		65343E8F1FFD9FC1002C5D39 /* SelectionItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionItemTableViewCell.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				65EEC4A41FF1D6EB00D638CD /* ExpenseDetailLocationTableViewCell.swift */,
 				65EEC4A61FF1E0FF00D638CD /* ExpenseDetailLocationPickerTableViewCell.swift */,
 				657F1EB5201D5C1000FEB385 /* ExpenseDetailViewController.swift */,
+				653111E7202E382E002560A0 /* ExpenseDetailSelectionTableViewCell.swift */,
 			);
 			path = Expense;
 			sourceTree = "<group>";
@@ -449,6 +452,7 @@
 				65EEC49D1FF067C200D638CD /* IncomeDetailTextTableViewCell.swift in Sources */,
 				657F1EB6201D5C1000FEB385 /* ExpenseDetailViewController.swift in Sources */,
 				65343E8B1FFD8898002C5D39 /* IncomeDetailSelectionTableViewCell.swift in Sources */,
+				653111E8202E382E002560A0 /* ExpenseDetailSelectionTableViewCell.swift in Sources */,
 				658F73541FDD961600AF7F8D /* ExpenseDetailTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

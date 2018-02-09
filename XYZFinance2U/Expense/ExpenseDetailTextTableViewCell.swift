@@ -25,7 +25,8 @@ class ExpenseDetailTextTableViewCell: UITableViewCell,
     @IBOutlet weak var input: UITextField!
     weak var delegate: ExpenseDetailTextTableViewCellDelegate?
     var isEditable = true
-
+    var currencyCode: String = Locale.current.currencyCode!
+    
     // MARK: - function
     func addUISwitch() {
         
@@ -87,14 +88,15 @@ class ExpenseDetailTextTableViewCell: UITableViewCell,
         delegate?.textDidEndEditing(self)
     }
     
-    func enableMonetaryEditing(_ enanble: Bool) {
+    func enableMonetaryEditing(_ enanble: Bool, _ currencyCode: String) {
         
         if enanble {
             
+            self.currencyCode = currencyCode
             input.addDoneToolbar(onDone: nil)
             input.clearButtonMode = .never
             input.keyboardType = .numberPad
-            input.text = formattingCurrencyValue(input: 0.0, code: nil)
+            input.text = formattingCurrencyValue(input: 0.0, code: currencyCode)
             input.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         } else {
             
@@ -110,7 +112,7 @@ class ExpenseDetailTextTableViewCell: UITableViewCell,
         
         text = formattingDoubleValue(input: text)
         text = formattingAndProcessDoubleValue(input: text)
-        text = formattingCurrencyValue(input: text, code: nil)
+        text = formattingCurrencyValue(input: text, code: currencyCode)
         textField.text = text
         delegate?.textDidEndEditing(self)
     }
