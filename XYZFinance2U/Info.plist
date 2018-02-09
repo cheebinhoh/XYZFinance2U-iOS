@@ -30,6 +30,8 @@
 	<string>Allow access to location?</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Allow access to save photo?</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Allow access to contact to share expense?</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

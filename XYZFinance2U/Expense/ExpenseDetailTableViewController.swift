@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import CloudKit
+import ContactsUI
 
 // MARK: - protocol
 protocol ExpenseDetailDelegate: class {
@@ -30,7 +31,8 @@ class ExpenseDetailTableViewController: UITableViewController,
     ExpenseDetailCommandDelegate,
     ExpenseDetailLocationDelegate,
     ExpenseDetailLocationPickerDelegate,
-    ExpenseDetailLocationViewDelegate {
+    ExpenseDetailLocationViewDelegate,
+    CNContactPickerDelegate {
  
     // MARK: - nested type
     struct ImageSet {
@@ -640,6 +642,43 @@ class ExpenseDetailTableViewController: UITableViewController,
         }
     }
     
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
+
+        // do nothing, TODO: not sure why it does not run
+    }
+    
+    func contactPicker(picker: CNContactPickerViewController, didSelectContact contact: CNContact) {
+        
+        emailcell = nil
+        print("-------- didSelectContact")
+    }
+    
+    func contactPickerDidCancel(picker: CNContactPickerViewController) {
+     
+        emailcell = nil
+        print("-------- contactPickerDidCancel")
+    }
+    
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
+
+        let email = contacts.first?.emailAddresses.first?.value
+        
+        guard let index = tableView.indexPath(for: emailcell!) else {
+            
+            return // case where I click on a textcell and then click on email toward bottom of the table view list, then textcell is not longer available
+        }
+        
+        emails[index.row] = email! as String
+        tableView.reloadRows(at: [index], with: .none)
+        
+        print("-------- didSelect \(String(describing: email))")
+    }
+    
+    func contactPicker(_ picker: CNContactPickerViewController, didSelectContactProperties contactProperties: [CNContactProperty]) {
+        
+        print("-------- didSelectContactProperties \(contactProperties)")
+    }
+    
     // MARK: - property
     var location = "Location"
     var isShared = false
@@ -674,6 +713,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     var isPopover = false
     var expenseDelegate: ExpenseDetailDelegate?
     var sectionList = [TableSectionCell]()
+    var emailcell : ExpenseDetailTextTableViewCell?
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
@@ -1117,6 +1157,18 @@ class ExpenseDetailTableViewController: UITableViewController,
             }
             
             textcell.input.becomeFirstResponder()
+            
+            let contactPicker = CNContactPickerViewController()
+            contactPicker.delegate = self
+            //contactPicker.displayedPropertyKeys = [CNContactEmailAddressesKey]
+            contactPicker.predicateForEnablingContact = NSPredicate(format: "emailAddresses.@count > 0")
+            contactPicker.predicateForSelectionOfContact = NSPredicate(format: "emailAddresses.@count > 0")
+            emailcell = textcell
+            
+            self.present(contactPicker, animated: true, completion: {
+                
+                print("-------- done presenting CNContactPickerViewController")
+            })
         }    
     }
 
