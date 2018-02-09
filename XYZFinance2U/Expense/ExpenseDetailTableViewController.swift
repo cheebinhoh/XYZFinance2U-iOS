@@ -668,8 +668,11 @@ class ExpenseDetailTableViewController: UITableViewController,
             return // case where I click on a textcell and then click on email toward bottom of the table view list, then textcell is not longer available
         }
         
-        emails[index.row] = email! as String
-        tableView.reloadRows(at: [index], with: .none)
+        if let _ = email {
+            
+            emails[index.row] = email! as String
+            tableView.reloadRows(at: [index], with: .none)
+        }
         
         print("-------- didSelect \(String(describing: email))")
     }
