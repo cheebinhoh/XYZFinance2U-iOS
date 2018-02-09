@@ -1213,7 +1213,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         selectionTableViewController.selectionIdentifier = "currency"
         
-        if currencyCodes?.isEmpty ?? false {
+            if let _ = currencyCodes, !(currencyCodes?.isEmpty)! {
             
             selectionTableViewController.setSelections("", false, currencyCodes!)
         }

@@ -601,6 +601,12 @@ class ExpenseTableViewController: UITableViewController,
             }
             
             sectionExpenseList?.append(expense)
+            
+            let currencyCode = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
+            if !currencyCodes.contains(currencyCode!) {
+                
+                currencyCodes.append(currencyCode!)
+            }
         }
         
         if sectionList.count > 0 {
@@ -837,6 +843,7 @@ class ExpenseTableViewController: UITableViewController,
             expenseTableView.setPopover(delegate: self)
             let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
             
+            expenseTableView.currencyCodes = currencyCodes
             expenseTableView.expense = sectionExpenseList?[indexPath.row]
             expenseDetailNavigationController.modalPresentationStyle = .popover
             self.present(expenseDetailNavigationController, animated: true, completion: nil)
@@ -855,6 +862,7 @@ class ExpenseTableViewController: UITableViewController,
                 fatalError("Exception: ExpenseDetailTableViewController is expedted" )
             }
             
+            detailTableViewController.currencyCodes = currencyCodes
             detailTableViewController.expenseDelegate = self
            
             let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
