@@ -26,9 +26,12 @@
 
 ### Road map
 
+* working on 1.1 release
+* prepare 1.1 release
+* adding currency support to expense
 * complete integration of Expenses tab with iCloudKit: End of Feb-2018 [Done]
 * submit app for testflight: End of April-2018 [Done]
 * pass 1st beta review [Done]
-* Adding sharing via iCloudKit: End of March-2018 [in progress]
+* Adding sharing via iCloudKit: End of March-2018 [Done]
 
 
