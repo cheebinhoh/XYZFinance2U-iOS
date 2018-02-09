@@ -61,6 +61,7 @@ class ExpenseTableViewController: UITableViewController,
         mainSplitView.popOverNavigatorController = expenseDetailNavigationController
         
         expenseDetailTableView.setPopover(delegate: self)
+        expenseDetailTableView.currencyCodes = currencyCodes
         isPopover = true
         
         expenseDetailNavigationController.modalPresentationStyle = .popover
@@ -548,9 +549,9 @@ class ExpenseTableViewController: UITableViewController,
     }
     
     private func loadExpensesIntoSections() {
-        
+
         let calendar = Calendar.current
-        
+
         // FIXME to improve performance
         sectionList = [TableSectionCell]()
         var sectionExpenseList: [XYZExpense]?
@@ -570,48 +571,47 @@ class ExpenseTableViewController: UITableViewController,
                 continue
             }
             
+            let currency = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
             let dateFormatter = DateFormatter()
             let month = calendar.component(.month, from: date)
             let year = calendar.component(.year, from: date)
-            let yearMonth = "\(year), \(dateFormatter.shortMonthSymbols[month - 1])"
-          
+            let title = "\(year), \(dateFormatter.shortMonthSymbols[month - 1])"
+            let identifier = "\(year), \(dateFormatter.shortMonthSymbols[month - 1]), \(currency!)"
+            
             var foundIndex = -1
             for (index, section) in sectionList.enumerated() {
                 
-                if section.title == yearMonth {
+                if section.identifier == identifier {
                     
                     foundIndex = index
                     break
                 }
             }
-            
+
             if foundIndex < 0 {
                 
-                if sectionList.count > 0 {
+                /*if sectionList.count > 0 {
                     
                     sectionList[sectionList.count - 1].data = sectionExpenseList
-                }
+                }*/
                 
-                //let newSection = SectionExpense(title: yearMonth, expenseList: [XYZExpense]())
-                let newSection = TableSectionCell(identifier: yearMonth, title: yearMonth, cellList: [], data: nil)
-                sectionList.append(newSection)
-                foundIndex = sectionList.count - 1
-                
+                foundIndex = sectionList.count;
+                let newSection = TableSectionCell(identifier: identifier, title: title, cellList: [], data: nil)
                 sectionExpenseList = [XYZExpense]()
+                sectionList.append(newSection)
+            } else {
+                
+                sectionExpenseList = sectionList[foundIndex].data as? [XYZExpense]
             }
             
             sectionExpenseList?.append(expense)
+            sectionList[foundIndex].data = sectionExpenseList
             
             let currencyCode = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
             if !currencyCodes.contains(currencyCode!) {
                 
                 currencyCodes.append(currencyCode!)
             }
-        }
-        
-        if sectionList.count > 0 {
-            
-            sectionList[sectionList.count - 1].data = sectionExpenseList
         }
     }
     
@@ -955,7 +955,11 @@ class ExpenseTableViewController: UITableViewController,
         for expense in (appDelegate?.expenseList)! {
             
             let indexPath = self.indexPath(of: expense)
-            tableView.deselectRow(at: indexPath!, animated: false)
+            
+            if let _ = indexPath {
+                
+                tableView.deselectRow(at: indexPath!, animated: false)
+            }
         }
         
         if let navigationController = secondaryViewController as? UINavigationController {

@@ -1261,7 +1261,10 @@ class ExpenseDetailTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         
-        if sectionList[indexPath.section].cellList[indexPath.row] == "locationPicker" {
+        if !modalEditing {
+            
+            return nil
+        } else if sectionList[indexPath.section].cellList[indexPath.row] == "locationPicker" {
             
             return indexPath
         } else if sectionList[indexPath.section].cellList[indexPath.row] == "currency" {
