@@ -137,19 +137,30 @@ class ExpenseTableViewController: UITableViewController,
     
     //MARK: - function
     
-    func sectionTotal(_ section: Int) -> Double {
+    func sectionTotal(_ section: Int) -> ( Double, String? ) {
         
         var total = 0.0
         let expenseList = sectionList[section].data as? [XYZExpense]
+        var usedCurrencyCode: String?
+        var hasMultipleCurrency = false
         
         for expense in expenseList! {
         
+            let currency = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
+            if usedCurrencyCode == nil {
+                
+                usedCurrencyCode = currency
+            } else if usedCurrencyCode != currency {
+                
+                hasMultipleCurrency = true
+            }
+            
             let amount = expense.value(forKey: XYZExpense.amount) as? Double
             
             total = total + amount!
         }
         
-        return total
+        return ( total, hasMultipleCurrency ? nil : usedCurrencyCode )
     }
     
     func delete(of indexPath:IndexPath) {
@@ -784,7 +795,7 @@ class ExpenseTableViewController: UITableViewController,
         let stackView = UIStackView()
         let title = UILabel()
         let subtotal = UILabel()
-        let amount = sectionTotal(section)
+        let (amount, currencyCode) = sectionTotal(section)
         
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 45)
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -794,9 +805,12 @@ class ExpenseTableViewController: UITableViewController,
         stackView.axis = .horizontal
         stackView.addArrangedSubview(title)
         
-        subtotal.text = formattingCurrencyValue(input: amount, code: Locale.current.currencyCode)
-        subtotal.textColor = UIColor.gray
-        stackView.addArrangedSubview(subtotal)
+        if let currencyCode = currencyCode {
+            
+            subtotal.text = formattingCurrencyValue(input: amount, code: currencyCode)
+            subtotal.textColor = UIColor.gray
+            stackView.addArrangedSubview(subtotal)
+        }
         
         return stackView
     }
