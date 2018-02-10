@@ -215,6 +215,20 @@ class IncomeTableViewController: UITableViewController,
         appDelegate?.incomeList.append(income)
         
         reloadData()
+        
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: UISplitViewController is expected" )
+        }
+        
+        if !mainSplitView.isCollapsed  {
+         
+            if let indexPath = incomeIndex(of: income) {
+                
+                tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)
+                delegate?.incomeSelected(newIncome: income)
+            }
+        }
     }
     
     func incomeIndex(of income: XYZAccount) -> IndexPath? {
@@ -240,6 +254,21 @@ class IncomeTableViewController: UITableViewController,
 
         reloadData()
         saveAccounts()
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: UISplitViewController is expected" )
+        }
+        
+        if !mainSplitView.isCollapsed {
+         
+            if let indexPath = incomeIndex(of: income) {
+             
+                tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+                delegate?.incomeSelected(newIncome: income)
+            }
+        }
         
         /* DEPRECATED: we do not need that when we have 
         let selectedIndexPath = incomeIndex(of: income)
