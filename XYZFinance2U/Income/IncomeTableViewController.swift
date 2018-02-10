@@ -212,7 +212,6 @@ class IncomeTableViewController: UITableViewController,
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
-        //income.setValue((appDelegate?.incomeList)!.count, forKey: XYZAccount.sequenceNr)
         appDelegate?.incomeList.append(income)
         
         reloadData()
@@ -356,11 +355,13 @@ class IncomeTableViewController: UITableViewController,
                 let mainSection = TableSectionCell(identifier: "main", title: currency, cellList: [], data: sectionIncomeList)
                 sectionList.append(mainSection)
                 
+                //DEPRECATED: we do not provide sum as a separate cell but part of header for the section
                 //let summarySection = TableSectionCell(identifier: "summary", title: nil, cellList: ["sum"], data: nil)
                 //tableSectionCellList.append(summarySection)
             }
         }
         
+        /* DEPRECATED: debugging code
         for section in sectionList {
             
             switch section.identifier {
@@ -379,13 +380,13 @@ class IncomeTableViewController: UITableViewController,
                     fatalError("Exception: execution should not be reached here, case = \(section.identifier)")
             }
         }
+        */
     }
     
     func reloadData() {
         
         saveAccounts()
         loadDataInTableSectionCell()
-        //saveAccounts()
 
         tableView.reloadData()
     }
@@ -495,18 +496,6 @@ class IncomeTableViewController: UITableViewController,
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
-        /*
-        for account in (appDelegate?.incomeList)! {
-            
-            let bank = account.value(forKey: XYZAccount.bank) as? String ?? ""
-            let accountNr = account.value(forKey: XYZAccount.accountNr) as? String ?? ""
-            let sequenceNr = account.value(forKey: XYZAccount.sequenceNr) as? Int ?? 0
-            
-            let recordId = "\(bank):\(accountNr):\(sequenceNr)"
-            account.setValue(recordId, forKey: XYZAccount.recordId)
-        }
-         */
-        
         saveManageContext()
 
         for income in (appDelegate?.incomeList)! {
@@ -522,96 +511,12 @@ class IncomeTableViewController: UITableViewController,
                              [ckrecordzone], (appDelegate?.privateiCloudZones)!, {
             
         })
-
-        /*
-        for account in incomeList {
-            
-            account.saveToiCloud()
-        }
-        
-        let predicate = NSPredicate(value: true)
-        let query = CKQuery(recordType: XYZAccount.type, predicate: predicate)
-        
-        let container = CKContainer.default()
-        let database = container.privateCloudDatabase
-        
-        database.perform(query, inZoneWith: nil) { (records, error) in
-        
-            if nil != error {
-                
-                print("------- error on query = \(String(describing: error))")
-            } else {
-                
-                var recordIDsToBeDeleted = Set<CKRecordID>()
-                
-                for record in records! {
-                   
-                    recordIDsToBeDeleted.insert( record.recordID )
-                }
-                
-                for income in self.incomeList {
-                    
-                    if let recordId = income.value(forKey: XYZAccount.recordId) as? String {
-                    
-                        let ckrecordId = CKRecordID(recordName: recordId)
-
-                        recordIDsToBeDeleted.remove(ckrecordId)
-                    }
-                }
-                
-                let recordIDsToBeDeletedArray = Array<CKRecordID>( recordIDsToBeDeleted )
-                let modifyOperation = CKModifyRecordsOperation(recordsToSave: [], recordIDsToDelete: recordIDsToBeDeletedArray)
-                modifyOperation.savePolicy = .ifServerRecordUnchanged
-                modifyOperation.modifyRecordsCompletionBlock = { ( saveRecords, deleteRecords, error ) in
-                    
-                    if nil != error {
-                        
-                        print("-------- error on saving to icloud \(String(describing: error))")
-                    } else {
-                        
-                        print("-------- delete done")
-                    }
-                }
-
-                database.add(modifyOperation)
-            }
-        }
- 
-        */
     }
-
-    /*
-    private func loadAccounts() -> [XYZAccount]? {
-        
-        var output: [XYZAccount]?
-        
-        let aContext = managedContext()
-        let fetchRequest = NSFetchRequest<XYZAccount>(entityName: "XYZAccount")
-
-        do {
-            
-            output = try aContext?.fetch(fetchRequest)
-            
-            output = output?.sorted() {
-                (acc1, acc2) in
-                
-                return ( acc1.value(forKey: XYZAccount.sequenceNr) as! Int ) < ( acc2.value(forKey: XYZAccount.sequenceNr) as! Int)
-            }
-        } catch let error as NSError {
-            
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-
-        return output
-    }
-     */
     
     func validateiCloud() {
         
-        print("---- enter validateiCloud")
         CKContainer.default().accountStatus { (status, error) in
             
-            print("---- enter validateiCloud cb = \(status)")
             if status == CKAccountStatus.noAccount {
 
                 DispatchQueue.main.async {
@@ -624,7 +529,8 @@ class IncomeTableViewController: UITableViewController,
                     
                     self.iCloudEnable = false
                     let alert = UIAlertController(title: "Sign in to icloud",
-                                                  message: "Sign in to your iCloud account to keep records in iCloud", preferredStyle: UIAlertControllerStyle.alert )
+                                                  message: "Sign in to your iCloud account to keep records in iCloud",
+                                                  preferredStyle: UIAlertControllerStyle.alert )
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (action) in
                         
                         alert.dismiss(animated: false, completion: {
@@ -638,7 +544,6 @@ class IncomeTableViewController: UITableViewController,
                 }
             } else {
                 
-    
                 self.iCloudEnable = true
                 
                 CKContainer.default().requestApplicationPermission(CKApplicationPermissions.userDiscoverability, completionHandler: { (status, error) in
@@ -757,15 +662,6 @@ class IncomeTableViewController: UITableViewController,
                 self.authenticatedOk = true
 
                 print("no auth support")
-                //FIXME: we have problem in multiple fetch
-                //let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                
-                //if let accounts = loadAccounts() {
-                    
-                //    appDelegate?.incomeList = accounts
-                //}
-                    
-                //self.reloadData()
             }
         } else {
             
@@ -808,7 +704,6 @@ class IncomeTableViewController: UITableViewController,
         navigationItem.setLeftBarButton(self.editButtonItem, animated: true)
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        //incomeList = loadAccounts()!
         loadDataInTableSectionCell()
 
         // Check for force touch feature, and add force touch/previewing capability.
@@ -840,7 +735,7 @@ class IncomeTableViewController: UITableViewController,
         }
         
         self.delegate = nil
-        secondaryViewController.navigationItem.title = "New"
+        secondaryViewController.navigationItem.title = "New" //TODO: check if we need this
         
         if let navigationController = secondaryViewController as? UINavigationController {
             
@@ -934,8 +829,6 @@ class IncomeTableViewController: UITableViewController,
             
             let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, handler in
                 
-                // Delete the row from the data source
-                //self.delete(of: indexPath)
                 self.deleteIncome(income: income)
                 
                 handler(true)
@@ -1083,7 +976,7 @@ class IncomeTableViewController: UITableViewController,
                 }
 
                 let incomeListStored = sectionList[indexPath.section].data as? [XYZAccount]
-                let account = incomeListStored![indexPath.row] //incomeList[indexPath.row]
+                let account = incomeListStored![indexPath.row]
                 let currencyCode = account.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
                 
                 incomecell.bank.text = account.value(forKey: XYZAccount.bank) as? String
@@ -1122,7 +1015,7 @@ class IncomeTableViewController: UITableViewController,
         
         // Return false if you do not want the specified item to be editable.
         
-        return sectionList[indexPath.section].identifier == "main" //indexPath.row < incomeList.count
+        return sectionList[indexPath.section].identifier == "main" 
     }
 
     // Override to support editing the table view.
@@ -1163,7 +1056,7 @@ class IncomeTableViewController: UITableViewController,
             notificationCenter.removeAllDeliveredNotifications()
   
             let aContext = managedContext()
-            let oldIncome = appDelegate?.incomeList.remove(at: (appDelegate?.incomeList.index(of: incomeToBeDeleted)!)!)   //incomeList.remove(at: indexPath.row)
+            let oldIncome = appDelegate?.incomeList.remove(at: (appDelegate?.incomeList.index(of: incomeToBeDeleted)!)!)
             aContext?.delete(oldIncome!)
             
             self.delegate?.incomeDeleted(deletedIncome: oldIncome!)

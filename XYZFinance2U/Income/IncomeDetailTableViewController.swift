@@ -79,6 +79,11 @@ class IncomeDetailTableViewController: UITableViewController,
     
     func incomeDeleted(deletedIncome: XYZAccount) {
 
+        income = nil
+        
+        navigationItem.setRightBarButton(nil, animated: true)
+        navigationItem.setLeftBarButton(nil, animated: true)
+        reloadData()
     }
     
     func reloadData() {
