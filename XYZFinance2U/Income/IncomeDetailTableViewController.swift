@@ -5,7 +5,7 @@
 //  Created by Chee Bin Hoh on 12/24/17.
 //  Copyright © 2017 CB Hoh. All rights reserved.
 //
-//  QA status: checked on feb-10, 2018
+//  QA status: checked on feb-10, 2018w
 
 import UIKit
 import UserNotifications
@@ -94,37 +94,23 @@ class IncomeDetailTableViewController: UITableViewController,
 
     private func getMasterTableViewController() -> IncomeTableViewController {
         
-        var masterViewController: IncomeTableViewController?
-        
-        if let split = self.parent?.parent as? UISplitViewController {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
             
-            guard let tabBarController = split.viewControllers.first as? UITabBarController else {
-                
-                fatalError("Exception: UITabBarController is expected")
-            }
-            
-            guard let navController = tabBarController.selectedViewController as? UINavigationController else {
-                
-                fatalError("Exception: UINavigationController is expected")
-            }
-            
-            masterViewController = (navController.topViewController as? IncomeTableViewController)!
-        } else if let split = self.parent?.parent?.parent as? UISplitViewController {
-            
-            guard let tabBarController = split.viewControllers.first as? UITabBarController else {
-                
-                fatalError("Exception: UITabBarController is expected")
-            }
-            
-            guard let navController = tabBarController.selectedViewController as? UINavigationController else {
-                
-                fatalError("Exception: UINavigationController is expected")
-            }
-            
-            masterViewController = (navController.viewControllers.first as? IncomeTableViewController)!
+            fatalError("Exception: UISplitViewController is expected" )
         }
         
-        return masterViewController!
+        guard let tabBarController = mainSplitView.viewControllers.first as? UITabBarController else {
+            
+            fatalError("Exception: UITabBarController is expected")
+        }
+            
+        guard let navController = tabBarController.selectedViewController as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+        
+        return (navController.topViewController as? IncomeTableViewController)!
     }
     
     func executeCommand(_ sender: IncomeDetailCommandTableViewCell) {
@@ -320,7 +306,6 @@ class IncomeDetailTableViewController: UITableViewController,
             } else {
                 
                 saveData()
-                
                 incomeDelegate?.saveIncome(income: income!)
             }
             
@@ -447,7 +432,6 @@ class IncomeDetailTableViewController: UITableViewController,
         if nil == income?.value(forKey: XYZAccount.lastRecordChange) as? Date
            || hasChanged {
             
-
             income?.setValue(Date(), forKey: XYZAccount.lastRecordChange)
         }
     }
@@ -639,8 +623,8 @@ class IncomeDetailTableViewController: UITableViewController,
                 datecell.delegate = self
                 datecell.label.text = "Last update"
                 datecell.enableEditing = modalEditing
-                
                 self.datecell = datecell
+                
                 cell = datecell
             
             case "datepicker":
@@ -651,6 +635,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 
                 datepickercell.setDate(date ?? Date())
                 datepickercell.delegate = self
+                
                 cell = datepickercell
             
             case "reminddatepicker":
@@ -661,6 +646,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 
                 datepickercell.setDate(reminddate ?? Date())
                 datepickercell.delegate = self
+                
                 cell = datepickercell
             
             case "remind":
@@ -671,6 +657,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 
                 remindOptionCell.setOption("Remind update on a day", default: hasUpdateReminder)
                 remindOptionCell.delegate = self
+                
                 cell = remindOptionCell
             
             case "reminddate":
@@ -716,7 +703,6 @@ class IncomeDetailTableViewController: UITableViewController,
                 
                 cell = currencycell
             
-            
             case "delete":
                 guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailCommandTextCell", for: indexPath) as? IncomeDetailCommandTableViewCell else {
                     
@@ -725,6 +711,7 @@ class IncomeDetailTableViewController: UITableViewController,
        
                 deletecell.delegate = self
                 deletecell.setCommand(command: "Delete Income")
+                
                 cell = deletecell
      
             default:

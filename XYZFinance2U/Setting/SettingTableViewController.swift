@@ -418,10 +418,15 @@ class SettingTableViewController: UITableViewController,
         
         if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "Export" {
         
+            let dateFormatter = DateFormatter();
+            
+            dateFormatter.dateFormat = "MM-dd-yyyy"
+            let datetoday = dateFormatter.string(from: Date())
+            
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let saveIncomeOption = UIAlertAction(title: "Save income", style: .default, handler: { (action) in
                 
-                let file = AppDelegate.appName + "-income.csv"
+                let file = AppDelegate.appName + "-income-\(datetoday).csv"
                 let text = self.incomeFileContent()
                 
                 self.saveContent(text, file: file)
@@ -431,7 +436,7 @@ class SettingTableViewController: UITableViewController,
             
             let saveExpenseOption = UIAlertAction(title: "Save expense", style: .default, handler: { (action) in
                 
-                let file = AppDelegate.appName + "-expense.csv"
+                let file = AppDelegate.appName + "-expense-\(datetoday).csv"
                 let text = self.expenseFileContent()
                 
                 self.saveContent(text, file: file)
