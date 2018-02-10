@@ -177,16 +177,18 @@ class ExpenseTableViewController: UITableViewController,
         
         saveManageContext()
         
-        if !isSoftDelete {
+        if isSoftDelete {
+            
+            self.updateToiCloud(oldExpense!)
+        } else {
             
             self.delegate?.expenseDeleted(deletedExpense: oldExpense!)
             aContext?.delete(oldExpense!)
     
             self.loadExpensesFromSections()
             self.reloadData()
-        } else {
             
-            self.updateToiCloud(oldExpense!)
+            self.updateToiCloud(nil)
         }
     }
     
@@ -455,6 +457,8 @@ class ExpenseTableViewController: UITableViewController,
             expense.setValue(Date(), forKey: XYZExpense.lastRecordChange)
         }
         
+        print("********* share \(isShared), \(!((appDelegate?.iCloudZones.isEmpty)!))")
+        
         if !((appDelegate?.iCloudZones.isEmpty)!) {
             
             /* TODO: we need to decline the ckshare
@@ -517,7 +521,7 @@ class ExpenseTableViewController: UITableViewController,
             }
         }
         
-        return isShared // if it is shared, then we softdelete it
+        return isShared // if it is shared, then we softdelete it by keeping
     }
     
     func reloadData() {
@@ -769,6 +773,7 @@ class ExpenseTableViewController: UITableViewController,
         
         if editingStyle == .delete {
             
+            print("********** delete")
             // Delete the row from the data source
             delete(of: indexPath)
         } else if editingStyle == .insert {
