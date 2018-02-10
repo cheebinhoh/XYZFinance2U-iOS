@@ -36,7 +36,7 @@ class ExpenseDetailViewController: UIViewController {
             fatalError("Exception: UISplitViewController is expected" )
         }
         
-        let copyAction = UIPreviewAction(title: "Copy share link", style: .default, handler: { (action, viewcontroller) in
+        let copyAction = UIPreviewAction(title: "Copy share url", style: .default, handler: { (action, viewcontroller) in
             
             if let expense = self.expense {
                 

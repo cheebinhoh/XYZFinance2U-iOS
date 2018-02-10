@@ -452,7 +452,7 @@ func createUpdateExpense(_ oldChangeToken: Data,
         let shareRecordId = record[XYZExpense.shareRecordId] as? String
         let hasLocation = record[XYZExpense.hasLocation] as? Bool
         let isSoftDelete = record[XYZExpense.isSoftDelete] as? Bool
-        let isSharedRecord = record[XYZExpense.isShared] as? Bool
+        let isSharedRecord = record[XYZExpense.isShared] as? Bool ?? false
         let currency = record[XYZExpense.currencyCode] as? String ?? Locale.current.currencyCode
         
         var expenseToBeUpdated: XYZExpense?
@@ -506,7 +506,7 @@ func createUpdateExpense(_ oldChangeToken: Data,
         expenseToBeUpdated?.setValue(amount, forKey: XYZExpense.amount)
         expenseToBeUpdated?.setValue(date, forKey: XYZExpense.date)
         expenseToBeUpdated?.setValue(shareRecordId, forKey: XYZExpense.shareRecordId)
-        expenseToBeUpdated?.setValue(isShared || isSharedRecord!, forKey: XYZExpense.isShared)
+        expenseToBeUpdated?.setValue(isShared || isSharedRecord, forKey: XYZExpense.isShared)
         expenseToBeUpdated?.setValue(hasLocation, forKey: XYZExpense.hasLocation)
         expenseToBeUpdated?.setValue(oldChangeToken, forKey: XYZExpense.preChangeToken)
         expenseToBeUpdated?.setValue(isSoftDelete, forKey: XYZExpense.isSoftDelete)
