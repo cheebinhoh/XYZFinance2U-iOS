@@ -5,7 +5,7 @@
 //  Created by Chee Bin Hoh on 12/24/17.
 //  Copyright © 2017 CB Hoh. All rights reserved.
 //
-//  QA status: checked on dec-29, 2017
+//  QA status: checked on feb-10, 2018
 
 import UIKit
 import UserNotifications
@@ -64,7 +64,6 @@ class IncomeDetailTableViewController: UITableViewController,
                 fatalError("Exception: index of IncomeDetailSwitchTableViewCell is not found in tableview")
         }
     }
-    
     
     func incomeSelected(newIncome: XYZAccount?) {
         
@@ -230,10 +229,6 @@ class IncomeDetailTableViewController: UITableViewController,
         
     }
     
-    // MARK: - IBOutlet
-    @IBOutlet weak var saveButton: UIBarButtonItem!
-    @IBOutlet weak var cancelButton: UIBarButtonItem!
-    
     // MARK: - property
     var income: XYZAccount?
     var modalEditing = true
@@ -273,6 +268,10 @@ class IncomeDetailTableViewController: UITableViewController,
     var tableSectionCellList = [TableSectionCell]()
     weak var datecell: IncomeDetailDateTableViewCell?
     weak var dateremindcell: IncomeDetailDateTableViewCell?
+    
+    // MARK: - IBOutlet
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
     
     // MARK: - IBAction
     
