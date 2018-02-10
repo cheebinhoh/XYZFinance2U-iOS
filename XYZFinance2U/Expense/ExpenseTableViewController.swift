@@ -68,7 +68,7 @@ class ExpenseTableViewController: UITableViewController,
         self.present(expenseDetailNavigationController, animated: true, completion: nil)
     }
     
-    /* deprecated need:
+    /* DEPRECATED: we do not need it anymore
     @IBAction func unwindToExpenseTableView(sender: UIStoryboardSegue)
     {
         modalEditing = false
