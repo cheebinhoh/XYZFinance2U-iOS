@@ -5,15 +5,15 @@
 //  Created by Chee Bin Hoh on 11/27/17.
 //  Copyright © 2017 CB Hoh. All rights reserved.
 //
-//  QA status: checked on dec-29, 2017
+//  QA status: checked on feb-10, 2018
 
 import UIKit
 import LocalAuthentication
-import os.log
 import CoreData
 import CloudKit
 import UserNotifications
 import NotificationCenter
+import os.log
 
 protocol IncomeSelectionDelegate: class {
     
@@ -26,9 +26,97 @@ class IncomeTableViewController: UITableViewController,
     UIViewControllerPreviewingDelegate,
     IncomeDetailDelegate {
     
+    // MARK: - property
+    
+    var sectionList = [TableSectionCell]()
+    var isPopover = false
+    let mainSection = 0
+    var currencyCodes = [String]()
+    var authenticatedMechanismExist = false
+    var authenticatedOk = false
+    var iCloudEnable = false
+    var lockScreenDisplayed = false
+    weak var delegate: IncomeSelectionDelegate?
+    weak var detailViewController: UIViewController?
+    weak var totalCell: IncomeTotalTableViewCell?
+    
+    var total: Double {
+        
+        var sum = 0.0
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        for account in (appDelegate?.incomeList)! {
+            
+            sum = sum + ( account.value(forKey: XYZAccount.amount) as? Double )!
+        }
+        
+        return sum
+    }
+    
+    // MARK: - IBOutlet
+    
+    @IBOutlet weak var add: UIBarButtonItem!
+    
+    // MARK: - IBAction
+    
+    @IBAction func add(_ sender: UIBarButtonItem) {
+        
+        guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "IncomeDetailNavigationController") as? UINavigationController else {
+            
+            fatalError("Exception: error on instantiating IncomeDetailNavigationController")
+        }
+        
+        guard let incomeDetailTableView = incomeDetailNavigationController.viewControllers.first as? IncomeDetailTableViewController else {
+            
+            fatalError("Exception: eror on casting first view controller to IncomeDetailTableViewController" )
+        }
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: UISplitViewController is expected" )
+        }
+        
+        mainSplitView.popOverNavigatorController = incomeDetailNavigationController
+        
+        incomeDetailTableView.currencyCodes = currencyCodes
+        incomeDetailTableView.setPopover(delegate: self)
+        isPopover = true
+        
+        incomeDetailNavigationController.modalPresentationStyle = .popover
+        self.present(incomeDetailNavigationController, animated: true, completion: nil)
+    }
+    
+    @IBAction func unwindToIncomeTableView(sender: UIStoryboardSegue) {
+        
+        fatalError("Exception: execution should not be reached here")
+        
+        /*
+         guard let incomeDetail = sender.source as? IncomeDetailViewController, let income = incomeDetail.account else
+         {
+         return
+         }
+         
+         if let selectedIndexPath = tableView.indexPathForSelectedRow
+         {
+         tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
+         // tableView.reloadData()
+         }
+         else
+         {
+         income.setValue(incomeList.count, forKey: XYZAccount.sequenceNr)
+         incomeList.append(income)
+         tableView.reloadData()
+         }
+         
+         saveAccounts()
+         */
+    }
+    
     // MARK: - 3d touch delegate (peek & pop)
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        
         // Reuse the "Peek" view controller for presentation.
         
         guard let viewController = viewControllerToCommit as? IncomeDetailViewController else {
@@ -82,109 +170,8 @@ class IncomeTableViewController: UITableViewController,
     }
     
     
-    // MARK: - property
-    
-    var sectionList = [TableSectionCell]()
-    var isPopover = false
-    let mainSection = 0
-    var currencyCodes = [String]()
-    
-    var total: Double {
-        
-        var sum = 0.0
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        
-        for account in (appDelegate?.incomeList)! {
-            
-            sum = sum + ( account.value(forKey: XYZAccount.amount) as? Double )! 
-        }
-        
-        return sum
-    }
-    
-    var authenticatedMechanismExist = false
-    var authenticatedOk = false
-    var iCloudEnable = false
-    var lockScreenDisplayed = false
-    weak var delegate: IncomeSelectionDelegate?
-    weak var detailViewController: UIViewController?
-    weak var totalCell: IncomeTotalTableViewCell?
-    
-    // MARK: - IBOutlet
-    
-    @IBOutlet weak var add: UIBarButtonItem!
-    
-    // MARK: - IBAction
- 
-    @IBAction func add(_ sender: UIBarButtonItem) {
-        
-        guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "IncomeDetailNavigationController") as? UINavigationController else {
-            
-            fatalError("Exception: error on instantiating IncomeDetailNavigationController")
-        }
-        
-        guard let incomeDetailTableView = incomeDetailNavigationController.viewControllers.first as? IncomeDetailTableViewController else {
-            
-            fatalError("Exception: eror on casting first view controller to IncomeDetailTableViewController" )
-        }
-        
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
-            
-            fatalError("Exception: UISplitViewController is expected" )
-        }
-        
-        mainSplitView.popOverNavigatorController = incomeDetailNavigationController
-        
-        incomeDetailTableView.currencyCodes = currencyCodes
-        incomeDetailTableView.setPopover(delegate: self)
-        isPopover = true
-        
-        incomeDetailNavigationController.modalPresentationStyle = .popover
-        self.present(incomeDetailNavigationController, animated: true, completion: nil)
-    }
-
-    @IBAction func unwindToIncomeTableView(sender: UIStoryboardSegue) {
-        
-        fatalError("Exception: execution should not be reached here")
-        
-        /*
-         guard let incomeDetail = sender.source as? IncomeDetailViewController, let income = incomeDetail.account else
-         {
-         return
-         }
-         
-         if let selectedIndexPath = tableView.indexPathForSelectedRow
-         {
-         tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
-         // tableView.reloadData()
-         }
-         else
-         {
-         income.setValue(incomeList.count, forKey: XYZAccount.sequenceNr)
-         incomeList.append(income)
-         tableView.reloadData()
-         }
-         
-         saveAccounts()
-         */
-    }
-    
     // MARK: - function
-    
-    func getTotal() -> Double {
-        
-        var sum = 0.0
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        
-        for account in (appDelegate?.incomeList)! {
-            
-            sum = sum + ( account.value(forKey: XYZAccount.amount) as? Double )!
-        }
-        
-        return sum
-    }
-    
+
     func sectionTotal(section: Int) -> Double {
     
         var total = 0.0;
@@ -201,7 +188,6 @@ class IncomeTableViewController: UITableViewController,
     override func didReceiveMemoryWarning() {
         
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func saveNewIncome(income: XYZAccount) {
@@ -226,7 +212,7 @@ class IncomeTableViewController: UITableViewController,
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
-        income.setValue((appDelegate?.incomeList)!.count, forKey: XYZAccount.sequenceNr)
+        //income.setValue((appDelegate?.incomeList)!.count, forKey: XYZAccount.sequenceNr)
         appDelegate?.incomeList.append(income)
         
         reloadData()

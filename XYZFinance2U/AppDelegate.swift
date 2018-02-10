@@ -408,7 +408,6 @@ class AppDelegate: UIResponder,
 
         application.registerForRemoteNotifications()
         
-        print("---- enter foreground")
         tableViewController.validateiCloud()
         tableViewController.authenticate()
         

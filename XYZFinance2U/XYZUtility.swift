@@ -172,6 +172,7 @@ func formattingCurrencyValue(input: String,
                              code: String?) -> String {
     
     let processedInput = formattingDoubleValue(input: input)
+    
     let formatter = NumberFormatter()
 
     let amountAsDouble = Double(processedInput) ?? 0.0
@@ -179,7 +180,9 @@ func formattingCurrencyValue(input: String,
     
     formatter.numberStyle = .currency
     formatter.currencyCode = code
-    
+    formatter.minimumFractionDigits = 2
+    formatter.maximumFractionDigits = 2
+
     guard let formattedAmount = formatter.string(from: amountASNSNumber) else {
         
         return ""

@@ -26,8 +26,6 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Allow access to camera?</string>
-	<key>NSContactsUsageDescription</key>
-	<string>Allow access to contact to share expense?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allow access to location?</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
