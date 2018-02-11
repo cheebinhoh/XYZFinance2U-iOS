@@ -35,13 +35,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     SelectionDelegate,
     CNContactPickerDelegate {
  
-    func selection(_ sender: SelectionTableViewController, item: String?) {
-        
-        currencyCode = item
-        
-        tableView.reloadData()
-    }
-    
+
     // MARK: - nested type
     struct ImageSet {
         
@@ -50,18 +44,25 @@ class ExpenseDetailTableViewController: UITableViewController,
     }
     
     // MARK: - protocol implementation
+    
+    func selection(_ sender: SelectionTableViewController, item: String?) {
+        
+        currencyCode = item
+        
+        tableView.reloadData()
+    }
+    
     func newlocation(coordinte: CLLocationCoordinate2D?) {
         
-        if nil == coordinte {
-            
-            cllocation = nil
-        } else {
+        if let _ = coordinte {
             
             cllocation = CLLocation(latitude: (coordinte?.latitude)!, longitude: (coordinte?.longitude)!)
+        } else {
+            
+            cllocation = nil
         }
-        
-        //locationCoordinate = coordinte
-        hasgeolocation = nil != cllocation //nil != coordinte
+
+        hasgeolocation = nil != cllocation
     }
 
     func locationTouchUp(_ sender: ExpenseDetailLocationPickerTableViewCell) {

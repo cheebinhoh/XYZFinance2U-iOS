@@ -35,8 +35,7 @@ class ExpenseDetailImagePickerTableViewCell: UITableViewCell,
     override func awakeFromNib() {
         
         super.awakeFromNib()
-        // Initialization code
-        
+
         imageViewList.append(newImage1)
         imageViewList.append(newImage2)
         
