@@ -21,11 +21,15 @@ protocol ExpenseTableViewDelegate: class {
 class ExpenseTableViewController: UITableViewController,
     UISplitViewControllerDelegate,
     UIViewControllerPreviewingDelegate,
+    UISearchBarDelegate,
     ExpenseDetailDelegate {
     
     // MARK: - property
+    weak var searchBar: UISearchBar?
+    var searchActive = false
     var currencyCodes = [String]()
-    var sectionList = [TableSectionCell]()  
+    var sectionList = [TableSectionCell]()
+    var filteredExpenseList: [XYZExpense]?
     var delegate: ExpenseTableViewDelegate?
     var isPopover = false
     var isCollapsed: Bool {
@@ -40,6 +44,11 @@ class ExpenseTableViewController: UITableViewController,
     }
     
     // MARK: - IBAction
+    @IBAction func navigationTap(_ sender: UITapGestureRecognizer) {
+     
+        print("****** double tap")
+    }
+    
     @IBAction func add(_ sender: UIBarButtonItem) {
         
         guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
@@ -196,12 +205,15 @@ class ExpenseTableViewController: UITableViewController,
         
         for (sectionIndex, section) in sectionList.enumerated() {
             
-            let sectionExpenseList = section.data as? [XYZExpense]
-            for (rowIndex, cell) in (sectionExpenseList?.enumerated())! {  //(section.expenseList?.enumerated())! {
-                
-                if cell == expense {
+            if section.identifier != "searchBar" {
+            
+                let sectionExpenseList = section.data as? [XYZExpense]
+                for (rowIndex, cell) in (sectionExpenseList?.enumerated())! {  //(section.expenseList?.enumerated())! {
                     
-                    return IndexPath(row: rowIndex, section: sectionIndex)
+                    if cell == expense {
+                        
+                        return IndexPath(row: rowIndex, section: sectionIndex)
+                    }
                 }
             }
         }
@@ -457,8 +469,6 @@ class ExpenseTableViewController: UITableViewController,
             expense.setValue(Date(), forKey: XYZExpense.lastRecordChange)
         }
         
-        print("********* share \(isShared), \(!((appDelegate?.iCloudZones.isEmpty)!))")
-        
         if !((appDelegate?.iCloudZones.isEmpty)!) {
             
             /* TODO: we need to decline the ckshare
@@ -513,11 +523,13 @@ class ExpenseTableViewController: UITableViewController,
                     fatalError("Exception: deleteRecordList is expected as [String]")
                 }
 
-                let shareRecordName = expense.value(forKey: XYZExpense.shareRecordId) as? String
-                deleteShareRecordLiset.append(shareRecordName!)
+                if let shareRecordName = expense.value(forKey: XYZExpense.shareRecordId) as? String {
                 
-                let savedDeleteShareRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteShareRecordLiset )
-                zone.setValue(savedDeleteShareRecordLiset, forKey: XYZiCloudZone.deleteShareRecordIdList)
+                    deleteShareRecordLiset.append(shareRecordName)
+                    
+                    let savedDeleteShareRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteShareRecordLiset )
+                    zone.setValue(savedDeleteShareRecordLiset, forKey: XYZiCloudZone.deleteShareRecordIdList)
+                }
             }
         }
         
@@ -539,10 +551,13 @@ class ExpenseTableViewController: UITableViewController,
         
         for section in sectionList {
             
-            let sectionExpenseList = section.data as? [XYZExpense]
-            for expense in sectionExpenseList! {
+            if section.identifier != "searchBar" {
                 
-                expenseList.append(expense)
+                let sectionExpenseList = section.data as? [XYZExpense]
+                for expense in sectionExpenseList! {
+                    
+                    expenseList.append(expense)
+                }
             }
         }
         
@@ -562,7 +577,12 @@ class ExpenseTableViewController: UITableViewController,
         var sectionExpenseList: [XYZExpense]?
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
-        for expense in (appDelegate?.expenseList)! {
+        let newSection = TableSectionCell(identifier: "searchBar", title: "", cellList: ["searchBar"], data: nil)
+        sectionList.append(newSection)
+        
+        let expenseList = filteredExpenseList != nil ? filteredExpenseList : (appDelegate?.expenseList)!
+        
+        for expense in expenseList! {
             
             guard let date = expense.value(forKey: XYZExpense.date) as? Date else {
                 
@@ -646,6 +666,10 @@ class ExpenseTableViewController: UITableViewController,
             registerForPreviewing(with: self, sourceView: view)
         }
 
+        //let tapDouble = UITapGestureRecognizer(target: self, action: #selector(navigationTap(_:)))
+        //tapDouble.numberOfTapsRequired = 2
+        //navigationItem.titleView?.addGestureRecognizer(tapDouble)
+
         loadExpensesIntoSections()
     }
 
@@ -654,7 +678,71 @@ class ExpenseTableViewController: UITableViewController,
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK: - Search delegate
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        
+        print("************* begin editing")
+        
+        searchActive = true;
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        
+        print("************* end editing")
+        
+        searchActive = false;
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        
+        print("************* cancel button")
+        
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
+        searchActive = false;
+        searchBar.resignFirstResponder()
+        
+        filteredExpenseList = nil
+        reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        print("************* search button")
+        
+        searchActive = false;
+        searchBar.resignFirstResponder()
+        
+        reloadData()
+    }
 
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        print("************* textDidChange")
+
+        searchBar.showsCancelButton = !searchText.isEmpty
+        
+        if searchText.isEmpty {
+            
+            if let _ = filteredExpenseList {
+                
+                filteredExpenseList = nil
+                reloadData()
+            }
+        } else {
+            
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            let expenseList = (appDelegate?.expenseList)!
+            filteredExpenseList = expenseList.filter({ (expense) -> Bool in
+            
+                let detail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
+                
+                return detail.lowercased().range(of: searchText.lowercased()) != nil
+            })
+        }
+    }
+    
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]?
     {
@@ -739,24 +827,43 @@ class ExpenseTableViewController: UITableViewController,
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        let sectionExpenseList = sectionList[section].data as? [XYZExpense]
+        if sectionList[section].identifier == "searchBar" {
+            
+            return sectionList[section].cellList.count
+        } else {
+            
+            let sectionExpenseList = sectionList[section].data as? [XYZExpense]
         
-        return (sectionExpenseList?.count) ?? 0
+            return (sectionExpenseList?.count) ?? 0
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell: UITableViewCell?
         
-        guard let expenseCell = tableView.dequeueReusableCell(withIdentifier: "expenseTableViewCell", for: indexPath) as? ExpenseTableViewCell else {
+        switch sectionList[indexPath.section].identifier {
+            case "searchBar":
+                guard let expenseCell = tableView.dequeueReusableCell(withIdentifier: "expenseTableViewSearchCell", for: indexPath) as? ExpenseTableViewSearchCell else {
+                    
+                    fatalError("error on ExpenseTableViewSearchCell cell")
+                }
+                
+                searchBar = expenseCell.searchBar
+                searchBar?.delegate = self
+                cell = expenseCell
             
-            fatalError("error on ExpenseTableViewCell cell")
+            default:
+                guard let expenseCell = tableView.dequeueReusableCell(withIdentifier: "expenseTableViewCell", for: indexPath) as? ExpenseTableViewCell else {
+                
+                    fatalError("error on ExpenseTableViewCell cell")
+                }
+                
+                let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
+                
+                expenseCell.setExpense(expense: (sectionExpenseList?[indexPath.row])!)
+                cell = expenseCell
         }
-        
-        let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
-        
-        expenseCell.setExpense(expense: (sectionExpenseList?[indexPath.row])!)
-        cell = expenseCell
         
         return cell!
     }
@@ -765,7 +872,7 @@ class ExpenseTableViewController: UITableViewController,
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         
         // Return false if you do not want the specified item to be editable.
-        return true
+        return sectionList[indexPath.section].identifier != "identifier"
     }
 
     // Override to support editing the table view.
@@ -773,7 +880,6 @@ class ExpenseTableViewController: UITableViewController,
         
         if editingStyle == .delete {
             
-            print("********** delete")
             // Delete the row from the data source
             delete(of: indexPath)
         } else if editingStyle == .insert {
@@ -804,27 +910,33 @@ class ExpenseTableViewController: UITableViewController,
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     
-        let stackView = UIStackView()
-        let title = UILabel()
-        let subtotal = UILabel()
-        let (amount, currencyCode) = sectionTotal(section)
-        
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 45)
-        stackView.isLayoutMarginsRelativeArrangement = true
-        
-        title.text = sectionList[section].title
-        title.textColor = UIColor.gray
-        stackView.axis = .horizontal
-        stackView.addArrangedSubview(title)
-        
-        if let currencyCode = currencyCode {
+        if sectionList[section].identifier == "searchBar" {
             
-            subtotal.text = formattingCurrencyValue(input: amount, code: currencyCode)
-            subtotal.textColor = UIColor.gray
-            stackView.addArrangedSubview(subtotal)
+            return nil
+        } else {
+            
+            let stackView = UIStackView()
+            let title = UILabel()
+            let subtotal = UILabel()
+            let (amount, currencyCode) = sectionTotal(section)
+            
+            stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 45)
+            stackView.isLayoutMarginsRelativeArrangement = true
+            
+            title.text = sectionList[section].title
+            title.textColor = UIColor.gray
+            stackView.axis = .horizontal
+            stackView.addArrangedSubview(title)
+            
+            if let currencyCode = currencyCode {
+                
+                subtotal.text = formattingCurrencyValue(input: amount, code: currencyCode)
+                subtotal.textColor = UIColor.gray
+                stackView.addArrangedSubview(subtotal)
+            }
+            
+            return stackView
         }
-        
-        return stackView
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -879,7 +991,7 @@ class ExpenseTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        return 35
+        return sectionList[section].identifier == "searchBar" ?  CGFloat.leastNormalMagnitude : 35
     }
 
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
