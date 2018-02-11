@@ -82,6 +82,7 @@
 		65343E8C1FFD93B1002C5D39 /* SelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionTableViewController.swift; sourceTree = "<group>"; };
 		65343E8F1FFD9FC1002C5D39 /* SelectionItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionItemTableViewCell.swift; sourceTree = "<group>"; };
 		653462181FD0FFB700F88218 /* XYZUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZUtility.swift; sourceTree = "<group>"; };
+		653BFB4C2030E3100076C184 /* XYZFinance2U-Mini-Guide.pages */ = {isa = PBXFileReference; lastKnownFileType = file; path = "XYZFinance2U-Mini-Guide.pages"; sourceTree = "<group>"; };
 		65402D951FEE0B740051367F /* ExpenseDetailCommandTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailCommandTableViewCell.swift; sourceTree = "<group>"; };
 		65425E8B2012C92E0078E6C2 /* IncomeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailViewController.swift; sourceTree = "<group>"; };
 		655C97991FCCCC210098D58D /* XYZFinance2U.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XYZFinance2U.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -220,6 +221,14 @@
 			path = "Shared UI";
 			sourceTree = "<group>";
 		};
+		653BFB4A2030A2530076C184 /* Document */ = {
+			isa = PBXGroup;
+			children = (
+				653BFB4C2030E3100076C184 /* XYZFinance2U-Mini-Guide.pages */,
+			);
+			path = Document;
+			sourceTree = "<group>";
+		};
 		655C97901FCCCC210098D58D = {
 			isa = PBXGroup;
 			children = (
@@ -257,6 +266,7 @@
 				655C97A51FCCCC210098D58D /* Assets.xcassets */,
 				655C97A71FCCCC210098D58D /* LaunchScreen.storyboard */,
 				655C97AA1FCCCC210098D58D /* Info.plist */,
+				653BFB4A2030A2530076C184 /* Document */,
 				650BAE192014DC5D00733903 /* Resource */,
 			);
 			path = XYZFinance2U;
