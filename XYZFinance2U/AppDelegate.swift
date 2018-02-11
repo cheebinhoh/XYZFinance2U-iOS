@@ -367,7 +367,7 @@ class AppDelegate: UIResponder,
         syncWithiCloudAndCoreData()
         
         fetchSharediCloudZone()
-
+        
         return true
     }
     

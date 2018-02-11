@@ -77,7 +77,7 @@ class SettingDetailTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         var cell: UITableViewCell?
-        
+
         switch  tableSectionCellList[indexPath.section].cellList[indexPath.row] {
             
             case "about":
@@ -85,6 +85,9 @@ class SettingDetailTableViewController: UITableViewController {
                     
                     fatalError("Exception: errpr on creating settingDetailAboutCell")
                 }
+                
+                let textVersion
+                    = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
                 
                 let textHeading = """
                 
@@ -95,12 +98,11 @@ class SettingDetailTableViewController: UITableViewController {
                 let headingAttributeText = NSMutableAttributedString(string: textHeading, attributes: headingAttributes)
                 
                 let text = """
- was created by CB Hoh.
+ (\(textVersion)) was created by CB Hoh.
 
 \u{A9} 2017-2018 CB Hoh. All rights reserved.
 
 """
-                
                 
                 let attributes: [NSAttributedStringKey: Any]? = [NSAttributedStringKey.font: newcell.content.font!]
                 let attributeText = NSAttributedString(string: text, attributes: attributes)
