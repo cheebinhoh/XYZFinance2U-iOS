@@ -754,60 +754,63 @@ class ExpenseTableViewController: UITableViewController,
         
         var commands = [UIContextualAction]()
         
-        guard let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense] else {
+        if sectionList[indexPath.section].identifier != "searchBar" {
             
-            fatalError("Exception: [XYZExpense] is expected")
-        }
-        
-        let expense = sectionExpenseList[indexPath.row]
-        let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
- 
-        let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, handler in
-            
-            // Delete the row from the data source
-            self.delete(of: indexPath)
-            
-            handler(true)
-        }
-        
-        commands.append(delete)
-        
-        if !(isShared!) {
-            
-            let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
+            guard let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense] else {
                 
-                let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
-                    
-                    fatalError("Exception: UISplitViewController is expected" )
-                }
+                fatalError("Exception: [XYZExpense] is expected")
+            }
+        
+            let expense = sectionExpenseList[indexPath.row]
+            let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
+     
+            let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, handler in
                 
-                let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                let copyUrlOption = UIAlertAction(title: "Copy share url", style: .default, handler: { (action) in
+                // Delete the row from the data source
+                self.delete(of: indexPath)
+                
+                handler(true)
+            }
+        
+            commands.append(delete)
+        
+            if !(isShared!) {
+                
+                let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
                     
-                    if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
+                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                    guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
                         
-                        UIPasteboard.general.string = "\(url)"
+                        fatalError("Exception: UISplitViewController is expected" )
                     }
                     
-                    mainSplitView.popOverAlertController = nil
-                    handler(true)
-                })
-                
-                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                    let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                    let copyUrlOption = UIAlertAction(title: "Copy share url", style: .default, handler: { (action) in
+                        
+                        if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
+                            
+                            UIPasteboard.general.string = "\(url)"
+                        }
+                        
+                        mainSplitView.popOverAlertController = nil
+                        handler(true)
+                    })
                     
-                    mainSplitView.popOverAlertController = nil
-                    handler(true)
-                })
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                        
+                        mainSplitView.popOverAlertController = nil
+                        handler(true)
+                    })
+                    
+                    optionMenu.addAction(copyUrlOption)
+                    optionMenu.addAction(cancelAction)
+                    
+                    mainSplitView.popOverAlertController = optionMenu
+                    self.present(optionMenu, animated: true, completion: nil)
+                }
                 
-                optionMenu.addAction(copyUrlOption)
-                optionMenu.addAction(cancelAction)
-                
-                mainSplitView.popOverAlertController = optionMenu
-                self.present(optionMenu, animated: true, completion: nil)
+                commands.append(more)
             }
-            
-            commands.append(more)
         }
         
         return UISwipeActionsConfiguration(actions: commands)
@@ -818,6 +821,18 @@ class ExpenseTableViewController: UITableViewController,
         navigationItem.rightBarButtonItem?.isEnabled = !editing
         
         super.setEditing(editing, animated: animated)
+    }
+    
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        
+        var result = UITableViewCellEditingStyle.none
+        
+        if sectionList[indexPath.section].identifier != "searchBar" {
+            
+            result = UITableViewCellEditingStyle.delete
+        }
+        
+        return result
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
