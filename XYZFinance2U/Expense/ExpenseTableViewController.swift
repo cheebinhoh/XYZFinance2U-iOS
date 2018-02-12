@@ -576,10 +576,7 @@ class ExpenseTableViewController: UITableViewController,
         sectionList = [TableSectionCell]()
         var sectionExpenseList: [XYZExpense]?
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        
-        let newSection = TableSectionCell(identifier: "searchBar", title: "", cellList: ["searchBar"], data: nil)
-        sectionList.append(newSection)
-        
+    
         let expenseList = filteredExpenseList != nil ? filteredExpenseList : (appDelegate?.expenseList)!
         
         for expense in expenseList! {
@@ -637,6 +634,12 @@ class ExpenseTableViewController: UITableViewController,
                 
                 currencyCodes.append(currencyCode!)
             }
+        }
+        
+        if !sectionList.isEmpty {
+            
+            let newSection = TableSectionCell(identifier: "searchBar", title: "", cellList: ["searchBar"], data: nil)
+            sectionList.insert(newSection, at: 0)
         }
     }
     
@@ -749,7 +752,7 @@ class ExpenseTableViewController: UITableViewController,
 
         return nil
     }
-        
+
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         var commands = [UIContextualAction]()
@@ -821,6 +824,11 @@ class ExpenseTableViewController: UITableViewController,
         navigationItem.rightBarButtonItem?.isEnabled = !editing
         
         super.setEditing(editing, animated: animated)
+    }
+    
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        
+        return sectionList[indexPath.section].identifier != "searchBar"
     }
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
