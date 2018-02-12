@@ -543,6 +543,16 @@ class ExpenseTableViewController: UITableViewController,
         appDelegate?.expenseList = sortExpenses((appDelegate?.expenseList)!)
         loadExpensesIntoSections()
         tableView.reloadData()
+        
+        self.navigationItem.leftBarButtonItem?.isEnabled = !sectionList.isEmpty
+        
+        if tableView.isEditing && sectionList.isEmpty {
+            
+            DispatchQueue.main.async {
+                
+                self.tableView.isEditing = false
+            }
+        }
     }
     
     private func loadExpensesFromSections() {

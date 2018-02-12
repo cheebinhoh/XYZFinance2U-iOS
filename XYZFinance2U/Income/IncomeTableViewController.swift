@@ -418,6 +418,16 @@ class IncomeTableViewController: UITableViewController,
         loadDataInTableSectionCell()
 
         tableView.reloadData()
+        
+        self.navigationItem.leftBarButtonItem?.isEnabled = !sectionList.isEmpty
+        
+        if tableView.isEditing && sectionList.isEmpty {
+            
+            DispatchQueue.main.async {
+            
+                self.tableView.isEditing = false
+            }
+        }
     }
     
     func registerNotification(income: XYZAccount) {
