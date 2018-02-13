@@ -282,6 +282,24 @@ func loadExpenses() -> [XYZExpense]? {
     return sortExpenses(expenses!)
 }
 
+func loadBudgets() -> [XYZBudget]? {
+    
+    var budgets: [XYZBudget]?
+    
+    let aContext = managedContext()
+    let fetchRequest = NSFetchRequest<XYZBudget>(entityName: XYZBudget.type)
+    
+    do {
+        
+        budgets = try aContext?.fetch(fetchRequest)
+    } catch let error as NSError {
+        
+        print("******** Could not fetch. \(error), \(error.userInfo)")
+    }
+    
+    return budgets
+}
+
 func sortExpenses(_ expenses: [XYZExpense]) -> [XYZExpense] {
     
     return expenses.sorted(by: { (exp1, exp2) -> Bool in

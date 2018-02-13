@@ -10,6 +10,33 @@ import UIKit
 
 class BudgetTableViewController: UITableViewController {
 
+    var sectionList = [TableSectionCell]()
+    
+    func loadBudgetsIntoSection() {
+        
+        sectionList = [TableSectionCell]()
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let budgetList = (appDelegate?.budgetList)!
+        
+        if !budgetList.isEmpty {
+        
+            for budget in budgetList {
+                
+                let name = budget.value(forKey: XYZBudget.name) as? String
+                let amount = budget.value(forKey: XYZBudget.amount) as? Double
+                let interval = budget.value(forKey: XYZBudget.interval) as? XYZBudget.Interval
+                
+                print("--- \(String(describing: name)), \(String(describing: amount)), \(String(describing: interval))")
+            }
+        } else {
+            
+            _ = XYZBudget(id: nil, name: "grocery", amount: 100.0, currency: Locale.current.currencyCode!, interval: .monthly, context: managedContext())
+            
+            saveManageContext()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,6 +47,7 @@ class BudgetTableViewController: UITableViewController {
         
         navigationItem.leftBarButtonItem = self.editButtonItem
         
+        loadBudgetsIntoSection()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

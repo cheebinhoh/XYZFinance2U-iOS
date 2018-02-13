@@ -335,6 +335,7 @@ class AppDelegate: UIResponder,
     
     var expenseList = [XYZExpense]()
     var incomeList = [XYZAccount]()
+    var budgetList = [XYZBudget]()
     var iCloudZones = [XYZiCloudZone]()
     var shareiCloudZones = [XYZiCloudZone]()
     var privateiCloudZones = [XYZiCloudZone]()
@@ -496,6 +497,7 @@ class AppDelegate: UIResponder,
         // fetch global data list
         incomeList = loadAccounts()!
         expenseList = loadExpenses()!
+        budgetList = loadBudgets()!
         iCloudZones = loadiCloudZone()!
         shareiCloudZones = [XYZiCloudZone]()
         privateiCloudZones = [XYZiCloudZone]()
