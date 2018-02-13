@@ -11,34 +11,64 @@ import UIKit
 class BudgetTableViewController: UITableViewController {
 
     var sectionList = [TableSectionCell]()
+    var currencyCodes = [String]()
     
     func loadBudgetsIntoSection() {
         
         sectionList = [TableSectionCell]()
+        currencyCodes = [String]()
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let budgetList = (appDelegate?.budgetList)!
         
-        if !budgetList.isEmpty {
-        
-            for budget in budgetList {
+        for budget in budgetList {
+            
+            let currency = budget.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode
+            
+            if !currencyCodes.contains(currency!) {
                 
-                let name = budget.value(forKey: XYZBudget.name) as? String
-                let amount = budget.value(forKey: XYZBudget.amount) as? Double
-                let interval = XYZBudget.Interval(rawValue: budget.value(forKey: XYZBudget.interval) as? Int ?? 0 )
+                let newSection = TableSectionCell(identifier: currency!, title: currency, cellList: [], data: [XYZBudget]())
+                sectionList.append(newSection)
                 
-                print("--- name = \(name)")
+                currencyCodes.append(currency!)
             }
-        } else {
             
-            _ = XYZBudget(id: nil, name: "grocery", amount: 600.0, currency: Locale.current.currencyCode!, interval: .monthly, context: managedContext())
+            var sectionBudgetList = sectionList[sectionList.count - 1].data as? [XYZBudget]
+            sectionBudgetList?.append(budget)
+            sectionList[sectionList.count - 1].data = sectionBudgetList
+        }
+        
+        // debug
+        print("-------- # of sections = \(sectionList.count)")
+        for section in sectionList {
             
-            _ = XYZBudget(id: nil, name: "xfinity", amount: 120.0, currency: Locale.current.currencyCode!, interval: .monthly, context: managedContext())
+            let currency = section.title
+            let sectionBudgetList = section.data as? [XYZBudget]
             
-            _ = XYZBudget(id: nil, name: "insurance", amount: 1500.0, currency: "MYR", interval: .monthly, context: managedContext())
+            print("-------- section = \(String(describing: currency))")
+            for budget in sectionBudgetList! {
+            
+                let name = budget.value(forKey: XYZBudget.name)
+                let amount = budget.value(forKey: XYZBudget.amount)
+                let start = budget.value(forKey: XYZBudget.start)
+                let length = XYZBudget.Length(rawValue: budget.value(forKey: XYZBudget.length) as? String ?? "")
+                
+                
+                print("-------- name = \(String(describing: name)), amount = \(String(describing: amount)), length = \(String(describing: length)), start = \(String(describing: start))")
+            }
+        }
+        
+        /*
+        else {
+            
+            _ = XYZBudget(id: nil, name: "grocery", amount: 600.0, currency: Locale.current.currencyCode!, length: .monthly, start: Date(),  context: managedContext())
+            
+            _ = XYZBudget(id: nil, name: "xfinity", amount: 120.0, currency: Locale.current.currencyCode!, length: .monthly, start: Date(), context: managedContext())
+            
+            _ = XYZBudget(id: nil, name: "insurance", amount: 1500.0, currency: "MYR", length: .monthly, start: Date(), context: managedContext())
         
             saveManageContext()
-        }
+        } */
     }
     
     override func viewDidLoad() {

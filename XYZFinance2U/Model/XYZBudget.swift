@@ -14,15 +14,15 @@ import CloudKit
 @objc(XYZBudget)
 class XYZBudget : NSManagedObject {
 
-    enum Interval: Int {
+    enum Length: String {
         
-        case none
-        case hourly
-        case daily
-        case weekly
-        case biweekly
-        case monthly
-        case yearly
+        case none = "none"
+        case hourly = "hourly"
+        case daily = "daily"
+        case weekly = "weekly"
+        case biweekly = "biweekly"
+        case monthly = "monthly"
+        case yearly = "yearly"
         
         func description() -> String {
             
@@ -58,13 +58,15 @@ class XYZBudget : NSManagedObject {
     static let name = "name"
     static let amount = "amount"
     static let currency = "currency"
-    static let interval = "interval"
+    static let length = "length"
+    static let start = "start"
     static let recordId = "recordId"
     static let lastRecordChange = "lastRecordChange"
     
     var name: String = ""
     var amount: Double = 0.0
-    var interval: Interval = .none
+    var start: Date = Date()
+    var length: Length = .none
     var lastRecordChange: Date = Date()
     var recordId: String = ""
     var currency: String = Locale.current.currencyCode ?? ""
@@ -75,7 +77,8 @@ class XYZBudget : NSManagedObject {
          name: String,
          amount: Double,
          currency: String,
-         interval: Interval,
+         length: XYZBudget.Length,
+         start: Date,
          context: NSManagedObjectContext?) {
         
         let aContext = context!
@@ -97,8 +100,9 @@ class XYZBudget : NSManagedObject {
         self.setValue(recordName, forKey: XYZBudget.recordId)
         self.setValue(name, forKey: XYZBudget.name)
         self.setValue(amount, forKey: XYZBudget.amount)
-        self.setValue(interval.rawValue, forKey: XYZBudget.interval)
+        self.setValue(length.rawValue, forKey: XYZBudget.length)
         self.setValue(currency, forKey: XYZBudget.currency)
+        self.setValue(start, forKey: XYZBudget.start)
     }
     
     override init(entity: NSEntityDescription,
