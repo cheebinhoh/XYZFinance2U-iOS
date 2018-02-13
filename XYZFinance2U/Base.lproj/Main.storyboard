@@ -1345,7 +1345,9 @@ Chee Bin HOH, 2017</string>
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Item" id="Tdw-rP-RvJ"/>
-                    <navigationItem key="navigationItem" title="Budgets" id="vhK-lX-uvX"/>
+                    <navigationItem key="navigationItem" title="Budgets" id="vhK-lX-uvX">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="MIo-YZ-DC5"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R0K-Bn-Eoz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
