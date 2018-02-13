@@ -194,6 +194,11 @@ class IncomeTableViewController: UITableViewController,
 
         let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
         
+        if let _ = currencyCode, !currencyCodes.contains(currencyCode!) {
+            
+            currencyCodes.append(currencyCode!)
+        }
+        
         for (index, section) in sectionList.enumerated() {
             
             if currencyCode == section.title {
