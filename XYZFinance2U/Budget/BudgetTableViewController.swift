@@ -25,14 +25,18 @@ class BudgetTableViewController: UITableViewController {
                 
                 let name = budget.value(forKey: XYZBudget.name) as? String
                 let amount = budget.value(forKey: XYZBudget.amount) as? Double
-                let interval = budget.value(forKey: XYZBudget.interval) as? XYZBudget.Interval
+                let interval = XYZBudget.Interval(rawValue: budget.value(forKey: XYZBudget.interval) as? Int ?? 0 )
                 
-                print("--- \(String(describing: name)), \(String(describing: amount)), \(String(describing: interval))")
+                print("--- name = \(name)")
             }
         } else {
             
-            _ = XYZBudget(id: nil, name: "grocery", amount: 100.0, currency: Locale.current.currencyCode!, interval: .monthly, context: managedContext())
+            _ = XYZBudget(id: nil, name: "grocery", amount: 600.0, currency: Locale.current.currencyCode!, interval: .monthly, context: managedContext())
             
+            _ = XYZBudget(id: nil, name: "xfinity", amount: 120.0, currency: Locale.current.currencyCode!, interval: .monthly, context: managedContext())
+            
+            _ = XYZBudget(id: nil, name: "insurance", amount: 1500.0, currency: "MYR", interval: .monthly, context: managedContext())
+        
             saveManageContext()
         }
     }

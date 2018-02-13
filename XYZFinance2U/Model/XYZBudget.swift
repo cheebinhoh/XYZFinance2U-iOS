@@ -23,6 +23,33 @@ class XYZBudget : NSManagedObject {
         case biweekly
         case monthly
         case yearly
+        
+        func description() -> String {
+            
+            switch self {
+                
+            case .none:
+                return "none"
+            
+            case .hourly:
+                return "hourly"
+                
+            case .daily:
+                return "daily"
+                
+            case .weekly:
+                return "weekly"
+                
+            case .biweekly:
+                return "biweekly"
+                
+            case .monthly:
+                return "monthly"
+                
+            case .yearly:
+                return "yearly"
+            }
+        }
     }
     
     // MARK: - static property
