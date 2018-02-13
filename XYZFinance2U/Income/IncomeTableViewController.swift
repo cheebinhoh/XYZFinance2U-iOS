@@ -162,8 +162,9 @@ class IncomeTableViewController: UITableViewController,
             viewController.indexPath = indexPath
         } else {
          
-            viewController.total = sectionTotal(section: indexPath!.section - 1)
-            viewController.currencyCode = sectionList[indexPath!.section].title
+            let (amount, currency) =  sectionTotal(section: indexPath!.section - 1)
+            viewController.total = amount
+            viewController.currencyCode = currency
         }
 
         return viewController
@@ -172,7 +173,7 @@ class IncomeTableViewController: UITableViewController,
     
     // MARK: - function
 
-    func sectionTotal(section: Int) -> Double {
+    func sectionTotal(section: Int) -> (Double, String) {
     
         var total = 0.0;
         let sectionIncomeList = sectionList[section].data as? [XYZAccount]
@@ -182,7 +183,7 @@ class IncomeTableViewController: UITableViewController,
             total = total + ((income.value(forKey: XYZAccount.amount) as? Double) ?? 0.0 )
         }
         
-        return total
+        return (total, sectionList[section].title!)
     }
     
     override func didReceiveMemoryWarning() {
@@ -866,7 +867,7 @@ class IncomeTableViewController: UITableViewController,
             commands.append(delete)
         } else {
             
-            amount = sectionTotal(section: indexPath.section - 1)
+            (amount, _) = sectionTotal(section: indexPath.section - 1)
         }
         
         let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
@@ -1022,7 +1023,8 @@ class IncomeTableViewController: UITableViewController,
                 }
 
                 totalCell = newTotalcell
-                totalCell?.setAmount(amount: sectionTotal(section: indexPath.section - 1), code: sectionList[indexPath.section - 1].title!)
+                let (amount, currency) = sectionTotal(section: indexPath.section - 1)
+                totalCell?.setAmount(amount: amount, code: currency)
                 cell = newTotalcell
             
             default:
@@ -1153,7 +1155,7 @@ class IncomeTableViewController: UITableViewController,
         let stackView = UIStackView()
         let title = UILabel()
         let subtotal = UILabel()
-        let amount = sectionTotal(section: section)
+        let (amount, currency) = sectionTotal(section: section)
         
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 45)
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -1163,7 +1165,7 @@ class IncomeTableViewController: UITableViewController,
         stackView.axis = .horizontal
         stackView.addArrangedSubview(title)
         
-        subtotal.text = formattingCurrencyValue(input: amount, code: Locale.current.currencyCode)
+        subtotal.text = formattingCurrencyValue(input: amount, code: currency)
         subtotal.textColor = UIColor.gray
         stackView.addArrangedSubview(subtotal)
         
