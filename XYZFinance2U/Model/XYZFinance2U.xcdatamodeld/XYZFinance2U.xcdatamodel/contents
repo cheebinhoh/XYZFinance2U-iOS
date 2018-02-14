@@ -21,6 +21,7 @@
         <attribute name="length" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="recordId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sequenceNr" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
     </entity>
     <entity name="XYZExchangeRate" representedClassName="XYZExchangeRate" syncable="YES">
@@ -71,7 +72,7 @@
     </entity>
     <elements>
         <element name="XYZAccount" positionX="-63" positionY="-18" width="128" height="225"/>
-        <element name="XYZBudget" positionX="-36" positionY="126" width="128" height="150"/>
+        <element name="XYZBudget" positionX="-36" positionY="126" width="128" height="165"/>
         <element name="XYZExchangeRate" positionX="-36" positionY="81" width="128" height="120"/>
         <element name="XYZExpense" positionX="-63" positionY="18" width="128" height="285"/>
         <element name="XYZExpensePerson" positionX="-36" positionY="72" width="128" height="120"/>

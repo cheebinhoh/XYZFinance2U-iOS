@@ -62,6 +62,7 @@ class XYZBudget : NSManagedObject {
     static let start = "start"
     static let recordId = "recordId"
     static let lastRecordChange = "lastRecordChange"
+    static let sequenceNr = "sequenceNr"
     
     var name: String = ""
     var amount: Double = 0.0
@@ -70,6 +71,7 @@ class XYZBudget : NSManagedObject {
     var lastRecordChange: Date = Date()
     var recordId: String = ""
     var currency: String = Locale.current.currencyCode ?? ""
+    var sequenceNr: Int = 0
     
     // MARK: - function
     
@@ -79,6 +81,7 @@ class XYZBudget : NSManagedObject {
          currency: String,
          length: XYZBudget.Length,
          start: Date,
+         sequenceNr: Int,
          context: NSManagedObjectContext?) {
         
         let aContext = context!
@@ -103,6 +106,7 @@ class XYZBudget : NSManagedObject {
         self.setValue(length.rawValue, forKey: XYZBudget.length)
         self.setValue(currency, forKey: XYZBudget.currency)
         self.setValue(start, forKey: XYZBudget.start)
+        self.setValue(sequenceNr, forKey: XYZBudget.sequenceNr)
     }
     
     override init(entity: NSEntityDescription,

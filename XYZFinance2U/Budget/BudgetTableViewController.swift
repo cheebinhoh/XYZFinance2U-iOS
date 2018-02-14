@@ -20,12 +20,27 @@ class BudgetTableViewController: UITableViewController {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let budgetList = (appDelegate?.budgetList)!
-        
+
         for budget in budgetList {
             
             let currency = budget.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode
             
             if !currencyCodes.contains(currency!) {
+                
+                if !sectionList.isEmpty {
+                    
+                    var sectionBudgetList = sectionList[sectionList.count - 1].data as? [XYZBudget]
+                    
+                    sectionBudgetList?.sort(by: { (bu1, bu2) -> Bool in
+                        
+                        let seq1 = bu1.value(forKey: XYZBudget.sequenceNr) as? Int
+                        let seq2 = bu2.value(forKey: XYZBudget.sequenceNr) as? Int
+                        
+                        return seq1! > seq2!
+                    })
+                    
+                    sectionList[sectionList.count - 1].data = sectionBudgetList
+                }
                 
                 let newSection = TableSectionCell(identifier: currency!, title: currency, cellList: [], data: [XYZBudget]())
                 sectionList.append(newSection)
@@ -38,6 +53,21 @@ class BudgetTableViewController: UITableViewController {
             sectionList[sectionList.count - 1].data = sectionBudgetList
         }
         
+        if !sectionList.isEmpty {
+            
+            var sectionBudgetList = sectionList[sectionList.count - 1].data as? [XYZBudget]
+            
+            sectionBudgetList?.sort(by: { (bu1, bu2) -> Bool in
+                
+                let seq1 = bu1.value(forKey: XYZBudget.sequenceNr) as? Int
+                let seq2 = bu2.value(forKey: XYZBudget.sequenceNr) as? Int
+                
+                return seq1! > seq2!
+            })
+            
+            sectionList[sectionList.count - 1].data = sectionBudgetList
+        }
+
         /*
         print("-------- # of sections = \(sectionList.count)")
         for section in sectionList {
@@ -199,15 +229,45 @@ class BudgetTableViewController: UITableViewController {
 
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+      
+        if fromIndexPath.row != to.row {
+            
+            var sectionBudgetList = sectionList[fromIndexPath.section].data as! [XYZBudget]
+            
+            sectionBudgetList.insert(sectionBudgetList[fromIndexPath.row], at: to.row)
+            
+            var sequenceNr = 0
+            for budget in sectionBudgetList {
+                
+                budget.setValue(sequenceNr, forKey: XYZBudget.sequenceNr)
+                
+                sequenceNr = sequenceNr + 1
+            }
+            
+            sectionList[fromIndexPath.section].data = sectionBudgetList
+            
+            saveManageContext()
+        }
     }
 
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
+
         return true
     }
 
+    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        
+        var indexPath = proposedDestinationIndexPath
+        
+        if ( sourceIndexPath.section != proposedDestinationIndexPath.section ) {
+            
+            indexPath = sourceIndexPath
+        }
+        
+        return indexPath
+    }
+    
     /*
     // MARK: - Navigation
 
