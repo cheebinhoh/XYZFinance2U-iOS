@@ -38,7 +38,7 @@ class BudgetTableViewController: UITableViewController {
             sectionList[sectionList.count - 1].data = sectionBudgetList
         }
         
-        // debug
+        /*
         print("-------- # of sections = \(sectionList.count)")
         for section in sectionList {
             
@@ -58,17 +58,15 @@ class BudgetTableViewController: UITableViewController {
             }
         }
         
-        /*
-        else {
-            
+
             _ = XYZBudget(id: nil, name: "grocery", amount: 600.0, currency: Locale.current.currencyCode!, length: .monthly, start: Date(),  context: managedContext())
             
             _ = XYZBudget(id: nil, name: "xfinity", amount: 120.0, currency: Locale.current.currencyCode!, length: .monthly, start: Date(), context: managedContext())
             
             _ = XYZBudget(id: nil, name: "insurance", amount: 1500.0, currency: "MYR", length: .monthly, start: Date(), context: managedContext())
         
-            saveManageContext()
-        } */
+            saveManageContext() */
+ 
     }
     
     override func viewDidLoad() {
@@ -93,28 +91,91 @@ class BudgetTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func sectionTotal(section: Int) -> (Double, String) {
+        
+        var total = 0.0;
+        let sectionBudgetList = sectionList[section].data as? [XYZBudget]
+        
+        for budget in sectionBudgetList! {
+            
+            total = total + ((budget.value(forKey: XYZBudget.amount) as? Double) ?? 0.0 )
+        }
+        
+        return (total, sectionList[section].title!)
+    }
+    
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        
+        return sectionList.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        
+        let sectionBudgetList = sectionList[section].data as? [XYZBudget]
+        
+        return (sectionBudgetList?.count)!
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let stackView = UIStackView()
+        let title = UILabel()
+        let subtotal = UILabel()
+        let (amount, currency) = sectionTotal(section: section)
+        
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 45)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        
+        title.text = sectionList[section].title
+        title.textColor = UIColor.gray
+        stackView.axis = .horizontal
+        stackView.addArrangedSubview(title)
+        
+        subtotal.text = formattingCurrencyValue(input: amount, code: currency)
+        subtotal.textColor = UIColor.gray
+        stackView.addArrangedSubview(subtotal)
+        
+        return stackView
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        return UIView(frame: .zero)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        return 35
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        
+        return CGFloat.leastNormalMagnitude
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "budgetTableCell", for: indexPath) as? BudgetTableViewCell else {
+            
+            fatalError("Exception: BudgetTableViewCell is expected")
+        }
 
-        // Configure the cell...
+        let sectionBudgetList = sectionList[indexPath.section].data as? [XYZBudget]
+        let budget = sectionBudgetList![indexPath.row]
+        let name = budget.value(forKey: XYZBudget.name) as? String
+        let amount = budget.value(forKey: XYZBudget.amount) as? Double
+        let currency = budget.value(forKey: XYZBudget.currency) as? String
+        
+        cell.amount.text = formattingCurrencyValue(input: amount!, code: currency!)
+        cell.name.text = name
 
         return cell
     }
-    */
+
 
     /*
     // Override to support conditional editing of the table view.
@@ -136,20 +197,16 @@ class BudgetTableViewController: UITableViewController {
     }
     */
 
-    /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
 
     }
-    */
 
-    /*
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
         return true
     }
-    */
 
     /*
     // MARK: - Navigation
