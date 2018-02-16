@@ -133,6 +133,33 @@ class MainUITabBarController: UITabBarController,
 
                 masterViewNavController?.setViewControllers([expenseDetailTableViewController], animated: false)
             }
+        } else if let budgetRoot = navController.viewControllers.first as? BudgetTableViewController {
+            
+            split.delegate = budgetRoot
+            
+            if nil == masterViewNavController {
+                
+                // empty
+            } else if let _ = masterViewNavController?.viewControllers.last as? BudgetDetailTableViewController {
+                
+                // empty
+            } else {
+                
+                guard let budgetDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "BudgetDetailNavigationController") as? UINavigationController else {
+                    
+                    fatalError("Exception: error on instantiating BudgetDetailNavigationController")
+                }
+                
+                guard let budgetDetailTableViewController = budgetDetailNavigationController.viewControllers.first as? BudgetDetailTableViewController else {
+                    
+                    fatalError("Exception: BudgetDetailTableViewController is expected")
+                }
+                
+                budgetDetailTableViewController.navigationItem.title = ""
+                budgetRoot.delegate = budgetDetailTableViewController
+                
+                masterViewNavController?.setViewControllers([budgetDetailTableViewController], animated: false)
+            }
         } else if let settingRoot = navController.viewControllers.first as? SettingTableViewController {
             
             split.delegate = settingRoot

@@ -8,10 +8,63 @@
 
 import UIKit
 
-class BudgetTableViewController: UITableViewController {
+protocol BudgetSelectionDelegate: class {
+    
+    func budgetSelected(newBudget: XYZBudget?)
+    func budgetDeleted(deletedBudget: XYZBudget)
+}
 
+class BudgetTableViewController: UITableViewController,
+    UISplitViewControllerDelegate,
+    BudgetDetailDelegate {
+    
+    // MARK: budget detail protocol
+    func saveNewBudget(budget: XYZBudget) {
+
+    }
+    
+    func saveBudget(budget: XYZBudget) {
+
+    }
+    
+    func deleteBudget(budget: XYZBudget) {
+
+    }
+    
+    // MARK: - property
+    var isPopover = false
     var sectionList = [TableSectionCell]()
     var currencyCodes = [String]()
+    var delegate: BudgetSelectionDelegate?
+    
+    @IBAction func add(_ sender: UIBarButtonItem) {
+    
+        guard let budgetDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "BudgetDetailNavigationController") as? UINavigationController else {
+            
+            fatalError("Exception: error on instantiating BudgetDetailNavigationController")
+        }
+        
+        guard let budgetDetailTableView = budgetDetailNavigationController.viewControllers.first as? BudgetDetailTableViewController else {
+            
+            fatalError("Exception: eror on casting first view controller to IncomeDetailTableViewController" )
+        }
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: UISplitViewController is expected" )
+        }
+        
+        mainSplitView.popOverNavigatorController = budgetDetailNavigationController
+        
+        //incomeDetailTableView.currencyCodes = currencyCodes
+        
+        budgetDetailTableView.setPopover(delegate: self)
+        isPopover = true
+        budgetDetailNavigationController.modalPresentationStyle = .popover
+        
+        self.present(budgetDetailNavigationController, animated: true, completion: nil)
+    }
     
     func loadBudgetsIntoSection() {
         
@@ -266,6 +319,98 @@ class BudgetTableViewController: UITableViewController {
         }
         
         return indexPath
+    }
+    
+    // MARK: - split view delegate
+    
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+        
+        /*
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        for row in 0..<(appDelegate?.incomeList)!.count {
+            
+            let indexPath = IndexPath(row: row, section: 0)
+            
+            tableView.deselectRow(at: indexPath, animated: true)
+        }*/
+        
+        self.delegate = nil
+        secondaryViewController.navigationItem.title = "New" //TODO: check if we need this
+        
+        if let navigationController = secondaryViewController as? UINavigationController {
+            
+            if let budgetDetailTableViewController = navigationController.viewControllers.first as? BudgetDetailTableViewController {
+                
+                budgetDetailTableViewController.budgetDelegate = self
+                budgetDetailTableViewController.isPushinto = true
+                
+                if !isPopover && budgetDetailTableViewController.modalEditing {
+                    
+                    budgetDetailTableViewController.isPushinto = false
+                    budgetDetailTableViewController.isPopover = true
+                    navigationController.modalPresentationStyle = .popover
+                    
+                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                    guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                        
+                        fatalError("Exception: UISplitViewController is expected" )
+                    }
+                    
+                    mainSplitView.popOverNavigatorController = navigationController
+                    
+                    //OperationQueue.main.addOperation
+                    DispatchQueue.main.async {
+                        
+                        self.present(navigationController, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
+        
+        navigationItem.leftBarButtonItem?.isEnabled = true
+        navigationItem.rightBarButtonItem?.isEnabled = true
+        
+        isPopover = false
+        
+        return true
+    }
+    
+    func splitViewController(_ svc: UISplitViewController, willChangeTo displayMode: UISplitViewControllerDisplayMode) {
+        
+    }
+    
+    func splitViewController(_ splitViewController: UISplitViewController, show vc: UIViewController, sender: Any?) -> Bool {
+        
+        return false
+    }
+    
+    func splitViewController(_ splitViewController: UISplitViewController, showDetail vc: UIViewController, sender: Any?) -> Bool {
+        
+        return false
+    }
+    
+    func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {
+        
+        guard let budgetDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "BudgetDetailNavigationController") as? UINavigationController else {
+            
+            fatalError("Exception: error on instantiating BudgetDetailNavigationController")
+        }
+        
+        guard let budgetDetailTableViewController = budgetDetailNavigationController.viewControllers.first as? BudgetDetailTableViewController else {
+            
+            fatalError("Exception: BudgetDetailTableViewController is expected")
+        }
+        
+        budgetDetailNavigationController.navigationItem.title = ""
+        self.delegate = budgetDetailTableViewController
+        
+        return budgetDetailNavigationController
+    }
+    
+    func primaryViewController(forExpanding splitViewController: UISplitViewController) -> UIViewController? {
+        
+        return nil
     }
     
     /*

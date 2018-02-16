@@ -310,7 +310,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pho-gG-lio" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3532" y="34.632683658170919"/>
+            <point key="canvasLocation" x="5410.3999999999996" y="34.632683658170919"/>
         </scene>
         <!--Expense Detail View Controller-->
         <scene sceneID="66M-Ug-AJf">
@@ -374,7 +374,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vRe-cm-UF1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4335.1999999999998" y="34.632683658170919"/>
+            <point key="canvasLocation" x="6213.6000000000004" y="34.632683658170919"/>
         </scene>
         <!--Exchange rates-->
         <scene sceneID="3Mj-Qf-NbD">
@@ -1050,7 +1050,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7le-dJ-YpZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="xyF-MD-Jvn" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5164" y="34.632683658170919"/>
+            <point key="canvasLocation" x="7042.3999999999996" y="34.632683658170919"/>
         </scene>
         <!--Location-->
         <scene sceneID="bQo-W5-8M3">
@@ -1153,7 +1153,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nb8-xB-O7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="ANL-Bn-bhJ"/>
             </objects>
-            <point key="canvasLocation" x="6080.8000000000002" y="34.632683658170919"/>
+            <point key="canvasLocation" x="7959.1999999999998" y="34.632683658170919"/>
         </scene>
         <!--Settings-->
         <scene sceneID="Cud-J6-JnH">
@@ -1205,7 +1205,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NY9-vS-J4X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="826.39999999999998" y="34.632683658170919"/>
+            <point key="canvasLocation" x="3340" y="9.4452773613193415"/>
         </scene>
         <!--Setting Detail Table View Controller-->
         <scene sceneID="Ve1-Mk-VKM">
@@ -1300,7 +1300,7 @@ Chee Bin HOH, 2017</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O7L-nJ-26a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1895.2" y="34.632683658170919"/>
+            <point key="canvasLocation" x="4138.3999999999996" y="6.746626686656672"/>
         </scene>
         <!--Expenses-->
         <scene sceneID="7vS-yM-iSR">
@@ -1319,7 +1319,7 @@ Chee Bin HOH, 2017</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QcG-oU-YSg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2800.8000000000002" y="34.632683658170919"/>
+            <point key="canvasLocation" x="4679.1999999999998" y="34.632683658170919"/>
         </scene>
         <!--Budgets-->
         <scene sceneID="xir-IK-qG2">
@@ -1371,12 +1371,55 @@ Chee Bin HOH, 2017</string>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Item" id="Tdw-rP-RvJ"/>
                     <navigationItem key="navigationItem" title="Budgets" id="vhK-lX-uvX">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="MIo-YZ-DC5"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="MIo-YZ-DC5">
+                            <connections>
+                                <action selector="add:" destination="AEI-Cc-O1r" id="V47-YE-yB9"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="OSu-GF-JbG" kind="show" identifier="ShowBudgetDetail" action="showDetailViewController:sender:" id="Vbr-uz-1K0"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R0K-Bn-Eoz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2172" y="20.239880059970016"/>
+            <point key="canvasLocation" x="-1764" y="7"/>
+        </scene>
+        <!--Budget Detail Table View Controller-->
+        <scene sceneID="90V-gv-a0N">
+            <objects>
+                <tableViewController id="OSu-GF-JbG" customClass="BudgetDetailTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="oeq-AZ-sgW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="neT-1J-pHG">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="neT-1J-pHG" id="6qg-Aa-3QD">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="OSu-GF-JbG" id="5Au-KE-TUC"/>
+                            <outlet property="delegate" destination="OSu-GF-JbG" id="038-nK-3Nb"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="wci-3z-WEa">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="adS-hP-0dk">
+                            <connections>
+                                <action selector="cancel:" destination="OSu-GF-JbG" id="o6u-qE-fmn"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="qDp-1J-1E5"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AIV-dV-Hpf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-890" y="9"/>
         </scene>
         <!--Settings-->
         <scene sceneID="TKg-N2-216">
@@ -1395,7 +1438,7 @@ Chee Bin HOH, 2017</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gDW-hM-SkA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-332" y="75"/>
+            <point key="canvasLocation" x="2623.1999999999998" y="9.4452773613193415"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ebr-GF-a8h">
@@ -1533,7 +1576,25 @@ Chee Bin HOH, 2017</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WOx-Dm-Z2c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1334" y="20"/>
+            <point key="canvasLocation" x="-2478" y="7"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="VcF-23-Kp0">
+            <objects>
+                <navigationController storyboardIdentifier="BudgetDetailNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="RRo-xe-oKW" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="EPw-vX-Wxc">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="OSu-GF-JbG" kind="relationship" relationship="rootViewController" id="Yzc-xO-mr2"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IHh-KB-b6v" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="55" y="7"/>
         </scene>
     </scenes>
     <resources>
@@ -1545,7 +1606,8 @@ Chee Bin HOH, 2017</string>
         <image name="settings" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Yzc-xO-mr2"/>
         <segue reference="n4x-5K-QOe"/>
-        <segue reference="p2p-KG-gtc"/>
+        <segue reference="12h-Ii-8y1"/>
     </inferredMetricsTieBreakers>
 </document>
