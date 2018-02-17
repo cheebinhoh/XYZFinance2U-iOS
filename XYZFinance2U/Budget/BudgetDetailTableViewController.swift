@@ -50,6 +50,7 @@ class BudgetDetailTableViewController: UITableViewController,
     var budgetType = ""
     var amount = 0.0
     var currencyCode = Locale.current.currencyCode
+    var length: XYZBudget.Length = XYZBudget.Length.none
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways.
@@ -124,6 +125,9 @@ class BudgetDetailTableViewController: UITableViewController,
         
         let mainSection = TableSectionCell(identifier: "main", title: nil, cellList: ["budget", "amount", "currency"], data: nil)
         sectionList.append(mainSection)
+        
+        let lengthSection = TableSectionCell(identifier: "length", title: nil, cellList: ["length"], data: nil)
+        sectionList.append(lengthSection)
     }
     
     func loadData() {
@@ -257,6 +261,18 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 cell = currencycell
             
+            case "length":
+                guard let currencycell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? BudgetDetailSelectionTableViewCell else {
+                    
+                    fatalError("Exception: budgetDetailSelectionCell is failed to be created")
+                }
+                
+                currencycell.setLabel("Period")
+                currencycell.setSelection(length.rawValue)
+                currencycell.selectionStyle = .none
+                
+                cell = currencycell
+            
             default:
                 fatalError("Exception: \(sectionList[indexPath.section].cellList[indexPath.row]) not handle")
         }
@@ -265,8 +281,7 @@ class BudgetDetailTableViewController: UITableViewController,
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        
-        print("----- here 1")
+
         if let _ = tableView.cellForRow(at: indexPath) as? BudgetDetailSelectionTableViewCell {
             
             return indexPath
@@ -279,7 +294,6 @@ class BudgetDetailTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        print("----- here 2")
         switch sectionList[indexPath.section].cellList[indexPath.row] {
             
         case "currency":
@@ -330,6 +344,29 @@ class BudgetDetailTableViewController: UITableViewController,
             
             self.present(nav, animated: true, completion: nil)
 
+        case "length":
+            guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+                
+                fatalError("Exception: error on instantiating SelectionNavigationController")
+            }
+            
+            selectionTableViewController.selectionIdentifier = "length"
+            selectionTableViewController.setSelections("", false,
+                                                       [XYZBudget.Length.none.rawValue,
+                                                        XYZBudget.Length.hourly.rawValue,
+                                                        XYZBudget.Length.daily.rawValue,
+                                                        XYZBudget.Length.weekly.rawValue,
+                                                        XYZBudget.Length.biweekly.rawValue,
+                                                        XYZBudget.Length.monthly.rawValue,
+                                                        XYZBudget.Length.yearly.rawValue])
+            selectionTableViewController.setSelectedItem(length.rawValue)
+            selectionTableViewController.delegate = self
+            
+            let nav = UINavigationController(rootViewController: selectionTableViewController)
+            nav.modalPresentationStyle = .popover
+            
+            self.present(nav, animated: true, completion: nil)
+            
         default:
             fatalError("Exception \(sectionList[indexPath.section].cellList[indexPath.row]) is not handled")
             
