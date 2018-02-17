@@ -48,6 +48,22 @@ class BudgetDetailTableViewController: UITableViewController,
         
     func textDidEndEditing(_ sender: BudgetDetailTextTableViewCell) {
         
+        if let index = tableView.indexPath(for: sender) {
+            
+            switch sectionList[index.section].cellList[index.row] {
+                
+                case "budget":
+                    budgetType = sender.input.text!
+                    navigationItem.rightBarButtonItem?.isEnabled = !budgetType.isEmpty
+                
+                case "amount":
+                    amount = formattingDoubleValueAsDouble(input: sender.input.text!)
+                    break
+                
+                default:
+                    fatalError("Exception: \(sectionList[index.section].cellList[index.row] ) is not supported")
+            }
+        }
     }
     
     func textDidBeginEditing(_ sender: BudgetDetailTextTableViewCell) {
@@ -98,6 +114,12 @@ class BudgetDetailTableViewController: UITableViewController,
     }
     
     @IBAction func save(_ sender: Any) {
+        
+        print("-------- type = \(budgetType)")
+        print("-------- amount = \(amount)")
+        print("-------- currency = \(String(describing: currencyCode))")
+        print("-------- length = \(length)")
+        print("-------- date = \(date)")
         
         /*
         if isPushinto {
@@ -156,10 +178,26 @@ class BudgetDetailTableViewController: UITableViewController,
     
     func loadData() {
         
+        if let _ = budget {
+            
+            navigationItem.title = "Budget"
+            
+            budgetType = (budget?.value(forKey: XYZBudget.type) as? String)!
+            amount = (budget?.value(forKey: XYZBudget.amount) as? Double)!
+            currencyCode = budget?.value(forKey: XYZBudget.currency) as? String
+            length = (budget?.value(forKey: XYZBudget.length) as? XYZBudget.Length)!
+            date = (budget?.value(forKey: XYZBudget.start) as? Date)!
+        } else {
+            
+            navigationItem.title = "New budget"
+            navigationItem.rightBarButtonItem?.isEnabled = !budgetType.isEmpty
+        }
+
         loadDataIntoSectionList()
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         tableView.tableFooterView = UIView(frame: .zero)
@@ -185,11 +223,6 @@ class BudgetDetailTableViewController: UITableViewController,
         
         loadData()
         
-        if let _ = budget {
-            
-            navigationItem.title = "Budget"
-        }
-
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
