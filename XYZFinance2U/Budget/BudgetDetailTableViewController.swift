@@ -24,6 +24,12 @@ class BudgetDetailTableViewController: UITableViewController,
     
     func dateDidPick(_ sender: BudgetDetailDatePickerTableViewCell) {
     
+        date = sender.date!
+        let indexPath = tableView.indexPath(for: sender)
+        let dateIndexPath = IndexPath(row: (indexPath?.row)! - 1, section: (indexPath?.section)!)
+        
+        tableView.reloadRows(at: [dateIndexPath], with: .none)
+        //tableView.reloadSections(indexPath, with: UITableViewRowAnimation.none)
     }
     
     func dateInputTouchUp(_ sender: BudgetDetailDateTableViewCell) {
@@ -44,6 +50,18 @@ class BudgetDetailTableViewController: UITableViewController,
     
     func selection(_ sender: SelectionTableViewController, item: String?) {
 
+        switch sender.selectionIdentifier {
+            case "length":
+                length = XYZBudget.Length(rawValue: item!)!
+            
+            case "currency":
+                currencyCode = item!
+            
+            default:
+                break
+        }
+        
+        tableView.reloadData() // TODO: how do we improve by just the row, does it worth it?
     }
         
     func textDidEndEditing(_ sender: BudgetDetailTextTableViewCell) {
@@ -121,7 +139,6 @@ class BudgetDetailTableViewController: UITableViewController,
         print("-------- length = \(length)")
         print("-------- date = \(date)")
         
-        /*
         if isPushinto {
             
             fatalError("Exception: todo")
@@ -131,21 +148,23 @@ class BudgetDetailTableViewController: UITableViewController,
             //navigationController?.popViewController(animated: true)
         } else if isPopover {
             
-            if nil == income {
-                
-                income = XYZAccount(id: nil, sequenceNr: 0, bank: bank, accountNr: accountNr, amount: amount!, date: date!, context: managedContext())
+            if nil == budget {
+             
+                budget = XYZBudget(id: nil, name: budgetType, amount: amount, currency: currencyCode!, length: length, start: date, sequenceNr: 0, context: managedContext())
                 
                 saveData()
-                incomeDelegate?.saveNewIncome(income: income!)
+                budgetDelegate?.saveNewBudget(budget: budget!)
             } else {
                 
                 saveData()
-                incomeDelegate?.saveIncome(income: income!)
+                budgetDelegate?.saveBudget(budget: budget!)
             }
-            
+
             dismiss(animated: true, completion: nil)
         } else {
             
+            fatalError("TODO")
+            /*
             saveData()
             navigationItem.leftBarButtonItem?.isEnabled = false
             modalEditing = false
@@ -162,7 +181,42 @@ class BudgetDetailTableViewController: UITableViewController,
             masterViewController.navigationItem.rightBarButtonItem?.isEnabled = true
             
             incomeDelegate?.saveIncome(income: income!)
-        }*/
+            */
+        }
+    }
+    
+    func saveData() {
+        
+        var hasChanged = false
+   
+        if let existingBudgetType = budget?.value(forKey: XYZBudget.name) as? String, existingBudgetType != budgetType {
+            
+            hasChanged = true
+        } else if let existingAmount = budget?.value(forKey: XYZBudget.amount) as? Double, existingAmount != amount {
+            
+            hasChanged = true
+        } else if let existingCurrencyCode = budget?.value(forKey: XYZBudget.currency) as? String, existingCurrencyCode != currencyCode {
+            
+            hasChanged = true
+        } else if let existingLength = budget?.value(forKey: XYZBudget.currency) as? XYZBudget.Length, existingLength != length {
+            
+            hasChanged = true
+        } else if let existingDate = budget?.value(forKey: XYZBudget.start) as? Date, existingDate != date {
+            
+            hasChanged = true
+        }
+
+        budget?.setValue(budgetType, forKey: XYZBudget.name)
+        budget?.setValue(amount, forKey: XYZBudget.amount)
+        budget?.setValue(currencyCode, forKey: XYZBudget.currency)
+        budget?.setValue(date, forKey: XYZBudget.start)
+        budget?.setValue(length.rawValue, forKey: XYZBudget.length)
+
+        if nil == budget?.value(forKey: XYZBudget.lastRecordChange) as? Date
+            || hasChanged {
+            
+            budget?.setValue(Date(), forKey: XYZBudget.lastRecordChange)
+        }
     }
     
     func loadDataIntoSectionList() {

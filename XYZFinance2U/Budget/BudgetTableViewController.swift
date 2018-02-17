@@ -21,6 +21,29 @@ class BudgetTableViewController: UITableViewController,
     // MARK: budget detail protocol
     func saveNewBudget(budget: XYZBudget) {
 
+        if let currencyCode = budget.value(forKey: XYZBudget.currency) as? String, currencyCodes.contains(currencyCode) {
+         
+            for section in sectionList {
+                
+                if section.identifier == currencyCode {
+                    
+                    let setionBudgetList = section.data as? [XYZBudget]
+                    
+                    budget.setValue(setionBudgetList?.count, forKey: XYZBudget.sequenceNr)
+                    
+                    break
+                }
+            }
+        }
+        
+        saveManageContext()
+
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        var budgetList = (appDelegate?.budgetList)!
+        budgetList.append(budget)
+        appDelegate?.budgetList = budgetList
+        
+        reloadData()
     }
     
     func saveBudget(budget: XYZBudget) {
@@ -73,11 +96,57 @@ class BudgetTableViewController: UITableViewController,
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let budgetList = (appDelegate?.budgetList)!
-
+        
         for budget in budgetList {
             
             let currency = budget.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode
             
+            if !currencyCodes.contains(currency!) {
+            
+                currencyCodes.append(currency!)
+            }
+        }
+        
+        for currency in currencyCodes {
+        
+            var sectionBudgetList = [XYZBudget]()
+            
+            for budget in budgetList {
+                
+                let budgetCurrency = budget.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode
+                
+                if budgetCurrency == currency {
+                    
+                    sectionBudgetList.append(budget)
+                }
+            }
+            
+            print("--- currency = \(currency)")
+            for b in sectionBudgetList {
+                
+                let name = b.value(forKey: XYZBudget.name) as? String
+                let seq = b.value(forKey: XYZBudget.sequenceNr) as? Int
+                
+                print("----- \(name), \(seq)")
+            }
+            
+            sectionBudgetList.sort(by: { (bu1, bu2) -> Bool in
+                
+                let seq1 = bu1.value(forKey: XYZBudget.sequenceNr) as? Int
+                let seq2 = bu2.value(forKey: XYZBudget.sequenceNr) as? Int
+                
+                return seq1! < seq2!
+            })
+            
+            let newSection = TableSectionCell(identifier: currency, title: currency, cellList: [], data: sectionBudgetList)
+            sectionList.append(newSection)
+        }
+        
+        /*
+        for budget in budgetList {
+            
+            let currency = budget.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode
+        
             if !currencyCodes.contains(currency!) {
                 
                 if !sectionList.isEmpty {
@@ -115,12 +184,12 @@ class BudgetTableViewController: UITableViewController,
                 let seq1 = bu1.value(forKey: XYZBudget.sequenceNr) as? Int
                 let seq2 = bu2.value(forKey: XYZBudget.sequenceNr) as? Int
                 
-                return seq1! > seq2!
+                return seq1! >  seq2!
             })
             
             sectionList[sectionList.count - 1].data = sectionBudgetList
         }
-
+        */
         /*
         print("-------- # of sections = \(sectionList.count)")
         for section in sectionList {
@@ -152,6 +221,17 @@ class BudgetTableViewController: UITableViewController,
  
     }
     
+    func loadData() {
+        
+        loadBudgetsIntoSection()
+    }
+    
+    func reloadData() {
+        
+        loadData()
+        tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -162,7 +242,7 @@ class BudgetTableViewController: UITableViewController,
         
         navigationItem.leftBarButtonItem = self.editButtonItem
         
-        loadBudgetsIntoSection()
+        loadData()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -259,6 +339,57 @@ class BudgetTableViewController: UITableViewController,
         return cell
     }
 
+    func indexPath(_ budget2Find: XYZBudget) -> IndexPath? {
+        
+        for (sectionIndex, section) in sectionList.enumerated() {
+            
+            let sectionBudgetList = section.data as? [XYZBudget]
+            
+            for (rowIndex, budget) in (sectionBudgetList?.enumerated())! {
+                
+                if budget == budget2Find {
+                    
+                    return IndexPath(row: rowIndex, section: sectionIndex)
+                }
+            }
+        }
+        
+        return nil
+    }
+    
+    func loadBudgetsFromSection() -> [XYZBudget] {
+        
+        var budgetList = [XYZBudget]()
+        
+        for section in sectionList {
+            
+            let sectionBudgetList = section.data as? [XYZBudget]
+            
+            for budget in sectionBudgetList! {
+                
+                budgetList.append(budget)
+            }
+        }
+        
+        return budgetList
+    }
+    
+    func softdeletebudget(_ budget: XYZBudget) {
+        
+        let indexPath = self.indexPath(budget)
+        var sectionBudgetList = sectionList[(indexPath?.section)!].data as? [XYZBudget]
+        
+        sectionBudgetList?.remove(at: (indexPath?.row)!)
+        sectionList[(indexPath?.section)!].data = sectionBudgetList
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.budgetList = loadBudgetsFromSection()
+        
+        let aContext = managedContext()
+        aContext?.delete(budget)
+        
+        saveManageContext()
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -268,17 +399,23 @@ class BudgetTableViewController: UITableViewController,
     }
     */
 
-    /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
+
+            let sectionBudgetList = sectionList[indexPath.section].data as? [XYZBudget]
+            let budget = sectionBudgetList![indexPath.row]
+            
+            softdeletebudget(budget)
+            
+            //tableView.deleteRows(at: [indexPath], with: .fade)
+            reloadData()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
+
 
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
@@ -286,15 +423,12 @@ class BudgetTableViewController: UITableViewController,
         if fromIndexPath.row != to.row {
             
             var sectionBudgetList = sectionList[fromIndexPath.section].data as! [XYZBudget]
-            
-            sectionBudgetList.insert(sectionBudgetList[fromIndexPath.row], at: to.row)
-            
-            var sequenceNr = 0
-            for budget in sectionBudgetList {
+
+            sectionBudgetList.insert(sectionBudgetList.remove(at: fromIndexPath.row), at: to.row)
+
+            for (index, budget) in sectionBudgetList.enumerated() {
                 
-                budget.setValue(sequenceNr, forKey: XYZBudget.sequenceNr)
-                
-                sequenceNr = sequenceNr + 1
+                budget.setValue(index, forKey: XYZBudget.sequenceNr)
             }
             
             sectionList[fromIndexPath.section].data = sectionBudgetList

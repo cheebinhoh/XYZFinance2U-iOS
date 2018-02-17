@@ -107,6 +107,7 @@ class XYZBudget : NSManagedObject {
         self.setValue(currency, forKey: XYZBudget.currency)
         self.setValue(start, forKey: XYZBudget.start)
         self.setValue(sequenceNr, forKey: XYZBudget.sequenceNr)
+        self.setValue(Date(), forKey: XYZBudget.lastRecordChange)
     }
     
     override init(entity: NSEntityDescription,
