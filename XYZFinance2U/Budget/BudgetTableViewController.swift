@@ -47,7 +47,10 @@ class BudgetTableViewController: UITableViewController,
     }
     
     func saveBudget(budget: XYZBudget) {
-
+        
+        saveManageContext()
+        
+        reloadData()
     }
     
     func deleteBudget(budget: XYZBudget) {
@@ -80,7 +83,7 @@ class BudgetTableViewController: UITableViewController,
         
         mainSplitView.popOverNavigatorController = budgetDetailNavigationController
         
-        //incomeDetailTableView.currencyCodes = currencyCodes
+        budgetDetailTableView.currencyCodes = currencyCodes
         
         budgetDetailTableView.setPopover(delegate: self)
         isPopover = true
@@ -262,6 +265,60 @@ class BudgetTableViewController: UITableViewController,
 
     // MARK: - Table view data source
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: UISplitViewController is expected" )
+        }
+        
+        if mainSplitView.isCollapsed  {
+            
+            guard let budgetDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "BudgetDetailNavigationController") as? UINavigationController else {
+                
+                fatalError("Exception: error on instantiating BudgetDetailNavigationController")
+            }
+            
+            guard let budgetDetailTableViewController = budgetDetailNavigationController.viewControllers.first as? BudgetDetailTableViewController else {
+                
+                fatalError("Exception: BudgetDetailTableViewController is expected")
+            }
+
+            budgetDetailTableViewController.setPopover(delegate: self)
+            
+            let sectionBudgetList = sectionList[indexPath.section].data as? [XYZBudget]
+            
+            budgetDetailTableViewController.budget = sectionBudgetList?[indexPath.row]
+            budgetDetailTableViewController.modalPresentationStyle = .popover
+            //budgetDetailTableViewController.currencyCodes = currencyCodes
+            
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                
+                fatalError("Exception: UISplitViewController is expected" )
+            }
+            
+            mainSplitView.popOverNavigatorController = budgetDetailNavigationController
+            
+            self.present(budgetDetailNavigationController, animated: true, completion: nil)
+        } else {
+            
+            /*
+            guard let detailTableViewController = delegate as? IncomeDetailTableViewController else {
+                
+                fatalError("Exception: IncomeDetailTableViewController is expedted" )
+            }
+            
+            let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
+            detailTableViewController.incomeDelegate = self
+            detailTableViewController.currencyCodes = currencyCodes
+            delegate?.incomeSelected(newIncome: sectionIncomeList?[indexPath.row])
+            */
+        }
+    }
+    
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         
         return sectionList.count

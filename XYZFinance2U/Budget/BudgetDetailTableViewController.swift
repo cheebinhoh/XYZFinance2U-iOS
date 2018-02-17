@@ -109,6 +109,7 @@ class BudgetDetailTableViewController: UITableViewController,
     var length: XYZBudget.Length = XYZBudget.Length.none
     var date = Date()
     var datecell: BudgetDetailDateTableViewCell?
+    var currencyCodes = [String]()
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways.
@@ -132,12 +133,6 @@ class BudgetDetailTableViewController: UITableViewController,
     }
     
     @IBAction func save(_ sender: Any) {
-        
-        print("-------- type = \(budgetType)")
-        print("-------- amount = \(amount)")
-        print("-------- currency = \(String(describing: currencyCode))")
-        print("-------- length = \(length)")
-        print("-------- date = \(date)")
         
         if isPushinto {
             
@@ -236,10 +231,10 @@ class BudgetDetailTableViewController: UITableViewController,
             
             navigationItem.title = "Budget"
             
-            budgetType = (budget?.value(forKey: XYZBudget.type) as? String)!
+            budgetType = (budget?.value(forKey: XYZBudget.name) as? String)!
             amount = (budget?.value(forKey: XYZBudget.amount) as? Double)!
             currencyCode = budget?.value(forKey: XYZBudget.currency) as? String
-            length = (budget?.value(forKey: XYZBudget.length) as? XYZBudget.Length)!
+            length = XYZBudget.Length(rawValue: (budget?.value(forKey: XYZBudget.length) as? String)!)!
             date = (budget?.value(forKey: XYZBudget.start) as? Date)!
         } else {
             
@@ -440,10 +435,10 @@ class BudgetDetailTableViewController: UITableViewController,
             
             selectionTableViewController.selectionIdentifier = "currency"
             
-            //if let _ = currencyCodes, !(currencyCodes?.isEmpty)! {
+            if !currencyCodes.isEmpty {
                 
-            //    selectionTableViewController.setSelections("", false, currencyCodes!)
-            //}
+                selectionTableViewController.setSelections("", false, currencyCodes)
+            }
             
             var codeIndex: Character?
             var codes = [String]()
