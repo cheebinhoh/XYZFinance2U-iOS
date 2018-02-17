@@ -45,6 +45,7 @@
 		6590AFAA1FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6590AFA91FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift */; };
 		65D870C42033B17700DE991E /* BudgetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C32033B17700DE991E /* BudgetTableViewCell.swift */; };
 		65D870C6203673BB00DE991E /* BudgetDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C5203673BB00DE991E /* BudgetDetailTableViewController.swift */; };
+		65D870C82037A05F00DE991E /* BudgetDetailTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C72037A05F00DE991E /* BudgetDetailTextTableViewCell.swift */; };
 		65D8BA7B201391D500944C2D /* ExchangeRateTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D8BA7A201391D500944C2D /* ExchangeRateTableViewController.swift */; };
 		65D8BA7F2013ADD200944C2D /* XYZExchangeRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D8BA7E2013ADD200944C2D /* XYZExchangeRate.swift */; };
 		65D8BA812013BD9300944C2D /* ExchangeRateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D8BA802013BD9300944C2D /* ExchangeRateTableViewCell.swift */; };
@@ -121,6 +122,7 @@
 		6590AFA91FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		65D870C32033B17700DE991E /* BudgetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetTableViewCell.swift; sourceTree = "<group>"; };
 		65D870C5203673BB00DE991E /* BudgetDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailTableViewController.swift; sourceTree = "<group>"; };
+		65D870C72037A05F00DE991E /* BudgetDetailTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailTextTableViewCell.swift; sourceTree = "<group>"; };
 		65D8BA7A201391D500944C2D /* ExchangeRateTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateTableViewController.swift; sourceTree = "<group>"; };
 		65D8BA7E2013ADD200944C2D /* XYZExchangeRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZExchangeRate.swift; sourceTree = "<group>"; };
 		65D8BA802013BD9300944C2D /* ExchangeRateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateTableViewCell.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				6567E12F20327DF300058238 /* BudgetTableViewController.swift */,
 				65D870C32033B17700DE991E /* BudgetTableViewCell.swift */,
 				65D870C5203673BB00DE991E /* BudgetDetailTableViewController.swift */,
+				65D870C72037A05F00DE991E /* BudgetDetailTextTableViewCell.swift */,
 			);
 			path = Budget;
 			sourceTree = "<group>";
@@ -461,6 +464,7 @@
 				65EEC4A71FF1E0FF00D638CD /* ExpenseDetailLocationPickerTableViewCell.swift in Sources */,
 				655C97C11FCCD09C0098D58D /* IncomeTableViewCell.swift in Sources */,
 				65EEC49B1FF05ED500D638CD /* IncomeDetailTableViewController.swift in Sources */,
+				65D870C82037A05F00DE991E /* BudgetDetailTextTableViewCell.swift in Sources */,
 				65F48F1F1FE370A1006951F7 /* SettingTableViewController.swift in Sources */,
 				658F73561FDD98D700AF7F8D /* ExpenseDetailTextTableViewCell.swift in Sources */,
 				65D8BA7B201391D500944C2D /* ExchangeRateTableViewController.swift in Sources */,
