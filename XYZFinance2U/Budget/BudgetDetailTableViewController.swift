@@ -17,8 +17,13 @@ protocol BudgetDetailDelegate: class {
 
 class BudgetDetailTableViewController: UITableViewController,
     BudgetSelectionDelegate,
-    BudgetDetailTextTableViewCellDelegate {
+    BudgetDetailTextTableViewCellDelegate,
+    SelectionDelegate {
     
+    func selection(_ sender: SelectionTableViewController, item: String?) {
+
+    }
+        
     func textDidEndEditing(_ sender: BudgetDetailTextTableViewCell) {
         
     }
@@ -39,9 +44,9 @@ class BudgetDetailTableViewController: UITableViewController,
     var budgetDelegate: BudgetDetailDelegate?
     var isPopover: Bool = false
     var isPushinto: Bool = false
-    var modalEditing = false
+    var modalEditing = true
     var budget: XYZBudget?
-    var sectinList = [TableSectionCell]()
+    var sectionList = [TableSectionCell]()
     var budgetType = ""
     var amount = 0.0
     var currencyCode = Locale.current.currencyCode
@@ -115,10 +120,10 @@ class BudgetDetailTableViewController: UITableViewController,
     
     func loadDataIntoSectionList() {
     
-        sectinList = [TableSectionCell]()
+        sectionList = [TableSectionCell]()
         
-        let mainSection = TableSectionCell(identifier: "main", title: nil, cellList: ["budget", "amount"], data: nil)
-        sectinList.append(mainSection)
+        let mainSection = TableSectionCell(identifier: "main", title: nil, cellList: ["budget", "amount", "currency"], data: nil)
+        sectionList.append(mainSection)
     }
     
     func loadData() {
@@ -130,7 +135,7 @@ class BudgetDetailTableViewController: UITableViewController,
         super.viewDidLoad()
 
         tableView.tableFooterView = UIView(frame: .zero)
-        
+
         navigationItem.largeTitleDisplayMode = .never
         
         if let split = self.parent?.parent as? UISplitViewController {
@@ -190,23 +195,23 @@ class BudgetDetailTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        return sectinList[section].title
+        return sectionList[section].title
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
 
-        return sectinList.count
+        return sectionList.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return sectinList[section].cellList.count
+        return sectionList[section].cellList.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell
         
-        switch sectinList[indexPath.section].cellList[indexPath.row] {
+        switch sectionList[indexPath.section].cellList[indexPath.row] {
         
             case "budget":
                 guard let textcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailTextCell", for: indexPath) as? BudgetDetailTextTableViewCell else {
@@ -239,12 +244,96 @@ class BudgetDetailTableViewController: UITableViewController,
                 textcell.label.text = "Amount"
                 
                 cell = textcell
+
+            case "currency":
+                guard let currencycell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? BudgetDetailSelectionTableViewCell else {
+                    
+                    fatalError("Exception: budgetDetailSelectionCell is failed to be created")
+                }
+                
+                currencycell.setLabel("Currency")
+                currencycell.setSelection(currencyCode ?? "USD")
+                currencycell.selectionStyle = .none
+                
+                cell = currencycell
             
             default:
-                fatalError("Exception: \(sectinList[indexPath.section].cellList[indexPath.row]) not handle")
+                fatalError("Exception: \(sectionList[indexPath.section].cellList[indexPath.row]) not handle")
         }
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        
+        print("----- here 1")
+        if let _ = tableView.cellForRow(at: indexPath) as? BudgetDetailSelectionTableViewCell {
+            
+            return indexPath
+        } else {
+            
+            return nil
+        }
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        print("----- here 2")
+        switch sectionList[indexPath.section].cellList[indexPath.row] {
+            
+        case "currency":
+            guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+                
+                fatalError("Exception: error on instantiating SelectionNavigationController")
+            }
+            
+            selectionTableViewController.selectionIdentifier = "currency"
+            
+            //if let _ = currencyCodes, !(currencyCodes?.isEmpty)! {
+                
+            //    selectionTableViewController.setSelections("", false, currencyCodes!)
+            //}
+            
+            var codeIndex: Character?
+            var codes = [String]()
+            for code in Locale.isoCurrencyCodes {
+                
+                if nil == codeIndex {
+                    
+                    codes.append(code)
+                    codeIndex = code.first
+                } else if code.first == codeIndex {
+                    
+                    codes.append(code)
+                } else {
+                    
+                    var identifier = ""
+                    identifier.append(codeIndex!)
+                    
+                    selectionTableViewController.setSelections(identifier, true, codes )
+                    codes.removeAll()
+                    codes.append(code)
+                    codeIndex = code.first
+                }
+            }
+            
+            var identifier = ""
+            identifier.append(codeIndex!)
+            
+            selectionTableViewController.setSelections(identifier, true, codes )
+            selectionTableViewController.setSelectedItem(currencyCode ?? "USD")
+            selectionTableViewController.delegate = self
+            
+            let nav = UINavigationController(rootViewController: selectionTableViewController)
+            nav.modalPresentationStyle = .popover
+            
+            self.present(nav, animated: true, completion: nil)
+
+        default:
+            fatalError("Exception \(sectionList[indexPath.section].cellList[indexPath.row]) is not handled")
+            
+        }
     }
 
     /*
