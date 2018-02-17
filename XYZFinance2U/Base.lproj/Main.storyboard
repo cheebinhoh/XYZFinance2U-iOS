@@ -1469,6 +1469,72 @@ Chee Bin HOH, 2017</string>
                                     <outlet property="selection" destination="zQ2-in-Wtc" id="Okz-xO-3AL"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="budgetDetailDateTextCell" rowHeight="80" id="AH5-DP-GTV" userLabel="budgetDetailDateTextCell" customClass="BudgetDetailDateTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="215.5" width="375" height="80"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AH5-DP-GTV" id="aL8-0f-mIb">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9FL-64-UwN">
+                                            <rect key="frame" x="16" y="35" width="359" height="35"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="35" id="BSf-Xt-MbX"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0K3-M7-rFp">
+                                            <rect key="frame" x="16" y="11" width="37.5" height="20"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0K3-M7-rFp" secondAttribute="trailingMargin" id="9xE-L3-Qtj"/>
+                                        <constraint firstAttribute="trailing" secondItem="9FL-64-UwN" secondAttribute="trailing" id="J6B-ZQ-2Ri"/>
+                                        <constraint firstItem="0K3-M7-rFp" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9FL-64-UwN" secondAttribute="leading" id="VVz-Tg-gCb"/>
+                                        <constraint firstItem="9FL-64-UwN" firstAttribute="top" secondItem="0K3-M7-rFp" secondAttribute="bottom" constant="4" id="XZE-8k-wZ0"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="9FL-64-UwN" secondAttribute="bottom" constant="-1" id="YwP-XJ-sc5"/>
+                                        <constraint firstItem="0K3-M7-rFp" firstAttribute="leading" secondItem="aL8-0f-mIb" secondAttribute="leadingMargin" id="bl8-Zk-sg5"/>
+                                        <constraint firstItem="0K3-M7-rFp" firstAttribute="top" secondItem="aL8-0f-mIb" secondAttribute="topMargin" id="hFz-et-Hrs"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="dateInput" destination="9FL-64-UwN" id="122-HM-Nu8"/>
+                                    <outlet property="label" destination="0K3-M7-rFp" id="llu-at-mg2"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="incomeDetailDatePickerCell" rowHeight="300" id="aG7-T4-g3y" customClass="IncomeDetailDatePickerTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="295.5" width="375" height="300"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aG7-T4-g3y" id="5m7-T8-F9s">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="299.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="CeS-qr-T2E">
+                                            <rect key="frame" x="16" y="0.0" width="359" height="289"/>
+                                            <date key="date" timeIntervalSinceReferenceDate="534744362.618038">
+                                                <!--2017-12-12 04:06:02 +0000-->
+                                            </date>
+                                            <connections>
+                                                <action selector="datePick:" destination="aG7-T4-g3y" eventType="valueChanged" id="yGC-6V-KTz"/>
+                                            </connections>
+                                        </datePicker>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="CeS-qr-T2E" secondAttribute="trailing" id="TV0-VB-sKB"/>
+                                        <constraint firstItem="CeS-qr-T2E" firstAttribute="bottom" secondItem="5m7-T8-F9s" secondAttribute="bottomMargin" id="cms-cj-LQC"/>
+                                        <constraint firstItem="CeS-qr-T2E" firstAttribute="leading" secondItem="5m7-T8-F9s" secondAttribute="leadingMargin" id="ipE-hk-JJh"/>
+                                        <constraint firstItem="CeS-qr-T2E" firstAttribute="top" secondItem="5m7-T8-F9s" secondAttribute="top" id="uU6-PV-Xkk"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="datePicker" destination="CeS-qr-T2E" id="k5U-YA-LpR"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="OSu-GF-JbG" id="5Au-KE-TUC"/>

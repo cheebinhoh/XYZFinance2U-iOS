@@ -18,7 +18,12 @@ protocol BudgetDetailDelegate: class {
 class BudgetDetailTableViewController: UITableViewController,
     BudgetSelectionDelegate,
     BudgetDetailTextTableViewCellDelegate,
+    BudgetDetailDateTableViewCellDelegate,
     SelectionDelegate {
+    
+    func dateInputTouchUp(_ sender: BudgetDetailDateTableViewCell) {
+    
+    }
     
     func selection(_ sender: SelectionTableViewController, item: String?) {
 
@@ -51,6 +56,8 @@ class BudgetDetailTableViewController: UITableViewController,
     var amount = 0.0
     var currencyCode = Locale.current.currencyCode
     var length: XYZBudget.Length = XYZBudget.Length.none
+    var date = Date()
+    var datecell: BudgetDetailDateTableViewCell?
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways.
@@ -126,7 +133,7 @@ class BudgetDetailTableViewController: UITableViewController,
         let mainSection = TableSectionCell(identifier: "main", title: nil, cellList: ["budget", "amount", "currency"], data: nil)
         sectionList.append(mainSection)
         
-        let lengthSection = TableSectionCell(identifier: "length", title: nil, cellList: ["length"], data: nil)
+        let lengthSection = TableSectionCell(identifier: "length", title: nil, cellList: ["length", "date"], data: nil)
         sectionList.append(lengthSection)
     }
     
@@ -272,6 +279,20 @@ class BudgetDetailTableViewController: UITableViewController,
                 currencycell.selectionStyle = .none
                 
                 cell = currencycell
+            
+            case "date":
+                guard let datecell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailDateTextCell", for: indexPath) as? BudgetDetailDateTableViewCell else {
+                    
+                    fatalError("Exception: budgetDetailDateTextCell is failed to be created")
+                }
+                
+                datecell.dateInput.text = formattingDate(date: date, style: .medium)
+                datecell.delegate = self
+                datecell.label.text = "Start date"
+                datecell.enableEditing = modalEditing
+                self.datecell = datecell
+                
+                cell = datecell
             
             default:
                 fatalError("Exception: \(sectionList[indexPath.section].cellList[indexPath.row]) not handle")
