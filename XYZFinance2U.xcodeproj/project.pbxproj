@@ -42,6 +42,7 @@
 		658F735C1FDF8CF300AF7F8D /* ExpenseDetailDatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F735B1FDF8CF300AF7F8D /* ExpenseDetailDatePickerTableViewCell.swift */; };
 		658F735E1FE08F5E00AF7F8D /* ExpenseDetailImagePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F735D1FE08F5E00AF7F8D /* ExpenseDetailImagePickerTableViewCell.swift */; };
 		658F73601FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F735F1FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift */; };
+		658FD1D82037DB3F00ABDD55 /* BudgetDetailDatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658FD1D72037DB3F00ABDD55 /* BudgetDetailDatePickerTableViewCell.swift */; };
 		6590AFAA1FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6590AFA91FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift */; };
 		65D870C42033B17700DE991E /* BudgetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C32033B17700DE991E /* BudgetTableViewCell.swift */; };
 		65D870C6203673BB00DE991E /* BudgetDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C5203673BB00DE991E /* BudgetDetailTableViewController.swift */; };
@@ -121,6 +122,7 @@
 		658F735B1FDF8CF300AF7F8D /* ExpenseDetailDatePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailDatePickerTableViewCell.swift; sourceTree = "<group>"; };
 		658F735D1FE08F5E00AF7F8D /* ExpenseDetailImagePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailImagePickerTableViewCell.swift; sourceTree = "<group>"; };
 		658F735F1FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailImageViewController.swift; sourceTree = "<group>"; };
+		658FD1D72037DB3F00ABDD55 /* BudgetDetailDatePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailDatePickerTableViewCell.swift; sourceTree = "<group>"; };
 		6590AFA91FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailSwitchTableViewCell.swift; sourceTree = "<group>"; };
 		65D870C32033B17700DE991E /* BudgetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetTableViewCell.swift; sourceTree = "<group>"; };
 		65D870C5203673BB00DE991E /* BudgetDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				65D870C72037A05F00DE991E /* BudgetDetailTextTableViewCell.swift */,
 				65D870CB2037CDE800DE991E /* BudgetDetailSelectionTableViewCell.swift */,
 				65D870CD2037D76100DE991E /* BudgetDetailDateTableViewCell.swift */,
+				658FD1D72037DB3F00ABDD55 /* BudgetDetailDatePickerTableViewCell.swift */,
 			);
 			path = Budget;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				655C97BF1FCCCF320098D58D /* IncomeTableViewController.swift in Sources */,
 				650024011FF67B4F001281EA /* MainSplitViewController.swift in Sources */,
 				650068FE200814F8003B6469 /* XYZiCloudZone.swift in Sources */,
+				658FD1D82037DB3F00ABDD55 /* BudgetDetailDatePickerTableViewCell.swift in Sources */,
 				65D870CC2037CDE800DE991E /* BudgetDetailSelectionTableViewCell.swift in Sources */,
 				65EEC4A31FF07E1400D638CD /* IncomeDetailCommandTableViewCell.swift in Sources */,
 				65F48F1D1FE3404D006951F7 /* IncomeTotalTableViewCell.swift in Sources */,

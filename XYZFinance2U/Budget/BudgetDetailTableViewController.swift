@@ -19,10 +19,27 @@ class BudgetDetailTableViewController: UITableViewController,
     BudgetSelectionDelegate,
     BudgetDetailTextTableViewCellDelegate,
     BudgetDetailDateTableViewCellDelegate,
+    BudgetDetailDatePickerTableViewCellDelegate,
     SelectionDelegate {
     
-    func dateInputTouchUp(_ sender: BudgetDetailDateTableViewCell) {
+    func dateDidPick(_ sender: BudgetDetailDatePickerTableViewCell) {
     
+    }
+    
+    func dateInputTouchUp(_ sender: BudgetDetailDateTableViewCell) {
+
+        let indexPath = tableView.indexPath(for: sender)
+        let showDatePicker = sectionList[(indexPath?.section)!].cellList.count - 1 > (indexPath?.row)!
+
+        if !showDatePicker {
+            
+            sectionList[(indexPath?.section)!].cellList.insert("datepicker", at: (indexPath?.row)! + 1)
+        } else {
+            
+            sectionList[(indexPath?.section)!].cellList.remove(at: (indexPath?.row)! + 1)
+        }
+        
+        tableView.reloadData()
     }
     
     func selection(_ sender: SelectionTableViewController, item: String?) {
@@ -293,6 +310,17 @@ class BudgetDetailTableViewController: UITableViewController,
                 self.datecell = datecell
                 
                 cell = datecell
+            
+        case "datepicker":
+            guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailDatePickerCell", for: indexPath) as? BudgetDetailDatePickerTableViewCell else {
+                
+                fatalError("Exception: incomeDetailDatePickerCell is failed to be created")
+            }
+            
+            datepickercell.setDate(date)
+            datepickercell.delegate = self
+            
+            cell = datepickercell
             
             default:
                 fatalError("Exception: \(sectionList[indexPath.section].cellList[indexPath.row]) not handle")
