@@ -121,15 +121,6 @@ class BudgetTableViewController: UITableViewController,
                 }
             }
             
-            print("--- currency = \(currency)")
-            for b in sectionBudgetList {
-                
-                let name = b.value(forKey: XYZBudget.name) as? String
-                let seq = b.value(forKey: XYZBudget.sequenceNr) as? Int
-                
-                print("----- \(name), \(seq)")
-            }
-            
             sectionBudgetList.sort(by: { (bu1, bu2) -> Bool in
                 
                 let seq1 = bu1.value(forKey: XYZBudget.sequenceNr) as? Int
