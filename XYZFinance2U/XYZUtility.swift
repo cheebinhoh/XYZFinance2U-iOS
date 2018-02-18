@@ -483,6 +483,7 @@ func createUpdateExpense(_ oldChangeToken: Data,
         let isSoftDelete = record[XYZExpense.isSoftDelete] as? Bool
         let isSharedRecord = record[XYZExpense.isShared] as? Bool ?? false
         let currency = record[XYZExpense.currencyCode] as? String ?? Locale.current.currencyCode
+        let budget = record[XYZExpense.budgetCategory] as? String ?? ""
         
         var expenseToBeUpdated: XYZExpense?
 
@@ -540,6 +541,7 @@ func createUpdateExpense(_ oldChangeToken: Data,
         expenseToBeUpdated?.setValue(oldChangeToken, forKey: XYZExpense.preChangeToken)
         expenseToBeUpdated?.setValue(isSoftDelete, forKey: XYZExpense.isSoftDelete)
         expenseToBeUpdated?.setValue(currency, forKey: XYZExpense.currencyCode)
+        expenseToBeUpdated?.setValue(budget, forKey: XYZExpense.budgetCategory)
         
         let nrOfReceipt = record[XYZExpense.nrOfReceipts] as? Int
         for index in 0..<nrOfReceipt! {
@@ -1117,15 +1119,17 @@ func saveExpensesToiCloud(_ database: CKDatabase,
         let isSoftDelete = expense.value(forKey: XYZExpense.isSoftDelete) as? Bool
         let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
         let currency = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
-        
+        let budget = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
+            
         record.setValue(detail, forKey: XYZExpense.detail)
         record.setValue(amount, forKey: XYZExpense.amount)
         record.setValue(date, forKey: XYZExpense.date)
         record.setValue(currency, forKey: XYZExpense.currencyCode)
+        record.setValue(budget, forKey: XYZExpense.budgetCategory)
         
         record.setValue(isSoftDelete, forKey: XYZExpense.isSoftDelete)
         record.setValue(isShared, forKey: XYZExpense.isShared)
-        
+    
         guard let receiptList = expense.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>  else {
             
             fatalError("Exception: [XYZExpenseReceipt] is expected")
