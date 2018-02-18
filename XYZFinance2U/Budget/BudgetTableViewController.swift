@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CloudKit
 
 protocol BudgetSelectionDelegate: class {
     
@@ -44,6 +45,8 @@ class BudgetTableViewController: UITableViewController,
         appDelegate?.budgetList = budgetList
         
         reloadData()
+        
+        saveBudgets()
     }
     
     func saveBudget(budget: XYZBudget) {
@@ -51,6 +54,8 @@ class BudgetTableViewController: UITableViewController,
         saveManageContext()
         
         reloadData()
+        
+        saveBudgets()
     }
     
     func deleteBudget(budget: XYZBudget) {
@@ -294,6 +299,34 @@ class BudgetTableViewController: UITableViewController,
         return total
     }
 
+    private func saveBudgets() {
+        
+        /* we do 3 things:
+         * - if there is a any record that its LastRecordChange is greater than LastRecordUpload, then we upload it to icloud
+         * - if the upload is success:
+         *      - then we tagged lastRecordUpload and lastRecordFetch
+         * - if the uploda is failed:
+         *      - if conflict:
+         *          - we will overwrite existing record with new record from icloud (which should overwrite all 3 timestamp:
+         *            lastRecordChange, lastRecordUpload and lastRecordFetch
+         *          - we then display alertpanel to user to notify that change failed
+         *      - if other error:
+         *          - then we will keep existing changed record and try to upload it again at different time.
+         *
+         */
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        let ckrecordzone = CKRecordZone(zoneName: XYZBudget.type)
+        let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.privateiCloudZones)!)
+        zone?.data = appDelegate?.budgetList
+        
+        fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
+                             [ckrecordzone], (appDelegate?.privateiCloudZones)!, {
+                                
+        })
+    }
+    
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -466,19 +499,47 @@ class BudgetTableViewController: UITableViewController,
     @discardableResult
     func softdeletebudget(_ budget: XYZBudget) -> XYZBudget {
         
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let ckrecordzone = CKRecordZone(zoneName: XYZBudget.type)
+        
+        if !(appDelegate?.iCloudZones.isEmpty)! {
+            
+            guard let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
+                
+                fatalError("Exception: iCloudZoen is expected")
+            }
+            
+            guard let data = zone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
+                
+                fatalError("Exception: data is expected for deleteRecordIdList")
+            }
+            
+            guard var deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+                
+                fatalError("Exception: deleteRecordList is expected as [String]")
+            }
+            
+            let recordName = budget.value(forKey: XYZBudget.recordId) as? String
+            deleteRecordLiset.append(recordName!)
+            
+            let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
+            zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
+        }
+        
         let indexPath = self.indexPath(budget)
         var sectionBudgetList = sectionList[(indexPath?.section)!].data as? [XYZBudget]
         
         let oldBudget = sectionBudgetList?.remove(at: (indexPath?.row)!)
         sectionList[(indexPath?.section)!].data = sectionBudgetList
         
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
         appDelegate?.budgetList = loadBudgetsFromSection()
         
         let aContext = managedContext()
         aContext?.delete(budget)
         
         saveManageContext()
+        
+        saveBudgets()
         
         return oldBudget!
     }

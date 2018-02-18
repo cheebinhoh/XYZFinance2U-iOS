@@ -609,6 +609,54 @@ func createUpdateExpense(_ oldChangeToken: Data,
     return (outputExpenseList, outputUnprocessedCkrecords)
 }
 
+func createUpdateBudget(_ record: CKRecord,
+                        _ budgetList: [XYZBudget],
+                        _ context: NSManagedObjectContext) -> [XYZBudget] {
+    
+    let recordName = record.recordID.recordName
+    let name = record[XYZBudget.name] as? String
+    let amount = record[XYZBudget.amount] as? Double
+    let start = record[XYZBudget.start] as? Date
+    let length = record[XYZBudget.length] as? String
+    let currency = record[XYZBudget.currency] as? String
+    let sequenceNr = record[XYZBudget.sequenceNr] as? Int
+    
+    var outputBudgetList: [XYZBudget] = budgetList
+    var budgetToBeUpdated: XYZBudget?
+    
+    for budget in outputBudgetList {
+        
+        guard let recordId = budget.value(forKey: XYZBudget.recordId) as? String else {
+            
+            fatalError("Exception: record is expected")
+        }
+        
+        if recordId == recordName {
+            
+            budgetToBeUpdated = budget
+            break
+        }
+    }
+    
+    if nil == budgetToBeUpdated {
+        
+        budgetToBeUpdated = XYZBudget(id: recordName, name: name!, amount: amount!, currency: currency!, length: XYZBudget.Length(rawValue: length!)!, start: start!, sequenceNr: sequenceNr!, context: context)
+        
+        outputBudgetList.append(budgetToBeUpdated!)
+    }
+    
+    budgetToBeUpdated?.setValue(name, forKey: XYZBudget.name)
+    budgetToBeUpdated?.setValue(amount, forKey: XYZBudget.amount)
+    budgetToBeUpdated?.setValue(currency, forKey: XYZBudget.currency)
+    budgetToBeUpdated?.setValue(length, forKey: XYZBudget.length)
+    budgetToBeUpdated?.setValue(sequenceNr, forKey: XYZBudget.sequenceNr)
+    
+    // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
+    budgetToBeUpdated?.setValue(Date(), forKey: XYZBudget.lastRecordChange)
+    
+    return outputBudgetList
+}
+
 func fetchiCloudZoneChange(_ database: CKDatabase,
                            _ zones: [CKRecordZone],
                            _ icloudZones: [XYZiCloudZone],
@@ -685,6 +733,16 @@ func fetchiCloudZoneChange(_ database: CKDatabase,
                                                                           aContext!)
                 
                 icloudZone?.data = expenseList
+            
+            case XYZBudget.type:
+                guard var budgetList = icloudZone?.data as? [XYZBudget] else {
+                    
+                    fatalError("Exception: incomeList is expected")
+                }
+                
+                budgetList = createUpdateBudget(record, budgetList, aContext!)
+                icloudZone?.data = budgetList
+            
             
             default:
                 fatalError("Exception: zone type \(String(describing: zoneName)) is not supported")
@@ -779,6 +837,29 @@ func fetchiCloudZoneChange(_ database: CKDatabase,
                                 break
                             }
                         }
+                    
+                    case XYZBudget.type:
+                        guard var budgetList = icloudZone.data as? [XYZBudget] else {
+                            
+                            fatalError("Exception: [XYZBudget] is expected")
+                        }
+                        
+                        for (index, budget) in budgetList.enumerated() {
+                            
+                            guard let recordName = budget.value(forKey: XYZBudget.recordId) as? String else {
+                                fatalError("Exception: record id is expected")
+                            }
+                            
+                            if recordName == recordId.recordName {
+                                
+                                aContext?.delete(budget)
+                                budgetList.remove(at: index)
+                                
+                                break
+                            }
+                        }
+                        
+                        icloudZone.data = budgetList
                     
                     case "cloudkit.share":
                         break
@@ -989,6 +1070,29 @@ func pushChangeToiCloudZone(_ database: CKDatabase,
                     }
                 })
             }
+            
+            case XYZBudget.type:
+                if let iCloudZone = GetiCloudZone(of: zone,
+                                                  share: CKContainer.default().sharedCloudDatabase == database,
+                                                  icloudZones) {
+                    
+                    guard let budgetList = iCloudZone.data as? [XYZBudget] else {
+                        
+                        fatalError("Exception: [XYZBudget] is expected")
+                    }
+                    
+                    saveBudgetsToiCloud(database, zone, iCloudZone, budgetList, {
+                        
+                        OperationQueue.main.addOperation {
+                            
+                            fetchiCloudZoneChange(database, [zone], icloudZones, {
+                                
+                            })
+                            
+                            completionblock()
+                        }
+                    })
+                }
             
             default:
                 fatalError("Exception: zone \(name) is not supported")
@@ -1374,6 +1478,113 @@ func saveAccountsToiCloud(_ database: CKDatabase,
     
     database.add(opToSaved)
 }
+
+func saveBudgetsToiCloud(_ database: CKDatabase,
+                          _ zone: CKRecordZone,
+                          _ iCloudZone: XYZiCloudZone,
+                          _ budgetList: [XYZBudget],
+                          _ completionblock: @escaping () -> Void ) {
+    
+    var budgetListToBeSaved: [XYZBudget]?
+    
+    if let lastChangeTokenFetch = iCloudZone.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date {
+        
+        budgetListToBeSaved = [XYZBudget]()
+        
+        for budget in budgetList {
+            
+            if let lastChanged = budget.value(forKey: XYZBudget.lastRecordChange) as? Date {
+                
+                if lastChanged > lastChangeTokenFetch {
+                    
+                    budgetListToBeSaved?.append(budget)
+                }
+            } else {
+                
+                budgetListToBeSaved?.append(budget)
+            }
+        }
+    } else {
+        
+        budgetListToBeSaved = budgetList
+    }
+    
+    var recordIdsToBeDeleted = [CKRecordID]()
+    
+    guard let data = iCloudZone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
+        
+        fatalError("Exception: data is expected for deleteRecordIdList")
+    }
+    
+    guard let deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+        
+        fatalError("Exception: deleteRecordList is expected as [String]")
+    }
+    
+    for deleteRecordName in deleteRecordLiset {
+        
+        let customZone = CKRecordZone(zoneName: XYZBudget.type)
+        
+        let ckrecordId = CKRecordID(recordName: deleteRecordName, zoneID: customZone.zoneID)
+        
+        recordIdsToBeDeleted.append(ckrecordId)
+    }
+    
+    saveBudgetsToiCloud(database, iCloudZone, budgetListToBeSaved!, recordIdsToBeDeleted, completionblock)
+}
+
+func saveBudgetsToiCloud(_ database: CKDatabase,
+                         _ iCloudZone: XYZiCloudZone,
+                         _ budgetList: [XYZBudget],
+                         _ recordIdsToBeDeleted: [CKRecordID],
+                         _ completionblock: @escaping () -> Void ) {
+    
+    var recordsToBeSaved = [CKRecord]()
+    
+    for budget in budgetList {
+        
+        let recordName = budget.value(forKey: XYZBudget.recordId) as? String
+        let customZone = CKRecordZone(zoneName: XYZBudget.type)
+        let ckrecordId = CKRecordID(recordName: recordName!, zoneID: customZone.zoneID)
+        
+        let record = CKRecord(recordType: XYZBudget.type, recordID: ckrecordId)
+        
+        let name = budget.value(forKey: XYZBudget.name) as? String
+        let amount = budget.value(forKey: XYZBudget.amount) as? Double
+        let date = budget.value(forKey: XYZBudget.start) as? Date
+        let currency = budget.value(forKey: XYZBudget.currency) as? String
+        let sequenceNr = budget.value(forKey: XYZBudget.sequenceNr) as? Int
+        let length = budget.value(forKey: XYZBudget.length) as? String
+        
+        record.setValue(name, forKey: XYZBudget.name)
+        record.setValue(amount, forKey: XYZBudget.amount)
+        record.setValue(date, forKey: XYZBudget.start)
+        record.setValue(currency, forKey: XYZBudget.currency)
+        record.setValue(length, forKey: XYZBudget.length)
+        record.setValue(sequenceNr, forKey: XYZBudget.sequenceNr)
+        
+        recordsToBeSaved.append(record)
+    }
+    
+    let opToSaved = CKModifyRecordsOperation(recordsToSave: recordsToBeSaved, recordIDsToDelete: recordIdsToBeDeleted)
+    opToSaved.savePolicy = .allKeys
+    opToSaved.completionBlock = {
+        
+        OperationQueue.main.addOperation {
+            
+            let data = NSKeyedArchiver.archivedData(withRootObject: [String]())
+            iCloudZone.setValue(data, forKey: XYZiCloudZone.deleteRecordIdList)
+            iCloudZone.setValue(data, forKey: XYZiCloudZone.deleteShareRecordIdList)
+            
+            saveManageContext() // save the iCloudZone to indicate that deleteRecordIdList is executed.
+            
+            completionblock()
+        }
+    }
+    
+    database.add(opToSaved)
+}
+
 
 func registeriCloudSubscription(_ database: CKDatabase,
                                 _ iCloudZones: [XYZiCloudZone]) {

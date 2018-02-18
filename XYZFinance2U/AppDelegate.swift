@@ -494,6 +494,16 @@ class AppDelegate: UIResponder,
             fatalError("Exception: ExpenseTableViewController is expected")
         }
         
+        guard let budgetNavController = tabbarView.viewControllers?[2] as? UINavigationController else {
+            
+            fatalError("Exception: budgetNavController is expected")
+        }
+        
+        guard let budgetView = budgetNavController.viewControllers.first as? BudgetTableViewController else {
+            
+            fatalError("Exception: BudgetTableViewController is expected")
+        }
+        
         // fetch global data list
         incomeList = loadAccounts()!
         expenseList = loadExpenses()!
@@ -505,6 +515,7 @@ class AppDelegate: UIResponder,
         var incomeiCloudZone: XYZiCloudZone?
         var expenseiCloudZone: XYZiCloudZone?
         var expenseShareiCloudZone: XYZiCloudZone?
+        var budgetiCloudZone: XYZiCloudZone?
       
         for icloudzone in iCloudZones {
             
@@ -527,6 +538,11 @@ class AppDelegate: UIResponder,
                         privateiCloudZones.append(icloudzone)
                     }
                 
+                case XYZBudget.type:
+                    icloudzone.data = budgetList  // We do not need to keep it in persistent state as it is already stored core data
+                    budgetiCloudZone = icloudzone
+                    privateiCloudZones.append(icloudzone)
+                
                 default:
                     fatalError("Exception: zone type is not supported")
             }
@@ -535,6 +551,7 @@ class AppDelegate: UIResponder,
         var zonesToBeFetched = [CKRecordZone]()
         var zonesToBeSaved = [CKRecordZone]()
         let incomeCustomZone = CKRecordZone(zoneName: XYZAccount.type)
+        let budgetCustomZone = CKRecordZone(zoneName: XYZBudget.type)
         
         if incomeiCloudZone == nil {
             
@@ -560,6 +577,14 @@ class AppDelegate: UIResponder,
             // we ignore it, we do nothing as share zone is dynamically maintained per user
         }
         
+        if budgetiCloudZone == nil {
+            
+            zonesToBeSaved.append(budgetCustomZone)
+        } else {
+            
+            zonesToBeFetched.append(budgetCustomZone)
+        }
+
         if !zonesToBeSaved.isEmpty {
             
             let op = CKModifyRecordZonesOperation(recordZonesToSave: zonesToBeSaved, recordZoneIDsToDelete: nil)
@@ -583,6 +608,9 @@ class AppDelegate: UIResponder,
                                 
                                 case XYZExpense.type:
                                     icloudzone.data = self.expenseList
+                                
+                                case XYZBudget.type:
+                                    icloudzone.data = self.budgetList
                                 
                                 default:
                                     fatalError("Exception: \(zone.zoneID.zoneName) is not supported")
@@ -617,6 +645,14 @@ class AppDelegate: UIResponder,
                                     DispatchQueue.main.async {
                                         
                                         expenseView.reloadData()
+                                    }
+                                    
+                                case XYZBudget.type:
+                                    self.budgetList = (icloudzone.data as? [XYZBudget])!
+                                    
+                                    DispatchQueue.main.async {
+                                        
+                                        budgetView.reloadData()
                                     }
                                     
                                 default:
@@ -660,6 +696,16 @@ class AppDelegate: UIResponder,
                         DispatchQueue.main.async {
                             
                             expenseView.reloadData()
+                            
+                            registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
+                        }
+                        
+                    case XYZBudget.type:
+                        self.budgetList = (icloudzone.data as? [XYZBudget])!
+                        
+                        DispatchQueue.main.async {
+                            
+                            budgetView.reloadData()
                             
                             registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
                         }
