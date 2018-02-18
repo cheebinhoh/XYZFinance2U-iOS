@@ -1286,7 +1286,7 @@ class ExpenseDetailTableViewController: UITableViewController,
 
                 selectionTableViewController.setSelections("", false,
                                                            budgetCategories)
-                selectionTableViewController.setSelectedItem(budgetCategory ?? "")
+                selectionTableViewController.setSelectedItem(budgetCategory)
                 selectionTableViewController.delegate = self
                 
                 let nav = UINavigationController(rootViewController: selectionTableViewController)
