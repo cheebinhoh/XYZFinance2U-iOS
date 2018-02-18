@@ -137,6 +137,8 @@ class MainUITabBarController: UITabBarController,
             
             split.delegate = budgetRoot
             
+            budgetRoot.reloadData()
+            
             if nil == masterViewNavController {
                 
                 // empty

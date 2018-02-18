@@ -77,7 +77,7 @@ class XYZBudget : NSManagedObject {
     
     var currentStart: Date? {
         
-        var value: Date?
+        var value: Date? = nil
         let date = self.currentEnd
         let length = XYZBudget.Length(rawValue: self.value(forKey: XYZBudget.length) as? String ?? "none")
         
@@ -115,7 +115,7 @@ class XYZBudget : NSManagedObject {
             
             value = Calendar.current.date(byAdding: .day,
                                           value:-1,
-                                          to: date!)
+                                          to: value!)
         }
         
         return value
@@ -125,7 +125,7 @@ class XYZBudget : NSManagedObject {
         
         let start = self.value(forKey: XYZBudget.start) as? Date ?? Date()
         let length = XYZBudget.Length(rawValue: self.value(forKey: XYZBudget.length) as? String ?? "none")
-        var value: Date?
+        var value: Date? = nil
         let currentDate = max(Date(), start)
 
         switch length! {

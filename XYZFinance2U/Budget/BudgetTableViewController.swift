@@ -266,6 +266,33 @@ class BudgetTableViewController: UITableViewController,
         return (total, sectionList[section].title!)
     }
     
+    func getTotalSpendAmount(of budget: XYZBudget, from expenseList: [XYZExpense]) -> Double {
+        
+        var total = 0.0
+        let name = budget.value(forKey: XYZBudget.name) as? String ?? ""
+        let currentStart = budget.currentStart
+        let currentEnd = budget.currentEnd
+        
+        for expense in expenseList {
+        
+            let category = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
+            
+            if category == name {
+                
+                let date = expense.value(forKey: XYZExpense.date) as? Date
+                if currentStart == nil
+                   || currentEnd == nil
+                    || (date! >= currentStart! && date! < currentEnd! ) {
+                
+                    let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
+                    
+                    total = total + amount
+                }
+            }
+        }
+        
+        return total
+    }
 
     // MARK: - Table view data source
 
@@ -390,6 +417,10 @@ class BudgetTableViewController: UITableViewController,
             length = "-"
         }
         
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        let spendAmount = getTotalSpendAmount(of: budget, from: (appDelegate?.expenseList)!)
+        cell.spendAmount.text = formattingCurrencyValue(input: spendAmount, code: currency!)
         cell.amount.text = formattingCurrencyValue(input: amount!, code: currency!)
         cell.name.text = name
         cell.length.text = "length: \(length!)"
