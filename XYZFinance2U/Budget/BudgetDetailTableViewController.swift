@@ -63,6 +63,7 @@ class BudgetDetailTableViewController: UITableViewController,
     func dateDidPick(_ sender: BudgetDetailDatePickerTableViewCell) {
     
         date = sender.date!
+        
         let indexPath = tableView.indexPath(for: sender)
         let dateIndexPath = IndexPath(row: (indexPath?.row)! - 1, section: (indexPath?.section)!)
         
@@ -152,7 +153,7 @@ class BudgetDetailTableViewController: UITableViewController,
     var amount = 0.0
     var currencyCode = Locale.current.currencyCode
     var length: XYZBudget.Length = XYZBudget.Length.none
-    var date = Date()
+    var date = Date() 
     var datecell: BudgetDetailDateTableViewCell?
     var currencyCodes = [String]()
     
@@ -609,7 +610,7 @@ class BudgetDetailTableViewController: UITableViewController,
             selectionTableViewController.selectionIdentifier = "length"
             selectionTableViewController.setSelections("", false,
                                                        [XYZBudget.Length.none.rawValue,
-                                                        XYZBudget.Length.hourly.rawValue,
+                                                        //DEPRECATED: XYZBudget.Length.hourly.rawValue,
                                                         XYZBudget.Length.daily.rawValue,
                                                         XYZBudget.Length.weekly.rawValue,
                                                         XYZBudget.Length.biweekly.rawValue,

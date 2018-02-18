@@ -34,6 +34,7 @@ class BudgetDetailDatePickerTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         // Initialization code
     }
 

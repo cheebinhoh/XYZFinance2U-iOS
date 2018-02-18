@@ -193,6 +193,17 @@ func formattingCurrencyValue(input: String,
 
 // MARK: - core data
 
+func getBudgets(of currency: String) -> [XYZBudget] {
+
+    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    
+    return (appDelegate?.budgetList.filter({ (budget) -> Bool in
+        
+        return currency == ""
+               || (budget.value(forKey: XYZBudget.currency) as? String ?? "" )! == currency
+    }))!
+}
+
 func managedContext() -> NSManagedObjectContext? {
     
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
