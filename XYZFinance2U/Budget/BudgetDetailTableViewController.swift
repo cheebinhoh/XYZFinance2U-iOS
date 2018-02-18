@@ -89,7 +89,7 @@ class BudgetDetailTableViewController: UITableViewController,
     
     func selection(_ sender: SelectionTableViewController, item: String?) {
 
-        switch sender.selectionIdentifier {
+        switch sender.selectionIdentifier! {
             case "length":
                 length = XYZBudget.Length(rawValue: item!)!
             
