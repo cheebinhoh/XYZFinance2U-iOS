@@ -11,6 +11,7 @@ import UIKit
 class BudgetTableViewCell: UITableViewCell {
 
     @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var length: UILabel!
     @IBOutlet weak var amount: UILabel!
     
     override func awakeFromNib() {

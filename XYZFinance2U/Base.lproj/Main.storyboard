@@ -1325,7 +1325,7 @@ Chee Bin HOH, 2017</string>
         <scene sceneID="xir-IK-qG2">
             <objects>
                 <tableViewController id="AEI-Cc-O1r" customClass="BudgetTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="OGd-9B-xxR">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="OGd-9B-xxR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -1344,7 +1344,13 @@ Chee Bin HOH, 2017</string>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qOX-jY-XiK">
-                                            <rect key="frame" x="16" y="24" width="193" height="21"/>
+                                            <rect key="frame" x="16" y="11" width="193" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Jw-qJ-ejx" userLabel="Length">
+                                            <rect key="frame" x="16" y="38" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1352,14 +1358,17 @@ Chee Bin HOH, 2017</string>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="E3R-7O-nWA" firstAttribute="centerY" secondItem="eX9-4P-DBj" secondAttribute="centerY" id="3GZ-Sh-2iB"/>
-                                        <constraint firstItem="qOX-jY-XiK" firstAttribute="centerY" secondItem="eX9-4P-DBj" secondAttribute="centerY" id="C2A-Qg-R1c"/>
                                         <constraint firstAttribute="trailing" secondItem="E3R-7O-nWA" secondAttribute="trailing" id="MId-nK-Ucn"/>
                                         <constraint firstItem="qOX-jY-XiK" firstAttribute="leading" secondItem="eX9-4P-DBj" secondAttribute="leadingMargin" id="Rad-mf-875"/>
+                                        <constraint firstItem="qOX-jY-XiK" firstAttribute="top" secondItem="eX9-4P-DBj" secondAttribute="topMargin" id="ZPZ-5c-X2D"/>
                                         <constraint firstItem="E3R-7O-nWA" firstAttribute="leading" secondItem="qOX-jY-XiK" secondAttribute="trailing" constant="50" id="fnx-Az-p3g"/>
+                                        <constraint firstItem="8Jw-qJ-ejx" firstAttribute="bottom" secondItem="eX9-4P-DBj" secondAttribute="bottomMargin" id="ibF-Yy-r6w"/>
+                                        <constraint firstItem="8Jw-qJ-ejx" firstAttribute="leading" secondItem="eX9-4P-DBj" secondAttribute="leadingMargin" id="mle-7y-OcO"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="amount" destination="E3R-7O-nWA" id="iFD-AC-zQa"/>
+                                    <outlet property="length" destination="8Jw-qJ-ejx" id="qGX-6o-ACh"/>
                                     <outlet property="name" destination="qOX-jY-XiK" id="o1u-zA-Vb2"/>
                                 </connections>
                             </tableViewCell>
@@ -1763,8 +1772,8 @@ Chee Bin HOH, 2017</string>
         <image name="settings" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Yzc-xO-mr2"/>
+        <segue reference="Vbr-uz-1K0"/>
         <segue reference="n4x-5K-QOe"/>
-        <segue reference="12h-Ii-8y1"/>
+        <segue reference="p2p-KG-gtc"/>
     </inferredMetricsTieBreakers>
 </document>

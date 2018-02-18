@@ -294,8 +294,9 @@ class BudgetTableViewController: UITableViewController,
             let sectionBudgetList = sectionList[indexPath.section].data as? [XYZBudget]
             
             budgetDetailTableViewController.budget = sectionBudgetList?[indexPath.row]
-            budgetDetailTableViewController.modalPresentationStyle = .popover
             budgetDetailTableViewController.currencyCodes = currencyCodes
+            isPopover = true
+            budgetDetailNavigationController.modalPresentationStyle = .popover
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
@@ -382,9 +383,16 @@ class BudgetTableViewController: UITableViewController,
         let name = budget.value(forKey: XYZBudget.name) as? String
         let amount = budget.value(forKey: XYZBudget.amount) as? Double
         let currency = budget.value(forKey: XYZBudget.currency) as? String
+        var length = budget.value(forKey: XYZBudget.length) as? String
+        
+        if length == XYZBudget.Length.none.rawValue {
+            
+            length = "-"
+        }
         
         cell.amount.text = formattingCurrencyValue(input: amount!, code: currency!)
         cell.name.text = name
+        cell.length.text = "length: \(length!)"
 
         return cell
     }
