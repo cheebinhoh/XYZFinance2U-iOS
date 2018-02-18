@@ -47,7 +47,26 @@ class ExpenseDetailTableViewController: UITableViewController,
     
     func selection(_ sender: SelectionTableViewController, item: String?) {
         
-        currencyCode = item
+        if sender.selectionIdentifier == "budget" {
+            
+            if let _ = item, item! != "" {
+                
+                budgetType = item
+            } else {
+                
+                budgetType = nil
+            }
+        } else {
+            
+            if currencyCode != item {
+                
+                budgetType = nil
+            }
+            
+            currencyCode = item
+            budgetList = getBudgets(of: item!)
+            loadDataInTableSectionCell()
+        }
         
         tableView.reloadData()
     }
@@ -143,7 +162,17 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         sectionList.removeAll()
         
-        var mainSectionCellList = ["text", "amount", "currency", "date", "location"]
+        var mainSectionCellList = ["text",
+                                   "amount",
+                                   "currency",
+                                   "date",
+                                   "location"]
+        
+        if !budgetList.isEmpty {
+            
+            let currencyIndex = mainSectionCellList.index(of: "currency")
+            mainSectionCellList.insert("budget", at: currencyIndex! + 1)
+        }
         
         if hasLocation {
             
@@ -433,6 +462,8 @@ class ExpenseDetailTableViewController: UITableViewController,
             }
         }
         
+        budgetList = getBudgets(of: currencyCode!)
+        
         loadDataInTableSectionCell()
     }
     
@@ -698,6 +729,8 @@ class ExpenseDetailTableViewController: UITableViewController,
     }
     
     // MARK: - property
+    var budgetType: String?
+    var budgetList = [XYZBudget]()
     var currencyCode = Locale.current.currencyCode
     var currencyCodes: [String]?
     var location = "Location"
@@ -1004,6 +1037,25 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 cell = currencycell
             
+            case "budget":
+                guard let budgetcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailSelectionCell", for: indexPath) as? ExpenseDetailSelectionTableViewCell else {
+                    
+                    fatalError("Exception: incomeDetailSelectionCell is failed to be created")
+                }
+                
+                budgetcell.setSelection(budgetType ?? "budget category")
+                budgetcell.selectionStyle = .none
+                
+                if let _ = budgetType {
+                    
+                    budgetcell.selection.textColor = UIColor.black
+                } else {
+                    
+                    budgetcell.selection.textColor = UIColor.lightGray
+                }
+                
+                cell = budgetcell
+            
             case "date":
                 guard let datecell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailDateTextCell", for: indexPath) as? ExpenseDetailDateTableViewCell else {
                     
@@ -1207,54 +1259,83 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         if let _ = tableView.cellForRow(at: indexPath) as? ExpenseDetailSelectionTableViewCell {
             
-        guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+            if sectionList[indexPath.section].cellList[indexPath.row] == "budget" {
             
-            fatalError("Exception: error on instantiating SelectionNavigationController")
-        }
-        
-        selectionTableViewController.selectionIdentifier = "currency"
-        
-            if let _ = currencyCodes, !(currencyCodes?.isEmpty)! {
-            
-            selectionTableViewController.setSelections("", false, currencyCodes!)
-        }
-        
-        var codeIndex: Character?
-        var codes = [String]()
-        for code in Locale.isoCurrencyCodes {
-            
-            if nil == codeIndex {
+                var budgetTypes = [String]()
                 
-                codes.append(code)
-                codeIndex = code.first
-            } else if code.first == codeIndex {
+                budgetTypes.append("")
+                for budget in budgetList {
+                 
+                    let type = budget.value(forKey: XYZBudget.name) as? String
+                    
+                    budgetTypes.append(type!)
+                }
+            
+                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+                    
+                    fatalError("Exception: error on instantiating SelectionNavigationController")
+                }
                 
-                codes.append(code)
+                selectionTableViewController.selectionIdentifier = "budget"
+
+                selectionTableViewController.setSelections("", false,
+                                                           budgetTypes)
+                selectionTableViewController.setSelectedItem(budgetType ?? "")
+                selectionTableViewController.delegate = self
+                
+                let nav = UINavigationController(rootViewController: selectionTableViewController)
+                nav.modalPresentationStyle = .popover
+                
+                self.present(nav, animated: true, completion: nil)
             } else {
+                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+                    
+                    fatalError("Exception: error on instantiating SelectionNavigationController")
+                }
+                
+                selectionTableViewController.selectionIdentifier = "currency"
+                
+                    if let _ = currencyCodes, !(currencyCodes?.isEmpty)! {
+                    
+                    selectionTableViewController.setSelections("", false, currencyCodes!)
+                }
+                
+                var codeIndex: Character?
+                var codes = [String]()
+                for code in Locale.isoCurrencyCodes {
+                    
+                    if nil == codeIndex {
+                        
+                        codes.append(code)
+                        codeIndex = code.first
+                    } else if code.first == codeIndex {
+                        
+                        codes.append(code)
+                    } else {
+                        
+                        var identifier = ""
+                        identifier.append(codeIndex!)
+                        
+                        selectionTableViewController.setSelections(identifier, true, codes )
+                        codes.removeAll()
+                        codes.append(code)
+                        codeIndex = code.first
+                    }
+                }
                 
                 var identifier = ""
                 identifier.append(codeIndex!)
                 
                 selectionTableViewController.setSelections(identifier, true, codes )
-                codes.removeAll()
-                codes.append(code)
-                codeIndex = code.first
+                selectionTableViewController.setSelectedItem(currencyCode ?? "USD")
+                selectionTableViewController.delegate = self
+                
+                let nav = UINavigationController(rootViewController: selectionTableViewController)
+                nav.modalPresentationStyle = .popover
+                
+                self.present(nav, animated: true, completion: nil)
             }
-        }
-        
-        var identifier = ""
-        identifier.append(codeIndex!)
-        
-        selectionTableViewController.setSelections(identifier, true, codes )
-        selectionTableViewController.setSelectedItem(currencyCode ?? "USD")
-        selectionTableViewController.delegate = self
-        
-        let nav = UINavigationController(rootViewController: selectionTableViewController)
-        nav.modalPresentationStyle = .popover
-        
-        self.present(nav, animated: true, completion: nil)
-        }
-        else {
+        } else {
             
             showLocationView()
         }
@@ -1269,6 +1350,9 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             return indexPath
         } else if sectionList[indexPath.section].cellList[indexPath.row] == "currency" {
+            
+            return indexPath
+        } else if sectionList[indexPath.section].cellList[indexPath.row] == "budget" {
             
             return indexPath
         } else {
