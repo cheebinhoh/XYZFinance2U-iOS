@@ -447,9 +447,9 @@ class BudgetDetailTableViewController: UITableViewController,
                 textcell.input.translatesAutoresizingMaskIntoConstraints = false
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
-                textcell.input.placeholder = "budget type"
+                textcell.input.placeholder = "budget"
                 textcell.input.text = budgetType
-                textcell.label.text = "Budget"
+                textcell.label.text = "Category"
                 
                 cell = textcell
             

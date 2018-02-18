@@ -33,6 +33,7 @@
     </entity>
     <entity name="XYZExpense" representedClassName="XYZExpense" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="budgetCategory" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="currencyCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="detail" optional="YES" attributeType="String" syncable="YES"/>
@@ -74,7 +75,7 @@
         <element name="XYZAccount" positionX="-63" positionY="-18" width="128" height="225"/>
         <element name="XYZBudget" positionX="-36" positionY="126" width="128" height="165"/>
         <element name="XYZExchangeRate" positionX="-36" positionY="81" width="128" height="120"/>
-        <element name="XYZExpense" positionX="-63" positionY="18" width="128" height="285"/>
+        <element name="XYZExpense" positionX="-63" positionY="18" width="128" height="300"/>
         <element name="XYZExpensePerson" positionX="-36" positionY="72" width="128" height="120"/>
         <element name="XYZExpenseReceipt" positionX="-9" positionY="99" width="128" height="90"/>
         <element name="XYZiCloudZone" positionX="-36" positionY="72" width="128" height="150"/>

@@ -51,16 +51,16 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             if let _ = item, item! != "" {
                 
-                budgetType = item
+                budgetCategory = item!
             } else {
                 
-                budgetType = nil
+                budgetCategory = ""
             }
         } else {
             
             if currencyCode != item {
                 
-                budgetType = nil
+                budgetCategory = ""
             }
             
             currencyCode = item
@@ -249,6 +249,9 @@ class ExpenseDetailTableViewController: UITableViewController,
         } else if let existingCurrencCode = expense?.value(forKey: XYZExpense.currencyCode) as? String, existingCurrencCode != currencyCode {
             
             hasChanged = true
+        } else if let existingBudgetCategory = expense?.value(forKey: XYZExpense.budgetCategory) as? String, existingBudgetCategory != budgetCategory {
+            
+            hasChanged = true
         }
         
         expense?.setValue(detail, forKey: XYZExpense.detail)
@@ -257,6 +260,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         expense?.setValue(false, forKey: XYZExpense.isShared) // if we can save it, it means it is not readonly
         expense?.setValue(hasLocation, forKey: XYZExpense.hasLocation)
         expense?.setValue(currencyCode, forKey: XYZExpense.currencyCode)
+        expense?.setValue(budgetCategory, forKey: XYZExpense.budgetCategory)
         
         if hasLocation, let _ = cllocation {
             
@@ -393,6 +397,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         hasgeolocation = false
         hasLocation = false
         currencyCode = Locale.current.currencyCode
+        budgetCategory = ""
         
         if nil != expense {
             
@@ -401,6 +406,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             amount = (expense?.value(forKey: XYZExpense.amount) as? Double) ?? 0.0
             isShared = (expense?.value(forKey: XYZExpense.isShared) as? Bool) ?? false
             currencyCode = (expense?.value(forKey: XYZExpense.currencyCode) as? String) ?? Locale.current.currencyCode
+            budgetCategory = expense?.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
             
             if isShared {
                 
@@ -729,7 +735,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     }
     
     // MARK: - property
-    var budgetType: String?
+    var budgetCategory = ""
     var budgetList = [XYZBudget]()
     var currencyCode = Locale.current.currencyCode
     var currencyCodes: [String]?
@@ -1043,10 +1049,10 @@ class ExpenseDetailTableViewController: UITableViewController,
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
                 
-                budgetcell.setSelection(budgetType ?? "budget category")
+                budgetcell.setSelection(budgetCategory == "" ? "budget category" : budgetCategory)
                 budgetcell.selectionStyle = .none
                 
-                if let _ = budgetType {
+                if "" != budgetCategory {
                     
                     budgetcell.selection.textColor = UIColor.black
                 } else {
@@ -1261,14 +1267,14 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             if sectionList[indexPath.section].cellList[indexPath.row] == "budget" {
             
-                var budgetTypes = [String]()
+                var budgetCategories = [String]()
                 
-                budgetTypes.append("")
+                budgetCategories.append("")
                 for budget in budgetList {
                  
                     let type = budget.value(forKey: XYZBudget.name) as? String
                     
-                    budgetTypes.append(type!)
+                    budgetCategories.append(type!)
                 }
             
                 guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
@@ -1279,8 +1285,8 @@ class ExpenseDetailTableViewController: UITableViewController,
                 selectionTableViewController.selectionIdentifier = "budget"
 
                 selectionTableViewController.setSelections("", false,
-                                                           budgetTypes)
-                selectionTableViewController.setSelectedItem(budgetType ?? "")
+                                                           budgetCategories)
+                selectionTableViewController.setSelectedItem(budgetCategory ?? "")
                 selectionTableViewController.delegate = self
                 
                 let nav = UINavigationController(rootViewController: selectionTableViewController)

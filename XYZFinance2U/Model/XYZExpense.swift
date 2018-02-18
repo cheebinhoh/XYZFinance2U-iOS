@@ -33,6 +33,7 @@ class XYZExpense: NSManagedObject {
     static let preChangeToken = "preChangeToken"
     static let isSoftDelete = "isSoftDelete"
     static let currencyCode = "currencyCode"
+    static let budgetCategory = "budgetCategory"
     
     // MARK: - property
     
@@ -51,6 +52,7 @@ class XYZExpense: NSManagedObject {
     var preChangeToken = NSData()
     var isSoftDelete = false
     var currencyCode: String = Locale.current.currencyCode!
+    var budgetCategory = ""
     
     // MARK: - function
     
@@ -90,6 +92,7 @@ class XYZExpense: NSManagedObject {
         self.setValue(NSData(), forKey: XYZExpense.preChangeToken)
         self.setValue(false, forKey: XYZExpense.isSoftDelete)
         self.setValue(Locale.current.currencyCode, forKey: XYZExpense.currencyCode)
+        self.setValue("", forKey: XYZExpense.budgetCategory)
     }
     
     func getPersons() -> Set<XYZExpensePerson> {
