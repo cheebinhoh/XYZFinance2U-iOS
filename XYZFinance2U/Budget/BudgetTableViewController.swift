@@ -55,6 +55,10 @@ class BudgetTableViewController: UITableViewController,
     
     func deleteBudget(budget: XYZBudget) {
 
+        let oldBudget = softdeletebudget(budget)
+        
+        self.delegate?.budgetDeleted(deletedBudget: oldBudget)
+        reloadData()
     }
     
     // MARK: - property
@@ -291,7 +295,7 @@ class BudgetTableViewController: UITableViewController,
             
             budgetDetailTableViewController.budget = sectionBudgetList?[indexPath.row]
             budgetDetailTableViewController.modalPresentationStyle = .popover
-            //budgetDetailTableViewController.currencyCodes = currencyCodes
+            budgetDetailTableViewController.currencyCodes = currencyCodes
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
@@ -304,17 +308,15 @@ class BudgetTableViewController: UITableViewController,
             self.present(budgetDetailNavigationController, animated: true, completion: nil)
         } else {
             
-            /*
-            guard let detailTableViewController = delegate as? IncomeDetailTableViewController else {
+            guard let detailTableViewController = delegate as? BudgetDetailTableViewController else {
                 
-                fatalError("Exception: IncomeDetailTableViewController is expedted" )
+                fatalError("Exception: BudgetDetailTableViewController is expedted" )
             }
             
-            let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
-            detailTableViewController.incomeDelegate = self
+            let sectionBudgetList = sectionList[indexPath.section].data as? [XYZBudget]
+            detailTableViewController.budgetDelegate = self
             detailTableViewController.currencyCodes = currencyCodes
-            delegate?.incomeSelected(newIncome: sectionIncomeList?[indexPath.row])
-            */
+            delegate?.budgetSelected(newBudget: sectionBudgetList?[indexPath.row])
         }
     }
     
@@ -422,12 +424,13 @@ class BudgetTableViewController: UITableViewController,
         return budgetList
     }
     
-    func softdeletebudget(_ budget: XYZBudget) {
+    @discardableResult
+    func softdeletebudget(_ budget: XYZBudget) -> XYZBudget {
         
         let indexPath = self.indexPath(budget)
         var sectionBudgetList = sectionList[(indexPath?.section)!].data as? [XYZBudget]
         
-        sectionBudgetList?.remove(at: (indexPath?.row)!)
+        let oldBudget = sectionBudgetList?.remove(at: (indexPath?.row)!)
         sectionList[(indexPath?.section)!].data = sectionBudgetList
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -437,6 +440,8 @@ class BudgetTableViewController: UITableViewController,
         aContext?.delete(budget)
         
         saveManageContext()
+        
+        return oldBudget!
     }
 
     /*
@@ -507,15 +512,14 @@ class BudgetTableViewController: UITableViewController,
     
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
         
-        /*
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
-        for row in 0..<(appDelegate?.incomeList)!.count {
+        for row in 0..<(appDelegate?.budgetList)!.count {
             
             let indexPath = IndexPath(row: row, section: 0)
             
             tableView.deselectRow(at: indexPath, animated: true)
-        }*/
+        }
         
         self.delegate = nil
         secondaryViewController.navigationItem.title = "New" //TODO: check if we need this

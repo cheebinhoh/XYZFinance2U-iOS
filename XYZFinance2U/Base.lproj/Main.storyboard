@@ -1535,6 +1535,30 @@ Chee Bin HOH, 2017</string>
                                     <outlet property="datePicker" destination="CeS-qr-T2E" id="slP-8f-M7S"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="budgetDetailCommandTextCell" rowHeight="80" id="HPJ-31-Vlc" userLabel="budgetDetailCommandTextCell" customClass="BudgetDetailCommandTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="595.5" width="375" height="80"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HPJ-31-Vlc" id="gK2-Ca-MFz">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l1b-gI-J2V" userLabel="Command">
+                                            <rect key="frame" x="16" y="30" width="343" height="20.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="l1b-gI-J2V" firstAttribute="centerY" secondItem="gK2-Ca-MFz" secondAttribute="centerY" id="f9m-i6-Fs0"/>
+                                        <constraint firstItem="l1b-gI-J2V" firstAttribute="centerX" secondItem="gK2-Ca-MFz" secondAttribute="centerX" id="ow2-KP-1Bf"/>
+                                        <constraint firstItem="l1b-gI-J2V" firstAttribute="leading" secondItem="gK2-Ca-MFz" secondAttribute="leadingMargin" id="shw-M9-f0x"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="command" destination="l1b-gI-J2V" id="KfL-hO-06R"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="OSu-GF-JbG" id="5Au-KE-TUC"/>

@@ -20,7 +20,45 @@ class BudgetDetailTableViewController: UITableViewController,
     BudgetDetailTextTableViewCellDelegate,
     BudgetDetailDateTableViewCellDelegate,
     BudgetDetailDatePickerTableViewCellDelegate,
+    BudgetDetailCommandDelegate,
     SelectionDelegate {
+    
+    func executeCommand(_ sender: BudgetDetailCommandTableViewCell) {
+
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let deleteOption = UIAlertAction(title: sender.command.text, style: .default, handler: { (action) in
+            
+            self.budgetDelegate?.deleteBudget(budget: self.budget!)
+            
+            if self.isPushinto {
+                
+                self.navigationController?.popViewController(animated: true)
+            } else if self.isCollapsed {
+                
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                
+                self.navigationItem.rightBarButtonItem = nil
+                self.navigationItem.leftBarButtonItem = nil
+                self.budget = nil
+                self.reloadData()
+                
+                let masterViewController  = self.getMasterTableViewController()
+                
+                masterViewController.navigationItem.leftBarButtonItem?.isEnabled = true
+                masterViewController.navigationItem.rightBarButtonItem?.isEnabled = true
+            }
+
+            self.modalEditing = false
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:nil)
+        
+        optionMenu.addAction(deleteOption)
+        optionMenu.addAction(cancelAction)
+        
+        present(optionMenu, animated: true, completion: nil)
+    }
     
     func dateDidPick(_ sender: BudgetDetailDatePickerTableViewCell) {
     
@@ -91,6 +129,13 @@ class BudgetDetailTableViewController: UITableViewController,
     
     func budgetSelected(newBudget: XYZBudget?) {
 
+        modalEditing = false
+        budget = newBudget
+        reloadData()
+        
+        let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit(_:)))
+        navigationItem.setRightBarButton(editButton, animated: true)
+        navigationItem.leftBarButtonItem = nil
     }
     
     func budgetDeleted(deletedBudget: XYZBudget) {
@@ -111,6 +156,17 @@ class BudgetDetailTableViewController: UITableViewController,
     var datecell: BudgetDetailDateTableViewCell?
     var currencyCodes = [String]()
     
+    var isCollapsed: Bool {
+        
+        if let split = self.parent?.parent as? UISplitViewController {
+            
+            return split.isCollapsed
+        } else {
+            
+            return true
+        }
+    }
+    
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways.
         
@@ -122,14 +178,30 @@ class BudgetDetailTableViewController: UITableViewController,
             dismiss(animated: true, completion: nil)
         } else {
             
-            /*
             let masterViewController  = getMasterTableViewController()
             
             masterViewController.navigationItem.leftBarButtonItem?.isEnabled = true
             masterViewController.navigationItem.rightBarButtonItem?.isEnabled = true
-            incomeSelected(newIncome: income)
-            */
+            budgetSelected(newBudget: budget)
         }
+    }
+    
+    @IBAction func edit(_ sender: Any) {
+        
+        let  masterViewController = getMasterTableViewController();
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save(_:)))
+        navigationItem.setRightBarButton(doneButton, animated: true)
+        
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
+        navigationItem.setLeftBarButton(cancelButton, animated: true)
+        
+        masterViewController.navigationItem.leftBarButtonItem?.isEnabled = false
+        masterViewController.navigationItem.rightBarButtonItem?.isEnabled = false
+        
+        modalEditing = true
+        
+        reloadData()
     }
     
     @IBAction func save(_ sender: Any) {
@@ -180,6 +252,27 @@ class BudgetDetailTableViewController: UITableViewController,
         }
     }
     
+    private func getMasterTableViewController() -> BudgetTableViewController {
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: UISplitViewController is expected" )
+        }
+        
+        guard let tabBarController = mainSplitView.viewControllers.first as? UITabBarController else {
+            
+            fatalError("Exception: UITabBarController is expected")
+        }
+        
+        guard let navController = tabBarController.selectedViewController as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+        
+        return (navController.topViewController as? BudgetTableViewController)!
+    }
+    
     func saveData() {
         
         var hasChanged = false
@@ -223,6 +316,21 @@ class BudgetDetailTableViewController: UITableViewController,
         
         let lengthSection = TableSectionCell(identifier: "length", title: nil, cellList: ["length", "date"], data: nil)
         sectionList.append(lengthSection)
+        
+        if modalEditing && nil != budget {
+            
+            let deleteSection = TableSectionCell(identifier: "delete",
+                                                 title: "",
+                                                 cellList: ["delete"],
+                                                 data: nil)
+            sectionList.append(deleteSection)
+        }
+    }
+    
+    func reloadData() {
+        
+        loadData()
+        tableView.reloadData()
     }
     
     func loadData() {
@@ -237,6 +345,12 @@ class BudgetDetailTableViewController: UITableViewController,
             length = XYZBudget.Length(rawValue: (budget?.value(forKey: XYZBudget.length) as? String)!)!
             date = (budget?.value(forKey: XYZBudget.start) as? Date)!
         } else {
+            
+            budgetType = ""
+            amount = 0.0
+            currencyCode = Locale.current.currencyCode
+            length = XYZBudget.Length.none
+            date = Date()
             
             navigationItem.title = "New budget"
             navigationItem.rightBarButtonItem?.isEnabled = !budgetType.isEmpty
@@ -403,6 +517,17 @@ class BudgetDetailTableViewController: UITableViewController,
             datepickercell.delegate = self
             
             cell = datepickercell
+            
+        case "delete":
+            guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailCommandTextCell", for: indexPath) as? BudgetDetailCommandTableViewCell else {
+                
+                fatalError("Exception: budjectDetailCommandTextCell is failed to be created")
+            }
+            
+            deletecell.delegate = self
+            deletecell.setCommand(command: "Delete Budget")
+            
+            cell = deletecell
             
             default:
                 fatalError("Exception: \(sectionList[indexPath.section].cellList[indexPath.row]) not handle")
