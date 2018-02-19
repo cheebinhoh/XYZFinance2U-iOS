@@ -635,81 +635,87 @@ class IncomeTableViewController: UITableViewController,
 
                 self.authenticatedMechanismExist = true
                 
-                if !lockScreenDisplayed {
+                let defaults = UserDefaults.standard;
+                let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
+     
+                if required {
                     
+                    if !lockScreenDisplayed {
+                        
+                        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                            
+                            fatalError("Exception: UISplitViewController is expected" )
+                        }
+                        
+                        if let _ = mainSplitView.popOverAlertController {
+                            
+                            dismiss(animated: false, completion: {
+                            
+                                mainSplitView.popOverAlertController = nil
+                            })
+                        }
+                        
+                        if nil == mainSplitView.popOverNavigatorController {
+                            
+                            lockout()
+                        }
+                    }
+            
                     let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                    guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
-                        
-                        fatalError("Exception: UISplitViewController is expected" )
-                    }
                     
-                    if let _ = mainSplitView.popOverAlertController {
-                        
-                        dismiss(animated: false, completion: {
-                        
-                            mainSplitView.popOverAlertController = nil
-                        })
-                    }
+                    if nil == appDelegate?.lastAuthenticated
+                        || Date().timeIntervalSince((appDelegate?.lastAuthenticated)!) >= 0.0 {
+                       
+                        laContext.evaluatePolicy(.deviceOwnerAuthentication,
+                                                 localizedReason: "Authenticate to use the app" )
+                        { (success, error) in
                     
-                    if nil == mainSplitView.popOverNavigatorController {
-                        
-                        lockout()
-                    }
-                }
-        
-                let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                
-                if nil == appDelegate?.lastAuthenticated
-                    || Date().timeIntervalSince((appDelegate?.lastAuthenticated)!) >= 60.0 {
-                   
-                    laContext.evaluatePolicy(.deviceOwnerAuthentication,
-                                             localizedReason: "Authenticate to use the app" )
-                    { (success, error) in
-                
-                        self.authenticatedOk = success
-                        
-                        if self.authenticatedOk {
+                            self.authenticatedOk = success
                             
-                            //OperationQueue.main.addOperation
-                            DispatchQueue.main.async {
+                            if self.authenticatedOk {
                                 
-                                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                                    
-                                    appDelegate.lastAuthenticated = Date()
-                                    appDelegate.orientation = .all
-                                }
-                                
-                                if self.lockScreenDisplayed {
-                                    
-                                    self.dismiss(animated: false, completion: nil)
-                                    self.lockScreenDisplayed = false
-                                }
-                            }
-                        } else {
-                            
-                            print("authentication fail = \(String(describing: error))")
-                            
-                            if !self.lockScreenDisplayed {
-                                
+                                //OperationQueue.main.addOperation
                                 DispatchQueue.main.async {
                                     
-                                    self.dismiss(animated: false, completion: nil)
+                                    if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                                        
+                                        appDelegate.lastAuthenticated = Date()
+                                        appDelegate.orientation = .all
+                                    }
+                                    
+                                    if self.lockScreenDisplayed {
+                                        
+                                        self.dismiss(animated: false, completion: nil)
+                                        self.lockScreenDisplayed = false
+                                    }
+                                }
+                            } else {
+                                
+                                print("authentication fail = \(String(describing: error))")
+                                
+                                if !self.lockScreenDisplayed {
+                                    
+                                    DispatchQueue.main.async {
+                                        
+                                        self.dismiss(animated: false, completion: nil)
 
-                                    self.lockout()
+                                        self.lockout()
+                                    }
                                 }
                             }
                         }
-                    }
-                } else {
-                    
-                    appDelegate?.lastAuthenticated = Date()
-                    
-                    DispatchQueue.main.async {
+                    } else {
                         
-                        if self.lockScreenDisplayed {
+                        appDelegate?.lastAuthenticated = Date()
+                        
+                        DispatchQueue.main.async {
                             
-                            self.dismiss(animated: false, completion: nil)
-                            self.lockScreenDisplayed = false
+                            if self.lockScreenDisplayed {
+                                
+                                self.dismiss(animated: false, completion: nil)
+                                self.lockScreenDisplayed = false
+                            }
                         }
                     }
                 }

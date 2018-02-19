@@ -8,6 +8,7 @@
 
 import UIKit
 import os.log
+import LocalAuthentication
 
 class SettingTableViewController: UITableViewController,
     UISplitViewControllerDelegate,
@@ -58,6 +59,46 @@ class SettingTableViewController: UITableViewController,
         return tableViewController
     }
     
+    func reload() {
+        
+        loadDataIntoSection()
+        tableView.reloadData()
+    }
+    
+    func loadDataIntoSection() {
+        
+        tableSectionCellList = [TableSectionCell]()
+        
+        let mainSection = TableSectionCell(identifier: "main", title: "", cellList: ["About"], data: nil)
+        tableSectionCellList.append(mainSection)
+        
+        let helperSection = TableSectionCell(identifier: "ex", title: "", cellList: ["ExchangeRate"], data: nil)
+        tableSectionCellList.append(helperSection)
+        
+        let tableViewController = getMainTableView()
+        
+        if tableViewController.iCloudEnable {
+            
+            let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export", "SynciCloud"], data: nil)
+            tableSectionCellList.append(exportSection)
+        }
+        
+        if tableViewController.authenticatedMechanismExist {
+            
+            let defaults = UserDefaults.standard;
+            let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
+            var celllist = ["requiredauthentication"]
+            
+            if required {
+                
+                celllist.append("Lockout")
+            }
+            
+            let logoutSection = TableSectionCell(identifier: "authentication", title: "", cellList: celllist, data: nil)
+            tableSectionCellList.append(logoutSection)
+        }
+    }
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -72,25 +113,7 @@ class SettingTableViewController: UITableViewController,
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         
-        let mainSection = TableSectionCell(identifier: "main", title: "", cellList: ["About"], data: nil)
-        tableSectionCellList.append(mainSection)
-        
-        let helperSection = TableSectionCell(identifier: "ex", title: "", cellList: ["ExchangeRate"], data: nil)
-        tableSectionCellList.append(helperSection)
-
-        let tableViewController = getMainTableView()
-        
-        if tableViewController.iCloudEnable {
-            
-            let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export", "SynciCloud"], data: nil)
-            tableSectionCellList.append(exportSection)
-        }
-        
-        if tableViewController.authenticatedMechanismExist {
-            
-            let logoutSection = TableSectionCell(identifier: "lockout", title: "", cellList: ["Lockout"], data: nil)
-            tableSectionCellList.append(logoutSection)
-        }
+        loadDataIntoSection()
     }
 
     override func didReceiveMemoryWarning() {
@@ -166,6 +189,19 @@ class SettingTableViewController: UITableViewController,
             newcell.accessoryType = .none
             cell = newcell
 
+        case "requiredauthentication" :
+            guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
+                
+                fatalError("Exception: error on creating settingTableCell")
+            }
+
+            let defaults = UserDefaults.standard;
+            let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
+            
+            newcell.title.text = "Require authentication"
+            newcell.accessoryType = required ? .checkmark : .none
+            cell = newcell
+            
             default:
                 fatalError("Exception: \(tableSectionCellList[indexPath.section].cellList[indexPath.row]) is not supported")
         }
@@ -474,13 +510,39 @@ class SettingTableViewController: UITableViewController,
             
             mainSplitView.popOverAlertController = optionMenu
             present(optionMenu, animated: true, completion: nil)
-        } else if tableSectionCellList[indexPath.section].identifier == "lockout" {
+        } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "Lockout" {
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             appDelegate?.lastAuthenticated = nil
             
             let tableViewController = getMainTableView()
             
             tableViewController.lockout()
+        } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "requiredauthentication" {
+        
+            let defaults = UserDefaults.standard;
+            let laContext = LAContext()
+            var authError: NSError?
+            
+            if #available(iOS 8.0, macOS 10.12.1, *) {
+                
+                if laContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
+                    
+                    laContext.evaluatePolicy(.deviceOwnerAuthentication,
+                                             localizedReason: "Authenticate to change the setting" )
+                    { (success, error) in
+                        
+                        if success {
+                            
+                            DispatchQueue.main.async {
+                                
+                                let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
+                                defaults.set(!required, forKey: "requiredauthentication")
+                                self.reload()
+                            }
+                        }
+                    }
+                }
+            }
         } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "ExchangeRate" {
             
             showExchangeRate(indexPath)
