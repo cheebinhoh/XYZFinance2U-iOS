@@ -450,11 +450,16 @@ class BudgetTableViewController: UITableViewController,
         let name = budget.value(forKey: XYZBudget.name) as? String
         let amount = budget.value(forKey: XYZBudget.amount) as? Double
         let currency = budget.value(forKey: XYZBudget.currency) as? String
-        var length = budget.value(forKey: XYZBudget.length) as? String
+        let length = budget.value(forKey: XYZBudget.length) as? String
+        var period = ""
         
         if length == XYZBudget.Length.none.rawValue {
             
-            length = "-"
+            period = "-"
+        } else {
+            
+            let start = formattingDate(date: budget.currentStart!, style: .short) //budget.currentStart
+            period = "\(length!), from: \(start)"
         }
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -463,8 +468,21 @@ class BudgetTableViewController: UITableViewController,
         cell.spendAmount.text = formattingCurrencyValue(input: spendAmount, code: currency!)
         cell.amount.text = formattingCurrencyValue(input: amount!, code: currency!)
         cell.name.text = name
-        cell.length.text = "length: \(length!)"
-
+        cell.length.text = period
+        var color = UIColor.black
+        if spendAmount > amount! {
+            
+            color = UIColor.red
+        } else if spendAmount == amount {
+            
+            color = UIColor.black
+        } else {
+            
+            color = UIColor.black
+        }
+        
+        cell.spendAmount.textColor = color
+        
         return cell
     }
 
