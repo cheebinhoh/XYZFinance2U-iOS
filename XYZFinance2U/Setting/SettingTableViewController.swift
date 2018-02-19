@@ -584,7 +584,7 @@ class SettingTableViewController: UITableViewController,
     
     func expenseFileContent() -> String {
         
-        var text = "Number\tDetail\tDate\tCurrency\tAmount\n"
+        var text = "Number\tDetail\tDate\tCurrency\tAmount\tCategory\n"
         let expenseList = sortExpenses(loadExpenses()!)
 
         for (index, expense) in expenseList.enumerated() {
@@ -593,8 +593,9 @@ class SettingTableViewController: UITableViewController,
             let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
             let date = formattingDate(date: expense.value(forKey: XYZExpense.date) as? Date ?? Date(), style: .short )
             let currencyCode = Locale.current.currencyCode!
+            let category = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
             
-            text = text + "\(index)\t\(detail)\t\(date)\t\(currencyCode)\t\(amount)\n"
+            text = text + "\(index)\t\(detail)\t\(date)\t\(currencyCode)\t\(amount)\t\(category)\n"
         }
         
         return text
