@@ -23,6 +23,7 @@ class BudgetDetailTableViewController: UITableViewController,
     BudgetDetailCommandDelegate,
     SelectionDelegate {
     
+    // MARK: - call back
     func executeCommand(_ sender: BudgetDetailCommandTableViewCell) {
 
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -143,6 +144,7 @@ class BudgetDetailTableViewController: UITableViewController,
     
     }
 
+    // MARK: - properties
     var budgetDelegate: BudgetDetailDelegate?
     var isPopover: Bool = false
     var isPushinto: Bool = false
@@ -167,6 +169,8 @@ class BudgetDetailTableViewController: UITableViewController,
             return true
         }
     }
+    
+    // MARK: - IBAction
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways.
@@ -252,6 +256,8 @@ class BudgetDetailTableViewController: UITableViewController,
             */
         }
     }
+    
+    // MARK: - functions
     
     private func getMasterTableViewController() -> BudgetTableViewController {
         
