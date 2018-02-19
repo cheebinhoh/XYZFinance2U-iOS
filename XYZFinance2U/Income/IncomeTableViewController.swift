@@ -660,7 +660,7 @@ class IncomeTableViewController: UITableViewController,
                 let appDelegate = UIApplication.shared.delegate as? AppDelegate
                 
                 if nil == appDelegate?.lastAuthenticated
-                    || Date().timeIntervalSince((appDelegate?.lastAuthenticated)!) >= 30.0 {
+                    || Date().timeIntervalSince((appDelegate?.lastAuthenticated)!) >= 60.0 {
                    
                     laContext.evaluatePolicy(.deviceOwnerAuthentication,
                                              localizedReason: "Authenticate to use the app" )
