@@ -636,7 +636,8 @@ class ExpenseTableViewController: UITableViewController,
             }
         }
         
-        if !sectionList.isEmpty {
+        if !sectionList.isEmpty
+            || filteredExpenseList != nil {
             
             let newSection = TableSectionCell(identifier: "searchBar", title: "", cellList: ["searchBar"], data: nil)
             sectionList.insert(newSection, at: 0)
