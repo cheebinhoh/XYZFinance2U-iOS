@@ -328,7 +328,14 @@ class BudgetTableViewController: UITableViewController,
     }
     
     // MARK: - Table view data source
-
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        
+        navigationItem.rightBarButtonItem?.isEnabled = !editing
+        
+        super.setEditing(editing, animated: animated)
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
