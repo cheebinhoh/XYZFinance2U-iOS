@@ -332,7 +332,7 @@ class AppDelegate: UIResponder,
     static let appName: String = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? ""
     
     // MARK: - property
-    
+    var lastAuthenticated: Date?
     var expenseList = [XYZExpense]()
     var incomeList = [XYZAccount]()
     var budgetList = [XYZBudget]()
@@ -343,6 +343,15 @@ class AppDelegate: UIResponder,
     var orientation = UIInterfaceOrientationMask.all
     
     // MARK: - function
+    
+    func applicationProtectedDataDidBecomeAvailable(_ application: UIApplication) {
+        
+    }
+
+    func applicationProtectedDataWillBecomeUnavailable(_ application: UIApplication) {
+ 
+        self.lastAuthenticated = nil
+    }
     
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         

@@ -605,6 +605,8 @@ class IncomeTableViewController: UITableViewController,
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             
+            //appDelegate.lastAuthenticated = nil
+            
             lockScreenDisplayed = true
             
             // NOTE: to avoid warning "Unbalanced calls to begin/end appearance transitions for"
@@ -654,41 +656,60 @@ class IncomeTableViewController: UITableViewController,
                         lockout()
                     }
                 }
-            
-                laContext.evaluatePolicy(.deviceOwnerAuthentication,
-                                         localizedReason: "Authenticate to use the app" )
-                { (success, error) in
-            
-                    self.authenticatedOk = success
-                    
-                    if self.authenticatedOk {
+        
+                let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                
+                if nil == appDelegate?.lastAuthenticated
+                    || Date().timeIntervalSince((appDelegate?.lastAuthenticated)!) >= 30.0 {
+                   
+                    laContext.evaluatePolicy(.deviceOwnerAuthentication,
+                                             localizedReason: "Authenticate to use the app" )
+                    { (success, error) in
+                
+                        self.authenticatedOk = success
                         
-                        //OperationQueue.main.addOperation
-                        DispatchQueue.main.async {
+                        if self.authenticatedOk {
                             
-                            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                                
-                                appDelegate.orientation = .all
-                            }
-                            
-                            if self.lockScreenDisplayed {
-                                
-                                self.dismiss(animated: false, completion: nil)
-                                self.lockScreenDisplayed = false
-                            }
-                        }
-                    } else {
-                        
-                        print("authentication fail = \(String(describing: error))")
-                        
-                        if !self.lockScreenDisplayed {
-                            
+                            //OperationQueue.main.addOperation
                             DispatchQueue.main.async {
                                 
-                                self.dismiss(animated: false, completion: nil)
-
-                                self.lockout()
+                                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                                    
+                                    appDelegate.lastAuthenticated = Date()
+                                    appDelegate.orientation = .all
+                                }
+                                
+                                if self.lockScreenDisplayed {
+                                    
+                                    self.dismiss(animated: false, completion: nil)
+                                    self.lockScreenDisplayed = false
+                                }
                             }
+                        } else {
+                            
+                            print("authentication fail = \(String(describing: error))")
+                            
+                            if !self.lockScreenDisplayed {
+                                
+                                DispatchQueue.main.async {
+                                    
+                                    self.dismiss(animated: false, completion: nil)
+
+                                    self.lockout()
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    
+                    appDelegate?.lastAuthenticated = Date()
+                    
+                    DispatchQueue.main.async {
+                        
+                        if self.lockScreenDisplayed {
+                            
+                            self.dismiss(animated: false, completion: nil)
+                            self.lockScreenDisplayed = false
                         }
                     }
                 }
