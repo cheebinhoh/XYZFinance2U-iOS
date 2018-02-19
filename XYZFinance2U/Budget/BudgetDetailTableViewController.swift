@@ -359,7 +359,11 @@ class BudgetDetailTableViewController: UITableViewController,
             length = XYZBudget.Length.none
             date = Date()
             
-            navigationItem.title = "New budget"
+            if isCollapsed {
+                
+                navigationItem.title = "New budget"
+            }
+            
             navigationItem.rightBarButtonItem?.isEnabled = !budgetType.isEmpty
         }
 
