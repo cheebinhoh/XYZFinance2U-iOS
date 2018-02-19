@@ -624,10 +624,7 @@ class IncomeTableViewController: UITableViewController,
         var authError: NSError?
         authenticatedOk = false
         
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            
-            appDelegate.orientation = .portrait
-        }
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
         if #available(iOS 8.0, macOS 10.12.1, *) {
             
@@ -642,7 +639,6 @@ class IncomeTableViewController: UITableViewController,
                     
                     if !lockScreenDisplayed {
                         
-                        let appDelegate = UIApplication.shared.delegate as? AppDelegate
                         guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
                             
                             fatalError("Exception: UISplitViewController is expected" )
@@ -661,8 +657,6 @@ class IncomeTableViewController: UITableViewController,
                             lockout()
                         }
                     }
-            
-                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
                     
                     if nil == appDelegate?.lastAuthenticated
                         || Date().timeIntervalSince((appDelegate?.lastAuthenticated)!) >= 0.0 {
@@ -675,15 +669,10 @@ class IncomeTableViewController: UITableViewController,
                             
                             if self.authenticatedOk {
                                 
-                                //OperationQueue.main.addOperation
                                 DispatchQueue.main.async {
                                     
-                                    if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                                        
-                                        appDelegate.lastAuthenticated = Date()
-                                        appDelegate.orientation = .all
-                                    }
-                                    
+                                    appDelegate?.lastAuthenticated = Date()
+            
                                     if self.lockScreenDisplayed {
                                         
                                         self.dismiss(animated: false, completion: nil)
@@ -712,7 +701,7 @@ class IncomeTableViewController: UITableViewController,
                         DispatchQueue.main.async {
                             
                             if self.lockScreenDisplayed {
-                                
+
                                 self.dismiss(animated: false, completion: nil)
                                 self.lockScreenDisplayed = false
                             }
