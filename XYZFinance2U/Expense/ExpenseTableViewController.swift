@@ -740,8 +740,10 @@ class ExpenseTableViewController: UITableViewController,
             filteredExpenseList = expenseList.filter({ (expense) -> Bool in
             
                 let detail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
+                let category = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
                 
                 return detail.lowercased().range(of: searchText.lowercased()) != nil
+                       || category.lowercased().range(of: searchText.lowercased()) != nil
             })
         }
     }

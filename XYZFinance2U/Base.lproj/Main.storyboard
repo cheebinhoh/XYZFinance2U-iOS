@@ -1743,7 +1743,7 @@ Chee Bin HOH, 2017</string>
         <scene sceneID="wXU-Xi-zwJ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Qhu-1X-V4L" userLabel="Budget" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Budget" image="budget" id="sun-Dr-dFf"/>
+                    <tabBarItem key="tabBarItem" title="Budgets" image="budget" id="sun-Dr-dFf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="L84-DH-Fxc">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
