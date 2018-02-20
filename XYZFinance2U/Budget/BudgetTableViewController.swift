@@ -281,6 +281,12 @@ class BudgetTableViewController: UITableViewController,
         for expense in expenseList {
         
             let category = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
+            let isSoftDelete = expense.value(forKey: XYZExpense.isSoftDelete) as? Bool ?? false
+            
+            if isSoftDelete {
+                
+                continue
+            }
             
             if category == name {
                 
