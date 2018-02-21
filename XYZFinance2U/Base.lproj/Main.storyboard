@@ -1537,7 +1537,7 @@ Chee Bin HOH, 2017</string>
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="299.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="CeS-qr-T2E">
+                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="CeS-qr-T2E">
                                             <rect key="frame" x="16" y="0.0" width="359" height="289"/>
                                             <date key="date" timeIntervalSinceReferenceDate="534744362.618038">
                                                 <!--2017-12-12 04:06:02 +0000-->

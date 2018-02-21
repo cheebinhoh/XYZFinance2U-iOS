@@ -300,7 +300,7 @@ class BudgetDetailTableViewController: UITableViewController,
             
             hasChanged = true
         }
-
+        
         budget?.setValue(budgetType, forKey: XYZBudget.name)
         budget?.setValue(amount, forKey: XYZBudget.amount)
         budget?.setValue(currencyCode, forKey: XYZBudget.currency)

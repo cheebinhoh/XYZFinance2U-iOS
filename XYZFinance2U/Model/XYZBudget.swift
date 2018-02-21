@@ -111,13 +111,6 @@ class XYZBudget : NSManagedObject {
                                               to: date!)
         }
         
-        if let _ = value {
-            
-            value = Calendar.current.date(byAdding: .day,
-                                          value:-1,
-                                          to: value!)
-        }
-        
         return value
     }
     
@@ -168,7 +161,13 @@ class XYZBudget : NSManagedObject {
                                               to: start)
         }
         
-        return value
+        if let _ = value {
+            
+            return Calendar.current.date(from: Calendar.current.dateComponents([.year, .month, .day], from: value!))
+        } else {
+            
+            return value
+        }
     }
     
     // MARK: - function

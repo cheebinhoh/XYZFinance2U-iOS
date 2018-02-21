@@ -288,7 +288,7 @@ class BudgetTableViewController: UITableViewController,
                 continue
             }
             
-            if category == name {
+            if category.lowercased() == name.lowercased() {
                 
                 let date = expense.value(forKey: XYZExpense.date) as? Date
                 if currentStart == nil
