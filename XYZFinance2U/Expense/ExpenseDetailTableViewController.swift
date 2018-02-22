@@ -1282,12 +1282,14 @@ class ExpenseDetailTableViewController: UITableViewController,
                     fatalError("Exception: error on instantiating SelectionNavigationController")
                 }
                 
+                selectionTableViewController.caseInsensitive = true
                 selectionTableViewController.selectionIdentifier = "budget"
 
                 selectionTableViewController.setSelections("", false,
                                                            budgetCategories)
                 selectionTableViewController.setSelectedItem(budgetCategory)
                 selectionTableViewController.delegate = self
+                
                 
                 let nav = UINavigationController(rootViewController: selectionTableViewController)
                 nav.modalPresentationStyle = .popover

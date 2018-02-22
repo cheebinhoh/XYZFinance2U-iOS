@@ -644,6 +644,7 @@ class AppDelegate: UIResponder,
                                     
                                 case XYZAccount.type:
                                     self.incomeList = (icloudzone.data as? [XYZAccount])!
+                                    self.incomeList = sortAcounts(self.incomeList)
                                     
                                     DispatchQueue.main.async {
                                         
@@ -693,6 +694,7 @@ class AppDelegate: UIResponder,
                         
                     case XYZAccount.type:
                         self.incomeList = (icloudzone.data as? [XYZAccount])!
+                        self.incomeList = sortAcounts(self.incomeList)
                         
                         DispatchQueue.main.async {
                             

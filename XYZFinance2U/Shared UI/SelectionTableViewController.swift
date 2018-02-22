@@ -23,6 +23,7 @@ class SelectionTableViewController: UITableViewController {
     var selectionIdentifier: String?
     var hasIndexing: Bool = false
     var sectionTitles = [String]()
+    var caseInsensitive = false
     
     // MARK: - function
     
@@ -139,7 +140,9 @@ class SelectionTableViewController: UITableViewController {
         
         cell.label.text = tableSectionList[indexPath.section].cellList[indexPath.row]
         
-        if tableSectionList[indexPath.section].cellList[indexPath.row] == self.selectedItem {
+        if tableSectionList[indexPath.section].cellList[indexPath.row] == self.selectedItem
+           || ( caseInsensitive
+                && tableSectionList[indexPath.section].cellList[indexPath.row].lowercased() == self.selectedItem?.lowercased() ){
             
             cell.accessoryType = .checkmark
         } else {
