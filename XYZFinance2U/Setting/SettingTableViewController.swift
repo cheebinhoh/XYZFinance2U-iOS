@@ -12,7 +12,36 @@ import LocalAuthentication
 
 class SettingTableViewController: UITableViewController,
     UISplitViewControllerDelegate,
-    UIDocumentPickerDelegate {
+    UIDocumentPickerDelegate,
+    SettingTextTableViewCellDelegate {
+    
+    func switchChanged(_ yesno: Bool, _ sender: SettingTableViewCell) {
+    
+        let defaults = UserDefaults.standard;
+        let laContext = LAContext()
+        var authError: NSError?
+        
+        if #available(iOS 8.0, macOS 10.12.1, *) {
+            
+            if laContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
+                
+                laContext.evaluatePolicy(.deviceOwnerAuthentication,
+                                         localizedReason: "Authenticate to change the setting" )
+                { (success, error) in
+                    
+                    DispatchQueue.main.async {
+                        
+                        if success {
+                            
+                            let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
+                            defaults.set(!required, forKey: "requiredauthentication")
+                        }
+                        self.reload()
+                    }
+                }
+            }
+        }
+    }
     
     // MARK: - property
     
@@ -165,7 +194,7 @@ class SettingTableViewController: UITableViewController,
                     fatalError("Exception: error on creating settingTableCell")
                 }
                 
-                newcell.title.text = "Save as file"
+                newcell.title.text = "Save to file"
                 newcell.accessoryType = .none
                 cell = newcell
             
@@ -199,7 +228,17 @@ class SettingTableViewController: UITableViewController,
             let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
             
             newcell.title.text = "Require authentication"
-            newcell.accessoryType = required ? .checkmark : .none
+            newcell.accessoryType = .none
+            
+            if nil == newcell.optionSwitch {
+                
+                newcell.addUISwitch()
+                newcell.delegate = self
+            }
+            
+            newcell.optionSwitch.isOn = required
+            
+            // newcell.accessoryType = required ? .checkmark : .none
             cell = newcell
             
             default:
@@ -519,6 +558,7 @@ class SettingTableViewController: UITableViewController,
             tableViewController.lockout()
         } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "requiredauthentication" {
         
+            /*
             let defaults = UserDefaults.standard;
             let laContext = LAContext()
             var authError: NSError?
@@ -543,6 +583,7 @@ class SettingTableViewController: UITableViewController,
                     }
                 }
             }
+            */
         } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "ExchangeRate" {
             
             showExchangeRate(indexPath)
