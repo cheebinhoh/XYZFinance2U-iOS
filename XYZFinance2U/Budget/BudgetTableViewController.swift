@@ -393,7 +393,7 @@ class BudgetTableViewController: UITableViewController,
         
         var commands = [UIContextualAction]()
         
-        let new = UIContextualAction(style: .normal, title: "Expense ..." ) { _, _, handler in
+        let new = UIContextualAction(style: .normal, title: "New Expense ..." ) { _, _, handler in
             
             guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
                 
