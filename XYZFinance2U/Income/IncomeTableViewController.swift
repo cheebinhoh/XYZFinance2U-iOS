@@ -1127,7 +1127,7 @@ class IncomeTableViewController: UITableViewController,
         
         saveAccounts()
         
-        navigationItem.rightBarButtonItem?.isEnabled = true
+        //navigationItem.rightBarButtonItem?.isEnabled = true
     }
 
     // Override to support rearranging the table view.
