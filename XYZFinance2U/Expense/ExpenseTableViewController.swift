@@ -775,6 +775,13 @@ class ExpenseTableViewController: UITableViewController,
                 // Delete the row from the data source
                 self.delete(of: indexPath)
                 
+                let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                if (appDelegate?.expenseList.isEmpty)! {
+                    
+                    self.setEditing(false, animated: true)
+                    self.tableView.setEditing(false, animated: false)
+                }
+                
                 handler(true)
             }
         

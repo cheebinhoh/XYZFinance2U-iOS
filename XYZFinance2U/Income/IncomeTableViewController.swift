@@ -882,6 +882,13 @@ class IncomeTableViewController: UITableViewController,
                 
                 self.deleteIncome(income: income)
                 
+                let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                if (appDelegate?.incomeList.isEmpty)! {
+                    
+                    self.setEditing(false, animated: true)
+                    self.tableView.setEditing(false, animated: false)
+                }
+                
                 handler(true)
             }
             
