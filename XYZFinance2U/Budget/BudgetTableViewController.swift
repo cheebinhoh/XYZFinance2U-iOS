@@ -17,7 +17,49 @@ protocol BudgetSelectionDelegate: class {
 
 class BudgetTableViewController: UITableViewController,
     UISplitViewControllerDelegate,
+    ExpenseDetailDelegate,
     BudgetDetailDelegate {
+    
+    func saveNewExpense(expense: XYZExpense) {
+
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.expenseList.append(expense)
+        
+        saveManageContext()
+
+        guard let splitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: MainSplitViewController is expected")
+        }
+        
+        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+            
+            fatalError("Exception: MainUITabBarController is expected")
+        }
+        
+        guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+        
+        guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+            
+            fatalError("Exception: ExpenseTableViewController is expected")
+        }
+        
+        expenseView.updateToiCloud(expense)
+        expenseView.reloadData()
+        reloadData()
+    }
+    
+    func saveExpense(expense: XYZExpense) {
+        fatalError("Exception: it is not supposed to be here")
+    }
+    
+    func deleteExpense(expense: XYZExpense) {
+        fatalError("Exception: it is not supposed to be here")
+    }
+    
     
     // MARK: budget detail protocol
     func saveNewBudget(budget: XYZBudget) {
@@ -333,7 +375,102 @@ class BudgetTableViewController: UITableViewController,
         })
     }
     
+    func delete(of indexPath:IndexPath) {
+
+        var sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]
+        
+        let oldBudget = sectionBudgetList?.remove(at: indexPath.row)
+        self.sectionList[indexPath.section].data = sectionBudgetList
+        
+        softdeletebudget(oldBudget!)
+        
+        saveManageContext()
+    }
+    
     // MARK: - Table view data source
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        var commands = [UIContextualAction]()
+            
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, handler in
+            
+            // Delete the row from the data source
+            let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]
+            let budget = sectionBudgetList![indexPath.row]
+            
+            self.softdeletebudget(budget)
+            
+            //tableView.deleteRows(at: [indexPath], with: .fade)
+            self.reloadData()
+            
+            handler(true)
+        }
+        
+        commands.append(delete)
+        
+        let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
+            
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                
+                fatalError("Exception: UISplitViewController is expected" )
+            }
+            
+            let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let copyUrlOption = UIAlertAction(title: "Add new expense", style: .default, handler: { (action) in
+                
+                guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+                    
+                    fatalError("Exception: ExpenseDetailNavigationController is expected")
+                }
+                
+                guard let expenseDetailTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
+                    
+                    fatalError("Exception: ExpenseDetailTableViewController is expected" )
+                }
+                
+                let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                    
+                    fatalError("Exception: UISplitViewController is expected" )
+                }
+                
+                mainSplitView.popOverNavigatorController = expenseDetailNavigationController
+                
+                let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]
+                let budget = sectionBudgetList![indexPath.row]
+                let currrency = budget.value(forKey: XYZBudget.currency) as? String
+                let budgetGroup = budget.value(forKey: XYZBudget.name) as? String
+                
+                expenseDetailTableView.presetBudgetCategory = budgetGroup
+                expenseDetailTableView.presetCurrencyCode = currrency
+                expenseDetailTableView.setPopover(delegate: self)
+                //expenseDetailTableView.currencyCodes = currencyCodes
+                self.isPopover = true
+                
+                expenseDetailNavigationController.modalPresentationStyle = .popover
+                handler(true)
+                self.present(expenseDetailNavigationController, animated: true, completion: nil)
+            })
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                
+                mainSplitView.popOverAlertController = nil
+                handler(true)
+            })
+            
+            optionMenu.addAction(copyUrlOption)
+            optionMenu.addAction(cancelAction)
+            
+            mainSplitView.popOverAlertController = optionMenu
+            self.present(optionMenu, animated: true, completion: nil)
+        }
+        
+        commands.append(more)
+        
+        return UISwipeActionsConfiguration(actions: commands)
+    }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         

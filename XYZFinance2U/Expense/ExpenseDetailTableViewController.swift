@@ -466,6 +466,10 @@ class ExpenseDetailTableViewController: UITableViewController,
                     navigationItem.setLeftBarButton(backButton, animated: true)
                 }
             }
+        } else {
+            
+            currencyCode = presetCurrencyCode ?? Locale.current.currencyCode
+            budgetCategory = presetBudgetCategory ?? ""
         }
         
         budgetList = getBudgets(of: currencyCode!)
@@ -735,6 +739,8 @@ class ExpenseDetailTableViewController: UITableViewController,
     }
     
     // MARK: - property
+    var presetBudgetCategory: String?
+    var presetCurrencyCode: String?
     var budgetCategory = ""
     var budgetList = [XYZBudget]()
     var currencyCode = Locale.current.currencyCode
@@ -1038,7 +1044,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
                 
-                currencycell.setSelection(currencyCode ?? "USD")
+                currencycell.setSelection( currencyCode ?? "USD" )
                 currencycell.selectionStyle = .none
                 
                 cell = currencycell
@@ -1049,7 +1055,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
                 
-                budgetcell.setSelection(budgetCategory == "" ? "budget category" : budgetCategory)
+                budgetcell.setSelection( budgetCategory == "" ? "budget category" : budgetCategory )
                 budgetcell.selectionStyle = .none
                 
                 if "" != budgetCategory {
@@ -1359,10 +1365,10 @@ class ExpenseDetailTableViewController: UITableViewController,
             return indexPath
         } else if sectionList[indexPath.section].cellList[indexPath.row] == "currency" {
             
-            return indexPath
+            return presetCurrencyCode == nil ? indexPath : nil
         } else if sectionList[indexPath.section].cellList[indexPath.row] == "budget" {
             
-            return indexPath
+            return presetBudgetCategory == nil ? indexPath : nil
         } else {
             
             return nil

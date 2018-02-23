@@ -769,7 +769,7 @@ class ExpenseTableViewController: UITableViewController,
         
             let expense = sectionExpenseList[indexPath.row]
             let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
-     
+            
             let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, handler in
                 
                 // Delete the row from the data source
