@@ -1171,21 +1171,23 @@
                                     <rect key="frame" x="0.0" y="0.0" width="341" height="49.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEy-AC-c1k">
-                                            <rect key="frame" x="16" y="0.0" width="325" height="50"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="B79-1b-dYa"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3E2-ny-KDZ">
+                                            <rect key="frame" x="16" y="0.0" width="325" height="49.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WEy-AC-c1k">
+                                                    <rect key="frame" x="0.0" y="0.0" width="325" height="49.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="WEy-AC-c1k" secondAttribute="trailingMargin" id="2gd-RY-Hrs"/>
-                                        <constraint firstItem="WEy-AC-c1k" firstAttribute="leading" secondItem="L83-Kc-5tb" secondAttribute="leadingMargin" id="46p-F7-WP8"/>
-                                        <constraint firstAttribute="trailing" secondItem="WEy-AC-c1k" secondAttribute="trailing" id="MVT-Ux-X54"/>
-                                        <constraint firstItem="WEy-AC-c1k" firstAttribute="centerY" secondItem="L83-Kc-5tb" secondAttribute="centerY" id="awG-6T-WJc"/>
+                                        <constraint firstAttribute="trailing" secondItem="3E2-ny-KDZ" secondAttribute="trailing" id="8pu-dO-tg1"/>
+                                        <constraint firstItem="3E2-ny-KDZ" firstAttribute="top" secondItem="L83-Kc-5tb" secondAttribute="top" id="Pdq-Pq-HeD"/>
+                                        <constraint firstAttribute="bottom" secondItem="3E2-ny-KDZ" secondAttribute="bottom" id="ere-La-7Im"/>
+                                        <constraint firstItem="3E2-ny-KDZ" firstAttribute="leading" secondItem="L83-Kc-5tb" secondAttribute="leading" constant="16" id="nMx-Hc-ByK"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
