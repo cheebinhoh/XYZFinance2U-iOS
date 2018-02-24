@@ -433,6 +433,14 @@ class BudgetTableViewController: UITableViewController,
         commands.append(new)
         
         let more = UIContextualAction(style: .normal, title: "More" ) { _, _, handler in
+            
+            guard let calendarViewNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "CalendarViewNavigationController") as? UINavigationController else {
+                
+                fatalError("Exception: ExpenseDetailNavigationController is expected")
+            }
+            
+            handler(true)
+            self.present(calendarViewNavigationController, animated: true, completion: {})
         }
         
         commands.append(more)

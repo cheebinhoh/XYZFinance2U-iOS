@@ -8,10 +8,12 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
+//private let reuseIdentifier = "calendarCollectionViewCell"
 
 class CalendarCollectionViewController: UICollectionViewController {
 
+    var sectionList = [TableSectionCell]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,16 +21,54 @@ class CalendarCollectionViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
+        //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        addBackButton()
+        loadDataIntoSection()
         // Do any additional setup after loading the view.
     }
 
+    func loadDataIntoSection() {
+        
+        sectionList = [TableSectionCell]()
+        
+        let headingSection = TableSectionCell(identifier: "heading", title: "", cellList: ["S", "M", "T", "W", "T", "F", "S"], data: nil)
+        sectionList.append(headingSection)
+        
+        var cellList = [String]()
+        for index in 1...35 {
+            
+            cellList.append("\(index)")
+        }
+        
+        let bodySection = TableSectionCell(identifier: "body", title: "", cellList: cellList, data: nil)
+        sectionList.append(bodySection)
+    }
+    
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
+    private func addBackButton() {
+        
+        let backButton = UIButton(type: .custom)
+        backButton.setImage(UIImage(named: "BackButton"), for: .normal) // Image can be downloaded from here below link
+        backButton.setTitle(" Back", for: .normal)
+        backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
+        backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+    }
+    
+    // MARK: - IBAction
+    
+    @IBAction func backAction(_ sender: UIButton) {
+        
+        dismiss(animated: true, completion: nil)
+        //let _ = self.navigationController?.popViewController(animated: true)
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -42,24 +82,32 @@ class CalendarCollectionViewController: UICollectionViewController {
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+
+        return sectionList.count
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+
+        return sectionList[section].cellList.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCollectionViewCell", for: indexPath) as? CalendarCollectionViewCell else {
+            
+            fatalError("Exception: calendarCollectionViewCell is expected")
+        }
     
+        cell.label.text = sectionList[indexPath.section].cellList[indexPath.row]
+        
+        // cell.label.text = sectionList[indexPath.section].cellList[indexPath.row]
         // Configure the cell
     
         return cell
     }
-
+    
+    
     // MARK: UICollectionViewDelegate
 
     /*
