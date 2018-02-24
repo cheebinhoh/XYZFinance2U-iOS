@@ -432,6 +432,11 @@ class BudgetTableViewController: UITableViewController,
         new.backgroundColor = UIColor.blue
         commands.append(new)
         
+        let more = UIContextualAction(style: .normal, title: "More" ) { _, _, handler in
+        }
+        
+        commands.append(more)
+        
         return UISwipeActionsConfiguration(actions: commands)
     }
     
