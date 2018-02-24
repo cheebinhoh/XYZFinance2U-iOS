@@ -661,6 +661,7 @@ class AppDelegate: UIResponder,
                                     
                                 case XYZBudget.type:
                                     self.budgetList = (icloudzone.data as? [XYZBudget])!
+                                    self.budgetList = sortBudgets(self.budgetList)
                                     
                                     DispatchQueue.main.async {
                                         
@@ -715,6 +716,7 @@ class AppDelegate: UIResponder,
                         
                     case XYZBudget.type:
                         self.budgetList = (icloudzone.data as? [XYZBudget])!
+                        self.budgetList = sortBudgets(self.budgetList)
                         
                         DispatchQueue.main.async {
                             

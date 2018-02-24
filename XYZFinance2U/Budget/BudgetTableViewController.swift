@@ -66,13 +66,13 @@ class BudgetTableViewController: UITableViewController,
 
         if let currencyCode = budget.value(forKey: XYZBudget.currency) as? String, currencyCodes.contains(currencyCode) {
          
-            for section in sectionList {
+            for (sectionIndex, section) in sectionList.enumerated() {
                 
                 if section.identifier == currencyCode {
                     
                     let setionBudgetList = section.data as? [XYZBudget]
                     
-                    budget.setValue(setionBudgetList?.count, forKey: XYZBudget.sequenceNr)
+                    budget.setValue((setionBudgetList?.count)! + sectionIndex * 1000, forKey: XYZBudget.sequenceNr)
                     
                     break
                 }
@@ -745,12 +745,23 @@ class BudgetTableViewController: UITableViewController,
 
             for (index, budget) in sectionBudgetList.enumerated() {
                 
-                budget.setValue(index, forKey: XYZBudget.sequenceNr)
+                budget.setValue(index + to.section * 1000, forKey: XYZBudget.sequenceNr)
+                budget.setValue(Date(), forKey: XYZBudget.lastRecordChange)
             }
             
             sectionList[fromIndexPath.section].data = sectionBudgetList
             
             saveManageContext()
+            
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            let ckrecordzone = CKRecordZone(zoneName: XYZBudget.type)
+            let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.privateiCloudZones)!)
+            zone?.data = appDelegate?.budgetList
+            
+            fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
+                                 [ckrecordzone], (appDelegate?.privateiCloudZones)!, {
+                                    
+            })
         }
     }
 
