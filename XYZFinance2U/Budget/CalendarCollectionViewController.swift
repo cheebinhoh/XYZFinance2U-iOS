@@ -49,6 +49,8 @@ class CalendarCollectionViewController: UICollectionViewController {
         startDateOfMonth = Calendar.current.date(byAdding: .day,
                                                  value:( -1 * dayComponent.day!) + 1,
                                                  to: date)
+        
+        print("************* \(String(describing: startDateOfMonth))")
     }
     
     override func viewDidLoad() {
@@ -82,9 +84,23 @@ class CalendarCollectionViewController: UICollectionViewController {
         
         dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: Date())
         let nowDate = Calendar.current.date(from: dateComponent)
-        
+
+        print("******** \(nowDate)")
+
         let targetMonthComponent = Calendar.current.dateComponents([.month,], from: startDate!)
      
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM yyyy"
+        let monthYear = dateFormatter.string(from: startDate!)
+        
+        let backButton = UIButton(type: .custom)
+        backButton.setImage(UIImage(named: "BackButton"), for: .normal) // Image can be downloaded from here below link
+        backButton.setTitle(" \(monthYear)", for: .normal)
+        backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
+        backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        
         indexPath = nil
         
         for index in 1...6 {
@@ -108,7 +124,7 @@ class CalendarCollectionViewController: UICollectionViewController {
                     
                     if startDate! == nowDate! {
                      
-                        indexPath = IndexPath(row: weekdayIndex - 1, section: index - 1)
+                        indexPath = IndexPath(row: weekdayIndex - 1, section: index)
                     }
                     
                     needSection = true
@@ -124,19 +140,6 @@ class CalendarCollectionViewController: UICollectionViewController {
                 sectionList.append(bodySection)
             }
         }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM yyyy"
-        let monthYear = dateFormatter.string(from: startDate!)
-        
-        let backButton = UIButton(type: .custom)
-        backButton.setImage(UIImage(named: "BackButton"), for: .normal) // Image can be downloaded from here below link
-        backButton.setTitle(" \(monthYear)", for: .normal)
-        backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
-        backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-        //navigationItem.leftBarButtonItem. = dateFormatter.string(from: startDate!)
     }
     
     override func didReceiveMemoryWarning() {
