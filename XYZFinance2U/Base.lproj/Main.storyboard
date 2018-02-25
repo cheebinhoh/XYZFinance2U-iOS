@@ -447,10 +447,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="1" id="vDt-t2-67N">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="5" id="vDt-t2-67N">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="50" height="1"/>
                             <inset key="sectionInset" minX="5" minY="5" maxX="5" maxY="5"/>
                         </collectionViewFlowLayout>
                         <cells>
@@ -468,13 +468,6 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8vI-af-0jB">
-                                            <rect key="frame" x="0.0" y="49" width="50" height="1"/>
-                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="ckZ-ZS-JXP"/>
-                                            </constraints>
-                                        </view>
                                     </subviews>
                                 </view>
                                 <constraints>
@@ -483,9 +476,6 @@
                                     <constraint firstItem="eWo-xS-el7" firstAttribute="top" secondItem="2XR-Mw-CDf" secondAttribute="topMargin" id="C4l-Ju-Hb9"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="eWo-xS-el7" secondAttribute="trailing" id="G4E-4V-RKD"/>
                                     <constraint firstItem="eWo-xS-el7" firstAttribute="leading" secondItem="2XR-Mw-CDf" secondAttribute="leadingMargin" id="Hqj-ec-XbV"/>
-                                    <constraint firstAttribute="trailing" secondItem="8vI-af-0jB" secondAttribute="trailing" id="IFP-wA-4mi"/>
-                                    <constraint firstAttribute="bottom" secondItem="8vI-af-0jB" secondAttribute="bottom" id="Ofc-qP-jNj"/>
-                                    <constraint firstItem="8vI-af-0jB" firstAttribute="leading" secondItem="2XR-Mw-CDf" secondAttribute="leading" id="Rni-AS-mTl"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="eWo-xS-el7" secondAttribute="bottom" id="qBB-qG-eWs"/>
                                 </constraints>
                                 <connections>
@@ -493,6 +483,11 @@
                                 </connections>
                             </collectionViewCell>
                         </cells>
+                        <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="calendarCollectionFooterView" id="ypl-Z8-SqA" userLabel="calendarCollectionFooterView">
+                            <rect key="frame" x="0.0" y="60" width="375" height="1"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </collectionReusableView>
                         <connections>
                             <outlet property="dataSource" destination="ho5-eE-oZp" id="AI4-ZS-UOp"/>
                             <outlet property="delegate" destination="ho5-eE-oZp" id="Geq-Co-mQ5"/>
@@ -502,7 +497,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="46z-CT-HO8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4321" y="786"/>
+            <point key="canvasLocation" x="4320.8000000000002" y="785.75712143928047"/>
         </scene>
         <!--Income Detail View Controller-->
         <scene sceneID="moN-AA-wde">

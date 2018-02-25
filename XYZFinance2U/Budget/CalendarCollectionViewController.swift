@@ -22,6 +22,9 @@ class CalendarCollectionViewController: UICollectionViewController {
 
         // Register cell classes
         //self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        
+        self.collectionView?.register(UICollectionViewCell.self, forSupplementaryViewOfKind: "UICollectionElementKindSectionFooter", withReuseIdentifier: "calendarCollectionFooterView")
+        
         addBackButton()
         loadDataIntoSection()
         // Do any additional setup after loading the view.
@@ -35,13 +38,16 @@ class CalendarCollectionViewController: UICollectionViewController {
         sectionList.append(headingSection)
         
         var cellList = [String]()
-        for index in 1...35 {
+        for index in 1...7 {
             
             cellList.append("\(index)")
         }
         
-        let bodySection = TableSectionCell(identifier: "body", title: "", cellList: cellList, data: nil)
-        sectionList.append(bodySection)
+        for index in 1...5 {
+            
+            let bodySection = TableSectionCell(identifier: "body\(index)", title: "", cellList: cellList, data: nil)
+            sectionList.append(bodySection)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -107,6 +113,22 @@ class CalendarCollectionViewController: UICollectionViewController {
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+ 
+        switch kind {
+        case UICollectionElementKindSectionFooter:
+            let reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: "UICollectionElementKindSectionFooter", withReuseIdentifier: "calendarCollectionFooterView", for: indexPath)
+            
+            let lineView = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 1.0))
+            //lineView.layer.borderWidth = 1.0
+            lineView.backgroundColor = UIColor.lightGray
+            reusableView.addSubview(lineView)
+            return reusableView
+            
+        default:
+            return UICollectionReusableView()
+        }
+    }
     
     // MARK: UICollectionViewDelegate
 
