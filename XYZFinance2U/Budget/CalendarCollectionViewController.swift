@@ -8,8 +8,6 @@
 
 import UIKit
 
-//private let reuseIdentifier = "calendarCollectionViewCell"
-
 class CalendarCollectionViewController: UICollectionViewController,
     UICollectionViewDelegateFlowLayout {
 
