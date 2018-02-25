@@ -67,8 +67,8 @@ class CalendarCollectionViewController: UICollectionViewController,
     @IBAction func movePreviousPeriod(_ sender: Any) {
     
         startDateOfMonth = Calendar.current.date(byAdding: .month,
-                                          value:-1,
-                                          to: startDateOfMonth!)
+                                                 value:-1,
+                                                 to: startDateOfMonth!)
         selectedExpenseList = nil
         self.reloadData()
     }
@@ -89,6 +89,9 @@ class CalendarCollectionViewController: UICollectionViewController,
         startDateOfMonth = Calendar.current.date(byAdding: .day,
                                                  value:( -1 * dayComponent.day!) + 1,
                                                  to: date)
+        
+        let dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: startDateOfMonth!)
+        startDateOfMonth = Calendar.current.date(from: dateComponents)
     }
     
     override func viewDidLoad() {
@@ -284,7 +287,6 @@ class CalendarCollectionViewController: UICollectionViewController,
             let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: Date())
             let nowDate = Calendar.current.date(from: dateComponent)
             
-            print("==== \(dayString), \(nowDate), \(thisDate)")
             if let _ = expenseList, !(expenseList?.isEmpty)! {
                 
                 cell.indicator.backgroundColor = UIColor.blue
