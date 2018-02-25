@@ -15,10 +15,41 @@ class CalendarCollectionViewController: UICollectionViewController {
     var sectionList = [TableSectionCell]()
     var indexPath: IndexPath?
     var date: Date?
+    var startDateOfMonth: Date?
     
     @IBOutlet weak var previousPeriod: UIBarButtonItem!
     @IBOutlet weak var nextPeriod: UIBarButtonItem!
     
+    func reloadData() {
+        
+        loadDataIntoSection()
+        collectionView?.reloadData()
+    }
+    
+    @IBAction func movePreviousPeriod(_ sender: Any) {
+    
+        startDateOfMonth = Calendar.current.date(byAdding: .month,
+                                          value:-1,
+                                          to: startDateOfMonth!)
+        self.reloadData()
+    }
+    
+    @IBAction func moveNextPeriod(_ sender: Any) {
+    
+        startDateOfMonth = Calendar.current.date(byAdding: .month,
+                                          value:1,
+                                          to: startDateOfMonth!)
+        self.reloadData()
+    }
+    
+    func setDate(_ date: Date) {
+        
+        self.date = date
+        let dayComponent = Calendar.current.dateComponents([.day,], from: date)
+        startDateOfMonth = Calendar.current.date(byAdding: .day,
+                                                 value:( -1 * dayComponent.day!) + 1,
+                                                 to: date)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,19 +74,69 @@ class CalendarCollectionViewController: UICollectionViewController {
         let headingSection = TableSectionCell(identifier: "heading", title: "", cellList: ["S", "M", "T", "W", "T", "F", "S"], data: nil)
         sectionList.append(headingSection)
         
-        var cellList = [String]()
-        for index in 0...6 {
-            
-            cellList.append("\(index)")
-        }
+        //let dayComponent = Calendar.current.dateComponents([.day,], from: date!)
+        var startDate = startDateOfMonth
+  
+        var dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: startDate!)
+        startDate = Calendar.current.date(from: dateComponent)
+        
+        dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: Date())
+        let nowDate = Calendar.current.date(from: dateComponent)
+        
+        let targetMonthComponent = Calendar.current.dateComponents([.month,], from: startDate!)
+     
+        indexPath = nil
         
         for index in 1...6 {
+      
+            var needSection = false
+            var cellList = [String]()
+            for weekdayIndex in 1...7 {
+                
+                let weekDayComponent = Calendar.current.dateComponents([.weekday], from: startDate!)
+                let monthComponent = Calendar.current.dateComponents([.month,], from: startDate!)
+
+                if weekDayComponent.weekday! == weekdayIndex
+                   && monthComponent.month! == targetMonthComponent.month! {
+                    
+                    let dayComponent = Calendar.current.dateComponents([.day,], from: startDate!)
+                    cellList.append("\(dayComponent.day!)")
+                    
+                    startDate = Calendar.current.date(byAdding: .day,
+                                                      value:1,
+                                                      to: startDate!)
+                    
+                    if startDate! == nowDate! {
+                     
+                        indexPath = IndexPath(row: weekdayIndex - 1, section: index - 1)
+                    }
+                    
+                    needSection = true
+                } else {
+                    
+                    cellList.append("")
+                }
+            }
             
-            let bodySection = TableSectionCell(identifier: "body\(index)", title: "", cellList: cellList, data: nil)
-            sectionList.append(bodySection)
+            if needSection {
+                
+                let bodySection = TableSectionCell(identifier: "body\(index)", title: "", cellList: cellList, data: nil)
+                sectionList.append(bodySection)
+            }
         }
         
-        indexPath = IndexPath(row: 0, section: 1)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM yyyy"
+        let monthYear = dateFormatter.string(from: startDate!)
+        
+        let backButton = UIButton(type: .custom)
+        backButton.setImage(UIImage(named: "BackButton"), for: .normal) // Image can be downloaded from here below link
+        backButton.setTitle(" \(monthYear)", for: .normal)
+        backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
+        backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        //navigationItem.leftBarButtonItem. = dateFormatter.string(from: startDate!)
     }
     
     override func didReceiveMemoryWarning() {
@@ -119,6 +200,7 @@ class CalendarCollectionViewController: UICollectionViewController {
             selectedIndexPath.row == indexPath.row && selectedIndexPath.section == indexPath.section {
             
             //cell.layer.cornerRadius = 8
+            //cell.layer.cornerRadius = 8
             cell.label.backgroundColor = UIColor.black
             cell.label.textColor = UIColor.white
         } else {
@@ -164,6 +246,7 @@ class CalendarCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         
         return sectionList[indexPath.section].identifier != "heading"
+               && !(sectionList[indexPath.section].cellList[indexPath.row].isEmpty)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -473,7 +473,6 @@
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qJn-oV-b4j" userLabel="Indicator">
                                                     <rect key="frame" x="0.0" y="38" width="50" height="2"/>
-                                                    <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="2" id="AKh-qP-ZQD"/>
                                                     </constraints>
@@ -489,6 +488,7 @@
                                     <constraint firstItem="8ED-dm-Hyj" firstAttribute="top" secondItem="2XR-Mw-CDf" secondAttribute="top" id="z1f-Ba-lpT"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="indicator" destination="qJn-oV-b4j" id="vvX-89-Gtf"/>
                                     <outlet property="label" destination="eWo-xS-el7" id="GoK-nB-S2j"/>
                                 </connections>
                             </collectionViewCell>
@@ -496,7 +496,7 @@
                         <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="calendarCollectionFooterView" id="ypl-Z8-SqA" userLabel="calendarCollectionFooterView">
                             <rect key="frame" x="0.0" y="50" width="375" height="1"/>
                             <autoresizingMask key="autoresizingMask"/>
-                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </collectionReusableView>
                         <connections>
                             <outlet property="dataSource" destination="ho5-eE-oZp" id="AI4-ZS-UOp"/>
@@ -505,8 +505,16 @@
                     </collectionView>
                     <navigationItem key="navigationItem" id="MVE-cQ-z8I">
                         <rightBarButtonItems>
-                            <barButtonItem title="Next" id="eEn-IK-JaU"/>
-                            <barButtonItem title="Previous" id="6A0-tv-4RK"/>
+                            <barButtonItem title="Next" id="eEn-IK-JaU">
+                                <connections>
+                                    <action selector="moveNextPeriod:" destination="ho5-eE-oZp" id="7Y3-IF-tbg"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Previous" id="6A0-tv-4RK">
+                                <connections>
+                                    <action selector="movePreviousPeriod:" destination="ho5-eE-oZp" id="iuS-fU-pdB"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>

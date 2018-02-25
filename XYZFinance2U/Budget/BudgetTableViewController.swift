@@ -448,7 +448,7 @@ class BudgetTableViewController: UITableViewController,
             let budget = sectionBudgetList![indexPath.row]
             let startDate = budget.currentStart
             
-            calendarCollectionViewController.date = startDate
+            calendarCollectionViewController.setDate(startDate!)
             
             handler(true)
             self.present(calendarViewNavigationController, animated: true, completion: {})
