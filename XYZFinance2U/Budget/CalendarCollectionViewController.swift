@@ -14,6 +14,11 @@ class CalendarCollectionViewController: UICollectionViewController {
 
     var sectionList = [TableSectionCell]()
     var indexPath: IndexPath?
+    var date: Date?
+    
+    @IBOutlet weak var previousPeriod: UIBarButtonItem!
+    @IBOutlet weak var nextPeriod: UIBarButtonItem!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,12 +44,12 @@ class CalendarCollectionViewController: UICollectionViewController {
         sectionList.append(headingSection)
         
         var cellList = [String]()
-        for index in 1...7 {
+        for index in 0...6 {
             
             cellList.append("\(index)")
         }
         
-        for index in 1...5 {
+        for index in 1...6 {
             
             let bodySection = TableSectionCell(identifier: "body\(index)", title: "", cellList: cellList, data: nil)
             sectionList.append(bodySection)
