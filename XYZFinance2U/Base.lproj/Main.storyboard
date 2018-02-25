@@ -537,7 +537,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="46z-CT-HO8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4320.8000000000002" y="785.75712143928047"/>
+            <point key="canvasLocation" x="4329" y="771"/>
         </scene>
         <!--Income Detail View Controller-->
         <scene sceneID="moN-AA-wde">
