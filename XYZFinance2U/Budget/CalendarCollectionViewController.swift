@@ -265,25 +265,60 @@ class CalendarCollectionViewController: UICollectionViewController,
                 fatalError("Exception: calendarCollectionViewCell is expected")
             }
         
-            cell.label.text = sectionList[indexPath.section].cellList[indexPath.row]
+            let dayString = sectionList[indexPath.section].cellList[indexPath.row]
+            cell.label.text = dayString
+            
+            var thisDate: Date?
+            var expenseList: [XYZExpense]?
+            if sectionList[indexPath.section].identifier != "heading" && !dayString.isEmpty {
+                
+                let day = Int(dayString)
+                let dayComponent = Calendar.current.dateComponents([.day,], from: startDateOfMonth!)
+                thisDate = Calendar.current.date(byAdding: .day,
+                                                 value:( -1 * dayComponent.day!) + day!,
+                                                 to: startDateOfMonth!)
+                
+                expenseList = filterExpenseList(of: thisDate!)
+            }
+        
+            let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: Date())
+            let nowDate = Calendar.current.date(from: dateComponent)
+            
+            print("==== \(dayString), \(nowDate), \(thisDate)")
+            if let _ = expenseList, !(expenseList?.isEmpty)! {
+                
+                cell.indicator.backgroundColor = UIColor.blue
+            } else {
+                
+                cell.indicator.backgroundColor = UIColor.clear
+            }
             
             if let selectedIndexPath = self.indexPath,
                 selectedIndexPath.row == indexPath.row && selectedIndexPath.section == indexPath.section {
                 
-                let day = Int(sectionList[indexPath.section].cellList[indexPath.row])
-                let dayComponent = Calendar.current.dateComponents([.day,], from: startDateOfMonth!)
-                selectedDate = Calendar.current.date(byAdding: .day,
-                                                     value:( -1 * dayComponent.day!) + day!,
-                                                     to: startDateOfMonth!)
+                selectedDate = thisDate
+                selectedExpenseList = expenseList
                 
-                selectedExpenseList = filterExpenseList(of: selectedDate!)
-                
-                cell.label.backgroundColor = UIColor.black
-                cell.label.textColor = UIColor.white
+                if nowDate == thisDate {
+                    
+                    cell.label.backgroundColor = UIColor.red
+                    cell.label.textColor = UIColor.white
+                } else {
+                    
+                    cell.label.backgroundColor = UIColor.black
+                    cell.label.textColor = UIColor.white
+                }
             } else {
                 
                 cell.label.backgroundColor = UIColor.clear
-                cell.label.textColor = UIColor.black
+                
+                if nowDate == thisDate {
+                 
+                    cell.label.textColor = UIColor.red
+                } else {
+                    
+                    cell.label.textColor = UIColor.black
+                }
             }
             
             returnCell = cell
