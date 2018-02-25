@@ -10,15 +10,30 @@ import UIKit
 
 //private let reuseIdentifier = "calendarCollectionViewCell"
 
-class CalendarCollectionViewController: UICollectionViewController {
+class CalendarCollectionViewController: UICollectionViewController,
+    UICollectionViewDelegateFlowLayout {
 
     var sectionList = [TableSectionCell]()
     var indexPath: IndexPath?
     var date: Date?
     var startDateOfMonth: Date?
+    var budgetExpensesTableViewController: BudgetExpensesTableViewController?
     
     @IBOutlet weak var previousPeriod: UIBarButtonItem!
     @IBOutlet weak var nextPeriod: UIBarButtonItem!
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize
+    {
+        if sectionList[indexPath.section].identifier == "table" {
+
+            return CGSize(width: 400.0, height: 350.0)
+        } else {
+            
+            return CGSize(width: 50.0, height: 40.0)
+        }
+    }
     
     func reloadData() {
         
@@ -49,8 +64,6 @@ class CalendarCollectionViewController: UICollectionViewController {
         startDateOfMonth = Calendar.current.date(byAdding: .day,
                                                  value:( -1 * dayComponent.day!) + 1,
                                                  to: date)
-        
-        print("************* \(String(describing: startDateOfMonth))")
     }
     
     override func viewDidLoad() {
@@ -68,7 +81,7 @@ class CalendarCollectionViewController: UICollectionViewController {
         loadDataIntoSection()
         // Do any additional setup after loading the view.
     }
-
+    
     func loadDataIntoSection() {
         
         sectionList = [TableSectionCell]()
@@ -84,9 +97,7 @@ class CalendarCollectionViewController: UICollectionViewController {
         
         dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: Date())
         let nowDate = Calendar.current.date(from: dateComponent)
-
-        print("******** \(nowDate)")
-
+        
         let targetMonthComponent = Calendar.current.dateComponents([.month,], from: startDate!)
      
         let dateFormatter = DateFormatter()
@@ -140,6 +151,9 @@ class CalendarCollectionViewController: UICollectionViewController {
                 sectionList.append(bodySection)
             }
         }
+        
+        let tableSection = TableSectionCell(identifier: "table", title: "Expenses", cellList: ["table"], data: nil)
+        sectionList.append(tableSection)
     }
     
     override func didReceiveMemoryWarning() {
@@ -192,27 +206,57 @@ class CalendarCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCollectionViewCell", for: indexPath) as? CalendarCollectionViewCell else {
-            
-            fatalError("Exception: calendarCollectionViewCell is expected")
-        }
-    
-        cell.label.text = sectionList[indexPath.section].cellList[indexPath.row]
+        let returnCell: UICollectionViewCell
         
-        if let selectedIndexPath = self.indexPath,
-            selectedIndexPath.row == indexPath.row && selectedIndexPath.section == indexPath.section {
+        print("-------- cell")
+        if sectionList[indexPath.section].identifier == "table" {
             
-            cell.label.backgroundColor = UIColor.black
-            cell.label.textColor = UIColor.white
+            print("------------ table cell")
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCollectionTableViewCell", for: indexPath) as? CalendarCollectionTableViewCell else {
+                
+                fatalError("Exception: calendarCollectionViewCell is expected")
+            }
+            
+            if cell.stack.subviews.isEmpty {
+                
+                guard let budgetExpensesTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "budgetExpensesTableViewController") as? BudgetExpensesTableViewController else {
+                
+                    fatalError("Exception: budgetExpensesTableViewController is expected")
+                }
+            
+                self.budgetExpensesTableViewController = budgetExpensesTableViewController
+                cell.stack.addArrangedSubview(budgetExpensesTableViewController.tableView)
+                budgetExpensesTableViewController.tableView.reloadData()
+            } else {
+              
+                self.budgetExpensesTableViewController?.tableView.reloadData()
+            }
+            
+            returnCell = cell
         } else {
             
-            cell.label.backgroundColor = UIColor.clear
-            cell.label.textColor = UIColor.black
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCollectionViewCell", for: indexPath) as? CalendarCollectionViewCell else {
+                
+                fatalError("Exception: calendarCollectionViewCell is expected")
+            }
+        
+            cell.label.text = sectionList[indexPath.section].cellList[indexPath.row]
+            
+            if let selectedIndexPath = self.indexPath,
+                selectedIndexPath.row == indexPath.row && selectedIndexPath.section == indexPath.section {
+                
+                cell.label.backgroundColor = UIColor.black
+                cell.label.textColor = UIColor.white
+            } else {
+                
+                cell.label.backgroundColor = UIColor.clear
+                cell.label.textColor = UIColor.black
+            }
+            
+            returnCell = cell
         }
-        // cell.label.text = sectionList[indexPath.section].cellList[indexPath.row]
-        // Configure the cell
     
-        return cell
+        return returnCell
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -221,7 +265,11 @@ class CalendarCollectionViewController: UICollectionViewController {
         case UICollectionElementKindSectionFooter:
             let reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: "UICollectionElementKindSectionFooter", withReuseIdentifier: "calendarCollectionFooterView", for: indexPath)
             
-            let lineView = UIView(frame: CGRect(x: 0, y: 0, width: 500, height: 1.0))
+            let height = 1.0
+            
+            let lineView = UIView(frame: CGRect(x: 0, y: 0,
+                                                width: 500,
+                                                height: height))
             //lineView.layer.borderWidth = 1.0
             lineView.backgroundColor = UIColor.lightGray
             reusableView.addSubview(lineView)
@@ -261,6 +309,16 @@ class CalendarCollectionViewController: UICollectionViewController {
         print("--------- didDeselectItemAt \(indexPath)")
     }
 
+    
+    
+    /*
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+        
+        let cellsize = CGSize(width: 50.0, height: 40.0)
+        
+        return cellsize
+    }*/
+    
     /*
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
@@ -275,5 +333,5 @@ class CalendarCollectionViewController: UICollectionViewController {
     
     }
     */
-
+    
 }

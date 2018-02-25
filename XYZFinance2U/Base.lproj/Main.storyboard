@@ -446,7 +446,7 @@
                 <collectionViewController storyboardIdentifier="calendarCollectionController" id="ho5-eE-oZp" customClass="CalendarCollectionViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="abo-q4-m1t">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="5" id="vDt-t2-67N">
                             <size key="itemSize" width="50" height="40"/>
@@ -456,8 +456,8 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="calendarCollectionViewCell" id="2XR-Mw-CDf" customClass="CalendarCollectionViewCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="5" y="5" width="50" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="162.5" y="5" width="50" height="40"/>
+                                <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="40"/>
                                     <autoresizingMask key="autoresizingMask"/>
@@ -499,15 +499,39 @@
                                     <constraint firstItem="8ED-dm-Hyj" firstAttribute="leading" secondItem="2XR-Mw-CDf" secondAttribute="leading" id="a8B-Qu-LeZ"/>
                                     <constraint firstItem="8ED-dm-Hyj" firstAttribute="top" secondItem="2XR-Mw-CDf" secondAttribute="top" id="z1f-Ba-lpT"/>
                                 </constraints>
+                                <size key="customSize" width="50" height="40"/>
                                 <connections>
                                     <outlet property="indicator" destination="qJn-oV-b4j" id="vvX-89-Gtf"/>
                                     <outlet property="label" destination="eWo-xS-el7" id="GoK-nB-S2j"/>
                                     <outlet property="labelView" destination="DLl-s7-jIf" id="BTt-bY-Vu6"/>
                                 </connections>
                             </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="calendarCollectionTableViewCell" id="2Pp-Sw-sbf" customClass="CalendarCollectionTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                                <rect key="frame" x="7.5" y="46" width="360" height="200"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="360" height="200"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="TmF-yA-OVi">
+                                            <rect key="frame" x="0.0" y="0.0" width="360" height="215"/>
+                                        </stackView>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="TmF-yA-OVi" firstAttribute="top" secondItem="2Pp-Sw-sbf" secondAttribute="top" id="2Ue-hz-FxV"/>
+                                    <constraint firstAttribute="bottom" secondItem="TmF-yA-OVi" secondAttribute="bottom" id="G7t-VN-jFJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="TmF-yA-OVi" secondAttribute="trailing" id="Xvb-hX-deB"/>
+                                    <constraint firstItem="TmF-yA-OVi" firstAttribute="leading" secondItem="2Pp-Sw-sbf" secondAttribute="leading" id="biV-qF-UYv"/>
+                                </constraints>
+                                <size key="customSize" width="360" height="200"/>
+                                <connections>
+                                    <outlet property="stack" destination="TmF-yA-OVi" id="smZ-3c-hdU"/>
+                                </connections>
+                            </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="calendarCollectionFooterView" id="ypl-Z8-SqA" userLabel="calendarCollectionFooterView">
-                            <rect key="frame" x="0.0" y="50" width="375" height="1"/>
+                            <rect key="frame" x="0.0" y="251" width="375" height="1"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </collectionReusableView>
@@ -537,7 +561,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="46z-CT-HO8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4329" y="771"/>
+            <point key="canvasLocation" x="4328.8000000000002" y="770.46476761619192"/>
         </scene>
         <!--Income Detail View Controller-->
         <scene sceneID="moN-AA-wde">
@@ -1151,6 +1175,43 @@
                 <exit id="xyF-MD-Jvn" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="7042.3999999999996" y="34.632683658170919"/>
+        </scene>
+        <!--Budget Expenses Table View Controller-->
+        <scene sceneID="ASU-4Z-IPu">
+            <objects>
+                <tableViewController storyboardIdentifier="budgetExpensesTableViewController" id="N85-kI-nMs" customClass="BudgetExpensesTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="g5U-yS-H2M">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="expenseTableViewCell" rowHeight="70" id="N6n-Xc-gD7" userLabel="ExpenseTableViewCell" customClass="ExpenseTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="70"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="N6n-Xc-gD7" id="LnE-OW-thY">
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="69.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hello " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hnN-61-c1j">
+                                            <rect key="frame" x="132" y="24" width="44" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="N85-kI-nMs" id="mmA-A1-eRJ"/>
+                            <outlet property="delegate" destination="N85-kI-nMs" id="DjR-1b-lbE"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pPw-p5-dqg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5296" y="770"/>
         </scene>
         <!--Location-->
         <scene sceneID="bQo-W5-8M3">
