@@ -13,6 +13,7 @@ import UIKit
 class CalendarCollectionViewController: UICollectionViewController {
 
     var sectionList = [TableSectionCell]()
+    var indexPath: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +49,8 @@ class CalendarCollectionViewController: UICollectionViewController {
             let bodySection = TableSectionCell(identifier: "body\(index)", title: "", cellList: cellList, data: nil)
             sectionList.append(bodySection)
         }
+        
+        indexPath = IndexPath(row: 0, section: 1)
     }
     
     override func didReceiveMemoryWarning() {
@@ -107,6 +110,14 @@ class CalendarCollectionViewController: UICollectionViewController {
     
         cell.label.text = sectionList[indexPath.section].cellList[indexPath.row]
         
+        if let selectedIndexPath = self.indexPath,
+            selectedIndexPath.row == indexPath.row && selectedIndexPath.section == indexPath.section {
+            
+            cell.label.textColor = UIColor.red
+        } else {
+            
+            cell.label.textColor = UIColor.black
+        }
         // cell.label.text = sectionList[indexPath.section].cellList[indexPath.row]
         // Configure the cell
     
@@ -132,19 +143,31 @@ class CalendarCollectionViewController: UICollectionViewController {
     
     // MARK: UICollectionViewDelegate
 
-    /*
     // Uncomment this method to specify if the specified item should be highlighted during tracking
+    /*
     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        
         return true
     }
-    */
+     */
 
-    /*
     // Uncomment this method to specify if the specified item should be selected
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
+        
+        return sectionList[indexPath.section].identifier != "heading"
     }
-    */
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        self.indexPath = indexPath
+        
+        collectionView.reloadData()
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        
+        print("--------- didDeselectItemAt \(indexPath)")
+    }
 
     /*
     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
