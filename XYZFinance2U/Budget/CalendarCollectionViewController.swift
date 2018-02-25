@@ -13,14 +13,37 @@ import UIKit
 class CalendarCollectionViewController: UICollectionViewController,
     UICollectionViewDelegateFlowLayout {
 
+    var expenseList: [XYZExpense]?
     var sectionList = [TableSectionCell]()
+    var selectedExpenseList: [XYZExpense]?
     var indexPath: IndexPath?
     var date: Date?
+    var selectedDate: Date?
     var startDateOfMonth: Date?
     var budgetExpensesTableViewController: BudgetExpensesTableViewController?
     
     @IBOutlet weak var previousPeriod: UIBarButtonItem!
     @IBOutlet weak var nextPeriod: UIBarButtonItem!
+    
+    func filterExpenseList(of date: Date) -> [XYZExpense] {
+        
+        let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: date)
+
+        return (expenseList?.filter({ (expense) -> Bool in
+            
+            if let date = expense.value(forKey: XYZExpense.date) as? Date {
+             
+               let expenseDateComponent = Calendar.current.dateComponents([.day, .month, .year], from: date)
+                
+               return expenseDateComponent.day! == dateComponent.day!
+                      && expenseDateComponent.month! == dateComponent.month!
+                      && expenseDateComponent.year! == dateComponent.year!
+            } else {
+            
+                return false
+            }
+        }))!
+    }
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -46,6 +69,7 @@ class CalendarCollectionViewController: UICollectionViewController,
         startDateOfMonth = Calendar.current.date(byAdding: .month,
                                           value:-1,
                                           to: startDateOfMonth!)
+        selectedExpenseList = nil
         self.reloadData()
     }
     
@@ -54,6 +78,7 @@ class CalendarCollectionViewController: UICollectionViewController,
         startDateOfMonth = Calendar.current.date(byAdding: .month,
                                           value:1,
                                           to: startDateOfMonth!)
+        selectedExpenseList = nil
         self.reloadData()
     }
     
@@ -128,15 +153,16 @@ class CalendarCollectionViewController: UICollectionViewController,
                     
                     let dayComponent = Calendar.current.dateComponents([.day,], from: startDate!)
                     cellList.append("\(dayComponent.day!)")
-                    
-                    startDate = Calendar.current.date(byAdding: .day,
-                                                      value:1,
-                                                      to: startDate!)
-                    
+
                     if startDate! == nowDate! {
                      
                         indexPath = IndexPath(row: weekdayIndex - 1, section: index)
                     }
+
+                    startDate = Calendar.current.date(byAdding: .day,
+                                                      value:1,
+                                                      to: startDate!)
+                    
                     
                     needSection = true
                 } else {
@@ -177,6 +203,9 @@ class CalendarCollectionViewController: UICollectionViewController,
     
     @IBAction func backAction(_ sender: UIButton) {
         
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.orientation = UIInterfaceOrientationMask.all
+        
         dismiss(animated: true, completion: nil)
         //let _ = self.navigationController?.popViewController(animated: true)
     }
@@ -208,10 +237,8 @@ class CalendarCollectionViewController: UICollectionViewController,
         
         let returnCell: UICollectionViewCell
         
-        print("-------- cell")
         if sectionList[indexPath.section].identifier == "table" {
             
-            print("------------ table cell")
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCollectionTableViewCell", for: indexPath) as? CalendarCollectionTableViewCell else {
                 
                 fatalError("Exception: calendarCollectionViewCell is expected")
@@ -226,11 +253,9 @@ class CalendarCollectionViewController: UICollectionViewController,
             
                 self.budgetExpensesTableViewController = budgetExpensesTableViewController
                 cell.stack.addArrangedSubview(budgetExpensesTableViewController.tableView)
-                budgetExpensesTableViewController.tableView.reloadData()
-            } else {
-              
-                self.budgetExpensesTableViewController?.tableView.reloadData()
             }
+              
+            self.budgetExpensesTableViewController?.loadData(of: selectedExpenseList)
             
             returnCell = cell
         } else {
@@ -244,6 +269,14 @@ class CalendarCollectionViewController: UICollectionViewController,
             
             if let selectedIndexPath = self.indexPath,
                 selectedIndexPath.row == indexPath.row && selectedIndexPath.section == indexPath.section {
+                
+                let day = Int(sectionList[indexPath.section].cellList[indexPath.row])
+                let dayComponent = Calendar.current.dateComponents([.day,], from: startDateOfMonth!)
+                selectedDate = Calendar.current.date(byAdding: .day,
+                                                     value:( -1 * dayComponent.day!) + day!,
+                                                     to: startDateOfMonth!)
+                
+                selectedExpenseList = filterExpenseList(of: selectedDate!)
                 
                 cell.label.backgroundColor = UIColor.black
                 cell.label.textColor = UIColor.white

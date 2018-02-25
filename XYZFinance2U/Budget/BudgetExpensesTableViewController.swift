@@ -10,10 +10,37 @@ import UIKit
 
 class BudgetExpensesTableViewController: UITableViewController {
 
+    var expenseList: [XYZExpense]?
+    var sectionList = [TableSectionCell]()
+    
+    func loadDataIntoTableSectionCell() {
+        
+        sectionList = [TableSectionCell]()
+        
+        if let _ = expenseList, !(expenseList?.isEmpty)! {
+            
+            let expenseSection = TableSectionCell(identifier: "expense", title: "", cellList: [], data: expenseList)
+            sectionList.append(expenseSection)
+        }
+    }
+    
+    func loadData() {
+    
+        loadDataIntoTableSectionCell()
+        tableView.reloadData()
+    }
+    
+    func loadData(of expenseList:[XYZExpense]?) {
+        
+        self.expenseList = expenseList
+        loadData()
+    }
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
-        print("******* view did load")
+        tableView.tableFooterView = UIView(frame: .zero)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -30,22 +57,27 @@ class BudgetExpensesTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return sectionList.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 30
+
+        let sectionExpeneseList = sectionList[section].data as? [XYZExpense]
+        
+        return (sectionExpeneseList?.count)!
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        print("********* table view cell")
+
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "expenseTableViewCell", for: indexPath) as? ExpenseTableViewCell else {
             
             fatalError("Exception: expenseTableViewCell is expected" )
         }
         
+        let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
+        let expense = sectionExpenseList![indexPath.row]
+        
+        cell.setExpense(expense: expense)
         // Configure the cell...
 
         return cell

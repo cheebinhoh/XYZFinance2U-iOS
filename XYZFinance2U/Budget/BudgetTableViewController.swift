@@ -313,6 +313,30 @@ class BudgetTableViewController: UITableViewController,
         return (total, sectionList[section].title!)
     }
     
+    func getExpenseList(of budget: XYZBudget, from expenseList: [XYZExpense]) -> [XYZExpense] {
+     
+        var outputExpenseList = [XYZExpense]()
+        let name = budget.value(forKey: XYZBudget.name) as? String ?? ""
+        
+        for expense in expenseList {
+            
+            let category = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
+            let isSoftDelete = expense.value(forKey: XYZExpense.isSoftDelete) as? Bool ?? false
+            
+            if isSoftDelete {
+                
+                continue
+            }
+            
+            if category.lowercased() == name.lowercased() {
+         
+                outputExpenseList.append(expense)
+            }
+        }
+        
+        return outputExpenseList
+    }
+    
     func getTotalSpendAmount(of budget: XYZBudget, from expenseList: [XYZExpense]) -> Double {
         
         var total = 0.0
@@ -448,6 +472,12 @@ class BudgetTableViewController: UITableViewController,
             let budget = sectionBudgetList![indexPath.row]
             let startDate = budget.currentStart ?? Date()
         
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            appDelegate?.orientation = UIInterfaceOrientationMask.portrait
+            
+            let expeneseList = self.getExpenseList(of: budget, from: (appDelegate?.expenseList)!)
+            calendarCollectionViewController.expenseList = expeneseList
+            
             calendarCollectionViewController.setDate(startDate)
             
             handler(true)
