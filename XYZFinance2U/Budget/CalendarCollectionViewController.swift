@@ -113,13 +113,13 @@ class CalendarCollectionViewController: UICollectionViewController {
         if let selectedIndexPath = self.indexPath,
             selectedIndexPath.row == indexPath.row && selectedIndexPath.section == indexPath.section {
             
-            cell.layer.cornerRadius = 8
-            cell.backgroundColor = UIColor.black
+            //cell.layer.cornerRadius = 8
+            cell.label.backgroundColor = UIColor.black
             cell.label.textColor = UIColor.white
         } else {
             
-            cell.layer.cornerRadius = 1
-            cell.backgroundColor = UIColor.clear
+            //cell.layer.cornerRadius = 1
+            cell.label.backgroundColor = UIColor.clear
             cell.label.textColor = UIColor.black
         }
         // cell.label.text = sectionList[indexPath.section].cellList[indexPath.row]

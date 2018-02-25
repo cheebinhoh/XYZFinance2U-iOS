@@ -461,21 +461,42 @@
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="28" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWo-xS-el7">
-                                            <rect key="frame" x="8" y="8" width="34" height="34"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="8ED-dm-Hyj">
+                                            <rect key="frame" x="0.0" y="0.0" width="110" height="200"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="28" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWo-xS-el7">
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="46"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qJn-oV-b4j">
+                                                    <rect key="frame" x="0.0" y="48" width="50" height="2"/>
+                                                    <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="2" id="hP8-aE-ocA"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="eWo-xS-el7" secondAttribute="trailing" id="Jit-Yo-e7b"/>
+                                                <constraint firstItem="eWo-xS-el7" firstAttribute="top" secondItem="8ED-dm-Hyj" secondAttribute="top" id="LSD-A2-fa4"/>
+                                                <constraint firstItem="eWo-xS-el7" firstAttribute="leading" secondItem="8ED-dm-Hyj" secondAttribute="leading" id="LtH-8u-HPZ"/>
+                                                <constraint firstAttribute="trailing" secondItem="qJn-oV-b4j" secondAttribute="trailing" id="MwN-9t-sUe"/>
+                                                <constraint firstAttribute="bottom" secondItem="qJn-oV-b4j" secondAttribute="bottom" id="NHm-5F-UlO"/>
+                                                <constraint firstItem="eWo-xS-el7" firstAttribute="leading" secondItem="8ED-dm-Hyj" secondAttribute="leading" id="NrN-Ee-qLB"/>
+                                                <constraint firstAttribute="trailing" secondItem="eWo-xS-el7" secondAttribute="trailing" id="SCw-yS-zPo"/>
+                                                <constraint firstItem="qJn-oV-b4j" firstAttribute="leading" secondItem="8ED-dm-Hyj" secondAttribute="leading" id="XzE-oH-PjF"/>
+                                                <constraint firstItem="eWo-xS-el7" firstAttribute="top" secondItem="8ED-dm-Hyj" secondAttribute="top" id="YAM-FY-lR1"/>
+                                            </constraints>
+                                        </stackView>
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="eWo-xS-el7" firstAttribute="centerX" secondItem="2XR-Mw-CDf" secondAttribute="centerX" id="2u1-pE-kMO"/>
-                                    <constraint firstItem="eWo-xS-el7" firstAttribute="centerY" secondItem="2XR-Mw-CDf" secondAttribute="centerY" id="3Lm-I6-fQq"/>
-                                    <constraint firstItem="eWo-xS-el7" firstAttribute="top" secondItem="2XR-Mw-CDf" secondAttribute="topMargin" id="C4l-Ju-Hb9"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="eWo-xS-el7" secondAttribute="trailing" id="G4E-4V-RKD"/>
-                                    <constraint firstItem="eWo-xS-el7" firstAttribute="leading" secondItem="2XR-Mw-CDf" secondAttribute="leadingMargin" id="Hqj-ec-XbV"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="eWo-xS-el7" secondAttribute="bottom" id="qBB-qG-eWs"/>
+                                    <constraint firstItem="8ED-dm-Hyj" firstAttribute="leading" secondItem="2XR-Mw-CDf" secondAttribute="leading" id="3uU-UZ-z1j"/>
+                                    <constraint firstAttribute="bottom" secondItem="8ED-dm-Hyj" secondAttribute="bottom" id="BOg-1W-goZ"/>
+                                    <constraint firstItem="8ED-dm-Hyj" firstAttribute="top" secondItem="2XR-Mw-CDf" secondAttribute="top" id="QLT-kR-HNk"/>
+                                    <constraint firstAttribute="trailing" secondItem="8ED-dm-Hyj" secondAttribute="trailing" id="TdB-ce-vnc"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="label" destination="eWo-xS-el7" id="GoK-nB-S2j"/>
