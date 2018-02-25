@@ -470,33 +470,21 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qJn-oV-b4j">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qJn-oV-b4j" userLabel="Indicator">
                                                     <rect key="frame" x="0.0" y="48" width="50" height="2"/>
-                                                    <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="2" id="hP8-aE-ocA"/>
+                                                        <constraint firstAttribute="height" constant="2" id="AKh-qP-ZQD"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="eWo-xS-el7" secondAttribute="trailing" id="Jit-Yo-e7b"/>
-                                                <constraint firstItem="eWo-xS-el7" firstAttribute="top" secondItem="8ED-dm-Hyj" secondAttribute="top" id="LSD-A2-fa4"/>
-                                                <constraint firstItem="eWo-xS-el7" firstAttribute="leading" secondItem="8ED-dm-Hyj" secondAttribute="leading" id="LtH-8u-HPZ"/>
-                                                <constraint firstAttribute="trailing" secondItem="qJn-oV-b4j" secondAttribute="trailing" id="MwN-9t-sUe"/>
-                                                <constraint firstAttribute="bottom" secondItem="qJn-oV-b4j" secondAttribute="bottom" id="NHm-5F-UlO"/>
-                                                <constraint firstItem="eWo-xS-el7" firstAttribute="leading" secondItem="8ED-dm-Hyj" secondAttribute="leading" id="NrN-Ee-qLB"/>
-                                                <constraint firstAttribute="trailing" secondItem="eWo-xS-el7" secondAttribute="trailing" id="SCw-yS-zPo"/>
-                                                <constraint firstItem="qJn-oV-b4j" firstAttribute="leading" secondItem="8ED-dm-Hyj" secondAttribute="leading" id="XzE-oH-PjF"/>
-                                                <constraint firstItem="eWo-xS-el7" firstAttribute="top" secondItem="8ED-dm-Hyj" secondAttribute="top" id="YAM-FY-lR1"/>
-                                            </constraints>
                                         </stackView>
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="8ED-dm-Hyj" firstAttribute="leading" secondItem="2XR-Mw-CDf" secondAttribute="leading" id="3uU-UZ-z1j"/>
-                                    <constraint firstAttribute="bottom" secondItem="8ED-dm-Hyj" secondAttribute="bottom" id="BOg-1W-goZ"/>
-                                    <constraint firstItem="8ED-dm-Hyj" firstAttribute="top" secondItem="2XR-Mw-CDf" secondAttribute="top" id="QLT-kR-HNk"/>
-                                    <constraint firstAttribute="trailing" secondItem="8ED-dm-Hyj" secondAttribute="trailing" id="TdB-ce-vnc"/>
+                                    <constraint firstAttribute="bottom" secondItem="8ED-dm-Hyj" secondAttribute="bottom" id="6gy-Sl-e4I"/>
+                                    <constraint firstAttribute="trailing" secondItem="8ED-dm-Hyj" secondAttribute="trailing" id="9hl-iX-9BA"/>
+                                    <constraint firstItem="8ED-dm-Hyj" firstAttribute="leading" secondItem="2XR-Mw-CDf" secondAttribute="leading" id="a8B-Qu-LeZ"/>
+                                    <constraint firstItem="8ED-dm-Hyj" firstAttribute="top" secondItem="2XR-Mw-CDf" secondAttribute="top" id="z1f-Ba-lpT"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="label" destination="eWo-xS-el7" id="GoK-nB-S2j"/>
