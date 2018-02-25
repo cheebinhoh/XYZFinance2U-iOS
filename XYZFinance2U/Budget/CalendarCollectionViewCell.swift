@@ -10,6 +10,7 @@ import UIKit
 
 class CalendarCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var labelView: UIView!
     @IBOutlet weak var indicator: UIView!
     @IBOutlet weak var label: UILabel!
 }

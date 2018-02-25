@@ -465,12 +465,24 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="8ED-dm-Hyj">
                                             <rect key="frame" x="0.0" y="0.0" width="110" height="200"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="28" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWo-xS-el7">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DLl-s7-jIf" userLabel="LabelView">
                                                     <rect key="frame" x="0.0" y="0.0" width="50" height="36"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="28" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWo-xS-el7">
+                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="36"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="eWo-xS-el7" secondAttribute="bottom" id="2Se-eZ-Pq2"/>
+                                                        <constraint firstItem="eWo-xS-el7" firstAttribute="top" secondItem="DLl-s7-jIf" secondAttribute="top" id="FIa-n5-ECv"/>
+                                                        <constraint firstAttribute="trailing" secondItem="eWo-xS-el7" secondAttribute="trailing" id="cpU-0I-EDs"/>
+                                                        <constraint firstItem="eWo-xS-el7" firstAttribute="leading" secondItem="DLl-s7-jIf" secondAttribute="leading" id="uwB-kl-Ufy"/>
+                                                    </constraints>
+                                                </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qJn-oV-b4j" userLabel="Indicator">
                                                     <rect key="frame" x="0.0" y="38" width="50" height="2"/>
                                                     <constraints>
@@ -490,6 +502,7 @@
                                 <connections>
                                     <outlet property="indicator" destination="qJn-oV-b4j" id="vvX-89-Gtf"/>
                                     <outlet property="label" destination="eWo-xS-el7" id="GoK-nB-S2j"/>
+                                    <outlet property="labelView" destination="DLl-s7-jIf" id="BTt-bY-Vu6"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
