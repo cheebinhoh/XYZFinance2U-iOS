@@ -12,10 +12,79 @@ import CloudKit
 
 protocol BudgetExpenseDelegate: class {
     
+    func reloadData()
     func deleteExpense(expense: XYZExpense)
 }
 
-class BudgetExpensesTableViewController: UITableViewController {
+class BudgetExpensesTableViewController: UITableViewController,
+    ExpenseDetailDelegate {
+    
+    func saveNewExpense(expense: XYZExpense) {
+
+    }
+    
+    func saveExpense(expense: XYZExpense) {
+
+        saveManageContext()
+        
+        updateToiCloud(expense)
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        appDelegate?.expenseList = loadExpenses()!
+        
+        delegate?.reloadData()
+        self.loadData()
+    }
+    
+    func deleteExpense(expense: XYZExpense) {
+ 
+        let aContext = managedContext()
+        var indexPath = IndexPath(row: 0, section: 0)
+        
+        for (sectionIndex, section) in sectionList.enumerated() {
+            
+            let sectionExpenseList = section.data as? [XYZExpense]
+            
+            for (index, expenseItem) in (sectionExpenseList?.enumerated())! {
+                
+                if expense == expenseItem {
+                    
+                    indexPath = IndexPath(row: index, section: sectionIndex)
+                    break
+                }
+            }
+        }
+        
+        var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
+        
+        self.sectionList[indexPath.section].data = sectionExpenseList
+        self.expenseList = sectionExpenseList
+        
+        let isSoftDelete = self.softDeleteExpense(expense: expense)
+        
+        saveManageContext()
+        
+        if isSoftDelete {
+            
+            self.updateToiCloud(expense)
+        } else {
+            
+            aContext?.delete(expense)
+            
+            
+            self.updateToiCloud(nil)
+        }
+        
+        self.delegate?.deleteExpense(expense: expense)
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        appDelegate?.expenseList = loadExpenses()!
+        
+        self.delegate?.reloadData()
+        self.loadData()
+    }
 
     var expenseList: [XYZExpense]?
     var sectionList = [TableSectionCell]()
@@ -242,47 +311,14 @@ class BudgetExpensesTableViewController: UITableViewController {
                 self.updateToiCloud(nil)
             }
             
-            self.loadData()
-            
             self.delegate?.deleteExpense(expense: oldExpense!)
 
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             
             appDelegate?.expenseList = loadExpenses()!
             
-            guard let splitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
-                
-                fatalError("Exception: UISplitViewController is expected" )
-            }
-            
-            guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
-                
-                fatalError("Exception: MainUITabBarController is expected")
-            }
-            
-            guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
-                
-                fatalError("Exception: UINavigationController is expected")
-            }
-            
-            guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
-                
-                fatalError("Exception: ExpenseTableViewController is expected")
-            }
-
-            expenseView.reloadData()
-            
-            guard let budgetNavController = tabbarView.viewControllers?[2] as? UINavigationController else {
-                
-                fatalError("Exception: UINavigationController is expected")
-            }
-            
-            guard let budgetView = budgetNavController.viewControllers.first as? BudgetTableViewController else {
-                
-                fatalError("Exception: BudgetTableViewController is expected")
-            }
-            
-            budgetView.reloadData()
+            self.delegate?.reloadData()
+            self.loadData()
             
             handler(true)
         }
@@ -290,6 +326,35 @@ class BudgetExpensesTableViewController: UITableViewController {
         commands.append(delete)
         
         return UISwipeActionsConfiguration(actions: commands)
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+            
+            fatalError("Exception: ExpenseDetailNavigationController is expected")
+        }
+        
+        guard let expenseTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
+            
+            fatalError("Exception: ExpenseDetailTableViewController is expected" )
+        }
+        
+        expenseTableView.setPopover(delegate: self)
+        let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
+        
+        //expenseTableView.currencyCodes = currencyCodes
+        expenseTableView.expense = sectionExpenseList?[indexPath.row]
+        expenseDetailNavigationController.modalPresentationStyle = .popover
+        self.present(expenseDetailNavigationController, animated: true, completion: nil)
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: UISplitViewController is expected" )
+        }
+        
+        mainSplitView.popOverNavigatorController = expenseDetailNavigationController
     }
 
     /*

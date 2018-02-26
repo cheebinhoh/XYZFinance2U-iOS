@@ -30,6 +30,7 @@ class CalendarCollectionViewController: UICollectionViewController,
         collectionView?.reloadItems(at: [indexPath!])
     }
     
+    var budgetGroup = ""
     var expenseList: [XYZExpense]?
     var sectionList = [TableSectionCell]()
     var selectedExpenseList: [XYZExpense]?
@@ -76,6 +77,44 @@ class CalendarCollectionViewController: UICollectionViewController,
     }
     
     func reloadData() {
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        appDelegate?.expenseList = loadExpenses()!
+        
+        guard let splitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: UISplitViewController is expected" )
+        }
+        
+        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+            
+            fatalError("Exception: MainUITabBarController is expected")
+        }
+        
+        guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+        
+        guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+            
+            fatalError("Exception: ExpenseTableViewController is expected")
+        }
+        
+        expenseView.reloadData()
+        
+        guard let budgetNavController = tabbarView.viewControllers?[2] as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+        
+        guard let budgetView = budgetNavController.viewControllers.first as? BudgetTableViewController else {
+            
+            fatalError("Exception: ExpenseTableViewController is expected")
+        }
+        
+        budgetView.reloadData()
         
         loadDataIntoSection()
         collectionView?.reloadData()
@@ -128,6 +167,13 @@ class CalendarCollectionViewController: UICollectionViewController,
     }
     
     func loadDataIntoSection() {
+        
+        expenseList = expenseList?.filter({ (expense) -> Bool in
+        
+            let expenseBudgetGroup = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
+            
+            return budgetGroup == "" || expenseBudgetGroup.lowercased() == budgetGroup.lowercased()
+        })
         
         sectionList = [TableSectionCell]()
         

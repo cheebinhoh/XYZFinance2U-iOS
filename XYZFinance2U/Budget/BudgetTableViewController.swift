@@ -477,8 +477,15 @@ class BudgetTableViewController: UITableViewController,
             
             let expeneseList = self.getExpenseList(of: budget, from: (appDelegate?.expenseList)!)
             calendarCollectionViewController.expenseList = expeneseList
-            
+            calendarCollectionViewController.budgetGroup = budget.value(forKey: XYZBudget.name) as? String ?? ""
             calendarCollectionViewController.setDate(startDate)
+            
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                
+                fatalError("Exception: UISplitViewController is expected" )
+            }
+            
+            mainSplitView.popOverNavigatorController = calendarViewNavigationController
             
             handler(true)
             self.present(calendarViewNavigationController, animated: true, completion: {})
