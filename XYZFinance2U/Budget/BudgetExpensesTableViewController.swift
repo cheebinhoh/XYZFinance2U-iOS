@@ -56,7 +56,7 @@ class BudgetExpensesTableViewController: UITableViewController,
             }
         }
         
-        var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
+        let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
         
         self.sectionList[indexPath.section].data = sectionExpenseList
         self.expenseList = sectionExpenseList
