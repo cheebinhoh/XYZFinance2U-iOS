@@ -798,11 +798,14 @@ func fetchiCloudZoneChange(_ database: CKDatabase,
                         for (index, expense) in expenseList.enumerated() {
                             
                             // TODO: there are case that we do not get recordName
-                            guard let recordName = expense.value(forKey: XYZExpense.recordId) as? String else {
-                                fatalError("Exception: record id is expected")
-                            }
+                            //guard let recordName = expense.value(forKey: XYZExpense.recordId) as? String else {
+                                
+                            //    fatalError("Exception: record id is expected")
+                            //}
                             
-                            if recordName == recordId.recordName {
+                            let recordName = expense.value(forKey: XYZExpense.recordId) as? String
+                            
+                            if let _ = recordName, recordName == recordId.recordName {
                                 
                                 aContext?.delete(expense)
                                 expenseList.remove(at: index)

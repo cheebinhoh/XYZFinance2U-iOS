@@ -7,11 +7,19 @@
 //
 
 import UIKit
+import CoreData
+import CloudKit
+
+protocol BudgetExpenseDelegate: class {
+    
+    func deleteExpense(expense: XYZExpense)
+}
 
 class BudgetExpensesTableViewController: UITableViewController {
 
     var expenseList: [XYZExpense]?
     var sectionList = [TableSectionCell]()
+    var delegate: BudgetExpenseDelegate?
     
     func loadDataIntoTableSectionCell() {
         
@@ -81,6 +89,151 @@ class BudgetExpensesTableViewController: UITableViewController {
         // Configure the cell...
 
         return cell
+    }
+
+    func softDeleteExpense(expense: XYZExpense) -> Bool {
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
+        let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool ?? false
+        
+        if isShared {
+            
+            expense.setValue(true, forKey: XYZExpense.isSoftDelete)
+            expense.setValue(Date(), forKey: XYZExpense.lastRecordChange)
+        }
+        
+        if !((appDelegate?.iCloudZones.isEmpty)!) {
+            
+            if isShared {
+                
+            } else {
+                
+                guard let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
+                    
+                    fatalError("Exception: iCloudZoen is expected")
+                }
+                
+                guard let data = zone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
+                    
+                    fatalError("Exception: data is expected for deleteRecordIdList")
+                }
+                
+                guard var deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+                    
+                    fatalError("Exception: deleteRecordList is expected as [String]")
+                }
+                
+                let recordName = expense.value(forKey: XYZExpense.recordId) as? String
+                deleteRecordLiset.append(recordName!)
+                
+                let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
+                zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
+                
+                guard let shareRecordNameData = zone.value(forKey: XYZiCloudZone.deleteShareRecordIdList) as? Data else {
+                    
+                    fatalError("Exception: data is expected for deleteRecordIdList")
+                }
+                
+                guard var deleteShareRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: shareRecordNameData) as? [String]) else {
+                    
+                    fatalError("Exception: deleteRecordList is expected as [String]")
+                }
+                
+                if let shareRecordName = expense.value(forKey: XYZExpense.shareRecordId) as? String {
+                    
+                    deleteShareRecordLiset.append(shareRecordName)
+                    
+                    let savedDeleteShareRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteShareRecordLiset )
+                    zone.setValue(savedDeleteShareRecordLiset, forKey: XYZiCloudZone.deleteShareRecordIdList)
+                }
+            }
+        }
+        
+        return isShared // if it is shared, then we softdelete it by keeping
+    }
+    
+    func updateToiCloud(_ expense: XYZExpense?) {
+        
+        let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let iCloudZone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!)
+        iCloudZone?.data = appDelegate?.expenseList
+        
+        if let _ = iCloudZone {
+            
+            fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
+                                 [ckrecordzone],
+                                 [iCloudZone!], {
+                                    
+                                
+            })
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        var commands = [UIContextualAction]()
+        
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, handler in
+            
+            let aContext = managedContext()
+            
+            var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
+            
+            let oldExpense = sectionExpenseList?.remove(at: indexPath.row)
+            self.sectionList[indexPath.section].data = sectionExpenseList
+            self.expenseList = sectionExpenseList
+            
+            let isSoftDelete = self.softDeleteExpense(expense: oldExpense!)
+            
+            saveManageContext()
+            
+            if isSoftDelete {
+                
+                self.updateToiCloud(oldExpense!)
+            } else {
+                
+                aContext?.delete(oldExpense!)
+
+                
+                self.updateToiCloud(nil)
+            }
+            
+            self.loadData()
+            
+            self.delegate?.deleteExpense(expense: oldExpense!)
+            
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            guard let splitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                
+                fatalError("Exception: UISplitViewController is expected" )
+            }
+            
+            guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+                
+                fatalError("Exception: MainUITabBarController is expected")
+            }
+            
+            guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
+                
+                fatalError("Exception: UINavigationController is expected")
+            }
+            
+            guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+                
+                fatalError("Exception: ExpenseTableViewController is expected")
+            }
+            
+            appDelegate?.expenseList = loadExpenses()!
+            expenseView.reloadData()
+            
+            handler(true)
+        }
+        
+        commands.append(delete)
+        
+        return UISwipeActionsConfiguration(actions: commands)
     }
 
     /*

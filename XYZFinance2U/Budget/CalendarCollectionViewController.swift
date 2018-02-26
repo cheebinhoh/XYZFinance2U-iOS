@@ -9,8 +9,27 @@
 import UIKit
 
 class CalendarCollectionViewController: UICollectionViewController,
-    UICollectionViewDelegateFlowLayout {
-
+    UICollectionViewDelegateFlowLayout,
+    BudgetExpenseDelegate {
+    
+    func deleteExpense(expense: XYZExpense) {
+    
+        var foundIndex = -1
+        
+        for (index, item) in (expenseList?.enumerated())! {
+            
+            if item == expense {
+                
+                foundIndex = index
+                break
+            }
+        }
+        
+        expenseList?.remove(at: foundIndex)
+        
+        collectionView?.reloadItems(at: [indexPath!])
+    }
+    
     var expenseList: [XYZExpense]?
     var sectionList = [TableSectionCell]()
     var selectedExpenseList: [XYZExpense]?
@@ -254,6 +273,7 @@ class CalendarCollectionViewController: UICollectionViewController,
             
                 self.budgetExpensesTableViewController = budgetExpensesTableViewController
                 cell.stack.addArrangedSubview(budgetExpensesTableViewController.tableView)
+                budgetExpensesTableViewController.delegate = self
             }
               
             self.budgetExpensesTableViewController?.loadData(of: selectedExpenseList)
