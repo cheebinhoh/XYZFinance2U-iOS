@@ -171,6 +171,48 @@ class BudgetExpensesTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        return 35
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let stackView = UIStackView()
+        let title = UILabel()
+        let subtotal = UILabel()
+        var total = 0.0
+        var currencyCode = Locale.current.currencyCode
+        let sectionExpenseList = sectionList[section].data as? [XYZExpense]
+        
+        for expense in sectionExpenseList! {
+            
+            let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
+            total = total + amount
+            
+            currencyCode = expense.value(forKey: XYZExpense.currencyCode) as? String
+        }
+        
+        //let (amount, currencyCode) = sectionTotal(section)
+        
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 10)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        
+        title.text = "Total"
+        title.textColor = UIColor.gray
+        stackView.axis = .horizontal
+        stackView.addArrangedSubview(title)
+        
+        if let currencyCode = currencyCode {
+            
+            subtotal.text = formattingCurrencyValue(input: total, code: currencyCode)
+            subtotal.textColor = UIColor.gray
+            stackView.addArrangedSubview(subtotal)
+        }
+        
+        return stackView
+    }
+    
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         var commands = [UIContextualAction]()
@@ -203,8 +245,11 @@ class BudgetExpensesTableViewController: UITableViewController {
             self.loadData()
             
             self.delegate?.deleteExpense(expense: oldExpense!)
-            
+
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            
+            appDelegate?.expenseList = loadExpenses()!
+            
             guard let splitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
                 
                 fatalError("Exception: UISplitViewController is expected" )
@@ -224,9 +269,20 @@ class BudgetExpensesTableViewController: UITableViewController {
                 
                 fatalError("Exception: ExpenseTableViewController is expected")
             }
-            
-            appDelegate?.expenseList = loadExpenses()!
+
             expenseView.reloadData()
+            
+            guard let budgetNavController = tabbarView.viewControllers?[2] as? UINavigationController else {
+                
+                fatalError("Exception: UINavigationController is expected")
+            }
+            
+            guard let budgetView = budgetNavController.viewControllers.first as? BudgetTableViewController else {
+                
+                fatalError("Exception: BudgetTableViewController is expected")
+            }
+            
+            budgetView.reloadData()
             
             handler(true)
         }
