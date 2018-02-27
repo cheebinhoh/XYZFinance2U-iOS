@@ -312,7 +312,6 @@ class CalendarCollectionViewController: UICollectionViewController,
 
             if cell.stack.subviews.isEmpty {
                 
-                print("--- create table view")
                 guard let budgetExpensesTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "budgetExpensesTableViewController") as? BudgetExpensesTableViewController else {
                 
                     fatalError("Exception: budgetExpensesTableViewController is expected")
@@ -328,10 +327,20 @@ class CalendarCollectionViewController: UICollectionViewController,
                     cell.stack.removeArrangedSubview(subview)
                 }
                 
-                cell.stack.addArrangedSubview((budgetExpensesTableViewController?.tableView)!)
+                self.budgetExpensesTableViewController = nil
+                
+                guard let budgetExpensesTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "budgetExpensesTableViewController") as? BudgetExpensesTableViewController else {
+                    
+                    fatalError("Exception: budgetExpensesTableViewController is expected")
+                }
+                
+                self.budgetExpensesTableViewController = budgetExpensesTableViewController
+                cell.stack.addArrangedSubview(budgetExpensesTableViewController.tableView)
+                budgetExpensesTableViewController.delegate = self
             }
         
             self.budgetExpensesTableViewController?.loadData(of: selectedExpenseList)
+            self.budgetExpensesTableViewController?.tableView.reloadData()
             
             returnCell = cell
         } else {
