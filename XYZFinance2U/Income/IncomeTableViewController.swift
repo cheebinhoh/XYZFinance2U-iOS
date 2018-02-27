@@ -684,9 +684,16 @@ class IncomeTableViewController: UITableViewController,
                                 print("authentication fail = \(String(describing: error))")
                                 
                                 if !self.lockScreenDisplayed {
-                                    
+                        
                                     DispatchQueue.main.async {
                                         
+                                        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                                            
+                                            fatalError("Exception: UISplitViewController is expected" )
+                                        }
+                                        
+                                        mainSplitView.popOverNavigatorController?.popToRootViewController(animated: false)
+                                        mainSplitView.popOverNavigatorController?.dismiss(animated: false, completion: nil)
                                         self.dismiss(animated: false, completion: nil)
 
                                         self.lockout()
