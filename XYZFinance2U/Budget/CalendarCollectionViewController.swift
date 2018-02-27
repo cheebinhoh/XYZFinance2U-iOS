@@ -65,14 +65,20 @@ class CalendarCollectionViewController: UICollectionViewController,
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize
-    {
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         if sectionList[indexPath.section].identifier == "table" {
 
             return CGSize(width: 400.0, height: 350.0)
         } else {
-            
-            return CGSize(width: 50.0, height: 40.0)
+        
+            if collectionView.frame.width >= 414.0 {
+                
+                return CGSize(width: 50, height: 40.0)
+            } else {
+                
+                return CGSize(width: 40, height: 30.0)
+            }
         }
     }
     
