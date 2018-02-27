@@ -335,27 +335,6 @@ class CalendarCollectionViewController: UICollectionViewController,
             cell.stack.addArrangedSubview(budgetExpensesTableViewController.tableView)
             budgetExpensesTableViewController.delegate = self
             
-            /*
-            } else {
-                
-                for subview in cell.stack.subviews {
-                    
-                    cell.stack.removeArrangedSubview(subview)
-                }
-                
-                self.budgetExpensesTableViewController = nil
-                
-                guard let budgetExpensesTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "budgetExpensesTableViewController") as? BudgetExpensesTableViewController else {
-                    
-                    fatalError("Exception: budgetExpensesTableViewController is expected")
-                }
-                
-                self.budgetExpensesTableViewController = budgetExpensesTableViewController
-                cell.stack.addArrangedSubview(budgetExpensesTableViewController.tableView)
-                budgetExpensesTableViewController.delegate = self
-            }
-            */
-        
             self.budgetExpensesTableViewController?.loadData(of: selectedExpenseList)
             self.budgetExpensesTableViewController?.tableView.reloadData()
             
@@ -399,7 +378,7 @@ class CalendarCollectionViewController: UICollectionViewController,
                 
                 selectedDate = thisDate
                 selectedExpenseList = expenseList
-                
+            
                 if nowDate == thisDate {
                     
                     cell.label.backgroundColor = UIColor.red
@@ -413,7 +392,10 @@ class CalendarCollectionViewController: UICollectionViewController,
                 
                 cell.label.backgroundColor = UIColor.clear
                 
-                if nowDate == thisDate {
+                if nil == thisDate {
+                    
+                    cell.label.textColor = UIColor.lightGray
+                } else if nowDate == thisDate {
                  
                     cell.label.textColor = UIColor.red
                 } else {
