@@ -17,7 +17,13 @@ protocol BudgetExpenseDelegate: class {
 }
 
 class BudgetExpensesTableViewController: UITableViewController,
-    ExpenseDetailDelegate {
+ExpenseDetailDelegate {
+
+    func cancelExpense() {
+
+        delegate?.reloadData()
+        //self.loadData()
+    }
     
     func saveNewExpense(expense: XYZExpense) {
 

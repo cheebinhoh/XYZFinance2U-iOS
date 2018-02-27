@@ -24,6 +24,10 @@ class ExpenseTableViewController: UITableViewController,
     UISearchBarDelegate,
     ExpenseDetailDelegate {
     
+    func cancelExpense() {
+    
+    }
+    
     // MARK: - property
     weak var searchBar: UISearchBar?
     var searchActive = false

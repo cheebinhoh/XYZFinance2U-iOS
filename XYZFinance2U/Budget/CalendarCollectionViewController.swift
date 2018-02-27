@@ -11,7 +11,7 @@ import UIKit
 class CalendarCollectionViewController: UICollectionViewController,
     UICollectionViewDelegateFlowLayout,
     BudgetExpenseDelegate {
-    
+        
     func deleteExpense(expense: XYZExpense) {
     
         var foundIndex = -1
@@ -203,7 +203,7 @@ class CalendarCollectionViewController: UICollectionViewController,
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         
-        indexPath = nil
+        //indexPath = nil
         
         for index in 1...6 {
       
@@ -220,7 +220,7 @@ class CalendarCollectionViewController: UICollectionViewController,
                     let dayComponent = Calendar.current.dateComponents([.day,], from: startDate!)
                     cellList.append("\(dayComponent.day!)")
 
-                    if startDate! == nowDate! {
+                    if startDate! == nowDate! && nil == indexPath {
                      
                         indexPath = IndexPath(row: weekdayIndex - 1, section: index)
                     }
@@ -309,9 +309,10 @@ class CalendarCollectionViewController: UICollectionViewController,
                 
                 fatalError("Exception: calendarCollectionViewCell is expected")
             }
-            
+
             if cell.stack.subviews.isEmpty {
                 
+                print("--- create table view")
                 guard let budgetExpensesTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "budgetExpensesTableViewController") as? BudgetExpensesTableViewController else {
                 
                     fatalError("Exception: budgetExpensesTableViewController is expected")
@@ -320,8 +321,16 @@ class CalendarCollectionViewController: UICollectionViewController,
                 self.budgetExpensesTableViewController = budgetExpensesTableViewController
                 cell.stack.addArrangedSubview(budgetExpensesTableViewController.tableView)
                 budgetExpensesTableViewController.delegate = self
+            } else {
+                
+                for subview in cell.stack.subviews {
+                    
+                    cell.stack.removeArrangedSubview(subview)
+                }
+                
+                cell.stack.addArrangedSubview((budgetExpensesTableViewController?.tableView)!)
             }
-              
+        
             self.budgetExpensesTableViewController?.loadData(of: selectedExpenseList)
             
             returnCell = cell

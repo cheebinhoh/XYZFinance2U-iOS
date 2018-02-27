@@ -17,6 +17,7 @@ protocol ExpenseDetailDelegate: class {
     func saveNewExpense(expense: XYZExpense)
     func saveExpense(expense: XYZExpense)
     func deleteExpense(expense: XYZExpense)
+    func cancelExpense()
 }
 
 class ExpenseDetailTableViewController: UITableViewController,
@@ -854,6 +855,8 @@ class ExpenseDetailTableViewController: UITableViewController,
             masterViewController.navigationItem.rightBarButtonItem?.isEnabled = true
             expenseSelected(newExpense: expense)
         }
+        
+        expenseDelegate?.cancelExpense()
     }
     
     @IBAction func save(_ sender: Any) {

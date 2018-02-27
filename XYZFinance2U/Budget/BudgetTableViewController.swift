@@ -20,6 +20,11 @@ class BudgetTableViewController: UITableViewController,
     ExpenseDetailDelegate,
     BudgetDetailDelegate {
     
+    func cancelExpense() {
+
+    }
+    
+    
     func saveNewExpense(expense: XYZExpense) {
 
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
