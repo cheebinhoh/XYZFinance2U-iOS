@@ -132,6 +132,7 @@ class CalendarCollectionViewController: UICollectionViewController,
                                                  value:-1,
                                                  to: startDateOfMonth!)
         selectedExpenseList = nil
+        indexPath = nil
         self.reloadData()
     }
     
@@ -141,6 +142,7 @@ class CalendarCollectionViewController: UICollectionViewController,
                                           value:1,
                                           to: startDateOfMonth!)
         selectedExpenseList = nil
+        indexPath = nil
         self.reloadData()
     }
     
@@ -210,7 +212,8 @@ class CalendarCollectionViewController: UICollectionViewController,
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         
         //indexPath = nil
-        
+        var hasNowDate = false
+        var startIndexPath = IndexPath(row: 100, section: 100)
         for index in 1...6 {
       
             var needSection = false
@@ -223,12 +226,23 @@ class CalendarCollectionViewController: UICollectionViewController,
                 if weekDayComponent.weekday! == weekdayIndex
                    && monthComponent.month! == targetMonthComponent.month! {
                     
+                    if index < startIndexPath.section
+                        || (index == startIndexPath.section && (weekdayIndex - 1) < startIndexPath.row ) {
+                        
+                        startIndexPath = IndexPath(row: weekdayIndex - 1, section: index)
+                    }
+                    
                     let dayComponent = Calendar.current.dateComponents([.day,], from: startDate!)
                     cellList.append("\(dayComponent.day!)")
 
-                    if startDate! == nowDate! && nil == indexPath {
-                     
-                        indexPath = IndexPath(row: weekdayIndex - 1, section: index)
+                    if startDate! == nowDate! {
+                        
+                        hasNowDate = true
+    
+                        if nil == indexPath {
+ 
+                            indexPath = IndexPath(row: weekdayIndex - 1, section: index)
+                        }
                     }
 
                     startDate = Calendar.current.date(byAdding: .day,
@@ -248,6 +262,11 @@ class CalendarCollectionViewController: UICollectionViewController,
                 let bodySection = TableSectionCell(identifier: "body\(index)", title: "", cellList: cellList, data: nil)
                 sectionList.append(bodySection)
             }
+        }
+        
+        if !hasNowDate {
+            
+            indexPath = startIndexPath
         }
         
         let tableSection = TableSectionCell(identifier: "table", title: "Expenses", cellList: ["table"], data: nil)
