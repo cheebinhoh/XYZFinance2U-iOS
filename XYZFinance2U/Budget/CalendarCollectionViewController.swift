@@ -309,17 +309,27 @@ class CalendarCollectionViewController: UICollectionViewController,
                 
                 fatalError("Exception: calendarCollectionViewCell is expected")
             }
-
-            if cell.stack.subviews.isEmpty {
-                
-                guard let budgetExpensesTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "budgetExpensesTableViewController") as? BudgetExpensesTableViewController else {
-                
-                    fatalError("Exception: budgetExpensesTableViewController is expected")
-                }
             
-                self.budgetExpensesTableViewController = budgetExpensesTableViewController
-                cell.stack.addArrangedSubview(budgetExpensesTableViewController.tableView)
-                budgetExpensesTableViewController.delegate = self
+            if !cell.stack.subviews.isEmpty {
+                
+                for subview in cell.stack.subviews {
+                    
+                    cell.stack.removeArrangedSubview(subview)
+                }
+                
+                self.budgetExpensesTableViewController = nil
+            }
+
+            guard let budgetExpensesTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "budgetExpensesTableViewController") as? BudgetExpensesTableViewController else {
+            
+                fatalError("Exception: budgetExpensesTableViewController is expected")
+            }
+        
+            self.budgetExpensesTableViewController = budgetExpensesTableViewController
+            cell.stack.addArrangedSubview(budgetExpensesTableViewController.tableView)
+            budgetExpensesTableViewController.delegate = self
+            
+            /*
             } else {
                 
                 for subview in cell.stack.subviews {
@@ -338,6 +348,7 @@ class CalendarCollectionViewController: UICollectionViewController,
                 cell.stack.addArrangedSubview(budgetExpensesTableViewController.tableView)
                 budgetExpensesTableViewController.delegate = self
             }
+            */
         
             self.budgetExpensesTableViewController?.loadData(of: selectedExpenseList)
             self.budgetExpensesTableViewController?.tableView.reloadData()
