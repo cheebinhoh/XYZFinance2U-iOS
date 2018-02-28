@@ -693,9 +693,15 @@ class IncomeTableViewController: UITableViewController,
                                         }
                                         
                                         mainSplitView.popOverNavigatorController?.popToRootViewController(animated: false)
-                                        mainSplitView.popOverNavigatorController?.dismiss(animated: false, completion: nil)
-                                        self.dismiss(animated: false, completion: nil)
-
+                                        mainSplitView.popOverNavigatorController?.dismiss(animated: false, completion: {
+                                        
+                                        })
+                                        
+                                        self.dismiss(animated: false, completion: {
+                                          
+                                            self.lockout()
+                                        })
+                                        
                                         self.lockout()
                                     }
                                 }

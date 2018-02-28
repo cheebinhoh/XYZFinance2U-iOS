@@ -22,7 +22,6 @@ ExpenseDetailDelegate {
     func cancelExpense() {
 
         delegate?.reloadData()
-        //self.loadData()
     }
     
     func saveNewExpense(expense: XYZExpense) {
@@ -40,7 +39,6 @@ ExpenseDetailDelegate {
         appDelegate?.expenseList = loadExpenses()!
         
         delegate?.reloadData()
-        self.loadData()
     }
     
     func deleteExpense(expense: XYZExpense) {
@@ -132,6 +130,7 @@ ExpenseDetailDelegate {
     }
 
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
@@ -139,6 +138,7 @@ ExpenseDetailDelegate {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
+        
         // #warning Incomplete implementation, return the number of sections
         return sectionList.count
     }
@@ -348,8 +348,7 @@ ExpenseDetailDelegate {
         
         expenseTableView.setPopover(delegate: self)
         let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
-        
-        //expenseTableView.currencyCodes = currencyCodes
+
         expenseTableView.expense = sectionExpenseList?[indexPath.row]
         expenseDetailNavigationController.modalPresentationStyle = .popover
         self.present(expenseDetailNavigationController, animated: true, completion: nil)

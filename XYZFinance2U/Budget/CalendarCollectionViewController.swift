@@ -158,6 +158,16 @@ class CalendarCollectionViewController: UICollectionViewController,
         startDateOfMonth = Calendar.current.date(from: dateComponents)
     }
     
+    
+    @objc
+    @IBAction func doubleTap(_ sender: UITapGestureRecognizer) {
+        
+        let point = sender.location(in: self.collectionView!)
+        let tapIndexPath = self.collectionView?.indexPathForItem(at: point)
+        
+        print("--- \(tapIndexPath)")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -171,6 +181,10 @@ class CalendarCollectionViewController: UICollectionViewController,
         
         addBackButton()
         loadDataIntoSection()
+        
+        let tapDouble = UITapGestureRecognizer(target: self, action: #selector(doubleTap(_:)))
+        tapDouble.numberOfTapsRequired = 2
+        self.collectionView?.addGestureRecognizer(tapDouble)
         // Do any additional setup after loading the view.
     }
     
