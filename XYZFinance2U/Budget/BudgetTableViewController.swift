@@ -475,7 +475,7 @@ class BudgetTableViewController: UITableViewController,
             
             let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]
             let budget = sectionBudgetList![indexPath.row]
-            let startDate = budget.currentStart ?? Date()
+            //let startDate = budget.currentStart ?? Date()
         
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             appDelegate?.orientation = UIInterfaceOrientationMask.portrait
@@ -483,7 +483,7 @@ class BudgetTableViewController: UITableViewController,
             let expeneseList = self.getExpenseList(of: budget, from: (appDelegate?.expenseList)!)
             calendarCollectionViewController.expenseList = expeneseList
             calendarCollectionViewController.budgetGroup = budget.value(forKey: XYZBudget.name) as? String ?? ""
-            calendarCollectionViewController.setDate(startDate)
+            calendarCollectionViewController.setDate(Date())
             calendarCollectionViewController.budget = budget
             
             guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
