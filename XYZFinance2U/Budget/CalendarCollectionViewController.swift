@@ -10,7 +10,48 @@ import UIKit
 
 class CalendarCollectionViewController: UICollectionViewController,
     UICollectionViewDelegateFlowLayout,
+    ExpenseDetailDelegate,
     BudgetExpenseDelegate {
+    
+    func saveNewExpense(expense: XYZExpense) {
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.expenseList.append(expense)
+        
+        saveManageContext()
+        
+        guard let splitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: MainSplitViewController is expected")
+        }
+        
+        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+            
+            fatalError("Exception: MainUITabBarController is expected")
+        }
+        
+        guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+        
+        guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+            
+            fatalError("Exception: ExpenseTableViewController is expected")
+        }
+        
+        expenseList?.append(expense)
+        expenseView.updateToiCloud(expense)
+        expenseView.reloadData()
+        reloadData()
+    }
+    
+    func saveExpense(expense: XYZExpense) {
+    }
+    
+    func cancelExpense() {
+    }
+    
         
     func deleteExpense(expense: XYZExpense) {
     
@@ -30,6 +71,7 @@ class CalendarCollectionViewController: UICollectionViewController,
         collectionView?.reloadItems(at: [indexPath!])
     }
     
+    var budget: XYZBudget?
     var budgetGroup = ""
     var expenseList: [XYZExpense]?
     var sectionList = [TableSectionCell]()
@@ -158,6 +200,24 @@ class CalendarCollectionViewController: UICollectionViewController,
         startDateOfMonth = Calendar.current.date(from: dateComponents)
     }
     
+    func getDate(of indexPath: IndexPath) -> Date? {
+        
+        if let _ = startDateOfMonth {
+            
+            guard let cell = collectionView?.cellForItem(at: indexPath) as? CalendarCollectionViewCell else {
+                
+                fatalError("Exception: CalendarCollectionViewCell is expected")
+            }
+            
+            let day = Int((cell.label.text)!)
+            return Calendar.current.date(byAdding: .day,
+                                         value:day! - 1,
+                                         to: startDateOfMonth!)
+        } else {
+        
+            return nil
+        }
+    }
     
     @objc
     @IBAction func doubleTap(_ sender: UITapGestureRecognizer) {
@@ -165,7 +225,62 @@ class CalendarCollectionViewController: UICollectionViewController,
         let point = sender.location(in: self.collectionView!)
         let tapIndexPath = self.collectionView?.indexPathForItem(at: point)
         
-        print("--- \(tapIndexPath)")
+        if nil != tapIndexPath
+            && sectionList[(tapIndexPath?.section)!].identifier != "heading"
+            && !(sectionList[(tapIndexPath?.section)!].cellList[(tapIndexPath?.row)!].isEmpty) {
+            
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                
+                fatalError("Exception: UISplitViewController is expected" )
+            }
+            
+            let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let copyUrlOption = UIAlertAction(title: "Add Expense", style: .default, handler: { (action) in
+                
+                guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+                    
+                    fatalError("Exception: ExpenseDetailNavigationController is expected")
+                }
+                
+                guard let expenseDetailTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
+                    
+                    fatalError("Exception: ExpenseDetailTableViewController is expected" )
+                }
+                
+                let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                    
+                    fatalError("Exception: UISplitViewController is expected" )
+                }
+                
+                mainSplitView.popOverNavigatorController = expenseDetailNavigationController
+                
+                let currrency = self.budget?.value(forKey: XYZBudget.currency) as? String
+                let budgetGroup = self.budget?.value(forKey: XYZBudget.name) as? String
+                
+                expenseDetailTableView.presetBudgetCategory = budgetGroup
+                expenseDetailTableView.presetCurrencyCode = currrency
+                expenseDetailTableView.setPopover(delegate: self)
+                
+                let date = self.getDate(of: tapIndexPath!)
+                expenseDetailTableView.presetDate = date
+                
+                expenseDetailNavigationController.modalPresentationStyle = .popover
+                self.present(expenseDetailNavigationController, animated: true, completion: nil)
+            })
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                
+                mainSplitView.popOverAlertController = nil
+            })
+            
+            optionMenu.addAction(copyUrlOption)
+            optionMenu.addAction(cancelAction)
+            
+            mainSplitView.popOverAlertController = optionMenu
+            self.present(optionMenu, animated: true, completion: nil)
+        }
     }
     
     override func viewDidLoad() {

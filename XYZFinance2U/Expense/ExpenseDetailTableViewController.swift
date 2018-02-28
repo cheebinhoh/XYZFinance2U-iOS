@@ -471,6 +471,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             currencyCode = presetCurrencyCode ?? Locale.current.currencyCode
             budgetCategory = presetBudgetCategory ?? ""
+            date = presetDate ?? Date()
         }
         
         budgetList = getBudgets(of: currencyCode!)
@@ -740,6 +741,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     }
     
     // MARK: - property
+    var presetDate: Date?
     var presetBudgetCategory: String?
     var presetCurrencyCode: String?
     var budgetCategory = ""

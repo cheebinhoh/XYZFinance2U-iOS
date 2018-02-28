@@ -484,6 +484,7 @@ class BudgetTableViewController: UITableViewController,
             calendarCollectionViewController.expenseList = expeneseList
             calendarCollectionViewController.budgetGroup = budget.value(forKey: XYZBudget.name) as? String ?? ""
             calendarCollectionViewController.setDate(startDate)
+            calendarCollectionViewController.budget = budget
             
             guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
                 
