@@ -93,6 +93,68 @@ class XYZExpense: NSManagedObject {
     var recurringStopDate: Date = Date()
     
     // MARK: - function
+    func getOccurenceDates(until: Date) -> [Date] {
+        
+        var outputDate = [Date]()
+        let recurring = XYZExpense.Length(rawValue: self.value(forKey: XYZExpense.recurring) as! String )
+        
+        switch recurring {
+            
+        case .none:
+            let date = self.value(forKey: XYZExpense.date) as? Date
+            outputDate.append(date!)
+            
+        default:
+            var date = self.value(forKey: XYZExpense.date) as? Date
+            var stopDate = until
+            let recurringStopDate = self.value(forKey: XYZExpense.recurringStopDate) as? Date ?? date
+            if recurringStopDate! > date! {
+                
+                stopDate = min(stopDate, recurringStopDate!)
+            }
+            
+            repeat {
+                outputDate.append(date!)
+                
+                switch recurring! {
+                    case .none:
+                        date = Calendar.current.date(byAdding: .day,
+                                                     value:1,
+                                                     to: stopDate)
+                    
+                    case .daily:
+                        date = Calendar.current.date(byAdding: .day,
+                                                     value:1,
+                                                     to: date!)
+                    
+                    case .weekly:
+                        date = Calendar.current.date(byAdding: .weekday,
+                                                     value:7,
+                                                     to: date!)
+                    
+                    case .biweekly:
+                        date = Calendar.current.date(byAdding: .weekday,
+                                                     value:14,
+                                                     to: date!)
+                    
+                    case .monthly:
+                        date = Calendar.current.date(byAdding: .month,
+                                                     value:1,
+                                                     to: date!)
+                    
+                    case .yearly:
+                        date = Calendar.current.date(byAdding: .year,
+                                                     value:1,
+                                                     to: date!)
+                }
+            } while (date! <= stopDate)
+        }
+        
+        return outputDate.sorted(by: { (date1, date2) -> Bool in
+        
+            return date1 >= date2
+        })
+    }
     
     override init(entity: NSEntityDescription,
                   insertInto context: NSManagedObjectContext?) {

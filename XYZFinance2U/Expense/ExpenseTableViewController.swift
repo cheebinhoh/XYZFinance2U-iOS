@@ -544,7 +544,7 @@ class ExpenseTableViewController: UITableViewController,
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
-        appDelegate?.expenseList = sortExpenses((appDelegate?.expenseList)!)
+        appDelegate?.expenseList = sortExpenses(loadExpenses()!)
         loadExpensesIntoSections()
         tableView.reloadData()
     }
@@ -597,46 +597,46 @@ class ExpenseTableViewController: UITableViewController,
                 continue
             }
             
-            let currency = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
-            let dateFormatter = DateFormatter()
-            let month = calendar.component(.month, from: date)
-            let year = calendar.component(.year, from: date)
-            let title = "\(year), \(dateFormatter.shortMonthSymbols[month - 1])"
-            let identifier = "\(year), \(dateFormatter.shortMonthSymbols[month - 1]), \(currency!)"
-            
-            var foundIndex = -1
-            for (index, section) in sectionList.enumerated() {
-                
-                if section.identifier == identifier {
-                    
-                    foundIndex = index
-                    break
-                }
-            }
+            let occurenceDates = expense.getOccurenceDates(until: Date())
 
-            if foundIndex < 0 {
+            for date in occurenceDates {
                 
-                /*if sectionList.count > 0 {
+                let currency = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
+                let dateFormatter = DateFormatter()
+                let month = calendar.component(.month, from: date)
+                let year = calendar.component(.year, from: date)
+                let title = "\(year), \(dateFormatter.shortMonthSymbols[month - 1])"
+                let identifier = "\(year), \(dateFormatter.shortMonthSymbols[month - 1]), \(currency!)"
+                
+                var foundIndex = -1
+                for (index, section) in sectionList.enumerated() {
                     
-                    sectionList[sectionList.count - 1].data = sectionExpenseList
-                }*/
+                    if section.identifier == identifier {
+                        
+                        foundIndex = index
+                        break
+                    }
+                }
+
+                if foundIndex < 0 {
+                    
+                    foundIndex = sectionList.count;
+                    let newSection = TableSectionCell(identifier: identifier, title: title, cellList: [], data: nil)
+                    sectionExpenseList = [XYZExpense]()
+                    sectionList.append(newSection)
+                } else {
+                    
+                    sectionExpenseList = sectionList[foundIndex].data as? [XYZExpense]
+                }
                 
-                foundIndex = sectionList.count;
-                let newSection = TableSectionCell(identifier: identifier, title: title, cellList: [], data: nil)
-                sectionExpenseList = [XYZExpense]()
-                sectionList.append(newSection)
-            } else {
+                sectionExpenseList?.append(expense)
+                sectionList[foundIndex].data = sectionExpenseList
                 
-                sectionExpenseList = sectionList[foundIndex].data as? [XYZExpense]
-            }
-            
-            sectionExpenseList?.append(expense)
-            sectionList[foundIndex].data = sectionExpenseList
-            
-            let currencyCode = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
-            if !currencyCodes.contains(currencyCode!) {
-                
-                currencyCodes.append(currencyCode!)
+                let currencyCode = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
+                if !currencyCodes.contains(currencyCode!) {
+                    
+                    currencyCodes.append(currencyCode!)
+                }
             }
         }
         

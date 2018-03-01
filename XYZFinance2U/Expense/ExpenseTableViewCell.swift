@@ -32,7 +32,39 @@ class ExpenseTableViewCell: UITableViewCell {
     func setExpense(expense: XYZExpense) {
         
         amount.text = formattingCurrencyValue(input: (expense.value(forKey: XYZExpense.amount) as? Double) ?? 0.0, code: expense.value(forKey: XYZExpense.currencyCode) as? String )
-        date.text = formattingDate(date: (expense.value(forKey: XYZExpense.date) as? Date) ?? Date(), style: .medium )
         detail.text = ( expense.value(forKey: XYZExpense.detail) as? String ) ?? ""
+        date.text = formattingDate(date: (expense.value(forKey: XYZExpense.date) as? Date) ?? Date(), style: .medium )
+        
+        
+        let recurring = XYZExpense.Length(rawValue: expense.value(forKey: XYZExpense.recurring) as? String ?? XYZExpense.Length.none.rawValue )
+        let theDate = (expense.value(forKey: XYZExpense.date) as? Date) ?? Date()
+        switch recurring! {
+            
+            case .none:
+                date.text = formattingDate(date: theDate, style: .medium )
+            
+            case .daily:
+                date.text = "daily since \(formattingDate(date: theDate, style: .medium ))"
+            
+            case .biweekly:
+                let f = DateFormatter()
+                date.text = "biweekly at \(f.weekdaySymbols[Calendar.current.component(.weekday, from: theDate)])"
+            
+            case .weekly:
+                let f = DateFormatter()
+                date.text = "weekly at \(f.weekdaySymbols[Calendar.current.component(.weekday, from: theDate)])"
+            
+            case .monthly:
+                let f = DateFormatter()
+                f.dateFormat = "MMMM, YYYY"
+                
+                date.text = "monthly since \(f.string(from: (expense.value(forKey: XYZExpense.date) as? Date) ?? Date()))"
+            
+            case .yearly:
+                let f = DateFormatter()
+                f.dateFormat = "YYYY"
+                
+                date.text = "yearly since \(f.string(from: theDate))"
+        }
     }
 }
