@@ -89,27 +89,42 @@ class CalendarCollectionViewController: UICollectionViewController,
 
         let targetDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date)
         let targetDate = Calendar.current.date(from: targetDateComponents)
+       
+        let todayComponents = Calendar.current.dateComponents([.day, .month, .year], from: Date())
+        let todayDate = Calendar.current.date(from: todayComponents)
         
-    
+        let minOfTargetOrToday = min(todayDate!, targetDate!)
+
         return (expenseList?.filter({ (expense) -> Bool in
       
-            let occurrenceDates = expense.getOccurenceDates(until: date)
+            let recurring = XYZExpense.Length(rawValue: expense.value(forKey: XYZExpense.recurring) as? String ?? XYZExpense.Length.none.rawValue )
             
-            var found = false
-            for theDate in occurrenceDates {
-
-                let occurentDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: theDate)
-                let occurentDate = Calendar.current.date(from: occurentDateComponents)
-
-                found = targetDate! == occurentDate!
+            if XYZExpense.Length.none == recurring {
                 
-                if found {
+                var theDate = expense.value(forKey: XYZExpense.date) as? Date
+                let theDateComponent = Calendar.current.dateComponents([.day, .month, .year], from: theDate!)
+                theDate = Calendar.current.date(from: theDateComponent)
+                
+                return theDate == date
+            } else {
+                let occurrenceDates = expense.getOccurenceDates(until: minOfTargetOrToday)
+
+                var found = false
+                for theDate in occurrenceDates {
+
+                    let occurentDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: theDate)
+                    let occurentDate = Calendar.current.date(from: occurentDateComponents)
+
+                    found = targetDate! == occurentDate!
                     
-                    break
+                    if found {
+                        
+                        break
+                    }
                 }
+                
+                return found
             }
-            
-            return found
         }))!
     }
     
