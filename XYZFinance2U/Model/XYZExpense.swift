@@ -13,6 +13,40 @@ import CoreLocation
 @objc(XYZExpense)
 class XYZExpense: NSManagedObject {
     
+    enum Length: String {
+        
+        case none = "none"
+        case daily = "daily"
+        case weekly = "weekly"
+        case biweekly = "biweekly"
+        case monthly = "monthly"
+        case yearly = "yearly"
+        
+        func description() -> String {
+            
+            switch self {
+                
+            case .none:
+                return "none"
+                
+            case .daily:
+                return "daily"
+                
+            case .weekly:
+                return "weekly"
+                
+            case .biweekly:
+                return "biweekly"
+                
+            case .monthly:
+                return "monthly"
+                
+            case .yearly:
+                return "yearly"
+            }
+        }
+    }
+    
     // MARK: - static property
 
     static let type = "XYZExpense"
@@ -34,6 +68,8 @@ class XYZExpense: NSManagedObject {
     static let isSoftDelete = "isSoftDelete"
     static let currencyCode = "currencyCode"
     static let budgetCategory = "budgetCategory"
+    static let recurring = "recurring"
+    static let recurringStopDate = "recurringStopDate"
     
     // MARK: - property
     
@@ -53,6 +89,8 @@ class XYZExpense: NSManagedObject {
     var isSoftDelete = false
     var currencyCode: String = Locale.current.currencyCode!
     var budgetCategory = ""
+    var recurring: Length = .none
+    var recurringStopDate: Date = Date()
     
     // MARK: - function
     

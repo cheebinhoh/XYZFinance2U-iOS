@@ -36,7 +36,6 @@ class ExpenseDetailTableViewController: UITableViewController,
     SelectionDelegate,
     CNContactPickerDelegate {
  
-
     // MARK: - nested type
     struct ImageSet {
         
@@ -48,25 +47,36 @@ class ExpenseDetailTableViewController: UITableViewController,
     
     func selection(_ sender: SelectionTableViewController, item: String?) {
         
-        if sender.selectionIdentifier == "budget" {
+        switch sender.selectionIdentifier {
             
-            if let _ = item, item! != "" {
+            case "recurring":
+                recurring = XYZExpense.Length(rawValue: item!)
+                if recurring == XYZExpense.Length.none {
+                    
+                    recurringStopDate = date
+                }
                 
-                budgetCategory = item!
-            } else {
-                
-                budgetCategory = ""
-            }
-        } else {
+                loadDataInTableSectionCell()
             
-            if currencyCode != item {
+            case "budget":
                 
-                budgetCategory = ""
-            }
+                if let _ = item, item! != "" {
+                    
+                    budgetCategory = item!
+                } else {
+                    
+                    budgetCategory = ""
+                }
             
-            currencyCode = item
-            budgetList = getBudgets(of: item!)
-            loadDataInTableSectionCell()
+            default:
+                if currencyCode != item {
+                    
+                    budgetCategory = ""
+                }
+                
+                currencyCode = item
+                budgetList = getBudgets(of: item!)
+                loadDataInTableSectionCell()
         }
         
         tableView.reloadData()
@@ -167,7 +177,14 @@ class ExpenseDetailTableViewController: UITableViewController,
                                    "amount",
                                    "currency",
                                    "date",
+                                   "recurring",
                                    "location"]
+        
+        if let _ = recurring, recurring != XYZExpense.Length.none {
+            
+            let currencyIndex = mainSectionCellList.index(of: "recurring")
+            mainSectionCellList.insert("recurringStopDate", at: currencyIndex! + 1)
+        }
         
         if !budgetList.isEmpty {
             
@@ -253,6 +270,14 @@ class ExpenseDetailTableViewController: UITableViewController,
         } else if let existingBudgetCategory = expense?.value(forKey: XYZExpense.budgetCategory) as? String, existingBudgetCategory != budgetCategory {
             
             hasChanged = true
+        } else if let existingRecurring = expense?.value(forKey: XYZExpense.recurring) as? String,
+            existingRecurring != recurring?.rawValue {
+            
+            hasChanged = true
+        } else if let existingRecurringStopDate = expense?.value(forKey: XYZExpense.recurringStopDate) as? Date ,
+            existingRecurringStopDate != recurringStopDate {
+            
+            hasChanged = true
         }
         
         expense?.setValue(detail, forKey: XYZExpense.detail)
@@ -262,6 +287,8 @@ class ExpenseDetailTableViewController: UITableViewController,
         expense?.setValue(hasLocation, forKey: XYZExpense.hasLocation)
         expense?.setValue(currencyCode, forKey: XYZExpense.currencyCode)
         expense?.setValue(budgetCategory, forKey: XYZExpense.budgetCategory)
+        expense?.setValue(recurring?.rawValue, forKey: XYZExpense.recurring)
+        expense?.setValue(recurringStopDate!, forKey: XYZExpense.recurringStopDate)
         
         if hasLocation, let _ = cllocation {
             
@@ -399,6 +426,8 @@ class ExpenseDetailTableViewController: UITableViewController,
         hasLocation = false
         currencyCode = Locale.current.currencyCode
         budgetCategory = ""
+        recurring = XYZExpense.Length.none
+        recurringStopDate = nil
         
         if nil != expense {
             
@@ -467,11 +496,15 @@ class ExpenseDetailTableViewController: UITableViewController,
                     navigationItem.setLeftBarButton(backButton, animated: true)
                 }
             }
+            
+            recurring = XYZExpense.Length(rawValue: expense?.value(forKey: XYZExpense.recurring) as? String ?? "none" )
+            recurringStopDate = expense?.value(forKey: XYZExpense.recurringStopDate) as? Date ?? date
         } else {
             
             currencyCode = presetCurrencyCode ?? Locale.current.currencyCode
             budgetCategory = presetBudgetCategory ?? ""
             date = presetDate ?? Date()
+            recurringStopDate = date
         }
         
         budgetList = getBudgets(of: currencyCode!)
@@ -599,23 +632,65 @@ class ExpenseDetailTableViewController: UITableViewController,
     // MARK: - date mamipulation
     func dateDidPick(_ sender: ExpenseDetailDatePickerTableViewCell) {
         
-        datecell?.dateInput.text = formattingDate(date: sender.date ?? Date(), style: .medium )
-        date = sender.date ?? Date()
+        let indexPath = tableView.indexPath(for: sender)
+        
+        switch sectionList[(indexPath?.section)!].cellList[(indexPath?.row)!] {
+            
+            case "datepicker":
+                datecell?.dateInput.text = formattingDate(date: sender.date ?? Date(), style: .medium )
+                date = sender.date ?? Date()
+            
+            case "recurringStopDatePicker":
+                
+                if let _ = sender.date {
+                    
+                    if sender.date! > date! {
+                        
+                        recurringStopDateCell?.dateInput.text = "Recurring stop: \(formattingDate(date: sender.date ?? Date(), style: .medium ))"
+                    } else {
+                        
+                       recurringStopDateCell?.dateInput.text = "Recurring stop: -"
+                    }
+                }
+                
+                recurringStopDate = sender.date
+            
+            default:
+                fatalError("Exception: dateDidPick is not handled")
+        }
     }
     
     func dateInputTouchUp(_ sender:ExpenseDetailDateTableViewCell) {
         
         let indexPath = tableView.indexPath(for: sender)
         
-        if !showDatePicker {
-            
-            sectionList[(indexPath?.section)!].cellList.insert("datepicker", at: (indexPath?.row)! + 1)
-        } else {
-            
-            sectionList[(indexPath?.section)!].cellList.remove(at: (indexPath?.row)! + 1)
-        }
+        switch sectionList[(indexPath?.section)!].cellList[(indexPath?.row)!] {
         
-        showDatePicker = !showDatePicker
+            case "recurringStopDate":
+                if !showRecurringStopDatePicker {
+                    
+                    sectionList[(indexPath?.section)!].cellList.insert("recurringStopDatePicker", at: (indexPath?.row)! + 1)
+                } else {
+                    
+                    sectionList[(indexPath?.section)!].cellList.remove(at: (indexPath?.row)! + 1)
+                }
+                
+                showRecurringStopDatePicker = !showRecurringStopDatePicker
+            
+            case "date":
+                if !showDatePicker {
+                    
+                    sectionList[(indexPath?.section)!].cellList.insert("datepicker", at: (indexPath?.row)! + 1)
+                } else {
+                    
+                    sectionList[(indexPath?.section)!].cellList.remove(at: (indexPath?.row)! + 1)
+                }
+                
+                showDatePicker = !showDatePicker
+            
+            default:
+                fatalError("Exception: dateInputTouchUp is not handled")
+        }
         
         tableView.reloadData()
     }
@@ -741,6 +816,8 @@ class ExpenseDetailTableViewController: UITableViewController,
     }
     
     // MARK: - property
+    var recurring: XYZExpense.Length?
+    var recurringStopDate: Date?
     var presetDate: Date?
     var presetBudgetCategory: String?
     var presetCurrencyCode: String?
@@ -763,7 +840,9 @@ class ExpenseDetailTableViewController: UITableViewController,
     var modalEditing = true
     var newImageIndex: Int?
     var showDatePicker = false
+    var showRecurringStopDatePicker = false
     weak var datecell : ExpenseDetailDateTableViewCell?
+    weak var recurringStopDateCell: ExpenseDetailDateTableViewCell?
     weak var imagecell : ExpenseDetailImagePickerTableViewCell?
     var expense: XYZExpense?
     var isCollapsed: Bool {
@@ -1092,6 +1171,49 @@ class ExpenseDetailTableViewController: UITableViewController,
                 self.datecell = datecell
                 cell = datecell
             
+            case "recurringStopDate":
+                guard let datecell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailDateTextCell", for: indexPath) as? ExpenseDetailDateTableViewCell else {
+                    
+                    fatalError("Exception: expenseDetailDateTextCell is failed to be created")
+                }
+     
+                if date! >= recurringStopDate! {
+                
+                    datecell.dateInput.text = "Recurring stop: -"
+                } else {
+                    
+                    datecell.dateInput.text = "Recurring stop: \(formattingDate(date: recurringStopDate!, style: .medium))"
+                }
+                
+                datecell.delegate = self
+                
+                datecell.enableEditing = modalEditing
+                
+                self.recurringStopDateCell = datecell
+                cell = datecell
+            
+            case "recurring":
+                guard let recurringcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailSelectionCell", for: indexPath) as? ExpenseDetailSelectionTableViewCell else {
+                    
+                    fatalError("Exception: incomeDetailSelectionCell is failed to be created")
+                }
+                
+                recurringcell.setSelection( "Recurring: \((recurring?.rawValue)!)" )
+                recurringcell.selectionStyle = .none
+                
+                cell = recurringcell
+            
+            case "recurringStopDatePicker":
+                guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailDatePickerCell", for: indexPath) as? ExpenseDetailDatePickerTableViewCell else {
+                    
+                    fatalError("Exception: expenseDetailDatePickerCell is failed to be created")
+                }
+                
+                datepickercell.datePicker.datePickerMode = .date
+                datepickercell.setDate(recurringStopDate ?? Date())
+                datepickercell.delegate = self
+                cell = datepickercell
+            
             case "datepicker":
                 guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailDatePickerCell", for: indexPath) as? ExpenseDetailDatePickerTableViewCell else {
                     
@@ -1276,83 +1398,107 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         if let _ = tableView.cellForRow(at: indexPath) as? ExpenseDetailSelectionTableViewCell {
             
-            if sectionList[indexPath.section].cellList[indexPath.row] == "budget" {
+            switch sectionList[indexPath.section].cellList[indexPath.row]  {
             
-                var budgetCategories = [String]()
-                
-                budgetCategories.append("")
-                for budget in budgetList {
-                 
-                    let type = budget.value(forKey: XYZBudget.name) as? String
-                    
-                    budgetCategories.append(type!)
-                }
-            
-                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
-                    
-                    fatalError("Exception: error on instantiating SelectionNavigationController")
-                }
-                
-                selectionTableViewController.caseInsensitive = true
-                selectionTableViewController.selectionIdentifier = "budget"
-
-                selectionTableViewController.setSelections("", false,
-                                                           budgetCategories)
-                selectionTableViewController.setSelectedItem(budgetCategory)
-                selectionTableViewController.delegate = self
-                
-                
-                let nav = UINavigationController(rootViewController: selectionTableViewController)
-                nav.modalPresentationStyle = .popover
-                
-                self.present(nav, animated: true, completion: nil)
-            } else {
-                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
-                    
-                    fatalError("Exception: error on instantiating SelectionNavigationController")
-                }
-                
-                selectionTableViewController.selectionIdentifier = "currency"
-                
-                    if let _ = currencyCodes, !(currencyCodes?.isEmpty)! {
-                    
-                    selectionTableViewController.setSelections("", false, currencyCodes!)
-                }
-                
-                var codeIndex: Character?
-                var codes = [String]()
-                for code in Locale.isoCurrencyCodes {
-                    
-                    if nil == codeIndex {
+                case "recurring":
+                    guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
                         
-                        codes.append(code)
-                        codeIndex = code.first
-                    } else if code.first == codeIndex {
-                        
-                        codes.append(code)
-                    } else {
-                        
-                        var identifier = ""
-                        identifier.append(codeIndex!)
-                        
-                        selectionTableViewController.setSelections(identifier, true, codes )
-                        codes.removeAll()
-                        codes.append(code)
-                        codeIndex = code.first
+                        fatalError("Exception: error on instantiating SelectionNavigationController")
                     }
-                }
+                    
+                    selectionTableViewController.selectionIdentifier = "recurring"
+                    selectionTableViewController.setSelections("", false,
+                                                               [XYZExpense.Length.none.rawValue,
+                                                                XYZExpense.Length.daily.rawValue,
+                                                                XYZExpense.Length.weekly.rawValue,
+                                                                XYZExpense.Length.biweekly.rawValue,
+                                                                XYZExpense.Length.monthly.rawValue,
+                                                                XYZExpense.Length.yearly.rawValue])
+                    selectionTableViewController.setSelectedItem(recurring?.rawValue)
+                    selectionTableViewController.delegate = self
+                    
+                    let nav = UINavigationController(rootViewController: selectionTableViewController)
+                    nav.modalPresentationStyle = .popover
+                    
+                    self.present(nav, animated: true, completion: nil)
                 
-                var identifier = ""
-                identifier.append(codeIndex!)
+                case "budget":
+                    var budgetCategories = [String]()
+                    
+                    budgetCategories.append("")
+                    for budget in budgetList {
+                     
+                        let type = budget.value(forKey: XYZBudget.name) as? String
+                        
+                        budgetCategories.append(type!)
+                    }
                 
-                selectionTableViewController.setSelections(identifier, true, codes )
-                selectionTableViewController.setSelectedItem(currencyCode ?? "USD")
-                selectionTableViewController.delegate = self
-                
-                let nav = UINavigationController(rootViewController: selectionTableViewController)
-                nav.modalPresentationStyle = .popover
-                
-                self.present(nav, animated: true, completion: nil)
+                    guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+                        
+                        fatalError("Exception: error on instantiating SelectionNavigationController")
+                    }
+                    
+                    selectionTableViewController.caseInsensitive = true
+                    selectionTableViewController.selectionIdentifier = "budget"
+
+                    selectionTableViewController.setSelections("", false,
+                                                               budgetCategories)
+                    selectionTableViewController.setSelectedItem(budgetCategory)
+                    selectionTableViewController.delegate = self
+                    
+                    
+                    let nav = UINavigationController(rootViewController: selectionTableViewController)
+                    nav.modalPresentationStyle = .popover
+                    
+                    self.present(nav, animated: true, completion: nil)
+               
+                default:
+                    guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+                        
+                        fatalError("Exception: error on instantiating SelectionNavigationController")
+                    }
+                    
+                    selectionTableViewController.selectionIdentifier = "currency"
+                    
+                        if let _ = currencyCodes, !(currencyCodes?.isEmpty)! {
+                        
+                        selectionTableViewController.setSelections("", false, currencyCodes!)
+                    }
+                    
+                    var codeIndex: Character?
+                    var codes = [String]()
+                    for code in Locale.isoCurrencyCodes {
+                        
+                        if nil == codeIndex {
+                            
+                            codes.append(code)
+                            codeIndex = code.first
+                        } else if code.first == codeIndex {
+                            
+                            codes.append(code)
+                        } else {
+                            
+                            var identifier = ""
+                            identifier.append(codeIndex!)
+                            
+                            selectionTableViewController.setSelections(identifier, true, codes )
+                            codes.removeAll()
+                            codes.append(code)
+                            codeIndex = code.first
+                        }
+                    }
+                    
+                    var identifier = ""
+                    identifier.append(codeIndex!)
+                    
+                    selectionTableViewController.setSelections(identifier, true, codes )
+                    selectionTableViewController.setSelectedItem(currencyCode ?? "USD")
+                    selectionTableViewController.delegate = self
+                    
+                    let nav = UINavigationController(rootViewController: selectionTableViewController)
+                    nav.modalPresentationStyle = .popover
+                    
+                    self.present(nav, animated: true, completion: nil)
             }
         } else {
             
@@ -1374,6 +1520,9 @@ class ExpenseDetailTableViewController: UITableViewController,
         } else if sectionList[indexPath.section].cellList[indexPath.row] == "budget" {
             
             return presetBudgetCategory == nil ? indexPath : nil
+        } else if sectionList[indexPath.section].cellList[indexPath.row] == "recurring" {
+        
+            return indexPath
         } else {
             
             return nil

@@ -492,6 +492,8 @@ func createUpdateExpense(_ oldChangeToken: Data,
         let isSharedRecord = record[XYZExpense.isShared] as? Bool ?? false
         let currency = record[XYZExpense.currencyCode] as? String ?? Locale.current.currencyCode
         let budget = record[XYZExpense.budgetCategory] as? String ?? ""
+        let recurring = record[XYZExpense.recurring] as? String ?? XYZExpense.Length.none.rawValue
+        let recurringStopDate = record[XYZExpense.recurringStopDate] as? Date ?? date
         
         var expenseToBeUpdated: XYZExpense?
 
@@ -550,6 +552,8 @@ func createUpdateExpense(_ oldChangeToken: Data,
         expenseToBeUpdated?.setValue(isSoftDelete, forKey: XYZExpense.isSoftDelete)
         expenseToBeUpdated?.setValue(currency, forKey: XYZExpense.currencyCode)
         expenseToBeUpdated?.setValue(budget, forKey: XYZExpense.budgetCategory)
+        expenseToBeUpdated?.setValue(recurring, forKey: XYZExpense.recurring)
+        expenseToBeUpdated?.setValue(recurringStopDate, forKey: XYZExpense.recurringStopDate)
         
         let nrOfReceipt = record[XYZExpense.nrOfReceipts] as? Int
         for index in 0..<nrOfReceipt! {
@@ -1235,7 +1239,10 @@ func saveExpensesToiCloud(_ database: CKDatabase,
         let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
         let currency = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
         let budget = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
-            
+        
+        let recurring = expense.value(forKey: XYZExpense.recurring) as? String ?? XYZExpense.Length.none.rawValue
+        let recurringStopDate = expense.value(forKey: XYZExpense.recurringStopDate) as? Date ?? date
+        
         record.setValue(detail, forKey: XYZExpense.detail)
         record.setValue(amount, forKey: XYZExpense.amount)
         record.setValue(date, forKey: XYZExpense.date)
@@ -1244,6 +1251,8 @@ func saveExpensesToiCloud(_ database: CKDatabase,
         
         record.setValue(isSoftDelete, forKey: XYZExpense.isSoftDelete)
         record.setValue(isShared, forKey: XYZExpense.isShared)
+        record.setValue(recurring, forKey: XYZExpense.recurring)
+        record.setValue(recurringStopDate, forKey: XYZExpense.recurringStopDate)
     
         guard let receiptList = expense.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>  else {
             
