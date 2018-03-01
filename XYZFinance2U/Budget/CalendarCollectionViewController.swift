@@ -366,7 +366,6 @@ class CalendarCollectionViewController: UICollectionViewController,
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         
-        //indexPath = nil
         var hasNowDate = false
         var startIndexPath = IndexPath(row: 100, section: 100)
         for index in 1...6 {
@@ -635,8 +634,6 @@ class CalendarCollectionViewController: UICollectionViewController,
         print("--------- didDeselectItemAt \(indexPath)")
     }
 
-    
-    
     /*
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
         
