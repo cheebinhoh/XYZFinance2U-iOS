@@ -69,7 +69,6 @@ class CalendarCollectionViewController: UICollectionViewController,
         expenseList?.remove(at: foundIndex)
         
         self.reloadData()
-        //collectionView?.reloadItems(at: [indexPath!])
     }
     
     var budget: XYZBudget?
