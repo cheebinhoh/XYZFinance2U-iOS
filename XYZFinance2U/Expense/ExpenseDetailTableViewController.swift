@@ -51,10 +51,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             case "recurring":
                 recurring = XYZExpense.Length(rawValue: item!)
-                if recurring == XYZExpense.Length.none {
-                    
-                    recurringStopDate = date
-                }
+                recurringStopDate = date
                 
                 loadDataInTableSectionCell()
             
@@ -248,7 +245,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         tableView.reloadData()
     }
     
-    func saveData() {
+    func saveData(isNew: Bool) {
         
         var hasChanged = false
         
@@ -278,6 +275,30 @@ class ExpenseDetailTableViewController: UITableViewController,
             existingRecurringStopDate != recurringStopDate {
             
             hasChanged = true
+        }
+        
+        if !isNew && hasChanged {
+            
+            let occurenceDates = expense?.getOccurenceDates(until: Date())
+            if (occurenceDates?.count)! > 1 && false {
+                
+                // if we already have recurring expense, prompt a dialog to ask if we want to create a new record or save
+                // old one
+                
+                let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                let applyToExistingOption = UIAlertAction(title: "Apply to all recurring expenses?", style: .default, handler: { (action) in
+                    
+
+                })
+                
+                optionMenu.addAction(applyToExistingOption)
+            
+                let addNewAction = UIAlertAction(title: "Add a new expense", style: .cancel, handler: nil)
+                
+                optionMenu.addAction(addNewAction)
+                
+                present(optionMenu, animated: true, completion: nil)
+            }
         }
         
         expense?.setValue(detail, forKey: XYZExpense.detail)
@@ -944,7 +965,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         if isPushinto {
             
-            saveData()
+            saveData(isNew: false)
             expenseDelegate?.saveExpense(expense: expense!)
             navigationController?.popViewController(animated: true)
         } else if isPopover {
@@ -953,18 +974,18 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 expense = XYZExpense(id: nil, detail: detail, amount: amount!, date: date!, context: managedContext())
         
-                saveData()
+                saveData(isNew: true)
                 expenseDelegate?.saveNewExpense(expense: expense!)
             } else {
                
-                saveData()
+                saveData(isNew: false)
                 expenseDelegate?.saveExpense(expense: expense!)
             }
             
             dismiss(animated: true, completion: nil)
         } else {
            
-            saveData()
+            saveData(isNew: false)
             navigationItem.leftBarButtonItem?.isEnabled = false
             modalEditing = false
             loadDataInTableSectionCell()
@@ -1580,7 +1601,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                         expense = XYZExpense(id: nil, detail: detail, amount: amount!, date: date!, context: managedContext())
                     }
       
-                    saveData()
+                    saveData(isNew:true)
                 }
                 
                 break
