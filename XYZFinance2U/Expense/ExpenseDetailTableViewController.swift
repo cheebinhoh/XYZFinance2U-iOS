@@ -245,7 +245,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         tableView.reloadData()
     }
     
-    func saveData(isNew: Bool) {
+    func saveData() {
         
         var hasChanged = false
         
@@ -661,6 +661,12 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             case "datepicker":
                 datecell?.dateInput.text = formattingDate(date: sender.date ?? Date(), style: .medium )
+                if date == recurringStopDate {
+                    
+                    recurringStopDateCell?.dateInput.text = "Recurring stop: -"
+                    recurringStopDate = sender.date ?? Date()
+                }
+                
                 date = sender.date ?? Date()
             
             case "recurringStopDatePicker":
@@ -963,11 +969,11 @@ class ExpenseDetailTableViewController: UITableViewController,
         expenseDelegate?.cancelExpense()
     }
     
-    @IBAction func save(_ sender: Any) {
+    func saveExpense() {
         
         if isPushinto {
             
-            saveData(isNew: false)
+            saveData()
             expenseDelegate?.saveExpense(expense: expense!)
             navigationController?.popViewController(animated: true)
         } else if isPopover {
@@ -975,19 +981,19 @@ class ExpenseDetailTableViewController: UITableViewController,
             if nil == expense {
                 
                 expense = XYZExpense(id: nil, detail: detail, amount: amount!, date: date!, context: managedContext())
-        
-                saveData(isNew: true)
+                
+                saveData()
                 expenseDelegate?.saveNewExpense(expense: expense!)
             } else {
-               
-                saveData(isNew: false)
+                
+                saveData()
                 expenseDelegate?.saveExpense(expense: expense!)
             }
             
             dismiss(animated: true, completion: nil)
         } else {
-           
-            saveData(isNew: false)
+            
+            saveData()
             navigationItem.leftBarButtonItem?.isEnabled = false
             modalEditing = false
             loadDataInTableSectionCell()
@@ -1003,6 +1009,44 @@ class ExpenseDetailTableViewController: UITableViewController,
             masterViewController.navigationItem.rightBarButtonItem?.isEnabled = true
             
             expenseDelegate?.saveExpense(expense: expense!)
+        }
+    }
+    
+    @IBAction func save(_ sender: Any) {
+        
+        if let _ = expense {
+            
+            let occurenceDates = expense?.getOccurenceDates(until: Date())
+            
+            if (occurenceDates?.count)! > 1  {
+                
+                // if we already have recurring expense, prompt a dialog to ask if we want to create a new record or save
+                // old one
+                
+                let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                let applyToExistingOption = UIAlertAction(title: "Save to all recurring expenses?", style: .default, handler: { (action) in
+                    
+                    self.saveExpense()
+                })
+                
+                optionMenu.addAction(applyToExistingOption)
+                
+                let addNewAction = UIAlertAction(title: "Save a new expense", style: .default, handler: { (action) in
+                
+                    self.expense = nil
+                    self.saveExpense()
+                })
+                
+                optionMenu.addAction(addNewAction)
+                
+                present(optionMenu, animated: true, completion: nil)
+            } else {
+                
+                saveExpense()
+            }
+        } else {
+            
+            saveExpense()
         }
     }
     
@@ -1603,7 +1647,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                         expense = XYZExpense(id: nil, detail: detail, amount: amount!, date: date!, context: managedContext())
                     }
       
-                    saveData(isNew:true)
+                    saveData()
                 }
                 
                 break
