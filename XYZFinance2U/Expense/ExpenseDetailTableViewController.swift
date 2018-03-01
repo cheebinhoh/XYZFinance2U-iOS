@@ -47,7 +47,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     
     func selection(_ sender: SelectionTableViewController, item: String?) {
         
-        switch sender.selectionIdentifier {
+        switch sender.selectionIdentifier! {
             
             case "recurring":
                 recurring = XYZExpense.Length(rawValue: item!)
