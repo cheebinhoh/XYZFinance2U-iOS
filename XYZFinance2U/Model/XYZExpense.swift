@@ -116,9 +116,7 @@ class XYZExpense: NSManagedObject {
 
             let dateDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date!)
             date = Calendar.current.date(from: dateDateComponents)!
-            
-            let stopDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: stopDate)
-            var dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date!)
+
             repeat {
                 outputDate.append(date!)
                 
@@ -152,12 +150,7 @@ class XYZExpense: NSManagedObject {
                                                      value:1,
                                                      to: date!)
                 }
-                
-                dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date!)
-
-            } while (dateComponents.year! <= stopDateComponents.year!
-                     && dateComponents.month! <= stopDateComponents.month!
-                     && dateComponents.day! <= stopDateComponents.day!)
+            } while date! <= stopDate
         }
         
         return outputDate.sorted(by: { (date1, date2) -> Bool in

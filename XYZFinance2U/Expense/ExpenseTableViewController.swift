@@ -33,6 +33,7 @@ class ExpenseTableViewController: UITableViewController,
     var searchActive = false
     var currencyCodes = [String]()
     var sectionList = [TableSectionCell]()
+    var sectionMonthYearList = [Date]()
     var filteredExpenseList: [XYZExpense]?
     var delegate: ExpenseTableViewDelegate?
     var isPopover = false
@@ -578,6 +579,7 @@ class ExpenseTableViewController: UITableViewController,
         // FIXME to improve performance
         currencyCodes = [String]()
         sectionList = [TableSectionCell]()
+        sectionMonthYearList = [Date]()
         var sectionExpenseList: [XYZExpense]?
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
     
@@ -608,6 +610,9 @@ class ExpenseTableViewController: UITableViewController,
                 let title = "\(year), \(dateFormatter.shortMonthSymbols[month - 1])"
                 let identifier = "\(year), \(dateFormatter.shortMonthSymbols[month - 1]), \(currency!)"
                 
+                let monthYearComponent =  Calendar.current.dateComponents([.month, .year], from: date)
+                let monthYearDate = Calendar.current.date(from: monthYearComponent)
+                
                 var foundIndex = -1
                 for (index, section) in sectionList.enumerated() {
                     
@@ -624,6 +629,7 @@ class ExpenseTableViewController: UITableViewController,
                     let newSection = TableSectionCell(identifier: identifier, title: title, cellList: [], data: nil)
                     sectionExpenseList = [XYZExpense]()
                     sectionList.append(newSection)
+                    sectionMonthYearList.append(monthYearDate!)
                 } else {
                     
                     sectionExpenseList = sectionList[foundIndex].data as? [XYZExpense]
@@ -645,6 +651,7 @@ class ExpenseTableViewController: UITableViewController,
             
             let newSection = TableSectionCell(identifier: "searchBar", title: "", cellList: ["searchBar"], data: nil)
             sectionList.insert(newSection, at: 0)
+            sectionMonthYearList.insert(Date(), at: 0)
         }
     }
     
@@ -897,6 +904,7 @@ class ExpenseTableViewController: UITableViewController,
                 }
                 
                 let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
+                expenseCell.monthYearDate = sectionMonthYearList[indexPath.section]
                 
                 expenseCell.setExpense(expense: (sectionExpenseList?[indexPath.row])!)
                 cell = expenseCell

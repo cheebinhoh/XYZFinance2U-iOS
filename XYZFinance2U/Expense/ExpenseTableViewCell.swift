@@ -15,6 +15,8 @@ class ExpenseTableViewCell: UITableViewCell {
     @IBOutlet weak var detail: UILabel!
     @IBOutlet weak var amount: UILabel!
     
+    var monthYearDate: Date?
+    
     // MARK: - function
     override func awakeFromNib() {
         
@@ -35,7 +37,6 @@ class ExpenseTableViewCell: UITableViewCell {
         detail.text = ( expense.value(forKey: XYZExpense.detail) as? String ) ?? ""
         date.text = formattingDate(date: (expense.value(forKey: XYZExpense.date) as? Date) ?? Date(), style: .medium )
         
-        
         let recurring = XYZExpense.Length(rawValue: expense.value(forKey: XYZExpense.recurring) as? String ?? XYZExpense.Length.none.rawValue )
         let theDate = (expense.value(forKey: XYZExpense.date) as? Date) ?? Date()
         switch recurring! {
@@ -44,27 +45,41 @@ class ExpenseTableViewCell: UITableViewCell {
                 date.text = formattingDate(date: theDate, style: .medium )
             
             case .daily:
-                date.text = "daily since \(formattingDate(date: theDate, style: .medium ))"
+                date.text = "daily: since \(formattingDate(date: theDate, style: .medium ))"
             
             case .biweekly:
                 let f = DateFormatter()
-                date.text = "biweekly at \(f.weekdaySymbols[Calendar.current.component(.weekday, from: theDate)])"
+                date.text = "biweekly: \(f.weekdaySymbols[Calendar.current.component(.weekday, from: theDate)])"
             
             case .weekly:
                 let f = DateFormatter()
-                date.text = "weekly at \(f.weekdaySymbols[Calendar.current.component(.weekday, from: theDate)])"
+                date.text = "weekly: \(f.weekdaySymbols[Calendar.current.component(.weekday, from: theDate)])"
             
             case .monthly:
-                let f = DateFormatter()
-                f.dateFormat = "MMMM, YYYY"
                 
-                date.text = "monthly since \(f.string(from: (expense.value(forKey: XYZExpense.date) as? Date) ?? Date()))"
+                let occurrenceDates = expense.getOccurenceDates(until: Date())
+                var nowDate: Date?
+                let monthYearDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: monthYearDate!)
+                for occurence in occurrenceDates {
+                    
+                    let nowDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: occurence)
+                    if nowDateComponents.month! == monthYearDateComponents.month!
+                        && nowDateComponents.year! == monthYearDateComponents.year! {
+                        
+                        nowDate = occurence
+                    }
+                }
+                
+                date.text = "monthly: \(formattingDate(date: nowDate!, style: .medium ))"
             
             case .yearly:
                 let f = DateFormatter()
                 f.dateFormat = "YYYY"
+
+                let theDateComponents = Calendar.current.dateComponents([.day], from: theDate)
                 
-                date.text = "yearly since \(f.string(from: theDate))"
+                let nowDate = Calendar.current.date(byAdding: .day, value: theDateComponents.day! - 1, to: monthYearDate!)
+                date.text = "yearly: \(formattingDate(date: nowDate!, style: .medium ))"
         }
     }
 }

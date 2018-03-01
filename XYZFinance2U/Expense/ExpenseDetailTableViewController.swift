@@ -1031,13 +1031,20 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 optionMenu.addAction(applyToExistingOption)
                 
-                let addNewAction = UIAlertAction(title: "Save a new expense", style: .default, handler: { (action) in
+                let addNewAction = UIAlertAction(title: "Save as new expense", style: .default, handler: { (action) in
                 
                     self.expense = nil
                     self.saveExpense()
                 })
                 
                 optionMenu.addAction(addNewAction)
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                    
+                    // nothing
+                })
+                
+                optionMenu.addAction(cancelAction)
                 
                 present(optionMenu, animated: true, completion: nil)
             } else {
