@@ -585,7 +585,7 @@ class ExpenseTableViewController: UITableViewController,
         
         for expense in expenseList! {
             
-            guard let date = expense.value(forKey: XYZExpense.date) as? Date else {
+            guard let _ = expense.value(forKey: XYZExpense.date) as? Date else {
                 
                 continue
             }

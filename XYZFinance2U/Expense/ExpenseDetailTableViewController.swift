@@ -289,7 +289,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         expense?.setValue(budgetCategory, forKey: XYZExpense.budgetCategory)
         expense?.setValue(recurring?.rawValue, forKey: XYZExpense.recurring)
         expense?.setValue(recurringStopDate!, forKey: XYZExpense.recurringStopDate)
-        
+    
         if hasLocation, let _ = cllocation {
             
             let data = NSKeyedArchiver.archivedData(withRootObject: cllocation!)

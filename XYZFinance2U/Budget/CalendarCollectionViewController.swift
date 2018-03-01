@@ -68,7 +68,8 @@ class CalendarCollectionViewController: UICollectionViewController,
         
         expenseList?.remove(at: foundIndex)
         
-        collectionView?.reloadItems(at: [indexPath!])
+        self.reloadData()
+        //collectionView?.reloadItems(at: [indexPath!])
     }
     
     var budget: XYZBudget?
@@ -86,22 +87,30 @@ class CalendarCollectionViewController: UICollectionViewController,
     @IBOutlet weak var nextPeriod: UIBarButtonItem!
     
     func filterExpenseList(of date: Date) -> [XYZExpense] {
-        
-        let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: date)
 
+        let targetDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date)
+        let targetDate = Calendar.current.date(from: targetDateComponents)
+        
+    
         return (expenseList?.filter({ (expense) -> Bool in
+      
+            let occurrenceDates = expense.getOccurenceDates(until: date)
             
-            if let date = expense.value(forKey: XYZExpense.date) as? Date {
-             
-               let expenseDateComponent = Calendar.current.dateComponents([.day, .month, .year], from: date)
+            var found = false
+            for theDate in occurrenceDates {
+
+                let occurentDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: theDate)
+                let occurentDate = Calendar.current.date(from: occurentDateComponents)
+
+                found = targetDate! == occurentDate!
                 
-               return expenseDateComponent.day! == dateComponent.day!
-                      && expenseDateComponent.month! == dateComponent.month!
-                      && expenseDateComponent.year! == dateComponent.year!
-            } else {
-            
-                return false
+                if found {
+                    
+                    break
+                }
             }
+            
+            return found
         }))!
     }
     

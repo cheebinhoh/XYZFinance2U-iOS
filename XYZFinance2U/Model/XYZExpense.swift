@@ -106,13 +106,19 @@ class XYZExpense: NSManagedObject {
             
         default:
             var date = self.value(forKey: XYZExpense.date) as? Date
+
             var stopDate = until
             let recurringStopDate = self.value(forKey: XYZExpense.recurringStopDate) as? Date ?? date
             if recurringStopDate! > date! {
                 
                 stopDate = min(stopDate, recurringStopDate!)
             }
+
+            let dateDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date!)
+            date = Calendar.current.date(from: dateDateComponents)!
             
+            let stopDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: stopDate)
+            var dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date!)
             repeat {
                 outputDate.append(date!)
                 
@@ -131,7 +137,6 @@ class XYZExpense: NSManagedObject {
                         date = Calendar.current.date(byAdding: .weekday,
                                                      value:7,
                                                      to: date!)
-                    
                     case .biweekly:
                         date = Calendar.current.date(byAdding: .weekday,
                                                      value:14,
@@ -147,7 +152,12 @@ class XYZExpense: NSManagedObject {
                                                      value:1,
                                                      to: date!)
                 }
-            } while (date! <= stopDate)
+                
+                dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date!)
+
+            } while (dateComponents.year! <= stopDateComponents.year!
+                     && dateComponents.month! <= stopDateComponents.month!
+                     && dateComponents.day! <= stopDateComponents.day!)
         }
         
         return outputDate.sorted(by: { (date1, date2) -> Bool in
