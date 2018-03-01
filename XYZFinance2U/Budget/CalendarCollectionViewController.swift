@@ -509,6 +509,7 @@ class CalendarCollectionViewController: UICollectionViewController,
             cell.stack.addArrangedSubview(budgetExpensesTableViewController.tableView)
             budgetExpensesTableViewController.delegate = self
             
+            self.budgetExpensesTableViewController?.monthYearDate = startDateOfMonth
             self.budgetExpensesTableViewController?.loadData(of: selectedExpenseList)
             self.budgetExpensesTableViewController?.tableView.reloadData()
             

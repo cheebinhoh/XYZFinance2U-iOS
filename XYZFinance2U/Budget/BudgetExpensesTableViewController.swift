@@ -19,6 +19,8 @@ protocol BudgetExpenseDelegate: class {
 class BudgetExpensesTableViewController: UITableViewController,
     ExpenseDetailDelegate {
 
+    var monthYearDate: Date?
+    
     func cancelExpense() {
 
         delegate?.reloadData()
@@ -160,9 +162,9 @@ class BudgetExpensesTableViewController: UITableViewController,
         
         let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
         let expense = sectionExpenseList![indexPath.row]
-        
+        cell.monthYearDate = monthYearDate
         cell.setExpense(expense: expense)
-
+        
         return cell
     }
 
