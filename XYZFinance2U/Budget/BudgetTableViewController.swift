@@ -192,83 +192,10 @@ class BudgetTableViewController: UITableViewController,
             sectionList.append(newSection)
         }
         
-        /*
-        for budget in budgetList {
+        sectionList = sectionList.sorted(by: { (section1, section2) -> Bool in
             
-            let currency = budget.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode
-        
-            if !currencyCodes.contains(currency!) {
-                
-                if !sectionList.isEmpty {
-                    
-                    var sectionBudgetList = sectionList[sectionList.count - 1].data as? [XYZBudget]
-                    
-                    sectionBudgetList?.sort(by: { (bu1, bu2) -> Bool in
-                        
-                        let seq1 = bu1.value(forKey: XYZBudget.sequenceNr) as? Int
-                        let seq2 = bu2.value(forKey: XYZBudget.sequenceNr) as? Int
-                        
-                        return seq1! > seq2!
-                    })
-                    
-                    sectionList[sectionList.count - 1].data = sectionBudgetList
-                }
-                
-                let newSection = TableSectionCell(identifier: currency!, title: currency, cellList: [], data: [XYZBudget]())
-                sectionList.append(newSection)
-                
-                currencyCodes.append(currency!)
-            }
-            
-            var sectionBudgetList = sectionList[sectionList.count - 1].data as? [XYZBudget]
-            sectionBudgetList?.append(budget)
-            sectionList[sectionList.count - 1].data = sectionBudgetList
-        }
-        
-        if !sectionList.isEmpty {
-            
-            var sectionBudgetList = sectionList[sectionList.count - 1].data as? [XYZBudget]
-            
-            sectionBudgetList?.sort(by: { (bu1, bu2) -> Bool in
-                
-                let seq1 = bu1.value(forKey: XYZBudget.sequenceNr) as? Int
-                let seq2 = bu2.value(forKey: XYZBudget.sequenceNr) as? Int
-                
-                return seq1! >  seq2!
-            })
-            
-            sectionList[sectionList.count - 1].data = sectionBudgetList
-        }
-        */
-        /*
-        print("-------- # of sections = \(sectionList.count)")
-        for section in sectionList {
-            
-            let currency = section.title
-            let sectionBudgetList = section.data as? [XYZBudget]
-            
-            print("-------- section = \(String(describing: currency))")
-            for budget in sectionBudgetList! {
-            
-                let name = budget.value(forKey: XYZBudget.name)
-                let amount = budget.value(forKey: XYZBudget.amount)
-                let start = budget.value(forKey: XYZBudget.start)
-                let length = XYZBudget.Length(rawValue: budget.value(forKey: XYZBudget.length) as? String ?? "")
-                
-                
-                print("-------- name = \(String(describing: name)), amount = \(String(describing: amount)), length = \(String(describing: length)), start = \(String(describing: start))")
-            }
-        }
-        
-
-            _ = XYZBudget(id: nil, name: "grocery", amount: 600.0, currency: Locale.current.currencyCode!, length: .monthly, start: Date(),  context: managedContext())
-            
-            _ = XYZBudget(id: nil, name: "xfinity", amount: 120.0, currency: Locale.current.currencyCode!, length: .monthly, start: Date(), context: managedContext())
-            
-            _ = XYZBudget(id: nil, name: "insurance", amount: 1500.0, currency: "MYR", length: .monthly, start: Date(), context: managedContext())
-        
-            saveManageContext() */
- 
+            section1.identifier < section2.identifier
+        })
     }
     
     func loadData() {
