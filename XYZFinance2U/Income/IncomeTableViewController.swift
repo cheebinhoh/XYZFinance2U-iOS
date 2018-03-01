@@ -396,26 +396,10 @@ class IncomeTableViewController: UITableViewController,
             }
         }
         
-        /* DEPRECATED: debugging code
-        for section in sectionList {
+        sectionList = sectionList.sorted(by: { (section1, section2) -> Bool in
             
-            switch section.identifier {
-                
-                case "main":
-                    let incomeListStored = section.data as? [XYZAccount]
-                    for income in incomeListStored! {
-                        
-                        _ = income.value(forKey: XYZAccount.bank)
-                    }
-                
-                case "summary":
-                    break;
-                
-                default:
-                    fatalError("Exception: execution should not be reached here, case = \(section.identifier)")
-            }
-        }
-        */
+            section1.identifier > section2.identifier
+        })
     }
     
     func reloadData() {
