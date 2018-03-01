@@ -47,9 +47,11 @@ class CalendarCollectionViewController: UICollectionViewController,
     }
     
     func saveExpense(expense: XYZExpense) {
+        
     }
     
     func cancelExpense() {
+        
     }
     
         
@@ -307,6 +309,7 @@ class CalendarCollectionViewController: UICollectionViewController,
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         // Uncomment the following line to preserve selection between presentations

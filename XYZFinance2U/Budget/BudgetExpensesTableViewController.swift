@@ -17,7 +17,7 @@ protocol BudgetExpenseDelegate: class {
 }
 
 class BudgetExpensesTableViewController: UITableViewController,
-ExpenseDetailDelegate {
+    ExpenseDetailDelegate {
 
     func cancelExpense() {
 
@@ -122,6 +122,7 @@ ExpenseDetailDelegate {
         super.viewDidLoad()
 
         tableView.tableFooterView = UIView(frame: .zero)
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -161,7 +162,6 @@ ExpenseDetailDelegate {
         let expense = sectionExpenseList![indexPath.row]
         
         cell.setExpense(expense: expense)
-        // Configure the cell...
 
         return cell
     }
@@ -241,7 +241,15 @@ ExpenseDetailDelegate {
                                  [ckrecordzone],
                                  [iCloudZone!], {
                                     
-                                
+                DispatchQueue.main.async {
+                    
+                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                    
+                    appDelegate?.expenseList = loadExpenses()!
+                    
+                    self.delegate?.reloadData()
+                    self.loadData()
+                }
             })
         }
     }
