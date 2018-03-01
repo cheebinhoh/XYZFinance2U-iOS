@@ -277,6 +277,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             hasChanged = true
         }
         
+        /*
         if !isNew && hasChanged {
             
             let occurenceDates = expense?.getOccurenceDates(until: Date())
@@ -300,6 +301,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 present(optionMenu, animated: true, completion: nil)
             }
         }
+        */
         
         expense?.setValue(detail, forKey: XYZExpense.detail)
         expense?.setValue(amount, forKey: XYZExpense.amount)
