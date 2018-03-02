@@ -147,7 +147,7 @@ class CalendarCollectionViewController: UICollectionViewController,
         
         if sectionList[indexPath.section].identifier == "table" {
 
-            return CGSize(width: 400.0, height: 350.0)
+            return CGSize(width: 400.0, height: 500.0)
         } else {
         
             if collectionView.frame.width >= 414.0 {
@@ -282,12 +282,6 @@ class CalendarCollectionViewController: UICollectionViewController,
                 guard let expenseDetailTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
                     
                     fatalError("Exception: ExpenseDetailTableViewController is expected" )
-                }
-                
-                let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
-                    
-                    fatalError("Exception: UISplitViewController is expected" )
                 }
                 
                 mainSplitView.popOverNavigatorController = expenseDetailNavigationController
