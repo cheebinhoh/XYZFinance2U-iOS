@@ -39,9 +39,20 @@ class CalendarCollectionViewController: UICollectionViewController,
             
             fatalError("Exception: ExpenseTableViewController is expected")
         }
+    
+        guard let budgetNavController = tabbarView.viewControllers?[2] as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
         
-        expenseList?.append(expense)
+        guard let budgetView = budgetNavController.viewControllers.first as? BudgetTableViewController else {
+            
+            fatalError("Exception: ExpenseTableViewController is expected")
+        }
+
         expenseView.updateToiCloud(expense)
+        expenseList?.append(expense)
+        budgetView.reloadData()
         expenseView.reloadData()
         reloadData()
     }
@@ -343,7 +354,6 @@ class CalendarCollectionViewController: UICollectionViewController,
         let headingSection = TableSectionCell(identifier: "heading", title: "", cellList: ["S", "M", "T", "W", "T", "F", "S"], data: nil)
         sectionList.append(headingSection)
         
-        //let dayComponent = Calendar.current.dateComponents([.day,], from: date!)
         var startDate = startDateOfMonth
   
         var dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: startDate!)
@@ -430,7 +440,6 @@ class CalendarCollectionViewController: UICollectionViewController,
     override func didReceiveMemoryWarning() {
         
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     private func addBackButton() {
@@ -452,7 +461,6 @@ class CalendarCollectionViewController: UICollectionViewController,
         appDelegate?.orientation = UIInterfaceOrientationMask.all
         
         dismiss(animated: true, completion: nil)
-        //let _ = self.navigationController?.popViewController(animated: true)
     }
     
     /*
@@ -506,7 +514,7 @@ class CalendarCollectionViewController: UICollectionViewController,
         
             self.budgetExpensesTableViewController = budgetExpensesTableViewController
             cell.stack.addArrangedSubview(budgetExpensesTableViewController.tableView)
-            budgetExpensesTableViewController.delegate = self
+            self.budgetExpensesTableViewController?.delegate = self
             
             self.budgetExpensesTableViewController?.monthYearDate = startDateOfMonth
             self.budgetExpensesTableViewController?.loadData(of: selectedExpenseList)
@@ -587,21 +595,21 @@ class CalendarCollectionViewController: UICollectionViewController,
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
  
         switch kind {
-        case UICollectionElementKindSectionFooter:
-            let reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: "UICollectionElementKindSectionFooter", withReuseIdentifier: "calendarCollectionFooterView", for: indexPath)
+            case UICollectionElementKindSectionFooter:
+                let reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: "UICollectionElementKindSectionFooter", withReuseIdentifier: "calendarCollectionFooterView", for: indexPath)
+                
+                let height = 1.0
+                
+                let lineView = UIView(frame: CGRect(x: 0, y: 0,
+                                                    width: 500,
+                                                    height: height))
+
+                lineView.backgroundColor = UIColor.lightGray
+                reusableView.addSubview(lineView)
+                return reusableView
             
-            let height = 1.0
-            
-            let lineView = UIView(frame: CGRect(x: 0, y: 0,
-                                                width: 500,
-                                                height: height))
-            //lineView.layer.borderWidth = 1.0
-            lineView.backgroundColor = UIColor.lightGray
-            reusableView.addSubview(lineView)
-            return reusableView
-            
-        default:
-            return UICollectionReusableView()
+            default:
+                return UICollectionReusableView()
         }
     }
     
