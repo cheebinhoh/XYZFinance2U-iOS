@@ -232,7 +232,7 @@ class BudgetTableViewController: UITableViewController,
         // Dispose of any resources that can be recreated.
     }
     
-    func sectionTotal(section: Int) -> (Double, String) {
+    func sectionTotalBudget(section: Int) -> (Double, String) {
         
         var total = 0.0;
         let sectionBudgetList = sectionList[section].data as? [XYZBudget]
@@ -244,6 +244,30 @@ class BudgetTableViewController: UITableViewController,
         
         return (total, sectionList[section].title!)
     }
+    
+    func sectionRemainingBudget(section: Int) -> (Double, String) {
+        
+        var total = 0.0;
+        let sectionBudgetList = sectionList[section].data as? [XYZBudget]
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        for budget in sectionBudgetList! {
+            
+            let expeneseList = self.getExpenseList(of: budget, from: (appDelegate?.expenseList)!)
+            
+            for expense in expeneseList {
+                
+                let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
+                
+                total = total + amount
+            }
+        }
+        
+        let (budget, _) = sectionTotalBudget(section: section)
+        
+        return (budget - total, sectionList[section].title!)
+    }
+    
     
     func getExpenseList(of budget: XYZBudget, from expenseList: [XYZExpense]) -> [XYZExpense] {
      
@@ -535,8 +559,8 @@ class BudgetTableViewController: UITableViewController,
         let stackView = UIStackView()
         let title = UILabel()
         let subtotal = UILabel()
-        let (amount, currency) = sectionTotal(section: section)
-        
+        let (amount, currency) = sectionRemainingBudget(section: section)
+
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 45)
         stackView.isLayoutMarginsRelativeArrangement = true
         

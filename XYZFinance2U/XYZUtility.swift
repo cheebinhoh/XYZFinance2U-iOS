@@ -135,13 +135,17 @@ func formattingDoubleValue(input: String) -> String {
     
     var processedInput = ""
     var startWithDecimalDigit = false
+    var startWithNegativeSign = false
     let digitSet = CharacterSet.decimalDigits
     
     var inputToBeProcessed = input
     
     for c in inputToBeProcessed.unicodeScalars {
         
-        if startWithDecimalDigit {
+        if !startWithNegativeSign && c == "-" {
+          
+            startWithNegativeSign = true
+        } else if startWithDecimalDigit {
             
             if digitSet.contains(c) || ( Locale.current.decimalSeparator ?? "" == "\(c)" ) {
                 
@@ -157,7 +161,7 @@ func formattingDoubleValue(input: String) -> String {
         }
     }
     
-    return processedInput
+    return startWithNegativeSign ? "-\(processedInput)" : processedInput
 }
 
 func formattingCurrencyValue(input: Double,
@@ -171,6 +175,8 @@ func formattingCurrencyValue(input: Double,
 func formattingCurrencyValue(input: String,
                              code: String?) -> String {
     
+    let doubleValue = formattingDoubleValueAsDouble(input: input)
+
     let processedInput = formattingDoubleValue(input: input)
     
     let formatter = NumberFormatter()
@@ -188,7 +194,7 @@ func formattingCurrencyValue(input: String,
         return ""
     }
     
-    return formattedAmount
+    return doubleValue < 0.0 ? "-\(formattedAmount)" : formattedAmount
 }
 
 // MARK: - core data
