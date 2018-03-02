@@ -1506,6 +1506,11 @@ class ExpenseDetailTableViewController: UITableViewController,
                         
                         budgetCategories.append(type!)
                     }
+                    
+                    budgetCategories = budgetCategories.sorted(by: { (bud1, bud2) -> Bool in
+                    
+                        return bud1 < bud2
+                    })
                 
                     guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
                         

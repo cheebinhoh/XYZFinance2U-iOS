@@ -94,6 +94,9 @@ class BudgetTableViewController: UITableViewController,
         reloadData()
         
         saveBudgets()
+        
+        let ip = indexPath(budget)
+        tableView.scrollToRow(at: ip!, at: UITableViewScrollPosition.top, animated: true)
     }
     
     func saveBudget(budget: XYZBudget) {
