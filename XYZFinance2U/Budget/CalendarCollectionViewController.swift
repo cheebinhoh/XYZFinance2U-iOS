@@ -65,7 +65,6 @@ class CalendarCollectionViewController: UICollectionViewController,
         
     }
     
-        
     func deleteExpense(expense: XYZExpense) {
     
         var foundIndex = -1
