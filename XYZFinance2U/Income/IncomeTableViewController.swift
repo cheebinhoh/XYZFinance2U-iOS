@@ -398,7 +398,7 @@ class IncomeTableViewController: UITableViewController,
         
         sectionList = sectionList.sorted(by: { (section1, section2) -> Bool in
             
-            section1.identifier < section2.identifier
+            section1.title! < section2.title!
         })
     }
     
