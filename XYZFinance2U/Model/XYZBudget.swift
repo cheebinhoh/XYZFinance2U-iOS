@@ -29,27 +29,23 @@ class XYZBudget : NSManagedObject {
             
             switch self {
                 
-            case .none:
-                return "none"
-            
-            //DEPRECATED:
-            //case .hourly:
-            //    return "hourly"
+                case .none:
+                    return "none"
                 
-            case .daily:
-                return "daily"
-                
-            case .weekly:
-                return "weekly"
-                
-            case .biweekly:
-                return "biweekly"
-                
-            case .monthly:
-                return "monthly"
-                
-            case .yearly:
-                return "yearly"
+                case .daily:
+                    return "daily"
+                    
+                case .weekly:
+                    return "weekly"
+                    
+                case .biweekly:
+                    return "biweekly"
+                    
+                case .monthly:
+                    return "monthly"
+                    
+                case .yearly:
+                    return "yearly"
             }
         }
     }

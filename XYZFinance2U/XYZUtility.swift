@@ -22,6 +22,65 @@ struct TableSectionCell {
     var data: Any?
 }
 
+enum XYZColor: String {
+    
+    case black = "Black"
+    case blue = "Blue"
+    case brown = "Brown"
+    case cyan = "Cyan"
+    case green = "Green"
+    case magenta = "Magenta"
+    case orange = "Orange"
+    case purple = "Purple"
+    case red = "Red"
+    case yellow = "yellow"
+    case white = "white"
+    
+    func description() -> String {
+        
+        return self.rawValue
+    }
+    
+    func uiColor() -> UIColor {
+        
+        switch self {
+            
+            case .black:
+                return UIColor.black
+                
+            case .blue:
+                return UIColor.blue
+                
+            case .brown:
+                return UIColor.brown
+                
+            case .cyan:
+                return UIColor.cyan
+                
+            case .green:
+                return UIColor.green
+                
+            case .magenta:
+                return UIColor.magenta
+                
+            case .orange:
+                return UIColor.orange
+                
+            case .purple:
+                return UIColor.purple
+                
+            case .red:
+                return UIColor.red
+                
+            case .yellow:
+                return UIColor.yellow
+            
+            case .white:
+                return UIColor.white
+        }
+    }
+}
+
 // MARK: - formatting
 
 func formattingDate(date: Date,

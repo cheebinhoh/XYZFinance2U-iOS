@@ -158,9 +158,10 @@ class BudgetDetailTableViewController: UITableViewController,
     var date = Date() 
     var datecell: BudgetDetailDateTableViewCell?
     var currencyCodes = [String]()
+    var color = ""
     
     var isCollapsed: Bool {
-        
+    
         if let split = self.parent?.parent as? UISplitViewController {
             
             return split.isCollapsed
@@ -323,6 +324,9 @@ class BudgetDetailTableViewController: UITableViewController,
         
         let lengthSection = TableSectionCell(identifier: "length", title: nil, cellList: ["length", "date"], data: nil)
         sectionList.append(lengthSection)
+        
+        let colorSection = TableSectionCell(identifier: "color", title: nil, cellList: ["color"], data: nil)
+        sectionList.append(colorSection)
         
         if modalEditing && nil != budget {
             
@@ -503,6 +507,17 @@ class BudgetDetailTableViewController: UITableViewController,
                 currencycell.selectionStyle = .none
                 
                 cell = currencycell
+            
+            case "color":
+                guard let colorcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? BudgetDetailSelectionTableViewCell else {
+                    
+                    fatalError("Exception: budgetDetailSelectionCell is failed to be created")
+                }
+                
+                colorcell.setLabel("Color")
+                colorcell.setSelection("")
+                colorcell.selectionStyle = .none
+                cell = colorcell
             
             case "date":
                 guard let datecell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailDateTextCell", for: indexPath) as? BudgetDetailDateTableViewCell else {
