@@ -1543,7 +1543,7 @@ Chee Bin HOH, 2017</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="E3R-7O-nWA">
-                                            <rect key="frame" x="259" y="9" width="82" height="27"/>
+                                            <rect key="frame" x="254" y="9" width="82" height="27"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1563,12 +1563,6 @@ Chee Bin HOH, 2017</string>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="Ech-ju-oc8" userLabel="spendAmount">
-                                            <rect key="frame" x="281" y="40" width="60" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X2O-Og-T8e">
                                             <rect key="frame" x="0.0" y="0.0" width="5" height="70"/>
                                             <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1577,20 +1571,24 @@ Chee Bin HOH, 2017</string>
                                                 <constraint firstAttribute="height" constant="70" id="MYT-TV-ynG"/>
                                             </constraints>
                                         </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="Ech-ju-oc8" userLabel="spendAmount">
+                                            <rect key="frame" x="276" y="39.5" width="60" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="E3R-7O-nWA" firstAttribute="top" secondItem="eX9-4P-DBj" secondAttribute="top" constant="9" id="F8I-rl-qxK"/>
                                         <constraint firstItem="8Jw-qJ-ejx" firstAttribute="leading" secondItem="X2O-Og-T8e" secondAttribute="trailing" constant="11" id="HDq-ZI-VCK"/>
-                                        <constraint firstAttribute="trailing" secondItem="Ech-ju-oc8" secondAttribute="trailing" id="HJg-sP-TjH"/>
-                                        <constraint firstAttribute="trailing" secondItem="E3R-7O-nWA" secondAttribute="trailing" id="MId-nK-Ucn"/>
+                                        <constraint firstAttribute="trailing" secondItem="E3R-7O-nWA" secondAttribute="trailing" constant="5" id="MId-nK-Ucn"/>
                                         <constraint firstItem="qOX-jY-XiK" firstAttribute="top" secondItem="eX9-4P-DBj" secondAttribute="topMargin" id="ZPZ-5c-X2D"/>
                                         <constraint firstAttribute="bottom" secondItem="Ech-ju-oc8" secondAttribute="bottom" constant="9" id="dgz-MR-UwL"/>
                                         <constraint firstItem="Ech-ju-oc8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eX9-4P-DBj" secondAttribute="leading" constant="20" symbolic="YES" id="f37-jF-Fdf"/>
-                                        <constraint firstAttribute="trailing" secondItem="E3R-7O-nWA" secondAttribute="trailing" id="h0W-Bt-yuz"/>
                                         <constraint firstItem="8Jw-qJ-ejx" firstAttribute="bottom" secondItem="eX9-4P-DBj" secondAttribute="bottomMargin" id="ibF-Yy-r6w"/>
                                         <constraint firstItem="X2O-Og-T8e" firstAttribute="leading" secondItem="eX9-4P-DBj" secondAttribute="leading" id="igQ-ET-ZyV"/>
                                         <constraint firstItem="X2O-Og-T8e" firstAttribute="top" secondItem="eX9-4P-DBj" secondAttribute="top" id="lxF-DR-4aP"/>
-                                        <constraint firstAttribute="trailing" secondItem="Ech-ju-oc8" secondAttribute="trailing" id="mPm-6l-DvY"/>
+                                        <constraint firstAttribute="trailing" secondItem="Ech-ju-oc8" secondAttribute="trailing" constant="5" id="mPm-6l-DvY"/>
                                         <constraint firstItem="qOX-jY-XiK" firstAttribute="leading" secondItem="X2O-Og-T8e" secondAttribute="trailing" constant="11" id="mx0-hO-Ffk"/>
                                         <constraint firstAttribute="bottom" secondItem="X2O-Og-T8e" secondAttribute="bottom" id="sSB-tg-evV"/>
                                     </constraints>
