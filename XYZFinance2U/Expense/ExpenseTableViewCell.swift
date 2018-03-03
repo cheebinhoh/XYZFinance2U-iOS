@@ -16,15 +16,12 @@ class ExpenseTableViewCell: UITableViewCell {
     @IBOutlet weak var amount: UILabel!
     @IBOutlet weak var colorView: UIView!
     
-    var color = UIColor.red
     var monthYearDate: Date?
     
     // MARK: - function
     override func awakeFromNib() {
         
         super.awakeFromNib()
-        
-        colorView.backgroundColor = color
         // Initialization code
     }
 
@@ -40,6 +37,17 @@ class ExpenseTableViewCell: UITableViewCell {
         amount.text = formattingCurrencyValue(input: (expense.value(forKey: XYZExpense.amount) as? Double) ?? 0.0, code: expense.value(forKey: XYZExpense.currencyCode) as? String )
         detail.text = ( expense.value(forKey: XYZExpense.detail) as? String ) ?? ""
         date.text = formattingDate(date: (expense.value(forKey: XYZExpense.date) as? Date) ?? Date(), style: .medium )
+        
+        let budgetCategory = expense.value(forKey: XYZExpense.budgetCategory) as? String
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let budgetList = appDelegate?.budgetList
+        let budget = budgetList?.first(where: { (budget) -> Bool in
+        
+            return ( budget.value(forKey: XYZBudget.name) as? String ?? "" ) == budgetCategory
+        })
+        
+        let color = XYZColor(rawValue: budget?.value(forKey: XYZBudget.color) as? String ?? "")
+        colorView.backgroundColor = color?.uiColor()
         
         let recurring = XYZExpense.Length(rawValue: expense.value(forKey: XYZExpense.recurring) as? String ?? XYZExpense.Length.none.rawValue )
         let theDate = (expense.value(forKey: XYZExpense.date) as? Date) ?? Date()
