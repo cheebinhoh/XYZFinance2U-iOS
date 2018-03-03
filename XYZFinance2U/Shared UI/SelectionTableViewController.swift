@@ -24,6 +24,7 @@ class SelectionTableViewController: UITableViewController {
     var hasIndexing: Bool = false
     var sectionTitles = [String]()
     var caseInsensitive = false
+    var selectionColors = [UIColor]()
     
     // MARK: - function
     
@@ -89,6 +90,11 @@ class SelectionTableViewController: UITableViewController {
             }
     }
     
+    func setSelectionColors(colors: [UIColor]) {
+        
+        selectionColors = colors
+    }
+    
     func setSelections(_ sectionIdentifier: String, _ indexing: Bool, _ selection: [String]) {
         
         if indexing {
@@ -139,6 +145,11 @@ class SelectionTableViewController: UITableViewController {
         }
         
         cell.label.text = tableSectionList[indexPath.section].cellList[indexPath.row]
+        
+        if !selectionColors.isEmpty {
+            
+            cell.color = selectionColors[indexPath.row]
+        }
         
         if tableSectionList[indexPath.section].cellList[indexPath.row] == self.selectedItem
            || ( caseInsensitive

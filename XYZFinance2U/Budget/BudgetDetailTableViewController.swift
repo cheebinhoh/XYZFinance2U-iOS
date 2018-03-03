@@ -519,8 +519,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 colorcell.setLabel("Color")
                 colorcell.setSelection(color.rawValue)
-                colorcell.selection.textColor = color.uiColor()
-                
+   
                 colorcell.selectionStyle = .none
                 cell = colorcell
             
@@ -675,6 +674,19 @@ class BudgetDetailTableViewController: UITableViewController,
                                                          XYZColor.yellow.rawValue,
                                                          XYZColor.white.rawValue])
             
+            selectionTableViewController.setSelectionColors(colors: [XYZColor.none.uiColor(),
+                                                                     XYZColor.black.uiColor(),
+                                                                     XYZColor.blue.uiColor(),
+                                                                     XYZColor.brown.uiColor(),
+                                                                     XYZColor.cyan.uiColor(),
+                                                                     XYZColor.green.uiColor(),
+                                                                     XYZColor.magenta.uiColor(),
+                                                                     XYZColor.orange.uiColor(),
+                                                                     XYZColor.purple.uiColor(),
+                                                                     XYZColor.red.uiColor(),
+                                                                     XYZColor.yellow.uiColor(),
+                                                                     XYZColor.white.uiColor()])
+            selectionTableViewController.setSelectedItem(color.rawValue)
             selectionTableViewController.delegate = self
             
             let nav = UINavigationController(rootViewController: selectionTableViewController)

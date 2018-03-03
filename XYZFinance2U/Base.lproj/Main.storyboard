@@ -1880,13 +1880,24 @@ Chee Bin HOH, 2017</string>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n0f-fB-3PJ" userLabel="Color View">
+                                            <rect key="frame" x="0.0" y="-13" width="5" height="70"/>
+                                            <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="5" id="bVn-P5-tUW"/>
+                                                <constraint firstAttribute="height" constant="70" id="f1x-wd-RDS"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="n0f-fB-3PJ" firstAttribute="centerY" secondItem="B02-ge-3JC" secondAttribute="centerY" id="Ht0-ZY-LDU"/>
                                         <constraint firstItem="re8-JO-ugY" firstAttribute="leading" secondItem="B02-ge-3JC" secondAttribute="leadingMargin" id="LfQ-Bt-iIy"/>
                                         <constraint firstItem="re8-JO-ugY" firstAttribute="centerY" secondItem="B02-ge-3JC" secondAttribute="centerY" id="UOp-0e-DBY"/>
+                                        <constraint firstItem="n0f-fB-3PJ" firstAttribute="leading" secondItem="B02-ge-3JC" secondAttribute="leading" id="pXD-HN-LKX"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="colorView" destination="n0f-fB-3PJ" id="pjW-HO-WHa"/>
                                     <outlet property="label" destination="re8-JO-ugY" id="ycH-lW-7yv"/>
                                 </connections>
                             </tableViewCell>

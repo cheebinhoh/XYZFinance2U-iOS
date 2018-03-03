@@ -11,6 +11,9 @@ import UIKit
 class SelectionItemTableViewCell: UITableViewCell {
 
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var colorView: UIView!
+    
+    var color = UIColor.clear
     
     override func awakeFromNib() {
         
@@ -22,6 +25,7 @@ class SelectionItemTableViewCell: UITableViewCell {
         
         super.setSelected(selected, animated: animated)
 
+        colorView.backgroundColor = color
         // Configure the view for the selected state
     }
 
