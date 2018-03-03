@@ -97,6 +97,9 @@ class BudgetDetailTableViewController: UITableViewController,
             case "currency":
                 currencyCode = item!
             
+            case "color":
+                color = XYZColor(rawValue: item!)!
+            
             default:
                 break
         }
@@ -158,7 +161,7 @@ class BudgetDetailTableViewController: UITableViewController,
     var date = Date() 
     var datecell: BudgetDetailDateTableViewCell?
     var currencyCodes = [String]()
-    var color = ""
+    var color = XYZColor.none
     
     var isCollapsed: Bool {
     
@@ -515,7 +518,9 @@ class BudgetDetailTableViewController: UITableViewController,
                 }
                 
                 colorcell.setLabel("Color")
-                colorcell.setSelection("")
+                colorcell.setSelection(color.rawValue)
+                colorcell.selection.textColor = color.uiColor()
+                
                 colorcell.selectionStyle = .none
                 cell = colorcell
             
@@ -642,6 +647,34 @@ class BudgetDetailTableViewController: UITableViewController,
                                                         XYZBudget.Length.monthly.rawValue,
                                                         XYZBudget.Length.yearly.rawValue])
             selectionTableViewController.setSelectedItem(length.rawValue)
+            selectionTableViewController.delegate = self
+            
+            let nav = UINavigationController(rootViewController: selectionTableViewController)
+            nav.modalPresentationStyle = .popover
+            
+            self.present(nav, animated: true, completion: nil)
+           
+        case "color":
+            guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+                
+                fatalError("Exception: error on instantiating SelectionNavigationController")
+            }
+            
+            selectionTableViewController.selectionIdentifier = "color"
+            selectionTableViewController.setSelections("", false,
+                                                        [XYZColor.none.rawValue,
+                                                         XYZColor.black.rawValue,
+                                                         XYZColor.blue.rawValue,
+                                                         XYZColor.brown.rawValue,
+                                                         XYZColor.cyan.rawValue,
+                                                         XYZColor.green.rawValue,
+                                                         XYZColor.magenta.rawValue,
+                                                         XYZColor.orange.rawValue,
+                                                         XYZColor.purple.rawValue,
+                                                         XYZColor.red.rawValue,
+                                                         XYZColor.yellow.rawValue,
+                                                         XYZColor.white.rawValue])
+            
             selectionTableViewController.delegate = self
             
             let nav = UINavigationController(rootViewController: selectionTableViewController)

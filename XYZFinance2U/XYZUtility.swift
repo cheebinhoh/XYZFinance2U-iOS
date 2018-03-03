@@ -24,6 +24,7 @@ struct TableSectionCell {
 
 enum XYZColor: String {
     
+    case none = ""
     case black = "Black"
     case blue = "Blue"
     case brown = "Brown"
@@ -45,33 +46,36 @@ enum XYZColor: String {
         
         switch self {
             
+            case .none:
+                return UIColor.clear
+            
             case .black:
                 return UIColor.black
-                
+            
             case .blue:
                 return UIColor.blue
-                
+            
             case .brown:
                 return UIColor.brown
-                
+            
             case .cyan:
                 return UIColor.cyan
-                
+            
             case .green:
                 return UIColor.green
-                
+            
             case .magenta:
                 return UIColor.magenta
-                
+            
             case .orange:
                 return UIColor.orange
-                
+            
             case .purple:
                 return UIColor.purple
-                
+            
             case .red:
                 return UIColor.red
-                
+            
             case .yellow:
                 return UIColor.yellow
             
