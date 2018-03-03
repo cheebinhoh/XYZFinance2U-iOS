@@ -14,13 +14,17 @@ class ExpenseTableViewCell: UITableViewCell {
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var detail: UILabel!
     @IBOutlet weak var amount: UILabel!
+    @IBOutlet weak var colorView: UIView!
     
+    var color = UIColor.clear
     var monthYearDate: Date?
     
     // MARK: - function
     override func awakeFromNib() {
         
         super.awakeFromNib()
+        
+        colorView.backgroundColor = color
         // Initialization code
     }
 
