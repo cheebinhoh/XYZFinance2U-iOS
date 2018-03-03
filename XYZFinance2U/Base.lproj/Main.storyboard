@@ -262,12 +262,12 @@
                                         <constraint firstItem="Lbl-ea-JO0" firstAttribute="leading" secondItem="Rt8-ns-G36" secondAttribute="leading" id="O6O-iV-DC1"/>
                                         <constraint firstItem="ll3-uL-fct" firstAttribute="centerY" secondItem="Rt8-ns-G36" secondAttribute="centerY" id="QIf-rS-0Of"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="c9a-BL-5zy" secondAttribute="trailing" constant="20" symbolic="YES" id="cpg-BL-aAb"/>
+                                        <constraint firstItem="tfB-lJ-RhK" firstAttribute="leading" secondItem="Lbl-ea-JO0" secondAttribute="trailing" constant="11" id="h6b-s1-5y4"/>
                                         <constraint firstItem="ll3-uL-fct" firstAttribute="leading" secondItem="tfB-lJ-RhK" secondAttribute="trailing" constant="24" id="icv-c0-jOL"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="ll3-uL-fct" secondAttribute="bottom" constant="13" id="lVV-Pi-uhA"/>
                                         <constraint firstItem="tfB-lJ-RhK" firstAttribute="top" secondItem="Rt8-ns-G36" secondAttribute="topMargin" id="lcy-Ia-5JD"/>
                                         <constraint firstAttribute="trailing" secondItem="ll3-uL-fct" secondAttribute="trailing" constant="7" id="q60-sU-HnW"/>
                                         <constraint firstItem="c9a-BL-5zy" firstAttribute="leading" secondItem="Lbl-ea-JO0" secondAttribute="trailing" constant="11" id="qIM-ab-kxc"/>
-                                        <constraint firstItem="tfB-lJ-RhK" firstAttribute="leading" secondItem="Lbl-ea-JO0" secondAttribute="trailing" constant="11" id="rbS-Zu-zF3"/>
                                         <constraint firstItem="c9a-BL-5zy" firstAttribute="top" secondItem="tfB-lJ-RhK" secondAttribute="bottom" constant="6" id="rjF-hj-JAP"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -320,7 +320,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pho-gG-lio" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5410.3999999999996" y="34.632683658170919"/>
+            <point key="canvasLocation" x="5620" y="35"/>
         </scene>
         <!--Expense Detail View Controller-->
         <scene sceneID="66M-Ug-AJf">
@@ -384,7 +384,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vRe-cm-UF1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6213.6000000000004" y="34.632683658170919"/>
+            <point key="canvasLocation" x="6438" y="35"/>
         </scene>
         <!--Exchange rates-->
         <scene sceneID="3Mj-Qf-NbD">
@@ -1183,7 +1183,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7le-dJ-YpZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="xyF-MD-Jvn" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="7042.3999999999996" y="34.632683658170919"/>
+            <point key="canvasLocation" x="7202" y="35"/>
         </scene>
         <!--Budget Expenses Table View Controller-->
         <scene sceneID="ASU-4Z-IPu">
@@ -1410,7 +1410,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NY9-vS-J4X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3340" y="9.4452773613193415"/>
+            <point key="canvasLocation" x="3327" y="35"/>
         </scene>
         <!--Setting Detail Table View Controller-->
         <scene sceneID="Ve1-Mk-VKM">
@@ -1505,7 +1505,7 @@ Chee Bin HOH, 2017</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O7L-nJ-26a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4138.3999999999996" y="6.746626686656672"/>
+            <point key="canvasLocation" x="4114" y="35"/>
         </scene>
         <!--Expenses-->
         <scene sceneID="7vS-yM-iSR">
@@ -1524,7 +1524,7 @@ Chee Bin HOH, 2017</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QcG-oU-YSg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4679.1999999999998" y="34.632683658170919"/>
+            <point key="canvasLocation" x="4870" y="35"/>
         </scene>
         <!--Budgets-->
         <scene sceneID="xir-IK-qG2">
@@ -1835,7 +1835,7 @@ Chee Bin HOH, 2017</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gDW-hM-SkA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2623.1999999999998" y="9.4452773613193415"/>
+            <point key="canvasLocation" x="2588" y="35"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ebr-GF-a8h">

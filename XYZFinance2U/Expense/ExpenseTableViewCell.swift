@@ -16,7 +16,7 @@ class ExpenseTableViewCell: UITableViewCell {
     @IBOutlet weak var amount: UILabel!
     @IBOutlet weak var colorView: UIView!
     
-    var color = UIColor.clear
+    var color = UIColor.red
     var monthYearDate: Date?
     
     // MARK: - function
