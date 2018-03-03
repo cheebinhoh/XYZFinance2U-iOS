@@ -47,7 +47,11 @@ class ExpenseTableViewCell: UITableViewCell {
         })
         
         let color = XYZColor(rawValue: budget?.value(forKey: XYZBudget.color) as? String ?? "")
-        colorView.backgroundColor = color?.uiColor()
+  
+        if let _ = colorView {
+        
+            colorView.backgroundColor = uicolor
+        }
         
         let recurring = XYZExpense.Length(rawValue: expense.value(forKey: XYZExpense.recurring) as? String ?? XYZExpense.Length.none.rawValue )
         let theDate = (expense.value(forKey: XYZExpense.date) as? Date) ?? Date()
