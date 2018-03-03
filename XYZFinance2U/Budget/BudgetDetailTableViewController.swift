@@ -303,6 +303,9 @@ class BudgetDetailTableViewController: UITableViewController,
         } else if let existingDate = budget?.value(forKey: XYZBudget.start) as? Date, existingDate != date {
             
             hasChanged = true
+        } else if let existingColor = budget?.value(forKey: XYZBudget.color) as? String, existingColor != color.rawValue {
+            
+            hasChanged = true
         }
         
         budget?.setValue(budgetType, forKey: XYZBudget.name)
@@ -310,7 +313,8 @@ class BudgetDetailTableViewController: UITableViewController,
         budget?.setValue(currencyCode, forKey: XYZBudget.currency)
         budget?.setValue(date, forKey: XYZBudget.start)
         budget?.setValue(length.rawValue, forKey: XYZBudget.length)
-
+        budget?.setValue(color.rawValue, forKey: XYZBudget.color)
+        
         if nil == budget?.value(forKey: XYZBudget.lastRecordChange) as? Date
             || hasChanged {
             
@@ -358,6 +362,7 @@ class BudgetDetailTableViewController: UITableViewController,
             currencyCode = budget?.value(forKey: XYZBudget.currency) as? String
             length = XYZBudget.Length(rawValue: (budget?.value(forKey: XYZBudget.length) as? String)!)!
             date = (budget?.value(forKey: XYZBudget.start) as? Date)!
+            color = XYZColor(rawValue: budget?.value(forKey: XYZBudget.color) as? String ?? "")!
         } else {
             
             budgetType = ""
@@ -365,6 +370,7 @@ class BudgetDetailTableViewController: UITableViewController,
             currencyCode = Locale.current.currencyCode
             length = XYZBudget.Length.none
             date = Date()
+            color = XYZColor.none
             
             if isCollapsed {
                 

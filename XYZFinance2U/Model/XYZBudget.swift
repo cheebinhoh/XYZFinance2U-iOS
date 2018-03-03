@@ -61,6 +61,7 @@ class XYZBudget : NSManagedObject {
     static let recordId = "recordId"
     static let lastRecordChange = "lastRecordChange"
     static let sequenceNr = "sequenceNr"
+    static let color = "color"
     
     var name: String = ""
     var amount: Double = 0.0
@@ -70,6 +71,7 @@ class XYZBudget : NSManagedObject {
     var recordId: String = ""
     var currency: String = Locale.current.currencyCode ?? ""
     var sequenceNr: Int = 0
+    var color: String = ""
     
     var currentStart: Date? {
         
@@ -201,6 +203,7 @@ class XYZBudget : NSManagedObject {
         self.setValue(start, forKey: XYZBudget.start)
         self.setValue(sequenceNr, forKey: XYZBudget.sequenceNr)
         self.setValue(Date(), forKey: XYZBudget.lastRecordChange)
+        self.setValue("", forKey: XYZBudget.color)
     }
     
     override init(entity: NSEntityDescription,

@@ -15,13 +15,10 @@ class BudgetTableViewCell: UITableViewCell {
     @IBOutlet weak var amount: UILabel!
     @IBOutlet weak var spendAmount: UILabel!
     @IBOutlet weak var colorView: UIView!
-    
-    var color = UIColor.clear
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        colorView.backgroundColor = color
+
         // Initialization code
     }
 

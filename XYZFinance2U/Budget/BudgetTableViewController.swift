@@ -607,6 +607,9 @@ class BudgetTableViewController: UITableViewController,
         let amount = budget.value(forKey: XYZBudget.amount) as? Double
         let currency = budget.value(forKey: XYZBudget.currency) as? String
         let length = budget.value(forKey: XYZBudget.length) as? String
+        let budgetColor = XYZColor(rawValue: budget.value(forKey: XYZBudget.color) as? String ?? "")
+        
+        print("=== color = \(budget.value(forKey: XYZBudget.color) as? String ?? "")")
         var period = ""
         
         if length == XYZBudget.Length.none.rawValue {
@@ -638,6 +641,8 @@ class BudgetTableViewController: UITableViewController,
         }
         
         cell.spendAmount.textColor = color
+    
+        cell.colorView.backgroundColor = (budgetColor?.uiColor())!
         
         return cell
     }

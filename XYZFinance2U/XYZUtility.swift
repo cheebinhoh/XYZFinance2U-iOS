@@ -701,6 +701,7 @@ func createUpdateBudget(_ record: CKRecord,
     let length = record[XYZBudget.length] as? String
     let currency = record[XYZBudget.currency] as? String
     let sequenceNr = record[XYZBudget.sequenceNr] as? Int
+    let color = record[XYZBudget.color] as? String ?? ""
     
     var outputBudgetList: [XYZBudget] = budgetList
     var budgetToBeUpdated: XYZBudget?
@@ -731,6 +732,7 @@ func createUpdateBudget(_ record: CKRecord,
     budgetToBeUpdated?.setValue(currency, forKey: XYZBudget.currency)
     budgetToBeUpdated?.setValue(length, forKey: XYZBudget.length)
     budgetToBeUpdated?.setValue(sequenceNr, forKey: XYZBudget.sequenceNr)
+    budgetToBeUpdated?.setValue(color, forKey: XYZBudget.color)
     
     // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
     budgetToBeUpdated?.setValue(Date(), forKey: XYZBudget.lastRecordChange)
@@ -1644,13 +1646,15 @@ func saveBudgetsToiCloud(_ database: CKDatabase,
         let currency = budget.value(forKey: XYZBudget.currency) as? String
         let sequenceNr = budget.value(forKey: XYZBudget.sequenceNr) as? Int
         let length = budget.value(forKey: XYZBudget.length) as? String
-        
+        let color = budget.value(forKey: XYZBudget.color) as? String ?? ""
+            
         record.setValue(name, forKey: XYZBudget.name)
         record.setValue(amount, forKey: XYZBudget.amount)
         record.setValue(date, forKey: XYZBudget.start)
         record.setValue(currency, forKey: XYZBudget.currency)
         record.setValue(length, forKey: XYZBudget.length)
         record.setValue(sequenceNr, forKey: XYZBudget.sequenceNr)
+        record.setValue(color, forKey: XYZBudget.color)
         
         recordsToBeSaved.append(record)
     }
