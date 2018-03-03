@@ -50,7 +50,7 @@ class ExpenseTableViewCell: UITableViewCell {
   
         if let _ = colorView {
         
-            colorView.backgroundColor = uicolor
+            colorView.backgroundColor = color?.uiColor()
         }
         
         let recurring = XYZExpense.Length(rawValue: expense.value(forKey: XYZExpense.recurring) as? String ?? XYZExpense.Length.none.rawValue )

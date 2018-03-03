@@ -12,7 +12,8 @@ class BudgetDetailSelectionTableViewCell: UITableViewCell {
 
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var selection: UILabel!
-
+    @IBOutlet weak var colorView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

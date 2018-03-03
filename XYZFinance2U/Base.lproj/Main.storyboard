@@ -1694,17 +1694,27 @@ Chee Bin HOH, 2017</string>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SeZ-rM-wn9" userLabel="Color View">
+                                            <rect key="frame" x="9" y="35" width="5" height="35"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="35" id="7bT-Ne-H8y"/>
+                                                <constraint firstAttribute="width" constant="5" id="xzj-xe-CZM"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="1gb-bF-pZo" firstAttribute="top" secondItem="6cy-XD-vcH" secondAttribute="topMargin" id="DQ4-Zb-g3x"/>
                                         <constraint firstItem="zQ2-in-Wtc" firstAttribute="top" secondItem="1gb-bF-pZo" secondAttribute="bottom" constant="4" id="QXJ-Y1-aR7"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="zQ2-in-Wtc" secondAttribute="bottom" constant="-1" id="SDN-Rk-5Fi"/>
+                                        <constraint firstItem="SeZ-rM-wn9" firstAttribute="top" secondItem="zQ2-in-Wtc" secondAttribute="top" id="YSO-Wz-ggv"/>
                                         <constraint firstAttribute="trailing" secondItem="zQ2-in-Wtc" secondAttribute="trailing" id="d6h-aD-Z6i"/>
                                         <constraint firstItem="1gb-bF-pZo" firstAttribute="leading" secondItem="6cy-XD-vcH" secondAttribute="leadingMargin" id="f8y-f6-1wL"/>
+                                        <constraint firstItem="SeZ-rM-wn9" firstAttribute="leading" secondItem="6cy-XD-vcH" secondAttribute="leadingMargin" constant="-7" id="kNg-Qh-ja8"/>
                                         <constraint firstItem="zQ2-in-Wtc" firstAttribute="leading" secondItem="6cy-XD-vcH" secondAttribute="leadingMargin" id="yT7-FT-zHI"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="colorView" destination="SeZ-rM-wn9" id="2k1-5T-ftI"/>
                                     <outlet property="label" destination="1gb-bF-pZo" id="uSH-ww-cAi"/>
                                     <outlet property="selection" destination="zQ2-in-Wtc" id="Okz-xO-3AL"/>
                                 </connections>
@@ -1816,7 +1826,7 @@ Chee Bin HOH, 2017</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AIV-dV-Hpf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-890" y="9"/>
+            <point key="canvasLocation" x="-890.39999999999998" y="8.5457271364317844"/>
         </scene>
         <!--Settings-->
         <scene sceneID="TKg-N2-216">

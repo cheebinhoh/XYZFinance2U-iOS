@@ -525,7 +525,8 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 colorcell.setLabel("Color")
                 colorcell.setSelection(color.rawValue)
-   
+                colorcell.colorView.backgroundColor = color.uiColor()
+                
                 colorcell.selectionStyle = .none
                 cell = colorcell
             
