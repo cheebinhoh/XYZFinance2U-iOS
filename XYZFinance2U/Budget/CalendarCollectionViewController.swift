@@ -312,6 +312,26 @@ class CalendarCollectionViewController: UICollectionViewController,
         }
     }
     
+    @objc func swipeGestureResponder(gesture: UIGestureRecognizer) {
+   
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            
+            switch swipeGesture.direction {
+         
+                case .right:
+                    moveNextPeriod(self)
+                    break
+                
+                case .left:
+                    movePreviousPeriod(self)
+                   break
+                
+                default:
+                    break
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -332,6 +352,14 @@ class CalendarCollectionViewController: UICollectionViewController,
         let tapDouble = UITapGestureRecognizer(target: self, action: #selector(doubleTap(_:)))
         tapDouble.numberOfTapsRequired = 2
         self.collectionView?.addGestureRecognizer(tapDouble)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeGestureResponder))
+        swipeRight.direction = UISwipeGestureRecognizerDirection.right
+        self.collectionView?.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeGestureResponder))
+        swipeRight.direction = UISwipeGestureRecognizerDirection.left
+        self.collectionView?.addGestureRecognizer(swipeLeft)
         // Do any additional setup after loading the view.
     }
     
