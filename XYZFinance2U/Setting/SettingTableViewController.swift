@@ -742,7 +742,7 @@ class SettingTableViewController: UITableViewController,
                 
                 let detail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
                 let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
-                let date = startDate!
+                let date = formattingDate(date: startDate!, style: .short) 
                 let currencyCode = Locale.current.currencyCode!
                 let category = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
                 

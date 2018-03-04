@@ -318,11 +318,11 @@ class CalendarCollectionViewController: UICollectionViewController,
             
             switch swipeGesture.direction {
          
-                case .right:
+                case .left:
                     moveNextPeriod(self)
                     break
                 
-                case .left:
+                case .right:
                     movePreviousPeriod(self)
                    break
                 
