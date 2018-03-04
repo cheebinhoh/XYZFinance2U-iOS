@@ -130,6 +130,24 @@ It does not come with warranty of any sort.
                 newcell.content.attributedText = attributeText
                 cell = newcell
             
+            case "credit":
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingDetailAboutCell", for: indexPath) as? SettingDetailAboutTableViewCell else {
+                    
+                    fatalError("Exception: errpr on creating settingDetailAboutCell")
+                }
+                
+                let text = """
+                
+The calendar icon is created by Shmidt Sergey
+
+from Noun project.
+
+"""
+                let attributes: [NSAttributedStringKey: Any]? = [NSAttributedStringKey.font: newcell.content.font!]
+                let attributeText = NSAttributedString(string: text, attributes: attributes)
+                newcell.content.attributedText = attributeText
+                cell = newcell
+            
                 default:
                     break
         }

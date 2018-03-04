@@ -258,6 +258,9 @@ class SettingTableViewController: UITableViewController,
         let disclaimerSection = TableSectionCell(identifier: "disclaimer", title: "", cellList: ["disclaimer"], data: nil)
         settingDetail.tableSectionCellList.append(disclaimerSection)
         
+        let creditSection = TableSectionCell(identifier: "credit", title: "", cellList: ["credit"], data: nil)
+        settingDetail.tableSectionCellList.append(creditSection)
+        
         settingDetail.navigationItem.title = "About"
         let footerSection = TableSectionCell(identifier: "footer", title: "", cellList: [String](), data: nil)
         settingDetail.tableSectionCellList.append(footerSection)

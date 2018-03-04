@@ -451,6 +451,8 @@ class BudgetTableViewController: UITableViewController,
             self.present(calendarViewNavigationController, animated: true, completion: {})
         }
         
+        more.image = UIImage(named: "Calendar")
+        
         commands.append(more)
         
         return UISwipeActionsConfiguration(actions: commands)
