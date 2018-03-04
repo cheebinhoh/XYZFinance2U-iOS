@@ -140,7 +140,7 @@ It does not come with warranty of any sort.
                 
 The calendar icon is created by Shmidt Sergey
 
-from Noun project.
+from Noun Project.
 
 """
                 let attributes: [NSAttributedStringKey: Any]? = [NSAttributedStringKey.font: newcell.content.font!]
