@@ -355,7 +355,10 @@ class BudgetDetailTableViewController: UITableViewController,
         
         if let _ = budget {
             
-            navigationItem.title = "Budget"
+            if isCollapsed {
+                
+                navigationItem.title = "Budget"
+            }
             
             budgetType = (budget?.value(forKey: XYZBudget.name) as? String)!
             amount = (budget?.value(forKey: XYZBudget.amount) as? Double)!
