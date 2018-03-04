@@ -692,15 +692,63 @@ class SettingTableViewController: UITableViewController,
         var text = "Number\tDetail\tDate\tCurrency\tAmount\tCategory\n"
         let expenseList = sortExpenses(loadExpenses()!)
 
-        for (index, expense) in expenseList.enumerated() {
+        let nowDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: Date())
+        let nowDate = Calendar.current.date(from: nowDateComponents)
+        var startDate = Calendar.current.date(byAdding: .month, value: -12, to: nowDate!)
+        startDate = Calendar.current.date(byAdding: .day, value: (nowDateComponents.day! * -1) + 1, to: startDate!)
+        
+        let filteredExpenseList = expenseList.filter { (expense) -> Bool in
+        
+            let occurrenceDates = expense.getOccurenceDates(until: Date())
+            var found = false
             
-            let detail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
-            let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
-            let date = formattingDate(date: expense.value(forKey: XYZExpense.date) as? Date ?? Date(), style: .short )
-            let currencyCode = Locale.current.currencyCode!
-            let category = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
+            for occurDate in occurrenceDates {
+                
+                if occurDate >= startDate! && occurDate <= Date() {
+                    
+                    found = true
+                    break
+                }
+            }
             
-            text = text + "\(index)\t\(detail)\t\(date)\t\(currencyCode)\t\(amount)\t\(category)\n"
+            return found
+        }
+        
+        var index = 0
+        
+        while startDate! < nowDate! {
+            
+            let dayfilteredExpenseList = filteredExpenseList.filter { (expense) -> Bool in
+                
+                let occurrenceDates = expense.getOccurenceDates(until: startDate!)
+                var found = false
+                
+                for occurDate in occurrenceDates {
+                    
+                    if occurDate >= startDate! && occurDate <= startDate! {
+                        
+                        found = true
+                        break
+                    }
+                }
+                
+                return found
+            }
+            
+            for expense in dayfilteredExpenseList {
+                
+                let detail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
+                let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
+                let date = startDate!
+                let currencyCode = Locale.current.currencyCode!
+                let category = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
+                
+                text = text + "\(index)\t\(detail)\t\(date)\t\(currencyCode)\t\(amount)\t\(category)\n"
+                
+                index = index + 1
+            }
+            
+            startDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate!)
         }
         
         return text
