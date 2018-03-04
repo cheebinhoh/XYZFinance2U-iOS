@@ -17,8 +17,6 @@ class XYZBudget : NSManagedObject {
     enum Length: String {
         
         case none = "none"
-        //DEPRECATED:
-        //case hourly = "hourly"
         case daily = "daily"
         case weekly = "weekly"
         case biweekly = "biweekly"
@@ -27,26 +25,7 @@ class XYZBudget : NSManagedObject {
         
         func description() -> String {
             
-            switch self {
-                
-                case .none:
-                    return "none"
-                
-                case .daily:
-                    return "daily"
-                    
-                case .weekly:
-                    return "weekly"
-                    
-                case .biweekly:
-                    return "biweekly"
-                    
-                case .monthly:
-                    return "monthly"
-                    
-                case .yearly:
-                    return "yearly"
-            }
+            return self.rawValue
         }
     }
     
