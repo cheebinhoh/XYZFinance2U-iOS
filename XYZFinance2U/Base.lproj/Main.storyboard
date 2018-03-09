@@ -243,9 +243,22 @@
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lbl-ea-JO0">
                                             <rect key="frame" x="0.0" y="-0.5" width="5" height="70"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bca-VO-om0">
+                                                    <rect key="frame" x="0.0" y="20" width="5" height="30"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="UR6-cZ-YaC"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
                                             <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="Bca-VO-om0" secondAttribute="trailing" id="BCn-h6-jPh"/>
+                                                <constraint firstItem="Bca-VO-om0" firstAttribute="leading" secondItem="Lbl-ea-JO0" secondAttribute="leading" id="NBE-U9-osQ"/>
+                                                <constraint firstItem="Bca-VO-om0" firstAttribute="centerY" secondItem="Lbl-ea-JO0" secondAttribute="centerY" id="g2P-2L-slv"/>
                                                 <constraint firstAttribute="height" constant="70" id="hGR-6x-5qi"/>
+                                                <constraint firstItem="Bca-VO-om0" firstAttribute="leading" secondItem="Lbl-ea-JO0" secondAttribute="leading" id="jdv-r1-eGC"/>
                                                 <constraint firstAttribute="width" constant="5" id="wG7-vG-n3C"/>
                                             </constraints>
                                         </view>
@@ -276,6 +289,7 @@
                                     <outlet property="colorView" destination="Lbl-ea-JO0" id="Yd1-Bd-C8e"/>
                                     <outlet property="date" destination="c9a-BL-5zy" id="JLJ-bR-Nb3"/>
                                     <outlet property="detail" destination="tfB-lJ-RhK" id="aZA-h1-6oP"/>
+                                    <outlet property="dotColorView" destination="Bca-VO-om0" id="ydG-XY-HcU"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseTableViewSearchCell" rowHeight="60" id="Kjj-1U-uiF" userLabel="ExpenseTableViewSearchCell" customClass="ExpenseTableViewSearchCell" customModule="XYZFinance2U" customModuleProvider="target">

@@ -15,6 +15,7 @@ class ExpenseTableViewCell: UITableViewCell {
     @IBOutlet weak var detail: UILabel!
     @IBOutlet weak var amount: UILabel!
     @IBOutlet weak var colorView: UIView!
+    @IBOutlet weak var dotColorView: UIView!
     
     var monthYearDate: Date?
     
@@ -22,6 +23,8 @@ class ExpenseTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         
         super.awakeFromNib()
+        
+        colorView.backgroundColor = UIColor.clear
         // Initialization code
     }
 
@@ -50,7 +53,7 @@ class ExpenseTableViewCell: UITableViewCell {
   
         if let _ = colorView {
         
-            colorView.backgroundColor = color?.uiColor()
+            dotColorView.backgroundColor = color?.uiColor()
         }
         
         let recurring = XYZExpense.Length(rawValue: expense.value(forKey: XYZExpense.recurring) as? String ?? XYZExpense.Length.none.rawValue )
