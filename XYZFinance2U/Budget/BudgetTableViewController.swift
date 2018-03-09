@@ -643,7 +643,7 @@ class BudgetTableViewController: UITableViewController,
         
         cell.spendAmount.textColor = color
     
-        cell.colorView.backgroundColor = (budgetColor?.uiColor())!
+        cell.dotColorView.backgroundColor = (budgetColor?.uiColor())!
         
         return cell
     }

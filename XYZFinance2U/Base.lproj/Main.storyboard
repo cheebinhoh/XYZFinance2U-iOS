@@ -1565,10 +1565,22 @@ Chee Bin HOH, 2017</string>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X2O-Og-T8e">
                                             <rect key="frame" x="0.0" y="0.0" width="5" height="70"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ESQ-QH-oXb">
+                                                    <rect key="frame" x="0.0" y="19.5" width="5" height="30"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="5xc-GK-Uor"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
                                             <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="5" id="1en-cd-8Aq"/>
+                                                <constraint firstItem="ESQ-QH-oXb" firstAttribute="centerY" secondItem="X2O-Og-T8e" secondAttribute="centerY" id="6rb-Ak-INx"/>
+                                                <constraint firstItem="ESQ-QH-oXb" firstAttribute="leading" secondItem="X2O-Og-T8e" secondAttribute="leading" id="DXG-uf-Dbh"/>
                                                 <constraint firstAttribute="height" constant="70" id="MYT-TV-ynG"/>
+                                                <constraint firstAttribute="trailing" secondItem="ESQ-QH-oXb" secondAttribute="trailing" id="SZr-gD-fjl"/>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="Ech-ju-oc8" userLabel="spendAmount">
@@ -1596,6 +1608,7 @@ Chee Bin HOH, 2017</string>
                                 <connections>
                                     <outlet property="amount" destination="E3R-7O-nWA" id="iFD-AC-zQa"/>
                                     <outlet property="colorView" destination="X2O-Og-T8e" id="bzG-FG-xiK"/>
+                                    <outlet property="dotColorView" destination="ESQ-QH-oXb" id="uBx-VJ-J0n"/>
                                     <outlet property="length" destination="8Jw-qJ-ejx" id="qGX-6o-ACh"/>
                                     <outlet property="name" destination="qOX-jY-XiK" id="o1u-zA-Vb2"/>
                                     <outlet property="spendAmount" destination="Ech-ju-oc8" id="U9o-GO-GTc"/>
