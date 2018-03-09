@@ -155,6 +155,7 @@ class BudgetTableViewController: UITableViewController,
         
         sectionList = [TableSectionCell]()
         currencyCodes = [String]()
+        var budgetLength = [XYZBudget.Length]()
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let budgetList = (appDelegate?.budgetList)!
@@ -169,30 +170,54 @@ class BudgetTableViewController: UITableViewController,
             }
         }
         
+        for budget in budgetList {
+            
+            let length = XYZBudget.Length(rawValue: budget.value(forKey: XYZBudget.length) as? String ?? XYZBudget.Length.none.rawValue)
+            
+            if !budgetLength.contains(length!) {
+                
+                budgetLength.append(length!)
+            }
+        }
+        
         for currency in currencyCodes {
         
-            var sectionBudgetList = [XYZBudget]()
-            
-            for budget in budgetList {
+            for length in budgetLength {
                 
-                let budgetCurrency = budget.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode
+                var sectionBudgetList = [XYZBudget]()
                 
-                if budgetCurrency == currency {
+                for budget in budgetList {
                     
-                    sectionBudgetList.append(budget)
+                    let budgetCurrency = budget.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode
+                    
+                    if budgetCurrency == currency {
+                        
+                        let budgetLength = XYZBudget.Length(rawValue: budget.value(forKey: XYZBudget.length) as? String ?? XYZBudget.Length.none.rawValue)
+                        
+                        if budgetLength == length {
+                            
+                            sectionBudgetList.append(budget)
+                        }
+                    }
+                }
+                
+                sectionBudgetList.sort(by: { (bu1, bu2) -> Bool in
+                    
+                    let seq1 = bu1.value(forKey: XYZBudget.sequenceNr) as? Int
+                    let seq2 = bu2.value(forKey: XYZBudget.sequenceNr) as? Int
+                    
+                    return seq1! < seq2!
+                })
+                
+                if !sectionBudgetList.isEmpty {
+                    
+                    let title = ( length == XYZBudget.Length.none ) ? "\(currency)" : "\(currency) \(length)"
+                    
+                    let newSection = TableSectionCell(identifier: currency,
+                                                      title: title, cellList: [], data: sectionBudgetList)
+                    sectionList.append(newSection)
                 }
             }
-            
-            sectionBudgetList.sort(by: { (bu1, bu2) -> Bool in
-                
-                let seq1 = bu1.value(forKey: XYZBudget.sequenceNr) as? Int
-                let seq2 = bu2.value(forKey: XYZBudget.sequenceNr) as? Int
-                
-                return seq1! < seq2!
-            })
-            
-            let newSection = TableSectionCell(identifier: currency, title: currency, cellList: [], data: sectionBudgetList)
-            sectionList.append(newSection)
         }
         
         sectionList = sectionList.sorted(by: { (section1, section2) -> Bool in
