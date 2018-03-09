@@ -23,6 +23,30 @@ class XYZBudget : NSManagedObject {
         case monthly = "monthly"
         case yearly = "yearly"
         
+        func index() -> Int {
+            
+            switch self {
+                
+                case .none:
+                    return 0
+                
+                case .daily:
+                    return 1
+
+                case .weekly:
+                    return 2
+                
+                case .biweekly:
+                    return 3
+
+                case .monthly:
+                    return 4
+                
+                case .yearly:
+                    return 5
+            }
+        }
+        
         func description() -> String {
             
             return self.rawValue

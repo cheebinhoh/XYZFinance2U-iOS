@@ -155,7 +155,7 @@ class BudgetTableViewController: UITableViewController,
         
         sectionList = [TableSectionCell]()
         currencyCodes = [String]()
-        var budgetLength = [XYZBudget.Length]()
+        var budgetLengths = [XYZBudget.Length]()
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let budgetList = (appDelegate?.budgetList)!
@@ -174,15 +174,25 @@ class BudgetTableViewController: UITableViewController,
             
             let length = XYZBudget.Length(rawValue: budget.value(forKey: XYZBudget.length) as? String ?? XYZBudget.Length.none.rawValue)
             
-            if !budgetLength.contains(length!) {
+            if !budgetLengths.contains(length!) {
                 
-                budgetLength.append(length!)
+                budgetLengths.append(length!)
             }
         }
         
+        currencyCodes = currencyCodes.sorted(by: { (cur1, cur2) -> Bool in
+        
+            return cur1 < cur2
+        })
+        
+        budgetLengths = budgetLengths.sorted(by: { (len1, len2) -> Bool in
+            
+            return len1.index() < len2.index()
+        })
+        
         for currency in currencyCodes {
         
-            for length in budgetLength {
+            for length in budgetLengths {
                 
                 var sectionBudgetList = [XYZBudget]()
                 
@@ -220,10 +230,10 @@ class BudgetTableViewController: UITableViewController,
             }
         }
         
-        sectionList = sectionList.sorted(by: { (section1, section2) -> Bool in
+        /*sectionList = sectionList.sorted(by: { (section1, section2) -> Bool in
             
             section1.identifier < section2.identifier
-        })
+        })*/
     }
     
     func loadData() {
