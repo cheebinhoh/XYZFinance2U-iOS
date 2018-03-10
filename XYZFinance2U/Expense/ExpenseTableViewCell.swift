@@ -24,7 +24,7 @@ class ExpenseTableViewCell: UITableViewCell {
         
         super.awakeFromNib()
         
-        colorView.backgroundColor = UIColor.clear
+        colorView?.backgroundColor = UIColor.clear
         // Initialization code
     }
 
