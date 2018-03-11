@@ -52,10 +52,15 @@ class ExpenseTableViewMonthCell: UITableViewCell {
 
         let count = stackView.arrangedSubviews.count
         
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM, YY"
+        let currentMonthYear = formatter.string(from: Date())
+        
         for (indexPos, subview) in stackView.arrangedSubviews.enumerated() {
             
             if let button = subview as? UIButton, indexPos > 0 && indexPos < (count - 1)  {
                 
+                let title = buttonText[indexPos - 1]
                 var backgroundColor = UIColor.clear
                 var textColor = UIColor.darkText
                 
@@ -63,9 +68,20 @@ class ExpenseTableViewMonthCell: UITableViewCell {
                     
                     backgroundColor = UIColor.black
                     textColor = UIColor.white
+                    
+                    if title == currentMonthYear {
+                        
+                        backgroundColor = UIColor.red
+                    }
+                } else {
+                    
+                    if title == currentMonthYear {
+                        
+                        textColor = UIColor.red
+                    }
                 }
                 
-                button.setTitle(buttonText[indexPos - 1], for: .normal)
+                button.setTitle(title, for: .normal)
                 button.setTitleColor(textColor, for: .normal)
                 button.backgroundColor = backgroundColor
             }
