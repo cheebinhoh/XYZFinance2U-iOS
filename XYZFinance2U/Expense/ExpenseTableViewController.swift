@@ -969,6 +969,12 @@ class ExpenseTableViewController: UITableViewController,
                 }
             
                 expenseCell.delegate = self
+                
+                if nil == filteredMonthYear {
+                    
+                    expenseCell.index = nil
+                }
+                
                 expenseCell.drawSelectionState()
                 cell = expenseCell
 
