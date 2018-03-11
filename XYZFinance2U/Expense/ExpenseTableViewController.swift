@@ -748,9 +748,9 @@ class ExpenseTableViewController: UITableViewController,
     }
     
     override func viewDidLoad() {
-        
+    
         super.viewDidLoad()
-
+        
         tableView.tableFooterView = UIView(frame: .zero)
         
         // Uncomment the following line to preserve selection between presentations
