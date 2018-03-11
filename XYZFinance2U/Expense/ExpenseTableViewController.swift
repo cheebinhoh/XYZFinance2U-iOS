@@ -33,6 +33,13 @@ class ExpenseTableViewController: UITableViewController,
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             filteredExpenseList = [XYZExpense]()
         
+            var lastDateOfTheMonthYear = Calendar.current.date(byAdding: .month, value: 1, to: monthYear!)
+            
+            print("*** \(lastDateOfTheMonthYear)")
+            lastDateOfTheMonthYear = Calendar.current.date(bySetting: .day, value: 1, of: lastDateOfTheMonthYear!)
+            
+            print("=== \(lastDateOfTheMonthYear), \(monthYear)")
+            
             for expense in (appDelegate?.expenseList)! {
                 
                 if let date = expense.value(forKey: XYZExpense.date) as? Date {
