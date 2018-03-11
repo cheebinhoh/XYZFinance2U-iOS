@@ -33,24 +33,26 @@ class ExpenseTableViewController: UITableViewController,
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             filteredExpenseList = [XYZExpense]()
         
-            var lastDateOfTheMonthYear = Calendar.current.date(byAdding: .month, value: 1, to: monthYear!)
-            
-            print("*** \(lastDateOfTheMonthYear)")
-            lastDateOfTheMonthYear = Calendar.current.date(bySetting: .day, value: 1, of: lastDateOfTheMonthYear!)
-            
-            print("=== \(lastDateOfTheMonthYear), \(monthYear)")
+            var lastDateOfTheMonthYear = Calendar.current.date(from: dateComponentWanted)
+            lastDateOfTheMonthYear = Calendar.current.date(byAdding: .month, value: 1, to: lastDateOfTheMonthYear!)
+            lastDateOfTheMonthYear = Calendar.current.date(byAdding: .day, value: -1, to: lastDateOfTheMonthYear!)
             
             for expense in (appDelegate?.expenseList)! {
                 
-                if let date = expense.value(forKey: XYZExpense.date) as? Date {
+                let occurenceDates = expense.getOccurenceDates(until: lastDateOfTheMonthYear!)
+                let filteredOcurenceDates = occurenceDates.filter { (date) -> Bool in
+                
                     
                     let dateComponent = Calendar.current.dateComponents([.month, .year], from: date)
- 
-                    if dateComponent.year! == dateComponentWanted.year!
-                        && dateComponent.month! == dateComponentWanted.month! {
-                        
-                        filteredExpenseList?.append(expense)
-                    }
+                    
+                    return dateComponent.year! == dateComponentWanted.year!
+                          && dateComponent.month! == dateComponentWanted.month!
+                }
+
+                
+                if !filteredOcurenceDates.isEmpty {
+                    
+                    filteredExpenseList?.append(expense)
                 }
             }
             
@@ -655,6 +657,13 @@ class ExpenseTableViewController: UITableViewController,
     
         let expenseList = filteredExpenseList != nil ? filteredExpenseList : (appDelegate?.expenseList)!
         
+        var dateComponentWanted: DateComponents?
+        
+        if let _ = filteredMonthYear {
+        
+            dateComponentWanted = Calendar.current.dateComponents([.month, .year], from: filteredMonthYear!)
+        }
+        
         for expense in expenseList! {
             
             guard let _ = expense.value(forKey: XYZExpense.date) as? Date else {
@@ -673,45 +682,58 @@ class ExpenseTableViewController: UITableViewController,
 
             for date in occurenceDates {
                 
-                let currency = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
-                let dateFormatter = DateFormatter()
-                let month = calendar.component(.month, from: date)
-                let year = calendar.component(.year, from: date)
-                let title = "\(year), \(dateFormatter.shortMonthSymbols[month - 1])"
-                let identifier = "\(year), \(dateFormatter.shortMonthSymbols[month - 1]), \(currency!)"
+                var needed = true
                 
-                let monthYearComponent =  Calendar.current.dateComponents([.month, .year], from: date)
-                let monthYearDate = Calendar.current.date(from: monthYearComponent)
-                
-                var foundIndex = -1
-                for (index, section) in sectionList.enumerated() {
+                if let _ = dateComponentWanted {
                     
-                    if section.identifier == identifier {
+                    let dateComponent = Calendar.current.dateComponents([.month, .year], from: date)
+                    
+                    needed = ( dateComponent.year! == dateComponentWanted?.year! )
+                               && (dateComponent.month! == dateComponentWanted?.month! )
+                }
+                
+                if needed {
+                    
+                    let currency = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
+                    let dateFormatter = DateFormatter()
+                    let month = calendar.component(.month, from: date)
+                    let year = calendar.component(.year, from: date)
+                    let title = "\(year), \(dateFormatter.shortMonthSymbols[month - 1])"
+                    let identifier = "\(year), \(dateFormatter.shortMonthSymbols[month - 1]), \(currency!)"
+                    
+                    let monthYearComponent =  Calendar.current.dateComponents([.month, .year], from: date)
+                    let monthYearDate = Calendar.current.date(from: monthYearComponent)
+                    
+                    var foundIndex = -1
+                    for (index, section) in sectionList.enumerated() {
                         
-                        foundIndex = index
-                        break
+                        if section.identifier == identifier {
+                            
+                            foundIndex = index
+                            break
+                        }
                     }
-                }
 
-                if foundIndex < 0 {
+                    if foundIndex < 0 {
+                        
+                        foundIndex = sectionList.count;
+                        let newSection = TableSectionCell(identifier: identifier, title: title, cellList: [], data: nil)
+                        sectionExpenseList = [XYZExpense]()
+                        sectionList.append(newSection)
+                        sectionMonthYearList.append(monthYearDate!)
+                    } else {
+                        
+                        sectionExpenseList = sectionList[foundIndex].data as? [XYZExpense]
+                    }
                     
-                    foundIndex = sectionList.count;
-                    let newSection = TableSectionCell(identifier: identifier, title: title, cellList: [], data: nil)
-                    sectionExpenseList = [XYZExpense]()
-                    sectionList.append(newSection)
-                    sectionMonthYearList.append(monthYearDate!)
-                } else {
+                    sectionExpenseList?.append(expense)
+                    sectionList[foundIndex].data = sectionExpenseList
                     
-                    sectionExpenseList = sectionList[foundIndex].data as? [XYZExpense]
-                }
-                
-                sectionExpenseList?.append(expense)
-                sectionList[foundIndex].data = sectionExpenseList
-                
-                let currencyCode = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
-                if !currencyCodes.contains(currencyCode!) {
-                    
-                    currencyCodes.append(currencyCode!)
+                    let currencyCode = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
+                    if !currencyCodes.contains(currencyCode!) {
+                        
+                        currencyCodes.append(currencyCode!)
+                    }
                 }
             }
         }
