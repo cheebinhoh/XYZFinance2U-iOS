@@ -68,6 +68,7 @@
 		65EEC4A71FF1E0FF00D638CD /* ExpenseDetailLocationPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EEC4A61FF1E0FF00D638CD /* ExpenseDetailLocationPickerTableViewCell.swift */; };
 		65EEC4A91FF1EEEE00D638CD /* ExpenseDetailLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EEC4A81FF1EEEE00D638CD /* ExpenseDetailLocationViewController.swift */; };
 		65EEC4AC1FF2B9BD00D638CD /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65EEC4AB1FF2B9BC00D638CD /* CoreLocation.framework */; };
+		65EF6AE92054D5B20058BD75 /* ExpenseTableViewMonthCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EF6AE82054D5B20058BD75 /* ExpenseTableViewMonthCell.swift */; };
 		65F48F1D1FE3404D006951F7 /* IncomeTotalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F48F1C1FE3404D006951F7 /* IncomeTotalTableViewCell.swift */; };
 		65F48F1F1FE370A1006951F7 /* SettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F48F1E1FE370A1006951F7 /* SettingTableViewController.swift */; };
 		65F48F211FE377EC006951F7 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F48F201FE377EC006951F7 /* SettingTableViewCell.swift */; };
@@ -153,6 +154,7 @@
 		65EEC4A61FF1E0FF00D638CD /* ExpenseDetailLocationPickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailLocationPickerTableViewCell.swift; sourceTree = "<group>"; };
 		65EEC4A81FF1EEEE00D638CD /* ExpenseDetailLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailLocationViewController.swift; sourceTree = "<group>"; };
 		65EEC4AB1FF2B9BC00D638CD /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		65EF6AE82054D5B20058BD75 /* ExpenseTableViewMonthCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTableViewMonthCell.swift; sourceTree = "<group>"; };
 		65F48F1C1FE3404D006951F7 /* IncomeTotalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeTotalTableViewCell.swift; sourceTree = "<group>"; };
 		65F48F1E1FE370A1006951F7 /* SettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewController.swift; sourceTree = "<group>"; };
 		65F48F201FE377EC006951F7 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				657F1EB5201D5C1000FEB385 /* ExpenseDetailViewController.swift */,
 				653111E7202E382E002560A0 /* ExpenseDetailSelectionTableViewCell.swift */,
 				653BFB4D2030E55A0076C184 /* ExpenseTableViewSearchCell.swift */,
+				65EF6AE82054D5B20058BD75 /* ExpenseTableViewMonthCell.swift */,
 			);
 			path = Expense;
 			sourceTree = "<group>";
@@ -509,6 +512,7 @@
 				65425E8C2012C92E0078E6C2 /* IncomeDetailViewController.swift in Sources */,
 				65F48F291FE56137006951F7 /* XYZExpensePerson.swift in Sources */,
 				65ECB04D20418D57009F01A9 /* CalendarCollectionViewController.swift in Sources */,
+				65EF6AE92054D5B20058BD75 /* ExpenseTableViewMonthCell.swift in Sources */,
 				655C97C31FCCD5140098D58D /* XYZAccount.swift in Sources */,
 				650024051FF6B423001281EA /* SettingDetailTableViewController.swift in Sources */,
 				65EEC49D1FF067C200D638CD /* IncomeDetailTextTableViewCell.swift in Sources */,

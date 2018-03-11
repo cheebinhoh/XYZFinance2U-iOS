@@ -128,26 +128,32 @@ class ExpenseTableViewController: UITableViewController,
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
-        guard let viewController = storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailViewController") as? ExpenseDetailViewController else  {
-            
-            fatalError("Exception: IncomeDetailViewController is expected")
-        }
-        
-        let indexPath = tableView.indexPathForRow(at: location)
-        let cell = tableView.cellForRow(at: indexPath!)
-        
-        viewController.preferredContentSize = CGSize(width: 0.0, height: 110)
-        previewingContext.sourceRect = (cell?.frame)!
-        
-        guard let sectionExpenseList = sectionList[(indexPath?.section)!].data as? [XYZExpense] else {
-            
-            fatalError("Exception: [XYZAccount] is expected")
-        }
-        
-        viewController.expense = sectionExpenseList[(indexPath?.row)!]
-        viewController.indexPath = indexPath
+        if let indexPath = tableView.indexPathForRow(at: location), sectionList[indexPath.section].identifier != "searchBar" {
+    
+            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailViewController") as? ExpenseDetailViewController else  {
+                
+                fatalError("Exception: IncomeDetailViewController is expected")
+            }
 
-        return viewController
+            let cell = tableView.cellForRow(at: indexPath)
+            
+            viewController.preferredContentSize = CGSize(width: 0.0, height: 110)
+            previewingContext.sourceRect = (cell?.frame)!
+            
+            guard let sectionExpenseList = sectionList[(indexPath.section)].data as? [XYZExpense] else {
+                
+                fatalError("Exception: [XYZAccount] is expected")
+            }
+            
+            viewController.expense = sectionExpenseList[(indexPath.row)]
+            viewController.indexPath = indexPath
+
+            return viewController
+        }
+        else {
+            
+            return nil
+        }
     }
     
     //MARK: - function
@@ -887,6 +893,7 @@ class ExpenseTableViewController: UITableViewController,
         var cell: UITableViewCell?
         
         switch sectionList[indexPath.section].identifier {
+          /*
             case "searchBar":
                 guard let expenseCell = tableView.dequeueReusableCell(withIdentifier: "expenseTableViewSearchCell", for: indexPath) as? ExpenseTableViewSearchCell else {
                     
@@ -896,7 +903,17 @@ class ExpenseTableViewController: UITableViewController,
                 searchBar = expenseCell.searchBar
                 searchBar?.delegate = self
                 cell = expenseCell
+          */
             
+            case "searchBar":
+                guard let expenseCell = tableView.dequeueReusableCell(withIdentifier: "expenseTableViewMonthCell", for: indexPath) as? ExpenseTableViewMonthCell else {
+                    
+                    fatalError("error on ExpenseTableViewMonthCell cell")
+                }
+            
+                expenseCell.drawSelectionState()
+                cell = expenseCell
+
             default:
                 guard let expenseCell = tableView.dequeueReusableCell(withIdentifier: "expenseTableViewCell", for: indexPath) as? ExpenseTableViewCell else {
                 
