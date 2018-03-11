@@ -22,7 +22,40 @@ class ExpenseTableViewController: UITableViewController,
     UISplitViewControllerDelegate,
     UIViewControllerPreviewingDelegate,
     UISearchBarDelegate,
-    ExpenseDetailDelegate {
+    ExpenseDetailDelegate,
+    ExpenseTableViewMonthChange {
+    
+    func change(_ monthYear: Date!) {
+
+        if let _ = monthYear {
+            
+            let dateComponentWanted = Calendar.current.dateComponents([.month, .year], from: monthYear!)
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            filteredExpenseList = [XYZExpense]()
+        
+            for expense in (appDelegate?.expenseList)! {
+                
+                if let date = expense.value(forKey: XYZExpense.date) as? Date {
+                    
+                    let dateComponent = Calendar.current.dateComponents([.month, .year], from: date)
+ 
+                    if dateComponent.year! == dateComponentWanted.year!
+                        && dateComponent.month! == dateComponentWanted.month! {
+                        
+                        filteredExpenseList?.append(expense)
+                    }
+                }
+            }
+            
+            filteredExpenseList = sortExpenses(filteredExpenseList!)
+        } else {
+            
+            filteredExpenseList = nil
+        }
+        
+        reloadData()
+    }
+    
     
     func cancelExpense() {
     
@@ -911,6 +944,7 @@ class ExpenseTableViewController: UITableViewController,
                     fatalError("error on ExpenseTableViewMonthCell cell")
                 }
             
+                expenseCell.delegate = self
                 expenseCell.drawSelectionState()
                 cell = expenseCell
 

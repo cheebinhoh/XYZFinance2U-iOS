@@ -8,12 +8,18 @@
 
 import UIKit
 
+protocol ExpenseTableViewMonthChange: class {
+    
+    func change(_ monthYear: Date! )
+}
+
 class ExpenseTableViewMonthCell: UITableViewCell {
 
     var index: Int?
     var highlightIndex: Int?
     var buttonText = [String]()
     var date: Date?
+    var delegate: ExpenseTableViewMonthChange?
     
     @IBOutlet weak var stackView: UIStackView!
     
@@ -21,6 +27,7 @@ class ExpenseTableViewMonthCell: UITableViewCell {
         
         let count = stackView.arrangedSubviews.count
         let newIndex = stackView.arrangedSubviews.index(of: sender as! UIView)
+        var monthYear: Date? 
         
         if nil == index || index! != newIndex! {
             
@@ -38,6 +45,9 @@ class ExpenseTableViewMonthCell: UITableViewCell {
                 index = nil
             } else {
             
+                let monthGap = newIndex! - 3
+
+                monthYear = Calendar.current.date(byAdding: .month, value: monthGap, to: date!)
                 index = newIndex
             }
         } else {
@@ -46,6 +56,7 @@ class ExpenseTableViewMonthCell: UITableViewCell {
         }
         
         drawSelectionState()
+        delegate?.change(monthYear)
     }
     
     func drawSelectionState() {

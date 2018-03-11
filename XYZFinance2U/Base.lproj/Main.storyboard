@@ -376,6 +376,7 @@
                                                 <constraint firstItem="ggJ-wy-Ror" firstAttribute="width" secondItem="81d-b9-oBr" secondAttribute="width" id="Bds-tz-aod"/>
                                                 <constraint firstItem="DXs-6s-KmU" firstAttribute="width" secondItem="81d-b9-oBr" secondAttribute="width" id="PvQ-Ty-fmU"/>
                                                 <constraint firstItem="BKD-ry-fhY" firstAttribute="width" secondItem="81d-b9-oBr" secondAttribute="width" id="pT3-J7-lKb"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="999" constant="40" id="syw-DR-aZ7"/>
                                             </constraints>
                                         </stackView>
                                     </subviews>
