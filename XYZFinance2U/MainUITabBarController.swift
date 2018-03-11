@@ -108,6 +108,7 @@ class MainUITabBarController: UITabBarController,
             }
         } else if let expenseRoot = navController.viewControllers.first as? ExpenseTableViewController  {
             
+            expenseRoot.filteredMonthYear = nil
             expenseRoot.reloadData()
             split.delegate = expenseRoot
             
