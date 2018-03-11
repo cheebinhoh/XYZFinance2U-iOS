@@ -53,6 +53,8 @@ class ExpenseTableViewController: UITableViewController,
             filteredExpenseList = nil
         }
         
+        filteredMonthYear = monthYear
+        
         reloadData()
     }
     
@@ -63,6 +65,7 @@ class ExpenseTableViewController: UITableViewController,
     
     // MARK: - property
     weak var searchBar: UISearchBar?
+    var filteredMonthYear: Date!
     var searchActive = false
     var currencyCodes = [String]()
     var sectionList = [TableSectionCell]()
@@ -486,11 +489,32 @@ class ExpenseTableViewController: UITableViewController,
         saveManageContext()
     
         updateToiCloud(expense)
+        
+        if let _ = filteredMonthYear, let _ = filteredExpenseList {
+            
+            let dateComponentWanted = Calendar.current.dateComponents([.month, .year], from: filteredMonthYear!)
+            
+            if let date = expense.value(forKey: XYZExpense.date) as? Date {
+                
+                let dateComponent = Calendar.current.dateComponents([.month, .year], from: date)
+                
+                if dateComponent.year! == dateComponentWanted.year!
+                    && dateComponent.month! == dateComponentWanted.month! {
+                 
+                    filteredExpenseList?.append(expense)
+                    
+                    filteredExpenseList = sortExpenses(filteredExpenseList!)
+                }
+            }
+        }
+        
         reloadData()
         
-        let indexPath = self.indexPath(of: expense)
-        tableView.selectRow(at: indexPath!, animated: true, scrollPosition: UITableViewScrollPosition.bottom)
-        delegate?.expenseSelected(newExpense: expense)
+        if let indexPath = self.indexPath(of: expense) {
+        
+            tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.bottom)
+            delegate?.expenseSelected(newExpense: expense)
+        }
     }
     
     func saveNewExpense(expense: XYZExpense) {
