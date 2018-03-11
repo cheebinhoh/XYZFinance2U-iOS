@@ -12,16 +12,34 @@ class ExpenseTableViewMonthCell: UITableViewCell {
 
     var index: Int?
     var highlightIndex: Int?
+    var buttonText = [String]()
+    var date: Date?
     
     @IBOutlet weak var stackView: UIStackView!
     
     @IBAction func button(_ sender: Any) {
         
+        let count = stackView.arrangedSubviews.count
         let newIndex = stackView.arrangedSubviews.index(of: sender as! UIView)
         
-        if nil == index || index! != newIndex {
+        if nil == index || index! != newIndex! {
             
-            index = newIndex
+            if newIndex! <= 0 {
+                
+                let prevMonthDate = Calendar.current.date(byAdding: .month, value: -1, to: date!)
+                setDate(prevMonthDate!)
+                
+                index = nil
+            } else if newIndex! >= (count - 1) {
+            
+                let nextMonthDate = Calendar.current.date(byAdding: .month, value: 1, to: date!)
+                setDate(nextMonthDate!)
+                
+                index = nil
+            } else {
+            
+                index = newIndex
+            }
         } else {
         
             index = nil
@@ -32,12 +50,14 @@ class ExpenseTableViewMonthCell: UITableViewCell {
     
     func drawSelectionState() {
 
+        let count = stackView.arrangedSubviews.count
+        
         for (indexPos, subview) in stackView.arrangedSubviews.enumerated() {
             
-            if let button = subview as? UIButton {
+            if let button = subview as? UIButton, indexPos > 0 && indexPos < (count - 1)  {
                 
                 var backgroundColor = UIColor.clear
-                var textColor = UIColor.lightGray
+                var textColor = UIColor.darkText
                 
                 if let _ = index, index == indexPos {
                     
@@ -45,6 +65,7 @@ class ExpenseTableViewMonthCell: UITableViewCell {
                     textColor = UIColor.white
                 }
                 
+                button.setTitle(buttonText[indexPos - 1], for: .normal)
                 button.setTitleColor(textColor, for: .normal)
                 button.backgroundColor = backgroundColor
             }
@@ -53,8 +74,29 @@ class ExpenseTableViewMonthCell: UITableViewCell {
         stackView.setNeedsDisplay()
     }
     
+    func setDate(_ date: Date) {
+        
+        self.date = date
+        buttonText = [String]()
+        
+        var count = 0
+        while count < 3 {
+            
+            let thisDate = Calendar.current.date(byAdding: .month, value: -1 * count, to: date)
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMM, YY"
+            
+            buttonText.insert( "\(formatter.string(from: thisDate!))", at: 0)
+
+            count = count + 1
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        setDate(Date())
         
         drawSelectionState()
         // Initialization code
