@@ -67,7 +67,6 @@ class ExpenseTableViewController: UITableViewController,
         reloadData()
     }
     
-    
     func cancelExpense() {
     
     }
