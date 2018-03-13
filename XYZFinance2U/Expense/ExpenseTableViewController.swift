@@ -877,7 +877,7 @@ class ExpenseTableViewController: UITableViewController,
             
             filteredMonthYear = nil
             filteredExpenseList = nil
-            reloadData
+            reloadData()
         }
         
         return UISwipeActionsConfiguration(actions: commands)
@@ -900,7 +900,7 @@ class ExpenseTableViewController: UITableViewController,
     
             filteredMonthYear = nil
             filteredExpenseList = nil
-            reloadData
+            reloadData()
         } else {
             
             guard let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense] else {
