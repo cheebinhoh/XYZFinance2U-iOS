@@ -874,6 +874,10 @@ class ExpenseTableViewController: UITableViewController,
             let prevMonthDate = Calendar.current.date(byAdding: .month, value: -1, to: cell.date!)
             cell.setDate(prevMonthDate!)
             cell.drawSelectionState()
+            
+            filteredMonthYear = nil
+            filteredExpenseList = nil
+            reloadData
         }
         
         return UISwipeActionsConfiguration(actions: commands)
@@ -893,6 +897,10 @@ class ExpenseTableViewController: UITableViewController,
             let nextMonthDate = Calendar.current.date(byAdding: .month, value: 1, to: cell.date!)
             cell.setDate(nextMonthDate!)
             cell.drawSelectionState()
+    
+            filteredMonthYear = nil
+            filteredExpenseList = nil
+            reloadData
         } else {
             
             guard let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense] else {
