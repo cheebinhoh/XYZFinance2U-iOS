@@ -24,26 +24,7 @@ class XYZExpense: NSManagedObject {
         
         func description() -> String {
             
-            switch self {
-                
-            case .none:
-                return "none"
-                
-            case .daily:
-                return "daily"
-                
-            case .weekly:
-                return "weekly"
-                
-            case .biweekly:
-                return "biweekly"
-                
-            case .monthly:
-                return "monthly"
-                
-            case .yearly:
-                return "yearly"
-            }
+            return self.rawValue
         }
     }
     

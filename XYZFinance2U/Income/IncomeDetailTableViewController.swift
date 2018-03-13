@@ -54,7 +54,7 @@ class IncomeDetailTableViewController: UITableViewController,
                     
                     hasUpdateReminder = false
                     reminddate = nil // FIXME: we need to reload the original value from the core data
-                    repeatAction = "Never"
+                    repeatAction = XYZAccount.RepeatAction.none.rawValue
                 }
 
                 loadDataInTableSectionCell()
@@ -442,7 +442,7 @@ class IncomeDetailTableViewController: UITableViewController,
         accountNr = ""
         amount = 0.0
         date = Date()
-        repeatAction = "Never"
+        repeatAction = XYZAccount.RepeatAction.none.rawValue
         hasUpdateReminder = false
         
         // we do not set reminddate as it is used to indicate if we have remind option checked
@@ -686,7 +686,15 @@ class IncomeDetailTableViewController: UITableViewController,
                 }
                 
                 repeatcell.setLabel("Repeat")
-                repeatcell.setSelection(repeatAction ?? "Never")
+                
+                if let _ = XYZAccount.RepeatAction(rawValue: repeatAction ?? "") {
+                  
+                    repeatcell.setSelection(repeatAction ?? XYZAccount.RepeatAction.none.rawValue)
+                } else {
+                    
+                    repeatcell.setSelection(XYZAccount.RepeatAction.none.rawValue)
+                }
+                
                 repeatcell.selectionStyle = .none
                 
                 cell = repeatcell
@@ -794,8 +802,15 @@ class IncomeDetailTableViewController: UITableViewController,
                 }
                 
                 selectionTableViewController.selectionIdentifier = "repeat"
-                selectionTableViewController.setSelections("", false, ["Never", "Every Hour", "Every Day", "Every Week", "Every Month", "Every Year"])
-                selectionTableViewController.setSelectedItem(repeatAction ?? "Never")
+                selectionTableViewController.setSelections("",
+                                                           false,
+                                                           ["\(XYZAccount.RepeatAction.none)",
+                                                            "\(XYZAccount.RepeatAction.hourly)",
+                                                            "\(XYZAccount.RepeatAction.daily)",
+                                                            "\(XYZAccount.RepeatAction.weekly)",
+                                                            "\(XYZAccount.RepeatAction.monthly)",
+                                                            "\(XYZAccount.RepeatAction.yearly)"])
+                selectionTableViewController.setSelectedItem(repeatAction ?? XYZAccount.RepeatAction.none.rawValue)
                 selectionTableViewController.delegate = self
                 
                 let nav = UINavigationController(rootViewController: selectionTableViewController)

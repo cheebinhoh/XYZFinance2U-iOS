@@ -201,7 +201,7 @@ class SelectionTableViewController: UITableViewController {
         cell?.accessoryType = .checkmark
         selectedItem = tableSectionList[indexPath.section].cellList[indexPath.row]
         
-        navigationItem.title = "Selection: \(String(describing: selectedItem!))"
+        navigationItem.title = "\(String(describing: selectedItem!))"
     }
 
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {

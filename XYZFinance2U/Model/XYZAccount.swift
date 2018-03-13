@@ -14,6 +14,22 @@ import CloudKit
 @objc(XYZAccount)
 class XYZAccount : NSManagedObject {
     
+    enum RepeatAction: String {
+        
+        case none = "none"
+        case hourly = "hourly"
+        case daily = "daily"
+        case weekly = "weekly"
+        case biweekly = "biweekly"
+        case monthly = "monthly"
+        case yearly = "yearly"
+        
+        func description() -> String {
+            
+            return self.rawValue
+        }
+    }
+    
     // MARK: - static property
     
     static let type = "XYZAccount"

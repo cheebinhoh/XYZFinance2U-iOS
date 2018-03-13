@@ -434,40 +434,41 @@ class IncomeTableViewController: UITableViewController,
             content.userInfo[XYZAccount.recordId] = income.value(forKey: XYZAccount.recordId) as? String
             
             var units: Set<Calendar.Component> = [ .hour, .minute]
-            switch repeatAction ?? "Never" {
+            switch repeatAction ?? XYZAccount.RepeatAction.none.rawValue {
                 
-            case "Never":
+            case XYZAccount.RepeatAction.none.rawValue:
                 units.insert(.year)
                 units.insert(.month)
                 units.insert(.day)
                 units.insert(.hour)
                 units.insert(.minute)
                 
-            case "Every Month":
+            case XYZAccount.RepeatAction.monthly.rawValue:
                 units.insert(.month)
                 units.insert(.day)
                 units.insert(.hour)
                 units.insert(.minute)
                 
-            case "Every Week":
+            case XYZAccount.RepeatAction.weekly.rawValue:
                 units.insert(.weekday)
                 units.insert(.hour)
                 units.insert(.minute)
                 
-            case "Every Day":
+            case XYZAccount.RepeatAction.daily.rawValue:
                 units.insert(.hour)
                 units.insert(.minute)
                 
-            case "Every Hour":
+            case XYZAccount.RepeatAction.hourly.rawValue:
                 units.insert(.minute)
                 
             default:
-                fatalError("Exception: \(repeatAction!) is not expected")
+                // we need to tolerate value that is not longer valid.
+                break
             }
             
             let dateInfo = Calendar.current.dateComponents(units, from: reminddate!)
             
-            let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: ( repeatAction ?? "Never" ) != "Never" )
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: ( repeatAction ?? XYZAccount.RepeatAction.none.rawValue ) != XYZAccount.RepeatAction.none.rawValue )
             
             let request = UNNotificationRequest(identifier: identifier!, content: content, trigger: trigger)
             

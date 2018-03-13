@@ -501,7 +501,14 @@ func createUpdateAccount(_ record: CKRecord,
     if repeatDate != nil {
         
         incomeToBeUpdated?.setValue(repeatDate, forKey: XYZAccount.repeatDate)
-        incomeToBeUpdated?.setValue(repeatAction, forKey: XYZAccount.repeatAction)
+        
+        if let _ = XYZAccount.RepeatAction(rawValue: repeatAction ?? "") {
+            
+            incomeToBeUpdated?.setValue(repeatAction, forKey: XYZAccount.repeatAction)
+        } else {
+            
+            incomeToBeUpdated?.setValue(XYZAccount.RepeatAction.none.rawValue, forKey: XYZAccount.repeatAction)
+        }
     }
 
     // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
