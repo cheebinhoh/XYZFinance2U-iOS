@@ -1677,7 +1677,6 @@ func saveBudgetsToiCloud(_ database: CKDatabase,
     database.add(opToSaved)
 }
 
-
 func registeriCloudSubscription(_ database: CKDatabase,
                                 _ iCloudZones: [XYZiCloudZone]) {
     
