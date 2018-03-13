@@ -33,16 +33,16 @@ class ExpenseTableViewMonthCell: UITableViewCell {
             
             if newIndex! <= 0 {
                 
-                let prevMonthDate = Calendar.current.date(byAdding: .month, value: -1, to: date!)
-                setDate(prevMonthDate!)
+                //let prevMonthDate = Calendar.current.date(byAdding: .month, value: -1, to: date!)
+                //setDate(prevMonthDate!)
                 
-                index = nil
+                //index = nil
             } else if newIndex! >= (count - 1) {
             
-                let nextMonthDate = Calendar.current.date(byAdding: .month, value: 1, to: date!)
-                setDate(nextMonthDate!)
+                //let nextMonthDate = Calendar.current.date(byAdding: .month, value: 1, to: date!)
+                //setDate(nextMonthDate!)
                 
-                index = nil
+                //index = nil
             } else {
             
                 let monthGap = newIndex! - 3
@@ -118,6 +118,8 @@ class ExpenseTableViewMonthCell: UITableViewCell {
 
             count = count + 1
         }
+        
+        index = nil
     }
     
     override func awakeFromNib() {

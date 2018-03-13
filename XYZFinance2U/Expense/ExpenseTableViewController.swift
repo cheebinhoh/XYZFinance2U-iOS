@@ -859,11 +859,41 @@ class ExpenseTableViewController: UITableViewController,
         return nil
     }
 
+    override func tableView(_ tableView: UITableView,
+                            leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+        let commands = [UIContextualAction]()
+        
+        if sectionList[indexPath.section].identifier == "searchBar" {
+            
+            guard let cell = tableView.cellForRow(at: indexPath) as? ExpenseTableViewMonthCell else {
+                
+                fatalError("Exception: ExpenseTableViewMonthCell is expected")
+            }
+            
+            let prevMonthDate = Calendar.current.date(byAdding: .month, value: -1, to: cell.date!)
+            cell.setDate(prevMonthDate!)
+            cell.drawSelectionState()
+        }
+        
+        return UISwipeActionsConfiguration(actions: commands)
+    }
+    
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         var commands = [UIContextualAction]()
         
-        if sectionList[indexPath.section].identifier != "searchBar" {
+        if sectionList[indexPath.section].identifier == "searchBar" {
+            
+            guard let cell = tableView.cellForRow(at: indexPath) as? ExpenseTableViewMonthCell else {
+                
+                fatalError("Exception: ExpenseTableViewMonthCell is expected")
+            }
+            
+            let nextMonthDate = Calendar.current.date(byAdding: .month, value: 1, to: cell.date!)
+            cell.setDate(nextMonthDate!)
+            cell.drawSelectionState()
+        } else {
             
             guard let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense] else {
                 
