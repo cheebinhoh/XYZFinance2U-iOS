@@ -337,6 +337,13 @@ class BudgetTableViewController: UITableViewController,
         let name = budget.value(forKey: XYZBudget.name) as? String ?? ""
         let currentStart = budget.currentStart
         let currentEnd = budget.currentEnd
+        var periodEnd: Date? = nil
+        
+        if let _ = currentEnd {
+            
+            periodEnd = min( Calendar.current.date(byAdding: .day, value: -1, to: currentEnd!)!,
+                             Date() )
+        }
         
         for expense in expenseList {
         
@@ -350,14 +357,27 @@ class BudgetTableViewController: UITableViewController,
             
             if category.lowercased() == name.lowercased() {
                 
-                let date = expense.value(forKey: XYZExpense.date) as? Date
+                var occurenceDates: [Date]?
+                
                 if currentStart == nil
-                   || currentEnd == nil
-                    || (date! >= currentStart! && date! < currentEnd! ) {
+                    || currentEnd == nil {
+                    
+                    occurenceDates = expense.getOccurenceDates(until: Date())
+                } else {
+                    
+                    occurenceDates = expense.getOccurenceDates(until: periodEnd!)
+
+                    occurenceDates = occurenceDates?.filter({ (date) -> Bool in
+                        
+                        date >= currentStart! && date < currentEnd!
+                    })
+                }
+                
+                if !(occurenceDates?.isEmpty)! {
                 
                     let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
                     
-                    total = total + amount
+                    total = total + ( amount * Double( (occurenceDates?.count)! ) )
                 }
             }
         }
@@ -650,7 +670,7 @@ class BudgetTableViewController: UITableViewController,
         
         if length == XYZBudget.Length.none.rawValue {
             
-            period = "-"
+            period = "infinite"
         } else {
             
             let start = formattingDate(date: budget.currentStart!, style: .short) //budget.currentStart
