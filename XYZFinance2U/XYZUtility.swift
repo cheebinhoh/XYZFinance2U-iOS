@@ -13,7 +13,6 @@ import UIKit
 
 // MARK: - type
 
-// generic structure to support UITableView section and cell
 struct TableSectionCell {
     
     let identifier: String
@@ -1532,7 +1531,7 @@ func saveAccountsToiCloud(_ database: CKDatabase,
         let lastUpdate = income.value(forKey: XYZAccount.lastUpdate) as? Date
         let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
         let repeatDate = income.value(forKey: XYZAccount.repeatDate) as? Date
-        let repeatAction = income.value(forKey: XYZAccount.repeatAction) as? String
+        let repeatAction = income.value(forKey: XYZAccount.repeatAction) as? String ?? ""
         let sequencNr = income.value(forKey: XYZAccount.sequenceNr) as? Int
         
         record.setValue(sequencNr, forKey: XYZAccount.sequenceNr)
@@ -1706,7 +1705,6 @@ func registeriCloudSubscription(_ database: CKDatabase,
         
         fetchOp.fetchSubscriptionCompletionBlock = {(subscriptionDict, error) -> Void in
             
-            //if let _ = subscriptionDict?[(ckrecordzone?.zoneID.zoneName)!]  {
             if let _ = subscriptionDict![id] {
                 
             } else {
