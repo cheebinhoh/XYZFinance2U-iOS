@@ -678,7 +678,7 @@ class ExpenseTableViewController: UITableViewController,
             }
             
             let occurenceDates = expense.getOccurenceDates(until: Date())
-
+            
             for date in occurenceDates {
                 
                 var needed = true
@@ -698,7 +698,7 @@ class ExpenseTableViewController: UITableViewController,
                     let month = calendar.component(.month, from: date)
                     let year = calendar.component(.year, from: date)
                     let title = "\(year), \(dateFormatter.shortMonthSymbols[month - 1])"
-                    let identifier = "\(year), \(dateFormatter.shortMonthSymbols[month - 1]), \(currency!)"
+                    let identifier = "\(year), \(month), \(currency!)"
                     
                     let monthYearComponent =  Calendar.current.dateComponents([.month, .year], from: date)
                     let monthYearDate = Calendar.current.date(from: monthYearComponent)
@@ -737,6 +737,11 @@ class ExpenseTableViewController: UITableViewController,
             }
         }
         
+        sectionList = sectionList.sorted(by: { (section1, section2) -> Bool in
+            
+            return section1.identifier >= section2.identifier
+        })
+
         if !sectionList.isEmpty
             || filteredExpenseList != nil {
             

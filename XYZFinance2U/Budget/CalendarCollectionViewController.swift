@@ -336,6 +336,7 @@ class CalendarCollectionViewController: UICollectionViewController,
         
         super.viewDidLoad()
 
+        navigationItem.title = budgetGroup
         collectionView?.isScrollEnabled = false
         
         // Uncomment the following line to preserve selection between presentations
