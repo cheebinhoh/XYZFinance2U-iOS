@@ -433,7 +433,7 @@ class IncomeTableViewController: UITableViewController,
             content.userInfo[XYZAccount.type] = true
             content.userInfo[XYZAccount.recordId] = income.value(forKey: XYZAccount.recordId) as? String
             
-            var units: Set<Calendar.Component> = [ .hour, .minute]
+            var units: Set<Calendar.Component> = [ .minute ]
             switch repeatAction ?? XYZAccount.RepeatAction.none.rawValue {
                 
             case XYZAccount.RepeatAction.none.rawValue:
