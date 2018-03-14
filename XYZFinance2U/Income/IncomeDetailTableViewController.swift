@@ -394,33 +394,6 @@ class IncomeDetailTableViewController: UITableViewController,
     
     func saveData() {
         
-        var hasChanged = false
-        if let existingBank = income?.value(forKey: XYZAccount.bank) as? String, existingBank != bank {
-         
-            hasChanged = true
-        } else if let existingAccountNr = income?.value(forKey: XYZAccount.accountNr) as? String, existingAccountNr != accountNr {
-            
-            hasChanged = true
-        } else if let existingAmount = income?.value(forKey: XYZAccount.amount) as? Double, existingAmount != amount {
-            
-            hasChanged = true
-        } else if let existingDate = income?.value(forKey: XYZAccount.lastUpdate) as? Date, existingDate != date {
-            
-            hasChanged = true
-        } else if let existingRepeatAction = income?.value(forKey: XYZAccount.repeatAction) as? String, existingRepeatAction != repeatAction {
-            
-            hasChanged = true
-        } else if nil == income?.value(forKey: XYZAccount.repeatDate) as? Date && nil != reminddate {
-            
-            hasChanged = true
-        } else if let existingRemindDate = income?.value(forKey: XYZAccount.repeatDate) as? Date, existingRemindDate != reminddate {
-            
-            hasChanged = true
-        } else if let existingCurrencyCode = income?.value(forKey: XYZAccount.currencyCode) as? String, existingCurrencyCode != currencyCode {
-            
-            hasChanged = true
-        }
-        
         income?.setValue(bank, forKey: XYZAccount.bank)
         income?.setValue(accountNr, forKey: XYZAccount.accountNr)
         income?.setValue(amount, forKey: XYZAccount.amount)
@@ -428,12 +401,7 @@ class IncomeDetailTableViewController: UITableViewController,
         income?.setValue(repeatAction, forKey: XYZAccount.repeatAction)
         income?.setValue(reminddate, forKey: XYZAccount.repeatDate)
         income?.setValue(currencyCode, forKey: XYZAccount.currencyCode)
-        
-        if nil == income?.value(forKey: XYZAccount.lastRecordChange) as? Date
-           || hasChanged {
-            
-            income?.setValue(Date(), forKey: XYZAccount.lastRecordChange)
-        }
+        income?.setValue(Date(), forKey: XYZAccount.lastRecordChange)
     }
 
     func loadData() {

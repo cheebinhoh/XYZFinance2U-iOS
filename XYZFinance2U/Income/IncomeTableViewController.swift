@@ -508,9 +508,15 @@ class IncomeTableViewController: UITableViewController,
                 
                 for (rowIndex, income) in sectionIncomeList.enumerated() {
                     
+                    let oldSequenceNr = income.value(forKey: XYZAccount.sequenceNr) as? Int
+                    
                     let sequenceNr = 1000 * sectionIndex + rowIndex
                     income.setValue(sequenceNr, forKey: XYZAccount.sequenceNr)
-                    income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
+                    
+                    if oldSequenceNr != sequenceNr {
+                        
+                        income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
+                    }
                 }
             }
         }
