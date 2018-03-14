@@ -510,6 +510,7 @@ class IncomeTableViewController: UITableViewController,
                     
                     let sequenceNr = 1000 * sectionIndex + rowIndex
                     income.setValue(sequenceNr, forKey: XYZAccount.sequenceNr)
+                    income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
                 }
             }
         }

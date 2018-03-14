@@ -1552,6 +1552,10 @@ func saveAccountsToiCloud(_ database: CKDatabase,
 
             record.setValue(repeatDate, forKey: XYZAccount.repeatDate)
             record.setValue(repeatAction, forKey: XYZAccount.repeatAction)
+        } else {
+            
+            record.setValue(nil, forKey: XYZAccount.repeatDate)
+            record.setValue("", forKey: XYZAccount.repeatAction)
         }
 
         recordsToBeSaved.append(record)
