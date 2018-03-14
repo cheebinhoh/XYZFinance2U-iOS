@@ -739,7 +739,19 @@ class ExpenseTableViewController: UITableViewController,
         
         sectionList = sectionList.sorted(by: { (section1, section2) -> Bool in
             
-            return section1.identifier >= section2.identifier
+            let tokens1 = section1.identifier.split(separator: ",")
+            let tokens2 = section2.identifier.split(separator: ",")
+           
+            let year1 = Int(tokens1[0])
+            let year2 = Int(tokens2[0])
+            let month1 = Int(tokens1[1].trimmingCharacters(in: CharacterSet.whitespaces))
+            let month2 = Int(tokens2[1].trimmingCharacters(in: CharacterSet.whitespaces))
+            let currency1 = tokens1[2]
+            let currency2 = tokens2[2]
+            
+            return year1! >= year2!
+                   && month1! >= month2!
+                   && currency1 <= currency2
         })
 
         if !sectionList.isEmpty
