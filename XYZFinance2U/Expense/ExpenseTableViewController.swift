@@ -57,9 +57,15 @@ class ExpenseTableViewController: UITableViewController,
             }
             
             filteredExpenseList = sortExpenses(filteredExpenseList!)
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMM, YY"
+            
+            navigationItem.title = "Expenses of \((formatter.string(from: monthYear!)))"
         } else {
             
             filteredExpenseList = nil
+            navigationItem.title = "Expenses"
         }
         
         filteredMonthYear = monthYear
