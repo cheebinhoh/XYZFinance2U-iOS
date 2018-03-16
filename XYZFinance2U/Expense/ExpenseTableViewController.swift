@@ -760,7 +760,7 @@ class ExpenseTableViewController: UITableViewController,
                    && currency1 <= currency2
         })
         
-        if let _ = filteredMonthYear, sectionList.isEmpty {
+        if let _ = filteredMonthYear, (appDelegate?.expenseList.isEmpty)! {
             
             filteredMonthYear = nil
             filteredExpenseList = nil
