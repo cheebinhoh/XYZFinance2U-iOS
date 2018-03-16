@@ -759,6 +759,13 @@ class ExpenseTableViewController: UITableViewController,
                    && month1! >= month2!
                    && currency1 <= currency2
         })
+        
+        if let _ = filteredMonthYear, sectionList.isEmpty {
+            
+            filteredMonthYear = nil
+            filteredExpenseList = nil
+            navigationItem.title = "Expenses"
+        }
 
         if !sectionList.isEmpty
             || filteredExpenseList != nil {
