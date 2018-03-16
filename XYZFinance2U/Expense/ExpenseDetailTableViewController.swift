@@ -527,7 +527,9 @@ class ExpenseDetailTableViewController: UITableViewController,
             currencyCode = presetCurrencyCode ?? Locale.current.currencyCode
             budgetCategory = presetBudgetCategory ?? ""
             date = presetDate ?? Date()
+            detail = presetDetail ?? ""
             recurringStopDate = date
+            amount = presetAmount
         }
         
         budgetList = getBudgets(of: currencyCode!)
@@ -847,7 +849,9 @@ class ExpenseDetailTableViewController: UITableViewController,
     // MARK: - property
     var recurring: XYZExpense.Length?
     var recurringStopDate: Date?
+    var presetAmount: Double?
     var presetDate: Date?
+    var presetDetail: String?
     var presetBudgetCategory: String?
     var presetCurrencyCode: String?
     var budgetCategory = ""
