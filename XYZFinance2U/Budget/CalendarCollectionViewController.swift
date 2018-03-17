@@ -54,7 +54,64 @@ class CalendarCollectionViewController: UICollectionViewController,
         expenseList?.append(expense)
         budgetView.reloadData()
         expenseView.reloadData()
-        reloadData()
+        //reloadData()
+        
+        let date = expense.value(forKey: XYZExpense.date) as? Date
+        
+        var dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: date!)
+        var startDateOfMonthComponent = Calendar.current.dateComponents([.day, .month, .year], from: startDateOfMonth!)
+
+        var monthStep = 0
+        
+        if dateComponent.year! != startDateOfMonthComponent.year! {
+
+            let yearStep = abs( startDateOfMonthComponent.year! - dateComponent.year! )
+            
+            monthStep = ( yearStep - 1 ) * 12
+            
+            if startDateOfMonthComponent.year! < dateComponent.year! {
+                
+                monthStep = monthStep + ( 12 - startDateOfMonthComponent.month! )
+                monthStep = monthStep + ( dateComponent.month! - 0 )
+            } else {
+                
+                monthStep = monthStep + ( startDateOfMonthComponent.month! - 0 )
+                monthStep = monthStep + ( 12 - dateComponent.month! )
+                monthStep = monthStep * -1
+            }
+        
+        } else if dateComponent.month! != startDateOfMonthComponent.month! {
+            
+            monthStep = abs(dateComponent.month! - startDateOfMonthComponent.month!)
+            if startDateOfMonthComponent.month! > dateComponent.month! {
+          
+                monthStep = monthStep * -1
+            }
+        }
+
+        while monthStep != 0 {
+            
+            if monthStep > 0 {
+                
+                moveNextPeriod(self)
+                monthStep = monthStep - 1
+            } else {
+                
+                movePreviousPeriod(self)
+                monthStep = monthStep + 1
+            }
+        }
+
+        let indexPath = self.indexPath(of: date!)
+
+        if let _ = indexPath {
+            
+            self.indexPath = indexPath
+            reloadData()
+        } else {
+        
+            reloadData()
+        }
     }
     
     func saveExpense(expense: XYZExpense) {
@@ -89,6 +146,7 @@ class CalendarCollectionViewController: UICollectionViewController,
     var sectionList = [TableSectionCell]()
     var selectedExpenseList: [XYZExpense]?
     var indexPath: IndexPath?
+    var monthCalendar = Array(repeating: Array(repeating: 0, count: 7), count: 5)
     var date: Date?
     var selectedDate: Date?
     var startDateOfMonth: Date?
@@ -198,7 +256,6 @@ class CalendarCollectionViewController: UICollectionViewController,
         }
         
         budgetView.reloadData()
-        
         loadDataIntoSection()
         collectionView?.reloadData()
     }
@@ -216,8 +273,8 @@ class CalendarCollectionViewController: UICollectionViewController,
     @IBAction func moveNextPeriod(_ sender: Any) {
     
         startDateOfMonth = Calendar.current.date(byAdding: .month,
-                                          value:1,
-                                          to: startDateOfMonth!)
+                                                 value:1,
+                                                 to: startDateOfMonth!)
         selectedExpenseList = nil
         indexPath = nil
         self.reloadData()
@@ -364,6 +421,30 @@ class CalendarCollectionViewController: UICollectionViewController,
         // Do any additional setup after loading the view.
     }
     
+    func indexPath(of date: Date) -> IndexPath? {
+        
+        var dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: date)
+        var startDateOfMonthComponent = Calendar.current.dateComponents([.day, .month, .year], from: startDateOfMonth!)
+        
+        if dateComponent.year! == startDateOfMonthComponent.year!
+            && dateComponent.month! == startDateOfMonthComponent.month! {
+            
+            for (sectionIndex, section) in monthCalendar.enumerated() {
+                
+                for (rowIndex, row) in section.enumerated() {
+                    
+                    if row == dateComponent.day! {
+                        
+                        // row is started with day of week heading.
+                        return IndexPath(row: rowIndex, section: sectionIndex + 1)
+                    }
+                }
+            }
+        }
+        
+        return nil
+    }
+    
     func loadDataIntoSection() {
         
         expenseList = expenseList?.filter({ (expense) -> Bool in
@@ -400,6 +481,8 @@ class CalendarCollectionViewController: UICollectionViewController,
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
         
+        monthCalendar = Array(repeating: Array(repeating: 0, count: 7), count: 5)
+        
         var hasNowDate = false
         var startIndexPath = IndexPath(row: 100, section: 100)
         for index in 1...6 {
@@ -422,7 +505,9 @@ class CalendarCollectionViewController: UICollectionViewController,
                     
                     let dayComponent = Calendar.current.dateComponents([.day,], from: startDate!)
                     cellList.append("\(dayComponent.day!)")
-
+                    
+                    monthCalendar[index - 1][weekdayIndex - 1] = dayComponent.day!
+                    
                     if startDate! == nowDate! {
                         
                         hasNowDate = true
@@ -452,7 +537,7 @@ class CalendarCollectionViewController: UICollectionViewController,
             }
         }
         
-        if !hasNowDate {
+        if !hasNowDate && nil == indexPath {
             
             indexPath = startIndexPath
         }

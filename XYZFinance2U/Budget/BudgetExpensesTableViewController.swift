@@ -28,6 +28,12 @@ class BudgetExpensesTableViewController: UITableViewController,
     
     func saveNewExpense(expense: XYZExpense) {
 
+        guard let calendarViewController = delegate as? CalendarCollectionViewController else {
+            
+            fatalError("Exception: CalendarCollectionViewController is expected")
+        }
+        
+        calendarViewController.saveNewExpense(expense: expense)
     }
     
     func saveExpense(expense: XYZExpense) {
@@ -296,6 +302,58 @@ class BudgetExpensesTableViewController: UITableViewController,
         }
         
         return stackView
+    }
+    
+    override func tableView(_ tableView: UITableView,
+                            leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        var commands = [UIContextualAction]()
+        
+        let copy = UIContextualAction(style: .normal, title: "Copy" ) { _, _, handler in
+            
+            guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+                
+                fatalError("Exception: ExpenseDetailNavigationController is expected")
+            }
+            
+            guard let expenseDetailTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
+                
+                fatalError("Exception: ExpenseDetailTableViewController is expected" )
+            }
+            
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                
+                fatalError("Exception: UISplitViewController is expected" )
+            }
+            
+            mainSplitView.popOverNavigatorController = expenseDetailNavigationController
+            
+            //let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]
+            let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
+            let expense = sectionExpenseList![indexPath.row]
+            let detail = expense.value(forKey: XYZExpense.detail) as? String
+            let amount = expense.value(forKey: XYZExpense.amount) as? Double
+            let budgetGroup = expense.value(forKey: XYZExpense.budgetCategory) as? String
+            let date = Date()
+            let currency = expense.value(forKey: XYZExpense.currencyCode) as? String
+            
+            expenseDetailTableView.presetAmount = amount
+            expenseDetailTableView.presetDate = date
+            expenseDetailTableView.presetDetail = detail
+            expenseDetailTableView.presetBudgetCategory = budgetGroup
+            expenseDetailTableView.presetCurrencyCode = currency
+            expenseDetailTableView.setPopover(delegate: self)
+            
+            expenseDetailNavigationController.modalPresentationStyle = .popover
+            handler(true)
+            self.present(expenseDetailNavigationController, animated: true, completion: nil)
+        }
+        
+        copy.backgroundColor = UIColor.blue
+        commands.append(copy)
+        
+        return UISwipeActionsConfiguration(actions: commands)
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
