@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14105" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MlQ-tP-LrG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14087.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MlQ-tP-LrG">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14075.4"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
@@ -1620,7 +1620,7 @@ Chee Bin HOH, 2017</string>
         <scene sceneID="xir-IK-qG2">
             <objects>
                 <tableViewController id="AEI-Cc-O1r" customClass="BudgetTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="OGd-9B-xxR">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="OGd-9B-xxR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -1669,7 +1669,7 @@ Chee Bin HOH, 2017</string>
                                                 <constraint firstAttribute="width" constant="5" id="1en-cd-8Aq"/>
                                                 <constraint firstItem="ESQ-QH-oXb" firstAttribute="centerY" secondItem="X2O-Og-T8e" secondAttribute="centerY" id="6rb-Ak-INx"/>
                                                 <constraint firstItem="ESQ-QH-oXb" firstAttribute="leading" secondItem="X2O-Og-T8e" secondAttribute="leading" id="DXG-uf-Dbh"/>
-                                                <constraint firstAttribute="height" constant="70" id="MYT-TV-ynG"/>
+                                                <constraint firstAttribute="height" priority="999" constant="70" id="MYT-TV-ynG"/>
                                                 <constraint firstAttribute="trailing" secondItem="ESQ-QH-oXb" secondAttribute="trailing" id="SZr-gD-fjl"/>
                                             </constraints>
                                         </view>
