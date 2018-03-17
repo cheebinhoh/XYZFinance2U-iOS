@@ -186,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XYZFinance2U/Expense/ExpenseDetailTableViewController.swift"
-            timestampString = "542921796.087159"
+            timestampString = "542981432.692744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1293"
-            endingLineNumber = "1293"
+            startingLineNumber = "1301"
+            endingLineNumber = "1301"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>

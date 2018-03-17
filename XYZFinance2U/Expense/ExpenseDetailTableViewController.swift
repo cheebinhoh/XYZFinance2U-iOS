@@ -1096,18 +1096,16 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         navigationItem.largeTitleDisplayMode = .never
         
-        if !self.isCollapsed {
-                
-            navigationItem.rightBarButtonItem = nil
-            navigationItem.leftBarButtonItem = nil
-           
-            modalEditing = false
-        }
-        
         if isPopover {
             
             let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save(_:)))
             navigationItem.setRightBarButton(saveButton, animated: true)
+        } else {
+            
+            navigationItem.rightBarButtonItem = nil
+            navigationItem.leftBarButtonItem = nil
+            
+            modalEditing = false
         }
         
         loadData()
