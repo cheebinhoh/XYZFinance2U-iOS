@@ -311,6 +311,8 @@ class BudgetExpensesTableViewController: UITableViewController,
                             leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         var commands = [UIContextualAction]()
+        let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
+        let expense = sectionExpenseList![indexPath.row]
         
         let copy = UIContextualAction(style: .normal, title: "Copy" ) { _, _, handler in
             
@@ -332,8 +334,6 @@ class BudgetExpensesTableViewController: UITableViewController,
             
             mainSplitView.popOverNavigatorController = expenseDetailNavigationController
             
-            let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
-            let expense = sectionExpenseList![indexPath.row]
             let detail = expense.value(forKey: XYZExpense.detail) as? String
             let amount = expense.value(forKey: XYZExpense.amount) as? Double
             let budgetGroup = expense.value(forKey: XYZExpense.budgetCategory) as? String
@@ -360,13 +360,13 @@ class BudgetExpensesTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
+        var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
+        let expense = sectionExpenseList![indexPath.row]
         var commands = [UIContextualAction]()
         
         let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, handler in
             
             let aContext = managedContext()
-            
-            var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
             
             let oldExpense = sectionExpenseList?.remove(at: indexPath.row)
             self.sectionList[indexPath.section].data = sectionExpenseList
@@ -400,6 +400,53 @@ class BudgetExpensesTableViewController: UITableViewController,
         }
         
         commands.append(delete)
+        
+        let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
+        
+        if !(isShared!) {
+            
+            if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
+                
+                let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
+                    
+                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                    guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                        
+                        fatalError("Exception: UISplitViewController is expected" )
+                    }
+                    
+                    let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                    let copyUrlOption = UIAlertAction(title: "Copy share url", style: .default, handler: { (action) in
+                        
+                        let vc = UIActivityViewController(activityItems: [url], applicationActivities: [])
+                        self.present(vc, animated: true, completion: {
+
+                            self.delegate?.reloadData()
+                            self.loadData()
+                        })
+                        
+                        //UIPasteboard.general.string = "\(url)"
+                        
+                        mainSplitView.popOverAlertController = nil
+                        handler(true)
+                    })
+                    
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                        
+                        mainSplitView.popOverAlertController = nil
+                        handler(true)
+                    })
+                    
+                    optionMenu.addAction(copyUrlOption)
+                    optionMenu.addAction(cancelAction)
+                    
+                    mainSplitView.popOverAlertController = optionMenu
+                    self.present(optionMenu, animated: true, completion: nil)
+                }
+                
+                commands.append(more)
+            }
+        }
         
         return UISwipeActionsConfiguration(actions: commands)
     }
