@@ -21,6 +21,7 @@ protocol ExpenseTableViewDelegate: class {
 class ExpenseTableViewController: UITableViewController,
     UISplitViewControllerDelegate,
     UIViewControllerPreviewingDelegate,
+    UISearchControllerDelegate,
     UISearchBarDelegate,
     ExpenseDetailDelegate,
     ExpenseTableViewMonthChange {
@@ -80,6 +81,7 @@ class ExpenseTableViewController: UITableViewController,
     // MARK: - property
     weak var searchBar: UISearchBar?
     var filteredMonthYear: Date!
+    var searchText: String? = nil
     var searchActive = false
     var currencyCodes = [String]()
     var sectionList = [TableSectionCell]()
@@ -805,7 +807,15 @@ class ExpenseTableViewController: UITableViewController,
         //let tapDouble = UITapGestureRecognizer(target: self, action: #selector(navigationTap(_:)))
         //tapDouble.numberOfTapsRequired = 2
         //navigationItem.titleView?.addGestureRecognizer(tapDouble)
-
+        
+        let searchBarController: UISearchController = UISearchController(searchResultsController: nil)
+        navigationItem.searchController = searchBarController
+        searchBar = searchBarController.searchBar
+        searchBar?.setShowsCancelButton(false, animated: true)
+        searchBarController.delegate = self
+        searchBar?.delegate = self
+        self.definesPresentationContext = true
+        
         loadExpensesIntoSections()
     }
 
@@ -816,18 +826,34 @@ class ExpenseTableViewController: UITableViewController,
     }
     
     // MARK: - Search delegate
+    func didDismissSearchController(_ searchController: UISearchController) {
+    
+        print("************* dismiss")
+        
+        if searchActive {
+            
+            searchBar?.text = searchText
+        } else {
+            
+            searchBar?.text = ""
+            filteredExpenseList = nil
+            reloadData()
+        }
+    }
+    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         
         print("************* begin editing")
         
-        searchActive = true;
+        //searchActive = true;
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         
         print("************* end editing")
         
-        searchActive = false;
+        searchText = searchBar.text
+        //searchActive = false;
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -837,6 +863,7 @@ class ExpenseTableViewController: UITableViewController,
         searchBar.showsCancelButton = false
         searchBar.text = ""
         searchActive = false;
+        searchText = nil
         searchBar.resignFirstResponder()
         
         filteredExpenseList = nil
@@ -847,7 +874,7 @@ class ExpenseTableViewController: UITableViewController,
         
         print("************* search button")
         
-        searchActive = false;
+        searchActive = true;
         searchBar.resignFirstResponder()
         
         reloadData()
