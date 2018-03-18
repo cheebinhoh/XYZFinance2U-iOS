@@ -19,15 +19,22 @@ protocol BudgetExpenseDelegate: class {
 class BudgetExpensesTableViewController: UITableViewController,
     ExpenseDetailDelegate {
 
+    // MARK: - Properties
+    
     var monthYearDate: Date?
+    var expenseList: [XYZExpense]?
+    var sectionList = [TableSectionCell]()
+    var delegate: BudgetExpenseDelegate?
+    
+    // MARK: - functions
     
     func cancelExpense() {
-
+        
         delegate?.reloadData()
     }
     
     func saveNewExpense(expense: XYZExpense) {
-
+        
         guard let calendarViewController = delegate as? CalendarCollectionViewController else {
             
             fatalError("Exception: CalendarCollectionViewController is expected")
@@ -37,7 +44,7 @@ class BudgetExpensesTableViewController: UITableViewController,
     }
     
     func saveExpense(expense: XYZExpense) {
-
+        
         saveManageContext()
         
         updateToiCloud(expense)
@@ -50,7 +57,7 @@ class BudgetExpensesTableViewController: UITableViewController,
     }
     
     func deleteExpense(expense: XYZExpense) {
- 
+        
         let aContext = managedContext()
         var indexPath = IndexPath(row: 0, section: 0)
         
@@ -97,10 +104,6 @@ class BudgetExpensesTableViewController: UITableViewController,
         self.delegate?.reloadData()
         self.loadData()
     }
-
-    var expenseList: [XYZExpense]?
-    var sectionList = [TableSectionCell]()
-    var delegate: BudgetExpenseDelegate?
     
     func loadDataIntoTableSectionCell() {
         
@@ -262,6 +265,8 @@ class BudgetExpensesTableViewController: UITableViewController,
         }
     }
     
+    // MARK: - table functions
+    
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         return 35
@@ -283,8 +288,6 @@ class BudgetExpensesTableViewController: UITableViewController,
             
             currencyCode = expense.value(forKey: XYZExpense.currencyCode) as? String
         }
-        
-        //let (amount, currencyCode) = sectionTotal(section)
         
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 10)
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -329,7 +332,6 @@ class BudgetExpensesTableViewController: UITableViewController,
             
             mainSplitView.popOverNavigatorController = expenseDetailNavigationController
             
-            //let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]
             let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
             let expense = sectionExpenseList![indexPath.row]
             let detail = expense.value(forKey: XYZExpense.detail) as? String
