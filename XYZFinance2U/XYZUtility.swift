@@ -695,27 +695,32 @@ func createUpdateExpense(_ oldChangeToken: Data,
     } else if record.recordType == "cloudkit.share" {
         
         let recordName = record.recordID.recordName
+        var found = false
 
+        guard let ckshare = record as? CKShare else {
+            
+            fatalError("Exception: CKShare is expected")
+        }
+        
         for expense in expenseList {
             
             if let shareRecordId = expense.value(forKey: XYZExpense.shareRecordId) as? String, shareRecordId == recordName {
 
-                guard let ckshare = record as? CKShare else {
-                    
-                    fatalError("Exception: CKShare is expected")
-                }
-                
                 if let shareUrl = ckshare.url?.absoluteString {
                 
                     expense.setValue(shareUrl, forKey: XYZExpense.shareUrl)
-                } else {
-                    
-                    cksharesFoundButNoRootRecord.append(ckshare)
                 }
                 
+                found = true
                 break
             }
         }
+        
+        if !found {
+
+            cksharesFoundButNoRootRecord.append(ckshare)
+        }
+        
     } else {
         
         fatalError("Exception: \(record.recordType) is not supported")
