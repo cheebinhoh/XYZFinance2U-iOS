@@ -662,7 +662,18 @@ class ExpenseTableViewController: UITableViewController,
         var sectionExpenseList: [XYZExpense]?
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
     
-        let expenseList = filteredExpenseList != nil ? filteredExpenseList : (appDelegate?.expenseList)!
+        var expenseList = filteredExpenseList != nil ? filteredExpenseList : (appDelegate?.expenseList)!
+        if let _ = searchText, !(searchText?.isEmpty)! {
+            
+            expenseList = expenseList?.filter({ (expense) -> Bool in
+                
+                let detail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
+                let category = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
+                
+                return detail.lowercased().range(of: searchText!.lowercased()) != nil
+                    || category.lowercased().range(of: searchText!.lowercased()) != nil
+            })
+        }
         
         var dateComponentWanted: DateComponents?
         
@@ -762,20 +773,9 @@ class ExpenseTableViewController: UITableViewController,
                    && currency1 <= currency2
         })
         
-        if let _ = filteredMonthYear, (appDelegate?.expenseList.isEmpty)! {
-            
-            filteredMonthYear = nil
-            filteredExpenseList = nil
-            navigationItem.title = "Expenses"
-        }
-
-        if !sectionList.isEmpty
-            || filteredExpenseList != nil {
-            
-            let newSection = TableSectionCell(identifier: "searchBar", title: "", cellList: ["searchBar"], data: nil)
-            sectionList.insert(newSection, at: 0)
-            sectionMonthYearList.insert(Date(), at: 0)
-        }
+        let newSection = TableSectionCell(identifier: "searchBar", title: "", cellList: ["searchBar"], data: nil)
+        sectionList.insert(newSection, at: 0)
+        sectionMonthYearList.insert(Date(), at: 0)
     }
     
     override func viewDidLoad() {
@@ -830,7 +830,7 @@ class ExpenseTableViewController: UITableViewController,
     
         print("************* dismiss")
         
-        if searchActive {
+        if let _ = searchText, !((searchText?.isEmpty)!), searchActive  {
             
             searchBar?.text = searchText
         } else {
@@ -895,6 +895,7 @@ class ExpenseTableViewController: UITableViewController,
             }
         } else {
             
+            /*
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             let expenseList = (appDelegate?.expenseList)!
             filteredExpenseList = expenseList.filter({ (expense) -> Bool in
@@ -905,6 +906,7 @@ class ExpenseTableViewController: UITableViewController,
                 return detail.lowercased().range(of: searchText.lowercased()) != nil
                        || category.lowercased().range(of: searchText.lowercased()) != nil
             })
+            */
         }
     }
     
@@ -1143,10 +1145,10 @@ class ExpenseTableViewController: UITableViewController,
             
                 expenseCell.delegate = self
                 
-                if nil == filteredMonthYear {
+                //if nil == filteredMonthYear {
                     
-                    expenseCell.index = nil
-                }
+                //    expenseCell.index = nil
+                //}
                 
                 expenseCell.drawSelectionState()
                 cell = expenseCell
