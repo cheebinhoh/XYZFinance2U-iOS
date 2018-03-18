@@ -1417,7 +1417,7 @@ func saveExpensesToiCloud(_ database: CKDatabase,
         
             ckshares.append(ckshare)
             shareRecordIds.append(ckshare.recordID.recordName)
-            
+            print("**************** create share = \(ckshare.recordID.recordName)")
             record.setValue(ckshare.recordID.recordName, forKey: XYZExpense.shareRecordId)
         } else {
             

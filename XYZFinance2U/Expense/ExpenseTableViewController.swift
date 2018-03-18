@@ -1007,40 +1007,42 @@ class ExpenseTableViewController: UITableViewController,
         
             if !(isShared!) {
                 
-                let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
+                if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
                     
-                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                    guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                    let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
                         
-                        fatalError("Exception: UISplitViewController is expected" )
-                    }
-                    
-                    let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                    let copyUrlOption = UIAlertAction(title: "Copy share url", style: .default, handler: { (action) in
-                        
-                        if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
+                        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
                             
-                            UIPasteboard.general.string = "\(url)"
+                            fatalError("Exception: UISplitViewController is expected" )
                         }
                         
-                        mainSplitView.popOverAlertController = nil
-                        handler(true)
-                    })
-                    
-                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                        let copyUrlOption = UIAlertAction(title: "Copy share url", style: .default, handler: { (action) in
+                            
+                            let vc = UIActivityViewController(activityItems: [url], applicationActivities: [])
+                            self.present(vc, animated: true, completion: nil)
+                            //UIPasteboard.general.string = "\(url)"
+
+                            mainSplitView.popOverAlertController = nil
+                            handler(true)
+                        })
                         
-                        mainSplitView.popOverAlertController = nil
-                        handler(true)
-                    })
+                        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                            
+                            mainSplitView.popOverAlertController = nil
+                            handler(true)
+                        })
+                        
+                        optionMenu.addAction(copyUrlOption)
+                        optionMenu.addAction(cancelAction)
+                        
+                        mainSplitView.popOverAlertController = optionMenu
+                        self.present(optionMenu, animated: true, completion: nil)
+                    }
                     
-                    optionMenu.addAction(copyUrlOption)
-                    optionMenu.addAction(cancelAction)
-                    
-                    mainSplitView.popOverAlertController = optionMenu
-                    self.present(optionMenu, animated: true, completion: nil)
+                    commands.append(more)
                 }
-                
-                commands.append(more)
             }
         }
         
