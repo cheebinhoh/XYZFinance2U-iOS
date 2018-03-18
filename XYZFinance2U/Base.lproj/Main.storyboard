@@ -1804,6 +1804,7 @@ Chee Bin HOH, 2017</string>
                                         </view>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1gb-bF-pZo" secondAttribute="trailingMargin" id="6Al-WL-qzy"/>
                                         <constraint firstItem="1gb-bF-pZo" firstAttribute="top" secondItem="6cy-XD-vcH" secondAttribute="topMargin" id="DQ4-Zb-g3x"/>
                                         <constraint firstItem="zQ2-in-Wtc" firstAttribute="top" secondItem="1gb-bF-pZo" secondAttribute="bottom" constant="4" id="QXJ-Y1-aR7"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="zQ2-in-Wtc" secondAttribute="bottom" constant="-1" id="SDN-Rk-5Fi"/>
