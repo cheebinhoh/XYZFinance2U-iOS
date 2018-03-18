@@ -342,7 +342,20 @@ class AppDelegate: UIResponder,
     var window: UIWindow?
     var orientation = UIInterfaceOrientationMask.all
     
+    /// Saved shortcut item used as a result of an app launch, used later when app is activated.
+    var launchedShortcutItem: UIApplicationShortcutItem?
+    
     // MARK: - function
+    
+    
+    func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
+
+        guard let shortCutType = shortcutItem.type as String? else { return false }
+
+        print("*********** \(shortCutType)")
+        
+        return true
+    }
     
     func applicationProtectedDataDidBecomeAvailable(_ application: UIApplication) {
         
@@ -358,27 +371,53 @@ class AppDelegate: UIResponder,
         return orientation
     }
     
+    
+    /*
+     Called when the user activates your application by selecting a shortcut on the home screen, except when
+     application(_:,willFinishLaunchingWithOptions:) or application(_:didFinishLaunchingWithOptions) returns `false`.
+     You should handle the shortcut in those callbacks and return `false` if possible. In that case, this
+     callback is used if your application is already launched in the background.
+     */
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        
+        //let handledShortCutItem = handleShortCutItem(shortcutItem)
+        //completionHandler(handledShortCutItem)
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.delegate = self
-        notificationCenter.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+        // Override point for customization after application launch.
+        var shouldPerformAdditionalDelegateHandling = true
+        
+        // If a shortcut was launched, display its information and take the appropriate action.
+        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
+
+            launchedShortcutItem = shortcutItem
             
-            if let theError = error {
+            // This will block "performActionForShortcutItem:completionHandler" from being called.
+            shouldPerformAdditionalDelegateHandling = false
+        } else {
+
+            let notificationCenter = UNUserNotificationCenter.current()
+            notificationCenter.delegate = self
+            notificationCenter.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
                 
-                print("-------- requestAuthorization error = \(theError.localizedDescription)")
-            } else {
-             
+                if let theError = error {
+                    
+                    print("-------- requestAuthorization error = \(theError.localizedDescription)")
+                } else {
+                 
+                }
             }
+            
+            application.registerForRemoteNotifications()
+            
+            syncWithiCloudAndCoreData()
+            
+            fetchSharediCloudZone()
         }
         
-        application.registerForRemoteNotifications()
-        
-        syncWithiCloudAndCoreData()
-        
-        fetchSharediCloudZone()
-        
-        return true
+        return shouldPerformAdditionalDelegateHandling
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
