@@ -11,6 +11,8 @@ import CoreData
 import CloudKit
 import UIKit
 
+var cksharesFoundButNoRootRecord = [CKShare]()
+
 // MARK: - type
 
 struct TableSectionCell {
@@ -656,7 +658,7 @@ func createUpdateExpense(_ oldChangeToken: Data,
                 task.resume()
             }
         }
-        
+    
         if let locationData = record[XYZExpense.loction] as? CLLocation {
             
             let data = NSKeyedArchiver.archivedData(withRootObject: locationData)
@@ -665,12 +667,35 @@ func createUpdateExpense(_ oldChangeToken: Data,
             //expenseToBeUpdated?.setValue(true, forKey: XYZExpense.hasgeolocation)
         }
         
+        var ckshareFound: CKShare? = nil
+        var ckshareFoundIndex: Int? = nil
+        
+        for (index, ckshare) in cksharesFoundButNoRootRecord.enumerated() {
+            
+            if ckshare.recordID.recordName == shareRecordId {
+                
+                ckshareFoundIndex = index
+                ckshareFound = ckshare
+                break
+            }
+        }
+        
+        if let _ = ckshareFound {
+            
+            if let shareUrl = ckshareFound?.url?.absoluteString {
+                
+                expenseToBeUpdated?.setValue(shareUrl, forKey: XYZExpense.shareUrl)
+            }
+            
+            cksharesFoundButNoRootRecord.remove(at: ckshareFoundIndex!)
+        }
+        
         // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
         expenseToBeUpdated?.setValue(Date(), forKey: XYZExpense.lastRecordChange)
     } else if record.recordType == "cloudkit.share" {
         
         let recordName = record.recordID.recordName
-        
+
         for expense in expenseList {
             
             if let shareRecordId = expense.value(forKey: XYZExpense.shareRecordId) as? String, shareRecordId == recordName {
@@ -683,6 +708,9 @@ func createUpdateExpense(_ oldChangeToken: Data,
                 if let shareUrl = ckshare.url?.absoluteString {
                 
                     expense.setValue(shareUrl, forKey: XYZExpense.shareUrl)
+                } else {
+                    
+                    cksharesFoundButNoRootRecord.append(ckshare)
                 }
                 
                 break
@@ -1417,7 +1445,7 @@ func saveExpensesToiCloud(_ database: CKDatabase,
         
             ckshares.append(ckshare)
             shareRecordIds.append(ckshare.recordID.recordName)
-            print("**************** create share = \(ckshare.recordID.recordName)")
+            
             record.setValue(ckshare.recordID.recordName, forKey: XYZExpense.shareRecordId)
         } else {
             
