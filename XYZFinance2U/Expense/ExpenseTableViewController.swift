@@ -29,36 +29,7 @@ class ExpenseTableViewController: UITableViewController,
     func change(_ monthYear: Date!) {
 
         if let _ = monthYear {
-            
-            let dateComponentWanted = Calendar.current.dateComponents([.month, .year], from: monthYear!)
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            filteredExpenseList = [XYZExpense]()
         
-            var lastDateOfTheMonthYear = Calendar.current.date(from: dateComponentWanted)
-            lastDateOfTheMonthYear = Calendar.current.date(byAdding: .month, value: 1, to: lastDateOfTheMonthYear!)
-            lastDateOfTheMonthYear = Calendar.current.date(byAdding: .day, value: -1, to: lastDateOfTheMonthYear!)
-            
-            for expense in (appDelegate?.expenseList)! {
-                
-                let occurenceDates = expense.getOccurenceDates(until: lastDateOfTheMonthYear!)
-                let filteredOcurenceDates = occurenceDates.filter { (date) -> Bool in
-                
-                    
-                    let dateComponent = Calendar.current.dateComponents([.month, .year], from: date)
-                    
-                    return dateComponent.year! == dateComponentWanted.year!
-                          && dateComponent.month! == dateComponentWanted.month!
-                }
-
-                
-                if !filteredOcurenceDates.isEmpty {
-                    
-                    filteredExpenseList?.append(expense)
-                }
-            }
-            
-            filteredExpenseList = sortExpenses(filteredExpenseList!)
-            
             let formatter = DateFormatter()
             formatter.dateFormat = "MMM, YY"
             
@@ -662,7 +633,9 @@ class ExpenseTableViewController: UITableViewController,
         var sectionExpenseList: [XYZExpense]?
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
     
-        var expenseList = filteredExpenseList != nil ? filteredExpenseList : (appDelegate?.expenseList)!
+        // var expenseList = filteredExpenseList != nil ? filteredExpenseList : (appDelegate?.expenseList)!
+        var expenseList = appDelegate?.expenseList
+        
         if let _ = searchText, !(searchText?.isEmpty)! {
             
             expenseList = expenseList?.filter({ (expense) -> Bool in
@@ -674,6 +647,33 @@ class ExpenseTableViewController: UITableViewController,
                     || category.lowercased().range(of: searchText!.lowercased()) != nil
             })
         }
+        
+        if let monthYear = filteredMonthYear {
+            
+            let dateComponentWanted = Calendar.current.dateComponents([.month, .year], from: monthYear)
+    
+            var lastDateOfTheMonthYear = Calendar.current.date(from: dateComponentWanted)
+            lastDateOfTheMonthYear = Calendar.current.date(byAdding: .month, value: 1, to: lastDateOfTheMonthYear!)
+            lastDateOfTheMonthYear = Calendar.current.date(byAdding: .day, value: -1, to: lastDateOfTheMonthYear!)
+            
+            expenseList = expenseList?.filter({ (expense) -> Bool in
+            
+                let occurenceDates = expense.getOccurenceDates(until: lastDateOfTheMonthYear!)
+                let filteredOcurenceDates = occurenceDates.filter { (date) -> Bool in
+                    
+                    
+                    let dateComponent = Calendar.current.dateComponents([.month, .year], from: date)
+                    
+                    return dateComponent.year! == dateComponentWanted.year!
+                        && dateComponent.month! == dateComponentWanted.month!
+                }
+                
+                
+                return !filteredOcurenceDates.isEmpty
+            })
+        }
+        
+        expenseList = sortExpenses(expenseList!)
         
         var dateComponentWanted: DateComponents?
         
