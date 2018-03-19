@@ -140,6 +140,7 @@ class CalendarCollectionViewController: UICollectionViewController,
         self.reloadData()
     }
     
+    var monthLevel = true
     var budget: XYZBudget?
     var budgetGroup = ""
     var expenseList: [XYZExpense]?
@@ -476,12 +477,15 @@ class CalendarCollectionViewController: UICollectionViewController,
         let backButton = UIButton(type: .custom)
         backButton.setImage(UIImage(named: "BackButton"), for: .normal) // Image can be downloaded from here below link
         backButton.setTitle(" \(monthYear)", for: .normal)
+        //backButton.setTitle("  ", for: .normal)
         backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
         backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+        //self.monthYearButton.title = " \(monthYear)"
+        self.monthYearButton.title = ""
         
-        monthCalendar = Array(repeating: Array(repeating: 0, count: 7), count: 5)
+        monthCalendar = Array(repeating: Array(repeating: 0, count: 7), count: 6)
         
         var hasNowDate = false
         var startIndexPath = IndexPath(row: 100, section: 100)
@@ -563,6 +567,8 @@ class CalendarCollectionViewController: UICollectionViewController,
     }
     
     // MARK: - IBAction
+    
+    @IBOutlet weak var monthYearButton: UIBarButtonItem!
     
     @IBAction func backAction(_ sender: UIButton) {
         
