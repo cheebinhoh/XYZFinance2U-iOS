@@ -108,10 +108,6 @@ class MainUITabBarController: UITabBarController,
             }
         } else if let expenseRoot = navController.viewControllers.first as? ExpenseTableViewController  {
             
-            expenseRoot.filteredMonthYear = nil
-            expenseRoot.filteredExpenseList = nil
-            expenseRoot.navigationItem.title = "Expenses"
-            expenseRoot.reloadData()
             split.delegate = expenseRoot
             
             if nil == masterViewNavController {
