@@ -387,54 +387,70 @@ class CalendarCollectionViewController: UICollectionViewController,
         
         if nil != tapIndexPath
             && sectionList[(tapIndexPath?.section)!].identifier != "heading"
-            && !(sectionList[(tapIndexPath?.section)!].cellList[(tapIndexPath?.row)!].isEmpty)
-            && ( monthLevel || (tapIndexPath?.row)! > 0 ){
+            && !(sectionList[(tapIndexPath?.section)!].cellList[(tapIndexPath?.row)!].isEmpty) {
             
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            if monthLevel {
                 
-                fatalError("Exception: UISplitViewController is expected" )
+                let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                    
+                    fatalError("Exception: UISplitViewController is expected" )
+                }
+                
+                let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                let copyUrlOption = UIAlertAction(title: "Add Expense", style: .default, handler: { (action) in
+                    
+                    guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+                        
+                        fatalError("Exception: ExpenseDetailNavigationController is expected")
+                    }
+                    
+                    guard let expenseDetailTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
+                        
+                        fatalError("Exception: ExpenseDetailTableViewController is expected" )
+                    }
+                    
+                    mainSplitView.popOverNavigatorController = expenseDetailNavigationController
+                    
+                    let currrency = self.budget?.value(forKey: XYZBudget.currency) as? String
+                    let budgetGroup = self.budget?.value(forKey: XYZBudget.name) as? String
+                    
+                    expenseDetailTableView.presetBudgetCategory = budgetGroup
+                    expenseDetailTableView.presetCurrencyCode = currrency
+                    expenseDetailTableView.setPopover(delegate: self)
+                    
+                    let date = self.getDate(of: tapIndexPath!)
+                    expenseDetailTableView.presetDate = date
+                    
+                    expenseDetailNavigationController.modalPresentationStyle = .popover
+                    self.present(expenseDetailNavigationController, animated: true, completion: nil)
+                })
+                
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                    
+                    mainSplitView.popOverAlertController = nil
+                })
+                
+                optionMenu.addAction(copyUrlOption)
+                optionMenu.addAction(cancelAction)
+                
+                mainSplitView.popOverAlertController = optionMenu
+                self.present(optionMenu, animated: true, completion: nil)
+            } else {
+                
+                var monthIndex = (tapIndexPath?.section)! * 3 + (tapIndexPath?.row)!
+                if (tapIndexPath?.row)! <= 0 {
+                    
+                    monthIndex = monthIndex + 1
+                }
+                
+                let targetYearComponent = Calendar.current.dateComponents([.month], from: targetYear!)
+                startDateOfMonth = Calendar.current.date(byAdding: .month, value: targetYearComponent.month! * -1 + monthIndex, to: targetYear!)
+                indexPath = nil
+                
+                monthLevel = true
+                reloadData()
             }
-            
-            let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let copyUrlOption = UIAlertAction(title: "Add Expense", style: .default, handler: { (action) in
-                
-                guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
-                    
-                    fatalError("Exception: ExpenseDetailNavigationController is expected")
-                }
-                
-                guard let expenseDetailTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
-                    
-                    fatalError("Exception: ExpenseDetailTableViewController is expected" )
-                }
-                
-                mainSplitView.popOverNavigatorController = expenseDetailNavigationController
-                
-                let currrency = self.budget?.value(forKey: XYZBudget.currency) as? String
-                let budgetGroup = self.budget?.value(forKey: XYZBudget.name) as? String
-                
-                expenseDetailTableView.presetBudgetCategory = budgetGroup
-                expenseDetailTableView.presetCurrencyCode = currrency
-                expenseDetailTableView.setPopover(delegate: self)
-                
-                let date = self.getDate(of: tapIndexPath!)
-                expenseDetailTableView.presetDate = date
-                
-                expenseDetailNavigationController.modalPresentationStyle = .popover
-                self.present(expenseDetailNavigationController, animated: true, completion: nil)
-            })
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-                
-                mainSplitView.popOverAlertController = nil
-            })
-            
-            optionMenu.addAction(copyUrlOption)
-            optionMenu.addAction(cancelAction)
-            
-            mainSplitView.popOverAlertController = optionMenu
-            self.present(optionMenu, animated: true, completion: nil)
         }
     }
     
@@ -697,30 +713,18 @@ class CalendarCollectionViewController: UICollectionViewController,
     
     @IBAction func monthYearButton(_ sender: Any) {
     
-        if let _ = indexPath {
+        if monthLevel {
             
-            if !monthLevel {
-                
-                var monthIndex = (indexPath?.section)! * 3 + (indexPath?.row)!
-                if (indexPath?.row)! <= 0 {
-                    
-                    monthIndex = monthIndex + 1
-                }
-                
-                let targetYearComponent = Calendar.current.dateComponents([.month], from: targetYear!)
-                startDateOfMonth = Calendar.current.date(byAdding: .month, value: targetYearComponent.month! * -1 + monthIndex, to: targetYear!)
-                indexPath = nil
-            } else {
-                
+            if let _ = indexPath {
+
                 let startDateComponent = Calendar.current.dateComponents([.month], from: startDateOfMonth!)
-        
+            
                 indexPath = IndexPath(row: ( startDateComponent.month! - 1 ) % 3 + 1, section: Int( ( startDateComponent.month! - 1) / 3 ) )
             }
+            
+            monthLevel = false
+            reloadData()
         }
-    
-        monthLevel = !monthLevel
-        
-        reloadData()
     }
     
     /*
