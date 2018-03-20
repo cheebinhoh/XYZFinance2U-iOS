@@ -785,7 +785,16 @@ class CalendarCollectionViewController: UICollectionViewController,
                 self.budgetExpensesTableViewController?.monthYearDate = startDateOfMonth
             } else {
                 
-                self.budgetExpensesTableViewController?.monthYearDate = targetYear
+                var monthIndex = (self.indexPath?.section)! * 3 + (self.indexPath?.row)!
+                if (self.indexPath?.row)! <= 0 {
+                    
+                    monthIndex = monthIndex + 1
+                }
+                
+                let targetYearComponent = Calendar.current.dateComponents([.month, .year], from: targetYear!)
+                let thisDate = Calendar.current.date(byAdding: .month, value: targetYearComponent.month! * -1 + monthIndex, to: targetYear!)
+                
+                self.budgetExpensesTableViewController?.monthYearDate = thisDate
             }
             
             self.budgetExpensesTableViewController?.loadData(of: selectedExpenseList)
