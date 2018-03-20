@@ -189,6 +189,7 @@ class CalendarCollectionViewController: UICollectionViewController,
                 if wholeMonth {
                     
                     return targetDateComponents.month! == theDateComponent.month!
+                            && targetDateComponents.year! == theDateComponent.year!
                 } else {
                     
                     return theDate == date
@@ -205,6 +206,7 @@ class CalendarCollectionViewController: UICollectionViewController,
                     if wholeMonth {
                         
                         found = occurentDateComponents.month! == targetDateComponents.month!
+                                 && occurentDateComponents.year! == targetDateComponents.year!
                     } else {
                         
                         found = targetDate! == occurentDate!
@@ -549,7 +551,8 @@ class CalendarCollectionViewController: UICollectionViewController,
             sectionList.append(headingSection)
             
             self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-            self.monthYearButton.title = " \(monthYear)"
+            self.navigationItem.leftBarButtonItem?.title = "  "
+            self.monthYearButton.title = "\(monthYear)"
             
             monthCalendar = Array(repeating: Array(repeating: 0, count: 7), count: 6)
             
