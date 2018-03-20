@@ -856,13 +856,25 @@ class CalendarCollectionViewController: UICollectionViewController,
                 
                 monthIndex = monthIndex + 1
             }
+
+            let thisDate = Calendar.current.date(byAdding: .month, value: targetYearComponent.month! * -1 + monthIndex, to: targetYear!)
+            let filteredExpenseList = filterExpenseList(of: thisDate!, wholeMonth: true)
+            
+            if !(filteredExpenseList.isEmpty) && indexPath.row > 0 {
+                
+                cell.indicator.backgroundColor = UIColor.blue
+            } else {
+                
+                cell.indicator.backgroundColor = UIColor.clear
+            }
             
             if let selectedIndexPath = self.indexPath,
                 selectedIndexPath.row == indexPath.row && selectedIndexPath.section == indexPath.section {
 
-                let thisDate = Calendar.current.date(byAdding: .month, value: targetYearComponent.month! * -1 + monthIndex, to: targetYear!)
-                selectedExpenseList = filterExpenseList(of: thisDate!, wholeMonth: true)
-                
+                //let thisDate = Calendar.current.date(byAdding: .month, value: targetYearComponent.month! * -1 + monthIndex, to: targetYear!)
+                //selectedExpenseList = filterExpenseList(of: thisDate!, wholeMonth: true)
+                selectedExpenseList = filteredExpenseList
+              
                 if targetYearComponent.year! == thisMonthComponent.year!
                     && thisMonthComponent.month! == monthIndex {
                     
