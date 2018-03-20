@@ -1047,7 +1047,7 @@ class ExpenseTableViewController: UITableViewController,
                         }
                         
                         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                        let copyUrlOption = UIAlertAction(title: "Copy share url", style: .default, handler: { (action) in
+                        let copyUrlOption = UIAlertAction(title: "Share expense", style: .default, handler: { (action) in
                             
                             let vc = UIActivityViewController(activityItems: [url], applicationActivities: [])
                             self.present(vc, animated: true, completion: nil)
