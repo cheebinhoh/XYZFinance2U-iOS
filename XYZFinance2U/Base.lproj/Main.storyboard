@@ -641,8 +641,12 @@
                     </collectionView>
                     <navigationItem key="navigationItem" id="MVE-cQ-z8I">
                         <leftBarButtonItems>
-                            <barButtonItem title="Item" id="ZfW-rV-XiQ"/>
-                            <barButtonItem title="Item" id="Qj2-Et-Mrn"/>
+                            <barButtonItem title="&lt;" id="ZfW-rV-XiQ"/>
+                            <barButtonItem title="Mar 2018" id="Qj2-Et-Mrn">
+                                <connections>
+                                    <action selector="monthYearButton:" destination="ho5-eE-oZp" id="TEo-PH-Sqw"/>
+                                </connections>
+                            </barButtonItem>
                         </leftBarButtonItems>
                         <rightBarButtonItems>
                             <barButtonItem title="Next" id="eEn-IK-JaU">
