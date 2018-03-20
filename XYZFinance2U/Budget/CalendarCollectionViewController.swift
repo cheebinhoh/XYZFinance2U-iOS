@@ -780,7 +780,14 @@ class CalendarCollectionViewController: UICollectionViewController,
             cell.stack.addArrangedSubview(budgetExpensesTableViewController.tableView)
             self.budgetExpensesTableViewController?.delegate = self
             
-            self.budgetExpensesTableViewController?.monthYearDate = startDateOfMonth
+            if monthLevel {
+                
+                self.budgetExpensesTableViewController?.monthYearDate = startDateOfMonth
+            } else {
+                
+                self.budgetExpensesTableViewController?.monthYearDate = targetYear
+            }
+            
             self.budgetExpensesTableViewController?.loadData(of: selectedExpenseList)
             self.budgetExpensesTableViewController?.tableView.reloadData()
             
@@ -871,7 +878,10 @@ class CalendarCollectionViewController: UICollectionViewController,
             }
 
             let thisDate = Calendar.current.date(byAdding: .month, value: targetYearComponent.month! * -1 + monthIndex, to: targetYear!)
-            let filteredExpenseList = filterExpenseList(of: thisDate!, wholeMonth: true)
+            let thisDateNextMonth = Calendar.current.date(byAdding: .month, value: 1, to: thisDate!)
+            let thisDateEndOfTheMonth = Calendar.current.date(byAdding: .day, value: -1, to: thisDateNextMonth!)
+           
+            let filteredExpenseList = filterExpenseList(of: thisDateEndOfTheMonth!, wholeMonth: true)
             
             if !(filteredExpenseList.isEmpty) && indexPath.row > 0 {
                 
@@ -884,8 +894,6 @@ class CalendarCollectionViewController: UICollectionViewController,
             if let selectedIndexPath = self.indexPath,
                 selectedIndexPath.row == indexPath.row && selectedIndexPath.section == indexPath.section {
 
-                //let thisDate = Calendar.current.date(byAdding: .month, value: targetYearComponent.month! * -1 + monthIndex, to: targetYear!)
-                //selectedExpenseList = filterExpenseList(of: thisDate!, wholeMonth: true)
                 selectedExpenseList = filteredExpenseList
               
                 if targetYearComponent.year! == thisMonthComponent.year!

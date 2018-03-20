@@ -654,6 +654,7 @@ class BudgetDetailTableViewController: UITableViewController,
                                                         XYZBudget.Length.weekly.rawValue,
                                                         XYZBudget.Length.biweekly.rawValue,
                                                         XYZBudget.Length.monthly.rawValue,
+                                                        XYZBudget.Length.halfyearly.rawValue,
                                                         XYZBudget.Length.yearly.rawValue])
             selectionTableViewController.setSelectedItem(length.rawValue)
             selectionTableViewController.delegate = self

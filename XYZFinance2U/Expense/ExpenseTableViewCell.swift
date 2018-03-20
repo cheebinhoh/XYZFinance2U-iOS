@@ -95,6 +95,7 @@ class ExpenseTableViewCell: UITableViewCell {
                 let occurrenceDates = expense.getOccurenceDates(until: Date())
                 var nowDate: Date?
                 let monthYearDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: monthYearDate!)
+                print("==== \(monthYearDateComponents)")
                 for occurence in occurrenceDates {
                     
                     let nowDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: occurence)
