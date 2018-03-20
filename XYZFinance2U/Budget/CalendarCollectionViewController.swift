@@ -243,7 +243,13 @@ class CalendarCollectionViewController: UICollectionViewController,
                 }
             } else {
                 
+                if collectionView.frame.width >= 414.0 {
+                    
                   return CGSize(width: 80, height: 40.0)
+                } else {
+                    
+                  return CGSize(width: 60, height: 40.0)
+                }
             }
         }
     }
