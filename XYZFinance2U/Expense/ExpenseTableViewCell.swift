@@ -91,6 +91,22 @@ class ExpenseTableViewCell: UITableViewCell {
                 
                 date.text = "monthly: \(formattingDate(date: nowDate!, style: .medium ))"
             
+            case .halfyearly:
+                let occurrenceDates = expense.getOccurenceDates(until: Date())
+                var nowDate: Date?
+                let monthYearDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: monthYearDate!)
+                for occurence in occurrenceDates {
+                    
+                    let nowDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: occurence)
+                    if nowDateComponents.month! == monthYearDateComponents.month!
+                        && nowDateComponents.year! == monthYearDateComponents.year! {
+                        
+                        nowDate = occurence
+                    }
+                }
+                
+                date.text = "half yearly: \(formattingDate(date: nowDate!, style: .medium ))"
+            
             case .yearly:
                 let f = DateFormatter()
                 f.dateFormat = "YYYY"

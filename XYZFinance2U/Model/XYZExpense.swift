@@ -20,6 +20,7 @@ class XYZExpense: NSManagedObject {
         case weekly = "weekly"
         case biweekly = "biweekly"
         case monthly = "monthly"
+        case halfyearly = "half yearly"
         case yearly = "yearly"
         
         func description() -> String {
@@ -124,6 +125,11 @@ class XYZExpense: NSManagedObject {
                     case .monthly:
                         date = Calendar.current.date(byAdding: .month,
                                                      value:1,
+                                                     to: date!)
+                    
+                    case .halfyearly:
+                        date = Calendar.current.date(byAdding: .month,
+                                                     value:7,
                                                      to: date!)
                     
                     case .yearly:

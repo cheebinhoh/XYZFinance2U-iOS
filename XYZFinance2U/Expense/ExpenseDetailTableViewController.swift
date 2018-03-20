@@ -1489,6 +1489,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                                                                 XYZExpense.Length.weekly.rawValue,
                                                                 XYZExpense.Length.biweekly.rawValue,
                                                                 XYZExpense.Length.monthly.rawValue,
+                                                                XYZExpense.Length.halfyearly.rawValue,
                                                                 XYZExpense.Length.yearly.rawValue])
                     selectionTableViewController.setSelectedItem(recurring?.rawValue)
                     selectionTableViewController.delegate = self
