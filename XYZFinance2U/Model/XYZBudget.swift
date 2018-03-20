@@ -131,59 +131,63 @@ class XYZBudget : NSManagedObject {
         var value: Date? = nil
         let currentDate = max(Date(), start)
 
-        repeat {
+        if length! != .none {
             
-            if let _ = value {
+            repeat {
                 
-                start = value!
-            }
-            
-            switch length! {
-                case .none:
-                    break
+                if let _ = value {
+                    
+                    start = value!
+                }
                 
-                case .daily:
-                    let startDateComponent = Calendar.current.dateComponents([.day], from: start)
-                    let currentDateComponent = Calendar.current.dateComponents([.day], from: currentDate)
-                    value = Calendar.current.date(byAdding: .day,
-                                                  value:currentDateComponent.day! - startDateComponent.day! + 1,
-                                                  to: start)
-                
-                case .weekly:
-                    let startDateComponent = Calendar.current.dateComponents([.weekOfYear], from: start)
-                    let currentDateComponent = Calendar.current.dateComponents([.weekOfYear], from: currentDate)
-                    value = Calendar.current.date(byAdding: .weekOfYear,
-                                                  value:currentDateComponent.weekOfYear! - startDateComponent.weekOfYear! + 1,
-                                                  to: start)
-                
-                case .biweekly:
-                    let startDateComponent = Calendar.current.dateComponents([.weekOfYear], from: start)
-                    let currentDateComponent = Calendar.current.dateComponents([.weekOfYear], from: currentDate)
-                    value = Calendar.current.date(byAdding: .weekOfYear,
-                                                  value:currentDateComponent.weekOfYear! - startDateComponent.weekOfYear! + 2,
-                                                  to: start)
-                
-                case .monthly:
-                    let startDateComponent = Calendar.current.dateComponents([.month], from: start)
-                    let currentDateComponent = Calendar.current.dateComponents([.month], from: currentDate)
-                    value = Calendar.current.date(byAdding: .month,
-                                                  value:currentDateComponent.month! - startDateComponent.month! + 1,
-                                                  to: start)
-                
-                case .halfyearly:
+                switch length! {
+                    case .none:
+                        fatalError("Exception: .none is not expected here")
+                        break
+                    
+                    case .daily:
+                        let startDateComponent = Calendar.current.dateComponents([.day], from: start)
+                        let currentDateComponent = Calendar.current.dateComponents([.day], from: currentDate)
+                        value = Calendar.current.date(byAdding: .day,
+                                                      value:currentDateComponent.day! - startDateComponent.day! + 1,
+                                                      to: start)
+                    
+                    case .weekly:
+                        let startDateComponent = Calendar.current.dateComponents([.weekOfYear], from: start)
+                        let currentDateComponent = Calendar.current.dateComponents([.weekOfYear], from: currentDate)
+                        value = Calendar.current.date(byAdding: .weekOfYear,
+                                                      value:currentDateComponent.weekOfYear! - startDateComponent.weekOfYear! + 1,
+                                                      to: start)
+                    
+                    case .biweekly:
+                        let startDateComponent = Calendar.current.dateComponents([.weekOfYear], from: start)
+                        let currentDateComponent = Calendar.current.dateComponents([.weekOfYear], from: currentDate)
+                        value = Calendar.current.date(byAdding: .weekOfYear,
+                                                      value:currentDateComponent.weekOfYear! - startDateComponent.weekOfYear! + 2,
+                                                      to: start)
+                    
+                    case .monthly:
+                        let startDateComponent = Calendar.current.dateComponents([.month], from: start)
+                        let currentDateComponent = Calendar.current.dateComponents([.month], from: currentDate)
+                        value = Calendar.current.date(byAdding: .month,
+                                                      value:currentDateComponent.month! - startDateComponent.month! + 1,
+                                                      to: start)
+                    
+                    case .halfyearly:
 
-                    value = Calendar.current.date(byAdding: .month,
-                                                  value:6,
-                                                  to: start)
-                
-                case .yearly:
-                    let startDateComponent = Calendar.current.dateComponents([.year], from: start)
-                    let currentDateComponent = Calendar.current.dateComponents([.year], from: currentDate)
-                    value = Calendar.current.date(byAdding: .year,
-                                                  value:currentDateComponent.year! - startDateComponent.year! + 1,
-                                                  to: start)
-            }
-        } while value! < currentDate
+                        value = Calendar.current.date(byAdding: .month,
+                                                      value:6,
+                                                      to: start)
+                    
+                    case .yearly:
+                        let startDateComponent = Calendar.current.dateComponents([.year], from: start)
+                        let currentDateComponent = Calendar.current.dateComponents([.year], from: currentDate)
+                        value = Calendar.current.date(byAdding: .year,
+                                                      value:currentDateComponent.year! - startDateComponent.year! + 1,
+                                                      to: start)
+                }
+            } while value! < currentDate
+        }
         
         if let _ = value {
             

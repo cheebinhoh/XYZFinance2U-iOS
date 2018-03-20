@@ -294,9 +294,25 @@ class BudgetTableViewController: UITableViewController,
             
             for expense in expeneseList {
                 
-                let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
+                var needed = budget.currentEnd == nil
+                                || budget.currentStart == nil
                 
-                total = total + amount
+                if !needed {
+                    
+                    let occurrenceDates = expense.getOccurenceDates(until: Date()).filter { (date) -> Bool in
+                        
+                        return date >= budget.currentStart! && date < budget.currentEnd!
+                    }
+                    
+                    needed = !occurrenceDates.isEmpty
+                }
+                
+                if needed {
+                
+                    let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
+                    
+                    total = total + amount
+                }
             }
         }
         

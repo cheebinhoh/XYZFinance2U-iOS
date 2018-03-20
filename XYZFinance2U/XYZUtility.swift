@@ -239,8 +239,6 @@ func formattingCurrencyValue(input: Double,
 func formattingCurrencyValue(input: String,
                              code: String?) -> String {
     
-    let doubleValue = formattingDoubleValueAsDouble(input: input)
-
     let processedInput = formattingDoubleValue(input: input)
     
     let formatter = NumberFormatter()
@@ -258,7 +256,7 @@ func formattingCurrencyValue(input: String,
         return ""
     }
     
-    return doubleValue < 0.0 ? "-\(formattedAmount)" : formattedAmount
+    return formattedAmount
 }
 
 // MARK: - core data
