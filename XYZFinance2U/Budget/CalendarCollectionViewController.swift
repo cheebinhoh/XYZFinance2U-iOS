@@ -54,51 +54,60 @@ class CalendarCollectionViewController: UICollectionViewController,
         expenseList?.append(expense)
         budgetView.reloadData()
         expenseView.reloadData()
-        //reloadData()
-        
+
         let date = expense.value(forKey: XYZExpense.date) as? Date
         
         var dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: date!)
         var startDateOfMonthComponent = Calendar.current.dateComponents([.day, .month, .year], from: startDateOfMonth!)
 
-        var monthStep = 0
+        var step = 0
         
-        if dateComponent.year! != startDateOfMonthComponent.year! {
+        if monthLevel {
+            
+            if dateComponent.year! != startDateOfMonthComponent.year! {
 
-            let yearStep = abs( startDateOfMonthComponent.year! - dateComponent.year! )
-            
-            monthStep = ( yearStep - 1 ) * 12
-            
-            if startDateOfMonthComponent.year! < dateComponent.year! {
+                let yearStep = abs( startDateOfMonthComponent.year! - dateComponent.year! )
                 
-                monthStep = monthStep + ( 12 - startDateOfMonthComponent.month! )
-                monthStep = monthStep + ( dateComponent.month! - 0 )
-            } else {
+                step = ( yearStep - 1 ) * 12
                 
-                monthStep = monthStep + ( startDateOfMonthComponent.month! - 0 )
-                monthStep = monthStep + ( 12 - dateComponent.month! )
-                monthStep = monthStep * -1
+                if startDateOfMonthComponent.year! < dateComponent.year! {
+                    
+                    step = step + ( 12 - startDateOfMonthComponent.month! )
+                    step = step + ( dateComponent.month! - 0 )
+                } else {
+                    
+                    step = step + ( startDateOfMonthComponent.month! - 0 )
+                    step = step + ( 12 - dateComponent.month! )
+                    step = step * -1
+                }
+            
+            } else if dateComponent.month! != startDateOfMonthComponent.month! {
+                
+                step = abs(dateComponent.month! - startDateOfMonthComponent.month!)
+                if startDateOfMonthComponent.month! > dateComponent.month! {
+              
+                    step = step * -1
+                }
             }
-        
-        } else if dateComponent.month! != startDateOfMonthComponent.month! {
+        } else {
             
-            monthStep = abs(dateComponent.month! - startDateOfMonthComponent.month!)
-            if startDateOfMonthComponent.month! > dateComponent.month! {
-          
-                monthStep = monthStep * -1
+            step = abs(dateComponent.year! - startDateOfMonthComponent.year!)
+            if startDateOfMonthComponent.year! > dateComponent.year! {
+                
+                step = step * -1
             }
         }
-
-        while monthStep != 0 {
+        
+        while step != 0 {
             
-            if monthStep > 0 {
+            if step > 0 {
                 
                 moveNextPeriod(self)
-                monthStep = monthStep - 1
+                step = step - 1
             } else {
                 
                 movePreviousPeriod(self)
-                monthStep = monthStep + 1
+                step = step + 1
             }
         }
 
@@ -478,20 +487,26 @@ class CalendarCollectionViewController: UICollectionViewController,
         var dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: date)
         var startDateOfMonthComponent = Calendar.current.dateComponents([.day, .month, .year], from: startDateOfMonth!)
         
-        if dateComponent.year! == startDateOfMonthComponent.year!
-            && dateComponent.month! == startDateOfMonthComponent.month! {
+        if monthLevel {
             
-            for (sectionIndex, section) in monthCalendar.enumerated() {
+            if dateComponent.year! == startDateOfMonthComponent.year!
+                && dateComponent.month! == startDateOfMonthComponent.month! {
                 
-                for (rowIndex, row) in section.enumerated() {
+                for (sectionIndex, section) in monthCalendar.enumerated() {
                     
-                    if row == dateComponent.day! {
+                    for (rowIndex, row) in section.enumerated() {
                         
-                        // row is started with day of week heading.
-                        return IndexPath(row: rowIndex, section: sectionIndex + 1)
+                        if row == dateComponent.day! {
+                            
+                            // row is started with day of week heading.
+                            return IndexPath(row: rowIndex, section: sectionIndex + 1)
+                        }
                     }
                 }
             }
+        } else if dateComponent.year! == startDateOfMonthComponent.year! {
+            
+            return IndexPath(row: ( dateComponent.month! - 1 ) % 3 + 1, section: Int( ( dateComponent.month! - 1) / 3 ) )
         }
         
         return nil
