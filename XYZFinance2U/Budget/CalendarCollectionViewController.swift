@@ -436,7 +436,7 @@ class CalendarCollectionViewController: UICollectionViewController,
                 
                 mainSplitView.popOverAlertController = optionMenu
                 self.present(optionMenu, animated: true, completion: nil)
-            } else {
+            } else if (tapIndexPath?.row)! > 0 {
                 
                 var monthIndex = (tapIndexPath?.section)! * 3 + (tapIndexPath?.row)!
                 if (tapIndexPath?.row)! <= 0 {
