@@ -821,7 +821,7 @@ class CalendarCollectionViewController: UICollectionViewController,
                                                  value:( -1 * dayComponent.day!) + day!,
                                                  to: startDateOfMonth!)
                 
-                expenseList = filterExpenseList(of: thisDate!, wholeMonth: false)
+                expenseList = sortExpenses( filterExpenseList(of: thisDate!, wholeMonth: false) )
             }
         
             let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: Date())
