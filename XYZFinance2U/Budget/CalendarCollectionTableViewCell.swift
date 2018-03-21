@@ -11,5 +11,4 @@ import UIKit
 class CalendarCollectionTableViewCell: UICollectionViewCell {
     
     @IBOutlet weak var stack: UIStackView!
-    
 }
