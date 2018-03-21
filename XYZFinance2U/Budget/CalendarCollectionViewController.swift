@@ -149,6 +149,7 @@ class CalendarCollectionViewController: UICollectionViewController,
         self.reloadData()
     }
     
+    // MARK: - properties
     var targetYear: Date?
     var monthLevel = true
     var budget: XYZBudget?
@@ -166,6 +167,8 @@ class CalendarCollectionViewController: UICollectionViewController,
     @IBOutlet weak var previousPeriod: UIBarButtonItem!
     @IBOutlet weak var nextPeriod: UIBarButtonItem!
     
+    // MARK: - functions
+
     func filterExpenseList(of date: Date, wholeMonth: Bool) -> [XYZExpense] {
 
         let targetDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date)
@@ -556,23 +559,16 @@ class CalendarCollectionViewController: UICollectionViewController,
         let nowDate = Calendar.current.date(from: dateComponent)
         
         let targetMonthComponent = Calendar.current.dateComponents([.month,], from: startDate!)
-     
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM yyyy"
-        let monthYear = dateFormatter.string(from: startDate!)
-        
-        let backButton = UIButton(type: .custom)
-        backButton.setImage(UIImage(named: "BackButton"), for: .normal) // Image can be downloaded from here below link
-        backButton.setTitle("  ", for: .normal)
-        backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
-        backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
         
         if monthLevel {
         
             let headingSection = TableSectionCell(identifier: "heading", title: "", cellList: ["S", "M", "T", "W", "T", "F", "S"], data: nil)
             sectionList.append(headingSection)
             
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMM yyyy"
+            let monthYear = dateFormatter.string(from: startDate!)
+            
             self.navigationItem.leftBarButtonItem?.title = "  "
             self.monthYearButton.title = "\(monthYear)"
             
@@ -617,7 +613,6 @@ class CalendarCollectionViewController: UICollectionViewController,
                                                           value:1,
                                                           to: startDate!)
                         
-                        
                         needSection = true
                     } else {
                         
@@ -644,7 +639,10 @@ class CalendarCollectionViewController: UICollectionViewController,
             
             targetYear = Calendar.current.date(byAdding: .day, value: targetYearComponents.day! * -1 + 1, to: startDate!)
             targetYear = Calendar.current.date(byAdding: .month, value: targetYearComponents.month! * -1 + 1, to: targetYear!)
- 
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMM"
+            
             for index in 1...4 {
                 
                 var cellList = [String]()
@@ -656,8 +654,7 @@ class CalendarCollectionViewController: UICollectionViewController,
                     let yearMonth = Calendar.current.date(byAdding: .month,
                                                           value: targetMonthComponent.month! * -1 + ( ( index - 1 ) * 3 + monthIndex),
                                                           to: startDate!)
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "MMM"
+
                     let monthYear = dateFormatter.string(from: yearMonth!)
                     cellList.append(monthYear)
                 }
@@ -692,7 +689,7 @@ class CalendarCollectionViewController: UICollectionViewController,
         
         let backButton = UIButton(type: .custom)
         backButton.setImage(UIImage(named: "BackButton"), for: .normal) // Image can be downloaded from here below link
-        backButton.setTitle(" Back", for: .normal)
+        backButton.setTitle("  ", for: .normal)
         backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
         backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
         
@@ -717,6 +714,8 @@ class CalendarCollectionViewController: UICollectionViewController,
             
             if let _ = indexPath {
 
+                // we are setting the selected IndexPath based on the month at the detail level view,
+                // we group 12 months by 4 row (quarter basic) with first column as heading for quarter, so the following formula is the right one.
                 let startDateComponent = Calendar.current.dateComponents([.month], from: startDateOfMonth!)
             
                 indexPath = IndexPath(row: ( startDateComponent.month! - 1 ) % 3 + 1, section: Int( ( startDateComponent.month! - 1) / 3 ) )
@@ -743,7 +742,6 @@ class CalendarCollectionViewController: UICollectionViewController,
 
         return sectionList.count
     }
-
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
@@ -785,6 +783,7 @@ class CalendarCollectionViewController: UICollectionViewController,
                 self.budgetExpensesTableViewController?.monthYearDate = startDateOfMonth
             } else {
                 
+                // if we are in year level, then we need to reeturn selected month (indexPath)
                 var monthIndex = (self.indexPath?.section)! * 3 + (self.indexPath?.row)!
                 if (self.indexPath?.row)! <= 0 {
                     
@@ -836,7 +835,8 @@ class CalendarCollectionViewController: UICollectionViewController,
             }
             
             if let selectedIndexPath = self.indexPath,
-                selectedIndexPath.row == indexPath.row && selectedIndexPath.section == indexPath.section {
+                selectedIndexPath.row == indexPath.row
+                    && selectedIndexPath.section == indexPath.section {
                 
                 selectedDate = thisDate
                 selectedExpenseList = expenseList
@@ -901,7 +901,8 @@ class CalendarCollectionViewController: UICollectionViewController,
             }
             
             if let selectedIndexPath = self.indexPath,
-                selectedIndexPath.row == indexPath.row && selectedIndexPath.section == indexPath.section {
+                selectedIndexPath.row == indexPath.row
+                    && selectedIndexPath.section == indexPath.section {
 
                 selectedExpenseList = filteredExpenseList
               
@@ -945,6 +946,7 @@ class CalendarCollectionViewController: UICollectionViewController,
  
         switch kind {
             case UICollectionElementKindSectionFooter:
+                // we draw a view with just a line which acts a separator line
                 let reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: "UICollectionElementKindSectionFooter", withReuseIdentifier: "calendarCollectionFooterView", for: indexPath)
                 
                 let height = 1.0
@@ -975,6 +977,7 @@ class CalendarCollectionViewController: UICollectionViewController,
     // Uncomment this method to specify if the specified item should be selected
     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         
+        // heading (day of week) or row 0 at year level (non modnth level) is allowed for selection.
         return sectionList[indexPath.section].identifier != "heading"
                && !(sectionList[indexPath.section].cellList[indexPath.row].isEmpty)
                && ( monthLevel || indexPath.row > 0 )
@@ -989,7 +992,6 @@ class CalendarCollectionViewController: UICollectionViewController,
     
     override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         
-        print("--------- didDeselectItemAt \(indexPath)")
     }
 
     /*
