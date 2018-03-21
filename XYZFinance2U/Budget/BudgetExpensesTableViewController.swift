@@ -124,7 +124,7 @@ class BudgetExpensesTableViewController: UITableViewController,
     
     func loadData(of expenseList:[XYZExpense]?) {
         
-        self.expenseList = expenseList
+        self.expenseList = sortExpenses( expenseList! )
         loadData()
     }
     
