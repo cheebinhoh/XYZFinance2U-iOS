@@ -724,9 +724,34 @@ class AppDelegate: UIResponder,
         
         if !zonesToBeFetched.isEmpty {
             
+            var changeTokens = [CKServerChangeToken?]()
+            
+            for icloudzone in self.privateiCloudZones {
+                
+                var changeToken: CKServerChangeToken? = nil
+                
+                if let data = icloudzone.value(forKey: XYZiCloudZone.changeToken) as? Data {
+                    
+                    changeToken = (NSKeyedUnarchiver.unarchiveObject(with: data) as? CKServerChangeToken)
+                }
+                
+                changeTokens.append(changeToken)
+            }
+            
             fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase, zonesToBeFetched, self.privateiCloudZones, {
 
-                for icloudzone in self.privateiCloudZones {
+                for (index, icloudzone) in self.privateiCloudZones.enumerated() {
+
+                    var changeToken: CKServerChangeToken? = nil
+                    
+                    if let data = icloudzone.value(forKey: XYZiCloudZone.changeToken) as? Data {
+                        
+                        changeToken = (NSKeyedUnarchiver.unarchiveObject(with: data) as? CKServerChangeToken)
+                    }
+                    
+                    let needreload = ( nil == changeToken
+                                       || nil == changeTokens[index]
+                                       || changeToken != changeTokens[index] )
 
                     let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
                     
@@ -738,7 +763,10 @@ class AppDelegate: UIResponder,
                         
                         DispatchQueue.main.async {
                             
-                            incomeView.reloadData()
+                            if needreload {
+                                
+                                incomeView.reloadData()
+                            }
                             
                             registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
                         }
@@ -748,7 +776,10 @@ class AppDelegate: UIResponder,
                         
                         DispatchQueue.main.async {
                             
-                            expenseView.reloadData()
+                            if needreload {
+                                
+                                expenseView.reloadData()
+                            }
                             
                             registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
                         }
@@ -759,7 +790,10 @@ class AppDelegate: UIResponder,
                         
                         DispatchQueue.main.async {
                             
-                            budgetView.reloadData()
+                            if needreload {
+                                
+                                budgetView.reloadData()
+                            }
                             
                             registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
                         }
