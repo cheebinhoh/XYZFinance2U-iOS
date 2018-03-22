@@ -446,7 +446,7 @@ class BudgetTableViewController: UITableViewController,
         
         var commands = [UIContextualAction]()
         
-        let new = UIContextualAction(style: .normal, title: "Add Expense" ) { _, _, handler in
+        let new = UIContextualAction(style: .normal, title: "New expense" ) { _, _, handler in
             
             guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
                 
@@ -692,9 +692,9 @@ class BudgetTableViewController: UITableViewController,
         }
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-print("----- here1")
+
         let spendAmount = getTotalSpendAmount(of: budget, from: (appDelegate?.expenseList)!)
-print("----- here2")
+
         let balance = amount! - spendAmount
         cell.balanceAmount.text = formattingCurrencyValue(input: balance, code: currency!)
         cell.amount.text = formattingCurrencyValue(input: amount!, code: currency!)

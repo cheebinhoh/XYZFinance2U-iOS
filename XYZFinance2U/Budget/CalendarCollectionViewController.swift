@@ -401,7 +401,7 @@ class CalendarCollectionViewController: UICollectionViewController,
                 }
                 
                 let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                let copyUrlOption = UIAlertAction(title: "Add Expense", style: .default, handler: { (action) in
+                let copyUrlOption = UIAlertAction(title: "New expense", style: .default, handler: { (action) in
                     
                     guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
                         
