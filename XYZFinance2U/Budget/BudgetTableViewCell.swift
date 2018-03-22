@@ -13,7 +13,7 @@ class BudgetTableViewCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var length: UILabel!
     @IBOutlet weak var amount: UILabel!
-    @IBOutlet weak var spendAmount: UILabel!
+    @IBOutlet weak var balanceAmount: UILabel!
     @IBOutlet weak var colorView: UIView!
     @IBOutlet weak var dotColorView: UIView!
     

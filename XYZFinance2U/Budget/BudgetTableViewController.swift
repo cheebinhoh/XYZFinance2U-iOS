@@ -694,23 +694,21 @@ class BudgetTableViewController: UITableViewController,
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
         let spendAmount = getTotalSpendAmount(of: budget, from: (appDelegate?.expenseList)!)
-        cell.spendAmount.text = formattingCurrencyValue(input: spendAmount, code: currency!)
+        let balance = amount! - spendAmount
+        cell.balanceAmount.text = formattingCurrencyValue(input: balance, code: currency!)
         cell.amount.text = formattingCurrencyValue(input: amount!, code: currency!)
         cell.name.text = name
         cell.length.text = period
         var color = UIColor.black
-        if spendAmount > amount! {
+        if balance < 0.0 {
             
             color = UIColor.red
-        } else if spendAmount == amount {
-            
-            color = UIColor.black
         } else {
             
             color = UIColor.black
         }
         
-        cell.spendAmount.textColor = color
+        cell.balanceAmount.textColor = color
     
         cell.dotColorView.backgroundColor = (budgetColor?.uiColor())!
         
