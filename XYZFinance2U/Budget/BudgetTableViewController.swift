@@ -692,8 +692,9 @@ class BudgetTableViewController: UITableViewController,
         }
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        
+print("----- here1")
         let spendAmount = getTotalSpendAmount(of: budget, from: (appDelegate?.expenseList)!)
+print("----- here2")
         let balance = amount! - spendAmount
         cell.balanceAmount.text = formattingCurrencyValue(input: balance, code: currency!)
         cell.amount.text = formattingCurrencyValue(input: amount!, code: currency!)
