@@ -670,10 +670,10 @@ class BudgetTableViewController: UITableViewController,
         
         let stackView = UIStackView()
         let title = UILabel()
-        let subtotal = UILabel()
-        let (amount, currency) = sectionSpentAmount(section: section)
+        //let subtotal = UILabel()
+        //let (amount, currency) = sectionSpentAmount(section: section)
 
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 45)
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 45)
         stackView.isLayoutMarginsRelativeArrangement = true
         
         title.text = sectionList[section].title
@@ -681,9 +681,9 @@ class BudgetTableViewController: UITableViewController,
         stackView.axis = .horizontal
         stackView.addArrangedSubview(title)
         
-        subtotal.text = formattingCurrencyValue(input: amount, code: currency)
-        subtotal.textColor = UIColor.gray
-        stackView.addArrangedSubview(subtotal)
+        //subtotal.text = formattingCurrencyValue(input: amount, code: currency)
+        //subtotal.textColor = UIColor.gray
+        //stackView.addArrangedSubview(subtotal)
         
         return stackView
     }
@@ -726,7 +726,7 @@ class BudgetTableViewController: UITableViewController,
         } else {
             
             let start = formattingDate(date: budget.currentStart!, style: .short) //budget.currentStart
-            period = "\(length!), from: \(start)"
+            period = "from: \(start)"
         }
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
