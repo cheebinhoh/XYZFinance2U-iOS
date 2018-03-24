@@ -223,10 +223,10 @@ class BudgetTableViewController: UITableViewController,
                     let title = ( length == XYZBudget.Length.none ) ? "\(currency)" : "\(currency) \(length)"
                     let sortedSectionBudgetList = sectionBudgetList.sorted { (bud1, bud2) -> Bool in
                     
-                        let name1 = bud1.value(forKey: XYZBudget.name) as? String ?? ""
-                        let name2 = bud2.value(forKey: XYZBudget.name) as? String ?? ""
+                        let seqNr1 = bud1.value(forKey: XYZBudget.sequenceNr) as? Int ?? 0
+                        let seqNr2 = bud2.value(forKey: XYZBudget.sequenceNr) as? Int ?? 0
                         
-                        return name1 <= name2
+                        return seqNr1 <= seqNr2
                     }
                     
                     let newSection = TableSectionCell(identifier: currency,
