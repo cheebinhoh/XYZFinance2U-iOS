@@ -221,18 +221,20 @@ class BudgetTableViewController: UITableViewController,
                 if !sectionBudgetList.isEmpty {
                     
                     let title = ( length == XYZBudget.Length.none ) ? "\(currency)" : "\(currency) \(length)"
+                    let sortedSectionBudgetList = sectionBudgetList.sorted { (bud1, bud2) -> Bool in
+                    
+                        let name1 = bud1.value(forKey: XYZBudget.name) as? String ?? ""
+                        let name2 = bud2.value(forKey: XYZBudget.name) as? String ?? ""
+                        
+                        return name1 <= name2
+                    }
                     
                     let newSection = TableSectionCell(identifier: currency,
-                                                      title: title, cellList: [], data: sectionBudgetList)
+                                                      title: title, cellList: [], data: sortedSectionBudgetList)
                     sectionList.append(newSection)
                 }
             }
         }
-        
-        /*sectionList = sectionList.sorted(by: { (section1, section2) -> Bool in
-            
-            section1.identifier < section2.identifier
-        })*/
     }
     
     func loadData() {
