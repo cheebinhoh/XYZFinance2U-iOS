@@ -284,6 +284,43 @@ class BudgetTableViewController: UITableViewController,
         return (total, sectionList[section].title!)
     }
     
+    func sectionSpentAmount(section: Int) -> (Double, String) {
+        
+        var total = 0.0;
+        let sectionBudgetList = sectionList[section].data as? [XYZBudget]
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        for budget in sectionBudgetList! {
+            
+            let expeneseList = self.getExpenseList(of: budget, from: (appDelegate?.expenseList)!)
+            
+            for expense in expeneseList {
+                
+                var needed = budget.currentEnd == nil
+                    || budget.currentStart == nil
+                
+                if !needed {
+                    
+                    let occurrenceDates = expense.getOccurenceDates(until: Date()).filter { (date) -> Bool in
+                        
+                        return date >= budget.currentStart! && date < budget.currentEnd!
+                    }
+                    
+                    needed = !occurrenceDates.isEmpty
+                }
+                
+                if needed {
+                    
+                    let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
+                    
+                    total = total + amount
+                }
+            }
+        }
+        
+        return (total, sectionList[section].title!)
+    }
+    
     func sectionRemainingBudget(section: Int) -> (Double, String) {
         
         var total = 0.0;
@@ -322,7 +359,6 @@ class BudgetTableViewController: UITableViewController,
         
         return (budget - total, sectionList[section].title!)
     }
-    
     
     func getExpenseList(of budget: XYZBudget, from expenseList: [XYZExpense]) -> [XYZExpense] {
      
@@ -635,7 +671,7 @@ class BudgetTableViewController: UITableViewController,
         let stackView = UIStackView()
         let title = UILabel()
         let subtotal = UILabel()
-        let (amount, currency) = sectionRemainingBudget(section: section)
+        let (amount, currency) = sectionSpentAmount(section: section)
 
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 45)
         stackView.isLayoutMarginsRelativeArrangement = true
