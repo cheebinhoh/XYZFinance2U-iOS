@@ -341,6 +341,7 @@ class AppDelegate: UIResponder,
     var privateiCloudZones = [XYZiCloudZone]()
     var window: UIWindow?
     var orientation = UIInterfaceOrientationMask.all
+    var authentictatedAlready = false
     
     /// Saved shortcut item used as a result of an app launch, used later when app is activated.
     var launchedShortcutItem: UIApplicationShortcutItem?
@@ -379,9 +380,31 @@ class AppDelegate: UIResponder,
      callback is used if your application is already launched in the background.
      */
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+
+        print("---- here1")
+        guard let split = self.window?.rootViewController as? UISplitViewController else {
+            
+            fatalError("Exception: UISplitViewController is expected" )
+        }
         
-        //let handledShortCutItem = handleShortCutItem(shortcutItem)
-        //completionHandler(handledShortCutItem)
+        guard let tabBarController = split.viewControllers.first as? UITabBarController else {
+            
+            fatalError("Exception: UITabBarController is expected" )
+        }
+        
+        guard let navigationController = tabBarController.viewControllers?[1] as! UINavigationController? else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+
+        tabBarController.selectedViewController = navigationController
+        
+        guard let tableViewController = navigationController.viewControllers[0] as? ExpenseTableViewController else {
+            
+            fatalError("Exception: ExpenseTableViewController is expected")
+        }
+        
+        tableViewController.add(tableViewController.navigationItem.rightBarButtonItem!)
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -431,11 +454,13 @@ class AppDelegate: UIResponder,
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
+        self.authentictatedAlready = false
+        
         self.lastAuthenticated = Date()
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-        
+
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         guard let split = self.window?.rootViewController as? UISplitViewController else {
             
@@ -460,7 +485,8 @@ class AppDelegate: UIResponder,
         application.registerForRemoteNotifications()
         
         tableViewController.validateiCloud()
-        tableViewController.authenticate()
+        
+        //tableViewController.authenticate()
         
         syncWithiCloudAndCoreData()
         
@@ -469,6 +495,32 @@ class AppDelegate: UIResponder,
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         
+        if !authentictatedAlready {
+            
+            guard let split = self.window?.rootViewController as? UISplitViewController else {
+                
+                fatalError("Exception: UISplitViewController is expected" )
+            }
+            
+            guard let tabBarController = split.viewControllers.first as? UITabBarController else {
+                
+                fatalError("Exception: UITabBarController is expected" )
+            }
+            
+            guard let navController = tabBarController.viewControllers?.first as? UINavigationController else {
+                
+                fatalError("Exception: UINavigationController is expected")
+            }
+            
+            guard let tableViewController = navController.viewControllers.first as? IncomeTableViewController else {
+                
+                fatalError("Exception: IncomeTableViewController is expected" )
+            }
+            
+            tableViewController.authenticate()
+            
+            authentictatedAlready = true
+        }
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 

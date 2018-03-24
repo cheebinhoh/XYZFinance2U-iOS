@@ -585,7 +585,7 @@ class IncomeTableViewController: UITableViewController,
         }
     }
     
-    func lockout() {
+    @discardableResult func lockout() -> UINavigationController? {
         
         guard let lockScreenView = self.storyboard?.instantiateViewController(withIdentifier: "lockScreenView") as? LockScreenViewController else {
             
@@ -607,14 +607,17 @@ class IncomeTableViewController: UITableViewController,
                 appDelegate.window?.rootViewController?.present(lockScreenViewNavigatorController, animated: false, completion: nil)
             }
         }
+        
+        return lockScreenViewNavigatorController
     }
     
-    func authenticate() {
+    @discardableResult func authenticate() -> UINavigationController? {
         
         // authentication validation before doing other things
         let laContext = LAContext()
         var authError: NSError?
         authenticatedOk = false
+        var lockoutNavigationController: UINavigationController? = nil
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
@@ -646,7 +649,7 @@ class IncomeTableViewController: UITableViewController,
                         
                         if nil == mainSplitView.popOverNavigatorController {
                             
-                            lockout()
+                            lockoutNavigationController = lockout()
                         }
                     }
                     
@@ -691,10 +694,10 @@ class IncomeTableViewController: UITableViewController,
                                         
                                         self.dismiss(animated: false, completion: {
                                           
-                                            self.lockout()
+                                            lockoutNavigationController = self.lockout()
                                         })
                                         
-                                        self.lockout()
+                                        lockoutNavigationController = self.lockout()
                                     }
                                 }
                             }
@@ -723,6 +726,8 @@ class IncomeTableViewController: UITableViewController,
             
             self.authenticatedOk = true
         }
+        
+        return lockoutNavigationController
     }
     
     override func viewDidLoad() {
