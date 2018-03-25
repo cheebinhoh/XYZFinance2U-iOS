@@ -396,14 +396,18 @@ class AppDelegate: UIResponder,
             fatalError("Exception: UINavigationController is expected")
         }
 
-        tabBarController.selectedViewController = navigationController
         
-        guard let tableViewController = navigationController.viewControllers[0] as? ExpenseTableViewController else {
+        DispatchQueue.main.async {
             
-            fatalError("Exception: ExpenseTableViewController is expected")
+            tabBarController.selectedViewController = navigationController
+            
+            guard let tableViewController = navigationController.viewControllers[0] as? ExpenseTableViewController else {
+                
+                fatalError("Exception: ExpenseTableViewController is expected")
+            }
+            
+            tableViewController.add(tableViewController.navigationItem.rightBarButtonItem!)
         }
-        
-        tableViewController.add(tableViewController.navigationItem.rightBarButtonItem!)
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -418,26 +422,25 @@ class AppDelegate: UIResponder,
             
             // This will block "performActionForShortcutItem:completionHandler" from being called.
             shouldPerformAdditionalDelegateHandling = true
-        } else {
-
-            let notificationCenter = UNUserNotificationCenter.current()
-            notificationCenter.delegate = self
-            notificationCenter.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
-                
-                if let theError = error {
-                    
-                    print("-------- requestAuthorization error = \(theError.localizedDescription)")
-                } else {
-                 
-                }
-            }
-            
-            application.registerForRemoteNotifications()
-            
-            syncWithiCloudAndCoreData()
-            
-            fetchSharediCloudZone()
         }
+
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.delegate = self
+        notificationCenter.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+            
+            if let theError = error {
+                
+                print("-------- requestAuthorization error = \(theError.localizedDescription)")
+            } else {
+             
+            }
+        }
+        
+        application.registerForRemoteNotifications()
+        
+        syncWithiCloudAndCoreData()
+        
+        fetchSharediCloudZone()
 
         authentictatedAlready = false
         
@@ -516,9 +519,12 @@ class AppDelegate: UIResponder,
                 fatalError("Exception: IncomeTableViewController is expected" )
             }
             
-            tableViewController.authenticate()
+            DispatchQueue.main.async {
+                
+                tableViewController.authenticate()
             
-            authentictatedAlready = true
+                self.authentictatedAlready = true
+            }
         }
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
