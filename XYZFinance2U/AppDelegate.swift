@@ -344,7 +344,7 @@ class AppDelegate: UIResponder,
     var authentictatedAlready = false
     
     /// Saved shortcut item used as a result of an app launch, used later when app is activated.
-    var launchedShortcutItem: UIApplicationShortcutItem?
+    /// var launchedShortcutItem: UIApplicationShortcutItem?
     
     // MARK: - function
     
@@ -381,7 +381,6 @@ class AppDelegate: UIResponder,
      */
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
 
-        print("---- here1")
         guard let split = self.window?.rootViewController as? UISplitViewController else {
             
             fatalError("Exception: UISplitViewController is expected" )
@@ -413,12 +412,12 @@ class AppDelegate: UIResponder,
         var shouldPerformAdditionalDelegateHandling = true
         
         // If a shortcut was launched, display its information and take the appropriate action.
-        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
+        if let _ = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
 
-            launchedShortcutItem = shortcutItem
+            //launchedShortcutItem = shortcutItem
             
             // This will block "performActionForShortcutItem:completionHandler" from being called.
-            shouldPerformAdditionalDelegateHandling = false
+            shouldPerformAdditionalDelegateHandling = true
         } else {
 
             let notificationCenter = UNUserNotificationCenter.current()
@@ -439,6 +438,8 @@ class AppDelegate: UIResponder,
             
             fetchSharediCloudZone()
         }
+
+        authentictatedAlready = false
         
         return shouldPerformAdditionalDelegateHandling
     }
@@ -485,8 +486,6 @@ class AppDelegate: UIResponder,
         application.registerForRemoteNotifications()
         
         tableViewController.validateiCloud()
-        
-        //tableViewController.authenticate()
         
         syncWithiCloudAndCoreData()
         
