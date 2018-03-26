@@ -396,10 +396,9 @@ class AppDelegate: UIResponder,
             fatalError("Exception: UINavigationController is expected")
         }
 
+        tabBarController.selectedViewController = navigationController
         
         DispatchQueue.main.async {
-            
-            tabBarController.selectedViewController = navigationController
             
             guard let tableViewController = navigationController.viewControllers[0] as? ExpenseTableViewController else {
                 
