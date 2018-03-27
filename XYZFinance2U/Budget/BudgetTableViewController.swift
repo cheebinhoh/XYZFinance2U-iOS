@@ -525,38 +525,59 @@ class BudgetTableViewController: UITableViewController,
         
         let more = UIContextualAction(style: .normal, title: "More" ) { _, _, handler in
             
-            guard let calendarViewNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "CalendarViewNavigationController") as? UINavigationController else {
+            let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
                 
-                fatalError("Exception: ExpenseDetailNavigationController is expected")
-            }
+                handler(true)
+            })
             
-            guard let calendarCollectionViewController = calendarViewNavigationController.viewControllers.first as? CalendarCollectionViewController else {
+            let calendarViewAction = UIAlertAction(title: "Calendar view", style: .default, handler: { (action) in
+
+                guard let calendarViewNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "CalendarViewNavigationController") as? UINavigationController else {
+                    
+                    fatalError("Exception: ExpenseDetailNavigationController is expected")
+                }
                 
-                fatalError("Exception: CalendarCollectionViewController is expected" )
-            }
+                guard let calendarCollectionViewController = calendarViewNavigationController.viewControllers.first as? CalendarCollectionViewController else {
+                    
+                    fatalError("Exception: CalendarCollectionViewController is expected" )
+                }
+                
+                let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]
+                let budget = sectionBudgetList![indexPath.row]
+                //let startDate = budget.currentStart ?? Date()
             
-            let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]
-            let budget = sectionBudgetList![indexPath.row]
-            //let startDate = budget.currentStart ?? Date()
-        
+                let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                appDelegate?.orientation = UIInterfaceOrientationMask.portrait
+                
+                let expeneseList = self.getExpenseList(of: budget, from: (appDelegate?.expenseList)!)
+                calendarCollectionViewController.expenseList = expeneseList
+                calendarCollectionViewController.budgetGroup = budget.value(forKey: XYZBudget.name) as? String ?? ""
+                calendarCollectionViewController.setDate(Date())
+                calendarCollectionViewController.budget = budget
+                
+                guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                    
+                    fatalError("Exception: UISplitViewController is expected" )
+                }
+                
+                mainSplitView.popOverNavigatorController = calendarViewNavigationController
+                
+                handler(true)
+                self.present(calendarViewNavigationController, animated: true, completion: {})
+            })
+            
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            appDelegate?.orientation = UIInterfaceOrientationMask.portrait
-            
-            let expeneseList = self.getExpenseList(of: budget, from: (appDelegate?.expenseList)!)
-            calendarCollectionViewController.expenseList = expeneseList
-            calendarCollectionViewController.budgetGroup = budget.value(forKey: XYZBudget.name) as? String ?? ""
-            calendarCollectionViewController.setDate(Date())
-            calendarCollectionViewController.budget = budget
-            
             guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
                 
                 fatalError("Exception: UISplitViewController is expected" )
             }
             
-            mainSplitView.popOverNavigatorController = calendarViewNavigationController
+            optionMenu.addAction(calendarViewAction)
+            optionMenu.addAction(cancelAction)
             
-            handler(true)
-            self.present(calendarViewNavigationController, animated: true, completion: {})
+            mainSplitView.popOverAlertController = optionMenu
+            self.present(optionMenu, animated: true, completion: nil)
         }
         
         more.image = UIImage(named: "Calendar")
