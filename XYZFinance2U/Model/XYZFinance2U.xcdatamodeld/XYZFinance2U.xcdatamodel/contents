@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14094.4" systemVersion="17E160e" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14124.1" systemVersion="17E190a" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="XYZAccount" representedClassName="XYZAccount" syncable="YES">
         <attribute name="accountNr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
@@ -18,6 +18,8 @@
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="currency" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="historicalAmount" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="historicalStart" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="lastRecordChange" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="length" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -76,7 +78,7 @@
     </entity>
     <elements>
         <element name="XYZAccount" positionX="-63" positionY="-18" width="128" height="225"/>
-        <element name="XYZBudget" positionX="-36" positionY="126" width="128" height="180"/>
+        <element name="XYZBudget" positionX="-36" positionY="126" width="128" height="210"/>
         <element name="XYZExchangeRate" positionX="-36" positionY="81" width="128" height="120"/>
         <element name="XYZExpense" positionX="-63" positionY="18" width="128" height="330"/>
         <element name="XYZExpensePerson" positionX="-36" positionY="72" width="128" height="120"/>

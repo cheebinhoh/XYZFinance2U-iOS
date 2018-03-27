@@ -63,13 +63,47 @@ class BudgetDetailTableViewController: UITableViewController,
     
     func dateDidPick(_ sender: BudgetDetailDatePickerTableViewCell) {
     
+        if let _ = budget {
+            
+            if nrOfHistoricalItems >= historicalStart.count {
+                
+                if sender.date! > date {
+                    
+                    historicalStart.append(date)
+                    historicalAmount.append(budget?.value(forKey: XYZBudget.amount) as? Double ?? 0.0)
+                }
+            } else {
+                
+                let result = Calendar.current.compare(sender.date!, to: historicalStart.last!, toGranularity: .day)
+                
+
+                switch result {
+                 
+                    case ComparisonResult.orderedDescending:
+                        break
+                    
+                    case ComparisonResult.orderedSame:
+                        historicalStart.removeLast()
+                        historicalAmount.removeLast()
+                    
+                    case ComparisonResult.orderedAscending:
+                        break
+                }
+                
+            }
+        }
+        
         date = sender.date!
         
         let indexPath = tableView.indexPath(for: sender)
         let dateIndexPath = IndexPath(row: (indexPath?.row)! - 1, section: (indexPath?.section)!)
         
         tableView.reloadRows(at: [dateIndexPath], with: .none)
-        //tableView.reloadSections(indexPath, with: UITableViewRowAnimation.none)
+        
+        if let _ = lastEffectiveIndexPath {
+            
+            tableView.reloadRows(at: [lastEffectiveIndexPath!], with: .none)
+        }
     }
     
     func dateInputTouchUp(_ sender: BudgetDetailDateTableViewCell) {
@@ -100,6 +134,10 @@ class BudgetDetailTableViewController: UITableViewController,
             case "color":
                 color = XYZColor(rawValue: item!)!
             
+            case "lasteffective":
+                print("--- last effective")
+                break
+            
             default:
                 break
         }
@@ -118,7 +156,21 @@ class BudgetDetailTableViewController: UITableViewController,
                     navigationItem.rightBarButtonItem?.isEnabled = !budgetType.isEmpty
                 
                 case "amount":
+                    /*
+                    if let _ = budget, nrOfHistoricalItems >= historicalStart.count {
+                        
+                        historicalStart.append(date)
+                        historicalAmount.append(amount)
+                    }
+                     */
+ 
                     amount = formattingDoubleValueAsDouble(input: sender.input.text!)
+                    
+                    if let _ = lastEffectiveIndexPath {
+                    
+                        tableView.reloadRows(at: [lastEffectiveIndexPath!], with: .none)
+                    }
+                    
                     break
                 
                 default:
@@ -162,6 +214,10 @@ class BudgetDetailTableViewController: UITableViewController,
     var datecell: BudgetDetailDateTableViewCell?
     var currencyCodes = [String]()
     var color = XYZColor.none
+    var historicalAmount = [Double]()
+    var historicalStart = [Date]()
+    var lastEffectiveIndexPath: IndexPath?
+    var nrOfHistoricalItems = 0
     
     var isCollapsed: Bool {
     
@@ -287,7 +343,9 @@ class BudgetDetailTableViewController: UITableViewController,
     func saveData() {
         
         var hasChanged = false
-   
+        let dataAmount = NSKeyedArchiver.archivedData(withRootObject: historicalAmount)
+        let dataDate = NSKeyedArchiver.archivedData(withRootObject: historicalStart)
+        
         if let existingBudgetType = budget?.value(forKey: XYZBudget.name) as? String, existingBudgetType != budgetType {
             
             hasChanged = true
@@ -306,6 +364,12 @@ class BudgetDetailTableViewController: UITableViewController,
         } else if let existingColor = budget?.value(forKey: XYZBudget.color) as? String, existingColor != color.rawValue {
             
             hasChanged = true
+        } else if let existingDataAmount = budget?.value(forKey: XYZBudget.historicalAmount) as? Data, existingDataAmount as Data != dataAmount {
+            
+            hasChanged = true
+        } else if let existingDataDate = budget?.value(forKey: XYZBudget.historicalAmount) as? Data, existingDataDate != dataDate {
+            
+            hasChanged = true
         }
         
         budget?.setValue(budgetType, forKey: XYZBudget.name)
@@ -314,6 +378,8 @@ class BudgetDetailTableViewController: UITableViewController,
         budget?.setValue(date, forKey: XYZBudget.start)
         budget?.setValue(length.rawValue, forKey: XYZBudget.length)
         budget?.setValue(color.rawValue, forKey: XYZBudget.color)
+        budget?.setValue(dataAmount, forKey: XYZBudget.historicalAmount)
+        budget?.setValue(dataDate, forKey: XYZBudget.historicalStart)
         
         if nil == budget?.value(forKey: XYZBudget.lastRecordChange) as? Date
             || hasChanged {
@@ -331,6 +397,9 @@ class BudgetDetailTableViewController: UITableViewController,
         
         let lengthSection = TableSectionCell(identifier: "length", title: nil, cellList: ["length", "date"], data: nil)
         sectionList.append(lengthSection)
+        
+        let lastEffectiveSection = TableSectionCell(identifier: "lasteffective", title: nil, cellList: ["lasteffective"], data: nil)
+        sectionList.append(lastEffectiveSection)
         
         let colorSection = TableSectionCell(identifier: "color", title: nil, cellList: ["color"], data: nil)
         sectionList.append(colorSection)
@@ -366,6 +435,14 @@ class BudgetDetailTableViewController: UITableViewController,
             length = XYZBudget.Length(rawValue: (budget?.value(forKey: XYZBudget.length) as? String)!)!
             date = (budget?.value(forKey: XYZBudget.start) as? Date)!
             color = XYZColor(rawValue: budget?.value(forKey: XYZBudget.color) as? String ?? "")!
+            
+            let dataAmount = budget?.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
+            historicalAmount = (NSKeyedUnarchiver.unarchiveObject(with: dataAmount) as! [Double] )
+            
+            let dataStart = budget?.value(forKey: XYZBudget.historicalStart) as? Data ?? NSData() as Data
+            historicalStart = (NSKeyedUnarchiver.unarchiveObject(with: dataStart) as! [Date] )
+            
+            nrOfHistoricalItems = historicalStart.count
         } else {
             
             budgetType = ""
@@ -520,6 +597,20 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 cell = currencycell
             
+            case "lasteffective":
+                guard let currencycell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? BudgetDetailSelectionTableViewCell else {
+                    
+                    fatalError("Exception: budgetDetailSelectionCell is failed to be created")
+                }
+                
+                currencycell.setLabel("Effective")
+                currencycell.setSelection("\(formattingCurrencyValue(input: amount, code: currencyCode)) from \(formattingDate(date: date, style: .medium))")
+                currencycell.selectionStyle = .none
+                
+                cell = currencycell
+            
+                lastEffectiveIndexPath = indexPath
+            
             case "color":
                 guard let colorcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? BudgetDetailSelectionTableViewCell else {
                     
@@ -664,6 +755,37 @@ class BudgetDetailTableViewController: UITableViewController,
             
             self.present(nav, animated: true, completion: nil)
            
+        case "lasteffective":
+            if !historicalAmount.isEmpty {
+                
+                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+                    
+                    fatalError("Exception: error on instantiating SelectionNavigationController")
+                }
+                
+                selectionTableViewController.selectionIdentifier = "Effective"
+                
+                var selectionStrings = [String]()
+                for (index, amount) in historicalAmount.enumerated() {
+                    
+                    let date = historicalStart[index]
+                    let string = "\(formattingCurrencyValue(input: amount, code: currencyCode)) from \(formattingDate(date: date, style: .medium))"
+                    
+                    selectionStrings.append(string)
+                }
+                
+                selectionTableViewController.setSelections("", false,
+                                                           selectionStrings)
+                selectionTableViewController.setSelectedItem("")
+                
+                selectionTableViewController.delegate = self
+                
+                let nav = UINavigationController(rootViewController: selectionTableViewController)
+                nav.modalPresentationStyle = .popover
+                
+                self.present(nav, animated: true, completion: nil)
+            }
+            
         case "color":
             guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
                 
