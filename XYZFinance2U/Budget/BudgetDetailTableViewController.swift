@@ -76,7 +76,6 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 let result = Calendar.current.compare(sender.date!, to: historicalStart.last!, toGranularity: .day)
                 
-
                 switch result {
                  
                     case ComparisonResult.orderedDescending:
@@ -89,7 +88,6 @@ class BudgetDetailTableViewController: UITableViewController,
                     case ComparisonResult.orderedAscending:
                         break
                 }
-                
             }
         }
         
@@ -342,9 +340,28 @@ class BudgetDetailTableViewController: UITableViewController,
     
     func saveData() {
         
+        // post processing
+        var processedHistoricalAmount = [Double]()
+        var processedHistoricalStart = [Date]()
+        
+        for (index, start) in historicalStart.enumerated() {
+            
+            let result = Calendar.current.compare(start, to: date, toGranularity: .day)
+            
+            switch result {
+                
+                case ComparisonResult.orderedAscending:
+                    processedHistoricalStart.append(start)
+                    processedHistoricalAmount.append(historicalAmount[index])
+                
+                default:
+                    break
+            }
+        }
+        
         var hasChanged = false
-        let dataAmount = NSKeyedArchiver.archivedData(withRootObject: historicalAmount)
-        let dataDate = NSKeyedArchiver.archivedData(withRootObject: historicalStart)
+        let dataAmount = NSKeyedArchiver.archivedData(withRootObject: processedHistoricalAmount)
+        let dataDate = NSKeyedArchiver.archivedData(withRootObject: processedHistoricalStart)
         
         if let existingBudgetType = budget?.value(forKey: XYZBudget.name) as? String, existingBudgetType != budgetType {
             
@@ -773,6 +790,8 @@ class BudgetDetailTableViewController: UITableViewController,
                     
                     selectionStrings.append(string)
                 }
+                
+                selectionStrings.reverse()
                 
                 selectionTableViewController.setSelections("", false,
                                                            selectionStrings)
