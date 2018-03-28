@@ -10,9 +10,19 @@ import UIKit
 
 class BudgetListTableViewController: UITableViewController {
     
+    // MARK: - type
+    struct TableCell {
+        
+        var start: Date
+        var until: Date
+        var amount: Double
+        var spentAmount: Double
+        var expenseList: [XYZExpense]
+    }
+    
     // MARK: - property
     var budget: XYZBudget?
-    var sectionList = [TableSectionCell]()
+    var cellList = [TableCell]()
     
     // MARK: - IBActions
     
@@ -33,9 +43,11 @@ class BudgetListTableViewController: UITableViewController {
     
     func loadDataIntoSection() {
         
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let expenseList = (appDelegate?.expenseList)!
+            
         navigationItem.title = budget?.value(forKey: XYZBudget.name) as? String ?? ""
-        
-        sectionList = [TableSectionCell]()
+        cellList = [TableCell]()
         
         if let _ = budget {
             
@@ -91,12 +103,25 @@ class BudgetListTableViewController: UITableViewController {
                         }
                     
                         end = min(end, untilDate!)
+                        let expenseLastDate = Calendar.current.date(byAdding: .day, value: -1, to: end)!
+                        let filterExpenseList = expenseList.filter { (expense) -> Bool in
+                            
+                            let occurenceDates = expense.getOccurenceDates(until: expenseLastDate)
+                            
+                            return !(occurenceDates.filter({ (date) -> Bool in
+                                
+                                return date >= start && date <= expenseLastDate
+                            })).isEmpty
+                        }
                         
-                        print("---- \(start), \(end)")
+                        let tableCell = TableCell(start: start, until: expenseLastDate, amount: amount, spentAmount: 0.0, expenseList: filterExpenseList)
+                        
+                        cellList.append(tableCell)
+                        
                         start = end
                     }
                 }
-            } 
+            }
         }
     }
     
