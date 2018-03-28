@@ -71,6 +71,7 @@ class XYZBudget : NSManagedObject {
     static let color = "color"
     static let historicalAmount = "historicalAmount"
     static let historicalStart = "historicalStart"
+    static let historicalLength = "historicalLength"
     
     var name: String = ""
     var amount: Double = 0.0
@@ -83,6 +84,7 @@ class XYZBudget : NSManagedObject {
     var color: String = ""
     var historicalAmount = NSData()
     var historicalStart = NSData()
+    var historicalLength = NSData()
     
     var currentStart: Date? {
         
@@ -202,10 +204,11 @@ class XYZBudget : NSManagedObject {
         }
     }
     
-    func getAllBudgetDateAmount() -> (Int, [Date], [Double]) {
+    func getAllBudgetDateAmount() -> (Int, [String], [Date], [Double]) {
         
         var dates = [Date]()
         var amounts = [Double]()
+        var lengths = [String]()
 
         let dataAmount = self.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
         amounts = (NSKeyedUnarchiver.unarchiveObject(with: dataAmount) as! [Double] )
@@ -213,16 +216,19 @@ class XYZBudget : NSManagedObject {
         let dataStart = self.value(forKey: XYZBudget.historicalStart) as? Data ?? NSData() as Data
         dates = (NSKeyedUnarchiver.unarchiveObject(with: dataStart) as! [Date] )
         
+        let dataLength = self.value(forKey: XYZBudget.historicalLength) as? Data ?? NSData() as Data
+        lengths = (NSKeyedUnarchiver.unarchiveObject(with: dataLength) as! [String] )
+        
         let date = self.value(forKey: XYZBudget.start) as? Date
         dates.append(date!)
         
         let amount = self.value(forKey: XYZBudget.amount) as? Double
         amounts.append(amount!)
-    
-        dates.reverse()
-        amounts.reverse()
         
-        return (dates.count, dates, amounts)
+        let length = self.value(forKey: XYZBudget.length) as? String
+        lengths.append(length!)
+        
+        return (dates.count, lengths, dates, amounts)
     }
     
     // MARK: - function
@@ -267,6 +273,9 @@ class XYZBudget : NSManagedObject {
         
         let dataDate = NSKeyedArchiver.archivedData(withRootObject: [Date]() )
         self.setValue(dataDate, forKey: XYZBudget.historicalStart)
+        
+        let dataLength = NSKeyedArchiver.archivedData(withRootObject: [String]() )
+        self.setValue(dataLength, forKey: XYZBudget.historicalLength)
     }
     
     override init(entity: NSEntityDescription,

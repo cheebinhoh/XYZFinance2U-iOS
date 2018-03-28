@@ -33,15 +33,70 @@ class BudgetListTableViewController: UITableViewController {
     
     func loadDataIntoSection() {
         
+        navigationItem.title = budget?.value(forKey: XYZBudget.name) as? String ?? ""
+        
         sectionList = [TableSectionCell]()
         
         if let _ = budget {
             
-            let (count, dates, amounts) = (budget?.getAllBudgetDateAmount())!
+            let (count, lengths, dates, amounts) = (budget?.getAllBudgetDateAmount())!
             
             for index in 0..<count {
+            
+                let length = XYZBudget.Length(rawValue: lengths[index])
+                let amount = amounts[index]
+                var start = dates[index]
+                var untilDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())
+                if index < (count - 1) {
                 
-            }
+                    untilDate = min(untilDate!, dates[index + 1])
+                }
+                
+                if length == XYZBudget.Length.none {
+                    
+                } else {
+                    
+                    while start < untilDate! {
+                        
+                        var end = start
+                        
+                        switch length! {
+                            
+                        case .none:
+                            fatalError("Exception: .none is not expected")
+                        
+                        case .daily:
+                            end = Calendar.current.date(byAdding: .day, value: 1, to: end)!
+                            break
+                            
+                        case .weekly:
+                            end = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: end)!
+                            break
+                            
+                        case .biweekly:
+                            end = Calendar.current.date(byAdding: .weekOfYear, value: 2, to: end)!
+                            break
+                        
+                        case .monthly:
+                            end = Calendar.current.date(byAdding: .month, value: 1, to: end)!
+                            break
+                            
+                        case .halfyearly:
+                            end = Calendar.current.date(byAdding: .month, value: 6, to: end)!
+                            break
+                            
+                        case .yearly:
+                            end = Calendar.current.date(byAdding: .year, value: 1, to: end)!
+                            break
+                        }
+                    
+                        end = min(end, untilDate!)
+                        
+                        print("---- \(start), \(end)")
+                        start = end
+                    }
+                }
+            } 
         }
     }
     

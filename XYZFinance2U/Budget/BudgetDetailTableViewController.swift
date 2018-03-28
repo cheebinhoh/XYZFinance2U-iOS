@@ -71,6 +71,7 @@ class BudgetDetailTableViewController: UITableViewController,
                     
                     historicalStart.append(date)
                     historicalAmount.append(budget?.value(forKey: XYZBudget.amount) as? Double ?? 0.0)
+                    historicalLength.append(budget?.value(forKey: XYZBudget.length) as? String ?? XYZBudget.Length.none.rawValue)
                 }
             } else {
                 
@@ -84,6 +85,7 @@ class BudgetDetailTableViewController: UITableViewController,
                     case ComparisonResult.orderedSame:
                         historicalStart.removeLast()
                         historicalAmount.removeLast()
+                        historicalLength.removeLast()
                     
                     case ComparisonResult.orderedAscending:
                         break
@@ -154,14 +156,6 @@ class BudgetDetailTableViewController: UITableViewController,
                     navigationItem.rightBarButtonItem?.isEnabled = !budgetType.isEmpty
                 
                 case "amount":
-                    /*
-                    if let _ = budget, nrOfHistoricalItems >= historicalStart.count {
-                        
-                        historicalStart.append(date)
-                        historicalAmount.append(amount)
-                    }
-                     */
- 
                     amount = formattingDoubleValueAsDouble(input: sender.input.text!)
                     
                     if let _ = lastEffectiveIndexPath {
@@ -214,6 +208,7 @@ class BudgetDetailTableViewController: UITableViewController,
     var color = XYZColor.none
     var historicalAmount = [Double]()
     var historicalStart = [Date]()
+    var historicalLength = [String]()
     var lastEffectiveIndexPath: IndexPath?
     var nrOfHistoricalItems = 0
     
@@ -343,6 +338,7 @@ class BudgetDetailTableViewController: UITableViewController,
         // post processing
         var processedHistoricalAmount = [Double]()
         var processedHistoricalStart = [Date]()
+        var processedHistoricalLength = [String]()
         
         for (index, start) in historicalStart.enumerated() {
             
@@ -353,6 +349,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 case ComparisonResult.orderedAscending:
                     processedHistoricalStart.append(start)
                     processedHistoricalAmount.append(historicalAmount[index])
+                    processedHistoricalLength.append(historicalLength[index])
                 
                 default:
                     break
@@ -362,6 +359,7 @@ class BudgetDetailTableViewController: UITableViewController,
         var hasChanged = false
         let dataAmount = NSKeyedArchiver.archivedData(withRootObject: processedHistoricalAmount)
         let dataDate = NSKeyedArchiver.archivedData(withRootObject: processedHistoricalStart)
+        let dataLength = NSKeyedArchiver.archivedData(withRootObject: processedHistoricalLength)
         
         if let existingBudgetType = budget?.value(forKey: XYZBudget.name) as? String, existingBudgetType != budgetType {
             
@@ -387,6 +385,9 @@ class BudgetDetailTableViewController: UITableViewController,
         } else if let existingDataDate = budget?.value(forKey: XYZBudget.historicalAmount) as? Data, existingDataDate != dataDate {
             
             hasChanged = true
+        } else if let existingDataLength = budget?.value(forKey: XYZBudget.historicalLength) as? Data, existingDataLength != dataLength {
+            
+            hasChanged = true
         }
         
         budget?.setValue(budgetType, forKey: XYZBudget.name)
@@ -397,6 +398,7 @@ class BudgetDetailTableViewController: UITableViewController,
         budget?.setValue(color.rawValue, forKey: XYZBudget.color)
         budget?.setValue(dataAmount, forKey: XYZBudget.historicalAmount)
         budget?.setValue(dataDate, forKey: XYZBudget.historicalStart)
+        budget?.setValue(dataLength, forKey: XYZBudget.historicalLength)
         
         if nil == budget?.value(forKey: XYZBudget.lastRecordChange) as? Date
             || hasChanged {
@@ -454,10 +456,13 @@ class BudgetDetailTableViewController: UITableViewController,
             color = XYZColor(rawValue: budget?.value(forKey: XYZBudget.color) as? String ?? "")!
             
             let dataAmount = budget?.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
-            historicalAmount = (NSKeyedUnarchiver.unarchiveObject(with: dataAmount) as! [Double] )
+            historicalAmount = (NSKeyedUnarchiver.unarchiveObject(with: dataAmount) as! [Double])
             
             let dataStart = budget?.value(forKey: XYZBudget.historicalStart) as? Data ?? NSData() as Data
-            historicalStart = (NSKeyedUnarchiver.unarchiveObject(with: dataStart) as! [Date] )
+            historicalStart = (NSKeyedUnarchiver.unarchiveObject(with: dataStart) as! [Date])
+            
+            let dataLength = budget?.value(forKey: XYZBudget.historicalLength) as? Data ?? NSData() as Data
+            historicalLength = (NSKeyedUnarchiver.unarchiveObject(with: dataLength) as! [String])
             
             nrOfHistoricalItems = historicalStart.count
         } else {
@@ -621,7 +626,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 }
                 
                 currencycell.setLabel("Effective")
-                currencycell.setSelection("\(formattingCurrencyValue(input: amount, code: currencyCode)) from \(formattingDate(date: date, style: .medium))")
+                currencycell.setSelection("\(length), \(formattingCurrencyValue(input: amount, code: currencyCode)) from \(formattingDate(date: date, style: .medium))")
                 currencycell.selectionStyle = .none
                 
                 cell = currencycell
@@ -786,7 +791,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 for (index, amount) in historicalAmount.enumerated() {
                     
                     let date = historicalStart[index]
-                    let string = "\(formattingCurrencyValue(input: amount, code: currencyCode)) from \(formattingDate(date: date, style: .medium))"
+                    let string = "\(historicalLength[index]), \(formattingCurrencyValue(input: amount, code: currencyCode)) from \(formattingDate(date: date, style: .medium))"
                     
                     selectionStrings.append(string)
                 }
