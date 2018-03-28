@@ -567,6 +567,36 @@ class BudgetTableViewController: UITableViewController,
                 self.present(calendarViewNavigationController, animated: true, completion: {})
             })
             
+            let historicalViewAction = UIAlertAction(title: "Historical view", style: .default, handler: { (action) in
+            
+                guard let budgetListViewNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "BudgetListNavigationController") as? UINavigationController else {
+                    
+                    fatalError("Exception: BudgetListNavigationController is expected")
+                }
+            
+                guard let budgetListViewController = budgetListViewNavigationController.viewControllers.first as? BudgetListTableViewController else {
+                    
+                    fatalError("Exception: BudgetListTableViewController is expected" )
+                }
+                
+                let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]
+                let budget = sectionBudgetList![indexPath.row]
+                budgetListViewController.budget = budget
+                
+                let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                appDelegate?.orientation = UIInterfaceOrientationMask.portrait
+                
+                guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                    
+                    fatalError("Exception: UISplitViewController is expected" )
+                }
+                
+                mainSplitView.popOverNavigatorController = budgetListViewNavigationController
+                
+                handler(true)
+                self.present(budgetListViewNavigationController, animated: true, completion: {})
+            })
+            
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
                 
@@ -574,6 +604,7 @@ class BudgetTableViewController: UITableViewController,
             }
             
             optionMenu.addAction(calendarViewAction)
+            optionMenu.addAction(historicalViewAction)
             optionMenu.addAction(cancelAction)
             
             mainSplitView.popOverAlertController = optionMenu

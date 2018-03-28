@@ -202,6 +202,29 @@ class XYZBudget : NSManagedObject {
         }
     }
     
+    func getAllBudgetDateAmount() -> (Int, [Date], [Double]) {
+        
+        var dates = [Date]()
+        var amounts = [Double]()
+
+        let dataAmount = self.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
+        amounts = (NSKeyedUnarchiver.unarchiveObject(with: dataAmount) as! [Double] )
+        
+        let dataStart = self.value(forKey: XYZBudget.historicalStart) as? Data ?? NSData() as Data
+        dates = (NSKeyedUnarchiver.unarchiveObject(with: dataStart) as! [Date] )
+        
+        let date = self.value(forKey: XYZBudget.start) as? Date
+        dates.append(date!)
+        
+        let amount = self.value(forKey: XYZBudget.amount) as? Double
+        amounts.append(amount!)
+    
+        dates.reverse()
+        amounts.reverse()
+        
+        return (dates.count, dates, amounts)
+    }
+    
     // MARK: - function
     
     init(id: String?,
