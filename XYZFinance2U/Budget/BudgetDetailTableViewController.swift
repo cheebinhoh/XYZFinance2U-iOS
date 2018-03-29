@@ -335,6 +335,7 @@ class BudgetDetailTableViewController: UITableViewController,
     
     func saveData() {
         
+        
         // post processing
         var processedHistoricalAmount = [Double]()
         var processedHistoricalStart = [Date]()
@@ -625,8 +626,29 @@ class BudgetDetailTableViewController: UITableViewController,
                     fatalError("Exception: budgetDetailSelectionCell is failed to be created")
                 }
                 
-                currencycell.setLabel("Effective")
-                currencycell.setSelection("\(length), \(formattingCurrencyValue(input: amount, code: currencyCode)) from \(formattingDate(date: date, style: .medium))")
+                let (retlength, retstart, retamount ) = XYZBudget.getEffectiveBudgetDateAmount(length: length.rawValue,
+                                                                                               start: date,
+                                                                                               amount: amount,
+                                                                                               lengths: historicalLength.reversed(),
+                                                                                               starts: historicalStart.reversed(),
+                                                                                               amounts: historicalAmount.reversed())
+                
+                currencycell.setLabel("Current effective")
+                if let _ = retstart {
+                    
+                    currencycell.setSelection("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!), \(formattingDate(date: retstart!, style: .medium))")
+                } else {
+                    
+                    currencycell.setSelection("nil")
+                }
+                
+                if historicalAmount.isEmpty {
+                    
+                    currencycell.accessoryType = .none
+                } else {
+                    
+                    currencycell.accessoryType = .disclosureIndicator
+                }
                 currencycell.selectionStyle = .none
                 
                 cell = currencycell
@@ -791,16 +813,33 @@ class BudgetDetailTableViewController: UITableViewController,
                 for (index, amount) in historicalAmount.enumerated() {
                     
                     let date = historicalStart[index]
-                    let string = "\(historicalLength[index]), \(formattingCurrencyValue(input: amount, code: currencyCode)) from \(formattingDate(date: date, style: .medium))"
+                    let string = "\(formattingCurrencyValue(input: amount, code: currencyCode)), \(historicalLength[index]) from \(formattingDate(date: date, style: .medium))"
+                        
+                        //"\(historicalLength[index]), \(formattingCurrencyValue(input: amount, code: currencyCode)), \(formattingDate(date: date, style: .medium))"
                     
                     selectionStrings.append(string)
                 }
                 
+                selectionStrings.append("\(formattingCurrencyValue(input: amount, code: currencyCode)), \(length.rawValue), \(formattingDate(date: date, style: .medium))")
                 selectionStrings.reverse()
                 
                 selectionTableViewController.setSelections("", false,
                                                            selectionStrings)
-                selectionTableViewController.setSelectedItem("")
+                
+                let (retlength, retstart, retamount ) = XYZBudget.getEffectiveBudgetDateAmount(length: length.rawValue,
+                                                                                               start: date,
+                                                                                               amount: amount,
+                                                                                               lengths: historicalLength.reversed(),
+                                                                                               starts: historicalStart.reversed(),
+                                                                                               amounts: historicalAmount.reversed())
+                
+                if let _ = retstart {
+                    
+                    selectionTableViewController.setSelectedItem("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!) from \(formattingDate(date: retstart!, style: .medium))")
+                } else {
+                    
+                   selectionTableViewController.setSelectedItem("")
+                }
                 
                 selectionTableViewController.delegate = self
                 

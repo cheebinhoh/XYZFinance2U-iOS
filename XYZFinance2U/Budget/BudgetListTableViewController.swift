@@ -46,7 +46,8 @@ class BudgetListTableViewController: UITableViewController {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let expenseList = (appDelegate?.expenseList)!
-            
+        let budgetName = budget?.value(forKey: XYZBudget.name) as? String
+        
         navigationItem.title = budget?.value(forKey: XYZBudget.name) as? String ?? ""
         cellList = [TableCell]()
         
@@ -107,12 +108,20 @@ class BudgetListTableViewController: UITableViewController {
                         let expenseLastDate = Calendar.current.date(byAdding: .day, value: -1, to: end)!
                         let filterExpenseList = expenseList.filter { (expense) -> Bool in
                             
-                            let occurenceDates = expense.getOccurenceDates(until: expenseLastDate)
+                            let expenseBudget = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
                             
-                            return !(occurenceDates.filter({ (date) -> Bool in
+                            if expenseBudget != budgetName {
                                 
-                                return date >= start && date <= expenseLastDate
-                            })).isEmpty
+                                return false
+                            } else {
+                                
+                                let occurenceDates = expense.getOccurenceDates(until: expenseLastDate)
+                                
+                                return !(occurenceDates.filter({ (date) -> Bool in
+                                    
+                                    return date >= start && date <= expenseLastDate
+                                })).isEmpty
+                            }
                         }
                         
                         let tableCell = TableCell(length: "\(length!)", start: start, until: expenseLastDate, amount: amount, spentAmount: 0.0, expenseList: filterExpenseList)

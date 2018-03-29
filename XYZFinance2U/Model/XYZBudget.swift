@@ -204,6 +204,40 @@ class XYZBudget : NSManagedObject {
         }
     }
     
+    static func getEffectiveBudgetDateAmount(length: String,
+                                             start: Date,
+                                             amount: Double,
+                                             lengths: [String],
+                                             starts: [Date],
+                                             amounts: [Double]) -> (String?, Date?, Double?) {
+        
+        var retLength: String?
+        var retAmount: Double?
+        var retStart: Date?
+        let now = Date()
+        
+        if now >= start {
+            
+            retStart = start
+            retAmount = amount
+            retLength = length
+        } else {
+            
+            for (index, startElem) in starts.enumerated() {
+                
+                if now >= startElem {
+                    retStart = startElem
+                    retAmount = amounts[index]
+                    retLength = lengths[index]
+                    
+                    break
+                }
+            }
+        }
+        
+        return (retLength, retStart, retAmount)
+    }
+    
     func getAllBudgetDateAmount() -> (Int, [String], [Date], [Double]) {
         
         var dates = [Date]()
