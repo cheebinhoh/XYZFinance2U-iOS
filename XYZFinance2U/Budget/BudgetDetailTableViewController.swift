@@ -456,13 +456,13 @@ class BudgetDetailTableViewController: UITableViewController,
             color = XYZColor(rawValue: budget?.value(forKey: XYZBudget.color) as? String ?? "")!
             
             let dataAmount = budget?.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
-            historicalAmount = (NSKeyedUnarchiver.unarchiveObject(with: dataAmount) as! [Double])
+            historicalAmount = (NSKeyedUnarchiver.unarchiveObject(with: dataAmount) as? [Double]) ?? [Double]()
             
             let dataStart = budget?.value(forKey: XYZBudget.historicalStart) as? Data ?? NSData() as Data
-            historicalStart = (NSKeyedUnarchiver.unarchiveObject(with: dataStart) as! [Date])
+            historicalStart = (NSKeyedUnarchiver.unarchiveObject(with: dataStart) as? [Date]) ?? [Date]()
             
             let dataLength = budget?.value(forKey: XYZBudget.historicalLength) as? Data ?? NSData() as Data
-            historicalLength = (NSKeyedUnarchiver.unarchiveObject(with: dataLength) as! [String])
+            historicalLength = (NSKeyedUnarchiver.unarchiveObject(with: dataLength) as? [String]) ?? [String]()
             
             nrOfHistoricalItems = historicalStart.count
         } else {
