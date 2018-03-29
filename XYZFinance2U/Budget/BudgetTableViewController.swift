@@ -761,13 +761,16 @@ class BudgetTableViewController: UITableViewController,
             
             fatalError("Exception: BudgetTableViewCell is expected")
         }
-
+        
         let sectionBudgetList = sectionList[indexPath.section].data as? [XYZBudget]
         let budget = sectionBudgetList![indexPath.row]
+        
+        let effectivebudget = budget.getEffectiveBudgetDateAmount()
+        
         let name = budget.value(forKey: XYZBudget.name) as? String
-        let amount = budget.value(forKey: XYZBudget.amount) as? Double
+        let amount = effectivebudget.Amount ?? 0.0
         let currency = budget.value(forKey: XYZBudget.currency) as? String
-        let length = budget.value(forKey: XYZBudget.length) as? String
+        let length = effectivebudget.Length ?? XYZBudget.Length.none.rawValue
         let budgetColor = XYZColor(rawValue: budget.value(forKey: XYZBudget.color) as? String ?? "")
         
         var period = ""
@@ -777,7 +780,9 @@ class BudgetTableViewController: UITableViewController,
             period = "infinite"
         } else {
             
-            let start = formattingDate(date: budget.currentStart!, style: .short) //budget.currentStart
+            var start = "-"
+            
+            start = formattingDate(date: budget.currentStart!, style: .short) //budget.currentStart
             period = "from: \(start)"
         }
         
@@ -785,9 +790,9 @@ class BudgetTableViewController: UITableViewController,
 
         let spendAmount = getTotalSpendAmount(of: budget, from: (appDelegate?.expenseList)!)
 
-        let balance = amount! - spendAmount
+        let balance = amount - spendAmount
         cell.balanceAmount.text = formattingCurrencyValue(input: balance, code: currency!)
-        cell.amount.text = formattingCurrencyValue(input: amount!, code: currency!)
+        cell.amount.text = formattingCurrencyValue(input: amount, code: currency!)
         cell.name.text = name
         cell.length.text = period
         var color = UIColor.black

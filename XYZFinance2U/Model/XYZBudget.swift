@@ -132,12 +132,13 @@ class XYZBudget : NSManagedObject {
     
     var currentEnd: Date? {
         
-        var start = self.value(forKey: XYZBudget.start) as? Date ?? Date()
+        let effectivebudget = self.getEffectiveBudgetDateAmount()
+        var start = effectivebudget.Start ?? Date() //self.value(forKey: XYZBudget.start) as? Date ?? Date()
         let length = XYZBudget.Length(rawValue: self.value(forKey: XYZBudget.length) as? String ?? "none")
         var value: Date? = nil
         let currentDate = max(Date(), start)
 
-        if length! != .none {
+        if let _ = effectivebudget.Start, length! != .none {
             
             repeat {
                 
@@ -202,6 +203,27 @@ class XYZBudget : NSManagedObject {
             
             return value
         }
+    }
+    
+    func getEffectiveBudgetDateAmount() -> (Length: String?, Start: Date?, Amount: Double?) {
+        
+        let dataAmount = self.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
+        let historicalAmount = (NSKeyedUnarchiver.unarchiveObject(with: dataAmount) as? [Double]) ?? [Double]()
+        
+        let dataStart = self.value(forKey: XYZBudget.historicalStart) as? Data ?? NSData() as Data
+        let historicalStart = (NSKeyedUnarchiver.unarchiveObject(with: dataStart) as? [Date]) ?? [Date]()
+        
+        let dataLength = self.value(forKey: XYZBudget.historicalLength) as? Data ?? NSData() as Data
+        let historicalLength = (NSKeyedUnarchiver.unarchiveObject(with: dataLength) as? [String]) ?? [String]()
+        
+        let length = self.value(forKey: XYZBudget.length) as? String ?? ""
+        let amount = self.value(forKey: XYZBudget.amount) as? Double ?? 0.0
+        let start = self.value(forKey: XYZBudget.start) as? Date ?? Date()
+        
+        return XYZBudget.getEffectiveBudgetDateAmount(length: length, start: start, amount: amount,
+                                                      lengths: historicalLength.reversed(),
+                                                      starts: historicalStart.reversed(),
+                                                      amounts: historicalAmount.reversed())
     }
     
     static func getEffectiveBudgetDateAmount(length: String,
