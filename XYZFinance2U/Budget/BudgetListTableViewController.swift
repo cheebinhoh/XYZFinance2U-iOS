@@ -124,6 +124,8 @@ class BudgetListTableViewController: UITableViewController {
                 }
             }
         }
+        
+        cellList.reverse()
     }
     
     private func addBackButton() {
@@ -210,9 +212,28 @@ class BudgetListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-
+        guard let expenseListNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "BudgetExpensesNavigationController") as? UINavigationController else {
+            
+            fatalError("Exception: BudgetListNavigationController is expected")
+        }
         
-        //self.present(budgetExpensesTableViewController, animated: true, completion: {})
+        guard let expenseListViewController = expenseListNavigationController.viewControllers.first as? BudgetExpensesTableViewController else {
+            
+            fatalError("Exception: BudgetListTableViewController is expected" )
+        }
+        
+        expenseListViewController.expenseList = cellList[indexPath.row].expenseList
+        expenseListViewController.addBackButton()
+        expenseListViewController.loadData()
+        expenseListViewController.headerPretext = "\(formattingDate(date: cellList[indexPath.row].start, style: .short)) ... \(formattingDate(date: cellList[indexPath.row].until, style: .short))"
+        expenseListViewController.navigationItem.title = budget?.value(forKey: XYZBudget.name) as? String
+        expenseListViewController.readonly = true
+        expenseListViewController.tableView.allowsSelection = false
+        
+        self.present(expenseListNavigationController, animated: true) {
+            
+            // do nothing
+        }
     }
 
 

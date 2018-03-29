@@ -25,8 +25,29 @@ class BudgetExpensesTableViewController: UITableViewController,
     var expenseList: [XYZExpense]?
     var sectionList = [TableSectionCell]()
     var delegate: BudgetExpenseDelegate?
+    var headerPretext: String?
+    var readonly = false
     
     // MARK: - functions
+    
+    func addBackButton() {
+        
+        let backButton = UIButton(type: .custom)
+        backButton.setImage(UIImage(named: "BackButton"), for: .normal) // Image can be downloaded from here below link
+        backButton.setTitle(" Back", for: .normal)
+        backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
+        backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+    }
+    
+    @IBAction func backAction(_ sender: UIButton) {
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.orientation = UIInterfaceOrientationMask.all
+        
+        dismiss(animated: true, completion: nil)
+    }
     
     func cancelExpense() {
         
@@ -292,7 +313,7 @@ class BudgetExpensesTableViewController: UITableViewController,
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 10)
         stackView.isLayoutMarginsRelativeArrangement = true
         
-        title.text = "Total"
+        title.text = headerPretext ?? "Total"
         title.textColor = UIColor.gray
         stackView.axis = .horizontal
         stackView.addArrangedSubview(title)
@@ -311,140 +332,148 @@ class BudgetExpensesTableViewController: UITableViewController,
                             leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         var commands = [UIContextualAction]()
-        let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
-        let expense = sectionExpenseList![indexPath.row]
         
-        let copy = UIContextualAction(style: .normal, title: "Copy" ) { _, _, handler in
+        if !readonly {
             
-            guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+            let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
+            let expense = sectionExpenseList![indexPath.row]
+            
+            let copy = UIContextualAction(style: .normal, title: "Copy" ) { _, _, handler in
                 
-                fatalError("Exception: ExpenseDetailNavigationController is expected")
+                guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+                    
+                    fatalError("Exception: ExpenseDetailNavigationController is expected")
+                }
+                
+                guard let expenseDetailTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
+                    
+                    fatalError("Exception: ExpenseDetailTableViewController is expected" )
+                }
+                
+                let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                    
+                    fatalError("Exception: UISplitViewController is expected" )
+                }
+                
+                mainSplitView.popOverNavigatorController = expenseDetailNavigationController
+                
+                let detail = expense.value(forKey: XYZExpense.detail) as? String
+                let amount = expense.value(forKey: XYZExpense.amount) as? Double
+                let budgetGroup = expense.value(forKey: XYZExpense.budgetCategory) as? String
+                let date = Date()
+                let currency = expense.value(forKey: XYZExpense.currencyCode) as? String
+                
+                expenseDetailTableView.presetAmount = amount
+                expenseDetailTableView.presetDate = date
+                expenseDetailTableView.presetDetail = detail
+                expenseDetailTableView.presetBudgetCategory = budgetGroup
+                expenseDetailTableView.presetCurrencyCode = currency
+                expenseDetailTableView.setPopover(delegate: self)
+                
+                expenseDetailNavigationController.modalPresentationStyle = .popover
+                handler(true)
+                self.present(expenseDetailNavigationController, animated: true, completion: nil)
             }
             
-            guard let expenseDetailTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
-                
-                fatalError("Exception: ExpenseDetailTableViewController is expected" )
-            }
-            
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
-                
-                fatalError("Exception: UISplitViewController is expected" )
-            }
-            
-            mainSplitView.popOverNavigatorController = expenseDetailNavigationController
-            
-            let detail = expense.value(forKey: XYZExpense.detail) as? String
-            let amount = expense.value(forKey: XYZExpense.amount) as? Double
-            let budgetGroup = expense.value(forKey: XYZExpense.budgetCategory) as? String
-            let date = Date()
-            let currency = expense.value(forKey: XYZExpense.currencyCode) as? String
-            
-            expenseDetailTableView.presetAmount = amount
-            expenseDetailTableView.presetDate = date
-            expenseDetailTableView.presetDetail = detail
-            expenseDetailTableView.presetBudgetCategory = budgetGroup
-            expenseDetailTableView.presetCurrencyCode = currency
-            expenseDetailTableView.setPopover(delegate: self)
-            
-            expenseDetailNavigationController.modalPresentationStyle = .popover
-            handler(true)
-            self.present(expenseDetailNavigationController, animated: true, completion: nil)
+            copy.backgroundColor = UIColor.blue
+            commands.append(copy)
         }
-        
-        copy.backgroundColor = UIColor.blue
-        commands.append(copy)
         
         return UISwipeActionsConfiguration(actions: commands)
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
-        var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
-        let expense = sectionExpenseList![indexPath.row]
+    
         var commands = [UIContextualAction]()
         
-        let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, handler in
+        if !readonly {
             
-            let aContext = managedContext()
-            
-            let oldExpense = sectionExpenseList?.remove(at: indexPath.row)
-            self.sectionList[indexPath.section].data = sectionExpenseList
-            self.expenseList = sectionExpenseList
-            
-            let isSoftDelete = self.softDeleteExpense(expense: oldExpense!)
-            
-            saveManageContext()
-            
-            if isSoftDelete {
-                
-                self.updateToiCloud(oldExpense!)
-            } else {
-                
-                aContext?.delete(oldExpense!)
+            var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
+            let expense = sectionExpenseList![indexPath.row]
 
+            let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, handler in
                 
-                self.updateToiCloud(nil)
-            }
-            
-            self.delegate?.deleteExpense(expense: oldExpense!)
-
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            
-            appDelegate?.expenseList = loadExpenses()!
-            
-            self.delegate?.reloadData()
-            self.loadData()
-            
-            handler(true)
-        }
-        
-        commands.append(delete)
-        
-        let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
-        
-        if !(isShared!) {
-            
-            if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
+                let aContext = managedContext()
                 
-                let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
+                let oldExpense = sectionExpenseList?.remove(at: indexPath.row)
+                self.sectionList[indexPath.section].data = sectionExpenseList
+                self.expenseList = sectionExpenseList
+                
+                let isSoftDelete = self.softDeleteExpense(expense: oldExpense!)
+                
+                saveManageContext()
+                
+                if isSoftDelete {
                     
-                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                    guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
-                        
-                        fatalError("Exception: UISplitViewController is expected" )
-                    }
+                    self.updateToiCloud(oldExpense!)
+                } else {
                     
-                    let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                    let copyUrlOption = UIAlertAction(title: "Share expense url", style: .default, handler: { (action) in
-                        
-                        let vc = UIActivityViewController(activityItems: [url], applicationActivities: [])
-                        self.present(vc, animated: true, completion: {
+                    aContext?.delete(oldExpense!)
 
-                            self.delegate?.reloadData()
-                            self.loadData()
-                        })
-                        
-                        //UIPasteboard.general.string = "\(url)"
-                        
-                        mainSplitView.popOverAlertController = nil
-                        handler(true)
-                    })
                     
-                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-                        
-                        mainSplitView.popOverAlertController = nil
-                        handler(true)
-                    })
-                    
-                    optionMenu.addAction(copyUrlOption)
-                    optionMenu.addAction(cancelAction)
-                    
-                    mainSplitView.popOverAlertController = optionMenu
-                    self.present(optionMenu, animated: true, completion: nil)
+                    self.updateToiCloud(nil)
                 }
                 
-                commands.append(more)
+                self.delegate?.deleteExpense(expense: oldExpense!)
+
+                let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                
+                appDelegate?.expenseList = loadExpenses()!
+                
+                self.delegate?.reloadData()
+                self.loadData()
+                
+                handler(true)
+            }
+            
+            commands.append(delete)
+            
+            let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
+            
+            if !(isShared!) {
+                
+                if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
+                    
+                    let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
+                        
+                        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                            
+                            fatalError("Exception: UISplitViewController is expected" )
+                        }
+                        
+                        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                        let copyUrlOption = UIAlertAction(title: "Share expense url", style: .default, handler: { (action) in
+                            
+                            let vc = UIActivityViewController(activityItems: [url], applicationActivities: [])
+                            self.present(vc, animated: true, completion: {
+
+                                self.delegate?.reloadData()
+                                self.loadData()
+                            })
+                            
+                            //UIPasteboard.general.string = "\(url)"
+                            
+                            mainSplitView.popOverAlertController = nil
+                            handler(true)
+                        })
+                        
+                        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                            
+                            mainSplitView.popOverAlertController = nil
+                            handler(true)
+                        })
+                        
+                        optionMenu.addAction(copyUrlOption)
+                        optionMenu.addAction(cancelAction)
+                        
+                        mainSplitView.popOverAlertController = optionMenu
+                        self.present(optionMenu, animated: true, completion: nil)
+                    }
+                    
+                    commands.append(more)
+                }
             }
         }
         
