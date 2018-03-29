@@ -138,7 +138,7 @@ class XYZBudget : NSManagedObject {
         var value: Date? = nil
         let currentDate = max(Date(), start)
 
-        if let _ = effectivebudget.Start, length! != .none {
+        if length! != .none {
             
             repeat {
                 
