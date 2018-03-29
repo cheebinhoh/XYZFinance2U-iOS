@@ -13,6 +13,7 @@ class BudgetListTableViewController: UITableViewController {
     // MARK: - type
     struct TableCell {
         
+        var length: String
         var start: Date
         var until: Date
         var amount: Double
@@ -114,7 +115,7 @@ class BudgetListTableViewController: UITableViewController {
                             })).isEmpty
                         }
                         
-                        let tableCell = TableCell(start: start, until: expenseLastDate, amount: amount, spentAmount: 0.0, expenseList: filterExpenseList)
+                        let tableCell = TableCell(length: "\(length!)", start: start, until: expenseLastDate, amount: amount, spentAmount: 0.0, expenseList: filterExpenseList)
                         
                         cellList.append(tableCell)
                         
@@ -164,23 +165,56 @@ class BudgetListTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return cellList.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "budgetTableCell", for: indexPath) as? BudgetTableViewCell else {
+            
+            fatalError("Exception: BudgetTableViewCell is expected")
+        }
+        
+        var spentAmount = 0.0;
+        let periodExpenseList = cellList[indexPath.row].expenseList
+        
+        for expense in periodExpenseList {
+            
+            let amount = expense.value(forKey: XYZBudget.amount) as? Double ?? 0.0
+            spentAmount = spentAmount + amount
+        }
+        
+        let balanceAmount = cellList[indexPath.row].amount - spentAmount
+        
+        cell.name.text = cellList[indexPath.row].length
+        cell.length.text = "from: \(formattingDate(date: cellList[indexPath.row].start, style: .short))"
+        cell.amount.text = formattingCurrencyValue(input: cellList[indexPath.row].amount,
+                                                   code: budget?.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode)
+        cell.balanceAmount.text = formattingCurrencyValue(input: balanceAmount,
+                                                          code: budget?.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode)
+        if balanceAmount < 0.0 {
+            
+            cell.balanceAmount.textColor = UIColor.red
+        } else {
+            
+            cell.balanceAmount.textColor = UIColor.black
+        }
+        
         return cell
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+
+        
+        //self.present(budgetExpensesTableViewController, animated: true, completion: {})
+    }
+
 
     /*
     // Override to support conditional editing of the table view.
