@@ -90,7 +90,8 @@ class XYZBudget : NSManagedObject {
         
         var value: Date? = nil
         let date = self.currentEnd
-        let length = XYZBudget.Length(rawValue: self.value(forKey: XYZBudget.length) as? String ?? "none")
+        let effectivebudget = self.getEffectiveBudgetDateAmount()
+        let length = XYZBudget.Length(rawValue: effectivebudget.Length ?? XYZBudget.Length.none.rawValue)
         
         switch length! {
             case .none:
@@ -134,7 +135,7 @@ class XYZBudget : NSManagedObject {
         
         let effectivebudget = self.getEffectiveBudgetDateAmount()
         var start = effectivebudget.Start ?? Date() //self.value(forKey: XYZBudget.start) as? Date ?? Date()
-        let length = XYZBudget.Length(rawValue: self.value(forKey: XYZBudget.length) as? String ?? "none")
+        let length = XYZBudget.Length(rawValue: effectivebudget.Length ?? XYZBudget.Length.none.rawValue )
         var value: Date? = nil
         let currentDate = max(Date(), start)
 

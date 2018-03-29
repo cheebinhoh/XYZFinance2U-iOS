@@ -25,6 +25,7 @@ class SelectionTableViewController: UITableViewController {
     var sectionTitles = [String]()
     var caseInsensitive = false
     var selectionColors = [UIColor]()
+    var readonly = false
     
     // MARK: - function
     
@@ -217,6 +218,17 @@ class SelectionTableViewController: UITableViewController {
         }
         
         return index
+    }
+    
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+
+        if readonly {
+            
+            return nil
+        } else {
+            
+            return indexPath
+        }
     }
     
     /*

@@ -649,7 +649,9 @@ class BudgetDetailTableViewController: UITableViewController,
                     
                     currencycell.accessoryType = .disclosureIndicator
                 }
+                
                 currencycell.selectionStyle = .none
+                currencycell.colorView.backgroundColor = UIColor.clear
                 
                 cell = currencycell
             
@@ -822,7 +824,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 selectionStrings.append("\(formattingCurrencyValue(input: amount, code: currencyCode)), \(length.rawValue), \(formattingDate(date: date, style: .medium))")
                 selectionStrings.reverse()
-                
+                selectionTableViewController.readonly = true
                 selectionTableViewController.setSelections("", false,
                                                            selectionStrings)
                 
