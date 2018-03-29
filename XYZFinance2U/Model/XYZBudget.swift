@@ -211,13 +211,13 @@ class XYZBudget : NSManagedObject {
         var lengths = [String]()
 
         let dataAmount = self.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
-        amounts = (NSKeyedUnarchiver.unarchiveObject(with: dataAmount) as! [Double] )
+        amounts = (NSKeyedUnarchiver.unarchiveObject(with: dataAmount) as? [Double] ) ?? [Double]()
         
         let dataStart = self.value(forKey: XYZBudget.historicalStart) as? Data ?? NSData() as Data
-        dates = (NSKeyedUnarchiver.unarchiveObject(with: dataStart) as! [Date] )
+        dates = (NSKeyedUnarchiver.unarchiveObject(with: dataStart) as? [Date] ) ?? [Date]()
         
         let dataLength = self.value(forKey: XYZBudget.historicalLength) as? Data ?? NSData() as Data
-        lengths = (NSKeyedUnarchiver.unarchiveObject(with: dataLength) as! [String] )
+        lengths = (NSKeyedUnarchiver.unarchiveObject(with: dataLength) as? [String] ) ?? [String]()
         
         let date = self.value(forKey: XYZBudget.start) as? Date
         dates.append(date!)
