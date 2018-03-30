@@ -777,7 +777,7 @@ class BudgetTableViewController: UITableViewController,
        
         if length == XYZBudget.Length.none.rawValue {
             
-            period = "Till today"
+            period = "from: ∞"
         } else {
             
             let start = formattingDate(date: budget.currentStart!, style: .short)
