@@ -815,7 +815,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 for (index, amount) in historicalAmount.enumerated() {
                     
                     let date = historicalStart[index]
-                    let string = "\(formattingCurrencyValue(input: amount, code: currencyCode)), \(historicalLength[index]) from \(formattingDate(date: date, style: .medium))"
+                    let string = "\(formattingCurrencyValue(input: amount, code: currencyCode)), \(historicalLength[index]), \(formattingDate(date: date, style: .medium))"
                         
                         //"\(historicalLength[index]), \(formattingCurrencyValue(input: amount, code: currencyCode)), \(formattingDate(date: date, style: .medium))"
                     
@@ -837,7 +837,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 if let _ = retstart {
                     
-                    selectionTableViewController.setSelectedItem("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!) from \(formattingDate(date: retstart!, style: .medium))")
+                    selectionTableViewController.setSelectedItem("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!), \(formattingDate(date: retstart!, style: .medium))")
                 } else {
                     
                    selectionTableViewController.setSelectedItem("")
