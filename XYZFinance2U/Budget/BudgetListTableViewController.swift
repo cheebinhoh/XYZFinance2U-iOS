@@ -282,6 +282,7 @@ class BudgetListTableViewController: UITableViewController {
         expenseListViewController.navigationItem.title = budget?.value(forKey: XYZBudget.name) as? String
         expenseListViewController.readonly = true
         expenseListViewController.tableView.allowsSelection = false
+        expenseListViewController.monthYearDate = cellList[indexPath.row].start
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         appDelegate?.orientation = UIInterfaceOrientationMask.portrait
