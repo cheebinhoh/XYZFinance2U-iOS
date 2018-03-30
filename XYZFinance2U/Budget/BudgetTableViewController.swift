@@ -774,20 +774,18 @@ class BudgetTableViewController: UITableViewController,
         let budgetColor = XYZColor(rawValue: budget.value(forKey: XYZBudget.color) as? String ?? "")
         
         var period = ""
-        
+       
         if length == XYZBudget.Length.none.rawValue {
             
-            period = "infinite"
+            period = "Till today"
         } else {
             
-            var start = "-"
-            
-            start = formattingDate(date: budget.currentStart!, style: .short) //budget.currentStart
+            let start = formattingDate(date: budget.currentStart!, style: .short)
             period = "from: \(start)"
         }
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-
+    
         let spendAmount = getTotalSpendAmount(of: budget, from: (appDelegate?.expenseList)!)
 
         let balance = amount - spendAmount
