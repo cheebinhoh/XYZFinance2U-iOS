@@ -239,6 +239,9 @@ class BudgetListTableViewController: UITableViewController {
         expenseListViewController.readonly = true
         expenseListViewController.tableView.allowsSelection = false
         
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.orientation = UIInterfaceOrientationMask.portrait
+        
         self.present(expenseListNavigationController, animated: true) {
             
             // do nothing
