@@ -53,21 +53,60 @@ class BudgetListTableViewController: UITableViewController {
         
         if let _ = budget {
             
-            let (count, lengths, dates, amounts) = (budget?.getAllBudgetDateAmount())!
+            var (count, lengths, dates, amounts) = (budget?.getAllBudgetDateAmount())!
+            
+            let nowIsCovered = dates.contains { (start) -> Bool in
+            
+                return start <= Date()
+            }
+            
+            if !nowIsCovered {
+                
+                if let _ = budget?.currentStart {
+                    
+                    dates.insert((budget?.currentStart)!, at: 0)
+                    amounts.insert(0.0, at: 0)
+                    lengths.insert(XYZBudget.Length.none.rawValue, at: 0)
+                    count = count + 1
+                }
+            }
             
             for index in 0..<count {
             
                 let length = XYZBudget.Length(rawValue: lengths[index])
                 let amount = amounts[index]
                 var start = dates[index]
-                var untilDate = Calendar.current.date(byAdding: .day, value: 1, to: Date())
+                let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: Date())
+                let dateOnly = Calendar.current.date(from: dateComponent)
+                var untilDate = Calendar.current.date(byAdding: .day, value: 1, to: dateOnly!)
                 if index < (count - 1) {
                 
                     untilDate = min(untilDate!, dates[index + 1])
                 }
                 
                 if length == XYZBudget.Length.none {
+                
+                    let filterExpenseList = expenseList.filter { (expense) -> Bool in
+                        
+                        let expenseBudget = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
+                        
+                        if expenseBudget != budgetName {
+                            
+                            return false
+                        } else {
+                            
+                            let occurenceDates = expense.getOccurenceDates(until: untilDate!)
+                            
+                            return !(occurenceDates.filter({ (date) -> Bool in
+                                
+                                return date >= start && date <= untilDate!
+                            })).isEmpty
+                        }
+                    }
                     
+                    let tableCell = TableCell(length: "\(length!)", start: start, until: untilDate!, amount: amounts[index], spentAmount: 0.0, expenseList: filterExpenseList)
+                    
+                    cellList.append(tableCell)
                 } else {
                     
                     while start < untilDate! {
@@ -203,6 +242,11 @@ class BudgetListTableViewController: UITableViewController {
         let balanceAmount = cellList[indexPath.row].amount - spentAmount
         
         cell.name.text = cellList[indexPath.row].length
+        if cellList[indexPath.row].length == XYZBudget.Length.none.rawValue {
+            
+            cell.name.text = "∞"
+        }
+        
         cell.length.text = "from: \(formattingDate(date: cellList[indexPath.row].start, style: .short))"
         cell.amount.text = formattingCurrencyValue(input: cellList[indexPath.row].amount,
                                                    code: budget?.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode)

@@ -309,6 +309,12 @@ class XYZBudget : NSManagedObject {
         let date = self.value(forKey: XYZBudget.start) as? Date
         dates.append(date!)
         
+        dates = dates.map({ (date) -> Date in
+            
+            let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: date)
+            return Calendar.current.date(from: dateComponent)!
+        })
+        
         let amount = self.value(forKey: XYZBudget.amount) as? Double
         amounts.append(amount!)
         
