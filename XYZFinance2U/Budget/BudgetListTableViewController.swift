@@ -247,14 +247,17 @@ class BudgetListTableViewController: UITableViewController {
         }
         
         let balanceAmount = cellList[indexPath.row].amount - spentAmount
-        
+    
         cell.name.text = cellList[indexPath.row].length
         if cellList[indexPath.row].length == XYZBudget.Length.none.rawValue {
             
             cell.name.text = "∞"
         }
         
-        cell.length.text = "from: \(formattingDate(date: cellList[indexPath.row].start, style: .short))"
+        let periodEnd = XYZBudget.getEndDate(of: cellList[indexPath.row].start, in: XYZBudget.Length(rawValue: cellList[indexPath.row].length)!)
+                            ?? Date()
+        
+        cell.length.text = "\(formattingDate(date: cellList[indexPath.row].start, style: .short)) ... \(formattingDate(date: periodEnd, style: .short))"
         cell.amount.text = formattingCurrencyValue(input: cellList[indexPath.row].amount,
                                                    code: budget?.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode)
         cell.balanceAmount.text = formattingCurrencyValue(input: balanceAmount,
