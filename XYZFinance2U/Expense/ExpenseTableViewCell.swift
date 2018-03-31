@@ -16,6 +16,7 @@ class ExpenseTableViewCell: UITableViewCell {
     @IBOutlet weak var amount: UILabel!
     @IBOutlet weak var colorView: UIView!
     @IBOutlet weak var dotColorView: UIView!
+    @IBOutlet weak var cellContentView: UIView!
     
     var monthYearDate: Date?
     

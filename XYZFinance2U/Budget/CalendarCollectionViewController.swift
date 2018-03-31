@@ -774,6 +774,7 @@ class CalendarCollectionViewController: UICollectionViewController,
                 fatalError("Exception: budgetExpensesTableViewController is expected")
             }
         
+            budgetExpensesTableViewController.hasDisclosureIndicator = true
             self.budgetExpensesTableViewController = budgetExpensesTableViewController
             cell.stack.addArrangedSubview(budgetExpensesTableViewController.tableView)
             self.budgetExpensesTableViewController?.delegate = self

@@ -27,6 +27,7 @@ class BudgetExpensesTableViewController: UITableViewController,
     var delegate: BudgetExpenseDelegate?
     var headerPretext: String?
     var readonly = false
+    var hasDisclosureIndicator = false
     
     // MARK: - functions
     
@@ -195,6 +196,19 @@ class BudgetExpensesTableViewController: UITableViewController,
         cell.monthYearDate = monthYearDate
         cell.setExpense(expense: expense)
         
+        if hasDisclosureIndicator {
+            
+            cell.accessoryType = .disclosureIndicator
+
+            for constraint in cell.cellContentView.constraints {
+                
+                if constraint.identifier == "amount" {
+                    
+                    constraint.constant = 5
+                }
+            }
+        }
+        
         return cell
     }
 
@@ -310,7 +324,13 @@ class BudgetExpensesTableViewController: UITableViewController,
             currencyCode = expense.value(forKey: XYZExpense.currencyCode) as? String
         }
         
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 10)
+        if hasDisclosureIndicator {
+            
+            stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 43)
+        } else {
+            
+            stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        }
         stackView.isLayoutMarginsRelativeArrangement = true
         
         title.text = headerPretext ?? "Total"
