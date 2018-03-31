@@ -390,13 +390,6 @@ class BudgetTableViewController: UITableViewController,
         let name = budget.value(forKey: XYZBudget.name) as? String ?? ""
         let currentStart = budget.currentStart
         let currentEnd = budget.currentEnd
-        var periodEnd: Date? = nil
-        
-        if let _ = currentEnd {
-            
-            periodEnd = min( Calendar.current.date(byAdding: .day, value: -1, to: currentEnd!)!,
-                             Date() )
-        }
         
         for expense in expenseList {
         
@@ -418,7 +411,7 @@ class BudgetTableViewController: UITableViewController,
                     occurenceDates = expense.getOccurenceDates(until: Date())
                 } else {
                     
-                    occurenceDates = expense.getOccurenceDates(until: periodEnd!)
+                    occurenceDates = expense.getOccurenceDates(until: currentEnd!)
 
                     occurenceDates = occurenceDates?.filter({ (date) -> Bool in
                         
@@ -770,19 +763,13 @@ class BudgetTableViewController: UITableViewController,
         let name = budget.value(forKey: XYZBudget.name) as? String
         let amount = effectivebudget.Amount ?? 0.0
         let currency = budget.value(forKey: XYZBudget.currency) as? String
-        let length = effectivebudget.Length ?? XYZBudget.Length.none.rawValue
         let budgetColor = XYZColor(rawValue: budget.value(forKey: XYZBudget.color) as? String ?? "")
         
-        var period = ""
-       
-        if length == XYZBudget.Length.none.rawValue {
+        var period = "∞"
+        if let currentStart = budget.currentStart, let currentEnd = budget.currentEnd {
             
-            let start = formattingDate(date: budget.currentStart ?? Date(), style: .short)
-            period = "from: \(start)"
-        } else {
-            
-            let start = formattingDate(date: budget.currentStart!, style: .short)
-            period = "from: \(start)"
+            let periodEnd = Calendar.current.date(byAdding: .day, value: -1, to: currentEnd)
+            period = "\(formattingDate(date: currentStart, style: .short)) ... \(formattingDate(date: periodEnd!, style: .short))"
         }
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate

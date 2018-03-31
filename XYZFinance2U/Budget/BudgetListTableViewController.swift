@@ -54,7 +54,7 @@ class BudgetListTableViewController: UITableViewController {
         if let _ = budget {
             
             var (count, lengths, dates, amounts) = (budget?.getAllBudgetDateAmount())!
-            
+        
             let nowIsCovered = dates.contains { (start) -> Bool in
             
                 return start <= Date()
@@ -71,6 +71,7 @@ class BudgetListTableViewController: UITableViewController {
                 }
             }
             
+            print("==== \(count)")
             for index in 0..<count {
             
                 let length = XYZBudget.Length(rawValue: lengths[index])
@@ -79,6 +80,9 @@ class BudgetListTableViewController: UITableViewController {
                 let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: Date())
                 let dateOnly = Calendar.current.date(from: dateComponent)
                 var untilDate = Calendar.current.date(byAdding: .day, value: 1, to: dateOnly!)
+                
+                untilDate = min( XYZBudget.getEndDate(of: start, in:length!) ?? untilDate!, untilDate! )
+                
                 if index < (count - 1) {
                 
                     untilDate = min(untilDate!, dates[index + 1])
@@ -86,27 +90,30 @@ class BudgetListTableViewController: UITableViewController {
                 
                 if length == XYZBudget.Length.none {
                 
-                    let filterExpenseList = expenseList.filter { (expense) -> Bool in
+                    if start < untilDate! {
                         
-                        let expenseBudget = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
-                        
-                        if expenseBudget != budgetName {
+                        let filterExpenseList = expenseList.filter { (expense) -> Bool in
                             
-                            return false
-                        } else {
+                            let expenseBudget = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
                             
-                            let occurenceDates = expense.getOccurenceDates(until: untilDate!)
-                            
-                            return !(occurenceDates.filter({ (date) -> Bool in
+                            if expenseBudget != budgetName {
                                 
-                                return date >= start && date <= untilDate!
-                            })).isEmpty
+                                return false
+                            } else {
+                                
+                                let occurenceDates = expense.getOccurenceDates(until: untilDate!)
+                                
+                                return !(occurenceDates.filter({ (date) -> Bool in
+                                    
+                                    return date >= start && date < untilDate!
+                                })).isEmpty
+                            }
                         }
+                        
+                        let tableCell = TableCell(length: "\(length!)", start: start, until: untilDate!, amount: amounts[index], spentAmount: 0.0, expenseList: filterExpenseList)
+                        
+                        cellList.append(tableCell)
                     }
-                    
-                    let tableCell = TableCell(length: "\(length!)", start: start, until: untilDate!, amount: amounts[index], spentAmount: 0.0, expenseList: filterExpenseList)
-                    
-                    cellList.append(tableCell)
                 } else {
                     
                     while start < untilDate! {
