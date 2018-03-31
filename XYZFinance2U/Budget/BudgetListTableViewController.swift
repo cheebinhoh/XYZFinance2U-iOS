@@ -287,10 +287,7 @@ class BudgetListTableViewController: UITableViewController {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         appDelegate?.orientation = UIInterfaceOrientationMask.portrait
         
-        self.present(expenseListNavigationController, animated: true) {
-            
-            // do nothing
-        }
+        self.present(expenseListNavigationController, animated: true, completion: nil)
     }
 
 
