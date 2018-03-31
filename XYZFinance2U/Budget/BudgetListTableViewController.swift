@@ -71,17 +71,15 @@ class BudgetListTableViewController: UITableViewController {
                 }
             }
             
-            print("==== \(count)")
             for index in 0..<count {
             
                 let length = XYZBudget.Length(rawValue: lengths[index])
                 let amount = amounts[index]
                 var start = dates[index]
                 let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: Date())
-                let dateOnly = Calendar.current.date(from: dateComponent)
-                var untilDate = Calendar.current.date(byAdding: .day, value: 1, to: dateOnly!)
-                
-                untilDate = min( XYZBudget.getEndDate(of: start, in:length!) ?? untilDate!, untilDate! )
+                var untilDate = Calendar.current.date(from: dateComponent)
+
+                untilDate = max( XYZBudget.getEndDate(of: start, in:length!) ?? untilDate!, untilDate! )
                 
                 if index < (count - 1) {
                 
@@ -118,40 +116,9 @@ class BudgetListTableViewController: UITableViewController {
                     
                     while start < untilDate! {
                         
-                        var end = start
+                        let end = XYZBudget.getEndDate(of: start, in: length!)
                         
-                        switch length! {
-                            
-                        case .none:
-                            fatalError("Exception: .none is not expected")
-                        
-                        case .daily:
-                            end = Calendar.current.date(byAdding: .day, value: 1, to: end)!
-                            break
-                            
-                        case .weekly:
-                            end = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: end)!
-                            break
-                            
-                        case .biweekly:
-                            end = Calendar.current.date(byAdding: .weekOfYear, value: 2, to: end)!
-                            break
-                        
-                        case .monthly:
-                            end = Calendar.current.date(byAdding: .month, value: 1, to: end)!
-                            break
-                            
-                        case .halfyearly:
-                            end = Calendar.current.date(byAdding: .month, value: 6, to: end)!
-                            break
-                            
-                        case .yearly:
-                            end = Calendar.current.date(byAdding: .year, value: 1, to: end)!
-                            break
-                        }
-                    
-                        end = min(end, untilDate!)
-                        let expenseLastDate = Calendar.current.date(byAdding: .day, value: -1, to: end)!
+                        let expenseLastDate = Calendar.current.date(byAdding: .day, value: -1, to: end!)!
                         let filterExpenseList = expenseList.filter { (expense) -> Bool in
                             
                             let expenseBudget = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
@@ -174,7 +141,7 @@ class BudgetListTableViewController: UITableViewController {
                         
                         cellList.append(tableCell)
                         
-                        start = end
+                        start = end!
                     }
                 }
             }
@@ -254,8 +221,7 @@ class BudgetListTableViewController: UITableViewController {
             cell.name.text = "∞"
         }
         
-        let periodEnd = XYZBudget.getEndDate(of: cellList[indexPath.row].start, in: XYZBudget.Length(rawValue: cellList[indexPath.row].length)!)
-                            ?? Date()
+        let periodEnd = cellList[indexPath.row].until
         
         cell.length.text = "\(formattingDate(date: cellList[indexPath.row].start, style: .short)) ... \(formattingDate(date: periodEnd, style: .short))"
         cell.amount.text = formattingCurrencyValue(input: cellList[indexPath.row].amount,

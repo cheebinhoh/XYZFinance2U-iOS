@@ -121,43 +121,6 @@ class XYZBudget : NSManagedObject {
             
             return value
  
-            /*
-            switch length! {
-                case .none:
-                    value = effectivebudget.Start!
-                    break
-                
-                case .daily:
-                    value = Calendar.current.date(byAdding: .day,
-                                                  value:-1,
-                                                  to: date!)
-                
-                case .weekly:
-                    value = Calendar.current.date(byAdding: .weekOfYear,
-                                                  value:-1,
-                                                  to: date!)
-                
-                case .biweekly:
-                    value = Calendar.current.date(byAdding: .weekOfYear,
-                                                  value:-2,
-                                                  to: date!)
-                
-                case .monthly:
-                    value = Calendar.current.date(byAdding: .month,
-                                                  value:-1,
-                                                  to: date!)
-                
-                case .halfyearly:
-                    value = Calendar.current.date(byAdding: .month,
-                                                  value:-6,
-                                                  to: date!)
-                
-                case .yearly:
-                    value = Calendar.current.date(byAdding: .year,
-                                                  value:-1,
-                                                  to: date!)
-            }
-            */
         } else if let _ = self.currentEnd {
             
             var dateComponents = DateComponents()
