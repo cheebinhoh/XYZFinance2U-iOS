@@ -113,8 +113,8 @@ class BudgetListTableViewController: UITableViewController {
                         cellList.append(tableCell)
                     }
                 } else {
-                    
-                    while start < untilDate! {
+                
+                    while start <= untilDate! {
                         
                         let end = XYZBudget.getEndDate(of: start, in: length!)
                         
