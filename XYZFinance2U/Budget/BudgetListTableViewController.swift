@@ -76,8 +76,10 @@ class BudgetListTableViewController: UITableViewController {
                 let length = XYZBudget.Length(rawValue: lengths[index])
                 let amount = amounts[index]
                 var start = dates[index]
+                
                 let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: Date())
-                var untilDate = Calendar.current.date(from: dateComponent)
+                let today = Calendar.current.date(from: dateComponent)
+                var untilDate = Calendar.current.date(byAdding: .day, value: 1, to: today!)
 
                 untilDate = max( XYZBudget.getEndDate(of: start, in:length!) ?? untilDate!, untilDate! )
                 
@@ -113,8 +115,8 @@ class BudgetListTableViewController: UITableViewController {
                         cellList.append(tableCell)
                     }
                 } else {
-                
-                    while start <= untilDate! {
+                    
+                    while start < untilDate! {
                         
                         let end = XYZBudget.getEndDate(of: start, in: length!)
                         
