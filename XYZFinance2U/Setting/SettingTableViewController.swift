@@ -9,6 +9,7 @@
 import UIKit
 import os.log
 import LocalAuthentication
+import CloudKit
 
 class SettingTableViewController: UITableViewController,
     UISplitViewControllerDelegate,
@@ -108,7 +109,7 @@ class SettingTableViewController: UITableViewController,
         
         if tableViewController.iCloudEnable {
             
-            let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export", "SynciCloud"], data: nil)
+            let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export", "SynciCloud", "DeleteData"], data: nil)
             tableSectionCellList.append(exportSection)
         }
         
@@ -208,41 +209,51 @@ class SettingTableViewController: UITableViewController,
                 newcell.accessoryType = .none
                 cell = newcell
             
-        case "Lockout" :
-            guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
+            case "DeleteData":
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
+                    
+                    fatalError("Exception: error on creating settingTableCell")
+                }
                 
-                fatalError("Exception: error on creating settingTableCell")
-            }
+                newcell.title.text = "Delete data"
+                newcell.accessoryType = .none
+                cell = newcell
             
-            newcell.title.text = "Lock out"
-            newcell.accessoryType = .none
-            cell = newcell
+            case "Lockout" :
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
+                    
+                    fatalError("Exception: error on creating settingTableCell")
+                }
+                
+                newcell.title.text = "Lock out"
+                newcell.accessoryType = .none
+                cell = newcell
 
-        case "requiredauthentication" :
-            guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
-                
-                fatalError("Exception: error on creating settingTableCell")
-            }
+            case "requiredauthentication" :
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
+                    
+                    fatalError("Exception: error on creating settingTableCell")
+                }
 
-            let defaults = UserDefaults.standard;
-            let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
-            
-            newcell.title.text = "Require authentication"
-            newcell.accessoryType = .none
-            
-            if nil == newcell.optionSwitch {
+                let defaults = UserDefaults.standard;
+                let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
                 
-                newcell.addUISwitch()
-                newcell.delegate = self
-            }
+                newcell.title.text = "Require authentication"
+                newcell.accessoryType = .none
+                
+                if nil == newcell.optionSwitch {
+                    
+                    newcell.addUISwitch()
+                    newcell.delegate = self
+                }
+                
+                newcell.optionSwitch.isOn = required
+                
+                // newcell.accessoryType = required ? .checkmark : .none
+                cell = newcell
             
-            newcell.optionSwitch.isOn = required
-            
-            // newcell.accessoryType = required ? .checkmark : .none
-            cell = newcell
-            
-            default:
-                fatalError("Exception: \(tableSectionCellList[indexPath.section].cellList[indexPath.row]) is not supported")
+                default:
+                    fatalError("Exception: \(tableSectionCellList[indexPath.section].cellList[indexPath.row]) is not supported")
         }
         
         return cell!
@@ -486,6 +497,215 @@ class SettingTableViewController: UITableViewController,
         }
     }
     
+    func deleteIncomesLocallyAndFromiCloud() {
+        
+        let ckrecordzone = CKRecordZone(zoneName: XYZAccount.type)
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        guard let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
+            
+            fatalError("Exception: iCloudZoen is expected")
+        }
+        
+        guard let data = zone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
+            
+            fatalError("Exception: data is expected for deleteRecordIdList")
+        }
+        
+        guard var deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+            
+            fatalError("Exception: deleteRecordList is expected as [String]")
+        }
+        
+        for income in (appDelegate?.incomeList)! {
+            
+            let recordName = income.value(forKey: XYZAccount.recordId) as? String
+            deleteRecordLiset.append(recordName!)
+            
+            managedContext()?.delete(income)
+        }
+        
+        let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
+        zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
+
+        saveManageContext()
+        appDelegate?.incomeList = [XYZAccount]()
+        zone.data = appDelegate?.incomeList
+        
+        guard let splitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: UISplitViewController is expected" )
+        }
+        
+        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+            
+            fatalError("Exception: MainUITabBarController is expected")
+        }
+        
+        guard let incomeNavController = tabbarView.viewControllers?[0] as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+        
+        guard let incomeView = incomeNavController.viewControllers.first as? IncomeTableViewController else {
+            
+            fatalError("Exception: ExpenseTableViewController is expected")
+        }
+        
+        incomeView.reloadData()
+        
+        fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
+                             [ckrecordzone],
+                             [zone], {
+                                
+        })
+    }
+    
+    func deleteExpensesLocallyAndFromiCloud() {
+        
+        let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+
+        guard let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
+            
+            fatalError("Exception: iCloudZoen is expected")
+        }
+        
+        guard let data = zone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
+            
+            fatalError("Exception: data is expected for deleteRecordIdList")
+        }
+        
+        guard var deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+            
+            fatalError("Exception: deleteRecordList is expected as [String]")
+        }
+        
+        guard let shareRecordNameData = zone.value(forKey: XYZiCloudZone.deleteShareRecordIdList) as? Data else {
+            
+            fatalError("Exception: data is expected for deleteRecordIdList")
+        }
+        
+        guard var deleteShareRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: shareRecordNameData) as? [String]) else {
+            
+            fatalError("Exception: deleteRecordList is expected as [String]")
+        }
+        
+        for expense in (appDelegate?.expenseList)! {
+            
+            let recordName = expense.value(forKey: XYZExpense.recordId) as? String
+            deleteRecordLiset.append(recordName!)
+            
+            if let shareRecordName = expense.value(forKey: XYZExpense.shareRecordId) as? String {
+                
+                deleteShareRecordLiset.append(shareRecordName)
+            }
+            
+            managedContext()?.delete(expense)
+        }
+        
+        let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
+        zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
+        
+        let savedDeleteShareRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteShareRecordLiset )
+        zone.setValue(savedDeleteShareRecordLiset, forKey: XYZiCloudZone.deleteShareRecordIdList)
+        
+        saveManageContext()
+        appDelegate?.expenseList = [XYZExpense]()
+        zone.data = appDelegate?.expenseList
+        
+        guard let splitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: UISplitViewController is expected" )
+        }
+        
+        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+            
+            fatalError("Exception: MainUITabBarController is expected")
+        }
+        
+        guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+        
+        guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+            
+            fatalError("Exception: ExpenseTableViewController is expected")
+        }
+        
+        expenseView.reloadData()
+        
+        fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
+                             [ckrecordzone],
+                             [zone], {
+
+        })
+    }
+    
+    func deletebudgetsLocallyAndFromiCloud() {
+        
+        let ckrecordzone = CKRecordZone(zoneName: XYZBudget.type)
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        guard let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
+            
+            fatalError("Exception: iCloudZoen is expected")
+        }
+        
+        guard let data = zone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
+            
+            fatalError("Exception: data is expected for deleteRecordIdList")
+        }
+        
+        guard var deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+            
+            fatalError("Exception: deleteRecordList is expected as [String]")
+        }
+        
+        for budget in (appDelegate?.budgetList)! {
+            
+            let recordName = budget.value(forKey: XYZBudget.recordId) as? String
+            deleteRecordLiset.append(recordName!)
+            
+            managedContext()?.delete(budget)
+        }
+        
+        let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
+        zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
+        
+        saveManageContext()
+        appDelegate?.budgetList = [XYZBudget]()
+        zone.data = appDelegate?.budgetList
+        
+        guard let splitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: UISplitViewController is expected" )
+        }
+        
+        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+            
+            fatalError("Exception: MainUITabBarController is expected")
+        }
+        
+        guard let budgetNavController = tabbarView.viewControllers?[2] as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+        
+        guard let budgetView = budgetNavController.viewControllers.first as? BudgetTableViewController else {
+            
+            fatalError("Exception: ExpenseTableViewController is expected")
+        }
+        
+        budgetView.reloadData()
+        
+        fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
+                             [ckrecordzone],
+                             [zone], {
+        })
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -521,6 +741,39 @@ class SettingTableViewController: UITableViewController,
             })
             
             optionMenu.addAction(saveExpenseOption)
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:{ (action) in
+                
+                mainSplitView.popOverAlertController = nil
+            })
+            
+            optionMenu.addAction(cancelAction)
+            mainSplitView.popOverAlertController = optionMenu
+            
+            present(optionMenu, animated: true, completion: nil)
+        } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "DeleteData" {
+        
+            let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            let deleteIncomes = UIAlertAction(title: "Delete incomes", style: .default, handler: { (action) in
+
+                self.deleteIncomesLocallyAndFromiCloud()
+            })
+            
+            optionMenu.addAction(deleteIncomes)
+            
+            let deleteExpenses = UIAlertAction(title: "Delete expenses", style: .default, handler: { (action) in
+                
+                self.deleteExpensesLocallyAndFromiCloud()
+            })
+            
+            optionMenu.addAction(deleteExpenses)
+            
+            let deletebudgets = UIAlertAction(title: "Delete budgets", style: .default, handler: { (action) in
+                
+                self.deletebudgetsLocallyAndFromiCloud()
+            })
+            
+            optionMenu.addAction(deletebudgets)
             
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:{ (action) in
                 
