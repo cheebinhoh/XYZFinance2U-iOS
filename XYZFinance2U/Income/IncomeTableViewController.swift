@@ -908,6 +908,7 @@ class IncomeTableViewController: UITableViewController,
             (amount, _) = sectionTotal(section: indexPath.section - 1)
         }
         
+        /* OLD CODE
         let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -931,6 +932,7 @@ class IncomeTableViewController: UITableViewController,
             })
             
             optionMenu.addAction(copyUrlOption)
+        
             optionMenu.addAction(cancelAction)
             
             self.present(optionMenu, animated: true, completion: {
@@ -940,7 +942,8 @@ class IncomeTableViewController: UITableViewController,
         }
         
         commands.append(more)
-        
+        */
+ 
         return UISwipeActionsConfiguration(actions: commands)
     }
     
