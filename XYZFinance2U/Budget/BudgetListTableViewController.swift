@@ -11,6 +11,7 @@ import UIKit
 class BudgetListTableViewController: UITableViewController {
     
     // MARK: - type
+    
     struct TableCell {
         
         var length: String
@@ -22,6 +23,7 @@ class BudgetListTableViewController: UITableViewController {
     }
     
     // MARK: - property
+    
     var budget: XYZBudget?
     var cellList = [TableCell]()
     
