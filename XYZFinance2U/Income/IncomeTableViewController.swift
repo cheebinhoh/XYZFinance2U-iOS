@@ -878,6 +878,9 @@ class IncomeTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
+        let commands = [UIContextualAction]()
+        
+        /* OLD CODE
         var commands = [UIContextualAction]()
         var amount = 0.0
         
@@ -908,7 +911,6 @@ class IncomeTableViewController: UITableViewController,
             (amount, _) = sectionTotal(section: indexPath.section - 1)
         }
         
-        /* OLD CODE
         let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate

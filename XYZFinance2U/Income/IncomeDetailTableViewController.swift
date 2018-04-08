@@ -186,12 +186,13 @@ class IncomeDetailTableViewController: UITableViewController,
     }
     
     func textDidEndEditing(_ sender: IncomeDetailTextTableViewCell) {
-        
+
         if modalEditing {
             
             guard let index = tableView.indexPath(for: sender) else {
                 
-                fatalError("Exception: index path is expected")
+                return
+                //fatalError("Exception: index path is expected")
             }
             
             switch tableSectionCellList[index.section].cellList[index.row] {
