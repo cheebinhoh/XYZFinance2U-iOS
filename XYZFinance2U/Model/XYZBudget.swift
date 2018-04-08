@@ -153,15 +153,6 @@ class XYZBudget : NSManagedObject {
             
             let untilDate = afterToday
             
-            /*
-            let allbudgets = self.getAllBudgetDateAmount()
-            let index = allbudgets.Starts.index(of: effectivebudget.Start!)
-            if let _ = index, index! < allbudgets.Starts.count - 1 {
-                
-                untilDate = allbudgets.Starts[index! + 1]
-            }
-             */
-            
             var endOfStart = XYZBudget.getEndDate(of: startDateOnly!, in: length!) ?? untilDate
             
             while (endOfStart! < untilDate!) {
