@@ -331,6 +331,7 @@ class BudgetExpensesTableViewController: UITableViewController,
             
             stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         }
+        
         stackView.isLayoutMarginsRelativeArrangement = true
         
         title.text = headerPretext ?? "Total"
@@ -431,7 +432,6 @@ class BudgetExpensesTableViewController: UITableViewController,
                     
                     aContext?.delete(oldExpense!)
 
-                    
                     self.updateToiCloud(nil)
                 }
                 
@@ -472,8 +472,6 @@ class BudgetExpensesTableViewController: UITableViewController,
                                 self.delegate?.reloadData()
                                 self.loadData()
                             })
-                            
-                            //UIPasteboard.general.string = "\(url)"
                             
                             mainSplitView.popOverAlertController = nil
                             handler(true)
