@@ -945,9 +945,16 @@ class SettingTableViewController: UITableViewController,
     
     func expenseFileContent() -> String {
         
+        var currencyCodes: Set<String> = []
         var text = "Number\tDetail\tDate\tCurrency\tAmount\tCategory\n"
         let expenseList = sortExpenses(loadExpenses()!)
 
+        expenseList.forEach { (expense) in
+        
+            let currencyCode = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
+            currencyCodes.insert(currencyCode!)
+        }
+        
         let nowDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: Date())
         let nowDate = Calendar.current.date(from: nowDateComponents)
         var startDate = Calendar.current.date(byAdding: .month, value: -12, to: nowDate!)
@@ -971,40 +978,50 @@ class SettingTableViewController: UITableViewController,
         }
         
         var index = 0
+        let originalStartDate = startDate!
         
-        while startDate! < nowDate! {
-            
-            let dayfilteredExpenseList = filteredExpenseList.filter { (expense) -> Bool in
+        for currencyCode in currencyCodes.sorted() {
+
+            startDate = originalStartDate
+            while startDate! < nowDate! {
                 
-                let occurrenceDates = expense.getOccurenceDates(until: startDate!)
-                var found = false
-                
-                for occurDate in occurrenceDates {
+                let dayfilteredExpenseList = filteredExpenseList.filter { (expense) -> Bool in
                     
-                    if occurDate >= startDate! && occurDate <= startDate! {
+                    let expenseCurrencyCode = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
+                    var found = false
+                    
+                    if expenseCurrencyCode == currencyCode {
                         
-                        found = true
-                        break
+                        let occurrenceDates = expense.getOccurenceDates(until: startDate!)
+                        
+                        for occurDate in occurrenceDates {
+                            
+                            if occurDate >= startDate! && occurDate <= startDate! {
+                                
+                                found = true
+                                break
+                            }
+                        }
                     }
+                    
+                    return found
                 }
                 
-                return found
+                for expense in dayfilteredExpenseList {
+                    
+                    let detail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
+                    let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
+                    let date = formattingDate(date: startDate!, style: .short)
+                    //let currencyCode = Locale.current.currencyCode!
+                    let category = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
+                    
+                    text = text + "\(index)\t\(detail)\t\(date)\t\(currencyCode)\t\(amount)\t\(category)\n"
+                    
+                    index = index + 1
+                }
+                
+                startDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate!)
             }
-            
-            for expense in dayfilteredExpenseList {
-                
-                let detail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
-                let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
-                let date = formattingDate(date: startDate!, style: .short) 
-                let currencyCode = Locale.current.currencyCode!
-                let category = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
-                
-                text = text + "\(index)\t\(detail)\t\(date)\t\(currencyCode)\t\(amount)\t\(category)\n"
-                
-                index = index + 1
-            }
-            
-            startDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate!)
         }
         
         return text
