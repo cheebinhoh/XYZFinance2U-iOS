@@ -983,7 +983,7 @@ class SettingTableViewController: UITableViewController,
         for currencyCode in currencyCodes.sorted() {
 
             startDate = originalStartDate
-            while startDate! < nowDate! {
+            while startDate! <= nowDate! {
                 
                 let dayfilteredExpenseList = filteredExpenseList.filter { (expense) -> Bool in
                     
