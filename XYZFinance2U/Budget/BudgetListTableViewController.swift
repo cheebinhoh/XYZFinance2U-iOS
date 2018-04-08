@@ -18,7 +18,6 @@ class BudgetListTableViewController: UITableViewController {
         var start: Date
         var until: Date
         var amount: Double
-        var spentAmount: Double
         var expenseList: [XYZExpense]
     }
     
@@ -48,9 +47,9 @@ class BudgetListTableViewController: UITableViewController {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let expenseList = (appDelegate?.expenseList)!
-        let budgetName = budget?.value(forKey: XYZBudget.name) as? String
+        let budgetName = budget?.value(forKey: XYZBudget.name) as? String ?? ""
         
-        navigationItem.title = budget?.value(forKey: XYZBudget.name) as? String ?? ""
+        navigationItem.title = budgetName
         cellList = [TableCell]()
         
         if let _ = budget {
@@ -62,6 +61,7 @@ class BudgetListTableViewController: UITableViewController {
                 return start <= Date()
             }
             
+            // if the early start of the budget is in future, we need an entry to cover what is now until early start.
             if !nowIsCovered {
                 
                 if let _ = budget?.currentStart {
@@ -112,7 +112,7 @@ class BudgetListTableViewController: UITableViewController {
                             }
                         }
                         
-                        let tableCell = TableCell(length: "\(length!)", start: start, until: untilDate!, amount: amounts[index], spentAmount: 0.0, expenseList: filterExpenseList)
+                        let tableCell = TableCell(length: "\(length!)", start: start, until: untilDate!, amount: amounts[index], expenseList: filterExpenseList)
                         
                         cellList.append(tableCell)
                     }
@@ -141,7 +141,7 @@ class BudgetListTableViewController: UITableViewController {
                             }
                         }
                         
-                        let tableCell = TableCell(length: "\(length!)", start: start, until: expenseLastDate, amount: amount, spentAmount: 0.0, expenseList: filterExpenseList)
+                        let tableCell = TableCell(length: "\(length!)", start: start, until: expenseLastDate, amount: amount, expenseList: filterExpenseList)
                         
                         cellList.append(tableCell)
                         
@@ -212,7 +212,7 @@ class BudgetListTableViewController: UITableViewController {
         var spentAmount = 0.0;
         let periodExpenseList = cellList[indexPath.row].expenseList
         
-        for expense in periodExpenseList {
+        periodExpenseList.forEach { (expense) in
             
             let amount = expense.value(forKey: XYZBudget.amount) as? Double ?? 0.0
             spentAmount = spentAmount + amount
