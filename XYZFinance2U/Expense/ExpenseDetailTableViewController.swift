@@ -170,29 +170,32 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         sectionList.removeAll()
         
-        var mainSectionCellList = ["text",
-                                   "amount",
-                                   "currency",
-                                   "date",
-                                   "recurring",
-                                   "location"]
-        
-        if let _ = recurring, recurring != XYZExpense.Length.none {
-            
-            let currencyIndex = mainSectionCellList.index(of: "recurring")
-            mainSectionCellList.insert("recurringStopDate", at: currencyIndex! + 1)
-        }
+        var mainSectionCellList = ["text"]
         
         if !budgetList.isEmpty {
             
-            let currencyIndex = mainSectionCellList.index(of: "currency")
+            let currencyIndex = mainSectionCellList.index(of: "text")
             mainSectionCellList.insert("budget", at: currencyIndex! + 1)
+        }
+        
+        let amountSectionCellList = ["amount",
+                                     "currency"]
+    
+        
+        var otherSectionCellList = ["date",
+                                    "recurring",
+                                    "location"]
+        
+        if let _ = recurring, recurring != XYZExpense.Length.none {
+            
+            let currencyIndex = otherSectionCellList.index(of: "recurring")
+            otherSectionCellList.insert("recurringStopDate", at: currencyIndex! + 1)
         }
         
         if hasLocation {
             
-            let locationIndex = mainSectionCellList.index(of: "location")
-            mainSectionCellList.insert("locationPicker", at: locationIndex! + 1)
+            let locationIndex = otherSectionCellList.index(of: "location")
+            otherSectionCellList.insert("locationPicker", at: locationIndex! + 1)
         }
         
         let mainSection = TableSectionCell(identifier: "main",
@@ -200,6 +203,18 @@ class ExpenseDetailTableViewController: UITableViewController,
                                            cellList: mainSectionCellList,
                                            data: nil)
         sectionList.append(mainSection)
+        
+        let amountSection = TableSectionCell(identifier: "amount",
+                                             title: "",
+                                             cellList: amountSectionCellList,
+                                             data: nil)
+        sectionList.append(amountSection)
+
+        let otherSection = TableSectionCell(identifier: "other",
+                                             title: "",
+                                             cellList: otherSectionCellList,
+                                             data: nil)
+        sectionList.append(otherSection)
         
         let imageSecteion = TableSectionCell(identifier: "image",
                                              title: "",
