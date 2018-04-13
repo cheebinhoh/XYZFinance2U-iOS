@@ -16,6 +16,7 @@ class BudgetTableViewCell: UITableViewCell {
     @IBOutlet weak var balanceAmount: UILabel!
     @IBOutlet weak var colorView: UIView!
     @IBOutlet weak var dotColorView: UIView!
+    @IBOutlet weak var icon: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
