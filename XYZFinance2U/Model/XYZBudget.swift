@@ -72,6 +72,7 @@ class XYZBudget : NSManagedObject {
     static let historicalAmount = "historicalAmount"
     static let historicalStart = "historicalStart"
     static let historicalLength = "historicalLength"
+    static let iconName = "iconName"
     
     var name: String = ""
     var amount: Double = 0.0
@@ -85,6 +86,7 @@ class XYZBudget : NSManagedObject {
     var historicalAmount = NSData()
     var historicalStart = NSData()
     var historicalLength = NSData()
+    var iconName = ""
     
     var currentStart: Date? {
         
@@ -340,6 +342,7 @@ class XYZBudget : NSManagedObject {
         self.setValue(sequenceNr, forKey: XYZBudget.sequenceNr)
         self.setValue(Date(), forKey: XYZBudget.lastRecordChange)
         self.setValue("", forKey: XYZBudget.color)
+        self.setValue("", forKey: XYZBudget.iconName)
         
         let dataAmount = NSKeyedArchiver.archivedData(withRootObject: [Double]() )
         self.setValue(dataAmount, forKey: XYZBudget.historicalAmount)

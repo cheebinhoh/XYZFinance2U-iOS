@@ -135,8 +135,10 @@ class BudgetDetailTableViewController: UITableViewController,
                 color = XYZColor(rawValue: item!)!
             
             case "lasteffective":
-                print("--- last effective")
                 break
+            
+            case "icon":
+                iconName = item!
             
             default:
                 break
@@ -211,6 +213,10 @@ class BudgetDetailTableViewController: UITableViewController,
     var historicalLength = [String]()
     var lastEffectiveIndexPath: IndexPath?
     var nrOfHistoricalItems = 0
+    var iconName = ""
+    let iconNameList = ["",
+                        "expense",
+                        "house"]
     
     var isCollapsed: Bool {
     
@@ -389,6 +395,9 @@ class BudgetDetailTableViewController: UITableViewController,
         } else if let existingDataLength = budget?.value(forKey: XYZBudget.historicalLength) as? Data, existingDataLength != dataLength {
             
             hasChanged = true
+        } else if let existingIconName = budget?.value(forKey: XYZBudget.iconName) as? String, existingIconName != iconName {
+            
+            hasChanged = true
         }
         
         budget?.setValue(budgetType, forKey: XYZBudget.name)
@@ -400,6 +409,7 @@ class BudgetDetailTableViewController: UITableViewController,
         budget?.setValue(dataAmount, forKey: XYZBudget.historicalAmount)
         budget?.setValue(dataDate, forKey: XYZBudget.historicalStart)
         budget?.setValue(dataLength, forKey: XYZBudget.historicalLength)
+        budget?.setValue(iconName, forKey: XYZBudget.iconName)
         
         if nil == budget?.value(forKey: XYZBudget.lastRecordChange) as? Date
             || hasChanged {
@@ -466,6 +476,8 @@ class BudgetDetailTableViewController: UITableViewController,
             historicalLength = (NSKeyedUnarchiver.unarchiveObject(with: dataLength) as? [String]) ?? [String]()
             
             nrOfHistoricalItems = historicalStart.count
+            
+            iconName = budget?.value(forKey: XYZBudget.iconName) as? String ?? ""
         } else {
             
             budgetType = ""
@@ -658,17 +670,16 @@ class BudgetDetailTableViewController: UITableViewController,
                 lastEffectiveIndexPath = indexPath
             
             case "icon":
-                guard let colorcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? BudgetDetailSelectionTableViewCell else {
+                guard let iconcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? BudgetDetailSelectionTableViewCell else {
                     
                     fatalError("Exception: budgetDetailSelectionCell is failed to be created")
                 }
                 
-                colorcell.setLabel("Icon")
-                //colorcell.setSelection(color.rawValue)
-                //colorcell.colorView.backgroundColor = color.uiColor()
+                iconcell.setLabel("Icon")
+                iconcell.icon.image = UIImage(named: iconName)
                 
-                colorcell.selectionStyle = .none
-                cell = colorcell
+                iconcell.selectionStyle = .none
+                cell = iconcell
             
             case "color":
                 guard let colorcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? BudgetDetailSelectionTableViewCell else {
@@ -863,6 +874,24 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 self.present(nav, animated: true, completion: nil)
             }
+            
+        case "icon":
+            guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+                
+                fatalError("Exception: error on instantiating SelectionNavigationController")
+            }
+            
+            selectionTableViewController.selectionIdentifier = "icon"
+            selectionTableViewController.setSelections("", false,
+                                                       iconNameList)
+            selectionTableViewController.setSelectionIcons(imageNames: iconNameList)
+            selectionTableViewController.setSelectedItem(iconName)
+            selectionTableViewController.delegate = self
+            
+            let nav = UINavigationController(rootViewController: selectionTableViewController)
+            nav.modalPresentationStyle = .popover
+            
+            self.present(nav, animated: true, completion: nil)
             
         case "color":
             guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {

@@ -262,7 +262,7 @@
                                                 <constraint firstAttribute="width" constant="5" id="wG7-vG-n3C"/>
                                             </constraints>
                                         </view>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="45" placeholderIntrinsicHeight="45" image="expense" translatesAutoresizingMaskIntoConstraints="NO" id="Thd-SS-YV1" userLabel="Icon">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="45" placeholderIntrinsicHeight="45" image="empty" translatesAutoresizingMaskIntoConstraints="NO" id="Thd-SS-YV1" userLabel="Icon">
                                             <rect key="frame" x="8" y="12" width="45" height="45"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="45" id="1Mh-R7-CPk"/>
@@ -1701,7 +1701,7 @@ Chee Bin HOH, 2017</string>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="45" placeholderIntrinsicHeight="45" translatesAutoresizingMaskIntoConstraints="NO" id="a2C-1Y-pZ3" userLabel="Icon">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="45" placeholderIntrinsicHeight="45" image="empty" translatesAutoresizingMaskIntoConstraints="NO" id="a2C-1Y-pZ3" userLabel="Icon">
                                             <rect key="frame" x="8" y="11.5" width="45" height="45"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="45" id="I0z-Ld-Y5G"/>
@@ -1920,9 +1920,10 @@ Chee Bin HOH, 2017</string>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQ2-in-Wtc" userLabel="Selection">
-                                            <rect key="frame" x="16" y="35" width="325" height="35"/>
+                                            <rect key="frame" x="57" y="35" width="281" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="ZAY-mK-de0"/>
+                                                <constraint firstAttribute="width" constant="281" id="dYA-bJ-Byc"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <nil key="textColor"/>
@@ -1935,21 +1936,30 @@ Chee Bin HOH, 2017</string>
                                                 <constraint firstAttribute="width" constant="5" id="xzj-xe-CZM"/>
                                             </constraints>
                                         </view>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="39" placeholderIntrinsicHeight="35" translatesAutoresizingMaskIntoConstraints="NO" id="1ab-2l-EZB">
+                                            <rect key="frame" x="16" y="35" width="39" height="35"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="39" id="8ek-Ih-ho2"/>
+                                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="35" id="VzN-pC-j27"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1gb-bF-pZo" secondAttribute="trailingMargin" id="6Al-WL-qzy"/>
                                         <constraint firstItem="1gb-bF-pZo" firstAttribute="top" secondItem="6cy-XD-vcH" secondAttribute="topMargin" id="DQ4-Zb-g3x"/>
+                                        <constraint firstItem="1ab-2l-EZB" firstAttribute="top" secondItem="SeZ-rM-wn9" secondAttribute="top" id="HRu-UO-Akd"/>
+                                        <constraint firstItem="1ab-2l-EZB" firstAttribute="leading" secondItem="1gb-bF-pZo" secondAttribute="leading" id="HyO-xP-T31"/>
                                         <constraint firstItem="zQ2-in-Wtc" firstAttribute="top" secondItem="1gb-bF-pZo" secondAttribute="bottom" constant="4" id="QXJ-Y1-aR7"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="zQ2-in-Wtc" secondAttribute="bottom" constant="-1" id="SDN-Rk-5Fi"/>
                                         <constraint firstItem="SeZ-rM-wn9" firstAttribute="top" secondItem="zQ2-in-Wtc" secondAttribute="top" id="YSO-Wz-ggv"/>
-                                        <constraint firstAttribute="trailing" secondItem="zQ2-in-Wtc" secondAttribute="trailing" id="d6h-aD-Z6i"/>
                                         <constraint firstItem="1gb-bF-pZo" firstAttribute="leading" secondItem="6cy-XD-vcH" secondAttribute="leadingMargin" id="f8y-f6-1wL"/>
                                         <constraint firstItem="SeZ-rM-wn9" firstAttribute="leading" secondItem="6cy-XD-vcH" secondAttribute="leadingMargin" constant="-7" id="kNg-Qh-ja8"/>
-                                        <constraint firstItem="zQ2-in-Wtc" firstAttribute="leading" secondItem="6cy-XD-vcH" secondAttribute="leadingMargin" id="yT7-FT-zHI"/>
+                                        <constraint firstItem="zQ2-in-Wtc" firstAttribute="leading" secondItem="1ab-2l-EZB" secondAttribute="trailing" constant="2" id="uvM-Gd-eSS"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="colorView" destination="SeZ-rM-wn9" id="2k1-5T-ftI"/>
+                                    <outlet property="icon" destination="1ab-2l-EZB" id="tJb-Io-Rim"/>
                                     <outlet property="label" destination="1gb-bF-pZo" id="uSH-ww-cAi"/>
                                     <outlet property="selection" destination="zQ2-in-Wtc" id="Okz-xO-3AL"/>
                                 </connections>
@@ -2128,7 +2138,6 @@ Chee Bin HOH, 2017</string>
                                             <rect key="frame" x="10" y="7" width="30" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="30" id="JeF-YT-dFH"/>
-                                                <constraint firstAttribute="width" secondItem="Qwe-xV-Nav" secondAttribute="height" multiplier="1:1" id="K5h-Wc-LED"/>
                                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="30" id="rtf-Or-Bxz"/>
                                             </constraints>
                                         </imageView>
@@ -2318,7 +2327,7 @@ Chee Bin HOH, 2017</string>
     <resources>
         <image name="budget" width="28" height="28"/>
         <image name="defaultPhoto" width="540" height="540"/>
-        <image name="expense" width="222" height="277"/>
+        <image name="empty" width="1" height="1"/>
         <image name="lock" width="189" height="135"/>
         <image name="minus" width="25" height="25"/>
         <image name="plus" width="25" height="25"/>

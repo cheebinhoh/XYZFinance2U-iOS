@@ -26,6 +26,7 @@ class SelectionTableViewController: UITableViewController {
     var caseInsensitive = false
     var selectionColors = [UIColor]()
     var readonly = false
+    var imageNames: [String]?
     
     // MARK: - function
     
@@ -96,6 +97,11 @@ class SelectionTableViewController: UITableViewController {
         selectionColors = colors
     }
     
+    func setSelectionIcons(imageNames: [String]) {
+        
+        self.imageNames = imageNames
+    }
+    
     func setSelections(_ sectionIdentifier: String, _ indexing: Bool, _ selection: [String]) {
         
         if indexing {
@@ -145,12 +151,16 @@ class SelectionTableViewController: UITableViewController {
             fatalError("Exception: errpt on creating selectionItemCell")
         }
         
-        cell.icon.isHidden = true
         cell.label.text = tableSectionList[indexPath.section].cellList[indexPath.row]
         
         if !selectionColors.isEmpty {
             
             cell.color = selectionColors[indexPath.row]
+        }
+        
+        if let _ = imageNames {
+            
+            cell.icon.image = UIImage(named: imageNames![indexPath.row])
         }
         
         if tableSectionList[indexPath.section].cellList[indexPath.row] == self.selectedItem

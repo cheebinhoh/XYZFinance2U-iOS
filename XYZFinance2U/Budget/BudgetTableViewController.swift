@@ -791,8 +791,17 @@ class BudgetTableViewController: UITableViewController,
         }
         
         cell.balanceAmount.textColor = color
-    
         cell.dotColorView.backgroundColor = (budgetColor?.uiColor())!
+        
+        if let iconName = budget.value(forKey: XYZBudget.iconName) as? String, iconName != "" {
+
+            cell.icon.isHidden = false
+            cell.icon.image = UIImage(named: iconName)
+        } else {
+
+            cell.icon.image = UIImage(named: "empty")
+            cell.icon.setNeedsDisplay()
+        }
         
         return cell
     }
