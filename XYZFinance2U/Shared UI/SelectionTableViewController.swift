@@ -160,7 +160,14 @@ class SelectionTableViewController: UITableViewController {
         
         if let _ = imageNames {
             
-            cell.icon.image = UIImage(named: imageNames![indexPath.row])
+            let iconName = imageNames![indexPath.row]
+            if iconName != "" {
+                
+                cell.icon.image = UIImage(named: imageNames![indexPath.row])
+            } else {
+                
+                cell.icon.image = UIImage(named: "bigemptyspace")
+            }
         }
         
         if tableSectionList[indexPath.section].cellList[indexPath.row] == self.selectedItem
