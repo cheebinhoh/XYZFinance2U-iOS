@@ -105,6 +105,30 @@ class BudgetTableViewController: UITableViewController,
         reloadData()
         
         saveBudgets()
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+
+        guard let splitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            
+            fatalError("Exception: MainSplitViewController is expected")
+        }
+        
+        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+            
+            fatalError("Exception: MainUITabBarController is expected")
+        }
+        
+        guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+        
+        guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+            
+            fatalError("Exception: ExpenseTableViewController is expected")
+        }
+        
+        expenseView.reloadData()
     }
     
     func deleteBudget(budget: XYZBudget) {

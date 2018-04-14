@@ -232,10 +232,11 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" misplaced="YES" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tfB-lJ-RhK">
-                                            <rect key="frame" x="60" y="11" width="212" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tfB-lJ-RhK">
+                                            <rect key="frame" x="58" y="11" width="44" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="Xaf-gw-y6l"/>
+                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="186" id="u1C-Uw-OR2"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -270,8 +271,8 @@
                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="45" id="RSl-y8-fZo"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c9a-BL-5zy">
-                                            <rect key="frame" x="60" y="38" width="36" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c9a-BL-5zy">
+                                            <rect key="frame" x="58" y="40.5" width="36" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -290,7 +291,7 @@
                                         <constraint firstItem="tfB-lJ-RhK" firstAttribute="top" secondItem="Rt8-ns-G36" secondAttribute="topMargin" id="lcy-Ia-5JD"/>
                                         <constraint firstAttribute="trailing" secondItem="ll3-uL-fct" secondAttribute="trailing" constant="7" id="q60-sU-HnW"/>
                                         <constraint firstItem="c9a-BL-5zy" firstAttribute="leading" secondItem="Thd-SS-YV1" secondAttribute="trailing" constant="5" id="qIM-ab-kxc"/>
-                                        <constraint firstItem="c9a-BL-5zy" firstAttribute="bottom" secondItem="Rt8-ns-G36" secondAttribute="bottom" constant="-5" id="rjF-hj-JAP"/>
+                                        <constraint firstItem="c9a-BL-5zy" firstAttribute="bottom" secondItem="Rt8-ns-G36" secondAttribute="bottom" constant="-8" id="rjF-hj-JAP"/>
                                         <constraint firstItem="Thd-SS-YV1" firstAttribute="leading" secondItem="Rt8-ns-G36" secondAttribute="leading" constant="8" id="uAw-Fj-VBz"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -421,7 +422,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pho-gG-lio" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5620" y="34.632683658170919"/>
+            <point key="canvasLocation" x="5619.5" y="34.5"/>
         </scene>
         <!--Expense Detail View Controller-->
         <scene sceneID="66M-Ug-AJf">
