@@ -286,7 +286,6 @@
                                         <constraint firstItem="ll3-uL-fct" firstAttribute="centerY" secondItem="Rt8-ns-G36" secondAttribute="centerY" id="QIf-rS-0Of"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="c9a-BL-5zy" secondAttribute="trailing" constant="20" symbolic="YES" id="cpg-BL-aAb"/>
                                         <constraint firstItem="tfB-lJ-RhK" firstAttribute="leading" secondItem="Thd-SS-YV1" secondAttribute="trailing" constant="5" id="h6b-s1-5y4"/>
-                                        <constraint firstItem="ll3-uL-fct" firstAttribute="leading" secondItem="tfB-lJ-RhK" secondAttribute="trailing" constant="24" id="icv-c0-jOL"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="ll3-uL-fct" secondAttribute="bottom" constant="13" id="lVV-Pi-uhA"/>
                                         <constraint firstItem="tfB-lJ-RhK" firstAttribute="top" secondItem="Rt8-ns-G36" secondAttribute="topMargin" id="lcy-Ia-5JD"/>
                                         <constraint firstAttribute="trailing" secondItem="ll3-uL-fct" secondAttribute="trailing" constant="7" id="q60-sU-HnW"/>
@@ -301,6 +300,7 @@
                                     <outlet property="date" destination="c9a-BL-5zy" id="JLJ-bR-Nb3"/>
                                     <outlet property="detail" destination="tfB-lJ-RhK" id="aZA-h1-6oP"/>
                                     <outlet property="dotColorView" destination="Bca-VO-om0" id="ydG-XY-HcU"/>
+                                    <outlet property="icon" destination="Thd-SS-YV1" id="apw-en-K9l"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseTableViewSearchCell" rowHeight="60" id="Kjj-1U-uiF" userLabel="ExpenseTableViewSearchCell" customClass="ExpenseTableViewSearchCell" customModule="XYZFinance2U" customModuleProvider="target">
@@ -1701,7 +1701,7 @@ Chee Bin HOH, 2017</string>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="45" placeholderIntrinsicHeight="45" image="expense" translatesAutoresizingMaskIntoConstraints="NO" id="a2C-1Y-pZ3" userLabel="Icon">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="45" placeholderIntrinsicHeight="45" translatesAutoresizingMaskIntoConstraints="NO" id="a2C-1Y-pZ3" userLabel="Icon">
                                             <rect key="frame" x="8" y="11.5" width="45" height="45"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="45" id="I0z-Ld-Y5G"/>
@@ -2116,15 +2116,6 @@ Chee Bin HOH, 2017</string>
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="re8-JO-ugY">
-                                            <rect key="frame" x="16" y="5" width="42" height="35"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="35" id="elw-GD-1jw"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n0f-fB-3PJ" userLabel="Color View">
                                             <rect key="frame" x="0.0" y="-13" width="5" height="70"/>
                                             <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2133,16 +2124,36 @@ Chee Bin HOH, 2017</string>
                                                 <constraint firstAttribute="height" constant="70" id="f1x-wd-RDS"/>
                                             </constraints>
                                         </view>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="30" placeholderIntrinsicHeight="30" translatesAutoresizingMaskIntoConstraints="NO" id="Qwe-xV-Nav">
+                                            <rect key="frame" x="10" y="7" width="30" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="30" id="JeF-YT-dFH"/>
+                                                <constraint firstAttribute="width" secondItem="Qwe-xV-Nav" secondAttribute="height" multiplier="1:1" id="K5h-Wc-LED"/>
+                                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="30" id="rtf-Or-Bxz"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="re8-JO-ugY">
+                                            <rect key="frame" x="45" y="4" width="42" height="35"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="35" id="elw-GD-1jw"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="Qwe-xV-Nav" firstAttribute="centerY" secondItem="B02-ge-3JC" secondAttribute="centerY" id="2dv-dq-nWo"/>
                                         <constraint firstItem="n0f-fB-3PJ" firstAttribute="centerY" secondItem="B02-ge-3JC" secondAttribute="centerY" id="Ht0-ZY-LDU"/>
-                                        <constraint firstItem="re8-JO-ugY" firstAttribute="leading" secondItem="B02-ge-3JC" secondAttribute="leadingMargin" id="LfQ-Bt-iIy"/>
                                         <constraint firstItem="re8-JO-ugY" firstAttribute="centerY" secondItem="B02-ge-3JC" secondAttribute="centerY" id="UOp-0e-DBY"/>
+                                        <constraint firstItem="Qwe-xV-Nav" firstAttribute="leading" secondItem="n0f-fB-3PJ" secondAttribute="trailing" constant="5" id="mmc-2A-VsE"/>
                                         <constraint firstItem="n0f-fB-3PJ" firstAttribute="leading" secondItem="B02-ge-3JC" secondAttribute="leading" id="pXD-HN-LKX"/>
+                                        <constraint firstItem="re8-JO-ugY" firstAttribute="leading" secondItem="Qwe-xV-Nav" secondAttribute="trailing" constant="5" id="wIR-Ro-yRo"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="colorView" destination="n0f-fB-3PJ" id="pjW-HO-WHa"/>
+                                    <outlet property="icon" destination="Qwe-xV-Nav" id="Chw-bM-Sv5"/>
                                     <outlet property="label" destination="re8-JO-ugY" id="ycH-lW-7yv"/>
                                 </connections>
                             </tableViewCell>
@@ -2156,7 +2167,7 @@ Chee Bin HOH, 2017</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5tb-oi-olN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5295" y="-769"/>
+            <point key="canvasLocation" x="5293.6000000000004" y="-769.56521739130437"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="rQc-gR-7Ul">

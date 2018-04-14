@@ -145,6 +145,7 @@ class SelectionTableViewController: UITableViewController {
             fatalError("Exception: errpt on creating selectionItemCell")
         }
         
+        cell.icon.isHidden = true
         cell.label.text = tableSectionList[indexPath.section].cellList[indexPath.row]
         
         if !selectionColors.isEmpty {

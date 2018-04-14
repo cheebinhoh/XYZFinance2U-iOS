@@ -12,6 +12,7 @@ class SelectionItemTableViewCell: UITableViewCell {
 
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var colorView: UIView!
+    @IBOutlet weak var icon: UIImageView!
     
     var color = UIColor.clear
     
