@@ -11,6 +11,7 @@ import UIKit
 class ExpenseDetailSelectionTableViewCell: UITableViewCell {
 
     @IBOutlet weak var selection: UILabel!
+    @IBOutlet weak var icon: UIImageView!
     
     override func awakeFromNib() {
         

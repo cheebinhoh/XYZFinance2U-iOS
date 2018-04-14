@@ -60,8 +60,19 @@ class ExpenseDetailTableViewController: UITableViewController,
                 if let _ = item, item! != "" {
                     
                     budgetCategory = item!
+                    
+                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                    let budget = appDelegate?.budgetList.first(where: { (budget) -> Bool in
+                    
+                        let name = budget.value(forKey: XYZBudget.name) as? String
+                        
+                        return name == item!
+                    })
+                    
+                    iconName = budget?.value(forKey: XYZBudget.iconName) as? String ?? ""
                 } else {
                     
+                    iconName = ""
                     budgetCategory = ""
                 }
             
@@ -547,6 +558,16 @@ class ExpenseDetailTableViewController: UITableViewController,
             amount = presetAmount
         }
         
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let budget = appDelegate?.budgetList.first(where: { (budget) -> Bool in
+            
+            let name = budget.value(forKey: XYZBudget.name) as? String
+            
+            return name == budgetCategory
+        })
+        
+        iconName = budget?.value(forKey: XYZBudget.iconName) as? String ?? ""
+        
         budgetList = getBudgets(of: currencyCode!)
         
         loadDataInTableSectionCell()
@@ -862,6 +883,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     }
     
     // MARK: - property
+    var iconName = ""
     var recurring: XYZExpense.Length?
     var recurringStopDate: Date?
     var presetAmount: Double?
@@ -1241,6 +1263,14 @@ class ExpenseDetailTableViewController: UITableViewController,
                     budgetcell.selection.textColor = UIColor.lightGray
                 }
                 
+                if iconName != "" {
+                    
+                    budgetcell.icon.image = UIImage(named: iconName)
+                } else {
+                    
+                    budgetcell.icon.image = UIImage(named: "empty")
+                }
+                
                 cell = budgetcell
             
             case "date":
@@ -1291,7 +1321,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 recurringcell.setSelection( "Recurring: \((recurring?.rawValue)!)" )
                 recurringcell.selectionStyle = .none
-                
+                recurringcell.icon.image = UIImage(named: "empty")
                 cell = recurringcell
             
             case "recurringStopDatePicker":
