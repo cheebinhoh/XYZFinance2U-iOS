@@ -22,7 +22,11 @@ class BudgetTableViewCell: UITableViewCell {
         super.awakeFromNib()
 
         colorView.backgroundColor = UIColor.clear
-        icon.image = UIImage(named: "")
+        
+        if let _ = icon {
+            
+            icon.image = UIImage(named: "")
+        }
         // Initialization code
     }
 
