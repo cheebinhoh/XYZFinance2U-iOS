@@ -1552,7 +1552,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                         let type1 = bud1.value(forKey: XYZBudget.name) as? String
                         let type2 = bud2.value(forKey: XYZBudget.name) as? String
                         
-                        return type1! < type2!
+                        return type1!.lowercased() < type2!.lowercased()
                     }
                     
                     budgetCategories.append("")
