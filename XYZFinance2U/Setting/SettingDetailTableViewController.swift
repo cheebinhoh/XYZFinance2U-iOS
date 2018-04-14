@@ -138,7 +138,7 @@ It does not come with warranty of any sort.
                 
                 let text = """
                 
-The icons used created by Yoraslav Samoylov, Sumhi_icon, Shmidt Sergey, Sandy Priyasa, Sophia Bai, ProSymbols, Mike Ashley, Krishna, Dinosoft Lab, Delwar Hossain, Arien Coquet
+The icons used created by Yoraslav Samoylov, Sumhi_icon, Shmidt Sergey, Sandy Priyasa, Sophia Bai, ProSymbols, Mike Ashley, Krishna, Gregor Cresnar, Dinosoft Lab, Delwar Hossain, Arien Coquet
 
 from Noun Project.
 
