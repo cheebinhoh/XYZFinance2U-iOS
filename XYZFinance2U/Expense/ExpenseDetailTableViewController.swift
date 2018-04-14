@@ -1517,18 +1517,30 @@ class ExpenseDetailTableViewController: UITableViewController,
                 case "budget":
                     var budgetCategories = [String]()
                     
+                    let soretedBudgetList = budgetList.sorted { (bud1, bud2) -> Bool in
+                        
+                        let type1 = bud1.value(forKey: XYZBudget.name) as? String
+                        let type2 = bud2.value(forKey: XYZBudget.name) as? String
+                        
+                        return type1! < type2!
+                    }
+                    
                     budgetCategories.append("")
-                    for budget in budgetList {
+                    for budget in soretedBudgetList {
                      
                         let type = budget.value(forKey: XYZBudget.name) as? String
                         
                         budgetCategories.append(type!)
                     }
                     
-                    budgetCategories = budgetCategories.sorted(by: { (bud1, bud2) -> Bool in
-                    
-                        return bud1 < bud2
-                    })
+                    var iconNames = [String]()
+                    iconNames.append("")
+                    for budget in soretedBudgetList {
+                        
+                        let icon = budget.value(forKey: XYZBudget.iconName) as? String ?? ""
+                        
+                        iconNames.append(icon)
+                    }
                 
                     guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
                         
@@ -1540,6 +1552,7 @@ class ExpenseDetailTableViewController: UITableViewController,
 
                     selectionTableViewController.setSelections("", false,
                                                                budgetCategories)
+                    selectionTableViewController.setSelectionIcons(imageNames: iconNames)
                     selectionTableViewController.setSelectedItem(budgetCategory)
                     selectionTableViewController.delegate = self
                     

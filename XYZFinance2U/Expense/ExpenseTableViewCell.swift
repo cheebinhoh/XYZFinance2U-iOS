@@ -51,6 +51,14 @@ class ExpenseTableViewCell: UITableViewCell {
             return ( budget.value(forKey: XYZBudget.name) as? String ?? "" ) == budgetCategory
         })
         
+        if let _ = budget, let iconName = budget?.value(forKey: XYZBudget.iconName) as? String, iconName != "" {
+            
+            icon.image = UIImage(named: iconName)
+        } else {
+            
+            icon.image = UIImage(named: "empty")
+        }
+        
         let color = XYZColor(rawValue: budget?.value(forKey: XYZBudget.color) as? String ?? "")
   
         if let _ = colorView {
