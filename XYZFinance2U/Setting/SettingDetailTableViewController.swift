@@ -138,7 +138,7 @@ It does not come with warranty of any sort.
                 
                 let text = """
                 
-The calendar icon is created by Shmidt Sergey
+The icons used created by Shmidt Sergey, Sandy Priyasa, Krishna, Mike Ashley, Dinosoft Labs, ProSymbols, Sophia Bai, Yoraslav Samoylov
 
 from Noun Project.
 

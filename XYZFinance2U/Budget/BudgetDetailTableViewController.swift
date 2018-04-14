@@ -216,10 +216,12 @@ class BudgetDetailTableViewController: UITableViewController,
     var iconName = ""
     let iconNameList = ["",
                         "autogas",
+                        "education",
                         "expense",
                         "food",
                         "grocery",
-                        "house"]
+                        "house",
+                        "laundry"]
     
     var isCollapsed: Bool {
     
