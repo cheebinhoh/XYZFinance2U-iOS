@@ -421,7 +421,7 @@ class BudgetDetailTableViewController: UITableViewController,
         let lastEffectiveSection = TableSectionCell(identifier: "lasteffective", title: nil, cellList: ["lasteffective"], data: nil)
         sectionList.append(lastEffectiveSection)
         
-        let colorSection = TableSectionCell(identifier: "color", title: nil, cellList: ["color"], data: nil)
+        let colorSection = TableSectionCell(identifier: "color", title: nil, cellList: ["icon", "color"], data: nil)
         sectionList.append(colorSection)
         
         if modalEditing && nil != budget {
@@ -656,6 +656,19 @@ class BudgetDetailTableViewController: UITableViewController,
                 cell = currencycell
             
                 lastEffectiveIndexPath = indexPath
+            
+            case "icon":
+                guard let colorcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? BudgetDetailSelectionTableViewCell else {
+                    
+                    fatalError("Exception: budgetDetailSelectionCell is failed to be created")
+                }
+                
+                colorcell.setLabel("Icon")
+                //colorcell.setSelection(color.rawValue)
+                //colorcell.colorView.backgroundColor = color.uiColor()
+                
+                colorcell.selectionStyle = .none
+                cell = colorcell
             
             case "color":
                 guard let colorcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? BudgetDetailSelectionTableViewCell else {
