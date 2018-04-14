@@ -221,9 +221,11 @@ class BudgetDetailTableViewController: UITableViewController,
                         "food",
                         "grocery",
                         "house",
-                        "kids",
+                        "kid",
                         "laundry",
-                        "transport"]
+                        "medical",
+                        "transport",
+                        "travel"]
     
     var isCollapsed: Bool {
     
