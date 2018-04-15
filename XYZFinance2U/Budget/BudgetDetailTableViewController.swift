@@ -700,6 +700,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 colorcell.setLabel("Color")
                 colorcell.setSelection(color.rawValue)
                 colorcell.colorView.backgroundColor = color.uiColor()
+                colorcell.icon.image = UIImage(named: "empty")
                 
                 colorcell.selectionStyle = .none
                 cell = colorcell
