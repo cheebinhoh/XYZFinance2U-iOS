@@ -232,7 +232,13 @@ class CalendarCollectionViewController: UICollectionViewController,
         
         if sectionList[indexPath.section].identifier == "table" {
 
-            return CGSize(width: 400.0, height: 500.0)
+            if collectionView.frame.width >= 414.0 {
+                
+                return CGSize(width: 400.0, height: 500.0)
+            } else {
+                
+                return CGSize(width: 330.0, height: 500.0)
+            }
         } else {
         
             if monthLevel {
