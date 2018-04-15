@@ -577,10 +577,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="110" height="200"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DLl-s7-jIf" userLabel="LabelView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="36"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="33"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="28" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWo-xS-el7">
-                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="36"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="33"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -595,12 +595,27 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qJn-oV-b4j" userLabel="Indicator">
-                                                    <rect key="frame" x="0.0" y="38" width="50" height="2"/>
+                                                    <rect key="frame" x="0.0" y="35" width="50" height="5"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aeh-gQ-fMA">
+                                                            <rect key="frame" x="22.5" y="0.0" width="5" height="5"/>
+                                                            <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="5" id="ms7-Kv-G8M"/>
+                                                            </constraints>
+                                                        </view>
+                                                    </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="2" id="AKh-qP-ZQD"/>
+                                                        <constraint firstItem="Aeh-gQ-fMA" firstAttribute="centerX" secondItem="qJn-oV-b4j" secondAttribute="centerX" id="2rY-yF-g5B"/>
+                                                        <constraint firstAttribute="height" constant="5" id="AKh-qP-ZQD"/>
+                                                        <constraint firstItem="Aeh-gQ-fMA" firstAttribute="top" secondItem="qJn-oV-b4j" secondAttribute="top" id="BYz-Fe-cax"/>
+                                                        <constraint firstAttribute="bottom" secondItem="Aeh-gQ-fMA" secondAttribute="bottom" id="rPZ-DZ-9Dj"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="qJn-oV-b4j" firstAttribute="leading" secondItem="8ED-dm-Hyj" secondAttribute="leading" id="dIe-iU-6tz"/>
+                                            </constraints>
                                         </stackView>
                                     </subviews>
                                 </view>
@@ -612,7 +627,7 @@
                                 </constraints>
                                 <size key="customSize" width="50" height="40"/>
                                 <connections>
-                                    <outlet property="indicator" destination="qJn-oV-b4j" id="vvX-89-Gtf"/>
+                                    <outlet property="indicator" destination="Aeh-gQ-fMA" id="QIc-sP-4eI"/>
                                     <outlet property="label" destination="eWo-xS-el7" id="GoK-nB-S2j"/>
                                     <outlet property="labelView" destination="DLl-s7-jIf" id="BTt-bY-Vu6"/>
                                 </connections>

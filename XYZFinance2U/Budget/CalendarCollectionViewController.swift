@@ -835,6 +835,8 @@ class CalendarCollectionViewController: UICollectionViewController,
                 cell.indicator.backgroundColor = UIColor.clear
             }
             
+            cell.indicator.layer.cornerRadius = 2
+            
             if let selectedIndexPath = self.indexPath,
                 selectedIndexPath.row == indexPath.row
                     && selectedIndexPath.section == indexPath.section {
