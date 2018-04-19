@@ -216,6 +216,7 @@ class BudgetDetailTableViewController: UITableViewController,
     var iconName = ""
     let iconNameList = ["",
                         "autogas",
+                        "automative service",
                         "education",
                         "entertainment",
                         "expense",

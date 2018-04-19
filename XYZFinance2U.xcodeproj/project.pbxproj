@@ -120,6 +120,7 @@
 		656BF67E208838BE00EE6280 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		656BF67F208838BF00EE6280 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		656BF681208838EB00EE6280 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		656BF6862088D92200EE6280 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		657455B6200585F500AAB2E3 /* XYZFinance2U.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XYZFinance2U.entitlements; sourceTree = "<group>"; };
 		657455B9200587D100AAB2E3 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		6576938A1FDA317F00BFFB6B /* XYZExpense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZExpense.swift; sourceTree = "<group>"; };
@@ -578,6 +579,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				656BF681208838EB00EE6280 /* zh-Hans */,
+				656BF6862088D92200EE6280 /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
