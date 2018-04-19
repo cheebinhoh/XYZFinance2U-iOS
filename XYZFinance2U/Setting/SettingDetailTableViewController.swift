@@ -29,7 +29,7 @@ class SettingDetailTableViewController: UITableViewController {
             
             let backButton = UIButton(type: .custom)
             backButton.setImage(UIImage(named: "BackButton"), for: .normal) 
-            backButton.setTitle(" Back", for: .normal)
+            backButton.setTitle(NSLocalizedString("Back", comment: "Back"), for: .normal)
             backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
             backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
             
@@ -98,9 +98,9 @@ class SettingDetailTableViewController: UITableViewController {
                 let headingAttributeText = NSMutableAttributedString(string: textHeading, attributes: headingAttributes)
                 
                 let text = """
- (\(textVersion)) was created by CB Hoh.
+(\(textVersion)) \(NSLocalizedString("was created by CB Hoh.", comment:""))
 
-\u{A9} 2017-2018 CB Hoh. All rights reserved.
+\u{A9} \(NSLocalizedString("2017-2018 CB Hoh, All rights reserved.", comment: ""))
 
 """
                 
@@ -120,9 +120,9 @@ class SettingDetailTableViewController: UITableViewController {
             
                 let text = """
                 
-The foreign exchange rates are from http://fixer.io.
+\(NSLocalizedString("The foreign exchange rates are from", comment: "")) http://fixer.io
 
-It does not come with warranty of any sort.
+\(NSLocalizedString("It does not come with warranty of any sort.", comment: ""))
 
 """
                 let attributes: [NSAttributedStringKey: Any]? = [NSAttributedStringKey.font: newcell.content.font!]
@@ -138,9 +138,7 @@ It does not come with warranty of any sort.
                 
                 let text = """
                 
-The icons are created by Yoraslav Samoylov, Sumhi_icon, Shmidt Sergey, Sandy Priyasa, Sophia Bai, ProSymbols, Mike Ashley, Krishna, Gregor Cresnar, Dinosoft Lab, Delwar Hossain, Arien Coquet
-
-from Noun Project.
+\(NSLocalizedString("The icons are from Noun Project by", comment:"")) Yoraslav Samoylov, Sumhi_icon, Shmidt Sergey, Sandy Priyasa, Sophia Bai, ProSymbols, Mike Ashley, Krishna, Gregor Cresnar, Dinosoft Lab, Delwar Hossain, Arien Coquet.
 
 """
                 let attributes: [NSAttributedStringKey: Any]? = [NSAttributedStringKey.font: newcell.content.font!]

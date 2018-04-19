@@ -177,7 +177,7 @@ class SettingTableViewController: UITableViewController,
                     fatalError("Exception: error on creating settingTableCell")
                 }
                 
-                newcell.title.text = tableSectionCellList[indexPath.section].cellList[indexPath.row]
+                newcell.title.text = NSLocalizedString("About", comment: "About")
                 cell = newcell
             
             case "ExchangeRate" :
@@ -186,7 +186,7 @@ class SettingTableViewController: UITableViewController,
                     fatalError("Exception: error on creating settingTableCell")
                 }
                 
-                newcell.title.text = "Foreign exchange rate"
+                newcell.title.text = NSLocalizedString("Foreign exchange rate", comment: "Foreign exchange rate")
                 cell = newcell
             
             case "Export" :
@@ -195,7 +195,7 @@ class SettingTableViewController: UITableViewController,
                     fatalError("Exception: error on creating settingTableCell")
                 }
                 
-                newcell.title.text = "Save to file"
+                newcell.title.text = NSLocalizedString("Save to file", comment: "Save to file")
                 newcell.accessoryType = .none
                 cell = newcell
             
@@ -205,7 +205,7 @@ class SettingTableViewController: UITableViewController,
                     fatalError("Exception: error on creating settingTableCell")
                 }
                 
-                newcell.title.text = "Update to iCloud"
+                newcell.title.text = NSLocalizedString("Update to iCloud", comment: "Update to iCloud")
                 newcell.accessoryType = .none
                 cell = newcell
             
@@ -215,7 +215,7 @@ class SettingTableViewController: UITableViewController,
                     fatalError("Exception: error on creating settingTableCell")
                 }
                 
-                newcell.title.text = "Delete data"
+                newcell.title.text = NSLocalizedString("Delete data", comment: "Delete data")
                 newcell.accessoryType = .none
                 cell = newcell
             
@@ -225,7 +225,7 @@ class SettingTableViewController: UITableViewController,
                     fatalError("Exception: error on creating settingTableCell")
                 }
                 
-                newcell.title.text = "Lock out"
+                newcell.title.text = NSLocalizedString("Lock out", comment: "Lock out")
                 newcell.accessoryType = .none
                 cell = newcell
 
@@ -238,7 +238,7 @@ class SettingTableViewController: UITableViewController,
                 let defaults = UserDefaults.standard;
                 let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
                 
-                newcell.title.text = "Require authentication"
+                newcell.title.text = NSLocalizedString("Require authentication", comment: "Require authentication")
                 newcell.accessoryType = .none
                 
                 if nil == newcell.optionSwitch {
@@ -272,7 +272,7 @@ class SettingTableViewController: UITableViewController,
         let creditSection = TableSectionCell(identifier: "credit", title: "", cellList: ["credit"], data: nil)
         settingDetail.tableSectionCellList.append(creditSection)
         
-        settingDetail.navigationItem.title = "About"
+        settingDetail.navigationItem.title = NSLocalizedString("About", comment: "About") 
         let footerSection = TableSectionCell(identifier: "footer", title: "", cellList: [String](), data: nil)
         settingDetail.tableSectionCellList.append(footerSection)
         settingDetail.tableView.reloadData()
@@ -722,7 +722,7 @@ class SettingTableViewController: UITableViewController,
             let datetoday = dateFormatter.string(from: Date())
             
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let saveIncomeOption = UIAlertAction(title: "Save income", style: .default, handler: { (action) in
+            let saveIncomeOption = UIAlertAction(title: NSLocalizedString("Save incomes", comment:""), style: .default, handler: { (action) in
                 
                 let file = AppDelegate.appName + "-income-\(datetoday).csv"
                 let text = self.incomeFileContent()
@@ -732,7 +732,7 @@ class SettingTableViewController: UITableViewController,
 
             optionMenu.addAction(saveIncomeOption)
             
-            let saveExpenseOption = UIAlertAction(title: "Save expense", style: .default, handler: { (action) in
+            let saveExpenseOption = UIAlertAction(title: NSLocalizedString("Save expenses", comment:""), style: .default, handler: { (action) in
                 
                 let file = AppDelegate.appName + "-expense-\(datetoday).csv"
                 let text = self.expenseFileContent()
@@ -742,7 +742,7 @@ class SettingTableViewController: UITableViewController,
             
             optionMenu.addAction(saveExpenseOption)
             
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:{ (action) in
+            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler:{ (action) in
                 
                 mainSplitView.popOverAlertController = nil
             })
@@ -754,28 +754,28 @@ class SettingTableViewController: UITableViewController,
         } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "DeleteData" {
         
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let deleteIncomes = UIAlertAction(title: "Delete incomes", style: .default, handler: { (action) in
+            let deleteIncomes = UIAlertAction(title: NSLocalizedString("Delete incomes", comment:""), style: .default, handler: { (action) in
 
                 self.deleteIncomesLocallyAndFromiCloud()
             })
             
             optionMenu.addAction(deleteIncomes)
             
-            let deleteExpenses = UIAlertAction(title: "Delete expenses", style: .default, handler: { (action) in
+            let deleteExpenses = UIAlertAction(title: NSLocalizedString("Delete expenses", comment:""), style: .default, handler: { (action) in
                 
                 self.deleteExpensesLocallyAndFromiCloud()
             })
             
             optionMenu.addAction(deleteExpenses)
             
-            let deletebudgets = UIAlertAction(title: "Delete budgets", style: .default, handler: { (action) in
+            let deletebudgets = UIAlertAction(title: NSLocalizedString("Delete budgets", comment: ""), style: .default, handler: { (action) in
                 
                 self.deletebudgetsLocallyAndFromiCloud()
             })
             
             optionMenu.addAction(deletebudgets)
             
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:{ (action) in
+            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment:""), style: .cancel, handler:{ (action) in
                 
                 mainSplitView.popOverAlertController = nil
             })

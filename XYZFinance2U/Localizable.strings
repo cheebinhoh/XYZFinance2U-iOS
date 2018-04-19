@@ -1,0 +1,27 @@
+/* 
+  Localizable.strings
+  XYZFinance2U
+
+  Created by Chee Bin Hoh on 4/18/18.
+  Copyright © 2018 CB Hoh. All rights reserved.
+*/
+
+"About" = "关于";
+"Foreign exchange rate" = "外汇牌价";
+"Save to file" = "保存到文件";
+"Update to iCloud" = "更新到iCloud";
+"Delete data" = "删除数据";
+"Lock out" = "闭锁";
+"Require authentication" = "需要认证";
+"Back" = "前页";
+"was created by CB Hoh." = "由胡志斌编程.";
+"2017-2018 CB Hoh, All rights reserved." = "2017-2018, 胡志斌. 版权所有.";
+"The foreign exchange rates are from" = "汇率取自";
+"It does not come with warranty of any sort." = "它不附带任何形式的保修.";
+"The icons are from Noun Project by" = "这些图标来自Noun Project 并提供被";
+"Delete incomes" = "删除收益";
+"Delete expenses" = "删除支出";
+"Delete budgets" = "删除预算";
+"Cancel" = "取消";
+"Save expenses" = "保存支出";
+"Save incomes" = "保存收益";
