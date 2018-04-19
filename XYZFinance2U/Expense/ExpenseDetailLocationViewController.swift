@@ -43,7 +43,7 @@ class ExpenseDetailLocationViewController: UIViewController,
 
         if let _ = coordinate {
             
-            displayCoordinate(coordinate!, "Selected location")
+            displayCoordinate(coordinate!, NSLocalizedString("Selected location", comment:""))
         }
         
         addCurrentLocationButton()
@@ -56,7 +56,7 @@ class ExpenseDetailLocationViewController: UIViewController,
         
         if let _ = map {
             
-            displayCoordinate(coordinate, "Selected location")
+            displayCoordinate(coordinate, NSLocalizedString("Selected location", comment:""))
         }
     }
     
@@ -122,9 +122,9 @@ class ExpenseDetailLocationViewController: UIViewController,
         
         if annotation?.title == "Selected location" {
             
-            let unselectOption = UIAlertAction(title: "Unselect it", style: .default, handler: { (action) in
+            let unselectOption = UIAlertAction(title: NSLocalizedString("Unselect it", comment:""), style: .default, handler: { (action) in
                 
-                annotation?.title = "Location"
+                annotation?.title = NSLocalizedString("Location", comment:"")
                 
                 self.delegate?.newlocation(coordinte: nil)
             })
@@ -132,7 +132,7 @@ class ExpenseDetailLocationViewController: UIViewController,
             optionMenu.addAction(unselectOption)
         } else {
             
-            let useOption = UIAlertAction(title: "Select it", style: .default, handler: { (action) in
+            let useOption = UIAlertAction(title: NSLocalizedString("Select it", comment:""), style: .default, handler: { (action) in
                 
                 annotation?.title = "Selected location"
             
@@ -142,7 +142,7 @@ class ExpenseDetailLocationViewController: UIViewController,
             optionMenu.addAction(useOption)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment:""), style: .cancel, handler: nil)
         
         optionMenu.addAction(cancelAction)
         
@@ -188,7 +188,7 @@ class ExpenseDetailLocationViewController: UIViewController,
         
         let backButton = UIButton(type: .custom)
         backButton.setImage(UIImage(named: "BackButton.png"), for: .normal)
-        backButton.setTitle(" Back", for: .normal)
+        backButton.setTitle(" \(NSLocalizedString("Back", comment:""))", for: .normal)
         backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
         backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
         

@@ -97,7 +97,7 @@ class ExpenseDetailImageViewController: UIViewController,
         
         let backButton = UIButton(type: .custom)
         backButton.setImage(UIImage(named: "BackButton"), for: .normal) // Image can be downloaded from here below link
-        backButton.setTitle(" Back", for: .normal)
+        backButton.setTitle(" \(NSLocalizedString("Back", comment:""))", for: .normal)
         backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
         backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
         
