@@ -71,7 +71,7 @@ class SelectionTableViewController: UITableViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    func setSelectedItem(_ item: String? ) {
+    func setSelectedItem(_ item: String?) {
         
         self.selectedItem = item
         
@@ -230,9 +230,16 @@ class SelectionTableViewController: UITableViewController {
         
         let cell = tableView.cellForRow(at: indexPath)
         cell?.accessoryType = .checkmark
-        selectedItem = tableSectionList[indexPath.section].cellList[indexPath.row]
         
-        navigationItem.title = "\(NSLocalizedString(selectedItem!, comment:""))"
+        if displayedString.isEmpty {
+            
+            selectedItem = NSLocalizedString(tableSectionList[indexPath.section].cellList[indexPath.row], comment: "")
+        } else {
+            
+            selectedItem = displayedString[indexPath.row]
+        }
+        
+        navigationItem.title = "\(String(describing: selectedItem))"
     }
 
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
