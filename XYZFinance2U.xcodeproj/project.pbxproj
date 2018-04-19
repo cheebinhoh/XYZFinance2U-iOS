@@ -118,7 +118,6 @@
 		6567E12F20327DF300058238 /* BudgetTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetTableViewController.swift; sourceTree = "<group>"; };
 		6567E1312032866C00058238 /* XYZBudget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZBudget.swift; sourceTree = "<group>"; };
 		656BF67E208838BE00EE6280 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
-		656BF67F208838BF00EE6280 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		656BF681208838EB00EE6280 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		656BF6862088D92200EE6280 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		657455B6200585F500AAB2E3 /* XYZFinance2U.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XYZFinance2U.entitlements; sourceTree = "<group>"; };
@@ -570,7 +569,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				655C97A81FCCCC210098D58D /* Base */,
-				656BF67F208838BF00EE6280 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
