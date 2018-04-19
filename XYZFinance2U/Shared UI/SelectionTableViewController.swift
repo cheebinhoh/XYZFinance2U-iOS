@@ -220,7 +220,7 @@ class SelectionTableViewController: UITableViewController {
         cell?.accessoryType = .checkmark
         selectedItem = tableSectionList[indexPath.section].cellList[indexPath.row]
         
-        navigationItem.title = "\(String(describing: selectedItem!))"
+        navigationItem.title = "\(NSLocalizedString(selectedItem!, comment:""))"
     }
 
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {

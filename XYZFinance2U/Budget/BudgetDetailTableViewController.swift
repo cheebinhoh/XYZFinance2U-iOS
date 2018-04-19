@@ -738,7 +738,7 @@ class BudgetDetailTableViewController: UITableViewController,
             }
             
             deletecell.delegate = self
-            deletecell.setCommand(command: "Delete Budget")
+            deletecell.setCommand(command: "\(NSLocalizedString("Delete Budget", comment:""))")
             
             cell = deletecell
             
