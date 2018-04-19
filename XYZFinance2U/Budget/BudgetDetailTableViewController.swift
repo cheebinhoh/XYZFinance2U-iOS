@@ -53,7 +53,7 @@ class BudgetDetailTableViewController: UITableViewController,
             self.modalEditing = false
         })
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:nil)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment:""), style: .cancel, handler:nil)
         
         optionMenu.addAction(deleteOption)
         optionMenu.addAction(cancelAction)
@@ -466,7 +466,7 @@ class BudgetDetailTableViewController: UITableViewController,
             
             if isCollapsed {
                 
-                navigationItem.title = "Budget"
+                navigationItem.title = NSLocalizedString("Budget", comment:"")
             }
             
             budgetType = (budget?.value(forKey: XYZBudget.name) as? String)!
@@ -499,7 +499,7 @@ class BudgetDetailTableViewController: UITableViewController,
             
             if isCollapsed {
                 
-                navigationItem.title = "New budget"
+                navigationItem.title = NSLocalizedString("New budget", comment:"")
             }
             
             navigationItem.rightBarButtonItem?.isEnabled = !budgetType.isEmpty
@@ -595,9 +595,9 @@ class BudgetDetailTableViewController: UITableViewController,
                 textcell.input.translatesAutoresizingMaskIntoConstraints = false
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
-                textcell.input.placeholder = "budget"
+                textcell.input.placeholder = NSLocalizedString("budget", comment:"")
                 textcell.input.text = budgetType
-                textcell.label.text = "Category"
+                textcell.label.text = NSLocalizedString("Category", comment:"")
                 
                 cell = textcell
             
@@ -614,7 +614,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 textcell.input.placeholder = formattingCurrencyValue(input: 0.0, code: currencyCode)
                 textcell.input.text = formattingCurrencyValue(input: amount, code: currencyCode)
-                textcell.label.text = "Amount"
+                textcell.label.text = NSLocalizedString("Amount", comment:"")
                 
                 cell = textcell
 
@@ -624,7 +624,7 @@ class BudgetDetailTableViewController: UITableViewController,
                     fatalError("Exception: budgetDetailSelectionCell is failed to be created")
                 }
                 
-                currencycell.setLabel("Currency")
+                currencycell.setLabel(NSLocalizedString("Currency", comment:""))
                 currencycell.setSelection(currencyCode ?? "USD")
                 currencycell.selectionStyle = .none
                 
@@ -636,7 +636,7 @@ class BudgetDetailTableViewController: UITableViewController,
                     fatalError("Exception: budgetDetailSelectionCell is failed to be created")
                 }
                 
-                currencycell.setLabel("Period")
+                currencycell.setLabel(NSLocalizedString("Period", comment:""))
                 currencycell.setSelection(length.rawValue)
                 currencycell.selectionStyle = .none
                 
@@ -655,7 +655,7 @@ class BudgetDetailTableViewController: UITableViewController,
                                                                                                starts: historicalStart.reversed(),
                                                                                                amounts: historicalAmount.reversed())
                 
-                currencycell.setLabel("Current effective")
+                currencycell.setLabel(NSLocalizedString("Current effective", comment:""))
                 if let _ = retstart {
                     
                     currencycell.setSelection("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!), \(formattingDate(date: retstart!, style: .medium))")
@@ -685,7 +685,7 @@ class BudgetDetailTableViewController: UITableViewController,
                     fatalError("Exception: budgetDetailSelectionCell is failed to be created")
                 }
                 
-                iconcell.setLabel("Icon")
+                iconcell.setLabel(NSLocalizedString("Icon", comment:""))
                 iconcell.icon.image = UIImage(named: iconName)
                 
                 iconcell.selectionStyle = .none
@@ -697,7 +697,7 @@ class BudgetDetailTableViewController: UITableViewController,
                     fatalError("Exception: budgetDetailSelectionCell is failed to be created")
                 }
                 
-                colorcell.setLabel("Color")
+                colorcell.setLabel(NSLocalizedString("Color", comment:""))
                 colorcell.setSelection(color.rawValue)
                 colorcell.colorView.backgroundColor = color.uiColor()
                 colorcell.icon.image = UIImage(named: "empty")
@@ -713,7 +713,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 datecell.dateInput.text = formattingDate(date: date, style: .medium)
                 datecell.delegate = self
-                datecell.label.text = "Start date"
+                datecell.label.text = NSLocalizedString("Start date", comment:"")
                 datecell.enableEditing = modalEditing
                 self.datecell = datecell
                 

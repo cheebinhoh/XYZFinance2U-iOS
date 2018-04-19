@@ -1213,7 +1213,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 textcell.isEditable = !isShared
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
-                textcell.input.placeholder = "description"
+                textcell.input.placeholder = NSLocalizedString("description", comment:"")
                 textcell.input.text = detail
                 
                 cell = textcell
@@ -1252,7 +1252,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
                 
-                budgetcell.setSelection( budgetCategory == "" ? "budget category" : budgetCategory )
+                budgetcell.setSelection( budgetCategory == "" ? NSLocalizedString("budget category", comment:"") : budgetCategory )
                 budgetcell.selectionStyle = .none
                 
                 if "" != budgetCategory {
@@ -1319,7 +1319,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
                 
-                recurringcell.setSelection( "Recurring: \((recurring?.rawValue)!)" )
+                recurringcell.setSelection( "\(NSLocalizedString("Recurring:", comment: "")) \(NSLocalizedString((recurring?.rawValue)!, comment:""))" )
                 recurringcell.selectionStyle = .none
                 recurringcell.icon.image = UIImage(named: "empty")
                 cell = recurringcell
@@ -1375,7 +1375,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
-                textcell.input.placeholder = "add email"
+                textcell.input.placeholder = NSLocalizedString("add email", comment:"")
                 textcell.input.text = ""
 
                 if modalEditing {
@@ -1451,7 +1451,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 }
                 
                 deletecell.delegate = self
-                deletecell.setCommand(command: "Delete Expense")
+                deletecell.setCommand(command: NSLocalizedString("Delete Expense", comment:""))
                 
                 cell = deletecell
             

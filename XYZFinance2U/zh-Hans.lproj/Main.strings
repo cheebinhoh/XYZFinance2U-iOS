@@ -99,7 +99,7 @@
 "IhD-2T-avI.title" = "About";
 
 /* Class = "UILabel"; text = "Mark it at a location"; ObjectID = "Ik9-sI-i9T"; */
-"Ik9-sI-i9T.text" = "Mark it at a location";
+"Ik9-sI-i9T.text" = "位置标记";
 
 /* Class = "UINavigationItem"; title = "Location"; ObjectID = "LDj-vD-hFl"; */
 "LDj-vD-hFl.title" = "Location";

@@ -34,7 +34,7 @@ class BudgetDetailSelectionTableViewCell: UITableViewCell {
     
     func setSelection(_ selection: String) {
         
-        self.selection.text = selection
+        self.selection.text = NSLocalizedString(selection, comment:"")
     }
 
 }

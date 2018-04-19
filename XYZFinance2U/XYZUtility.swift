@@ -35,8 +35,8 @@ enum XYZColor: String {
     case orange = "Orange"
     case purple = "Purple"
     case red = "Red"
-    case yellow = "yellow"
-    case white = "white"
+    case yellow = "Yellow"
+    case white = "White"
     
     func description() -> String {
         
