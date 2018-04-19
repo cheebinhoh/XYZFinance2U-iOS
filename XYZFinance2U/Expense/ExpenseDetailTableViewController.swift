@@ -635,7 +635,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         newImageIndex = index
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let cameraOption = UIAlertAction(title: "Take photo", style: .default, handler: { (action) in
+        let cameraOption = UIAlertAction(title: NSLocalizedString("Take photo", comment:""), style: .default, handler: { (action) in
             
             let imagePicker = UIImagePickerController()
             
@@ -654,7 +654,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         optionMenu.addAction(cameraOption)
         
-        let photoOption = UIAlertAction(title: "Choose photo", style: .default, handler: { (action) in
+        let photoOption = UIAlertAction(title: NSLocalizedString("Choose photo", comment:""), style: .default, handler: { (action) in
             
             let imagePicker = UIImagePickerController()
             
@@ -675,7 +675,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         if imageSet![index].selected {
             
-            let saveOption = UIAlertAction(title: "Save photo", style: .default, handler: { (action) in
+            let saveOption = UIAlertAction(title: NSLocalizedString("Save photo", comment:""), style: .default, handler: { (action) in
                 
                 UIImageWriteToSavedPhotosAlbum(self.imageSet![index].image!, nil, nil, nil)
             })
@@ -683,7 +683,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             optionMenu.addAction(saveOption)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment:""), style: .cancel, handler: nil)
         
         optionMenu.addAction(cancelAction)
         
