@@ -16,7 +16,7 @@
 "Back" = "前页";
 "was created by CB Hoh." = "由胡志斌编程.";
 "2017-2018 CB Hoh, All rights reserved." = "2017-2018, 胡志斌. 版权所有.";
-"The foreign exchange rates are from" = "汇率取自";
+"The foreign exchange rates are from http://fixer.io" = "汇率取自 http://fixer.io";
 "It does not come with warranty of any sort." = "它不附带任何形式的保修.";
 "The icons are from Noun Project by" = "这些图标来自Noun Project 并提供被";
 "Delete incomes" = "删除收益";

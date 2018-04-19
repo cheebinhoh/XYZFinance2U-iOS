@@ -120,7 +120,7 @@ class SettingDetailTableViewController: UITableViewController {
             
                 let text = """
                 
-\(NSLocalizedString("The foreign exchange rates are from", comment: "")) http://fixer.io
+\(NSLocalizedString("The foreign exchange rates are from http://fixer.io", comment: ""))
 
 \(NSLocalizedString("It does not come with warranty of any sort.", comment: ""))
 
