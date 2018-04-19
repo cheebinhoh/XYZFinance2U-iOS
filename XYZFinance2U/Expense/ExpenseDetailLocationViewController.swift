@@ -124,7 +124,7 @@ class ExpenseDetailLocationViewController: UIViewController,
             
             let unselectOption = UIAlertAction(title: NSLocalizedString("Unselect it", comment:""), style: .default, handler: { (action) in
                 
-                annotation?.title = "Location"
+                annotation?.title = NSLocalizedString("Location", comment:"")
                 
                 self.delegate?.newlocation(coordinte: nil)
             })
@@ -134,7 +134,7 @@ class ExpenseDetailLocationViewController: UIViewController,
             
             let useOption = UIAlertAction(title: NSLocalizedString("Select it", comment:""), style: .default, handler: { (action) in
                 
-                annotation?.title = "Selected location"
+                annotation?.title = NSLocalizedString("Selected location", comment:"")
             
                 self.delegate?.newlocation(coordinte: (annotationView.annotation?.coordinate)!)
             })
@@ -156,7 +156,7 @@ class ExpenseDetailLocationViewController: UIViewController,
         
         let annotation = view.annotation as? MKPointAnnotation
      
-        if annotation?.title == "Selected location" {
+        if annotation?.title == NSLocalizedString("Selected location", comment:"") {
             
             self.delegate?.newlocation(coordinte: (view.annotation?.coordinate)!)
         }
@@ -166,7 +166,7 @@ class ExpenseDetailLocationViewController: UIViewController,
         
         let location = locations[0]
         
-        displayCoordinate(location.coordinate, "Location")
+        displayCoordinate(location.coordinate, NSLocalizedString("Location", comment:""))
         
         self.clmanager.stopUpdatingLocation()
     }
@@ -188,7 +188,7 @@ class ExpenseDetailLocationViewController: UIViewController,
         
         let backButton = UIButton(type: .custom)
         backButton.setImage(UIImage(named: "BackButton.png"), for: .normal)
-        backButton.setTitle(" \(NSLocalizedString("Back", comment:""))", for: .normal)
+        backButton.setTitle(" \(NSLocalizedString("\(NSLocalizedString("Back", comment:""))", comment:""))", for: .normal)
         backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
         backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
         
