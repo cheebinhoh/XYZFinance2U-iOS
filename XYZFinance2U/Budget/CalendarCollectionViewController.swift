@@ -407,7 +407,7 @@ class CalendarCollectionViewController: UICollectionViewController,
                 }
                 
                 let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                let copyUrlOption = UIAlertAction(title: "New expense", style: .default, handler: { (action) in
+                let copyUrlOption = UIAlertAction(title: NSLocalizedString("New expense", comment:""), style: .default, handler: { (action) in
                     
                     guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
                         
@@ -435,7 +435,7 @@ class CalendarCollectionViewController: UICollectionViewController,
                     self.present(expenseDetailNavigationController, animated: true, completion: nil)
                 })
                 
-                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment:""), style: .cancel, handler: { (action) in
                     
                     mainSplitView.popOverAlertController = nil
                 })

@@ -657,7 +657,7 @@ class IncomeTableViewController: UITableViewController,
                         || Date().timeIntervalSince((appDelegate?.lastAuthenticated)!) >= 0.0 {
                        
                         laContext.evaluatePolicy(.deviceOwnerAuthentication,
-                                                 localizedReason: "Authenticate to use the app" )
+                                                 localizedReason: NSLocalizedString("Authenticate to use the app", comment:"") )
                         { (success, error) in
                     
                             self.authenticatedOk = success

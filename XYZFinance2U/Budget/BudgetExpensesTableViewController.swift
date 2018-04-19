@@ -359,7 +359,7 @@ class BudgetExpensesTableViewController: UITableViewController,
             let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
             let expense = sectionExpenseList![indexPath.row]
             
-            let copy = UIContextualAction(style: .normal, title: "Copy" ) { _, _, handler in
+            let copy = UIContextualAction(style: .normal, title: NSLocalizedString("Copy", comment:"") ) { _, _, handler in
                 
                 guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
                     
@@ -413,7 +413,7 @@ class BudgetExpensesTableViewController: UITableViewController,
             var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
             let expense = sectionExpenseList![indexPath.row]
 
-            let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, handler in
+            let delete = UIContextualAction(style: .destructive, title: NSLocalizedString("Delete", comment:"")) { _, _, handler in
                 
                 let aContext = managedContext()
                 
@@ -455,7 +455,7 @@ class BudgetExpensesTableViewController: UITableViewController,
                 
                 if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
                     
-                    let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
+                    let more = UIContextualAction(style: .normal, title: NSLocalizedString("More", comment:"")) { _, _, handler in
                         
                         let appDelegate = UIApplication.shared.delegate as? AppDelegate
                         guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
@@ -464,7 +464,7 @@ class BudgetExpensesTableViewController: UITableViewController,
                         }
                         
                         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                        let copyUrlOption = UIAlertAction(title: "Share expense url", style: .default, handler: { (action) in
+                        let copyUrlOption = UIAlertAction(title: NSLocalizedString("Share expense url", comment:""), style: .default, handler: { (action) in
                             
                             let vc = UIActivityViewController(activityItems: [url], applicationActivities: [])
                             self.present(vc, animated: true, completion: {
@@ -477,7 +477,7 @@ class BudgetExpensesTableViewController: UITableViewController,
                             handler(true)
                         })
                         
-                        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment:""), style: .cancel, handler: { (action) in
                             
                             mainSplitView.popOverAlertController = nil
                             handler(true)
