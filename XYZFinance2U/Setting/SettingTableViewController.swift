@@ -787,7 +787,7 @@ class SettingTableViewController: UITableViewController,
         } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "SynciCloud" {
             
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let deleteOption = UIAlertAction(title: "Update to iCloud", style: .default, handler: { (action) in
+            let deleteOption = UIAlertAction(title: NSLocalizedString("Update to iCloud", comment:""), style: .default, handler: { (action) in
                 
                 mainSplitView.popOverAlertController = nil
                 let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -795,7 +795,7 @@ class SettingTableViewController: UITableViewController,
                 appDelegate?.syncWithiCloudAndCoreData()
             })
             
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:{ (action) in
+            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment:""), style: .cancel, handler:{ (action) in
              
                 mainSplitView.popOverAlertController = nil
             })
