@@ -1439,7 +1439,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 }
                 
                 locationpicker.selectionStyle = .none
-                locationpicker.location.text = location
+                locationpicker.location.text = NSLocalizedString(location, comment:"")
                 locationpicker.delegate = self
                 
                 cell = locationpicker

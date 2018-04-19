@@ -124,7 +124,7 @@ class ExpenseDetailLocationViewController: UIViewController,
             
             let unselectOption = UIAlertAction(title: NSLocalizedString("Unselect it", comment:""), style: .default, handler: { (action) in
                 
-                annotation?.title = NSLocalizedString("Location", comment:"")
+                annotation?.title = "Location"
                 
                 self.delegate?.newlocation(coordinte: nil)
             })
