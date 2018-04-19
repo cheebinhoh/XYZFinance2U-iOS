@@ -10,7 +10,7 @@
 "Foreign exchange rate" = "환율";
 "Save to file" = "파일에 저장";
 "Update to iCloud" = "iCloud로 업데이트";
-"Delete data" = "데이터 삭제;
+"Delete data" = "데이터 삭제";
 "Lock out" = "잠금";
 "Require authentication" = "인증 필요";
 "Back" = "뒤로";
@@ -100,5 +100,5 @@
 "Calendar view" = "달력";
 "Historical view" = "역사가의 경비";
 "Share expense url" = "URL 공유";
-"Authenticate to use the app" = "앱을 사용하도록 인증";
-"automative service" = "자동차 서비스";
+"Authenticate to use the app" = "验证使用应用程序";
+"automative service" = "汽车维修";
