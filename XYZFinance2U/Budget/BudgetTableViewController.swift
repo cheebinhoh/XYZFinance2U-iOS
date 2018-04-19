@@ -525,7 +525,7 @@ class BudgetTableViewController: UITableViewController,
         
         var commands = [UIContextualAction]()
         
-        let new = UIContextualAction(style: .normal, title: "New expense" ) { _, _, handler in
+        let new = UIContextualAction(style: .normal, title: NSLocalizedString("New expense", comment:"") ) { _, _, handler in
             
             guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
                 
@@ -564,15 +564,15 @@ class BudgetTableViewController: UITableViewController,
         new.backgroundColor = UIColor.blue
         commands.append(new)
         
-        let more = UIContextualAction(style: .normal, title: "More" ) { _, _, handler in
+        let more = UIContextualAction(style: .normal, title: NSLocalizedString("More", comment:"") ) { _, _, handler in
             
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment:""), style: .cancel, handler: { (action) in
                 
                 handler(true)
             })
             
-            let calendarViewAction = UIAlertAction(title: "Calendar view", style: .default, handler: { (action) in
+            let calendarViewAction = UIAlertAction(title: NSLocalizedString("Calendar view", comment:""), style: .default, handler: { (action) in
 
                 guard let calendarViewNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "CalendarViewNavigationController") as? UINavigationController else {
                     
@@ -608,7 +608,7 @@ class BudgetTableViewController: UITableViewController,
                 self.present(calendarViewNavigationController, animated: true, completion: {})
             })
             
-            let historicalViewAction = UIAlertAction(title: "Historical view", style: .default, handler: { (action) in
+            let historicalViewAction = UIAlertAction(title: NSLocalizedString("Historical view", comment:""), style: .default, handler: { (action) in
             
                 guard let budgetListViewNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "BudgetListNavigationController") as? UINavigationController else {
                     
@@ -663,7 +663,7 @@ class BudgetTableViewController: UITableViewController,
         
         var commands = [UIContextualAction]()
             
-        let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, handler in
+        let delete = UIContextualAction(style: .destructive, title: NSLocalizedString("Delete", comment:"")) { _, _, handler in
             
             // Delete the row from the data source
             let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]

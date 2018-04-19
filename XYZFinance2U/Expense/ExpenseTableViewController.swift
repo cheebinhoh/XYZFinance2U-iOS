@@ -938,7 +938,7 @@ class ExpenseTableViewController: UITableViewController,
             reloadData()
         } else {
 
-            let copy = UIContextualAction(style: .normal, title: "Copy" ) { _, _, handler in
+            let copy = UIContextualAction(style: .normal, title: NSLocalizedString("Copy", comment:"") ) { _, _, handler in
                 
                 guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
                     
@@ -1017,7 +1017,7 @@ class ExpenseTableViewController: UITableViewController,
             let expense = sectionExpenseList[indexPath.row]
             let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
             
-            let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, handler in
+            let delete = UIContextualAction(style: .destructive, title: NSLocalizedString("Delete", comment:"")) { _, _, handler in
                 
                 // Delete the row from the data source
                 self.delete(of: indexPath)
@@ -1038,7 +1038,7 @@ class ExpenseTableViewController: UITableViewController,
                 
                 if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
                     
-                    let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
+                    let more = UIContextualAction(style: .normal, title: NSLocalizedString("More", comment:"")) { _, _, handler in
                         
                         let appDelegate = UIApplication.shared.delegate as? AppDelegate
                         guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {

@@ -878,20 +878,17 @@ class IncomeTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let commands = [UIContextualAction]()
-        
-        /* OLD CODE
         var commands = [UIContextualAction]()
-        var amount = 0.0
+        //var amount = 0.0
         
         if sectionList[indexPath.section].identifier == "main" {
             
             let incomeList = sectionList[indexPath.section].data as? [XYZAccount]
             let income = incomeList![indexPath.row]
             
-            amount = income.value(forKey: XYZExpense.amount) as? Double ?? 0.0
+            //amount = income.value(forKey: XYZExpense.amount) as? Double ?? 0.0
             
-            let delete = UIContextualAction(style: .destructive, title: "Delete") { _, _, handler in
+            let delete = UIContextualAction(style: .destructive, title: NSLocalizedString("Delete", comment:"")) { _, _, handler in
                 
                 self.deleteIncome(income: income)
                 
@@ -908,9 +905,10 @@ class IncomeTableViewController: UITableViewController,
             commands.append(delete)
         } else {
             
-            (amount, _) = sectionTotal(section: indexPath.section - 1)
+            //(amount, _) = sectionTotal(section: indexPath.section - 1)
         }
         
+        /*
         let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate

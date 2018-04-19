@@ -120,7 +120,7 @@ class ExpenseDetailLocationViewController: UIViewController,
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        if annotation?.title == "Selected location" {
+        if annotation?.title == NSLocalizedString("Selected location", comment:"") {
             
             let unselectOption = UIAlertAction(title: NSLocalizedString("Unselect it", comment:""), style: .default, handler: { (action) in
                 

@@ -334,7 +334,7 @@ class BudgetExpensesTableViewController: UITableViewController,
         
         stackView.isLayoutMarginsRelativeArrangement = true
         
-        title.text = headerPretext ?? "Total"
+        title.text = headerPretext ?? NSLocalizedString("Total", comment:"")
         title.textColor = UIColor.gray
         stackView.axis = .horizontal
         stackView.addArrangedSubview(title)
