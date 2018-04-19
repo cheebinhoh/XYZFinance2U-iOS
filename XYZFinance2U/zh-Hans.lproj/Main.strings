@@ -12,7 +12,7 @@
 "1JT-KP-6vt.text" = "Label";
 
 /* Class = "UILabel"; text = "Detail"; ObjectID = "1MI-gi-dtv"; */
-"1MI-gi-dtv.text" = "细节";
+"1MI-gi-dtv.text" = "详情";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "1gb-bF-pZo"; */
 "1gb-bF-pZo.text" = "Label";
@@ -27,10 +27,10 @@
 "54w-S4-OlL.text" = "金额";
 
 /* Class = "UILabel"; text = "XYZFinance2U was created by:\n \nChee Bin HOH, 2017"; ObjectID = "5P9-Ea-pOH"; */
-"5P9-Ea-pOH.text" = "XYZFinance2U 由胡志斌编程, 2017";
+"5P9-Ea-pOH.text" = "XYZFinance2U 由胡志斌编程, 2017-2018";
 
 /* Class = "UIBarButtonItem"; title = "Prev"; ObjectID = "6A0-tv-4RK"; */
-"6A0-tv-4RK.title" = "上个";
+"6A0-tv-4RK.title" = "前页";
 
 /* Class = "UILabel"; text = "Amount"; ObjectID = "6U1-rC-2b9"; */
 "6U1-rC-2b9.text" = "金额";
@@ -51,13 +51,13 @@
 "AUe-LX-3CZ.text" = "Label";
 
 /* Class = "UINavigationItem"; title = "New expense"; ObjectID = "B09-YJ-XlT"; */
-"B09-YJ-XlT.title" = "新的支出";
+"B09-YJ-XlT.title" = "新支出";
 
 /* Class = "UIButton"; normalTitle = "Feb, 18"; ObjectID = "BKD-ry-fhY"; */
 "BKD-ry-fhY.normalTitle" = "Feb, 18";
 
 /* Class = "UILabel"; text = "Account number"; ObjectID = "CMI-F5-8uV"; */
-"CMI-F5-8uV.text" = "帐号";
+"CMI-F5-8uV.text" = "帐户";
 
 /* Class = "UILabel"; text = "Bank"; ObjectID = "DSv-AJ-3xO"; */
 "DSv-AJ-3xO.text" = "来源收入";
@@ -66,7 +66,7 @@
 "DXs-6s-KmU.normalTitle" = "...";
 
 /* Class = "UILabel"; text = "Detail"; ObjectID = "Dfz-OU-gAH"; */
-"Dfz-OU-gAH.text" = "细节";
+"Dfz-OU-gAH.text" = "详情";
 
 /* Class = "UILabel"; text = "Amount"; ObjectID = "E3R-7O-nWA"; */
 "E3R-7O-nWA.text" = "金额";
@@ -96,13 +96,13 @@
 "IOq-bn-NVL.text" = "location...";
 
 /* Class = "UINavigationItem"; title = "About"; ObjectID = "IhD-2T-avI"; */
-"IhD-2T-avI.title" = "About";
+"IhD-2T-avI.title" = "关于";
 
 /* Class = "UILabel"; text = "Mark it at a location"; ObjectID = "Ik9-sI-i9T"; */
-"Ik9-sI-i9T.text" = "位置标记";
+"Ik9-sI-i9T.text" = "标记位置";
 
 /* Class = "UINavigationItem"; title = "Location"; ObjectID = "LDj-vD-hFl"; */
-"LDj-vD-hFl.title" = "Location";
+"LDj-vD-hFl.title" = "位置";
 
 /* Class = "UILabel"; text = "XYZFinance2U"; ObjectID = "Lcd-SV-3xf"; */
 "Lcd-SV-3xf.text" = "XYZFinance2U";
@@ -111,10 +111,10 @@
 "M1a-nl-R47.text" = "Label";
 
 /* Class = "UILabel"; text = "Last update"; ObjectID = "OCQ-4O-ujO"; */
-"OCQ-4O-ujO.text" = "最后更新日期";
+"OCQ-4O-ujO.text" = "Last update";
 
 /* Class = "UILabel"; text = "Account number"; ObjectID = "Ojl-1W-I0N"; */
-"Ojl-1W-I0N.text" = "Account number";
+"Ojl-1W-I0N.text" = "帐户";
 
 /* Class = "UILabel"; text = "Amount"; ObjectID = "Oqt-fr-z7l"; */
 "Oqt-fr-z7l.text" = "金额";
@@ -132,16 +132,16 @@
 "RqA-tQ-dzY.title" = "收益";
 
 /* Class = "UITabBarItem"; title = "Item"; ObjectID = "Tdw-rP-RvJ"; */
-"Tdw-rP-RvJ.title" = "Item";
+"Tdw-rP-RvJ.title" = "项目";
 
 /* Class = "UILabel"; text = "date"; ObjectID = "UjH-Xu-Coh"; */
-"UjH-Xu-Coh.text" = "date";
+"UjH-Xu-Coh.text" = "日期";
 
 /* Class = "UILabel"; text = "Detail"; ObjectID = "VLh-q6-yD2"; */
-"VLh-q6-yD2.text" = "细节";
+"VLh-q6-yD2.text" = "详情";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "WEy-AC-c1k"; */
-"WEy-AC-c1k.text" = "Title";
+"WEy-AC-c1k.text" = "标题";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "ZZK-TY-NKE"; */
 "ZZK-TY-NKE.text" = "Label";
@@ -150,19 +150,19 @@
 "ZfW-rV-XiQ.title" = "<";
 
 /* Class = "UILabel"; text = "Account nr"; ObjectID = "aHN-Uh-Ugt"; */
-"aHN-Uh-Ugt.text" = "Account nr";
+"aHN-Uh-Ugt.text" = "帐户";
 
 /* Class = "UILabel"; text = "Bank name"; ObjectID = "arb-2Y-1TS"; */
 "arb-2Y-1TS.text" = "来源收入";
 
 /* Class = "UILabel"; text = "Rate"; ObjectID = "ay2-KR-0uS"; */
-"ay2-KR-0uS.text" = "Rate";
+"ay2-KR-0uS.text" = "率";
 
 /* Class = "UILabel"; text = "Date"; ObjectID = "c9a-BL-5zy"; */
 "c9a-BL-5zy.text" = "日期";
 
 /* Class = "UIBarButtonItem"; title = "Next"; ObjectID = "eEn-IK-JaU"; */
-"eEn-IK-JaU.title" = "下个";
+"eEn-IK-JaU.title" = "下页";
 
 /* Class = "UILabel"; text = "28"; ObjectID = "eWo-xS-el7"; */
 "eWo-xS-el7.text" = "28";
@@ -186,7 +186,7 @@
 "mg8-Y8-6Ha.text" = "Label";
 
 /* Class = "UILabel"; text = "Date"; ObjectID = "n13-xv-BIT"; */
-"n13-xv-BIT.text" = "日期";
+"n13-xv-BIT.text" = "Date";
 
 /* Class = "UINavigationItem"; title = "Image"; ObjectID = "pBm-V2-iuL"; */
 "pBm-V2-iuL.title" = "图片";
@@ -216,7 +216,7 @@
 "sun-Dr-dFf.title" = "预算";
 
 /* Class = "UILabel"; text = "Detail"; ObjectID = "tfB-lJ-RhK"; */
-"tfB-lJ-RhK.text" = "细节";
+"tfB-lJ-RhK.text" = "详情";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "tiZ-sD-Hke"; */
 "tiZ-sD-Hke.text" = "Label";
@@ -237,4 +237,4 @@
 "yjz-8M-Awz.title" = "设置";
 
 /* Class = "UILabel"; text = "Unlock"; ObjectID = "yqh-aT-k67"; */
-"yqh-aT-k67.text" = "解锁";
+"yqh-aT-k67.text" = "开锁";

@@ -30,6 +30,7 @@
 		655C97C31FCCD5140098D58D /* XYZAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C97C21FCCD5130098D58D /* XYZAccount.swift */; };
 		6567E13020327DF300058238 /* BudgetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E12F20327DF300058238 /* BudgetTableViewController.swift */; };
 		6567E1322032866C00058238 /* XYZBudget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E1312032866C00058238 /* XYZBudget.swift */; };
+		656BF680208838EB00EE6280 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 656BF682208838EB00EE6280 /* Localizable.strings */; };
 		657455BA200587D100AAB2E3 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657455B9200587D100AAB2E3 /* CloudKit.framework */; };
 		6576938B1FDA317F00BFFB6B /* XYZExpense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6576938A1FDA317F00BFFB6B /* XYZExpense.swift */; };
 		6576938D1FDA3ACB00BFFB6B /* ExpenseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6576938C1FDA3ACB00BFFB6B /* ExpenseTableViewController.swift */; };
@@ -49,7 +50,6 @@
 		658F73601FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F735F1FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift */; };
 		658FD1D82037DB3F00ABDD55 /* BudgetDetailDatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658FD1D72037DB3F00ABDD55 /* BudgetDetailDatePickerTableViewCell.swift */; };
 		6590AFAA1FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6590AFA91FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift */; };
-		659E547520880A6600687F05 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 659E547420880A6600687F05 /* Localizable.strings */; };
 		65D870C42033B17700DE991E /* BudgetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C32033B17700DE991E /* BudgetTableViewCell.swift */; };
 		65D870C6203673BB00DE991E /* BudgetDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C5203673BB00DE991E /* BudgetDetailTableViewController.swift */; };
 		65D870C82037A05F00DE991E /* BudgetDetailTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C72037A05F00DE991E /* BudgetDetailTextTableViewCell.swift */; };
@@ -117,6 +117,9 @@
 		655C97C21FCCD5130098D58D /* XYZAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZAccount.swift; sourceTree = "<group>"; };
 		6567E12F20327DF300058238 /* BudgetTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetTableViewController.swift; sourceTree = "<group>"; };
 		6567E1312032866C00058238 /* XYZBudget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZBudget.swift; sourceTree = "<group>"; };
+		656BF67E208838BE00EE6280 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		656BF67F208838BF00EE6280 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		656BF681208838EB00EE6280 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		657455B6200585F500AAB2E3 /* XYZFinance2U.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XYZFinance2U.entitlements; sourceTree = "<group>"; };
 		657455B9200587D100AAB2E3 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		6576938A1FDA317F00BFFB6B /* XYZExpense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZExpense.swift; sourceTree = "<group>"; };
@@ -137,9 +140,6 @@
 		658F735F1FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailImageViewController.swift; sourceTree = "<group>"; };
 		658FD1D72037DB3F00ABDD55 /* BudgetDetailDatePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailDatePickerTableViewCell.swift; sourceTree = "<group>"; };
 		6590AFA91FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailSwitchTableViewCell.swift; sourceTree = "<group>"; };
-		659E5472208801BB00687F05 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
-		659E5473208801BC00687F05 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		659E547420880A6600687F05 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		65D870C32033B17700DE991E /* BudgetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetTableViewCell.swift; sourceTree = "<group>"; };
 		65D870C5203673BB00DE991E /* BudgetDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailTableViewController.swift; sourceTree = "<group>"; };
 		65D870C72037A05F00DE991E /* BudgetDetailTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailTextTableViewCell.swift; sourceTree = "<group>"; };
@@ -299,7 +299,7 @@
 				655C97A71FCCCC210098D58D /* LaunchScreen.storyboard */,
 				655C97AA1FCCCC210098D58D /* Info.plist */,
 				653BFB4A2030A2530076C184 /* Document */,
-				659E547420880A6600687F05 /* Localizable.strings */,
+				656BF682208838EB00EE6280 /* Localizable.strings */,
 			);
 			path = XYZFinance2U;
 			sourceTree = "<group>";
@@ -452,7 +452,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				655C97A91FCCCC210098D58D /* LaunchScreen.storyboard in Resources */,
-				659E547520880A6600687F05 /* Localizable.strings in Resources */,
+				656BF680208838EB00EE6280 /* Localizable.strings in Resources */,
 				655C97A61FCCCC210098D58D /* Assets.xcassets in Resources */,
 				655C97A41FCCCC210098D58D /* Main.storyboard in Resources */,
 			);
@@ -560,7 +560,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				655C97A31FCCCC210098D58D /* Base */,
-				659E5472208801BB00687F05 /* zh-Hans */,
+				656BF67E208838BE00EE6280 /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -569,9 +569,17 @@
 			isa = PBXVariantGroup;
 			children = (
 				655C97A81FCCCC210098D58D /* Base */,
-				659E5473208801BC00687F05 /* zh-Hans */,
+				656BF67F208838BF00EE6280 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		656BF682208838EB00EE6280 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				656BF681208838EB00EE6280 /* zh-Hans */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

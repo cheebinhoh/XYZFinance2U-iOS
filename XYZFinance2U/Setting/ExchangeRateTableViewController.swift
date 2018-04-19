@@ -168,7 +168,7 @@ class ExchangeRateTableViewController: UITableViewController {
         
         cell.base2target.text = target
         cell.rate.text = formattingCurrencyValue(input: rate!, code: target)
-        cell.date.text = "Last update: " + formattingDate(date: date!, style: .short)
+        cell.date.text = "\(NSLocalizedString("Last update:", comment:"")) " + formattingDate(date: date!, style: .short)
         
         return cell
     }
