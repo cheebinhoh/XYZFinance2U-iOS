@@ -66,16 +66,23 @@ class SelectionTableViewController: UITableViewController {
     // MARK: - IBAction
     
     @IBAction func backAction(_ sender: UIButton) {
-        
+
         delegate?.selection(self, item: selectedItem)
         dismiss(animated: true, completion: nil)
     }
 
-    func setSelectedItem(_ item: String?) {
+    func setSelectedItem(_ item: String?,
+                         _ displayedItem: String? = nil) {
         
         self.selectedItem = item
         
-        navigationItem.title = "\(NSLocalizedString(selectedItem!, comment:""))"
+        if let _ = displayedItem {
+            
+            navigationItem.title = displayedItem
+        } else {
+            
+            navigationItem.title = "\(NSLocalizedString(selectedItem!, comment:""))"
+        }
         
         found:
             for (sectionIndex, section) in tableSectionList.enumerated() {
@@ -231,15 +238,15 @@ class SelectionTableViewController: UITableViewController {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.accessoryType = .checkmark
         
-        if displayedString.isEmpty {
+        selectedItem = tableSectionList[indexPath.section].cellList[indexPath.row];
+        var displayedSelectedItem = NSLocalizedString(selectedItem!, comment: "")
+        
+        if !displayedString.isEmpty {
             
-            selectedItem = NSLocalizedString(tableSectionList[indexPath.section].cellList[indexPath.row], comment: "")
-        } else {
-            
-            selectedItem = displayedString[indexPath.row]
+            displayedSelectedItem = displayedString[indexPath.row]
         }
         
-        navigationItem.title = "\(String(describing: selectedItem))"
+        navigationItem.title = displayedSelectedItem
     }
 
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {

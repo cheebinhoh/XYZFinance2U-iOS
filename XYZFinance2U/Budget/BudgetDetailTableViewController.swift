@@ -881,7 +881,8 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 if let _ = retstart {
                     
-                    selectionTableViewController.setSelectedItem("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!), \(formattingDate(date: retstart!, style: .medium))")
+                    selectionTableViewController.setSelectedItem("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!), \(formattingDate(date: retstart!, style: .medium))",
+                    "\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(NSLocalizedString(retlength!, comment:"")), \(formattingDate(date: retstart!, style: .medium))")
                 } else {
                     
                    selectionTableViewController.setSelectedItem("")
