@@ -74,7 +74,7 @@ class SelectionTableViewController: UITableViewController {
         
         self.selectedItem = item
         
-        navigationItem.title = "\(String(describing: selectedItem!))"
+        navigationItem.title = "\(NSLocalizedString(selectedItem!, comment:""))"
         
         found:
             for (sectionIndex, section) in tableSectionList.enumerated() {
