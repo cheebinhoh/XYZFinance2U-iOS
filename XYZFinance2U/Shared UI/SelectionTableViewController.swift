@@ -27,6 +27,7 @@ class SelectionTableViewController: UITableViewController {
     var selectionColors = [UIColor]()
     var readonly = false
     var imageNames: [String]?
+    var displayedString = [String]()
     
     // MARK: - function
     
@@ -102,7 +103,12 @@ class SelectionTableViewController: UITableViewController {
         self.imageNames = imageNames
     }
     
-    func setSelections(_ sectionIdentifier: String, _ indexing: Bool, _ selection: [String]) {
+    func setSelections(_ sectionIdentifier: String,
+                       _ indexing: Bool,
+                       _ selection: [String],
+                       _ displayedString: [String] = [String]()) {
+        
+        self.displayedString = displayedString
         
         if indexing {
         
@@ -151,7 +157,13 @@ class SelectionTableViewController: UITableViewController {
             fatalError("Exception: errpt on creating selectionItemCell")
         }
         
-        cell.label.text = NSLocalizedString(tableSectionList[indexPath.section].cellList[indexPath.row], comment:"")
+        if displayedString.isEmpty {
+            
+            cell.label.text = NSLocalizedString(tableSectionList[indexPath.section].cellList[indexPath.row], comment:"")
+        } else {
+            
+            cell.label.text = displayedString[indexPath.row]
+        }
         
         if !selectionColors.isEmpty {
             

@@ -659,7 +659,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 currencycell.setLabel(NSLocalizedString("Current effective", comment:""))
                 if let _ = retstart {
                     
-                    currencycell.setSelection("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!), \(formattingDate(date: retstart!, style: .medium))")
+                    currencycell.setSelection("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(NSLocalizedString(retlength!, comment:"")), \(formattingDate(date: retstart!, style: .medium))")
                 } else {
                     
                     currencycell.setSelection("nil")
@@ -847,22 +847,30 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 selectionTableViewController.selectionIdentifier = "Effective"
                 
+                var displayedStrings = [String]()
                 var selectionStrings = [String]()
                 for (index, amount) in historicalAmount.enumerated() {
                     
                     let date = historicalStart[index]
                     let string = "\(formattingCurrencyValue(input: amount, code: currencyCode)), \(historicalLength[index]), \(formattingDate(date: date, style: .medium))"
-                        
-                        //"\(historicalLength[index]), \(formattingCurrencyValue(input: amount, code: currencyCode)), \(formattingDate(date: date, style: .medium))"
-                    
+
                     selectionStrings.append(string)
+                    
+                    let displayedString = "\(formattingCurrencyValue(input: amount, code: currencyCode)), \(NSLocalizedString(historicalLength[index], comment:"")), \(formattingDate(date: date, style: .medium))"
+                    displayedStrings.append(displayedString)
                 }
                 
+                displayedStrings.append("\(formattingCurrencyValue(input: amount, code: currencyCode)), \(NSLocalizedString(length.rawValue, comment:"")), \(formattingDate(date: date, style: .medium))")
+                
                 selectionStrings.append("\(formattingCurrencyValue(input: amount, code: currencyCode)), \(length.rawValue), \(formattingDate(date: date, style: .medium))")
+                
                 selectionStrings.reverse()
+                displayedStrings.reverse()
                 selectionTableViewController.readonly = true
-                selectionTableViewController.setSelections("", false,
-                                                           selectionStrings)
+                selectionTableViewController.setSelections("",
+                                                           false,
+                                                           selectionStrings,
+                                                           displayedStrings)
                 
                 let (retlength, retstart, retamount ) = XYZBudget.getEffectiveBudgetDateAmount(length: length.rawValue,
                                                                                                start: date,
