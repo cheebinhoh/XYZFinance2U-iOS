@@ -701,7 +701,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 datecell?.dateInput.text = formattingDate(date: sender.date ?? Date(), style: .medium )
                 if date == recurringStopDate {
                     
-                    recurringStopDateCell?.dateInput.text = "Recurring stop: -"
+                    recurringStopDateCell?.dateInput.text = "\(NSLocalizedString("Recurring stop:", comment:"")) -"
                     recurringStopDate = sender.date ?? Date()
                 }
                 
@@ -713,10 +713,10 @@ class ExpenseDetailTableViewController: UITableViewController,
                     
                     if sender.date! > date! {
                         
-                        recurringStopDateCell?.dateInput.text = "Recurring stop: \(formattingDate(date: sender.date ?? Date(), style: .medium ))"
+                        recurringStopDateCell?.dateInput.text = "\(NSLocalizedString("Recurring stop:", comment:"")) \(formattingDate(date: sender.date ?? Date(), style: .medium ))"
                     } else {
                         
-                       recurringStopDateCell?.dateInput.text = "Recurring stop: -"
+                       recurringStopDateCell?.dateInput.text = "\(NSLocalizedString("Recurring stop:", comment:"")) -"
                     }
                 }
                 
@@ -1300,10 +1300,10 @@ class ExpenseDetailTableViewController: UITableViewController,
      
                 if date! >= recurringStopDate! {
                 
-                    datecell.dateInput.text = "Recurring stop: -"
+                    datecell.dateInput.text = "\(NSLocalizedString("Recurring stop:", comment:"")) -"
                 } else {
                     
-                    datecell.dateInput.text = "Recurring stop: \(formattingDate(date: recurringStopDate!, style: .medium))"
+                    datecell.dateInput.text = "\(NSLocalizedString("Recurring stop:", comment:"")) \(formattingDate(date: recurringStopDate!, style: .medium))"
                 }
                 
                 datecell.delegate = self

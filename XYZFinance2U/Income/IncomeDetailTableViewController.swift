@@ -540,9 +540,9 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.input.translatesAutoresizingMaskIntoConstraints = false
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
-                textcell.input.placeholder = "bank"
+                textcell.input.placeholder = NSLocalizedString("Bank", comment:"")
                 textcell.input.text = bank
-                textcell.label.text = "Bank"
+                textcell.label.text = NSLocalizedString("Bank", comment:"")
                 
                 cell = textcell
             
@@ -555,9 +555,9 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.input.translatesAutoresizingMaskIntoConstraints = false
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
-                textcell.input.placeholder = "accountNr"
+                textcell.input.placeholder = NSLocalizedString("AccountNr", comment:"")
                 textcell.input.text = accountNr
-                textcell.label.text = "AccountNr"
+                textcell.label.text = NSLocalizedString("AccountNr", comment:"")
                 
                 cell = textcell
             
@@ -573,7 +573,7 @@ class IncomeDetailTableViewController: UITableViewController,
 
                 textcell.input.placeholder = formattingCurrencyValue(input: 0.0, code: currencyCode)
                 textcell.input.text = formattingCurrencyValue(input: amount ?? 0.0, code: currencyCode)
-                textcell.label.text = "Balance"
+                textcell.label.text = NSLocalizedString("Balance", comment:"")
                 
                 cell = textcell
             
@@ -590,7 +590,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 
                 datecell.dateInput.text = formattingDate(date: date ?? Date(), style: .medium)
                 datecell.delegate = self
-                datecell.label.text = "Last update"
+                datecell.label.text = NSLocalizedString("Last update", comment:"")
                 datecell.enableEditing = modalEditing
                 self.datecell = datecell
                 
@@ -624,7 +624,7 @@ class IncomeDetailTableViewController: UITableViewController,
                     fatalError("Exception: incomeDetailSwitchCell is failed to be created")
                 }
                 
-                remindOptionCell.setOption("Remind update on a day", default: hasUpdateReminder)
+                remindOptionCell.setOption(NSLocalizedString("Remind update on a day", comment:""), default: hasUpdateReminder)
                 remindOptionCell.delegate = self
                 
                 cell = remindOptionCell
@@ -642,7 +642,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 
                 datecell.dateInput.text = formattingDateTime(date: reminddate ?? Date())
                 datecell.delegate = self
-                datecell.label.text = "Remind date"
+                datecell.label.text = NSLocalizedString("Remind date", comment:"")
                 datecell.enableEditing = modalEditing
                 dateremindcell = datecell
                 
@@ -654,14 +654,14 @@ class IncomeDetailTableViewController: UITableViewController,
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
                 
-                repeatcell.setLabel("Repeat")
+                repeatcell.setLabel(NSLocalizedString("Repeat", comment:""))
                 
                 if let _ = XYZAccount.RepeatAction(rawValue: repeatAction ?? "") {
                   
-                    repeatcell.setSelection(repeatAction ?? XYZAccount.RepeatAction.none.rawValue)
+                    repeatcell.setSelection(NSLocalizedString(repeatAction ?? XYZAccount.RepeatAction.none.rawValue, comment:""))
                 } else {
                     
-                    repeatcell.setSelection(XYZAccount.RepeatAction.none.rawValue)
+                    repeatcell.setSelection(NSLocalizedString(XYZAccount.RepeatAction.none.rawValue, comment:""))
                 }
                 
                 repeatcell.selectionStyle = .none
@@ -674,7 +674,7 @@ class IncomeDetailTableViewController: UITableViewController,
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
                 
-                currencycell.setLabel("Currency")
+                currencycell.setLabel(NSLocalizedString("Currency", comment:""))
                 currencycell.setSelection(currencyCode ?? "USD")
                 currencycell.selectionStyle = .none
                 
@@ -687,7 +687,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 }
        
                 deletecell.delegate = self
-                deletecell.setCommand(command: "Delete Income")
+                deletecell.setCommand(command: NSLocalizedString("Delete Income", comment:""))
                 
                 cell = deletecell
      
