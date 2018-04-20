@@ -1,0 +1,11 @@
+/* 
+  InfoPlist.strings
+  XYZFinance2U
+
+  Created by Chee Bin Hoh on 4/20/18.
+  Copyright © 2018 CB Hoh. All rights reserved.
+*/
+
+NSPhotoLibraryUsageDescription = "允许使用保存的照片";
+NSLocationWhenInUseUsageDescription = "位置情報サービスの使用を許可する";
+NSCameraUsageDescription = "カメラの使用を許可する";

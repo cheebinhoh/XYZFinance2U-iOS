@@ -17,6 +17,7 @@
 		65343E8D1FFD93B1002C5D39 /* SelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65343E8C1FFD93B1002C5D39 /* SelectionTableViewController.swift */; };
 		65343E901FFD9FC1002C5D39 /* SelectionItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65343E8F1FFD9FC1002C5D39 /* SelectionItemTableViewCell.swift */; };
 		653462191FD0FFB700F88218 /* XYZUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653462181FD0FFB700F88218 /* XYZUtility.swift */; };
+		6539D74A208A4270000BBC1D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6539D74C208A4270000BBC1D /* InfoPlist.strings */; };
 		653BFB4E2030E55A0076C184 /* ExpenseTableViewSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653BFB4D2030E55A0076C184 /* ExpenseTableViewSearchCell.swift */; };
 		65402D961FEE0B740051367F /* ExpenseDetailCommandTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65402D951FEE0B740051367F /* ExpenseDetailCommandTableViewCell.swift */; };
 		65425E8C2012C92E0078E6C2 /* IncomeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65425E8B2012C92E0078E6C2 /* IncomeDetailViewController.swift */; };
@@ -93,12 +94,16 @@
 		650024001FF67B4E001281EA /* MainSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitViewController.swift; sourceTree = "<group>"; };
 		650024041FF6B423001281EA /* SettingDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDetailTableViewController.swift; sourceTree = "<group>"; };
 		650068FD200814F8003B6469 /* XYZiCloudZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZiCloudZone.swift; sourceTree = "<group>"; };
+		65170569208A46ED000355C6 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6517056A208A46ED000355C6 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6522F8B41FE9BBC7005686B6 /* MainUITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUITabBarController.swift; sourceTree = "<group>"; };
 		653111E7202E382E002560A0 /* ExpenseDetailSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailSelectionTableViewCell.swift; sourceTree = "<group>"; };
 		65343E8A1FFD8898002C5D39 /* IncomeDetailSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeDetailSelectionTableViewCell.swift; sourceTree = "<group>"; };
 		65343E8C1FFD93B1002C5D39 /* SelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionTableViewController.swift; sourceTree = "<group>"; };
 		65343E8F1FFD9FC1002C5D39 /* SelectionItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionItemTableViewCell.swift; sourceTree = "<group>"; };
 		653462181FD0FFB700F88218 /* XYZUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZUtility.swift; sourceTree = "<group>"; };
+		6539D74B208A4270000BBC1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6539D74D208A427D000BBC1D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		653BFB4C2030E3100076C184 /* XYZFinance2U-Mini-Guide.pages */ = {isa = PBXFileReference; lastKnownFileType = file; path = "XYZFinance2U-Mini-Guide.pages"; sourceTree = "<group>"; };
 		653BFB4D2030E55A0076C184 /* ExpenseTableViewSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseTableViewSearchCell.swift; sourceTree = "<group>"; };
 		65402D951FEE0B740051367F /* ExpenseDetailCommandTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailCommandTableViewCell.swift; sourceTree = "<group>"; };
@@ -306,6 +311,7 @@
 				655C97AA1FCCCC210098D58D /* Info.plist */,
 				653BFB4A2030A2530076C184 /* Document */,
 				656BF682208838EB00EE6280 /* Localizable.strings */,
+				6539D74C208A4270000BBC1D /* InfoPlist.strings */,
 			);
 			path = XYZFinance2U;
 			sourceTree = "<group>";
@@ -442,6 +448,7 @@
 				Base,
 				ja,
 				ko,
+				"zh-Hans",
 			);
 			mainGroup = 655C97901FCCCC210098D58D;
 			productRefGroup = 655C979A1FCCCC210098D58D /* Products */;
@@ -463,6 +470,7 @@
 				656BF680208838EB00EE6280 /* Localizable.strings in Resources */,
 				655C97A61FCCCC210098D58D /* Assets.xcassets in Resources */,
 				655C97A41FCCCC210098D58D /* Main.storyboard in Resources */,
+				6539D74A208A4270000BBC1D /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -564,6 +572,17 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		6539D74C208A4270000BBC1D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6539D74B208A4270000BBC1D /* en */,
+				6539D74D208A427D000BBC1D /* zh-Hans */,
+				65170569208A46ED000355C6 /* ko */,
+				6517056A208A46ED000355C6 /* ja */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		655C97A21FCCCC210098D58D /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
