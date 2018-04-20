@@ -81,7 +81,7 @@
 "Remind update on a day" = "更新提醒日期";
 "Last update" = "上次更新日期";
 "AccountNr" = "帐户";
-"Bank" = "来源收入";
+"Bank" = "收入来源";
 "Balance" = "结余";
 "hourly" = "每小时";
 "Last update:" = "最后更新:";
@@ -90,7 +90,7 @@
 "Take photo" = "拍照";
 "Select location" = "选定的位置";
 "Select it" = "选择它";
-"Unselect it" = "取消选择它";
+"Unselect it" = "取消选择";
 "Location" = "位置";
 "Selected location" = "选择的位置";
 "Delete" = "删除";

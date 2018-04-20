@@ -60,7 +60,7 @@
 "CMI-F5-8uV.text" = "帐户";
 
 /* Class = "UILabel"; text = "Bank"; ObjectID = "DSv-AJ-3xO"; */
-"DSv-AJ-3xO.text" = "来源收入";
+"DSv-AJ-3xO.text" = "收入来源";
 
 /* Class = "UIButton"; normalTitle = "..."; ObjectID = "DXs-6s-KmU"; */
 "DXs-6s-KmU.normalTitle" = "...";
@@ -153,7 +153,7 @@
 "aHN-Uh-Ugt.text" = "帐户";
 
 /* Class = "UILabel"; text = "Bank name"; ObjectID = "arb-2Y-1TS"; */
-"arb-2Y-1TS.text" = "来源收入";
+"arb-2Y-1TS.text" = "收入来源";
 
 /* Class = "UILabel"; text = "Rate"; ObjectID = "ay2-KR-0uS"; */
 "ay2-KR-0uS.text" = "率";
@@ -225,7 +225,7 @@
 "vhK-lX-uvX.title" = "预算";
 
 /* Class = "UILabel"; text = "Bank name"; ObjectID = "wuV-kR-Y7q"; */
-"wuV-kR-Y7q.text" = "来源收入";
+"wuV-kR-Y7q.text" = "收入来源";
 
 /* Class = "UILabel"; text = "Date"; ObjectID = "x1q-FO-nzj"; */
 "x1q-FO-nzj.text" = "日期";
