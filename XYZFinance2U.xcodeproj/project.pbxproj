@@ -142,6 +142,10 @@
 		657C29D120433D6900CF3165 /* BudgetExpensesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetExpensesTableViewController.swift; sourceTree = "<group>"; };
 		657C390F2038F7D400276A6E /* BudgetDetailCommandTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailCommandTableViewCell.swift; sourceTree = "<group>"; };
 		657F1EB5201D5C1000FEB385 /* ExpenseDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailViewController.swift; sourceTree = "<group>"; };
+		65837B66208ADA1700AF6579 /* km-KH */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "km-KH"; path = "km-KH.lproj/Main.strings"; sourceTree = "<group>"; };
+		65837B67208ADA1800AF6579 /* km-KH */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "km-KH"; path = "km-KH.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		65837B68208ADA1800AF6579 /* km-KH */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "km-KH"; path = "km-KH.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		65837B69208ADA1800AF6579 /* km-KH */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "km-KH"; path = "km-KH.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		658DE92B206B17E9006C5D17 /* BudgetListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetListTableViewController.swift; sourceTree = "<group>"; };
 		658F73531FDD961600AF7F8D /* ExpenseDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailTableViewController.swift; sourceTree = "<group>"; };
 		658F73551FDD98D700AF7F8D /* ExpenseDetailTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailTextTableViewCell.swift; sourceTree = "<group>"; };
@@ -449,6 +453,7 @@
 				ja,
 				ko,
 				"zh-Hans",
+				"km-KH",
 			);
 			mainGroup = 655C97901FCCCC210098D58D;
 			productRefGroup = 655C979A1FCCCC210098D58D /* Products */;
@@ -579,6 +584,7 @@
 				6539D74D208A427D000BBC1D /* zh-Hans */,
 				65170569208A46ED000355C6 /* ko */,
 				6517056A208A46ED000355C6 /* ja */,
+				65837B69208ADA1800AF6579 /* km-KH */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -590,6 +596,7 @@
 				656BF67E208838BE00EE6280 /* zh-Hans */,
 				656BF6902088F28600EE6280 /* ja */,
 				656BF6932088F28E00EE6280 /* ko */,
+				65837B66208ADA1700AF6579 /* km-KH */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -600,6 +607,7 @@
 				655C97A81FCCCC210098D58D /* Base */,
 				656BF6912088F28600EE6280 /* ja */,
 				656BF6942088F28F00EE6280 /* ko */,
+				65837B67208ADA1800AF6579 /* km-KH */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -611,6 +619,7 @@
 				656BF6862088D92200EE6280 /* en */,
 				656BF6922088F28700EE6280 /* ja */,
 				656BF6952088F28F00EE6280 /* ko */,
+				65837B68208ADA1800AF6579 /* km-KH */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
