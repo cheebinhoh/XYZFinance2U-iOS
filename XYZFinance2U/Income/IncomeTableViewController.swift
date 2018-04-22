@@ -782,6 +782,55 @@ class IncomeTableViewController: UITableViewController,
              */
             registerForPreviewing(with: self, sourceView: view)
         }
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("Retrieve latest update from iCloud", comment:""))
+        refreshControl.addTarget(self, action: #selector(refreshUpdateFromiCloud), for: .valueChanged)
+        
+        // this is the replacement of implementing: "collectionView.addSubview(refreshControl)"
+        tableView.refreshControl = refreshControl
+    }
+
+    @objc func refreshUpdateFromiCloud(refreshControl: UIRefreshControl) {
+
+        var zonesToBeFetched = [CKRecordZone]()
+        let incomeCustomZone = CKRecordZone(zoneName: XYZAccount.type)
+        zonesToBeFetched.append(incomeCustomZone)
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let icloudZones = appDelegate?.privateiCloudZones.filter({ (icloudZone) -> Bool in
+        
+            let name = icloudZone.value(forKey: XYZiCloudZone.name) as? String ?? ""
+            
+            return name == XYZAccount.type
+        })
+
+        fetchiCloudZoneChange(CKContainer.default().privateCloudDatabase, zonesToBeFetched, icloudZones!, {
+            
+            for (_, icloudzone) in (icloudZones?.enumerated())! {
+                
+                let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
+                
+                switch zName! {
+                    
+                case XYZAccount.type:
+                    print("-------- refresh XYZAccount")
+                    appDelegate?.incomeList = (icloudzone.data as? [XYZAccount])!
+                    appDelegate?.incomeList = sortAcounts((appDelegate?.incomeList)!)
+                    
+                    DispatchQueue.main.async {
+                        
+                        self.reloadData()
+                    }
+ 
+                default:
+                    fatalError("Exception: \(String(describing: zName)) is not supported")
+                }
+            }
+        })
+        
+        // somewhere in your code you might need to call:
+        refreshControl.endRefreshing()
     }
     
     // MARK: - split view delegate

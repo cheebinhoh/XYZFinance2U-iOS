@@ -817,6 +817,53 @@ class ExpenseTableViewController: UITableViewController,
         self.definesPresentationContext = true
         
         loadExpensesIntoSections()
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("Retrieve latest update from iCloud", comment:""))
+        refreshControl.addTarget(self, action: #selector(refreshUpdateFromiCloud), for: .valueChanged)
+        
+        // this is the replacement of implementing: "collectionView.addSubview(refreshControl)"
+        tableView.refreshControl = refreshControl
+    }
+    
+    @objc func refreshUpdateFromiCloud(refreshControl: UIRefreshControl) {
+        
+        var zonesToBeFetched = [CKRecordZone]()
+        let incomeCustomZone = CKRecordZone(zoneName: XYZExpense.type)
+        zonesToBeFetched.append(incomeCustomZone)
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let icloudZones = appDelegate?.privateiCloudZones.filter({ (icloudZone) -> Bool in
+            
+            let name = icloudZone.value(forKey: XYZiCloudZone.name) as? String ?? ""
+            
+            return name == XYZExpense.type
+        })
+        
+        fetchiCloudZoneChange(CKContainer.default().privateCloudDatabase, zonesToBeFetched, icloudZones!, {
+            
+            for (_, icloudzone) in (icloudZones?.enumerated())! {
+                
+                let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
+                
+                switch zName! {
+                    
+                    case XYZExpense.type:
+                    print("-------- refresh XYZExpense")
+                    appDelegate?.expenseList = (icloudzone.data as? [XYZExpense])!
+
+                    DispatchQueue.main.async {
+
+                        self.reloadData()
+                    }
+                    
+                default:
+                    fatalError("Exception: \(String(describing: zName)) is not supported")
+                }
+            }
+        })
+        
+        // somewhere in your code you might need to call:
+        refreshControl.endRefreshing()
     }
 
     override func didReceiveMemoryWarning() {
