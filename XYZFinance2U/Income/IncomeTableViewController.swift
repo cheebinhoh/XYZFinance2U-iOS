@@ -145,26 +145,28 @@ class IncomeTableViewController: UITableViewController,
             fatalError("Exception: IncomeDetailViewController is expected")
         }
 
-        let indexPath = tableView.indexPathForRow(at: location)
-        let cell = tableView.cellForRow(at: indexPath!)
-        
-        viewController.preferredContentSize = CGSize(width: 0.0, height: 140)
-        previewingContext.sourceRect = (cell?.frame)!
-        
-        if sectionList[indexPath!.section].identifier == "main" {
+        if let indexPath = tableView.indexPathForRow(at: location) {
             
-            guard let sectionIncomeList = sectionList[(indexPath?.section)!].data as? [XYZAccount] else {
+            let cell = tableView.cellForRow(at: indexPath)
+            
+            viewController.preferredContentSize = CGSize(width: 0.0, height: 140)
+            previewingContext.sourceRect = (cell?.frame)!
+            
+            if sectionList[indexPath.section].identifier == "main" {
                 
-                fatalError("Exception: [XYZAccount] is expected")
+                guard let sectionIncomeList = sectionList[(indexPath.section)].data as? [XYZAccount] else {
+                    
+                    fatalError("Exception: [XYZAccount] is expected")
+                }
+                
+                viewController.income = sectionIncomeList[(indexPath.row)]
+                viewController.indexPath = indexPath
+            } else {
+             
+                let (amount, currency) =  sectionTotal(section: indexPath.section - 1)
+                viewController.total = amount
+                viewController.currencyCode = currency
             }
-            
-            viewController.income = sectionIncomeList[(indexPath?.row)!]
-            viewController.indexPath = indexPath
-        } else {
-         
-            let (amount, currency) =  sectionTotal(section: indexPath!.section - 1)
-            viewController.total = amount
-            viewController.currencyCode = currency
         }
 
         return viewController
