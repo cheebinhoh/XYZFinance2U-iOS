@@ -268,7 +268,7 @@ class BudgetTableViewController: UITableViewController,
                 
                 if !sectionBudgetList.isEmpty {
                     
-                    let title = ( length == XYZBudget.Length.none ) ? "\(currency)" : "\(currency) \(length)"
+                    let title = ( length == XYZBudget.Length.none ) ? "\(currency)" : "\(currency) \(NSLocalizedString(length.rawValue, comment:""))"
                     let sortedSectionBudgetList = sectionBudgetList.sorted { (bud1, bud2) -> Bool in
                     
                         let seqNr1 = bud1.value(forKey: XYZBudget.sequenceNr) as? Int ?? 0
