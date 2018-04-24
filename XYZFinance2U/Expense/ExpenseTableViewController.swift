@@ -33,11 +33,11 @@ class ExpenseTableViewController: UITableViewController,
             let formatter = DateFormatter()
             formatter.dateFormat = "MMM, YY"
             
-            navigationItem.title = "Expenses of \((formatter.string(from: monthYear!)))"
+            navigationItem.title = "\(NSLocalizedString("Expenses -", comment:"")) \((formatter.string(from: monthYear!)))"
         } else {
             
             filteredExpenseList = nil
-            navigationItem.title = "Expenses"
+            navigationItem.title = "\(NSLocalizedString("Expenses", comment:""))"
         }
         
         filteredMonthYear = monthYear
