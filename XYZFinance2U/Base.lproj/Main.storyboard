@@ -1231,7 +1231,7 @@
                                 <rect key="frame" x="0.0" y="720.5" width="375" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XC4-PS-hna" id="Q1K-1u-qBP">
-                                    <rect key="frame" x="0.0" y="0.0" width="349" height="45.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="45.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="location..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IOq-bn-NVL" userLabel="Label">
@@ -1258,7 +1258,7 @@
                                 <rect key="frame" x="0.0" y="766.5" width="375" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AJF-xB-n2I" id="hsI-TW-jqi">
-                                    <rect key="frame" x="0.0" y="0.0" width="349" height="45.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="45.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="itQ-eY-ig0" userLabel="Selection">
@@ -1946,7 +1946,7 @@ Chee Bin HOH, 2017</string>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQ2-in-Wtc" userLabel="Selection">
-                                            <rect key="frame" x="57" y="35" width="281" height="35"/>
+                                            <rect key="frame" x="55" y="35" width="281" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="ZAY-mK-de0"/>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="281" id="dYA-bJ-Byc"/>
@@ -1980,7 +1980,7 @@ Chee Bin HOH, 2017</string>
                                         <constraint firstItem="SeZ-rM-wn9" firstAttribute="top" secondItem="zQ2-in-Wtc" secondAttribute="top" id="YSO-Wz-ggv"/>
                                         <constraint firstItem="1gb-bF-pZo" firstAttribute="leading" secondItem="6cy-XD-vcH" secondAttribute="leadingMargin" id="f8y-f6-1wL"/>
                                         <constraint firstItem="SeZ-rM-wn9" firstAttribute="leading" secondItem="6cy-XD-vcH" secondAttribute="leadingMargin" constant="-7" id="kNg-Qh-ja8"/>
-                                        <constraint firstItem="zQ2-in-Wtc" firstAttribute="leading" secondItem="1ab-2l-EZB" secondAttribute="trailing" constant="2" id="uvM-Gd-eSS"/>
+                                        <constraint firstItem="zQ2-in-Wtc" firstAttribute="leading" secondItem="1ab-2l-EZB" secondAttribute="trailing" id="uvM-Gd-eSS"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
