@@ -28,11 +28,11 @@
 "Save incomes" = "Guardar ingresos";
 "Update to iCloud" = "Actualización a iCloud";
 "New budget" = "Nuevo presupuesto";
-"Category" = "la categoría";
-"Amount" = "la cantidad";
-"Currency" = "la moneda";
-"Period" = "el periodo";
-"Start date" = "fecha de inicio";
+"Category" = "La categoría";
+"Amount" = "La cantidad";
+"Currency" = "La moneda";
+"Period" = "El periodo";
+"Start date" = "Fecha de inicio";
 "Current effective" = "Efectivo actual";
 "Icon" = "El icono";
 "Color" = "El color";
@@ -78,8 +78,7 @@
 "Currency" = "La moneda";
 "Repeat" = "Repetir";
 "Remind date" = "Fecha de recordatorio";
-"Remind update on a day" = "Recordar actualización en un día
-";
+"Remind update on a day" = "Recordar actualización en un día";
 "Last update" = "Última actualización";
 "AccountNr" = "La cuenta";
 "Bank" = "Fuente de ingresos";
@@ -106,5 +105,5 @@
 "automative service" = "servicio automatizado";
 "Done" = "listo";
 "Retrieve latest update from iCloud" = "Recuperar la última actualización de iCloud";
-"Expenses" = "Los gastos"
-"Expenses -" = "Los gastos -"
+"Expenses" = "Los gastos";
+"Expenses -" = "Los gastos -";
