@@ -1231,7 +1231,7 @@
                                 <rect key="frame" x="0.0" y="720.5" width="375" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XC4-PS-hna" id="Q1K-1u-qBP">
-                                    <rect key="frame" x="0.0" y="0.0" width="341" height="45.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="349" height="45.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="location..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IOq-bn-NVL" userLabel="Label">
@@ -1258,7 +1258,7 @@
                                 <rect key="frame" x="0.0" y="766.5" width="375" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AJF-xB-n2I" id="hsI-TW-jqi">
-                                    <rect key="frame" x="0.0" y="0.0" width="341" height="45.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="349" height="45.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="itQ-eY-ig0" userLabel="Selection">
@@ -1681,7 +1681,7 @@ Chee Bin HOH, 2017</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="E3R-7O-nWA" userLabel="Balance">
-                                            <rect key="frame" x="254" y="9" width="82" height="27"/>
+                                            <rect key="frame" x="253" y="9" width="82" height="27"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1722,7 +1722,7 @@ Chee Bin HOH, 2017</string>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="Ech-ju-oc8" userLabel="Amount">
-                                            <rect key="frame" x="276" y="40" width="60" height="21"/>
+                                            <rect key="frame" x="275" y="40" width="60" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1741,14 +1741,14 @@ Chee Bin HOH, 2017</string>
                                         <constraint firstItem="a2C-1Y-pZ3" firstAttribute="centerY" secondItem="eX9-4P-DBj" secondAttribute="centerY" id="89X-2J-1cJ"/>
                                         <constraint firstItem="E3R-7O-nWA" firstAttribute="top" secondItem="eX9-4P-DBj" secondAttribute="top" constant="9" id="F8I-rl-qxK"/>
                                         <constraint firstItem="8Jw-qJ-ejx" firstAttribute="leading" secondItem="a2C-1Y-pZ3" secondAttribute="trailing" constant="5" id="HDq-ZI-VCK"/>
-                                        <constraint firstAttribute="trailing" secondItem="E3R-7O-nWA" secondAttribute="trailing" constant="5" id="MId-nK-Ucn"/>
+                                        <constraint firstAttribute="trailing" secondItem="E3R-7O-nWA" secondAttribute="trailing" constant="6" id="MId-nK-Ucn"/>
                                         <constraint firstItem="qOX-jY-XiK" firstAttribute="top" secondItem="eX9-4P-DBj" secondAttribute="topMargin" id="ZPZ-5c-X2D"/>
                                         <constraint firstAttribute="bottom" secondItem="Ech-ju-oc8" secondAttribute="bottom" constant="9" id="dgz-MR-UwL"/>
                                         <constraint firstItem="Ech-ju-oc8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eX9-4P-DBj" secondAttribute="leading" constant="20" symbolic="YES" id="f37-jF-Fdf"/>
                                         <constraint firstItem="8Jw-qJ-ejx" firstAttribute="bottom" secondItem="eX9-4P-DBj" secondAttribute="bottomMargin" id="ibF-Yy-r6w"/>
                                         <constraint firstItem="X2O-Og-T8e" firstAttribute="leading" secondItem="eX9-4P-DBj" secondAttribute="leading" id="igQ-ET-ZyV"/>
                                         <constraint firstItem="X2O-Og-T8e" firstAttribute="top" secondItem="eX9-4P-DBj" secondAttribute="top" id="lxF-DR-4aP"/>
-                                        <constraint firstAttribute="trailing" secondItem="Ech-ju-oc8" secondAttribute="trailing" constant="5" id="mPm-6l-DvY"/>
+                                        <constraint firstAttribute="trailing" secondItem="Ech-ju-oc8" secondAttribute="trailing" constant="6" id="mPm-6l-DvY"/>
                                         <constraint firstItem="qOX-jY-XiK" firstAttribute="leading" secondItem="a2C-1Y-pZ3" secondAttribute="trailing" constant="5" id="mx0-hO-Ffk"/>
                                         <constraint firstAttribute="bottom" secondItem="X2O-Og-T8e" secondAttribute="bottom" id="sSB-tg-evV"/>
                                     </constraints>
@@ -1802,7 +1802,7 @@ Chee Bin HOH, 2017</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="54w-S4-OlL" userLabel="Balance">
-                                            <rect key="frame" x="254" y="9" width="82" height="27"/>
+                                            <rect key="frame" x="252" y="9" width="82" height="27"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1843,7 +1843,7 @@ Chee Bin HOH, 2017</string>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="fcd-LF-mvF" userLabel="Amount">
-                                            <rect key="frame" x="276" y="39.5" width="60" height="21"/>
+                                            <rect key="frame" x="274" y="39.5" width="60" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1851,13 +1851,13 @@ Chee Bin HOH, 2017</string>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="o2O-q2-nlb" firstAttribute="top" secondItem="VLJ-bo-j9W" secondAttribute="top" id="0ED-cj-a1D"/>
-                                        <constraint firstAttribute="trailing" secondItem="54w-S4-OlL" secondAttribute="trailing" constant="5" id="3UA-2o-pcD"/>
+                                        <constraint firstAttribute="trailing" secondItem="54w-S4-OlL" secondAttribute="trailing" constant="7" id="3UA-2o-pcD"/>
                                         <constraint firstItem="54w-S4-OlL" firstAttribute="top" secondItem="VLJ-bo-j9W" secondAttribute="top" constant="9" id="8Gx-d8-BSJ"/>
                                         <constraint firstAttribute="bottom" secondItem="o2O-q2-nlb" secondAttribute="bottom" id="E4M-aL-2uI"/>
                                         <constraint firstItem="s4F-ZZ-x0O" firstAttribute="leading" secondItem="o2O-q2-nlb" secondAttribute="trailing" constant="11" id="F4K-mO-ejO"/>
                                         <constraint firstItem="fcd-LF-mvF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VLJ-bo-j9W" secondAttribute="leading" constant="20" symbolic="YES" id="KaR-TY-oSi"/>
                                         <constraint firstItem="2ew-Em-eaH" firstAttribute="top" secondItem="VLJ-bo-j9W" secondAttribute="topMargin" id="M9K-1b-NqJ"/>
-                                        <constraint firstAttribute="trailing" secondItem="fcd-LF-mvF" secondAttribute="trailing" constant="5" id="Mnp-Jw-d5Z"/>
+                                        <constraint firstAttribute="trailing" secondItem="fcd-LF-mvF" secondAttribute="trailing" constant="7" id="Mnp-Jw-d5Z"/>
                                         <constraint firstAttribute="bottom" secondItem="fcd-LF-mvF" secondAttribute="bottom" constant="9" id="T3q-tX-mkY"/>
                                         <constraint firstItem="o2O-q2-nlb" firstAttribute="leading" secondItem="VLJ-bo-j9W" secondAttribute="leading" id="kig-gN-Gvi"/>
                                         <constraint firstItem="s4F-ZZ-x0O" firstAttribute="bottom" secondItem="VLJ-bo-j9W" secondAttribute="bottomMargin" id="lbt-6q-Eum"/>
