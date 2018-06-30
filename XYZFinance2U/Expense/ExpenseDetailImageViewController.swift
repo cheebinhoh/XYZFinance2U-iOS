@@ -97,7 +97,7 @@ class ExpenseDetailImageViewController: UIViewController,
         
         let backButton = UIButton(type: .custom)
         backButton.setImage(UIImage(named: "BackButton"), for: .normal) // Image can be downloaded from here below link
-        backButton.setTitle(" \(NSLocalizedString("Back", comment:""))", for: .normal)
+        backButton.setTitle(" \("Back".localized())", for: .normal)
         backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
         backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
         
@@ -140,7 +140,7 @@ class ExpenseDetailImageViewController: UIViewController,
         imagePickerController.delegate = self
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let cameraOption = UIAlertAction(title: NSLocalizedString("Take photo", comment:""), style: .default, handler: { (action) in
+        let cameraOption = UIAlertAction(title: "Take photo".localized(), style: .default, handler: { (action) in
             
             imagePickerController.sourceType = .camera
             imagePickerController.modalPresentationStyle = UIModalPresentationStyle.popover
@@ -149,7 +149,7 @@ class ExpenseDetailImageViewController: UIViewController,
         
         optionMenu.addAction(cameraOption)
         
-        let photoOption = UIAlertAction(title: NSLocalizedString("Choose photo", comment:""), style: .default, handler: { (action) in
+        let photoOption = UIAlertAction(title: "Choose photo".localized(), style: .default, handler: { (action) in
             
             imagePickerController.sourceType = .photoLibrary
             imagePickerController.modalPresentationStyle = UIModalPresentationStyle.popover
@@ -160,7 +160,7 @@ class ExpenseDetailImageViewController: UIViewController,
         
         if let _ = image {
             
-            let saveOption = UIAlertAction(title: NSLocalizedString("Save photo", comment:""), style: .default, handler: { (action) in
+            let saveOption = UIAlertAction(title: "Save photo".localized(), style: .default, handler: { (action) in
                 
                 UIImageWriteToSavedPhotosAlbum(self.image!, nil, nil, nil)
             })
@@ -168,7 +168,7 @@ class ExpenseDetailImageViewController: UIViewController,
             optionMenu.addAction(saveOption)
         }
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment:""), style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil)
 
         optionMenu.addAction(cancelAction)
         

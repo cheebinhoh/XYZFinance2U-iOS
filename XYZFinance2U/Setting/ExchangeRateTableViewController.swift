@@ -31,7 +31,7 @@ class ExchangeRateTableViewController: UITableViewController {
             
             let backButton = UIButton(type: .custom)
             backButton.setImage(UIImage(named: "BackButton"), for: .normal)
-            backButton.setTitle(" \(NSLocalizedString("Back", comment:""))", for: .normal)
+            backButton.setTitle(" \("Back".localized())", for: .normal)
             backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
             backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
             
@@ -168,7 +168,7 @@ class ExchangeRateTableViewController: UITableViewController {
         
         cell.base2target.text = target
         cell.rate.text = formattingCurrencyValue(input: rate!, code: target)
-        cell.date.text = "\(NSLocalizedString("Last update:", comment:"")) " + formattingDate(date: date!, style: .short)
+        cell.date.text = "\("Last update:".localized()) " + formattingDate(date: date!, style: .short)
         
         return cell
     }

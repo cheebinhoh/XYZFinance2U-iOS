@@ -43,7 +43,7 @@ class ExpenseDetailLocationViewController: UIViewController,
 
         if let _ = coordinate {
             
-            displayCoordinate(coordinate!, NSLocalizedString("Selected location", comment:""))
+            displayCoordinate(coordinate!, "Selected location".localized())
         }
         
         addCurrentLocationButton()
@@ -56,7 +56,7 @@ class ExpenseDetailLocationViewController: UIViewController,
         
         if let _ = map {
             
-            displayCoordinate(coordinate, NSLocalizedString("Selected location", comment:""))
+            displayCoordinate(coordinate, "Selected location".localized())
         }
     }
     
@@ -120,11 +120,11 @@ class ExpenseDetailLocationViewController: UIViewController,
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        if annotation?.title == NSLocalizedString("Selected location", comment:"") {
+        if annotation?.title == "Selected location".localized() {
             
-            let unselectOption = UIAlertAction(title: NSLocalizedString("Unselect it", comment:""), style: .default, handler: { (action) in
+            let unselectOption = UIAlertAction(title: "Unselect it".localized(), style: .default, handler: { (action) in
                 
-                annotation?.title = NSLocalizedString("Location", comment:"")
+                annotation?.title = "Location".localized()
                 
                 self.delegate?.newlocation(coordinte: nil)
             })
@@ -132,9 +132,9 @@ class ExpenseDetailLocationViewController: UIViewController,
             optionMenu.addAction(unselectOption)
         } else {
             
-            let useOption = UIAlertAction(title: NSLocalizedString("Select it", comment:""), style: .default, handler: { (action) in
+            let useOption = UIAlertAction(title: "Select it".localized(), style: .default, handler: { (action) in
                 
-                annotation?.title = NSLocalizedString("Selected location", comment:"")
+                annotation?.title = "Selected location".localized()
             
                 self.delegate?.newlocation(coordinte: (annotationView.annotation?.coordinate)!)
             })
@@ -142,7 +142,7 @@ class ExpenseDetailLocationViewController: UIViewController,
             optionMenu.addAction(useOption)
         }
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment:""), style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil)
         
         optionMenu.addAction(cancelAction)
         
@@ -156,7 +156,7 @@ class ExpenseDetailLocationViewController: UIViewController,
         
         let annotation = view.annotation as? MKPointAnnotation
      
-        if annotation?.title == NSLocalizedString("Selected location", comment:"") {
+        if annotation?.title == "Selected location".localized() {
             
             self.delegate?.newlocation(coordinte: (view.annotation?.coordinate)!)
         }
@@ -166,7 +166,7 @@ class ExpenseDetailLocationViewController: UIViewController,
         
         let location = locations[0]
         
-        displayCoordinate(location.coordinate, NSLocalizedString("Location", comment:""))
+        displayCoordinate(location.coordinate, "Location".localized())
         
         self.clmanager.stopUpdatingLocation()
     }
@@ -188,7 +188,7 @@ class ExpenseDetailLocationViewController: UIViewController,
         
         let backButton = UIButton(type: .custom)
         backButton.setImage(UIImage(named: "BackButton.png"), for: .normal)
-        backButton.setTitle(" \(NSLocalizedString("\(NSLocalizedString("Back", comment:""))", comment:""))", for: .normal)
+        backButton.setTitle(" \("Back".localized())", for: .normal)
         backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
         backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
         

@@ -53,7 +53,7 @@ class BudgetDetailTableViewController: UITableViewController,
             self.modalEditing = false
         })
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment:""), style: .cancel, handler:nil)
+        let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler:nil)
         
         optionMenu.addAction(deleteOption)
         optionMenu.addAction(cancelAction)
@@ -467,7 +467,7 @@ class BudgetDetailTableViewController: UITableViewController,
             
             if isCollapsed {
                 
-                navigationItem.title = NSLocalizedString("Budget", comment:"")
+                navigationItem.title = "Budget".localized()
             }
             
             budgetType = (budget?.value(forKey: XYZBudget.name) as? String)!
@@ -500,7 +500,7 @@ class BudgetDetailTableViewController: UITableViewController,
             
             if isCollapsed {
                 
-                navigationItem.title = NSLocalizedString("New budget", comment:"")
+                navigationItem.title = "New budget".localized()
             }
             
             navigationItem.rightBarButtonItem?.isEnabled = !budgetType.isEmpty
@@ -596,9 +596,9 @@ class BudgetDetailTableViewController: UITableViewController,
                 textcell.input.translatesAutoresizingMaskIntoConstraints = false
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
-                textcell.input.placeholder = NSLocalizedString("budget", comment:"")
+                textcell.input.placeholder = "budget".localized()
                 textcell.input.text = budgetType
-                textcell.label.text = NSLocalizedString("Category", comment:"")
+                textcell.label.text = "Category".localized()
                 
                 cell = textcell
             
@@ -615,7 +615,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 textcell.input.placeholder = formattingCurrencyValue(input: 0.0, code: currencyCode)
                 textcell.input.text = formattingCurrencyValue(input: amount, code: currencyCode)
-                textcell.label.text = NSLocalizedString("Amount", comment:"")
+                textcell.label.text = "Amount".localized()
                 
                 cell = textcell
 
@@ -625,7 +625,7 @@ class BudgetDetailTableViewController: UITableViewController,
                     fatalError("Exception: budgetDetailSelectionCell is failed to be created")
                 }
                 
-                currencycell.setLabel(NSLocalizedString("Currency", comment:""))
+                currencycell.setLabel("Currency".localized())
                 currencycell.setSelection(currencyCode ?? "USD")
                 currencycell.selectionStyle = .none
                 
@@ -637,7 +637,7 @@ class BudgetDetailTableViewController: UITableViewController,
                     fatalError("Exception: budgetDetailSelectionCell is failed to be created")
                 }
                 
-                currencycell.setLabel(NSLocalizedString("Period", comment:""))
+                currencycell.setLabel("Period".localized())
                 currencycell.setSelection(length.rawValue)
                 currencycell.selectionStyle = .none
                 
@@ -656,10 +656,10 @@ class BudgetDetailTableViewController: UITableViewController,
                                                                                                starts: historicalStart.reversed(),
                                                                                                amounts: historicalAmount.reversed())
                 
-                currencycell.setLabel(NSLocalizedString("Current effective", comment:""))
+                currencycell.setLabel("Current effective".localized())
                 if let _ = retstart {
                     
-                    currencycell.setSelection("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(NSLocalizedString(retlength!, comment:"")), \(formattingDate(date: retstart!, style: .medium))")
+                    currencycell.setSelection("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!.localized()), \(formattingDate(date: retstart!, style: .medium))")
                 } else {
                     
                     currencycell.setSelection("nil")
@@ -686,7 +686,7 @@ class BudgetDetailTableViewController: UITableViewController,
                     fatalError("Exception: budgetDetailSelectionCell is failed to be created")
                 }
                 
-                iconcell.setLabel(NSLocalizedString("Icon", comment:""))
+                iconcell.setLabel("Icon".localized())
                 iconcell.icon.image = UIImage(named: iconName)
                 
                 iconcell.selectionStyle = .none
@@ -698,7 +698,7 @@ class BudgetDetailTableViewController: UITableViewController,
                     fatalError("Exception: budgetDetailSelectionCell is failed to be created")
                 }
                 
-                colorcell.setLabel(NSLocalizedString("Color", comment:""))
+                colorcell.setLabel("Color".localized())
                 colorcell.setSelection(color.rawValue)
                 colorcell.colorView.backgroundColor = color.uiColor()
                 colorcell.icon.image = UIImage(named: "empty")
@@ -714,7 +714,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 datecell.dateInput.text = formattingDate(date: date, style: .medium)
                 datecell.delegate = self
-                datecell.label.text = NSLocalizedString("Start date", comment:"")
+                datecell.label.text = "Start date".localized()
                 datecell.enableEditing = modalEditing
                 self.datecell = datecell
                 
@@ -738,7 +738,7 @@ class BudgetDetailTableViewController: UITableViewController,
             }
             
             deletecell.delegate = self
-            deletecell.setCommand(command: "\(NSLocalizedString("Delete Budget", comment:""))")
+            deletecell.setCommand(command: "\("Delete Budget".localized())")
             
             cell = deletecell
             
@@ -856,11 +856,11 @@ class BudgetDetailTableViewController: UITableViewController,
 
                     selectionStrings.append(string)
                     
-                    let displayedString = "\(formattingCurrencyValue(input: amount, code: currencyCode)), \(NSLocalizedString(historicalLength[index], comment:"")), \(formattingDate(date: date, style: .medium))"
+                    let displayedString = "\(formattingCurrencyValue(input: amount, code: currencyCode)), \(historicalLength[index].localized()), \(formattingDate(date: date, style: .medium))"
                     displayedStrings.append(displayedString)
                 }
                 
-                displayedStrings.append("\(formattingCurrencyValue(input: amount, code: currencyCode)), \(NSLocalizedString(length.rawValue, comment:"")), \(formattingDate(date: date, style: .medium))")
+                displayedStrings.append("\(formattingCurrencyValue(input: amount, code: currencyCode)), \(length.rawValue.localized()), \(formattingDate(date: date, style: .medium))")
                 
                 selectionStrings.append("\(formattingCurrencyValue(input: amount, code: currencyCode)), \(length.rawValue), \(formattingDate(date: date, style: .medium))")
                 
@@ -882,7 +882,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 if let _ = retstart {
                     
                     selectionTableViewController.setSelectedItem("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!), \(formattingDate(date: retstart!, style: .medium))",
-                    "\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(NSLocalizedString(retlength!, comment:"")), \(formattingDate(date: retstart!, style: .medium))")
+                    "\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!.localized()), \(formattingDate(date: retstart!, style: .medium))")
                 } else {
                     
                    selectionTableViewController.setSelectedItem("")

@@ -268,7 +268,7 @@ class BudgetTableViewController: UITableViewController,
                 
                 if !sectionBudgetList.isEmpty {
                     
-                    let title = ( length == XYZBudget.Length.none ) ? "\(currency)" : "\(currency) \(NSLocalizedString(length.rawValue, comment:""))"
+                    let title = ( length == XYZBudget.Length.none ) ? "\(currency)" : "\(currency) \(length.rawValue.localized())"
                     let sortedSectionBudgetList = sectionBudgetList.sorted { (bud1, bud2) -> Bool in
                     
                         let seqNr1 = bud1.value(forKey: XYZBudget.sequenceNr) as? Int ?? 0
@@ -313,7 +313,7 @@ class BudgetTableViewController: UITableViewController,
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         let refreshControl = UIRefreshControl()
-        refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("Retrieve latest update from iCloud", comment:""))
+        refreshControl.attributedTitle = NSAttributedString(string: "Retrieve latest update from iCloud".localized())
         refreshControl.addTarget(self, action: #selector(refreshUpdateFromiCloud), for: .valueChanged)
         
         // this is the replacement of implementing: "collectionView.addSubview(refreshControl)"
@@ -572,7 +572,7 @@ class BudgetTableViewController: UITableViewController,
         
         var commands = [UIContextualAction]()
         
-        let new = UIContextualAction(style: .normal, title: NSLocalizedString("New expense", comment:"") ) { _, _, handler in
+        let new = UIContextualAction(style: .normal, title: "New expense".localized() ) { _, _, handler in
             
             guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
                 
@@ -611,15 +611,15 @@ class BudgetTableViewController: UITableViewController,
         new.backgroundColor = UIColor.blue
         commands.append(new)
         
-        let more = UIContextualAction(style: .normal, title: NSLocalizedString("More", comment:"") ) { _, _, handler in
+        let more = UIContextualAction(style: .normal, title: "More".localized() ) { _, _, handler in
             
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment:""), style: .cancel, handler: { (action) in
+            let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: { (action) in
                 
                 handler(true)
             })
             
-            let calendarViewAction = UIAlertAction(title: NSLocalizedString("Calendar view", comment:""), style: .default, handler: { (action) in
+            let calendarViewAction = UIAlertAction(title: "Calendar view".localized(), style: .default, handler: { (action) in
 
                 guard let calendarViewNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "CalendarViewNavigationController") as? UINavigationController else {
                     
@@ -655,7 +655,7 @@ class BudgetTableViewController: UITableViewController,
                 self.present(calendarViewNavigationController, animated: true, completion: {})
             })
             
-            let historicalViewAction = UIAlertAction(title: NSLocalizedString("Historical view", comment:""), style: .default, handler: { (action) in
+            let historicalViewAction = UIAlertAction(title: "Historical view".localized(), style: .default, handler: { (action) in
             
                 guard let budgetListViewNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "BudgetListNavigationController") as? UINavigationController else {
                     
@@ -710,7 +710,7 @@ class BudgetTableViewController: UITableViewController,
         
         var commands = [UIContextualAction]()
             
-        let delete = UIContextualAction(style: .destructive, title: NSLocalizedString("Delete", comment:"")) { _, _, handler in
+        let delete = UIContextualAction(style: .destructive, title: "Delete".localized()) { _, _, handler in
             
             // Delete the row from the data source
             let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]

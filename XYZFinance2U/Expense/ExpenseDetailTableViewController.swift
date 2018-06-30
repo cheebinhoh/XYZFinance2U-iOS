@@ -635,7 +635,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         newImageIndex = index
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let cameraOption = UIAlertAction(title: NSLocalizedString("Take photo", comment:""), style: .default, handler: { (action) in
+        let cameraOption = UIAlertAction(title: "Take photo".localized(), style: .default, handler: { (action) in
             
             let imagePicker = UIImagePickerController()
             
@@ -654,7 +654,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         optionMenu.addAction(cameraOption)
         
-        let photoOption = UIAlertAction(title: NSLocalizedString("Choose photo", comment:""), style: .default, handler: { (action) in
+        let photoOption = UIAlertAction(title: "Choose photo".localized(), style: .default, handler: { (action) in
             
             let imagePicker = UIImagePickerController()
             
@@ -675,7 +675,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         if imageSet![index].selected {
             
-            let saveOption = UIAlertAction(title: NSLocalizedString("Save photo", comment:""), style: .default, handler: { (action) in
+            let saveOption = UIAlertAction(title: "Save photo".localized(), style: .default, handler: { (action) in
                 
                 UIImageWriteToSavedPhotosAlbum(self.imageSet![index].image!, nil, nil, nil)
             })
@@ -683,7 +683,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             optionMenu.addAction(saveOption)
         }
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment:""), style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil)
         
         optionMenu.addAction(cancelAction)
         
@@ -701,7 +701,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 datecell?.dateInput.text = formattingDate(date: sender.date ?? Date(), style: .medium )
                 if date == recurringStopDate {
                     
-                    recurringStopDateCell?.dateInput.text = "\(NSLocalizedString("Recurring stop:", comment:"")) -"
+                    recurringStopDateCell?.dateInput.text = "\("Recurring stop:".localized()) -"
                     recurringStopDate = sender.date ?? Date()
                 }
                 
@@ -713,10 +713,10 @@ class ExpenseDetailTableViewController: UITableViewController,
                     
                     if sender.date! > date! {
                         
-                        recurringStopDateCell?.dateInput.text = "\(NSLocalizedString("Recurring stop:", comment:"")) \(formattingDate(date: sender.date ?? Date(), style: .medium ))"
+                        recurringStopDateCell?.dateInput.text = "\("Recurring stop:".localized()) \(formattingDate(date: sender.date ?? Date(), style: .medium ))"
                     } else {
                         
-                       recurringStopDateCell?.dateInput.text = "\(NSLocalizedString("Recurring stop:", comment:"")) -"
+                       recurringStopDateCell?.dateInput.text = "\("Recurring stop:".localized()) -"
                     }
                 }
                 
@@ -1213,7 +1213,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 textcell.isEditable = !isShared
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
-                textcell.input.placeholder = NSLocalizedString("description", comment:"")
+                textcell.input.placeholder = "description".localized()
                 textcell.input.text = detail
                 
                 cell = textcell
@@ -1252,7 +1252,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
                 
-                budgetcell.setSelection( budgetCategory == "" ? NSLocalizedString("budget category", comment:"") : budgetCategory )
+                budgetcell.setSelection( budgetCategory == "" ? "budget category".localized() : budgetCategory )
                 budgetcell.selectionStyle = .none
                 
                 if "" != budgetCategory {
@@ -1300,10 +1300,10 @@ class ExpenseDetailTableViewController: UITableViewController,
      
                 if date! >= recurringStopDate! {
                 
-                    datecell.dateInput.text = "\(NSLocalizedString("Recurring stop:", comment:"")) -"
+                    datecell.dateInput.text = "\("Recurring stop:".localized()) -"
                 } else {
                     
-                    datecell.dateInput.text = "\(NSLocalizedString("Recurring stop:", comment:"")) \(formattingDate(date: recurringStopDate!, style: .medium))"
+                    datecell.dateInput.text = "\("Recurring stop:".localized()) \(formattingDate(date: recurringStopDate!, style: .medium))"
                 }
                 
                 datecell.delegate = self
@@ -1319,7 +1319,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
                 
-                recurringcell.setSelection( "\(NSLocalizedString("Recurring:", comment: "")) \(NSLocalizedString((recurring?.rawValue)!, comment:""))" )
+                recurringcell.setSelection( "\("Recurring:".localized()) \((recurring?.rawValue)!.localized())" )
                 recurringcell.selectionStyle = .none
                 recurringcell.icon.image = UIImage(named: "empty")
                 cell = recurringcell
@@ -1375,7 +1375,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
-                textcell.input.placeholder = NSLocalizedString("add email", comment:"")
+                textcell.input.placeholder = "add email".localized()
                 textcell.input.text = ""
 
                 if modalEditing {
@@ -1439,7 +1439,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 }
                 
                 locationpicker.selectionStyle = .none
-                locationpicker.location.text = NSLocalizedString(location, comment:"")
+                locationpicker.location.text = location.localized()
                 locationpicker.delegate = self
                 
                 cell = locationpicker
@@ -1451,7 +1451,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 }
                 
                 deletecell.delegate = self
-                deletecell.setCommand(command: NSLocalizedString("Delete Expense", comment:""))
+                deletecell.setCommand(command: "Delete Expense".localized())
                 
                 cell = deletecell
             

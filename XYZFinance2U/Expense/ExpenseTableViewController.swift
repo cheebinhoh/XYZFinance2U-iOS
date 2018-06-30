@@ -33,11 +33,11 @@ class ExpenseTableViewController: UITableViewController,
             let formatter = DateFormatter()
             formatter.dateFormat = "MMM, YY"
             
-            navigationItem.title = "\(NSLocalizedString("Expenses -", comment:"")) \((formatter.string(from: monthYear!)))"
+            navigationItem.title = "\("Expenses -".localized()) \((formatter.string(from: monthYear!)))"
         } else {
             
             filteredExpenseList = nil
-            navigationItem.title = "\(NSLocalizedString("Expenses", comment:""))"
+            navigationItem.title = "\("Expenses".localized())"
         }
         
         filteredMonthYear = monthYear
@@ -818,7 +818,7 @@ class ExpenseTableViewController: UITableViewController,
         
         loadExpensesIntoSections()
         let refreshControl = UIRefreshControl()
-        refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("Retrieve latest update from iCloud", comment:""))
+        refreshControl.attributedTitle = NSAttributedString(string: "Retrieve latest update from iCloud".localized())
         refreshControl.addTarget(self, action: #selector(refreshUpdateFromiCloud), for: .valueChanged)
         
         // this is the replacement of implementing: "collectionView.addSubview(refreshControl)"
@@ -985,7 +985,7 @@ class ExpenseTableViewController: UITableViewController,
             reloadData()
         } else {
 
-            let copy = UIContextualAction(style: .normal, title: NSLocalizedString("Copy", comment:"") ) { _, _, handler in
+            let copy = UIContextualAction(style: .normal, title: "Copy".localized() ) { _, _, handler in
                 
                 guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
                     
@@ -1064,7 +1064,7 @@ class ExpenseTableViewController: UITableViewController,
             let expense = sectionExpenseList[indexPath.row]
             let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
             
-            let delete = UIContextualAction(style: .destructive, title: NSLocalizedString("Delete", comment:"")) { _, _, handler in
+            let delete = UIContextualAction(style: .destructive, title: "Delete".localized()) { _, _, handler in
                 
                 // Delete the row from the data source
                 self.delete(of: indexPath)
@@ -1085,7 +1085,7 @@ class ExpenseTableViewController: UITableViewController,
                 
                 if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
                     
-                    let more = UIContextualAction(style: .normal, title: NSLocalizedString("More", comment:"")) { _, _, handler in
+                    let more = UIContextualAction(style: .normal, title: "More".localized()) { _, _, handler in
                         
                         let appDelegate = UIApplication.shared.delegate as? AppDelegate
                         guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
@@ -1094,7 +1094,7 @@ class ExpenseTableViewController: UITableViewController,
                         }
                         
                         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                        let copyUrlOption = UIAlertAction(title: NSLocalizedString("Share expense url", comment:""), style: .default, handler: { (action) in
+                        let copyUrlOption = UIAlertAction(title: "Share expense url".localized(), style: .default, handler: { (action) in
                             
                             let vc = UIActivityViewController(activityItems: [url], applicationActivities: [])
                             self.present(vc, animated: true, completion: nil)

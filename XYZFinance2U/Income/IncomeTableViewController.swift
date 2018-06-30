@@ -659,7 +659,7 @@ class IncomeTableViewController: UITableViewController,
                         || Date().timeIntervalSince((appDelegate?.lastAuthenticated)!) >= 0.0 {
                        
                         laContext.evaluatePolicy(.deviceOwnerAuthentication,
-                                                 localizedReason: NSLocalizedString("Authenticate to use the app", comment:"") )
+                                                 localizedReason: "Authenticate to use the app".localized() )
                         { (success, error) in
                     
                             self.authenticatedOk = success
@@ -784,7 +784,7 @@ class IncomeTableViewController: UITableViewController,
         }
         
         let refreshControl = UIRefreshControl()
-        refreshControl.attributedTitle = NSAttributedString(string: NSLocalizedString("Retrieve latest update from iCloud", comment:""))
+        refreshControl.attributedTitle = NSAttributedString(string: "Retrieve latest update from iCloud".localized())
         refreshControl.addTarget(self, action: #selector(refreshUpdateFromiCloud), for: .valueChanged)
         
         // this is the replacement of implementing: "collectionView.addSubview(refreshControl)"
@@ -939,7 +939,7 @@ class IncomeTableViewController: UITableViewController,
             
             //amount = income.value(forKey: XYZExpense.amount) as? Double ?? 0.0
             
-            let delete = UIContextualAction(style: .destructive, title: NSLocalizedString("Delete", comment:"")) { _, _, handler in
+            let delete = UIContextualAction(style: .destructive, title: "Delete".localized()) { _, _, handler in
                 
                 self.deleteIncome(income: income)
                 

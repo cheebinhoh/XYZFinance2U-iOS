@@ -13,6 +13,14 @@ import UIKit
 
 var cksharesFoundButNoRootRecord = [CKShare]()
 
+extension String {
+    
+    func localized() -> String {
+        
+        return NSLocalizedString(self, comment:"")
+    }
+}
+
 // MARK: - type
 
 struct TableSectionCell {

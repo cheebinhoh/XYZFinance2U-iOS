@@ -35,7 +35,7 @@ class BudgetExpensesTableViewController: UITableViewController,
         
         let backButton = UIButton(type: .custom)
         backButton.setImage(UIImage(named: "BackButton"), for: .normal) // Image can be downloaded from here below link
-        backButton.setTitle(" \(NSLocalizedString("Back", comment:""))", for: .normal)
+        backButton.setTitle(" \("Back".localized())", for: .normal)
         backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
         backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
         
@@ -334,7 +334,7 @@ class BudgetExpensesTableViewController: UITableViewController,
         
         stackView.isLayoutMarginsRelativeArrangement = true
         
-        title.text = headerPretext ?? NSLocalizedString("Total", comment:"")
+        title.text = headerPretext ?? "Total".localized()
         title.textColor = UIColor.gray
         stackView.axis = .horizontal
         stackView.addArrangedSubview(title)
@@ -359,7 +359,7 @@ class BudgetExpensesTableViewController: UITableViewController,
             let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
             let expense = sectionExpenseList![indexPath.row]
             
-            let copy = UIContextualAction(style: .normal, title: NSLocalizedString("Copy", comment:"") ) { _, _, handler in
+            let copy = UIContextualAction(style: .normal, title: "Copy".localized() ) { _, _, handler in
                 
                 guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
                     
@@ -413,7 +413,7 @@ class BudgetExpensesTableViewController: UITableViewController,
             var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
             let expense = sectionExpenseList![indexPath.row]
 
-            let delete = UIContextualAction(style: .destructive, title: NSLocalizedString("Delete", comment:"")) { _, _, handler in
+            let delete = UIContextualAction(style: .destructive, title: "Delete".localized()) { _, _, handler in
                 
                 let aContext = managedContext()
                 
@@ -455,7 +455,7 @@ class BudgetExpensesTableViewController: UITableViewController,
                 
                 if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
                     
-                    let more = UIContextualAction(style: .normal, title: NSLocalizedString("More", comment:"")) { _, _, handler in
+                    let more = UIContextualAction(style: .normal, title: "More".localized()) { _, _, handler in
                         
                         let appDelegate = UIApplication.shared.delegate as? AppDelegate
                         guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
@@ -464,7 +464,7 @@ class BudgetExpensesTableViewController: UITableViewController,
                         }
                         
                         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                        let copyUrlOption = UIAlertAction(title: NSLocalizedString("Share expense url", comment:""), style: .default, handler: { (action) in
+                        let copyUrlOption = UIAlertAction(title: "Share expense url".localized(), style: .default, handler: { (action) in
                             
                             let vc = UIActivityViewController(activityItems: [url], applicationActivities: [])
                             self.present(vc, animated: true, completion: {
@@ -477,7 +477,7 @@ class BudgetExpensesTableViewController: UITableViewController,
                             handler(true)
                         })
                         
-                        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment:""), style: .cancel, handler: { (action) in
+                        let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: { (action) in
                             
                             mainSplitView.popOverAlertController = nil
                             handler(true)

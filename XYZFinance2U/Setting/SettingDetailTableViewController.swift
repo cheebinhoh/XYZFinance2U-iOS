@@ -29,7 +29,7 @@ class SettingDetailTableViewController: UITableViewController {
             
             let backButton = UIButton(type: .custom)
             backButton.setImage(UIImage(named: "BackButton"), for: .normal) 
-            backButton.setTitle(" \(NSLocalizedString("Back", comment: "Back"))", for: .normal)
+            backButton.setTitle(" \("Back".localized())", for: .normal)
             backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
             backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
             
@@ -98,9 +98,9 @@ class SettingDetailTableViewController: UITableViewController {
                 let headingAttributeText = NSMutableAttributedString(string: textHeading, attributes: headingAttributes)
                 
                 let text = """
-(\(textVersion)) \(NSLocalizedString("was created by CB Hoh.", comment:""))
+(\(textVersion)) \("was created by CB Hoh.".localized())
 
-\u{A9} \(NSLocalizedString("2017-2018 CB Hoh, All rights reserved.", comment: ""))
+\u{A9} \("2017-2018 CB Hoh, All rights reserved.".localized())
 
 """
                 
@@ -120,9 +120,9 @@ class SettingDetailTableViewController: UITableViewController {
             
                 let text = """
                 
-\(NSLocalizedString("The foreign exchange rates are from http://fixer.io", comment: ""))
+\("The foreign exchange rates are from http://fixer.io".localized())
 
-\(NSLocalizedString("It does not come with warranty of any sort.", comment: ""))
+\("It does not come with warranty of any sort.".localized())
 
 """
                 let attributes: [NSAttributedStringKey: Any]? = [NSAttributedStringKey.font: newcell.content.font!]
@@ -138,7 +138,7 @@ class SettingDetailTableViewController: UITableViewController {
                 
                 let text = """
                 
-\(NSLocalizedString("The icons are from Noun Project by", comment:"")) Yoraslav Samoylov, Sumhi_icon, Shmidt Sergey, Sandy Priyasa, Sophia Bai, ProSymbols, Mike Ashley, Krishna, Gregor Cresnar, Dinosoft Lab, Delwar Hossain, Arien Coquet.
+\("The icons are from Noun Project by".localized()) Yoraslav Samoylov, Sumhi_icon, Shmidt Sergey, Sandy Priyasa, Sophia Bai, ProSymbols, Mike Ashley, Krishna, Gregor Cresnar, Dinosoft Lab, Delwar Hossain, Arien Coquet.
 
 """
                 let attributes: [NSAttributedStringKey: Any]? = [NSAttributedStringKey.font: newcell.content.font!]
