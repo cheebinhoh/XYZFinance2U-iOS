@@ -19,7 +19,7 @@ class IncomeDetailTextTableViewCell: UITableViewCell,
     UITextFieldDelegate {
 
     // MARK: - property
-    
+    var monetory = false
     weak var delegate: IncomeDetailTextTableViewCellDelegate?
     var currencyCode: String = Locale.current.currencyCode!
     
@@ -35,6 +35,7 @@ class IncomeDetailTextTableViewCell: UITableViewCell,
         super.awakeFromNib()
         
         self.input.delegate = self
+        input.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         // Initialization code
     }
 
@@ -64,6 +65,8 @@ class IncomeDetailTextTableViewCell: UITableViewCell,
 
     func enableMonetaryEditing(_ enanble: Bool, _ currencyCode: String) {
         
+        monetory = enanble
+        
         if enanble {
             
             self.currencyCode = currencyCode
@@ -71,12 +74,10 @@ class IncomeDetailTextTableViewCell: UITableViewCell,
             input.clearButtonMode = .never
             input.keyboardType = .numberPad
             input.text = formattingCurrencyValue(input: 0.0, code: self.currencyCode)
-            input.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         } else {
             
             input.keyboardType = .default
             input.text = ""
-            input.addTarget(nil, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         }
     }
     
@@ -85,12 +86,19 @@ class IncomeDetailTextTableViewCell: UITableViewCell,
     @objc
     func textFieldDidChange(_ textField: UITextField) {
         
-        var text = textField.text ?? "0.00"
-        
-        text = formattingDoubleValue(input: text)
-        text = formattingAndProcessDoubleValue(input: text)
-        text = formattingCurrencyValue(input: text, code: currencyCode)
-        textField.text = text
-        delegate?.textDidEndEditing(self)
+        if monetory {
+            
+            var text = textField.text ?? "0.00"
+            
+                text = formattingDoubleValue(input: text)
+                text = formattingAndProcessDoubleValue(input: text)
+                text = formattingCurrencyValue(input: text, code: currencyCode)
+                textField.text = text
+                delegate?.textDidEndEditing(self)
+        }
+        else {
+            
+            delegate?.textDidEndEditing(self)
+        }
     }
 }
