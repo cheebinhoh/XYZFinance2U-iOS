@@ -460,7 +460,7 @@ class AppDelegate: UIResponder,
         
         self.lastAuthenticated = Date()
         
-        guard let split = self.window?.rootViewController as? UISplitViewController else {
+        guard let split = self.window?.rootViewController as? MainSplitViewController else {
             
             fatalError("Exception: UISplitViewController is expected" )
         }
@@ -480,7 +480,8 @@ class AppDelegate: UIResponder,
             fatalError("Exception: IncomeTableViewController is expected" )
         }
         
-        if tableViewController.authenticatedMechanismExist {
+        if tableViewController.authenticatedMechanismExist
+            && nil == split.popOverNavigatorController {
             
             let defaults = UserDefaults.standard;
             let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
