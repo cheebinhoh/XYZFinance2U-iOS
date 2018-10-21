@@ -316,7 +316,7 @@ class ExpenseTableViewController: UITableViewController,
                         shareRecordId != "",
                         lastTokenChangeFetch != newLastTokenChangeFetch {
                 
-                        let ckrecordid = CKRecordID(recordName: shareRecordId, zoneID: ckrecordzone.zoneID)
+                        let ckrecordid = CKRecord.ID(recordName: shareRecordId, zoneID: ckrecordzone.zoneID)
                         let database = CKContainer.default().privateCloudDatabase
                     
                         database.fetch(withRecordID: ckrecordid , completionHandler: { (ckrecord, error) in
@@ -338,13 +338,13 @@ class ExpenseTableViewController: UITableViewController,
                                 }
                             
                                 var existingParticipants = ckshare.participants
-                                var userIdentityLookupInfos = [CKUserIdentityLookupInfo]()
+                                var userIdentityLookupInfos = [CKUserIdentity.LookupInfo]()
                             
                                 for person in personList {
                                 
                                     let email = person.value(forKey: XYZExpensePerson.email) as? String
                                                                     
-                                    let useridentitylookup = CKUserIdentityLookupInfo(emailAddress: email!)
+                                    let useridentitylookup = CKUserIdentity.LookupInfo(emailAddress: email!)
                                     userIdentityLookupInfos.append(useridentitylookup)
                                 }
                             
@@ -499,7 +499,7 @@ class ExpenseTableViewController: UITableViewController,
         
         if let indexPath = self.indexPath(of: expense) {
         
-            tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableViewScrollPosition.bottom)
+            tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableView.ScrollPosition.bottom)
             delegate?.expenseSelected(newExpense: expense)
         }
     }
@@ -1137,13 +1137,13 @@ class ExpenseTableViewController: UITableViewController,
         return sectionList[indexPath.section].identifier != "searchBar"
     }
     
-    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         
-        var result = UITableViewCellEditingStyle.none
+        var result = UITableViewCell.EditingStyle.none
         
         if sectionList[indexPath.section].identifier != "searchBar" {
             
-            result = UITableViewCellEditingStyle.delete
+            result = UITableViewCell.EditingStyle.delete
         }
         
         return result
@@ -1224,7 +1224,7 @@ class ExpenseTableViewController: UITableViewController,
     }
 
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             

@@ -93,8 +93,8 @@ class SettingDetailTableViewController: UITableViewController {
                 
 \(AppDelegate.appName)
 """
-                let headingAttributes: [NSAttributedStringKey: Any]? = [NSAttributedStringKey.font: newcell.content.font!,
-                                                                        NSAttributedStringKey.link: "https://twitter.com/XYZFinance2U"]
+                let headingAttributes: [NSAttributedString.Key: Any]? = [NSAttributedString.Key.font: newcell.content.font!,
+                                                                        NSAttributedString.Key.link: "https://twitter.com/XYZFinance2U"]
                 let headingAttributeText = NSMutableAttributedString(string: textHeading, attributes: headingAttributes)
                 
                 let text = """
@@ -104,7 +104,7 @@ class SettingDetailTableViewController: UITableViewController {
 
 """
                 
-                let attributes: [NSAttributedStringKey: Any]? = [NSAttributedStringKey.font: newcell.content.font!]
+                let attributes: [NSAttributedString.Key: Any]? = [NSAttributedString.Key.font: newcell.content.font!]
                 let attributeText = NSAttributedString(string: text, attributes: attributes)
                 
                 headingAttributeText.append(attributeText)
@@ -125,7 +125,7 @@ class SettingDetailTableViewController: UITableViewController {
 \("It does not come with warranty of any sort.".localized())
 
 """
-                let attributes: [NSAttributedStringKey: Any]? = [NSAttributedStringKey.font: newcell.content.font!]
+                let attributes: [NSAttributedString.Key: Any]? = [NSAttributedString.Key.font: newcell.content.font!]
                 let attributeText = NSAttributedString(string: text, attributes: attributes)
                 newcell.content.attributedText = attributeText
                 cell = newcell
@@ -141,7 +141,7 @@ class SettingDetailTableViewController: UITableViewController {
 \("The icons are from Noun Project by".localized()) Yoraslav Samoylov, Sumhi_icon, Shmidt Sergey, Sandy Priyasa, Sophia Bai, ProSymbols, Mike Ashley, Krishna, Gregor Cresnar, Dinosoft Lab, Delwar Hossain, Arien Coquet.
 
 """
-                let attributes: [NSAttributedStringKey: Any]? = [NSAttributedStringKey.font: newcell.content.font!]
+                let attributes: [NSAttributedString.Key: Any]? = [NSAttributedString.Key.font: newcell.content.font!]
                 let attributeText = NSAttributedString(string: text, attributes: attributes)
                 newcell.content.attributedText = attributeText
                 cell = newcell

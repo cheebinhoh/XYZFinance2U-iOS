@@ -28,7 +28,7 @@ class IncomeDetailSwitchTableViewCell: UITableViewCell {
         
         super.awakeFromNib()
         
-        switchOption.addTarget(self, action: #selector(switchChanged(_:)), for: UIControlEvents.valueChanged)
+        switchOption.addTarget(self, action: #selector(switchChanged(_:)), for: UIControl.Event.valueChanged)
         // Initialization code
     }
 

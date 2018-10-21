@@ -30,7 +30,7 @@ class ExpenseDetailLocationTableViewCell: UITableViewCell {
         
         super.awakeFromNib()
         
-        location.addTarget(self, action: #selector(switchChanged(_:)), for: UIControlEvents.valueChanged)
+        location.addTarget(self, action: #selector(switchChanged(_:)), for: UIControl.Event.valueChanged)
         // Initialization code
     }
 

@@ -151,8 +151,8 @@ class ExpenseDetailLocationViewController: UIViewController,
     
     func mapView(_ mapView: MKMapView,
                  annotationView view: MKAnnotationView,
-                 didChange newState: MKAnnotationViewDragState,
-                 fromOldState oldState: MKAnnotationViewDragState) {
+                 didChange newState: MKAnnotationView.DragState,
+                 fromOldState oldState: MKAnnotationView.DragState) {
         
         let annotation = view.annotation as? MKPointAnnotation
      

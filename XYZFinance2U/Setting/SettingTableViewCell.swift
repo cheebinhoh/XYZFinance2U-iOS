@@ -45,7 +45,7 @@ class SettingTableViewCell: UITableViewCell {
         let frame = CGRect(origin: cgpoint , size: CGSize(width: 20, height: 35))
         let uiswitch = UISwitch(frame: frame)
         
-        uiswitch.addTarget(self, action: #selector(switchChanged(_:)), for: UIControlEvents.valueChanged)
+        uiswitch.addTarget(self, action: #selector(switchChanged(_:)), for: UIControl.Event.valueChanged)
         
         optionSwitch = uiswitch
         self.stack.addArrangedSubview(uiswitch)

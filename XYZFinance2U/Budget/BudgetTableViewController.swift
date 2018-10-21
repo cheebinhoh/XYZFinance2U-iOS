@@ -95,7 +95,7 @@ class BudgetTableViewController: UITableViewController,
         saveBudgets()
         
         let ip = indexPath(budget)
-        tableView.scrollToRow(at: ip!, at: UITableViewScrollPosition.top, animated: true)
+        tableView.scrollToRow(at: ip!, at: UITableView.ScrollPosition.top, animated: true)
     }
     
     func saveBudget(budget: XYZBudget) {
@@ -993,7 +993,7 @@ class BudgetTableViewController: UITableViewController,
     */
 
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 
         if editingStyle == .delete {
 
@@ -1112,7 +1112,7 @@ class BudgetTableViewController: UITableViewController,
         return true
     }
     
-    func splitViewController(_ svc: UISplitViewController, willChangeTo displayMode: UISplitViewControllerDisplayMode) {
+    func splitViewController(_ svc: UISplitViewController, willChangeTo displayMode: UISplitViewController.DisplayMode) {
         
     }
     

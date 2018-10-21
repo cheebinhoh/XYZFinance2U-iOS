@@ -431,7 +431,7 @@ class IncomeTableViewController: UITableViewController,
             let content = UNMutableNotificationContent()
             content.title = "Income update reminder"
             content.body = "\(String(describing: bank!)), \(String(describing: accountNr!)) ..."
-            content.sound = UNNotificationSound.default()
+            content.sound = UNNotificationSound.default
             content.userInfo[XYZAccount.type] = true
             content.userInfo[XYZAccount.recordId] = income.value(forKey: XYZAccount.recordId) as? String
             
@@ -559,8 +559,8 @@ class IncomeTableViewController: UITableViewController,
                     self.iCloudEnable = false
                     let alert = UIAlertController(title: "Sign in to icloud",
                                                   message: "Sign in to your iCloud account to keep records in iCloud",
-                                                  preferredStyle: UIAlertControllerStyle.alert )
-                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (action) in
+                                                  preferredStyle: UIAlertController.Style.alert )
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { (action) in
                         
                         alert.dismiss(animated: false, completion: {
                         
@@ -575,7 +575,7 @@ class IncomeTableViewController: UITableViewController,
                 
                 self.iCloudEnable = true
                 
-                CKContainer.default().requestApplicationPermission(CKApplicationPermissions.userDiscoverability, completionHandler: { (status, error) in
+                CKContainer.default().requestApplicationPermission(CKContainer.Application.Permissions.userDiscoverability, completionHandler: { (status, error) in
                     
                     if nil != error {
                         
@@ -887,7 +887,7 @@ class IncomeTableViewController: UITableViewController,
         return true
     }
     
-    func splitViewController(_ svc: UISplitViewController, willChangeTo displayMode: UISplitViewControllerDisplayMode) {
+    func splitViewController(_ svc: UISplitViewController, willChangeTo displayMode: UISplitViewController.DisplayMode) {
         
     }
 
@@ -1104,7 +1104,7 @@ class IncomeTableViewController: UITableViewController,
                 incomecell.bank.text = account.value(forKey: XYZAccount.bank) as? String
                 incomecell.account.text = account.value(forKey: XYZAccount.accountNr ) as? String
                 incomecell.amount.text = formattingCurrencyValue(input: (account.value(forKey: XYZAccount.amount) as? Double)!, code: currencyCode)
-                incomecell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+                incomecell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 
                 cell = incomecell
        
@@ -1142,7 +1142,7 @@ class IncomeTableViewController: UITableViewController,
     }
 
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             

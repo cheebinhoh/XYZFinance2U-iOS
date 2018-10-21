@@ -364,10 +364,10 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 var data: NSData?
                 
-                if let jpegdata = UIImageJPEGRepresentation(image.image!, 0) as NSData? {
+                if let jpegdata = image.image!.jpegData(compressionQuality: 0) as NSData? {
                     
                     data = jpegdata
-                } else if let pngdata = UIImagePNGRepresentation(image.image!) as NSData? {
+                } else if let pngdata = image.image!.pngData() as NSData? {
                     
                     data = pngdata
                 }
@@ -541,7 +541,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 if isPopover {
                 
-                    let backButton = UIBarButtonItem(title: " Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.cancel(_:)))
+                    let backButton = UIBarButtonItem(title: " Back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.cancel(_:)))
                     navigationItem.setLeftBarButton(backButton, animated: true)
                 }
             }
@@ -615,9 +615,12 @@ class ExpenseDetailTableViewController: UITableViewController,
         dismiss( animated: true, completion: nil )
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
         
-        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+        guard let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage else {
             
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
         }
@@ -1463,9 +1466,9 @@ class ExpenseDetailTableViewController: UITableViewController,
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         
-        var result = UITableViewCellEditingStyle.delete
+        var result = UITableViewCell.EditingStyle.delete
         
         if indexPath.row >= emails.count {
             
@@ -1484,7 +1487,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     }
 
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             
@@ -1730,4 +1733,14 @@ class ExpenseDetailTableViewController: UITableViewController,
         }
     }
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }

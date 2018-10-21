@@ -39,7 +39,7 @@ class AppDelegate: UIResponder,
                 
                 if let ownerName = icloudZone.value(forKey: XYZiCloudZone.ownerName) as? String, ownerName != "" {
                     
-                    let zoneId = CKRecordZoneID(zoneName: name, ownerName: ownerName)
+                    let zoneId = CKRecordZone.ID(zoneName: name, ownerName: ownerName)
                     let zone = CKRecordZone(zoneID: zoneId)
                 
                     zones.append(zone)
@@ -96,7 +96,7 @@ class AppDelegate: UIResponder,
     }
     
     func application(_ application: UIApplication,
-                     userDidAcceptCloudKitShareWith cloudKitShareMetadata: CKShareMetadata) {
+                     userDidAcceptCloudKitShareWith cloudKitShareMetadata: CKShare.Metadata) {
         
         let acceptSharesOp = CKAcceptSharesOperation(shareMetadatas: [cloudKitShareMetadata])
         acceptSharesOp.acceptSharesCompletionBlock = { error in
@@ -266,7 +266,6 @@ class AppDelegate: UIResponder,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         
         os_log("-------- userNotificationCenter", log: OSLog.default, type: .default)
-        print("--- here")
         
         let userinfo = response.notification.request.content.userInfo
         
@@ -409,13 +408,13 @@ class AppDelegate: UIResponder,
         }
     }
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         // Override point for customization after application launch.
         var shouldPerformAdditionalDelegateHandling = true
         
         // If a shortcut was launched, display its information and take the appropriate action.
-        if let _ = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
+        if let _ = launchOptions?[UIApplication.LaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
 
             //launchedShortcutItem = shortcutItem
             
@@ -483,7 +482,13 @@ class AppDelegate: UIResponder,
         
         if tableViewController.authenticatedMechanismExist {
             
-            tableViewController.lockout()
+            let defaults = UserDefaults.standard;
+            let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
+            
+            if ( required ) {
+                
+                tableViewController.lockout()
+            }
         }
     }
     

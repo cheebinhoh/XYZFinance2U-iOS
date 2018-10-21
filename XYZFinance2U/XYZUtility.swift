@@ -538,7 +538,7 @@ func createUpdateExpense(_ oldChangeToken: Data,
     
     if record.recordType == XYZExpensePerson.type {
         
-        let parentckreference = record[XYZExpense.type] as? CKReference
+        let parentckreference = record[XYZExpense.type] as? CKRecord.Reference
       
         unprocessedCkrecord = record
         
@@ -604,7 +604,7 @@ func createUpdateExpense(_ oldChangeToken: Data,
         
         for (index, pendingCkrecord) in unprocessedCKrecords.enumerated() {
             
-            let parentckreference = pendingCkrecord[XYZExpense.type] as? CKReference
+            let parentckreference = pendingCkrecord[XYZExpense.type] as? CKRecord.Reference
             
             if recordName == parentckreference?.recordID.recordName {
                 
@@ -799,8 +799,8 @@ func fetchiCloudZoneChange(_ database: CKDatabase,
                            _ completionblock: @escaping () -> Void ) {
  
     let aContext = managedContext()
-    var changedZoneIDs: [CKRecordZoneID] = []
-    var optionsByRecordZoneID = [CKRecordZoneID: CKFetchRecordZoneChangesOptions]()
+    var changedZoneIDs: [CKRecordZone.ID] = []
+    var optionsByRecordZoneID = [CKRecordZone.ID: CKFetchRecordZoneChangesOperation.ZoneOptions]()
     var unprocessedCkrecords = [CKRecord]()
     
     for zone in zones {
@@ -825,7 +825,7 @@ func fetchiCloudZoneChange(_ database: CKDatabase,
             }
         }
         
-        let option = CKFetchRecordZoneChangesOptions()
+        let option = CKFetchRecordZoneChangesOperation.ZoneOptions()
         option.previousServerChangeToken = changeToken
         
         optionsByRecordZoneID[zone.zoneID] = option
@@ -1290,7 +1290,7 @@ func saveExpensesToiCloud(_ database: CKDatabase,
         expenseListToBeSaved = expenseList
     }
     
-    var recordIdsToBeDeleted = [CKRecordID]()
+    var recordIdsToBeDeleted = [CKRecord.ID]()
     
     guard let data = iCloudZone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
         
@@ -1307,7 +1307,7 @@ func saveExpensesToiCloud(_ database: CKDatabase,
         if deleteRecordName != "" {
             
             let customZone = CKRecordZone(zoneName: XYZExpense.type)
-            let ckrecordId = CKRecordID(recordName: deleteRecordName, zoneID: customZone.zoneID)
+            let ckrecordId = CKRecord.ID(recordName: deleteRecordName, zoneID: customZone.zoneID)
             
             recordIdsToBeDeleted.append(ckrecordId)
         }
@@ -1329,7 +1329,7 @@ func saveExpensesToiCloud(_ database: CKDatabase,
         if deleteRecordName != "" {
             
             let customZone = CKRecordZone(zoneName: XYZExpense.type)
-            let ckrecordId = CKRecordID(recordName: deleteRecordName, zoneID: customZone.zoneID)
+            let ckrecordId = CKRecord.ID(recordName: deleteRecordName, zoneID: customZone.zoneID)
             
             recordIdsToBeDeleted.append(ckrecordId)
         }
@@ -1341,7 +1341,7 @@ func saveExpensesToiCloud(_ database: CKDatabase,
 func saveExpensesToiCloud(_ database: CKDatabase,
                           _ iCloudZone: XYZiCloudZone,
                           _ expenseList: [XYZExpense],
-                          _ recordIdsToBeDeleted: [CKRecordID],
+                          _ recordIdsToBeDeleted: [CKRecord.ID],
                           _ completionblock: @escaping () -> Void ) {
     
     var recordsToBeSaved = [CKRecord]()
@@ -1352,7 +1352,7 @@ func saveExpensesToiCloud(_ database: CKDatabase,
         
         let recordName = expense.value(forKey: XYZExpense.recordId) as? String
         let customZone = CKRecordZone(zoneName: XYZExpense.type)
-        let ckrecordId = CKRecordID(recordName: recordName!, zoneID: customZone.zoneID)
+        let ckrecordId = CKRecord.ID(recordName: recordName!, zoneID: customZone.zoneID)
         
         let record = CKRecord(recordType: XYZExpense.type, recordID: ckrecordId)
         
@@ -1434,7 +1434,7 @@ func saveExpensesToiCloud(_ database: CKDatabase,
             
             let sequenceNr = person.value(forKey: XYZExpensePerson.sequenceNr) as? Int
             let personRecordName = "\(recordName!)-\(sequenceNr!)"
-            let personckrecordId = CKRecordID(recordName: personRecordName, zoneID: customZone.zoneID)
+            let personckrecordId = CKRecord.ID(recordName: personRecordName, zoneID: customZone.zoneID)
          
             let personRecord = CKRecord(recordType: XYZExpensePerson.type, recordID: personckrecordId)
             
@@ -1447,7 +1447,7 @@ func saveExpensesToiCloud(_ database: CKDatabase,
             personRecord.setValue(paid, forKey: XYZExpensePerson.paid)
             personRecord.setValue(sequenceNr, forKey: XYZExpensePerson.sequenceNr)
             
-            let ckreference = CKReference(recordID: ckrecordId, action: .deleteSelf)
+            let ckreference = CKRecord.Reference(recordID: ckrecordId, action: .deleteSelf)
             personRecord.setValue(ckreference, forKey: XYZExpense.type)
 
             recordsToBeSaved.append(personRecord)
@@ -1539,7 +1539,7 @@ func saveAccountsToiCloud(_ database: CKDatabase,
         incomeListToBeSaved = incomeList
     }
  
-    var recordIdsToBeDeleted = [CKRecordID]()
+    var recordIdsToBeDeleted = [CKRecord.ID]()
     
     guard let data = iCloudZone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
         
@@ -1555,7 +1555,7 @@ func saveAccountsToiCloud(_ database: CKDatabase,
         
         let customZone = CKRecordZone(zoneName: XYZAccount.type)
 
-        let ckrecordId = CKRecordID(recordName: deleteRecordName, zoneID: customZone.zoneID)
+        let ckrecordId = CKRecord.ID(recordName: deleteRecordName, zoneID: customZone.zoneID)
 
         recordIdsToBeDeleted.append(ckrecordId)
     }
@@ -1566,7 +1566,7 @@ func saveAccountsToiCloud(_ database: CKDatabase,
 func saveAccountsToiCloud(_ database: CKDatabase,
                           _ iCloudZone: XYZiCloudZone,
                           _ incomeList: [XYZAccount],
-                          _ recordIdsToBeDeleted: [CKRecordID],
+                          _ recordIdsToBeDeleted: [CKRecord.ID],
                           _ completionblock: @escaping () -> Void ) {
     
     var recordsToBeSaved = [CKRecord]()
@@ -1575,7 +1575,7 @@ func saveAccountsToiCloud(_ database: CKDatabase,
 
         let recordName = income.value(forKey: XYZAccount.recordId) as? String
         let customZone = CKRecordZone(zoneName: XYZAccount.type)
-        let ckrecordId = CKRecordID(recordName: recordName!, zoneID: customZone.zoneID)
+        let ckrecordId = CKRecord.ID(recordName: recordName!, zoneID: customZone.zoneID)
 
         let record = CKRecord(recordType: XYZAccount.type, recordID: ckrecordId)
 
@@ -1657,7 +1657,7 @@ func saveBudgetsToiCloud(_ database: CKDatabase,
         budgetListToBeSaved = budgetList
     }
     
-    var recordIdsToBeDeleted = [CKRecordID]()
+    var recordIdsToBeDeleted = [CKRecord.ID]()
     
     guard let data = iCloudZone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
         
@@ -1673,7 +1673,7 @@ func saveBudgetsToiCloud(_ database: CKDatabase,
         
         let customZone = CKRecordZone(zoneName: XYZBudget.type)
         
-        let ckrecordId = CKRecordID(recordName: deleteRecordName, zoneID: customZone.zoneID)
+        let ckrecordId = CKRecord.ID(recordName: deleteRecordName, zoneID: customZone.zoneID)
         
         recordIdsToBeDeleted.append(ckrecordId)
     }
@@ -1684,7 +1684,7 @@ func saveBudgetsToiCloud(_ database: CKDatabase,
 func saveBudgetsToiCloud(_ database: CKDatabase,
                          _ iCloudZone: XYZiCloudZone,
                          _ budgetList: [XYZBudget],
-                         _ recordIdsToBeDeleted: [CKRecordID],
+                         _ recordIdsToBeDeleted: [CKRecord.ID],
                          _ completionblock: @escaping () -> Void ) {
     
     var recordsToBeSaved = [CKRecord]()
@@ -1693,7 +1693,7 @@ func saveBudgetsToiCloud(_ database: CKDatabase,
         
         let recordName = budget.value(forKey: XYZBudget.recordId) as? String
         let customZone = CKRecordZone(zoneName: XYZBudget.type)
-        let ckrecordId = CKRecordID(recordName: recordName!, zoneID: customZone.zoneID)
+        let ckrecordId = CKRecord.ID(recordName: recordName!, zoneID: customZone.zoneID)
         
         let record = CKRecord(recordType: XYZBudget.type, recordID: ckrecordId)
         
@@ -1765,7 +1765,7 @@ func registeriCloudSubscription(_ database: CKDatabase,
             ckrecordzone = CKRecordZone(zoneName: name)
         } else {
             
-            ckrecordzone = CKRecordZone(zoneID: CKRecordZoneID(zoneName: name, ownerName: ownerName))
+            ckrecordzone = CKRecordZone(zoneID: CKRecordZone.ID(zoneName: name, ownerName: ownerName))
         }
         
         let id = "\((ckrecordzone?.zoneID.zoneName)!)-\((ckrecordzone?.zoneID.ownerName)!)"
@@ -1778,7 +1778,7 @@ func registeriCloudSubscription(_ database: CKDatabase,
             } else {
 
                 let subscription = CKRecordZoneSubscription.init(zoneID: (ckrecordzone?.zoneID)!, subscriptionID: id)
-                let notificationInfo = CKNotificationInfo()
+                let notificationInfo = CKSubscription.NotificationInfo()
                 
                 notificationInfo.shouldSendContentAvailable = true
                 subscription.notificationInfo = notificationInfo

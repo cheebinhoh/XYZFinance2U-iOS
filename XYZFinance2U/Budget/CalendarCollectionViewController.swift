@@ -506,11 +506,11 @@ class CalendarCollectionViewController: UICollectionViewController,
         self.collectionView?.addGestureRecognizer(tapDouble)
         
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeGestureResponder))
-        swipeRight.direction = UISwipeGestureRecognizerDirection.right
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.collectionView?.addGestureRecognizer(swipeRight)
         
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeGestureResponder))
-        swipeRight.direction = UISwipeGestureRecognizerDirection.left
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.left
         self.collectionView?.addGestureRecognizer(swipeLeft)
         // Do any additional setup after loading the view.
     }
@@ -954,7 +954,7 @@ class CalendarCollectionViewController: UICollectionViewController,
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
  
         switch kind {
-            case UICollectionElementKindSectionFooter:
+            case UICollectionView.elementKindSectionFooter:
                 // we draw a view with just a line which acts a separator line
                 let reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: "UICollectionElementKindSectionFooter", withReuseIdentifier: "calendarCollectionFooterView", for: indexPath)
                 
