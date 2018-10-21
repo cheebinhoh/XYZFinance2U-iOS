@@ -480,6 +480,7 @@ class AppDelegate: UIResponder,
             fatalError("Exception: IncomeTableViewController is expected" )
         }
         
+        print("-------- prior to show lock screen" )
         if tableViewController.authenticatedMechanismExist
             && nil == split.popOverNavigatorController {
             
@@ -488,6 +489,7 @@ class AppDelegate: UIResponder,
             
             if ( required ) {
                 
+                print("-------- show lock screen")
                 tableViewController.lockout()
             }
         }

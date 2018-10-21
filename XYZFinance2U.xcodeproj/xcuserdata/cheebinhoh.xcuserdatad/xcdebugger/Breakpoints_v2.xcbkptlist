@@ -122,7 +122,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XYZFinance2U/Setting/SettingTableViewController.swift"
-            timestampString = "561838354.268682"
+            timestampString = "561843185.112794"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "7"
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XYZFinance2U/AppDelegate.swift"
-            timestampString = "561838354.268775"
+            timestampString = "561843185.112936"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "691"
-            endingLineNumber = "691"
+            startingLineNumber = "693"
+            endingLineNumber = "693"
             landmarkName = "syncWithiCloudAndCoreData()"
             landmarkType = "7">
          </BreakpointContent>
