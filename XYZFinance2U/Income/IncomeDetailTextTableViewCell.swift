@@ -90,11 +90,11 @@ class IncomeDetailTextTableViewCell: UITableViewCell,
             
             var text = textField.text ?? "0.00"
             
-                text = formattingDoubleValue(input: text)
-                text = formattingAndProcessDoubleValue(input: text)
-                text = formattingCurrencyValue(input: text, code: currencyCode)
-                textField.text = text
-                delegate?.textDidEndEditing(self)
+            text = formattingDoubleValue(input: text)
+            text = formattingAndProcessDoubleValue(input: text)
+            text = formattingCurrencyValue(input: text, code: currencyCode)
+            textField.text = text
+            delegate?.textDidEndEditing(self)
         }
         else {
             

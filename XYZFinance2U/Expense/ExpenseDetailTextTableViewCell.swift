@@ -20,6 +20,8 @@ class ExpenseDetailTextTableViewCell: UITableViewCell,
     UITextFieldDelegate {
     
     // MARK: - property
+    
+    var monetory = false
     @IBOutlet weak var optionSwitch: UISwitch!
     @IBOutlet weak var stack: UIStackView!
     @IBOutlet weak var input: UITextField!
@@ -55,6 +57,7 @@ class ExpenseDetailTextTableViewCell: UITableViewCell,
         // Initialization code
         
         self.input.delegate = self
+        self.input.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -90,6 +93,8 @@ class ExpenseDetailTextTableViewCell: UITableViewCell,
     
     func enableMonetaryEditing(_ enanble: Bool, _ currencyCode: String) {
         
+        monetory = enanble
+        
         if enanble {
             
             self.currencyCode = currencyCode
@@ -108,12 +113,19 @@ class ExpenseDetailTextTableViewCell: UITableViewCell,
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         
-        var text = textField.text ?? "0.00"
-        
-        text = formattingDoubleValue(input: text)
-        text = formattingAndProcessDoubleValue(input: text)
-        text = formattingCurrencyValue(input: text, code: currencyCode)
-        textField.text = text
-        delegate?.textDidEndEditing(self)
+        if monetory {
+            
+            var text = textField.text ?? "0.00"
+            
+            text = formattingDoubleValue(input: text)
+            text = formattingAndProcessDoubleValue(input: text)
+            text = formattingCurrencyValue(input: text, code: currencyCode)
+            textField.text = text
+            delegate?.textDidEndEditing(self)
+        }
+        else {
+            
+            delegate?.textDidEndEditing(self)
+        }
     }
 }

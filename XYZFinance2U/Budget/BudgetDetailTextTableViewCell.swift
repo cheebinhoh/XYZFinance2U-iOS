@@ -19,6 +19,7 @@ class BudgetDetailTextTableViewCell: UITableViewCell,
 
     // MARK: - property
     
+    var monetory = false
     weak var delegate: BudgetDetailTextTableViewCellDelegate?
     var currencyCode: String = Locale.current.currencyCode!
     
@@ -31,6 +32,7 @@ class BudgetDetailTextTableViewCell: UITableViewCell,
         super.awakeFromNib()
         
         self.input.delegate = self
+        self.input.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         // Initialization code
     }
 
@@ -59,6 +61,8 @@ class BudgetDetailTextTableViewCell: UITableViewCell,
     
     func enableMonetaryEditing(_ enanble: Bool, _ currencyCode: String) {
         
+        monetory = enanble
+        
         if enanble {
             
             self.currencyCode = currencyCode
@@ -80,12 +84,20 @@ class BudgetDetailTextTableViewCell: UITableViewCell,
     @objc
     func textFieldDidChange(_ textField: UITextField) {
         
-        var text = textField.text ?? "0.00"
-        
-        text = formattingDoubleValue(input: text)
-        text = formattingAndProcessDoubleValue(input: text)
-        text = formattingCurrencyValue(input: text, code: currencyCode)
-        textField.text = text
-        delegate?.textDidEndEditing(self)
+        if monetory {
+            
+            var text = textField.text ?? "0.00"
+            
+            text = formattingDoubleValue(input: text)
+            text = formattingAndProcessDoubleValue(input: text)
+            text = formattingCurrencyValue(input: text, code: currencyCode)
+            textField.text = text
+            delegate?.textDidEndEditing(self)
+        }
+        else
+        {
+    
+            delegate?.textDidEndEditing(self)
+        }
     }
 }
