@@ -460,6 +460,31 @@ class AppDelegate: UIResponder,
         self.authentictatedAlready = false
         
         self.lastAuthenticated = Date()
+        
+        guard let split = self.window?.rootViewController as? UISplitViewController else {
+            
+            fatalError("Exception: UISplitViewController is expected" )
+        }
+        
+        guard let tabBarController = split.viewControllers.first as? UITabBarController else {
+            
+            fatalError("Exception: UITabBarController is expected" )
+        }
+        
+        guard let navController = tabBarController.viewControllers?.first as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+        
+        guard let tableViewController = navController.viewControllers.first as? IncomeTableViewController else {
+            
+            fatalError("Exception: IncomeTableViewController is expected" )
+        }
+        
+        if tableViewController.authenticatedMechanismExist {
+            
+            tableViewController.lockout()
+        }
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {

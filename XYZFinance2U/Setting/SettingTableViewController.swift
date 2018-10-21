@@ -808,6 +808,7 @@ class SettingTableViewController: UITableViewController,
             mainSplitView.popOverAlertController = optionMenu
             present(optionMenu, animated: true, completion: nil)
         } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "Lockout" {
+            
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             appDelegate?.lastAuthenticated = nil
             
