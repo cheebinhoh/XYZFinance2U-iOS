@@ -15,9 +15,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.10</string>
+	<string>3.11</string>
 	<key>CFBundleVersion</key>
-	<string>4</string>
+	<string>3</string>
 	<key>CKSharingSupported</key>
 	<true/>
 	<key>LSApplicationCategoryType</key>
@@ -25,11 +25,13 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Allow access to camera?</string>
+	<string>Allow access to camera in order to capture image of the receipt for your expense?</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow access to location?</string>
+	<string>Allow access to location in order to remark occurenace place for your expense?</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Allow access to save photo?</string>
+	<string>Allow access to save photo of receipt for your expense?</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allow access to save photo of receipt for your expense?</string>
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>

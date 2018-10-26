@@ -488,6 +488,12 @@ class AppDelegate: UIResponder,
             let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
             
             if ( required ) {
+            
+                if nil != split.popOverAlertController {
+                    
+                    split.dismiss(animated: true, completion: nil)
+                    split.popOverAlertController = nil
+                }
                 
                 print("-------- show lock screen")
                 tableViewController.lockout()
