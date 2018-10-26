@@ -6,6 +6,7 @@
   Copyright © 2018 CB Hoh. All rights reserved.
 */
 
-NSPhotoLibraryUsageDescription = "Permitir el uso de fotos";
-NSLocationWhenInUseUsageDescription = "Permitir usar el servicio de ubicación";
-NSCameraUsageDescription = "Permitir el uso de la cámara";
+NSPhotoLibraryUsageDescription = "Permitir el acceso para guardar foto de recibo para su costo";
+NSPhotoLibraryAddUsageDescription = "Permitir el acceso para guardar foto de recibo para su costo";
+NSLocationUsageDescription = "Permitir el acceso a la ubicación para señalar el lugar de ocurrencia para su costo";
+NSCameraUsageDescription = "rmita el acceso a la cámara para capturar la imagen del recibo para su costo";
