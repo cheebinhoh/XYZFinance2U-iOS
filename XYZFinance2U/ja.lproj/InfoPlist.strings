@@ -6,6 +6,7 @@
   Copyright © 2018 CB Hoh. All rights reserved.
 */
 
-NSPhotoLibraryUsageDescription = "允许使用保存的照片";
-NSLocationWhenInUseUsageDescription = "位置情報サービスの使用を許可する";
-NSCameraUsageDescription = "カメラの使用を許可する";
+NSPhotoLibraryUsageDescription = "領収書を保存するための写真へのアクセスを許可する";
+NSPhotoLibraryAddUsageDescription = "領収書を保存するための写真へのアクセスを許可する";
+NSLocationUsageDescription = "料金所の場所を示す場所へのアクセスを許可する";
+NSCameraUsageDescription = "手数料を払ってカメラにアクセスできる領収書イメージ";
