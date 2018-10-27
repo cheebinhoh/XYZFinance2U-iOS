@@ -934,6 +934,7 @@
                                         <constraint firstAttribute="trailing" secondItem="qTg-Ff-a9Y" secondAttribute="trailing" constant="16" id="8eU-O8-ZGe"/>
                                         <constraint firstItem="qTg-Ff-a9Y" firstAttribute="centerY" secondItem="Mse-1O-yeL" secondAttribute="centerY" id="BRj-kB-c0O"/>
                                         <constraint firstItem="mg8-Y8-6Ha" firstAttribute="leading" secondItem="Mse-1O-yeL" secondAttribute="leadingMargin" id="Xnz-Zg-bJa"/>
+                                        <constraint firstItem="qTg-Ff-a9Y" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mg8-Y8-6Ha" secondAttribute="trailing" constant="8" symbolic="YES" id="flR-M4-2p4"/>
                                         <constraint firstItem="mg8-Y8-6Ha" firstAttribute="centerY" secondItem="Mse-1O-yeL" secondAttribute="centerY" id="icH-WG-RI7"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -946,7 +947,7 @@
                                 <rect key="frame" x="0.0" y="640.5" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YaX-RK-lUZ" id="qwM-kl-Jqy">
-                                    <rect key="frame" x="0.0" y="0.0" width="349" height="79.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4e5-q3-Ybb">
@@ -970,6 +971,7 @@
                                         <constraint firstAttribute="trailing" secondItem="Us8-sr-oQZ" secondAttribute="trailing" id="80D-Cz-1Id"/>
                                         <constraint firstItem="Us8-sr-oQZ" firstAttribute="top" secondItem="4e5-q3-Ybb" secondAttribute="bottom" constant="4" id="AYp-km-TZJ"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="Us8-sr-oQZ" secondAttribute="bottom" constant="-1" id="HOT-mO-FfT"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4e5-q3-Ybb" secondAttribute="trailing" constant="20" symbolic="YES" id="OZM-Ci-pWd"/>
                                         <constraint firstItem="4e5-q3-Ybb" firstAttribute="top" secondItem="qwM-kl-Jqy" secondAttribute="topMargin" id="k85-Lw-i7V"/>
                                         <constraint firstItem="4e5-q3-Ybb" firstAttribute="leading" secondItem="qwM-kl-Jqy" secondAttribute="leadingMargin" id="twQ-CV-uhI"/>
                                     </constraints>
