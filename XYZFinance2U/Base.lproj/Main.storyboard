@@ -1855,11 +1855,13 @@ Chee Bin HOH, 2017</string>
                                         <constraint firstItem="o2O-q2-nlb" firstAttribute="top" secondItem="VLJ-bo-j9W" secondAttribute="top" id="0ED-cj-a1D"/>
                                         <constraint firstAttribute="trailing" secondItem="54w-S4-OlL" secondAttribute="trailing" constant="7" id="3UA-2o-pcD"/>
                                         <constraint firstItem="54w-S4-OlL" firstAttribute="top" secondItem="VLJ-bo-j9W" secondAttribute="top" constant="9" id="8Gx-d8-BSJ"/>
+                                        <constraint firstItem="fcd-LF-mvF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="s4F-ZZ-x0O" secondAttribute="trailing" constant="8" symbolic="YES" id="CM3-LU-0JB"/>
                                         <constraint firstAttribute="bottom" secondItem="o2O-q2-nlb" secondAttribute="bottom" id="E4M-aL-2uI"/>
                                         <constraint firstItem="s4F-ZZ-x0O" firstAttribute="leading" secondItem="o2O-q2-nlb" secondAttribute="trailing" constant="11" id="F4K-mO-ejO"/>
                                         <constraint firstItem="fcd-LF-mvF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VLJ-bo-j9W" secondAttribute="leading" constant="20" symbolic="YES" id="KaR-TY-oSi"/>
                                         <constraint firstItem="2ew-Em-eaH" firstAttribute="top" secondItem="VLJ-bo-j9W" secondAttribute="topMargin" id="M9K-1b-NqJ"/>
                                         <constraint firstAttribute="trailing" secondItem="fcd-LF-mvF" secondAttribute="trailing" constant="7" id="Mnp-Jw-d5Z"/>
+                                        <constraint firstItem="54w-S4-OlL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2ew-Em-eaH" secondAttribute="trailing" constant="8" symbolic="YES" id="RIz-0G-Ojr"/>
                                         <constraint firstAttribute="bottom" secondItem="fcd-LF-mvF" secondAttribute="bottom" constant="9" id="T3q-tX-mkY"/>
                                         <constraint firstItem="o2O-q2-nlb" firstAttribute="leading" secondItem="VLJ-bo-j9W" secondAttribute="leading" id="kig-gN-Gvi"/>
                                         <constraint firstItem="s4F-ZZ-x0O" firstAttribute="bottom" secondItem="VLJ-bo-j9W" secondAttribute="bottomMargin" id="lbt-6q-Eum"/>
