@@ -2180,6 +2180,7 @@ Chee Bin HOH, 2017</string>
                                         </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="re8-JO-ugY" secondAttribute="trailing" constant="20" symbolic="YES" id="2I6-Gc-mXY"/>
                                         <constraint firstItem="Qwe-xV-Nav" firstAttribute="centerY" secondItem="B02-ge-3JC" secondAttribute="centerY" id="2dv-dq-nWo"/>
                                         <constraint firstItem="n0f-fB-3PJ" firstAttribute="centerY" secondItem="B02-ge-3JC" secondAttribute="centerY" id="Ht0-ZY-LDU"/>
                                         <constraint firstItem="re8-JO-ugY" firstAttribute="centerY" secondItem="B02-ge-3JC" secondAttribute="centerY" id="UOp-0e-DBY"/>
