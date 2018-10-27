@@ -1973,6 +1973,7 @@ Chee Bin HOH, 2017</string>
                                         </imageView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="zQ2-in-Wtc" secondAttribute="trailing" constant="5" id="42Z-zt-H7O"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1gb-bF-pZo" secondAttribute="trailingMargin" id="6Al-WL-qzy"/>
                                         <constraint firstItem="1gb-bF-pZo" firstAttribute="top" secondItem="6cy-XD-vcH" secondAttribute="topMargin" id="DQ4-Zb-g3x"/>
                                         <constraint firstItem="1ab-2l-EZB" firstAttribute="top" secondItem="SeZ-rM-wn9" secondAttribute="top" id="HRu-UO-Akd"/>
