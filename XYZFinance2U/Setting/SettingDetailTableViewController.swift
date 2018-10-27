@@ -98,9 +98,9 @@ class SettingDetailTableViewController: UITableViewController {
                 let headingAttributeText = NSMutableAttributedString(string: textHeading, attributes: headingAttributes)
                 
                 let text = """
-(\(textVersion)) \("was created by CB Hoh.".localized())
+(\(textVersion)) \("was created by Chee Bin Hoh.".localized())
 
-\u{A9} \("2017-2018 CB Hoh, All rights reserved.".localized())
+\u{A9} \("2017-2018 Chee Bin Hoh, All rights reserved.".localized())
 
 """
                 
