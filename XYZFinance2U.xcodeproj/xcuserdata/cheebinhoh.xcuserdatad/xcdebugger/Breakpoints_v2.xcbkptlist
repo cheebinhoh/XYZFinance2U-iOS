@@ -74,7 +74,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XYZFinance2U/Setting/SettingDetailTableViewController.swift"
-            timestampString = "562348557.860232"
+            timestampString = "562369366.409892"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "31"
@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XYZFinance2U/Budget/CalendarCollectionViewController.swift"
-            timestampString = "562361854.080021"
+            timestampString = "562369366.410076"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "406"
-            endingLineNumber = "406"
+            startingLineNumber = "410"
+            endingLineNumber = "410"
             landmarkName = "doubleTap(_:)"
             landmarkType = "7">
          </BreakpointContent>
