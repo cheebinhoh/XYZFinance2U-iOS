@@ -243,9 +243,14 @@ class CalendarCollectionViewController: UICollectionViewController,
         
             if monthLevel {
                 
+                print("=== width = \(collectionView.frame.width)")
+                
                 if collectionView.frame.width >= 414.0 {
                     
                     return CGSize(width: 50, height: 40.0)
+                } else if collectionView.frame.width >= 375.0 {
+                    
+                    return CGSize(width: 45, height: 40.0)
                 } else {
                     
                     return CGSize(width: 40, height: 30.0)
@@ -254,10 +259,13 @@ class CalendarCollectionViewController: UICollectionViewController,
                 
                 if collectionView.frame.width >= 414.0 {
                     
-                  return CGSize(width: 80, height: 40.0)
+                    return CGSize(width: 80, height: 40.0)
+                } else if collectionView.frame.width >= 375.0 {
+                    
+                    return CGSize(width: 70, height: 40.0)
                 } else {
                     
-                  return CGSize(width: 60, height: 40.0)
+                    return CGSize(width: 60, height: 40.0)
                 }
             }
         }
