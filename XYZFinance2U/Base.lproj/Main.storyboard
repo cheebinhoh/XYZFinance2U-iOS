@@ -1744,7 +1744,9 @@ Chee Bin HOH, 2017</string>
                                         <constraint firstItem="E3R-7O-nWA" firstAttribute="top" secondItem="eX9-4P-DBj" secondAttribute="top" constant="9" id="F8I-rl-qxK"/>
                                         <constraint firstItem="8Jw-qJ-ejx" firstAttribute="leading" secondItem="a2C-1Y-pZ3" secondAttribute="trailing" constant="5" id="HDq-ZI-VCK"/>
                                         <constraint firstAttribute="trailing" secondItem="E3R-7O-nWA" secondAttribute="trailing" constant="6" id="MId-nK-Ucn"/>
+                                        <constraint firstItem="Ech-ju-oc8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8Jw-qJ-ejx" secondAttribute="trailing" constant="8" symbolic="YES" id="PiT-rG-8WL"/>
                                         <constraint firstItem="qOX-jY-XiK" firstAttribute="top" secondItem="eX9-4P-DBj" secondAttribute="topMargin" id="ZPZ-5c-X2D"/>
+                                        <constraint firstItem="E3R-7O-nWA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qOX-jY-XiK" secondAttribute="trailing" constant="8" symbolic="YES" id="dMd-vg-5p1"/>
                                         <constraint firstAttribute="bottom" secondItem="Ech-ju-oc8" secondAttribute="bottom" constant="9" id="dgz-MR-UwL"/>
                                         <constraint firstItem="Ech-ju-oc8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eX9-4P-DBj" secondAttribute="leading" constant="20" symbolic="YES" id="f37-jF-Fdf"/>
                                         <constraint firstItem="8Jw-qJ-ejx" firstAttribute="bottom" secondItem="eX9-4P-DBj" secondAttribute="bottomMargin" id="ibF-Yy-r6w"/>
