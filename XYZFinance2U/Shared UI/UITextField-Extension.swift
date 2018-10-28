@@ -19,7 +19,7 @@ extension UITextField {
         toolbar.items = [
             
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-            UIBarButtonItem(title: NSLocalizedString("Done", comment:""), style: .done, target: onDone.target, action: onDone.action)
+            UIBarButtonItem(title: "Done".localized(), style: .done, target: onDone.target, action: onDone.action)
         ]
         
         toolbar.sizeToFit()

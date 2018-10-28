@@ -53,10 +53,9 @@ class SelectionTableViewController: UITableViewController {
     
     private func addBackButton() {
         
-        
         let backButton = UIButton(type: .custom)
         backButton.setImage(UIImage(named: "BackButton"), for: .normal) 
-        backButton.setTitle(" \(NSLocalizedString("Back", comment:""))", for: .normal)
+        backButton.setTitle(" \("Back".localized())", for: .normal)
         backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
         backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
         
@@ -81,7 +80,7 @@ class SelectionTableViewController: UITableViewController {
             navigationItem.title = displayedItem
         } else {
             
-            navigationItem.title = "\(NSLocalizedString(selectedItem!, comment:""))"
+            navigationItem.title = "\((selectedItem!).localized)"
         }
         
         found:
@@ -180,6 +179,7 @@ class SelectionTableViewController: UITableViewController {
         if let _ = imageNames {
             
             let iconName = imageNames![indexPath.row]
+            
             if iconName != "" {
                 
                 cell.icon.image = UIImage(named: imageNames![indexPath.row])
@@ -239,7 +239,7 @@ class SelectionTableViewController: UITableViewController {
         cell?.accessoryType = .checkmark
         
         selectedItem = tableSectionList[indexPath.section].cellList[indexPath.row];
-        var displayedSelectedItem = NSLocalizedString(selectedItem!, comment: "")
+        var displayedSelectedItem = (selectedItem!).localized()
         
         if !displayedString.isEmpty {
             
