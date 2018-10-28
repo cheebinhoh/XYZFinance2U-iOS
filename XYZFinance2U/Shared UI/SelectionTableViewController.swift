@@ -165,7 +165,7 @@ class SelectionTableViewController: UITableViewController {
         
         if displayedString.isEmpty {
             
-            cell.label.text = NSLocalizedString(tableSectionList[indexPath.section].cellList[indexPath.row], comment:"")
+            cell.label.text = tableSectionList[indexPath.section].cellList[indexPath.row].localized()
         } else {
             
             cell.label.text = displayedString[indexPath.row]
