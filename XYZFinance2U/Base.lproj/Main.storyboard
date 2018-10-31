@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MlQ-tP-LrG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MlQ-tP-LrG">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -515,18 +515,23 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tiZ-sD-Hke">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tiZ-sD-Hke">
                                             <rect key="frame" x="16" y="33" width="187" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="187" id="DD6-Pu-XI0"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="tiZ-sD-Hke" firstAttribute="bottom" secondItem="SMz-og-LVg" secondAttribute="bottomMargin" id="MhJ-Wi-ZkJ"/>
+                                        <constraint firstItem="tiZ-sD-Hke" firstAttribute="leading" secondItem="1JT-KP-6vt" secondAttribute="leading" id="NbZ-q3-cdY"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="1JT-KP-6vt" secondAttribute="bottom" constant="32" id="Y1U-Da-SzH"/>
                                         <constraint firstItem="ay2-KR-0uS" firstAttribute="trailing" secondItem="SMz-og-LVg" secondAttribute="trailingMargin" id="af8-h5-dyF"/>
                                         <constraint firstItem="ay2-KR-0uS" firstAttribute="leading" secondItem="1JT-KP-6vt" secondAttribute="trailing" constant="69" id="enL-j6-97g"/>
+                                        <constraint firstItem="ay2-KR-0uS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tiZ-sD-Hke" secondAttribute="trailing" constant="8" symbolic="YES" id="i7x-e8-7fr"/>
                                         <constraint firstItem="1JT-KP-6vt" firstAttribute="top" secondItem="SMz-og-LVg" secondAttribute="topMargin" id="w1H-rw-OxC"/>
                                         <constraint firstItem="1JT-KP-6vt" firstAttribute="leading" secondItem="SMz-og-LVg" secondAttribute="leadingMargin" id="yZE-NF-n8y"/>
                                         <constraint firstItem="ay2-KR-0uS" firstAttribute="centerY" secondItem="SMz-og-LVg" secondAttribute="centerY" id="zNg-om-ESy"/>
