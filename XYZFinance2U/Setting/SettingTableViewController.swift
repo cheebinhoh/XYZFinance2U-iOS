@@ -37,6 +37,7 @@ class SettingTableViewController: UITableViewController,
                             let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
                             defaults.set(!required, forKey: "requiredauthentication")
                         }
+                        
                         self.reload()
                     }
                 }
