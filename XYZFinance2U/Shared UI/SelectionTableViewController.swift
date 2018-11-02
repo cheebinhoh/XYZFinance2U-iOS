@@ -191,7 +191,7 @@ class SelectionTableViewController: UITableViewController {
         
         if tableSectionList[indexPath.section].cellList[indexPath.row] == self.selectedItem
            || ( caseInsensitive
-                && tableSectionList[indexPath.section].cellList[indexPath.row].lowercased() == self.selectedItem?.lowercased() ){
+                && tableSectionList[indexPath.section].cellList[indexPath.row].lowercased() == self.selectedItem?.lowercased() ) {
             
             cell.accessoryType = .checkmark
         } else {
