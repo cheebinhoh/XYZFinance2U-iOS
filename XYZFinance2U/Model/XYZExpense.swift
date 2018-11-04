@@ -32,49 +32,51 @@ class XYZExpense: NSManagedObject {
     // MARK: - static property
 
     static let type = "XYZExpense"
-    static let detail = "detail"
+
     static let amount = "amount"
+    static let budgetCategory = "budgetCategory"
+    static let currencyCode = "currencyCode"
     static let date = "date"
-    static let loction = "location"
+    static let detail = "detail"
     static let hasLocation = "hasLocation"
+    static let isShared = "isShared"
+    static let isSoftDelete = "isSoftDelete"
+    static let lastRecordChange = "lastRecordChange"
+    static let loction = "location"
+    static let nrOfPersons = "nrOfPersons"
+    static let nrOfReceipts = "nrOfReceipts"
+    static let preChangeToken = "preChangeToken"
     static let persons = "persons"
     static let receipts = "receipts"
     static let recordId = "recordId"
-    static let lastRecordChange = "lastRecordChange"
-    static let nrOfReceipts = "nrOfReceipts"
-    static let nrOfPersons = "nrOfPersons"
-    static let shareRecordId = "shareRecordId"
-    static let shareUrl = "shareUrl"
-    static let isShared = "isShared"
-    static let preChangeToken = "preChangeToken"
-    static let isSoftDelete = "isSoftDelete"
-    static let currencyCode = "currencyCode"
-    static let budgetCategory = "budgetCategory"
     static let recurring = "recurring"
     static let recurringStopDate = "recurringStopDate"
-    
+    static let shareRecordId = "shareRecordId"
+    static let shareUrl = "shareUrl"
+
     // MARK: - property
     
-    var detail = ""
     var amount = 0.0
+    var budgetCategory = ""
+    var currencyCode: String = Locale.current.currencyCode!
     var date: Date = Date()
-    var location = CLLocation()
+    var detail = ""
     var hasLocation = false
+    var isShared = false
+    var isSoftDelete = false
+    var lastRecordChange = Date()
+    var location = CLLocation()
     var persons: Set<XYZExpensePerson>?
+    var preChangeToken = NSData()
     var receipts: Set<XYZExpenseReceipt>?
     var recordId: String = ""
-    var lastRecordChange = Date()
     var shareRecordId: String = ""
     var shareUrl: String = ""
-    var isShared = false
-    var preChangeToken = NSData()
-    var isSoftDelete = false
-    var currencyCode: String = Locale.current.currencyCode!
-    var budgetCategory = ""
     var recurring: Length = .none
     var recurringStopDate: Date = Date()
     
     // MARK: - function
+    
     func getOccurenceDates(until: Date) -> [Date] {
         
         var outputDate = [Date]()

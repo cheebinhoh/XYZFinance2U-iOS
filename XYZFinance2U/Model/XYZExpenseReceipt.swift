@@ -15,15 +15,16 @@ class XYZExpenseReceipt: NSManagedObject
     // MARK: - static property
     
     static let type = "XYZExpenseReceipt"
-    static let sequenceNr = "sequenceNr"
-    static let image = "image"
+    
     static let expense = "expense"
+    static let image = "image"
+    static let sequenceNr = "sequenceNr"
     
     // MARK: - property
     
-    var sequenceNr = 0
-    var image = NSData()
     var expense: XYZExpense?
+    var image = NSData()
+    var sequenceNr = 0
     
     // MARK: - function
     

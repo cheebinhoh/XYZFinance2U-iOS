@@ -18,13 +18,14 @@ class XYZiCloudZone: NSManagedObject {
     // MARK: - static property
     
     static let type = "XYZiCloudZone"
-    static let name = "name"
-    static let ownerName = "ownerName"
-    static let inShareDB = "inShareDB"
+    
     static let changeToken = "changeToken"
     static let changeTokenLastFetch = "changeTokenLastFetch"
     static let deleteRecordIdList = "deleteRecordIdList"
     static let deleteShareRecordIdList = "deleteShareRecordIdList"
+    static let inShareDB = "inShareDB"
+    static let name = "name"
+    static let ownerName = "ownerName"
     
      // MARK: - property
     

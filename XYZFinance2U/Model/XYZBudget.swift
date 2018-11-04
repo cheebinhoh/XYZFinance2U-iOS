@@ -60,34 +60,35 @@ class XYZBudget : NSManagedObject {
     // MARK: - static property
     
     static let type = "XYZBudget"
-    static let name = "name"
+  
     static let amount = "amount"
-    static let currency = "currency"
-    static let length = "length"
-    static let start = "start"
-    static let recordId = "recordId"
-    static let lastRecordChange = "lastRecordChange"
-    static let sequenceNr = "sequenceNr"
     static let color = "color"
+    static let currency = "currency"
     static let historicalAmount = "historicalAmount"
-    static let historicalStart = "historicalStart"
     static let historicalLength = "historicalLength"
+    static let historicalStart = "historicalStart"
     static let iconName = "iconName"
+    static let lastRecordChange = "lastRecordChange"
+    static let length = "length"
+    static let name = "name"
+    static let recordId = "recordId"
+    static let sequenceNr = "sequenceNr"
+    static let start = "start"
     
-    var name: String = ""
     var amount: Double = 0.0
-    var start: Date = Date()
-    var length: Length = .none
-    var lastRecordChange: Date = Date()
-    var recordId: String = ""
-    var currency: String = Locale.current.currencyCode ?? ""
-    var sequenceNr: Int = 0
     var color: String = ""
+    var currency: String = Locale.current.currencyCode ?? ""
     var historicalAmount = NSData()
     var historicalStart = NSData()
     var historicalLength = NSData()
     var iconName = ""
-    
+    var lastRecordChange: Date = Date()
+    var length: Length = .none
+    var name: String = ""
+    var recordId: String = ""
+    var sequenceNr: Int = 0
+    var start: Date = Date()
+
     var currentStart: Date? {
         
         var value: Date? = nil
