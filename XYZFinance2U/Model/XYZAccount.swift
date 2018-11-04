@@ -33,30 +33,31 @@ class XYZAccount : NSManagedObject {
     // MARK: - static property
     
     static let type = "XYZAccount"
-    static let bank = "bank"
+
     static let accountNr = "accountNr"
     static let amount = "amount"
-    static let lastUpdate = "lastUpdate"
-    static let sequenceNr = "sequenceNr"
-    static let repeatDate = "repeatDate"
-    static let repeatAction = "repeatAction"
+    static let bank = "bank"
     static let currencyCode = "currencyCode"
     static let lastRecordChange = "lastRecordChange"
+    static let lastUpdate = "lastUpdate"
     static let recordId = "recordId"
-    
+    static let repeatDate = "repeatDate"
+    static let repeatAction = "repeatAction"
+    static let sequenceNr = "sequenceNr"
+
 
     // MARK: - property
     
-    var bank: String = ""
     var accountNr: String = ""
     var amount: Double = 0.0
-    var lastUpdate: Date = Date()
-    var sequenceNr = 0
-    var repeatDate: Date = Date()
-    var repeatAction: String = ""
+    var bank: String = ""
     var currencyCode: String = Locale.current.currencyCode!
     var lastRecordChange: Date = Date()
+    var lastUpdate: Date = Date()
     var recordId: String = ""
+    var repeatAction: String = ""
+    var repeatDate: Date = Date()
+    var sequenceNr = 0
     
     
     // MARK: - function

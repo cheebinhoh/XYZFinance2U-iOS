@@ -17,19 +17,22 @@ class XYZExchangeRate : NSManagedObject {
     // MARK: - static
     
     static let type = "XYZExchangeRate"
-    static let recordId = "recordId"
+
     static let base = "base"
-    static let target = "target"
-    static let rate = "rate"
     static let date = "date"
+    static let rate = "rate"
+    static let recordId = "recordId"
+    static let target = "target"
+
     
     // MARK: - property
-    
-    var recordId: String = ""
+
     var base: String = ""
-    var target: String = ""
-    var rate: Double = 0.0
     var date: Date = Date()
+    var rate: Double = 0.0
+    var recordId: String = ""
+    var target: String = ""
+
     
     // MARK: - function
     
