@@ -57,10 +57,12 @@ class BudgetTableViewController: UITableViewController,
     }
     
     func saveExpense(expense: XYZExpense) {
+        
         fatalError("Exception: it is not supposed to be here")
     }
     
     func deleteExpense(expense: XYZExpense) {
+        
         fatalError("Exception: it is not supposed to be here")
     }
     
@@ -297,6 +299,7 @@ class BudgetTableViewController: UITableViewController,
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         tableView.tableFooterView = UIView(frame: .zero)
@@ -342,7 +345,6 @@ class BudgetTableViewController: UITableViewController,
                 
                 switch zName! {
                     case XYZBudget.type:
-                        print("-------- refresh XYZBudget")
                         appDelegate?.budgetList = (icloudzone.data as? [XYZBudget])!
                         appDelegate?.budgetList = sortBudgets((appDelegate?.budgetList)!)
 
@@ -362,6 +364,7 @@ class BudgetTableViewController: UITableViewController,
     }
 
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
