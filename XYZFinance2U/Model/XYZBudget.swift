@@ -180,7 +180,8 @@ class XYZBudget : NSManagedObject {
         }
     }
     
-    static func getEndDate(of start: Date, in length: XYZBudget.Length) -> Date? {
+    static func getEndDate(of start: Date,
+                           in length: XYZBudget.Length) -> Date? {
         
         switch length {
         case .none:
@@ -244,7 +245,9 @@ class XYZBudget : NSManagedObject {
                                              amount: Double,
                                              lengths: [String],
                                              starts: [Date],
-                                             amounts: [Double]) -> (String?, Date?, Double?) {
+                                             amounts: [Double]) -> (String?,
+                                                                        Date?,
+                                                                        Double?) {
         
         var retLength: String?
         var retAmount: Double?
@@ -273,7 +276,10 @@ class XYZBudget : NSManagedObject {
         return (retLength, retStart, retAmount)
     }
     
-    func getAllBudgetDateAmount() -> (count: Int, Lengths: [String], Starts: [Date], Amounts: [Double]) {
+    func getAllBudgetDateAmount() -> (count: Int,
+                                        Lengths: [String],
+                                        Starts: [Date],
+                                        Amounts: [Double]) {
         
         var dates = [Date]()
         var amounts = [Double]()
