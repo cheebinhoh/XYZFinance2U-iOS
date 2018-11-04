@@ -305,7 +305,7 @@ class XYZExpense: NSManagedObject {
     
     @discardableResult
     func addReceipt(sequenceNr: Int,
-                    image: NSData) -> ( XYZExpenseReceipt, Bool ) {
+                    image: NSData) -> (XYZExpenseReceipt, Bool) {
         
         var hasChangeImage = true
         var receipt: XYZExpenseReceipt?
@@ -317,7 +317,8 @@ class XYZExpense: NSManagedObject {
         
         for existingReceipt in receiptList {
             
-            if let existingSequenceNr = existingReceipt.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int, existingSequenceNr == sequenceNr {
+            if let existingSequenceNr = existingReceipt.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int,
+                existingSequenceNr == sequenceNr {
                 
                 let imageData = existingReceipt.value(forKey: XYZExpenseReceipt.image) as? NSData
                 
