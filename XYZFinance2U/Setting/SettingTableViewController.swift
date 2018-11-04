@@ -987,6 +987,7 @@ class SettingTableViewController: UITableViewController,
         for currencyCode in currencyCodes.sorted() {
 
             startDate = originalStartDate
+            
             while startDate! <= nowDate! {
                 
                 let dayfilteredExpenseList = filteredExpenseList.filter { (expense) -> Bool in
@@ -1016,7 +1017,7 @@ class SettingTableViewController: UITableViewController,
                     let detail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
                     let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
                     let date = formattingDate(date: startDate!, style: .short)
-                    //let currencyCode = Locale.current.currencyCode!
+                    
                     let category = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
                     
                     text = text + "\(index)\t\(detail)\t\(date)\t\(currencyCode)\t\(amount)\t\(category)\n"
