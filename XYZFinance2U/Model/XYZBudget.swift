@@ -127,6 +127,7 @@ class XYZBudget : NSManagedObject {
         } else if let _ = self.currentEnd {
             
             var dateComponents = DateComponents()
+            
             dateComponents.year = 2018
             dateComponents.month = 1
             dateComponents.day = 1
@@ -220,7 +221,9 @@ class XYZBudget : NSManagedObject {
         }
     }
     
-    func getEffectiveBudgetDateAmount() -> (Length: String?, Start: Date?, Amount: Double?) {
+    func getEffectiveBudgetDateAmount() -> (Length: String?,
+                                                Start: Date?,
+                                                Amount: Double?) {
         
         let dataAmount = self.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
         let historicalAmount = (NSKeyedUnarchiver.unarchiveObject(with: dataAmount) as? [Double]) ?? [Double]()
