@@ -27,15 +27,17 @@ class IncomeTableViewController: UITableViewController,
     IncomeDetailDelegate {
     
     // MARK: - property
+
+    let mainSection = 0
     
     var sectionList = [TableSectionCell]()
     var isPopover = false
-    let mainSection = 0
     var currencyCodes = [String]()
     var authenticatedMechanismExist = false
     var authenticatedOk = false
     var iCloudEnable = false
     var lockScreenDisplayed = false
+    
     weak var delegate: IncomeSelectionDelegate?
     weak var detailViewController: UIViewController?
     weak var totalCell: IncomeTotalTableViewCell?
