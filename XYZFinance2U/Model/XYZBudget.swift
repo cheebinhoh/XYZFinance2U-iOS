@@ -6,8 +6,8 @@
 //  Copyright © 2018 CB Hoh. All rights reserved.
 //
 
-import Foundation
 import os.log
+import Foundation
 import CoreData
 import CloudKit
 
