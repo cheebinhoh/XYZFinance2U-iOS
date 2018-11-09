@@ -816,7 +816,6 @@ class IncomeTableViewController: UITableViewController,
                 switch zName! {
                     
                 case XYZAccount.type:
-                    print("-------- refresh XYZAccount")
                     appDelegate?.incomeList = (icloudzone.data as? [XYZAccount])!
                     appDelegate?.incomeList = sortAcounts((appDelegate?.incomeList)!)
                     

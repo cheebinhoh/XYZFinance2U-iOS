@@ -50,6 +50,7 @@ class IncomeDetailTextTableViewCell: UITableViewCell,
         
         // Hide the keyboard.
         textField.resignFirstResponder()
+        
         return true
     }
     
