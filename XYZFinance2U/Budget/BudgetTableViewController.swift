@@ -1053,7 +1053,7 @@ class BudgetTableViewController: UITableViewController,
         
         var indexPath = proposedDestinationIndexPath
         
-        if ( sourceIndexPath.section != proposedDestinationIndexPath.section ) {
+        if sourceIndexPath.section != proposedDestinationIndexPath.section {
             
             indexPath = sourceIndexPath
         }

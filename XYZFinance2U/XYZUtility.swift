@@ -7,9 +7,9 @@
 //
 
 import Foundation
+import UIKit
 import CoreData
 import CloudKit
-import UIKit
 
 var cksharesFoundButNoRootRecord = [CKShare]()
 
@@ -126,7 +126,7 @@ func formattingAndProcessDoubleValue(input: String) -> String {
     
     let lastChar = input[input.index(before: input.endIndex)]
     
-    if ( Locale.current.decimalSeparator ?? "" == "\(lastChar)" ) {
+    if Locale.current.decimalSeparator ?? "" == "\(lastChar)" {
         
         processedInput = shiftingDecimalPoint(input: input)
         numberOfDigitsAfterPoint = numberOfFixedDecimalPoints
@@ -176,14 +176,14 @@ func shiftingDecimalPoint(input: String) -> String {
     
     for c in String(reversedInput).unicodeScalars {
         
-        if ( Locale.current.decimalSeparator ?? "" == "\(c)" ) {
+        if Locale.current.decimalSeparator ?? "" == "\(c)" {
             
             if ( decimalPointFound ) {
                 
                 continue
             } else {
                 
-                if ( processedInput.isEmpty ) {
+                if processedInput.isEmpty {
                     
                     processedInput = processedInput + "00"
                 }
