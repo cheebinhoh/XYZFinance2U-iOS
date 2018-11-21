@@ -351,6 +351,10 @@ class BudgetTableViewController: UITableViewController,
                         DispatchQueue.main.async {
 
                             self.reloadData()
+                            
+                            pushChangeToiCloudZone(CKContainer.default().privateCloudDatabase, zonesToBeFetched, icloudZones!, {
+                                
+                            })
                         }
                     
                     default:

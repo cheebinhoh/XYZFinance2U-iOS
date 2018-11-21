@@ -111,7 +111,10 @@ class SettingTableViewController: UITableViewController,
         
         if tableViewController.iCloudEnable {
             
-            let exportSection = TableSectionCell(identifier: "export", title: "", cellList: ["Export", "SynciCloud", "DeleteData"], data: nil)
+            let exportSection = TableSectionCell(identifier: "export", title: "",
+                                                 cellList: ["Export",
+                                                            // "SynciCloud", we do not need this but merge the sync into refreesh pull down of each page
+                                                            "DeleteData"], data: nil)
             tableSectionCellList.append(exportSection)
         }
         
