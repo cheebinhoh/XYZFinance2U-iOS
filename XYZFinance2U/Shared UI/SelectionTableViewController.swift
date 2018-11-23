@@ -76,11 +76,11 @@ class SelectionTableViewController: UITableViewController {
         self.selectedItem = item
         
         if let _ = displayedItem {
-            
+         
             navigationItem.title = displayedItem
-        } else {
+        } else  {
             
-            navigationItem.title = "\((selectedItem!).localized)"
+            navigationItem.title = self.selectedItem?.localized() ?? "";
         }
         
         found:
@@ -239,8 +239,9 @@ class SelectionTableViewController: UITableViewController {
         cell?.accessoryType = .checkmark
         
         selectedItem = tableSectionList[indexPath.section].cellList[indexPath.row];
+
         var displayedSelectedItem = (selectedItem!).localized()
-        
+
         if !displayedString.isEmpty {
             
             displayedSelectedItem = displayedString[indexPath.row]

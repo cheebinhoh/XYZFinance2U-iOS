@@ -247,8 +247,6 @@ class CalendarCollectionViewController: UICollectionViewController,
         
             if monthLevel {
                 
-                print("=== width = \(collectionView.frame.width)")
-                
                 if collectionView.frame.width >= 414.0 {
                     
                     return CGSize(width: 50, height: 40.0)

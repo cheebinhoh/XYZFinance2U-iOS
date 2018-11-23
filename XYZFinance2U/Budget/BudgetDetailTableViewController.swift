@@ -909,6 +909,7 @@ class BudgetDetailTableViewController: UITableViewController,
             selectionTableViewController.setSelections("", false,
                                                        iconNameList)
             selectionTableViewController.setSelectionIcons(imageNames: iconNameList)
+
             selectionTableViewController.setSelectedItem(iconName)
             selectionTableViewController.delegate = self
             
