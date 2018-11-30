@@ -18,15 +18,16 @@ class LockScreenViewController: UIViewController {
     // MARK: - outlet
     
     @IBOutlet weak var unlock: UILabel!
-
+    @IBOutlet weak var unlockButton: UIButton!
+    
     // MARK: - function
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
 
-        let tap = UITapGestureRecognizer(target: self, action: #selector(touchToUnlock(_:)))
-        self.unlock.addGestureRecognizer(tap)
+        //let tap = UITapGestureRecognizer(target: self, action: #selector(touchToUnlock(_:)))
+        //self.unlock.addGestureRecognizer(tap)
     }
     
     override func didReceiveMemoryWarning() {
@@ -44,6 +45,10 @@ class LockScreenViewController: UIViewController {
         mainTableViewController?.authenticate()
     }
 
+    @IBAction func unlock(_ sender: Any) {
+        
+        mainTableViewController?.authenticate()
+    }
     /*
     // MARK: - Navigation
 
