@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17F35e" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18B75" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="XYZAccount" representedClassName="XYZAccount" syncable="YES">
         <attribute name="accountNr" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
@@ -9,6 +9,7 @@
         <attribute name="lastRecordFetch" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="lastRecordUpload" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="lastUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="principal" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="recordId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="repeatAction" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="repeatDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -79,7 +80,7 @@
         <attribute name="ownerName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="XYZAccount" positionX="-63" positionY="-18" width="128" height="225"/>
+        <element name="XYZAccount" positionX="-63" positionY="-18" width="128" height="240"/>
         <element name="XYZBudget" positionX="-36" positionY="126" width="128" height="240"/>
         <element name="XYZExchangeRate" positionX="-36" positionY="81" width="128" height="120"/>
         <element name="XYZExpense" positionX="-63" positionY="18" width="128" height="330"/>

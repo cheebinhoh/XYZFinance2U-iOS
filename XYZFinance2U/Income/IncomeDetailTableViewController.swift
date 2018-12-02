@@ -203,6 +203,9 @@ class IncomeDetailTableViewController: UITableViewController,
                 case "amount":
                     amount = formattingDoubleValueAsDouble(input: sender.input.text!)
                 
+                case "principal":
+                    principal = formattingDoubleValueAsDouble(input: sender.input.text!)
+                
                 case "accountNr":
                     accountNr = sender.input.text!
                 
@@ -236,6 +239,7 @@ class IncomeDetailTableViewController: UITableViewController,
     
     var accountNr = ""
     var amount: Double?
+    var principal: Double?
     var date: Date?
     var reminddate: Date?
     var repeatAction: String?
@@ -300,7 +304,7 @@ class IncomeDetailTableViewController: UITableViewController,
             
             if nil == income {
                 
-                income = XYZAccount(id: nil, sequenceNr: 0, bank: bank, accountNr: accountNr, amount: amount!, date: date!, context: managedContext())
+                income = XYZAccount(id: nil, sequenceNr: 0, bank: bank, accountNr: accountNr, amount: amount!, principal: principal!, date: date!, context: managedContext())
                 
                 saveData()
                 incomeDelegate?.saveNewIncome(income: income!)
@@ -398,6 +402,7 @@ class IncomeDetailTableViewController: UITableViewController,
         income?.setValue(bank, forKey: XYZAccount.bank)
         income?.setValue(accountNr, forKey: XYZAccount.accountNr)
         income?.setValue(amount, forKey: XYZAccount.amount)
+        income?.setValue(principal, forKey: XYZAccount.principal)
         income?.setValue(date, forKey: XYZAccount.lastUpdate)
         income?.setValue(repeatAction, forKey: XYZAccount.repeatAction)
         income?.setValue(reminddate, forKey: XYZAccount.repeatDate)
@@ -410,6 +415,7 @@ class IncomeDetailTableViewController: UITableViewController,
         bank = ""
         accountNr = ""
         amount = 0.0
+        principal = 0.0
         date = Date()
         repeatAction = XYZAccount.RepeatAction.none.rawValue
         hasUpdateReminder = false
@@ -422,6 +428,7 @@ class IncomeDetailTableViewController: UITableViewController,
             accountNr = (income?.value(forKey: XYZAccount.accountNr) as! String)
             date = (income?.value(forKey: XYZAccount.lastUpdate) as? Date) ?? Date()
             amount = (income?.value(forKey: XYZAccount.amount) as? Double) ?? 0.0
+            principal = (income?.value(forKey: XYZAccount.principal) as? Double) ?? 0.0
             currencyCode = (income?.value(forKey: XYZAccount.currencyCode) as? String) ?? Locale.current.currencyCode!
             
             if let setdate = (income?.value(forKey: XYZAccount.repeatDate) as? Date) {
@@ -464,7 +471,7 @@ class IncomeDetailTableViewController: UITableViewController,
         
         let balanceSection = TableSectionCell(identifier: "balance",
                                               title: "",
-                                              cellList: ["amount", "currency", "date"],
+                                              cellList: ["amount", "principal", "currency", "date"],
                                               data: nil)
         tableSectionCellList.append(balanceSection)
         
@@ -576,6 +583,22 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.label.text = "Balance".localized()
                 
                 cell = textcell
+
+        case "principal":
+            guard let textcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailTextCell", for: indexPath) as? IncomeDetailTextTableViewCell else {
+                
+                fatalError("Exception: incomeDetailTextCell is failed to be created")
+            }
+            
+            textcell.input.isEnabled = modalEditing
+            textcell.delegate = self
+            textcell.enableMonetaryEditing(true, currencyCode!)
+            
+            textcell.input.placeholder = formattingCurrencyValue(input: 0.0, code: currencyCode)
+            textcell.input.text = formattingCurrencyValue(input: principal ?? 0.0, code: currencyCode)
+            textcell.label.text = "Principal".localized()
+            
+            cell = textcell
             
             case "date":
                 guard let datecell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailDateTextCell", for: indexPath) as? IncomeDetailDateTableViewCell else {

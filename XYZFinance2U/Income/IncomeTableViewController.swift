@@ -1108,6 +1108,17 @@ class IncomeTableViewController: UITableViewController,
                 
                 incomecell.bank.text = account.value(forKey: XYZAccount.bank) as? String
                 incomecell.account.text = account.value(forKey: XYZAccount.accountNr ) as? String
+                
+                if nil == incomecell.amount.text || incomecell.amount.text!.isEmpty {
+                    
+                    let principal = account.value(forKey: XYZAccount.principal) as? Double
+                    
+                    if nil != principal && principal! > 0.0 {
+                        
+                        incomecell.account.text = "Principal \(formattingCurrencyValue(input: principal!, code: currencyCode))"
+                    }
+                }
+                
                 incomecell.amount.text = formattingCurrencyValue(input: (account.value(forKey: XYZAccount.amount) as? Double)!, code: currencyCode)
                 incomecell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 

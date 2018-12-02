@@ -40,6 +40,7 @@ class XYZAccount : NSManagedObject {
     static let currencyCode = "currencyCode"
     static let lastRecordChange = "lastRecordChange"
     static let lastUpdate = "lastUpdate"
+    static let principal = "principal"
     static let recordId = "recordId"
     static let repeatDate = "repeatDate"
     static let repeatAction = "repeatAction"
@@ -54,6 +55,7 @@ class XYZAccount : NSManagedObject {
     var currencyCode: String = Locale.current.currencyCode!
     var lastRecordChange: Date = Date()
     var lastUpdate: Date = Date()
+    var principal: Double = 0.0
     var recordId: String = ""
     var repeatAction: String = ""
     var repeatDate: Date = Date()
@@ -62,9 +64,12 @@ class XYZAccount : NSManagedObject {
     
     // MARK: - function
     
-    init(id: String?, sequenceNr: Int,
-         bank: String, accountNr: String,
+    init(id: String?,
+         sequenceNr: Int,
+         bank: String,
+         accountNr: String,
          amount: Double,
+         principal: Double,
          date: Date,
          context: NSManagedObjectContext?) {
         
@@ -90,6 +95,7 @@ class XYZAccount : NSManagedObject {
         self.setValue(accountNr, forKey: XYZAccount.accountNr)
         self.setValue(date, forKey: XYZAccount.lastUpdate)
         self.setValue(sequenceNr, forKey: XYZAccount.sequenceNr)
+        self.setValue(principal, forKey: XYZAccount.principal)
     }
     
     override init(entity: NSEntityDescription,
