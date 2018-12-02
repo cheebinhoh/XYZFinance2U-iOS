@@ -151,7 +151,7 @@ class IncomeTableViewController: UITableViewController,
             
             let cell = tableView.cellForRow(at: indexPath)
             
-            viewController.preferredContentSize = CGSize(width: 0.0, height: 140)
+            viewController.preferredContentSize = CGSize(width: 0.0, height: 175)
             previewingContext.sourceRect = (cell?.frame)!
             
             if sectionList[indexPath.section].identifier == "main" {

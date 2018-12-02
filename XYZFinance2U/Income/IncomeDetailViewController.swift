@@ -20,6 +20,7 @@ class IncomeDetailViewController: UIViewController {
     @IBOutlet weak var bank: UILabel!
     @IBOutlet weak var accountNr: UILabel!
     @IBOutlet weak var amount: UILabel!
+    @IBOutlet weak var principal: UILabel!
     @IBOutlet weak var date: UILabel!
     
     // MARK: 3d touch
@@ -76,8 +77,10 @@ class IncomeDetailViewController: UIViewController {
             
             let currencyCode = income?.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode
             let balance = income?.value(forKey: XYZAccount.amount) as? Double
-            
+            let principalAmount = income?.value(forKey: XYZAccount.principal) as? Double ?? 0.0
+                
             amount.text = formattingCurrencyValue(input: balance!, code:currencyCode)
+            principal.text = formattingCurrencyValue(input: principalAmount, code:currencyCode)
             date.text = formattingDate(date: (income?.value(forKey: XYZAccount.lastUpdate) as? Date )!, style: .medium)
         } else if let _ = total {
             
