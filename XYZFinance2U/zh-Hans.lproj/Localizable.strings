@@ -80,7 +80,7 @@
 "Remind date" = "提醒日期";
 "Remind update on a day" = "更新提醒日期";
 "Last update" = "上次更新日期";
-"AccountNr" = "帐户";
+"Description" = "描述";
 "Bank" = "收入来源";
 "Balance" = "结余";
 "hourly" = "每小时";

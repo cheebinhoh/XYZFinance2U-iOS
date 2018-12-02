@@ -540,9 +540,9 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.input.translatesAutoresizingMaskIntoConstraints = false
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
-                textcell.input.placeholder = "Bank".localized()
+                textcell.input.placeholder = "Source".localized()
                 textcell.input.text = bank
-                textcell.label.text = "Bank".localized()
+                textcell.label.text = "Source".localized()
                 
                 cell = textcell
             
@@ -555,9 +555,9 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.input.translatesAutoresizingMaskIntoConstraints = false
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
-                textcell.input.placeholder = "AccountNr".localized()
+                textcell.input.placeholder = "Description".localized()
                 textcell.input.text = accountNr
-                textcell.label.text = "AccountNr".localized()
+                textcell.label.text = "Description".localized()
                 
                 cell = textcell
             

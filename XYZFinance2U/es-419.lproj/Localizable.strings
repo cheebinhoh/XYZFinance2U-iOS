@@ -80,7 +80,7 @@
 "Remind date" = "Fecha de recordatorio";
 "Remind update on a day" = "Recordar actualización en un día";
 "Last update" = "Última actualización";
-"AccountNr" = "La cuenta";
+"Description" = "descripción";
 "Bank" = "Fuente de ingresos";
 "Balance" = "El equilibrio";
 "hourly" = "por hora";

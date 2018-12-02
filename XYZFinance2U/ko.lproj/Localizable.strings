@@ -80,8 +80,8 @@
 "Remind date" = "미리 알림 날짜";
 "Remind update on a day" = "하루에 업데이트 알림";
 "Last update" = "마지막 업데이트";
-"AccountNr" = "계정";
-"Bank" = "원천 소득";
+"Description" = "설명";
+"Bank" = "수입원";
 "Balance" = "밸런스";
 "hourly" = "每小时";
 "Last update:" = "매시간:";

@@ -80,7 +80,7 @@
 "Remind date" = "リマインダの日付";
 "Remind update on a day" = "1日に更新を通知する";
 "Last update" = "最後の更新";
-"AccountNr" = "アカウント";
+"Description" = "説明";
 "Bank" = "収入源";
 "Balance" = "バランス";
 "hourly" = "毎時";
