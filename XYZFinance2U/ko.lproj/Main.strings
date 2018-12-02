@@ -233,8 +233,8 @@
 /* Class = "UINavigationItem"; title = "Exchange rates"; ObjectID = "xoE-B3-fAP"; */
 "xoE-B3-fAP.title" = "환율;
 
-/* Class = "UITabBarItem"; title = "Settings"; ObjectID = "yjz-8M-Awz"; */
-"yjz-8M-Awz.title" = "설정";
+/* Class = "UITabBarItem"; title = "More"; ObjectID = "yjz-8M-Awz"; */
+"yjz-8M-Awz.title" = "기타";
 
 /* Class = "UILabel"; text = "Unlock"; ObjectID = "yqh-aT-k67"; */
 "yqh-aT-k67.text" = "잠금 해제";

@@ -1512,7 +1512,7 @@
             </objects>
             <point key="canvasLocation" x="7959.1999999999998" y="34.632683658170919"/>
         </scene>
-        <!--More ...-->
+        <!--More-->
         <scene sceneID="Cud-J6-JnH">
             <objects>
                 <tableViewController id="vW8-DY-qcd" customClass="SettingTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
@@ -1558,7 +1558,7 @@
                             <outlet property="delegate" destination="vW8-DY-qcd" id="cOQ-Zl-GwR"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="More ..." id="Geb-cb-YeQ"/>
+                    <navigationItem key="navigationItem" title="More" id="Geb-cb-YeQ"/>
                     <connections>
                         <segue destination="Xe7-R8-DjY" kind="show" identifier="ShowAboutDetail" id="sFr-im-qri"/>
                     </connections>
@@ -2374,7 +2374,7 @@ Chee Bin HOH, 2017</string>
         </scene>
     </scenes>
     <resources>
-        <image name="budget" width="56" height="56"/>
+        <image name="budget" width="50" height="50"/>
         <image name="defaultPhoto" width="1080" height="1080"/>
         <image name="empty" width="2" height="1"/>
         <image name="lock" width="379" height="270"/>
