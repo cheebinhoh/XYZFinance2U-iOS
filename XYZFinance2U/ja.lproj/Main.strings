@@ -236,5 +236,11 @@
 /* Class = "UITabBarItem"; title = "More"; ObjectID = "yjz-8M-Awz"; */
 "yjz-8M-Awz.title" = "もっと";
 
-/* Class = "UILabel"; text = "Unlock"; ObjectID = "yqh-aT-k67"; */
-"yqh-aT-k67.text" = "ロックを解除する";
+/* Class = "UILabel"; text = "Unlock"; ObjectID = "e0W-8X-FqE"; */
+"e0W-8X-FqE.normalTitle" = "ロックを解除する";
+
+/* Class = "UILabel"; text = "Principal"; ObjectID = "5FE-Fd-RW2"; */
+"5FE-Fd-RW2.text" = "プリンシパル";
+
+/* Class = "UILabel"; text = "Principal"; ObjectID = "gEr-tz-4Xo"; */
+"gEr-tz-4Xo.text" = "プリンシパル";

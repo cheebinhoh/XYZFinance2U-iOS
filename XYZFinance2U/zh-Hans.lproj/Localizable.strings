@@ -14,8 +14,8 @@
 "Lock out" = "闭锁";
 "Require authentication" = "需要认证";
 "Back" = "前页";
-"was created by CB Hoh." = "由胡志斌编程.";
-"2017-2018 CB Hoh, All rights reserved." = "2017-2018, 胡志斌. 版权所有.";
+"was created by Chee Bin Hoh." = "由胡志斌编程.";
+"2017-2018 Chee Bin Hoh, All rights reserved." = "2017-2018, 胡志斌. 版权所有.";
 "The foreign exchange rates are from http://fixer.io" = "汇率取自 http://fixer.io";
 "It does not come with warranty of any sort." = "它不附带任何形式的保修.";
 "The icons are from Noun Project by" = "这些图标来自Noun Project 并提供被";
@@ -107,3 +107,6 @@
 "Retrieve latest update from iCloud" = "从iCloud获取最新数据";
 "Expenses" = "费用";
 "Expenses -" = "费用 -";
+"Principal" = "本金";
+"Source" = "收入来源";
+"Authenticate to change the setting" = "Autentíquese para cambiar la configuración";

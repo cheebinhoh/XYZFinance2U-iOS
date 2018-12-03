@@ -81,7 +81,7 @@
 "Gax-js-UNZ.normalTitle" = "Mar, 18";
 
 /* Class = "UINavigationItem"; title = "Settings"; ObjectID = "Geb-cb-YeQ"; */
-"Geb-cb-YeQ.title" = "设置";
+"Geb-cb-YeQ.title" = "更多";
 
 /* Class = "UILabel"; text = "Amount"; ObjectID = "HJl-4x-LvT"; */
 "HJl-4x-LvT.text" = "金额";
@@ -111,7 +111,7 @@
 "M1a-nl-R47.text" = "Label";
 
 /* Class = "UILabel"; text = "Last update"; ObjectID = "OCQ-4O-ujO"; */
-"OCQ-4O-ujO.text" = "Last update";
+"OCQ-4O-ujO.text" = "最后更新";
 
 /* Class = "UILabel"; text = "Account number"; ObjectID = "Ojl-1W-I0N"; */
 "Ojl-1W-I0N.text" = "帐户";
@@ -236,5 +236,11 @@
 /* Class = "UITabBarItem"; title = "More"; ObjectID = "yjz-8M-Awz"; */
 "yjz-8M-Awz.title" = "更多";
 
-/* Class = "UILabel"; text = "Unlock"; ObjectID = "yqh-aT-k67"; */
-"yqh-aT-k67.text" = "开锁";
+/* Class = "UILabel"; text = "Unlock"; ObjectID = "e0W-8X-FqE"; */
+"e0W-8X-FqE.normalTitle" = "开锁";
+
+/* Class = "UILabel"; text = "Principal"; ObjectID = "5FE-Fd-RW2"; */
+"5FE-Fd-RW2.text" = "本金";
+
+/* Class = "UILabel"; text = "Principal"; ObjectID = "gEr-tz-4Xo"; */
+"gEr-tz-4Xo.text" = "本金";

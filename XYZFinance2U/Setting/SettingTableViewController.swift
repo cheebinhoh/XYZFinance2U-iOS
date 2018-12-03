@@ -27,7 +27,7 @@ class SettingTableViewController: UITableViewController,
             if laContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
                 
                 laContext.evaluatePolicy(.deviceOwnerAuthentication,
-                                         localizedReason: "Authenticate to change the setting" )
+                                         localizedReason: "Authenticate to change the setting".localized() )
                 { (success, error) in
                     
                     DispatchQueue.main.async {
