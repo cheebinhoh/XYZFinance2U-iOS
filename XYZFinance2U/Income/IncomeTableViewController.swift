@@ -1267,7 +1267,7 @@ class IncomeTableViewController: UITableViewController,
         let subtotal = UILabel()
         let (amount, currency) = sectionTotal(section: section)
         
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 45)
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 45)
         stackView.isLayoutMarginsRelativeArrangement = true
         
         title.text = sectionList[section].title
