@@ -10,4 +10,4 @@ NSPhotoLibraryUsageDescription = "사진에 액세스하여 영수증 저장";
 NSPhotoLibraryAddUsageDescription = "允사진에 액세스하여 영수증 저장";
 NSLocationUsageDescription = "청구 장소를 표시 할 위치에 대한 액세스 허용";
 NSCameraUsageDescription = "유료로 카메라에 액세스 할 수있는 영수증 이미지";
-
+NSLocationWhenInUseUsageDescription = "청구 장소를 표시 할 위치에 대한 액세스 허용";

@@ -388,7 +388,8 @@ class BudgetDetailTableViewController: UITableViewController,
         } else if let existingCurrencyCode = budget?.value(forKey: XYZBudget.currency) as? String, existingCurrencyCode != currencyCode {
             
             hasChanged = true
-        } else if let existingLength = budget?.value(forKey: XYZBudget.currency) as? XYZBudget.Length, existingLength != length {
+        } else if let existingLength = budget?.value(forKey: XYZBudget.length) as? String,
+            XYZBudget.Length(rawValue: existingLength) != length {
             
             hasChanged = true
         } else if let existingDate = budget?.value(forKey: XYZBudget.start) as? Date, existingDate != date {
@@ -639,7 +640,17 @@ class BudgetDetailTableViewController: UITableViewController,
                 }
                 
                 lengthcell.setLabel("Period".localized())
-                lengthcell.setSelection(length.rawValue)
+                
+                var lengthRawValue = "";
+                switch length {
+                    case .none:
+                        lengthRawValue = ""
+                    
+                    default:
+                        lengthRawValue = length.rawValue.localized()
+                }
+                
+                lengthcell.setSelection(lengthRawValue)
                 lengthcell.selectionStyle = .none
                 lengthcell.icon.image = UIImage(named: "empty")
                 
@@ -831,7 +842,16 @@ class BudgetDetailTableViewController: UITableViewController,
                                                         XYZBudget.Length.biweekly.rawValue,
                                                         XYZBudget.Length.monthly.rawValue,
                                                         XYZBudget.Length.halfyearly.rawValue,
-                                                        XYZBudget.Length.yearly.rawValue])
+                                                        XYZBudget.Length.yearly.rawValue],
+                                                       ["",
+                                                        //DEPRECATED: XYZBudget.Length.hourly.rawValue,
+                                                        XYZBudget.Length.daily.rawValue.localized(),
+                                                        XYZBudget.Length.weekly.rawValue.localized(),
+                                                        XYZBudget.Length.biweekly.rawValue.localized(),
+                                                        XYZBudget.Length.monthly.rawValue.localized(),
+                                                        XYZBudget.Length.halfyearly.rawValue.localized(),
+                                                        XYZBudget.Length.yearly.rawValue.localized()]
+                                                       )
             selectionTableViewController.setSelectedItem(length.rawValue)
             selectionTableViewController.delegate = self
             

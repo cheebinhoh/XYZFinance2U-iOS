@@ -1322,7 +1322,16 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
                 
-                recurringcell.setSelection( "\("Recurring:".localized()) \((recurring?.rawValue)!.localized())" )
+                var recurringRawValue = ""
+                switch recurring! {
+                    case .none:
+                        recurringRawValue = ""
+                    
+                    default:
+                        recurringRawValue = (recurring?.rawValue)!.localized()
+                }
+                
+                recurringcell.setSelection( "\("Recurring:".localized()) \(recurringRawValue)" )
                 recurringcell.selectionStyle = .none
                 recurringcell.icon.image = UIImage(named: "empty")
                 cell = recurringcell
@@ -1538,7 +1547,15 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                                                                 XYZExpense.Length.biweekly.rawValue,
                                                                 XYZExpense.Length.monthly.rawValue,
                                                                 XYZExpense.Length.halfyearly.rawValue,
-                                                                XYZExpense.Length.yearly.rawValue])
+                                                                XYZExpense.Length.yearly.rawValue],
+                                                               ["",
+                                                                XYZExpense.Length.daily.rawValue.localized(),
+                                                                XYZExpense.Length.weekly.rawValue.localized(),
+                                                                XYZExpense.Length.biweekly.rawValue.localized(),
+                                                                XYZExpense.Length.monthly.rawValue.localized(),
+                                                                XYZExpense.Length.halfyearly.rawValue.localized(),
+                                                                XYZExpense.Length.yearly.rawValue.localized()]
+                                                               )
                     selectionTableViewController.setSelectedItem(recurring?.rawValue)
                     selectionTableViewController.delegate = self
                     
