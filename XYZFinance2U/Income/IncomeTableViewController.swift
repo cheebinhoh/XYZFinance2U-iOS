@@ -1027,7 +1027,7 @@ class IncomeTableViewController: UITableViewController,
             case 0:
                 sectionExpandStatus[indexPath.section] = !sectionExpandStatus[indexPath.section]
                 tableView.reloadData()
-                
+            
             default:
                 let appDelegate = UIApplication.shared.delegate as? AppDelegate
                 guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
@@ -1143,6 +1143,7 @@ class IncomeTableViewController: UITableViewController,
                     incomecell.amount.text = formattingCurrencyValue(input: (account.value(forKey: XYZAccount.amount) as? Double)!, code: currencyCode)
                     
                     incomecell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                
                     cell = incomecell
                     
                 } else {
@@ -1164,6 +1165,20 @@ class IncomeTableViewController: UITableViewController,
                     
                     totalCell.amount.text = formattingCurrencyValue(input: total, code: currencyCode)
                     totalCell.currency.text = currencyCode.localized()
+                    
+                    if sectionExpandStatus[indexPath.section] {
+                        
+                        totalCell.accessoryType = UITableViewCell.AccessoryType.none
+                        
+                        var imageView : UIImageView
+                        imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 20, y: 20), size: CGSize(width: 18, height: 15)))
+                        imageView.image = UIImage(named:"down_disclosure_indicator")
+                        totalCell.accessoryView = imageView
+                    } else {
+                        
+                        totalCell.accessoryView = nil
+                        totalCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                    }
                     
                     cell = totalCell
                 }
@@ -1198,7 +1213,8 @@ class IncomeTableViewController: UITableViewController,
         
         // Return false if you do not want the specified item to be editable.
         
-        return sectionList[indexPath.section].identifier == "main" 
+        return sectionList[indexPath.section].identifier == "main"
+               && indexPath.row > 0
     }
 
     // Override to support editing the table view.
