@@ -14,7 +14,8 @@ class IncomeTotalTableViewCell: UITableViewCell {
     // MARK: IBOutlet
     
     @IBOutlet weak var amount: UILabel!
-
+    @IBOutlet weak var currency: UILabel!
+    
     // MARK: - function
     
     override func awakeFromNib() {

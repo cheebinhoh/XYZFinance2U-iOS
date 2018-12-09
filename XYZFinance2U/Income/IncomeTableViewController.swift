@@ -1102,15 +1102,15 @@ class IncomeTableViewController: UITableViewController,
         switch identifier {
             
             case "main":
-                guard let incomecell = tableView.dequeueReusableCell(withIdentifier: "IncomeTableViewCell", for: indexPath) as? IncomeTableViewCell else {
-                    
-                    fatalError("error on creating cell")
-                }
-
                 let incomeListStored = sectionList[indexPath.section].data as? [XYZAccount]
                 
                 if indexPath.row > 0 
                 {
+                    guard let incomecell = tableView.dequeueReusableCell(withIdentifier: "IncomeTableViewCell", for: indexPath) as? IncomeTableViewCell else {
+                        
+                        fatalError("error on creating cell")
+                    }
+                    
                     let account = incomeListStored![indexPath.row - 1]
                     let currencyCode = account.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
                     
@@ -1131,7 +1131,15 @@ class IncomeTableViewController: UITableViewController,
                     
                     incomecell.amount.text = formattingCurrencyValue(input: (account.value(forKey: XYZAccount.amount) as? Double)!, code: currencyCode)
                     
+                    incomecell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                    cell = incomecell
+                    
                 } else {
+                    
+                    guard let totalCell = tableView.dequeueReusableCell(withIdentifier: "IncomeTotalTableViewCell", for: indexPath) as? IncomeTotalTableViewCell else {
+                        
+                        fatalError("Exception: error on creating IncomeTotalTableViewCell")
+                    }
                     
                     var total = 0.0;
                     var currencyCode = ""
@@ -1143,13 +1151,11 @@ class IncomeTableViewController: UITableViewController,
                         currencyCode = account.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
                     }
                     
-                    incomecell.amount.text = formattingCurrencyValue(input: total, code: currencyCode)
-                    incomecell.bank.text = currencyCode.localized()
-                    incomecell.account.text = ""
+                    totalCell.amount.text = formattingCurrencyValue(input: total, code: currencyCode)
+                    totalCell.currency.text = currencyCode.localized()
+                    
+                    cell = totalCell
                 }
-                
-                incomecell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                cell = incomecell
        
             case "summary":
                 guard let newTotalcell = tableView.dequeueReusableCell(withIdentifier: "IncomeTotalTableViewCell", for: indexPath) as? IncomeTotalTableViewCell else {
