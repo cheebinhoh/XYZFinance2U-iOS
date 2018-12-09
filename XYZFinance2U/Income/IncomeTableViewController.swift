@@ -1019,51 +1019,60 @@ class IncomeTableViewController: UITableViewController,
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+        switch indexPath.row {
             
-            fatalError("Exception: UISplitViewController is expected" )
-        }
-        
-        if mainSplitView.isCollapsed  {
+        case 0:
+            sectionExpandStatus[indexPath.section] = !sectionExpandStatus[indexPath.section]
+            print("--- expand \(sectionExpandStatus[indexPath.section])")
+            tableView.reloadData()
             
-            guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "IncomeDetailNavigationController") as? UINavigationController else {
-                
-                fatalError("Exception: error on instantiating ExpenseDetailNavigationController")
-            }
-            
-            guard let incomeTableView = incomeDetailNavigationController.viewControllers.first as? IncomeDetailTableViewController else {
-                
-                fatalError("Exception: IncomeDetailTableViewController is expected" )
-            }
-            
-            incomeTableView.setPopover(delegate: self)
-            
-            let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
-            
-            incomeTableView.income = sectionIncomeList![indexPath.row]
-            incomeDetailNavigationController.modalPresentationStyle = .popover
-            incomeTableView.currencyCodes = currencyCodes
-            self.present(incomeDetailNavigationController, animated: true, completion: nil)
-            
+        default:
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
                 
                 fatalError("Exception: UISplitViewController is expected" )
             }
             
-            mainSplitView.popOverNavigatorController = incomeDetailNavigationController
-        } else {
-            
-            guard let detailTableViewController = delegate as? IncomeDetailTableViewController else {
+            if mainSplitView.isCollapsed  {
                 
-                fatalError("Exception: IncomeDetailTableViewController is expedted" )
+                guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "IncomeDetailNavigationController") as? UINavigationController else {
+                    
+                    fatalError("Exception: error on instantiating ExpenseDetailNavigationController")
+                }
+                
+                guard let incomeTableView = incomeDetailNavigationController.viewControllers.first as? IncomeDetailTableViewController else {
+                    
+                    fatalError("Exception: IncomeDetailTableViewController is expected" )
+                }
+                
+                incomeTableView.setPopover(delegate: self)
+                
+                let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
+                
+                incomeTableView.income = sectionIncomeList![indexPath.row + 1]
+                incomeDetailNavigationController.modalPresentationStyle = .popover
+                incomeTableView.currencyCodes = currencyCodes
+                self.present(incomeDetailNavigationController, animated: true, completion: nil)
+                
+                let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                    
+                    fatalError("Exception: UISplitViewController is expected" )
+                }
+                
+                mainSplitView.popOverNavigatorController = incomeDetailNavigationController
+            } else {
+                
+                guard let detailTableViewController = delegate as? IncomeDetailTableViewController else {
+                    
+                    fatalError("Exception: IncomeDetailTableViewController is expedted" )
+                }
+                
+                let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
+                detailTableViewController.incomeDelegate = self
+                detailTableViewController.currencyCodes = currencyCodes
+                delegate?.incomeSelected(newIncome: sectionIncomeList?[indexPath.row])
             }
-            
-            let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
-            detailTableViewController.incomeDelegate = self
-            detailTableViewController.currencyCodes = currencyCodes
-            delegate?.incomeSelected(newIncome: sectionIncomeList?[indexPath.row])
         }
     }
     
