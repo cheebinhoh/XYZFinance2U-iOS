@@ -143,12 +143,12 @@ class IncomeTableViewController: UITableViewController,
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
-        guard let viewController = storyboard?.instantiateViewController(withIdentifier: "IncomeDetailViewController") as? IncomeDetailViewController else  {
-            
-            fatalError("Exception: IncomeDetailViewController is expected")
-        }
+        if let indexPath = tableView.indexPathForRow(at: location), indexPath.row > 0 {
 
-        if let indexPath = tableView.indexPathForRow(at: location) {
+            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "IncomeDetailViewController") as? IncomeDetailViewController else  {
+                
+                fatalError("Exception: IncomeDetailViewController is expected")
+            }
             
             let cell = tableView.cellForRow(at: indexPath)
             
@@ -162,7 +162,7 @@ class IncomeTableViewController: UITableViewController,
                     fatalError("Exception: [XYZAccount] is expected")
                 }
                 
-                viewController.income = sectionIncomeList[(indexPath.row)]
+                viewController.income = sectionIncomeList[(indexPath.row) - 1]
                 viewController.indexPath = indexPath
             } else {
              
@@ -170,9 +170,12 @@ class IncomeTableViewController: UITableViewController,
                 viewController.total = amount
                 viewController.currencyCode = currency
             }
+            
+            return viewController
+        } else {
+            
+            return nil
         }
-
-        return viewController
     }
     
     
@@ -1023,7 +1026,6 @@ class IncomeTableViewController: UITableViewController,
             
         case 0:
             sectionExpandStatus[indexPath.section] = !sectionExpandStatus[indexPath.section]
-            print("--- expand \(sectionExpandStatus[indexPath.section])")
             tableView.reloadData()
             
         default:
@@ -1049,7 +1051,7 @@ class IncomeTableViewController: UITableViewController,
                 
                 let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
                 
-                incomeTableView.income = sectionIncomeList![indexPath.row + 1]
+                incomeTableView.income = sectionIncomeList![indexPath.row - 1]
                 incomeDetailNavigationController.modalPresentationStyle = .popover
                 incomeTableView.currencyCodes = currencyCodes
                 self.present(incomeDetailNavigationController, animated: true, completion: nil)
@@ -1320,7 +1322,8 @@ class IncomeTableViewController: UITableViewController,
         stackView.addArrangedSubview(subtotal)
         
         // return stackView
-        return nil
+        // return nil
+        return UIView(frame: .zero)
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -1330,7 +1333,9 @@ class IncomeTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        return 35
+        // return 35
+        //return CGFloat.leastNormalMagnitude
+        return 10
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
