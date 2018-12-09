@@ -30,6 +30,7 @@ class IncomeTableViewController: UITableViewController,
 
     let mainSection = 0
     
+    var sectionExpandStatus = [Bool]()
     var sectionList = [TableSectionCell]()
     var isPopover = false
     var currencyCodes = [String]()
@@ -367,7 +368,8 @@ class IncomeTableViewController: UITableViewController,
         }
         
         sectionList.removeAll()
-     
+        sectionExpandStatus.removeAll()
+        
         for currency in currencyList {
             
             var sectionIncomeList = [XYZAccount]()
@@ -389,6 +391,7 @@ class IncomeTableViewController: UITableViewController,
             
             if !sectionIncomeList.isEmpty {
                 
+                sectionExpandStatus.append(true)
                 sectionIncomeList = sortAcounts(sectionIncomeList)
                 
                 let mainSection = TableSectionCell(identifier: "main", title: currency, cellList: [], data: sectionIncomeList)
@@ -1077,7 +1080,9 @@ class IncomeTableViewController: UITableViewController,
             
             case "main":
                 let incomeListStored = sectionList[section].data as? [XYZAccount]
-                nrOfRows = (incomeListStored?.count)!
+                let expanded = sectionExpandStatus[section]
+                
+                nrOfRows = 1 + ( expanded ? (incomeListStored?.count)! : 0 )
             
             default:
                 let incomeListStored = sectionList[0].data as? [XYZAccount]
@@ -1103,27 +1108,47 @@ class IncomeTableViewController: UITableViewController,
                 }
 
                 let incomeListStored = sectionList[indexPath.section].data as? [XYZAccount]
-                let account = incomeListStored![indexPath.row]
-                let currencyCode = account.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
                 
-                incomecell.bank.text = account.value(forKey: XYZAccount.bank) as? String
-                incomecell.account.text = account.value(forKey: XYZAccount.accountNr ) as? String
-                
-                let principal = account.value(forKey: XYZAccount.principal) as? Double
-                
-                if nil != principal && principal! > 0.0 {
+                if indexPath.row > 0 
+                {
+                    let account = incomeListStored![indexPath.row - 1]
+                    let currencyCode = account.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
                     
-                    if incomecell.account.text != "" {
+                    incomecell.bank.text = account.value(forKey: XYZAccount.bank) as? String
+                    incomecell.account.text = account.value(forKey: XYZAccount.accountNr ) as? String
+                    
+                    let principal = account.value(forKey: XYZAccount.principal) as? Double
+                    
+                    if nil != principal && principal! > 0.0 {
                         
-                        incomecell.account.text = incomecell.account.text! + ", "
+                        if incomecell.account.text != "" {
+                            
+                            incomecell.account.text = incomecell.account.text! + ", "
+                        }
+                        
+                        incomecell.account.text = incomecell.account.text! + "Principal \(formattingCurrencyValue(input: principal!, code: currencyCode))"
                     }
                     
-                    incomecell.account.text = incomecell.account.text! + "Principal \(formattingCurrencyValue(input: principal!, code: currencyCode))"
+                    incomecell.amount.text = formattingCurrencyValue(input: (account.value(forKey: XYZAccount.amount) as? Double)!, code: currencyCode)
+                    
+                } else {
+                    
+                    var total = 0.0;
+                    var currencyCode = ""
+                    
+                    for account in incomeListStored! {
+                        
+                        total = total + ( account.value(forKey: XYZAccount.amount) as? Double ?? 0.0 )
+                        
+                        currencyCode = account.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
+                    }
+                    
+                    incomecell.amount.text = formattingCurrencyValue(input: total, code: currencyCode)
+                    incomecell.bank.text = currencyCode.localized()
+                    incomecell.account.text = ""
                 }
                 
-                incomecell.amount.text = formattingCurrencyValue(input: (account.value(forKey: XYZAccount.amount) as? Double)!, code: currencyCode)
                 incomecell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                
                 cell = incomecell
        
             case "summary":
@@ -1279,7 +1304,8 @@ class IncomeTableViewController: UITableViewController,
         subtotal.textColor = UIColor.gray
         stackView.addArrangedSubview(subtotal)
         
-        return stackView
+        // return stackView
+        return nil
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
