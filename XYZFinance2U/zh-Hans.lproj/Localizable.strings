@@ -27,7 +27,7 @@
 "Save expenses" = "保存支出";
 "Save incomes" = "保存收益";
 "Update to iCloud" = "更新到iCloud";
-"New budget" = "新的预算";
+"New budget" = "新预算";
 "Category" = "类别";
 "Amount" = "金额";
 "Currency" = "货币";
@@ -96,10 +96,10 @@
 "Delete" = "删除";
 "More" = "更多";
 "Copy" = "复制";
-"New expense" = "新的开支";
+"New expense" = "新支出";
 "Total" = "总额";
 "Calendar view" = "日历";
-"Historical view" = "历史支出";
+"Historical view" = "支出历史";
 "Share expense url" = "分享费用链接";
 "Authenticate to use the app" = "验证使用应用程序";
 "automative service" = "汽车维修";
@@ -109,4 +109,6 @@
 "Expenses -" = "费用 -";
 "Principal" = "本金";
 "Source" = "收入来源";
-"Authenticate to change the setting" = "Autentíquese para cambiar la configuración";
+"Authenticate to change the setting" = "进行身份验证以更改配置";
+"Expense" = "支出";
+"Income" = "收益";

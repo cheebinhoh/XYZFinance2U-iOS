@@ -1155,7 +1155,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             navigationItem.title = "Shared"
         } else if let _ = expense {
             
-            navigationItem.title = "Expense"
+            navigationItem.title = "Expense".localized()
         }
         
         // Uncomment the following line to preserve selection between presentations

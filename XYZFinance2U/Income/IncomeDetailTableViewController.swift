@@ -385,7 +385,7 @@ class IncomeDetailTableViewController: UITableViewController,
         
         if let _ = income {
             
-            navigationItem.title = "Income"
+            navigationItem.title = "Income".localized()
         }
         
         // DEPRECATED: we do not disable Save when it is empty, let user decide what to save
