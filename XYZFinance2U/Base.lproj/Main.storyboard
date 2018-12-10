@@ -119,8 +119,8 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6U1-rC-2b9">
-                                            <rect key="frame" x="251" y="21.5" width="82" height="26.5"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                            <rect key="frame" x="257.5" y="21.5" width="75.5" height="26.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -239,7 +239,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="uQK-dU-KOf"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -1715,8 +1715,8 @@ Chee Bin HOH, 2017</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="E3R-7O-nWA" userLabel="Balance">
-                                            <rect key="frame" x="253" y="9" width="82" height="27"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                            <rect key="frame" x="259.5" y="9" width="75.5" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
