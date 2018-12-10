@@ -234,17 +234,20 @@
                                     <rect key="frame" x="0.0" y="0.0" width="341" height="69.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ll3-uL-fct">
-                                            <rect key="frame" x="252" y="23.5" width="82" height="22.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ll3-uL-fct">
+                                            <rect key="frame" x="234" y="23.5" width="100" height="22.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="750" constant="100" id="uQK-dU-KOf"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tfB-lJ-RhK">
-                                            <rect key="frame" x="58" y="11" width="186" height="21"/>
+                                            <rect key="frame" x="58" y="11" width="150" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="Xaf-gw-y6l"/>
-                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="186" id="u1C-Uw-OR2"/>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="u1C-Uw-OR2"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -290,7 +293,7 @@
                                         <constraint firstAttribute="bottom" secondItem="Lbl-ea-JO0" secondAttribute="bottom" id="5It-Af-6dM"/>
                                         <constraint firstItem="Thd-SS-YV1" firstAttribute="width" secondItem="Thd-SS-YV1" secondAttribute="height" multiplier="1:1" id="834-GJ-xjD"/>
                                         <constraint firstItem="ll3-uL-fct" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tfB-lJ-RhK" secondAttribute="trailing" constant="8" symbolic="YES" id="CFm-pp-ZAY"/>
-                                        <constraint firstItem="ll3-uL-fct" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Rt8-ns-G36" secondAttribute="leading" constant="20" symbolic="YES" id="EcL-Et-Lp3"/>
+                                        <constraint firstItem="ll3-uL-fct" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Rt8-ns-G36" secondAttribute="leading" priority="750" constant="20" symbolic="YES" id="EcL-Et-Lp3"/>
                                         <constraint firstItem="Lbl-ea-JO0" firstAttribute="leading" secondItem="Rt8-ns-G36" secondAttribute="leading" id="O6O-iV-DC1"/>
                                         <constraint firstItem="Thd-SS-YV1" firstAttribute="centerY" secondItem="Rt8-ns-G36" secondAttribute="centerY" id="OiJ-Mh-Zgd"/>
                                         <constraint firstItem="ll3-uL-fct" firstAttribute="centerY" secondItem="Rt8-ns-G36" secondAttribute="centerY" id="QIf-rS-0Of"/>
