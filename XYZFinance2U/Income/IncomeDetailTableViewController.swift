@@ -679,12 +679,23 @@ class IncomeDetailTableViewController: UITableViewController,
                 
                 repeatcell.setLabel("Repeat".localized())
                 
-                if let _ = XYZAccount.RepeatAction(rawValue: repeatAction ?? "") {
+                if let repeatSetting = XYZAccount.RepeatAction(rawValue: repeatAction ?? "") {
                   
-                    repeatcell.setSelection((repeatAction ?? XYZAccount.RepeatAction.none.rawValue).localized())
+                    var repeatSettingValue = ""
+                    
+                    switch repeatSetting
+                    {
+                        case .none:
+                            repeatSettingValue = ""
+                        
+                        default:
+                            repeatSettingValue = repeatSetting.rawValue.localized()
+                    }
+                    
+                    repeatcell.setSelection(repeatSettingValue)
                 } else {
                     
-                    repeatcell.setSelection(XYZAccount.RepeatAction.none.rawValue.localized())
+                    repeatcell.setSelection("")
                 }
                 
                 repeatcell.selectionStyle = .none
@@ -801,7 +812,13 @@ class IncomeDetailTableViewController: UITableViewController,
                                                             "\(XYZAccount.RepeatAction.daily)",
                                                             "\(XYZAccount.RepeatAction.weekly)",
                                                             "\(XYZAccount.RepeatAction.monthly)",
-                                                            "\(XYZAccount.RepeatAction.yearly)"])
+                                                            "\(XYZAccount.RepeatAction.yearly)"],
+                                                           ["",
+                                                            "\(XYZAccount.RepeatAction.hourly.rawValue.localized())",
+                                                            "\(XYZAccount.RepeatAction.daily.rawValue.localized())",
+                                                            "\(XYZAccount.RepeatAction.weekly.rawValue.localized())",
+                                                            "\(XYZAccount.RepeatAction.monthly.rawValue.localized())",
+                                                            "\(XYZAccount.RepeatAction.yearly.rawValue.localized())"])
                 selectionTableViewController.setSelectedItem(repeatAction ?? XYZAccount.RepeatAction.none.rawValue)
                 selectionTableViewController.delegate = self
                 
