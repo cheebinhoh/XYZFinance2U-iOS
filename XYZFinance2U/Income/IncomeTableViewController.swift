@@ -1137,7 +1137,7 @@ class IncomeTableViewController: UITableViewController,
                             incomecell.account.text = incomecell.account.text! + ", "
                         }
                         
-                        incomecell.account.text = incomecell.account.text! + "Principal \(formattingCurrencyValue(input: principal!, code: currencyCode))"
+                        incomecell.account.text = incomecell.account.text! + "\("Principal".localized()) \(formattingCurrencyValue(input: principal!, code: currencyCode))"
                     }
                     
                     incomecell.amount.text = formattingCurrencyValue(input: (account.value(forKey: XYZAccount.amount) as? Double)!, code: currencyCode)
