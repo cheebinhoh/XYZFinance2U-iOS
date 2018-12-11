@@ -172,6 +172,7 @@
                                         <constraint firstItem="Oqt-fr-z7l" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kSB-Oh-7wh" secondAttribute="leadingMargin" id="vsV-Ao-AsQ"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                 <connections>
                                     <outlet property="amount" destination="Oqt-fr-z7l" id="Cz5-Nx-zh4"/>
                                     <outlet property="currency" destination="lvN-dn-FNt" id="T9H-7U-u7c"/>
