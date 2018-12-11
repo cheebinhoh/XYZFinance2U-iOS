@@ -112,7 +112,17 @@ class BudgetListTableViewController: UITableViewController {
                             }
                         }
                         
-                        let tableCell = TableCell(length: "\(length!)", start: start, until: untilDate!, amount: amounts[index], expenseList: filterExpenseList)
+                        var lengthString = ""
+                        switch length!
+                        {
+                            case .none:
+                                lengthString = ""
+                            
+                            default:
+                                lengthString = length?.rawValue.localized() ?? ""
+                        }
+                        
+                        let tableCell = TableCell(length: "\(lengthString)", start: start, until: untilDate!, amount: amounts[index], expenseList: filterExpenseList)
                         
                         cellList.append(tableCell)
                     }
@@ -141,7 +151,17 @@ class BudgetListTableViewController: UITableViewController {
                             }
                         }
                         
-                        let tableCell = TableCell(length: "\(length!)", start: start, until: expenseLastDate, amount: amount, expenseList: filterExpenseList)
+                        var lengthString = ""
+                        switch length!
+                        {
+                        case .none:
+                            lengthString = ""
+                            
+                        default:
+                            lengthString = length?.rawValue.localized() ?? ""
+                        }
+                        
+                        let tableCell = TableCell(length: "\(lengthString)", start: start, until: expenseLastDate, amount: amount, expenseList: filterExpenseList)
                         
                         cellList.append(tableCell)
                         
