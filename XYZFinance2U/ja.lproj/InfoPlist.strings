@@ -11,3 +11,4 @@ NSPhotoLibraryAddUsageDescription = "領収書を保存するための写真へ�
 NSLocationUsageDescription = "料金所の場所を示す場所へのアクセスを許可する";
 NSCameraUsageDescription = "手数料を払ってカメラにアクセスできる領収書イメージ";
 NSLocationWhenInUseUsageDescription = "料金所の場所を示す場所へのアクセスを許可する";
+NEW_EXPENSE_SHORTCUT_TITLE = "新支出";

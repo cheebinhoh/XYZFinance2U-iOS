@@ -11,3 +11,4 @@ NSPhotoLibraryAddUsageDescription = "Permitir el acceso para guardar foto de rec
 NSLocationUsageDescription = "Permitir el acceso a la ubicación para señalar el lugar de ocurrencia para su costo";
 NSCameraUsageDescription = "rmita el acceso a la cámara para capturar la imagen del recibo para su costo";
 NSLocationWhenInUseUsageDescription = "Permitir el acceso a la ubicación para señalar el lugar de ocurrencia para su costo";
+NEW_EXPENSE_SHORTCUT_TITLE = "Nuevos gastos";

@@ -11,3 +11,4 @@ NSPhotoLibraryAddUsageDescription = "允许访问以保存收据的照片";
 NSLocationUsageDescription = "允许访问位置以便为您的费用标记发生地点";
 NSCameraUsageDescription = "允许访问相机以获取费用的收据图像";
 NSLocationWhenInUseUsageDescription = "允许访问位置以便为您的费用标记发生地点";
+NEW_EXPENSE_SHORTCUT_TITLE = "新支出";

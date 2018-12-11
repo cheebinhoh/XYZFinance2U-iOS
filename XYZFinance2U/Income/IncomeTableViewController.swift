@@ -1137,7 +1137,30 @@ class IncomeTableViewController: UITableViewController,
                             incomecell.account.text = incomecell.account.text! + ", "
                         }
                         
-                        incomecell.account.text = incomecell.account.text! + "\("Principal".localized()) \(formattingCurrencyValue(input: principal!, code: currencyCode))"
+                        let earnedAmount = ( ( account.value(forKey: XYZAccount.amount) as? Double ?? 0.0 ) - principal! )
+                        let percentage = earnedAmount / principal!
+                        let amountASNSNumber = NSNumber(value: percentage * 100)
+                        let formatter = NumberFormatter()
+                        
+                        formatter.minimumIntegerDigits = 1
+                        formatter.minimumFractionDigits = 2
+                        formatter.maximumFractionDigits = 2
+                        
+                        let percentageAsString = formatter.string(from: amountASNSNumber)
+                        var percentageDiff = ""
+                        switch percentage
+                        {
+                            case let x where x < 0.0 :
+                                percentageDiff = "\(percentageAsString!)%"
+                            
+                            case let x where x > 0.0 :
+                                percentageDiff = "+\(percentageAsString!)%"
+                            
+                            default:
+                                break
+                        }
+                        
+                        incomecell.account.text = incomecell.account.text! + "\(formattingCurrencyValue(input: principal!, code: currencyCode)) (\(formattingCurrencyValue(input: earnedAmount, code: currencyCode)), \(percentageDiff))"
                     }
                     
                     incomecell.amount.text = formattingCurrencyValue(input: (account.value(forKey: XYZAccount.amount) as? Double)!, code: currencyCode)
