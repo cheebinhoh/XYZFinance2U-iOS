@@ -43,8 +43,8 @@
 "Brown" = "棕色";
 "Cyan" = "青色";
 "Green" = "绿色";
-"Magenta" = "品红";
-"Orange" = "橙子";
+"Magenta" = "品红色";
+"Orange" = "橙色";
 "Purple" = "紫色";
 "Red" = "红色";
 "Yellow" = "黄色";
@@ -80,7 +80,7 @@
 "Remind date" = "提醒日期";
 "Remind update on a day" = "更新提醒日期";
 "Last update" = "上次更新日期";
-"Description" = "描述";
+"Description" = "详情";
 "Bank" = "收入来源";
 "Balance" = "结余";
 "hourly" = "每小时";

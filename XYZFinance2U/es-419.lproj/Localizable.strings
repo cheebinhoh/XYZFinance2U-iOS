@@ -107,6 +107,8 @@
 "Retrieve latest update from iCloud" = "Recuperar la última actualización de iCloud";
 "Expenses" = "Los gastos";
 "Expenses -" = "Los gastos -";
+"Principal" = "Capital";
 "Source" = "Fuente de ingresos";
 "Authenticate to change the setting" = "인증 설정을 변경하려면";
-
+"Expense" = "Gastos";
+"Income" = "Ingresos";
