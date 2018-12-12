@@ -107,7 +107,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CMI-F5-8uV">
-                                            <rect key="frame" x="16" y="38.5" width="127" height="20.5"/>
+                                            <rect key="frame" x="16" y="41.5" width="127" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -132,7 +132,7 @@
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="CMI-F5-8uV" secondAttribute="trailingMargin" id="Zni-o9-lvd"/>
                                         <constraint firstItem="CMI-F5-8uV" firstAttribute="leading" secondItem="eLK-LZ-xE9" secondAttribute="leadingMargin" id="g47-Ti-C2p"/>
                                         <constraint firstItem="6U1-rC-2b9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eLK-LZ-xE9" secondAttribute="leadingMargin" id="h18-C7-x01"/>
-                                        <constraint firstItem="CMI-F5-8uV" firstAttribute="bottom" secondItem="eLK-LZ-xE9" secondAttribute="bottomMargin" id="siZ-wD-BvM"/>
+                                        <constraint firstItem="CMI-F5-8uV" firstAttribute="bottom" secondItem="eLK-LZ-xE9" secondAttribute="bottomMargin" constant="3" id="siZ-wD-BvM"/>
                                         <constraint firstItem="wuV-kR-Y7q" firstAttribute="leading" secondItem="eLK-LZ-xE9" secondAttribute="leadingMargin" id="tON-Ho-yni"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wuV-kR-Y7q" secondAttribute="trailingMargin" id="ybW-gM-GGi"/>
                                     </constraints>
