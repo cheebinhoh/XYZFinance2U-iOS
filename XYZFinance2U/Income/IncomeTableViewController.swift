@@ -1147,6 +1147,7 @@ class IncomeTableViewController: UITableViewController,
                         formatter.maximumFractionDigits = 2
                         
                         let percentageAsString = formatter.string(from: amountASNSNumber)
+                        var percentageSign = ""
                         var percentageDiff = ""
                         switch percentage
                         {
@@ -1154,13 +1155,14 @@ class IncomeTableViewController: UITableViewController,
                                 percentageDiff = "\(percentageAsString!)%"
                             
                             case let x where x > 0.0 :
+                                percentageSign = "+"
                                 percentageDiff = "+\(percentageAsString!)%"
                             
                             default:
                                 break
                         }
                         
-                        incomecell.account.text = incomecell.account.text! + "\(formattingCurrencyValue(input: principal!, code: currencyCode)) (\(formattingCurrencyValue(input: earnedAmount, code: currencyCode)), \(percentageDiff))"
+                        incomecell.account.text = incomecell.account.text! + "\(percentageSign)\(formattingCurrencyValue(input: earnedAmount, code: currencyCode)) (\(percentageDiff))"
                     }
                     
                     incomecell.amount.text = formattingCurrencyValue(input: (account.value(forKey: XYZAccount.amount) as? Double)!, code: currencyCode)
