@@ -658,7 +658,7 @@ class IncomeTableViewController: UITableViewController,
                         }
                         
                         if nil == mainSplitView.popOverNavigatorController {
-                            
+                           
                             lockoutNavigationController = lockout()
                         }
                     }

@@ -380,7 +380,7 @@ class AppDelegate: UIResponder,
      */
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
 
-        guard let split = self.window?.rootViewController as? UISplitViewController else {
+        guard let split = self.window?.rootViewController as? MainSplitViewController else {
             
             fatalError("Exception: UISplitViewController is expected" )
         }
@@ -397,7 +397,25 @@ class AppDelegate: UIResponder,
 
         tabBarController.selectedViewController = navigationController
         
+        guard let navController = tabBarController.viewControllers?.first as? UINavigationController else {
+            
+            fatalError("Exception: UINavigationController is expected")
+        }
+        
+        guard let tableViewController = navController.viewControllers.first as? IncomeTableViewController else {
+            
+            fatalError("Exception: IncomeTableViewController is expected" )
+        }
+        
         DispatchQueue.main.async {
+            
+            if tableViewController.lockScreenDisplayed {
+                
+                split.dismiss(animated: false, completion: nil)
+                
+                tableViewController.lockScreenDisplayed = false
+                split.popOverNavigatorController = navController
+            }
             
             guard let tableViewController = navigationController.viewControllers[0] as? ExpenseTableViewController else {
                 
