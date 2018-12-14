@@ -1300,16 +1300,20 @@ class IncomeTableViewController: UITableViewController,
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         
         return sectionList[indexPath.section].identifier == "main"
+               && indexPath.row > 0
     }
     
     override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         
         var indexPath = proposedDestinationIndexPath
-        
+
         if ( sectionList[proposedDestinationIndexPath.section].identifier != "main" )
            || ( sourceIndexPath.section != proposedDestinationIndexPath.section ) {
             
             indexPath = sourceIndexPath
+        } else if indexPath.row <= 0 {
+            
+            indexPath.row = 1
         }
         
         return indexPath
@@ -1319,7 +1323,7 @@ class IncomeTableViewController: UITableViewController,
         
         if var sectionIncomeList = sectionList[to.section].data as? [XYZAccount] {
             
-            sectionIncomeList.insert(sectionIncomeList.remove(at: fromIndexPath.row), at: to.row)
+            sectionIncomeList.insert(sectionIncomeList.remove(at: fromIndexPath.row - 1), at: to.row - 1)
             sectionList[to.section].data = sectionIncomeList
         }
 
