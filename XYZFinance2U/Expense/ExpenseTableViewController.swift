@@ -152,7 +152,8 @@ class ExpenseTableViewController: UITableViewController,
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
-        if let indexPath = tableView.indexPathForRow(at: location), sectionList[indexPath.section].identifier != "searchBar" {
+        if let indexPath = tableView.indexPathForRow(at: location), sectionList[indexPath.section].identifier != "searchBar"
+            && indexPath.row > 0 {
     
             guard let viewController = storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailViewController") as? ExpenseDetailViewController else  {
                 
