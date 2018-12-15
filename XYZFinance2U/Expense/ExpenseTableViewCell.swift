@@ -77,18 +77,18 @@ class ExpenseTableViewCell: UITableViewCell {
                 date.text = formattingDate(date: theDate, style: .medium )
             
             case .daily:
-                date.text = "\("daily".localized()): \(formattingDate(date: theDate, style: .medium ))"
+                date.text = "\("daily".localized())" //: \(formattingDate(date: theDate, style: .medium ))"
             
             case .biweekly:
-                let f = DateFormatter()
-                date.text = "\("biweekly".localized()): \(f.weekdaySymbols[Calendar.current.component(.weekday, from: theDate)])"
+                //let f = DateFormatter()
+                date.text = "\("biweekly".localized())" //: \(f.weekdaySymbols[Calendar.current.component(.weekday, from: theDate)])"
             
             case .weekly:
-                let f = DateFormatter()
-                date.text = "\("weekly".localized()): \(f.weekdaySymbols[Calendar.current.component(.weekday, from: theDate)])"
+                //let f = DateFormatter()
+                date.text = "\("weekly".localized())" //: \(f.weekdaySymbols[Calendar.current.component(.weekday, from: theDate)])"
             
             case .monthly:
-                
+                /*
                 let occurrenceDates = expense.getOccurenceDates(until: Date())
                 var nowDate: Date?
                 let monthYearDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: monthYearDate!)
@@ -101,10 +101,12 @@ class ExpenseTableViewCell: UITableViewCell {
                         nowDate = occurence
                     }
                 }
+                */
                 
-                date.text = "\("monthly".localized()): \(formattingDate(date: nowDate!, style: .medium ))"
+                date.text = "\("monthly".localized())" //: \(formattingDate(date: nowDate!, style: .medium ))"
             
             case .halfyearly:
+                /*
                 let occurrenceDates = expense.getOccurenceDates(until: Date())
                 var nowDate: Date?
                 let monthYearDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: monthYearDate!)
@@ -118,8 +120,9 @@ class ExpenseTableViewCell: UITableViewCell {
                         nowDate = occurence
                     }
                 }
+                 */
                 
-                date.text = "\("half yearly".localized()): \(formattingDate(date: nowDate!, style: .medium ))"
+                date.text = "\("half yearly".localized())" //: \(formattingDate(date: nowDate!, style: .medium ))"
             
             case .yearly:
                 let f = DateFormatter()
@@ -127,8 +130,8 @@ class ExpenseTableViewCell: UITableViewCell {
 
                 let theDateComponents = Calendar.current.dateComponents([.day], from: theDate)
                 
-                let nowDate = Calendar.current.date(byAdding: .day, value: theDateComponents.day! - 1, to: monthYearDate!)
-                date.text = "\("yearly".localized()): \(formattingDate(date: nowDate!, style: .medium ))"
+                //let nowDate = Calendar.current.date(byAdding: .day, value: theDateComponents.day! - 1, to: monthYearDate!)
+                date.text = "\("yearly".localized())" //": \(formattingDate(date: nowDate!, style: .medium ))"
         }
     }
 }

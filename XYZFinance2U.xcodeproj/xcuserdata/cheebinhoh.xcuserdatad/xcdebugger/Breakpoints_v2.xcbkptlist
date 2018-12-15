@@ -42,13 +42,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XYZFinance2U/Income/IncomeTableViewController.swift"
-            timestampString = "566535559.671706"
+            timestampString = "566538614.063419"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1352"
             endingLineNumber = "1352"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "tableView(_:viewForHeaderInSection:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
