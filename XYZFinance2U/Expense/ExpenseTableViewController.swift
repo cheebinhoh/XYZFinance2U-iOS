@@ -50,6 +50,7 @@ class ExpenseTableViewController: UITableViewController,
     }
     
     // MARK: - property
+    var sectionExpandStatus = [Bool]()
     weak var searchBar: UISearchBar?
     var filteredMonthYear: Date!
     var searchText: String? = nil
@@ -168,7 +169,7 @@ class ExpenseTableViewController: UITableViewController,
                 fatalError("Exception: [XYZAccount] is expected")
             }
             
-            viewController.expense = sectionExpenseList[(indexPath.row)]
+            viewController.expense = sectionExpenseList[(indexPath.row - 1)]
             viewController.indexPath = indexPath
 
             return viewController
@@ -213,7 +214,7 @@ class ExpenseTableViewController: UITableViewController,
         
         var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
         
-        let oldExpense = sectionExpenseList?.remove(at: indexPath.row)
+        let oldExpense = sectionExpenseList?.remove(at: indexPath.row - 1)
         self.sectionList[indexPath.section].data = sectionExpenseList
         
         let isSoftDelete = self.softDeleteExpense(expense: oldExpense!)
@@ -262,7 +263,7 @@ class ExpenseTableViewController: UITableViewController,
             let aContext = managedContext()
             var sectionExpenseList = sectionList[selectedIndexPath.section].data as? [XYZExpense]
             
-            let oldExpense = sectionExpenseList?.remove(at: selectedIndexPath.row)
+            let oldExpense = sectionExpenseList?.remove(at: selectedIndexPath.row - 1)
             sectionList[selectedIndexPath.section].data = sectionExpenseList
             
             guard oldExpense == expense else {
@@ -636,6 +637,8 @@ class ExpenseTableViewController: UITableViewController,
         // var expenseList = filteredExpenseList != nil ? filteredExpenseList : (appDelegate?.expenseList)!
         var expenseList = appDelegate?.expenseList
         
+        sectionExpandStatus.removeAll()
+        
         if let _ = searchText, !(searchText?.isEmpty)! {
             
             expenseList = expenseList?.filter({ (expense) -> Bool in
@@ -773,9 +776,10 @@ class ExpenseTableViewController: UITableViewController,
                    && currency1 <= currency2
         })
         
-        let newSection = TableSectionCell(identifier: "searchBar", title: "", cellList: ["searchBar"], data: nil)
-        sectionList.insert(newSection, at: 0)
-        sectionMonthYearList.insert(Date(), at: 0)
+        sectionExpandStatus = Array(repeating: true, count: sectionList.count)
+        //let newSection = TableSectionCell(identifier: "searchBar", title: "", cellList: ["searchBar"], data: nil)
+        //sectionList.insert(newSection, at: 0)
+        //sectionMonthYearList.insert(Date(), at: 0)
     }
     
     override func viewDidLoad() {
@@ -1011,7 +1015,7 @@ class ExpenseTableViewController: UITableViewController,
                 
                 //let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]
                 let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
-                let expense = sectionExpenseList![indexPath.row]
+                let expense = sectionExpenseList![indexPath.row - 1 ]
                 let detail = expense.value(forKey: XYZExpense.detail) as? String
                 let amount = expense.value(forKey: XYZExpense.amount) as? Double
                 let budgetGroup = expense.value(forKey: XYZExpense.budgetCategory) as? String
@@ -1065,7 +1069,7 @@ class ExpenseTableViewController: UITableViewController,
                 fatalError("Exception: [XYZExpense] is expected")
             }
         
-            let expense = sectionExpenseList[indexPath.row]
+            let expense = sectionExpenseList[indexPath.row - 1]
             let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
             
             let delete = UIContextualAction(style: .destructive, title: "Delete".localized()) { _, _, handler in
@@ -1167,7 +1171,13 @@ class ExpenseTableViewController: UITableViewController,
             
             let sectionExpenseList = sectionList[section].data as? [XYZExpense]
         
-            return (sectionExpenseList?.count) ?? 0
+            var numRows = ( sectionExpenseList?.count ?? 0 ) + 1
+            if !sectionExpandStatus[section] {
+                
+                numRows = 1
+            }
+            
+            return numRows
         }
     }
     
@@ -1205,16 +1215,58 @@ class ExpenseTableViewController: UITableViewController,
                 cell = expenseCell
 
             default:
-                guard let expenseCell = tableView.dequeueReusableCell(withIdentifier: "expenseTableViewCell", for: indexPath) as? ExpenseTableViewCell else {
                 
-                    fatalError("error on ExpenseTableViewCell cell")
+                switch indexPath.row {
+                    
+                    case 0:
+                        guard let totalCell = tableView.dequeueReusableCell(withIdentifier: "expenseTotalTableViewCell", for: indexPath) as? ExpenseTableViewCell else {
+                            
+                            fatalError("error on ExpenseTableViewCell cell")
+                        }
+                    
+                        var currency = "";
+                        var total = 0.0
+                        
+                        let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
+                        for expense in sectionExpenseList! {
+                            
+                            total = total + ( ( expense.value(forKey: XYZExpense.amount) as? Double ) ?? 0.0 )
+                            currency = ( expense.value(forKey: XYZExpense.currencyCode) as? String ) ?? Locale.current.currencyCode ??  ""
+                        }
+                        
+                        totalCell.detail.text = currency
+                        totalCell.amount.text = formattingCurrencyValue(input: total, code: currency)
+                        totalCell.date.text = sectionList[indexPath.section].title
+                        
+                        if sectionExpandStatus[indexPath.section] {
+                            
+                            totalCell.accessoryType = UITableViewCell.AccessoryType.none
+                            
+                            var imageView : UIImageView
+                            imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 20, y: 20), size: CGSize(width: 18, height: 15)))
+                            imageView.image = UIImage(named:"down_disclosure_indicator")
+                            totalCell.accessoryView = imageView
+                        } else {
+                            
+                            totalCell.accessoryView = nil
+                            totalCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                        }
+                        
+                        cell = totalCell
+                    
+                    default:
+                        guard let expenseCell = tableView.dequeueReusableCell(withIdentifier: "expenseTableViewCell", for: indexPath) as? ExpenseTableViewCell else {
+                        
+                            fatalError("error on ExpenseTableViewCell cell")
+                        }
+                        
+                        let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
+                        expenseCell.monthYearDate = sectionMonthYearList[indexPath.section]
+                        
+                        expenseCell.setExpense(expense: (sectionExpenseList?[indexPath.row - 1])!)
+                        expenseCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                        cell = expenseCell
                 }
-                
-                let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
-                expenseCell.monthYearDate = sectionMonthYearList[indexPath.section]
-                
-                expenseCell.setExpense(expense: (sectionExpenseList?[indexPath.row])!)
-                cell = expenseCell
         }
         
         return cell!
@@ -1225,6 +1277,7 @@ class ExpenseTableViewController: UITableViewController,
         
         // Return false if you do not want the specified item to be editable.
         return sectionList[indexPath.section].identifier != "identifier"
+               && indexPath.row > 0
     }
 
     // Override to support editing the table view.
@@ -1287,7 +1340,8 @@ class ExpenseTableViewController: UITableViewController,
                 stackView.addArrangedSubview(subtotal)
             }
             
-            return stackView
+            // return stackView
+            return UIView(frame: .zero)
         }
     }
     
@@ -1298,52 +1352,61 @@ class ExpenseTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if self.isCollapsed {
-            
-            guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+        switch indexPath.row {
+        
+            case 0:
+                sectionExpandStatus[indexPath.section] = !sectionExpandStatus[indexPath.section]
                 
-                fatalError("Exception: ExpenseDetailNavigationController is expected")
-            }
+                tableView.reloadData()
             
-            guard let expenseTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
-                
-                fatalError("Exception: ExpenseDetailTableViewController is expected" )
-            }
-            
-            expenseTableView.setPopover(delegate: self)
-            let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
-            
-            expenseTableView.currencyCodes = currencyCodes
-            expenseTableView.expense = sectionExpenseList?[indexPath.row]
-            expenseDetailNavigationController.modalPresentationStyle = .popover
-            self.present(expenseDetailNavigationController, animated: true, completion: nil)
-            
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
-                
-                fatalError("Exception: UISplitViewController is expected" )
-            }
-            
-            mainSplitView.popOverNavigatorController = expenseDetailNavigationController
-        } else {
-            
-            guard let detailTableViewController = delegate as? ExpenseDetailTableViewController else {
-                
-                fatalError("Exception: ExpenseDetailTableViewController is expedted" )
-            }
-            
-            detailTableViewController.currencyCodes = currencyCodes
-            detailTableViewController.expenseDelegate = self
-           
-            let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
-            
-            delegate?.expenseSelected(newExpense: sectionExpenseList?[indexPath.row])
+            default:
+                if self.isCollapsed {
+                    
+                    guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+                        
+                        fatalError("Exception: ExpenseDetailNavigationController is expected")
+                    }
+                    
+                    guard let expenseTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
+                        
+                        fatalError("Exception: ExpenseDetailTableViewController is expected" )
+                    }
+                    
+                    expenseTableView.setPopover(delegate: self)
+                    let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
+                    
+                    expenseTableView.currencyCodes = currencyCodes
+                    expenseTableView.expense = sectionExpenseList?[indexPath.row - 1]
+                    expenseDetailNavigationController.modalPresentationStyle = .popover
+                    self.present(expenseDetailNavigationController, animated: true, completion: nil)
+                    
+                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                    guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                        
+                        fatalError("Exception: UISplitViewController is expected" )
+                    }
+                    
+                    mainSplitView.popOverNavigatorController = expenseDetailNavigationController
+                } else {
+                    
+                    guard let detailTableViewController = delegate as? ExpenseDetailTableViewController else {
+                        
+                        fatalError("Exception: ExpenseDetailTableViewController is expedted" )
+                    }
+                    
+                    detailTableViewController.currencyCodes = currencyCodes
+                    detailTableViewController.expenseDelegate = self
+                   
+                    let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
+                    
+                    delegate?.expenseSelected(newExpense: sectionExpenseList?[indexPath.row - 1])
+                }
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        return sectionList[section].identifier == "searchBar" ?  CGFloat.leastNormalMagnitude : 35
+        return sectionList[section].identifier == "searchBar" ?  CGFloat.leastNormalMagnitude :      10 //35
     }
 
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
