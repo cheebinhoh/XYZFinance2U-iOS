@@ -125,11 +125,12 @@ class ExpenseTableViewCell: UITableViewCell {
                 date.text = "\("half yearly".localized())" //: \(formattingDate(date: nowDate!, style: .medium ))"
             
             case .yearly:
+                /*
                 let f = DateFormatter()
                 f.dateFormat = "YYYY"
 
                 let theDateComponents = Calendar.current.dateComponents([.day], from: theDate)
-                
+                 */
                 //let nowDate = Calendar.current.date(byAdding: .day, value: theDateComponents.day! - 1, to: monthYearDate!)
                 date.text = "\("yearly".localized())" //": \(formattingDate(date: nowDate!, style: .medium ))"
         }

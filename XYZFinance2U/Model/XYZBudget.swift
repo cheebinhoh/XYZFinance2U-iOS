@@ -100,7 +100,9 @@ class XYZBudget : NSManagedObject {
             switch length! {
                 
                 case .none:
-                    value = effectivebudget.Start!
+                    let startComponents = Calendar.current.dateComponents([.day, .month, .year], from: effectivebudget.Start!)
+                    let startDateOnly = Calendar.current.date(from: startComponents)
+                    value = startDateOnly!
                 
                 default:
                     let todayComponents = Calendar.current.dateComponents([.day, .month, .year], from: Date())
@@ -121,8 +123,6 @@ class XYZBudget : NSManagedObject {
                         endOfStart = XYZBudget.getEndDate(of: value!, in: length!) ?? untilDate
                     }
             }
-            
-            return value
  
         } else if let _ = self.currentEnd {
             
@@ -187,7 +187,13 @@ class XYZBudget : NSManagedObject {
         
         switch length {
         case .none:
-            return nil
+            let yearAfterToday = Calendar.current.date(byAdding: .year,
+                                                        value:1,
+                                                        to: Date())
+            let yearAfterStart = Calendar.current.date(byAdding: .year,
+                                                        value:1,
+                                                        to: start)
+            return max( yearAfterToday!, yearAfterStart! )
             
         case .daily:
             return Calendar.current.date(byAdding: .day,
