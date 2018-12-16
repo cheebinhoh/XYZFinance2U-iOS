@@ -43,9 +43,9 @@
                                             <constraint firstAttribute="height" constant="50" id="5e2-Pv-NcN"/>
                                             <constraint firstAttribute="width" constant="300" id="7zS-Pd-1Hg"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                         <state key="normal" title="Unlock">
-                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="titleColor" red="0.48220935880829008" green="0.48220935880829008" blue="0.48220935880829008" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
