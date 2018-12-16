@@ -55,7 +55,7 @@ class BudgetListTableViewController: UITableViewController {
         if let _ = budget {
             
             var (count, lengths, dates, amounts) = (budget?.getAllBudgetDateAmount())!
-        
+
             let nowIsCovered = dates.contains { (start) -> Bool in
             
                 return start <= Date()
