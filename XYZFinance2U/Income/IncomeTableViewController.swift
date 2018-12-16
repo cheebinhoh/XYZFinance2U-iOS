@@ -774,6 +774,7 @@ class IncomeTableViewController: UITableViewController,
         tableView.tableFooterView = UIView(frame: .zero)
         navigationItem.setLeftBarButton(self.editButtonItem, animated: true)
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
         
         loadDataInTableSectionCell()
 

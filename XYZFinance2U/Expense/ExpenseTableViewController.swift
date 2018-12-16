@@ -793,6 +793,7 @@ class ExpenseTableViewController: UITableViewController,
         // self.clearsSelectionOnViewWillAppear = false
         
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
         self.navigationItem.setLeftBarButton(self.editButtonItem, animated: true)
 
         // Check for force touch feature, and add force touch/previewing capability.
