@@ -22,10 +22,10 @@
             </objects>
             <point key="canvasLocation" x="-2764" y="-769"/>
         </scene>
-        <!--Lock Screen View Controller-->
+        <!--XYZFinance2U-->
         <scene sceneID="cBa-xZ-YhF">
             <objects>
-                <viewController storyboardIdentifier="lockScreenView" id="ho8-Yj-zuC" customClass="LockScreenViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="lockScreenView" title="XYZFinance2U" id="ho8-Yj-zuC" customClass="LockScreenViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zvC-Ic-M8f">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
