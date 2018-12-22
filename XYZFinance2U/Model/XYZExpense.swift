@@ -15,13 +15,13 @@ class XYZExpense: NSManagedObject {
     
     enum Length: String {
         
-        case none = "none"
-        case daily = "daily"
-        case weekly = "weekly"
-        case biweekly = "biweekly"
-        case monthly = "monthly"
+        case none
+        case daily
+        case weekly
+        case biweekly
+        case monthly
         case halfyearly = "half yearly"
-        case yearly = "yearly"
+        case yearly
         
         func description() -> String {
             

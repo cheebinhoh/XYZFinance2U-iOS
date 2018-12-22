@@ -16,13 +16,13 @@ class XYZAccount : NSManagedObject {
     
     enum RepeatAction: String {
         
-        case none = "none"
-        case hourly = "hourly"
-        case daily = "daily"
-        case weekly = "weekly"
-        case biweekly = "biweekly"
-        case monthly = "monthly"
-        case yearly = "yearly"
+        case none
+        case hourly
+        case daily
+        case weekly
+        case biweekly
+        case monthly
+        case yearly
         
         func description() -> String {
             
