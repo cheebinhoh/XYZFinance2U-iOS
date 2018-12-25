@@ -244,7 +244,7 @@
 			path = Income;
 			sourceTree = "<group>";
 		};
-		650024081FF6FFA6001281EA /* Setting */ = {
+		650024081FF6FFA6001281EA /* More & settings */ = {
 			isa = PBXGroup;
 			children = (
 				65F48F1E1FE370A1006951F7 /* SettingTableViewController.swift */,
@@ -254,7 +254,7 @@
 				65D8BA7A201391D500944C2D /* ExchangeRateTableViewController.swift */,
 				65D8BA802013BD9300944C2D /* ExchangeRateTableViewCell.swift */,
 			);
-			path = Setting;
+			path = "More & settings";
 			sourceTree = "<group>";
 		};
 		65343E8E1FFD969A002C5D39 /* Shared UI */ = {
@@ -302,7 +302,7 @@
 				650024071FF6FF7E001281EA /* Income */,
 				650024061FF6FEFE001281EA /* Expense */,
 				6567E12E20327DAC00058238 /* Budget */,
-				650024081FF6FFA6001281EA /* Setting */,
+				650024081FF6FFA6001281EA /* More & settings */,
 				65343E8E1FFD969A002C5D39 /* Shared UI */,
 				655C979C1FCCCC210098D58D /* AppDelegate.swift */,
 				650024001FF67B4E001281EA /* MainSplitViewController.swift */,
