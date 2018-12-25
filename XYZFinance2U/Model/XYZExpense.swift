@@ -84,62 +84,62 @@ class XYZExpense: NSManagedObject {
         
         switch recurring {
             
-        case .none:
-            let date = self.value(forKey: XYZExpense.date) as? Date
-            outputDate.append(date!)
-            
-        default:
-            var date = self.value(forKey: XYZExpense.date) as? Date
-
-            var stopDate = until
-            let recurringStopDate = self.value(forKey: XYZExpense.recurringStopDate) as? Date ?? date
-            if recurringStopDate! > date! {
-                
-                stopDate = min(stopDate, recurringStopDate!)
-            }
-
-            let dateDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date!)
-            date = Calendar.current.date(from: dateDateComponents)!
-
-            repeat {
+            case .none:
+                let date = self.value(forKey: XYZExpense.date) as? Date
                 outputDate.append(date!)
-                
-                switch recurring! {
-                    case .none:
-                        date = Calendar.current.date(byAdding: .day,
-                                                     value:1,
-                                                     to: stopDate)
+            
+            default:
+                var date = self.value(forKey: XYZExpense.date) as? Date
+
+                var stopDate = until
+                let recurringStopDate = self.value(forKey: XYZExpense.recurringStopDate) as? Date ?? date
+                if recurringStopDate! > date! {
                     
-                    case .daily:
-                        date = Calendar.current.date(byAdding: .day,
-                                                     value:1,
-                                                     to: date!)
-                    
-                    case .weekly:
-                        date = Calendar.current.date(byAdding: .weekday,
-                                                     value:7,
-                                                     to: date!)
-                    case .biweekly:
-                        date = Calendar.current.date(byAdding: .weekday,
-                                                     value:14,
-                                                     to: date!)
-                    
-                    case .monthly:
-                        date = Calendar.current.date(byAdding: .month,
-                                                     value:1,
-                                                     to: date!)
-                    
-                    case .halfyearly:
-                        date = Calendar.current.date(byAdding: .month,
-                                                     value:7,
-                                                     to: date!)
-                    
-                    case .yearly:
-                        date = Calendar.current.date(byAdding: .year,
-                                                     value:1,
-                                                     to: date!)
+                    stopDate = min(stopDate, recurringStopDate!)
                 }
-            } while date! <= stopDate
+
+                let dateDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date!)
+                date = Calendar.current.date(from: dateDateComponents)!
+
+                repeat {
+                    outputDate.append(date!)
+                    
+                    switch recurring! {
+                        case .none:
+                            date = Calendar.current.date(byAdding: .day,
+                                                         value:1,
+                                                         to: stopDate)
+                        
+                        case .daily:
+                            date = Calendar.current.date(byAdding: .day,
+                                                         value:1,
+                                                         to: date!)
+                        
+                        case .weekly:
+                            date = Calendar.current.date(byAdding: .weekday,
+                                                         value:7,
+                                                         to: date!)
+                        case .biweekly:
+                            date = Calendar.current.date(byAdding: .weekday,
+                                                         value:14,
+                                                         to: date!)
+                        
+                        case .monthly:
+                            date = Calendar.current.date(byAdding: .month,
+                                                         value:1,
+                                                         to: date!)
+                        
+                        case .halfyearly:
+                            date = Calendar.current.date(byAdding: .month,
+                                                         value:7,
+                                                         to: date!)
+                        
+                        case .yearly:
+                            date = Calendar.current.date(byAdding: .year,
+                                                         value:1,
+                                                         to: date!)
+                    }
+                } while date! <= stopDate
         }
         
         return outputDate.sorted(by: { (date1, date2) -> Bool in
@@ -148,11 +148,13 @@ class XYZExpense: NSManagedObject {
         })
     }
     
+    /* DEPRECATED
     override init(entity: NSEntityDescription,
                   insertInto context: NSManagedObjectContext?) {
         
         super.init(entity: entity, insertInto: context)
     }
+     */
     
     init(id: String?,
          detail: String,
@@ -302,14 +304,14 @@ class XYZExpense: NSManagedObject {
             self.setValue(personList, forKey: XYZExpense.persons)
         }
         
-        return ( person!, hasChange )
+        return (person!, hasChange)
     }
     
     @discardableResult
     func addReceipt(sequenceNr: Int,
                     image: NSData) -> (XYZExpenseReceipt, Bool) {
         
-        var hasChangeImage = true
+        var hasChange = false
         var receipt: XYZExpenseReceipt?
         
         guard var receiptList = self.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>  else {
@@ -324,22 +326,25 @@ class XYZExpense: NSManagedObject {
                 
                 let imageData = existingReceipt.value(forKey: XYZExpenseReceipt.image) as? NSData
                 
-                hasChangeImage = imageData != image // this is not 100% accurate as data might be different
-                                                    // at various time of compress image.
+                hasChange = imageData != image // this is not 100% accurate as data might be different
+                                               // at various time of compress image.
                 
                 existingReceipt.setValue(image, forKey: XYZExpenseReceipt.image)
                 receipt = existingReceipt
+                
+                break
             }
         }
     
         if nil == receipt {
             
+            hasChange = true
             receipt = XYZExpenseReceipt(expense: self, sequenceNr: sequenceNr, image: image, context: managedContext())
             receiptList.insert(receipt!)
             
             self.setValue(receiptList, forKey: XYZExpense.receipts)
         }
         
-        return (receipt!, hasChangeImage)
+        return (receipt!, hasChange)
     }
 }
