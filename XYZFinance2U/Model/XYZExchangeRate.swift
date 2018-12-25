@@ -56,11 +56,9 @@ class XYZExchangeRate : NSManagedObject {
         self.setValue(date, forKey: XYZExchangeRate.date)
     }
     
-    /* DEPRECATED
     override init(entity: NSEntityDescription,
                   insertInto context: NSManagedObjectContext?) {
         
         super.init(entity: entity, insertInto: context)
     }
-    */
 }

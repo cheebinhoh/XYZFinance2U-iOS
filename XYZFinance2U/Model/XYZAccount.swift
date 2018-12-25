@@ -98,13 +98,13 @@ class XYZAccount : NSManagedObject {
         self.setValue(principal, forKey: XYZAccount.principal)
     }
     
-    /* DEPRECATED
      override init(entity: NSEntityDescription,
                   insertInto context: NSManagedObjectContext?) {
         
         super.init(entity: entity, insertInto: context)
     }
-    
+
+    /* DEPRECATED
     func saveToiCloud() {
         
         let recordName = self.value(forKey: XYZAccount.recordId) as? String

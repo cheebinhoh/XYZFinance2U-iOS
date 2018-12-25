@@ -148,13 +148,11 @@ class XYZExpense: NSManagedObject {
         })
     }
     
-    /* DEPRECATED
     override init(entity: NSEntityDescription,
                   insertInto context: NSManagedObjectContext?) {
         
         super.init(entity: entity, insertInto: context)
     }
-     */
     
     init(id: String?,
          detail: String,

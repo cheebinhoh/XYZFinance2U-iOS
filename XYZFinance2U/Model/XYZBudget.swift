@@ -371,11 +371,9 @@ class XYZBudget : NSManagedObject {
         self.setValue(dataLength, forKey: XYZBudget.historicalLength)
     }
 
-    /* DEPRECATED
     override init(entity: NSEntityDescription,
                   insertInto context: NSManagedObjectContext?) {
         
         super.init(entity: entity, insertInto: context)
     }
-     */
 }

@@ -64,11 +64,9 @@ class XYZiCloudZone: NSManagedObject {
         setValue(NSData(), forKey: XYZiCloudZone.changeToken)
     }
 
-    /* DEPRECATED
     override init(entity: NSEntityDescription,
                   insertInto context: NSManagedObjectContext?) {
         
         super.init(entity: entity, insertInto: context)
     }
-     */
 }

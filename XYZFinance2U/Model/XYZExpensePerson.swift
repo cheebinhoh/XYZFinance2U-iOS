@@ -32,13 +32,11 @@ class XYZExpensePerson: NSManagedObject
     var sequenceNr = 0
     
     // MARK: - function
-    /* DEPRECATED
     override init(entity: NSEntityDescription,
                   insertInto context: NSManagedObjectContext?) {
         
         super.init(entity: entity, insertInto: context)
     }
-     */
     
     init(expense: XYZExpense,
          sequenceNr: Int,
