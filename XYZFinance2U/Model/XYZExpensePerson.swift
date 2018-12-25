@@ -25,19 +25,20 @@ class XYZExpensePerson: NSManagedObject
     
     // MARK: - property
     
+    var expense: XYZExpense?
     var name  = ""
     var email = ""
-    var expense: XYZExpense?
     var paid = false
     var sequenceNr = 0
     
     // MARK: - function
-    
+    /* DEPRECATED
     override init(entity: NSEntityDescription,
                   insertInto context: NSManagedObjectContext?) {
         
         super.init(entity: entity, insertInto: context)
     }
+     */
     
     init(expense: XYZExpense,
          sequenceNr: Int,

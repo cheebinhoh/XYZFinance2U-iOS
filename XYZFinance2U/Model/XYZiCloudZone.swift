@@ -63,10 +63,12 @@ class XYZiCloudZone: NSManagedObject {
         self.setValue(data, forKey: XYZiCloudZone.deleteShareRecordIdList)
         setValue(NSData(), forKey: XYZiCloudZone.changeToken)
     }
-    
+
+    /* DEPRECATED
     override init(entity: NSEntityDescription,
                   insertInto context: NSManagedObjectContext?) {
         
         super.init(entity: entity, insertInto: context)
     }
+     */
 }

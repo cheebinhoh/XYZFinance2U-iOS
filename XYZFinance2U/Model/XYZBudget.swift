@@ -274,6 +274,7 @@ class XYZBudget : NSManagedObject {
             for (index, startElem) in starts.enumerated() {
                 
                 if now >= startElem {
+                    
                     retStart = startElem
                     retAmount = amounts[index]
                     retLength = lengths[index]
@@ -369,10 +370,12 @@ class XYZBudget : NSManagedObject {
         let dataLength = NSKeyedArchiver.archivedData(withRootObject: [String]() )
         self.setValue(dataLength, forKey: XYZBudget.historicalLength)
     }
-    
+
+    /* DEPRECATED
     override init(entity: NSEntityDescription,
                   insertInto context: NSManagedObjectContext?) {
         
         super.init(entity: entity, insertInto: context)
     }
+     */
 }
