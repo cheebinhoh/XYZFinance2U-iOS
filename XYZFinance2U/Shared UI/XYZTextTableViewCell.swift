@@ -8,10 +8,12 @@
 
 import UIKit
 
+@objc
 protocol XYZTextTableViewCellDelegate : class {
     
     func textDidEndEditing(_ sender:XYZTextTableViewCell)
     func textDidBeginEditing(_ sender:XYZTextTableViewCell)
+    @objc optional func switchChanged(_ yesno: Bool, _ sender: XYZTextTableViewCell)
 }
 
 class XYZTextTableViewCell: UITableViewCell,
@@ -26,8 +28,37 @@ class XYZTextTableViewCell: UITableViewCell,
     
     @IBOutlet weak var input: UITextField!
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var optionSwitch: UISwitch!
+    @IBOutlet weak var stack: UIStackView!
+    var isEditable = true
     
     // MARK: - function
+    
+    func addUISwitch() {
+        
+        let cgpoint = CGPoint(x: 0.0, y: 0.0)
+        let frame = CGRect(origin: cgpoint , size: CGSize(width: 20, height: 35))
+        let uiswitch = UISwitch(frame: frame)
+        
+        uiswitch.addTarget(self, action: #selector(switchChanged(_:)), for: UIControl.Event.valueChanged)
+        
+        optionSwitch = uiswitch
+        self.stack.addArrangedSubview(uiswitch)
+    }
+    
+    @objc
+    func switchChanged(_ locationSwitch: UISwitch) {
+        
+        let value = locationSwitch.isOn
+        
+        delegate?.switchChanged!(value, self)
+        // Do something
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        
+        return isEditable
+    }
     
     override func awakeFromNib() {
         

@@ -23,7 +23,7 @@ protocol ExpenseDetailDelegate: class {
 class ExpenseDetailTableViewController: UITableViewController,
     UIImagePickerControllerDelegate,
     UINavigationControllerDelegate,
-    ExpenseDetailTextTableViewCellDelegate,
+    XYZTextTableViewCellDelegate,
     ExpenseDetailDateTableViewCellDelegate,
     ExpenseDetailDatePickerTableViewCellDelegate,
     ExpenseDetailImagePickerTableViewCellDelegate,
@@ -766,7 +766,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     }
     
     // MARK: - text mamipulation
-    func switchChanged(_ yesno: Bool, _ sender: ExpenseDetailTextTableViewCell) {
+    func switchChanged(_ yesno: Bool, _ sender: XYZTextTableViewCell) {
         
         guard let index = tableView.indexPath(for: sender) else {
             
@@ -776,7 +776,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         paids[index.row] = yesno
     }
     
-    func textDidBeginEditing(_ sender:ExpenseDetailTextTableViewCell) {
+    func textDidBeginEditing(_ sender:XYZTextTableViewCell) {
         
         guard let index = tableView.indexPath(for: sender) else {
             
@@ -794,7 +794,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                     emails.append("")
                     paids.append(false)
                     
-                    guard let textcell = tableView.cellForRow(at: index) as? ExpenseDetailTextTableViewCell else {
+                    guard let textcell = tableView.cellForRow(at: index) as? XYZTextTableViewCell else {
                     
                         fatalError("Exception: ExpenseDetailTextTableViewCell is expected")
                     }
@@ -816,7 +816,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         }
     }
     
-    func textDidEndEditing(_ sender: ExpenseDetailTextTableViewCell)
+    func textDidEndEditing(_ sender: XYZTextTableViewCell)
     {
         if modalEditing {
             
@@ -933,7 +933,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     var isPopover = false
     var expenseDelegate: ExpenseDetailDelegate?
     var sectionList = [TableSectionCell]()
-    var emailcell : ExpenseDetailTextTableViewCell?
+    var emailcell : XYZTextTableViewCell?
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
@@ -1206,7 +1206,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         switch  sectionList[indexPath.section].cellList[indexPath.row] {
             
             case "text":
-                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailTextCell", for: indexPath) as? ExpenseDetailTextTableViewCell else {
+                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailTextCell", for: indexPath) as? XYZTextTableViewCell else {
                     
                     fatalError("Exception: expenseDetailTextCell is failed to be created")
                 }
@@ -1222,7 +1222,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 cell = textcell
             
             case "amount":
-                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailTextCell", for: indexPath) as? ExpenseDetailTextTableViewCell else {
+                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailTextCell", for: indexPath) as? XYZTextTableViewCell else {
                     
                     fatalError("Exception: expenseDetailTextCell is failed to be created")
                 }
@@ -1358,7 +1358,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 cell = datepickercell
             
             case "email":
-                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailTextCell", for: indexPath) as? ExpenseDetailTextTableViewCell else {
+                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailTextCell", for: indexPath) as? XYZTextTableViewCell else {
                     
                     fatalError("Exception: expenseDetailTextCell is failed to be created")
                 }
@@ -1380,7 +1380,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 cell = textcell
             
             case "newemail":
-                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailTextCell", for: indexPath) as? ExpenseDetailTextTableViewCell else {
+                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailTextCell", for: indexPath) as? XYZTextTableViewCell else {
                     
                     fatalError("Exception: expenseDetailTextCell is failed to be created")
                 }
@@ -1506,7 +1506,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             tableView.reloadData()
         } else if editingStyle == .insert {
             
-            guard let textcell = tableView.cellForRow(at: indexPath) as? ExpenseDetailTextTableViewCell else {
+            guard let textcell = tableView.cellForRow(at: indexPath) as? XYZTextTableViewCell else {
                 
                 fatalError("Exception: ExpenseDetailTextTableViewCell is expected")
             }

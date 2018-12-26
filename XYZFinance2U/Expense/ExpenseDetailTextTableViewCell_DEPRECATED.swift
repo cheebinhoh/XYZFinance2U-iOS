@@ -7,6 +7,7 @@
 //
 //  QA status: checked on dec-29, 2017
 
+/* DEPRECATED
 import UIKit
 
 protocol ExpenseDetailTextTableViewCellDelegate: class {
@@ -129,3 +130,5 @@ class ExpenseDetailTextTableViewCell: UITableViewCell,
         }
     }
 }
+
+ */
