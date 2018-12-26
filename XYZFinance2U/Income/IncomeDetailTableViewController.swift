@@ -19,7 +19,7 @@ protocol IncomeDetailDelegate: class {
 }
 
 class IncomeDetailTableViewController: UITableViewController,
-    IncomeDetailTextTableViewCellDelegate,
+    XYZTextTableViewCellDelegate,
     IncomeDetailDateTableViewCellDelegate,
     IncomeDetailDatePickerTableViewCellDelegate,
     IncomeDetailCommandDelegate,
@@ -185,7 +185,7 @@ class IncomeDetailTableViewController: UITableViewController,
         tableView.reloadData()
     }
     
-    func textDidEndEditing(_ sender: IncomeDetailTextTableViewCell) {
+    func textDidEndEditing(_ sender: XYZTextTableViewCell) {
 
         if modalEditing {
             
@@ -215,7 +215,7 @@ class IncomeDetailTableViewController: UITableViewController,
         }
     }
     
-    func textDidBeginEditing(_ sender: IncomeDetailTextTableViewCell) {
+    func textDidBeginEditing(_ sender: XYZTextTableViewCell) {
         
     }
     
@@ -539,7 +539,7 @@ class IncomeDetailTableViewController: UITableViewController,
         switch  tableSectionCellList[indexPath.section].cellList[indexPath.row] {
             
             case "bank":
-                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailTextCell", for: indexPath) as? IncomeDetailTextTableViewCell else {
+                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailTextCell", for: indexPath) as? XYZTextTableViewCell else {
                     
                     fatalError("Exception: incomeDetailTextCell is failed to be created")
                 }
@@ -554,7 +554,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 cell = textcell
             
             case "accountNr":
-                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailTextCell", for: indexPath) as? IncomeDetailTextTableViewCell else {
+                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailTextCell", for: indexPath) as? XYZTextTableViewCell else {
                     
                     fatalError("Exception: incomeDetailTextCell is failed to be created")
                 }
@@ -569,7 +569,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 cell = textcell
             
             case "amount":
-                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailTextCell", for: indexPath) as? IncomeDetailTextTableViewCell else {
+                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailTextCell", for: indexPath) as? XYZTextTableViewCell else {
                     
                     fatalError("Exception: incomeDetailTextCell is failed to be created")
                 }
@@ -585,7 +585,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 cell = textcell
 
         case "principal":
-            guard let textcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailTextCell", for: indexPath) as? IncomeDetailTextTableViewCell else {
+            guard let textcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailTextCell", for: indexPath) as? XYZTextTableViewCell else {
                 
                 fatalError("Exception: incomeDetailTextCell is failed to be created")
             }

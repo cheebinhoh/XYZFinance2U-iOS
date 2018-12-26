@@ -6,6 +6,7 @@
 //  Copyright © 2018 CB Hoh. All rights reserved.
 //
 
+/* DEPRECATED
 import UIKit
 
 protocol BudgetDetailTextTableViewCellDelegate : class {
@@ -101,3 +102,5 @@ class BudgetDetailTextTableViewCell: UITableViewCell,
         }
     }
 }
+
+*/

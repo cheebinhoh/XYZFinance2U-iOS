@@ -1,26 +1,25 @@
 //
-//  IncomeDetailTextTableViewCell.swift
+//  XYZTextTableViewCell.swift
 //  XYZFinance2U
 //
-//  Created by Chee Bin Hoh on 12/24/17.
-//  Copyright © 2017 CB Hoh. All rights reserved.
+//  Created by Chee Bin Hoh on 12/25/18.
+//  Copyright © 2018 CB Hoh. All rights reserved.
 //
-//  QA status: checked on dec-29, 2017
 
 import UIKit
 
-protocol IncomeDetailTextTableViewCellDelegate : class {
+protocol XYZTextTableViewCellDelegate : class {
     
-    func textDidEndEditing(_ sender:IncomeDetailTextTableViewCell)
-    func textDidBeginEditing(_ sender:IncomeDetailTextTableViewCell)
+    func textDidEndEditing(_ sender:XYZTextTableViewCell)
+    func textDidBeginEditing(_ sender:XYZTextTableViewCell)
 }
 
-class IncomeDetailTextTableViewCell: UITableViewCell,
+class XYZTextTableViewCell: UITableViewCell,
     UITextFieldDelegate {
 
     // MARK: - property
     var monetory = false
-    weak var delegate: IncomeDetailTextTableViewCellDelegate?
+    weak var delegate: XYZTextTableViewCellDelegate?
     var currencyCode: String = Locale.current.currencyCode!
     
     // MARK: - IBOutlet
@@ -38,11 +37,11 @@ class IncomeDetailTextTableViewCell: UITableViewCell,
         input.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
@@ -60,10 +59,10 @@ class IncomeDetailTextTableViewCell: UITableViewCell,
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-    
+        
         delegate?.textDidEndEditing(self)
     }
-
+    
     func enableMonetaryEditing(_ enanble: Bool, _ currencyCode: String) {
         
         monetory = enanble
@@ -102,4 +101,5 @@ class IncomeDetailTextTableViewCell: UITableViewCell,
             delegate?.textDidEndEditing(self)
         }
     }
+
 }

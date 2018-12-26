@@ -17,7 +17,7 @@ protocol BudgetDetailDelegate: class {
 
 class BudgetDetailTableViewController: UITableViewController,
     BudgetSelectionDelegate,
-    BudgetDetailTextTableViewCellDelegate,
+    XYZTextTableViewCellDelegate,
     BudgetDetailDateTableViewCellDelegate,
     BudgetDetailDatePickerTableViewCellDelegate,
     BudgetDetailCommandDelegate,
@@ -147,7 +147,7 @@ class BudgetDetailTableViewController: UITableViewController,
         tableView.reloadData() // TODO: how do we improve by just the row, does it worth it?
     }
         
-    func textDidEndEditing(_ sender: BudgetDetailTextTableViewCell) {
+    func textDidEndEditing(_ sender: XYZTextTableViewCell) {
         
         if let index = tableView.indexPath(for: sender) {
             
@@ -173,7 +173,7 @@ class BudgetDetailTableViewController: UITableViewController,
         }
     }
     
-    func textDidBeginEditing(_ sender: BudgetDetailTextTableViewCell) {
+    func textDidBeginEditing(_ sender: XYZTextTableViewCell) {
     
     }
     
@@ -589,7 +589,7 @@ class BudgetDetailTableViewController: UITableViewController,
         switch sectionList[indexPath.section].cellList[indexPath.row] {
         
             case "budget":
-                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailTextCell", for: indexPath) as? BudgetDetailTextTableViewCell else {
+                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailTextCell", for: indexPath) as? XYZTextTableViewCell else {
                     
                     fatalError("Exception: budgetDetailTextCell is failed to be created")
                 }
@@ -605,7 +605,7 @@ class BudgetDetailTableViewController: UITableViewController,
             
             
             case "amount":
-                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailTextCell", for: indexPath) as? BudgetDetailTextTableViewCell else {
+                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailTextCell", for: indexPath) as? XYZTextTableViewCell else {
                     
                     fatalError("Exception: budgetDetailTextCell is failed to be created")
                 }
