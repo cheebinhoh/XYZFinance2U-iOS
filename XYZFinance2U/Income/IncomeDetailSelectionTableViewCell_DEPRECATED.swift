@@ -1,17 +1,17 @@
 //
-//  ExpenseDetailSelectionTableViewCell.swift
+//  IncomeDetailSelectionTableViewCell.swift
 //  XYZFinance2U
 //
-//  Created by Chee Bin Hoh on 2/9/18.
+//  Created by Chee Bin Hoh on 1/3/18.
 //  Copyright © 2018 CB Hoh. All rights reserved.
 //
-
+/* DEPRECATED
 import UIKit
 
-class ExpenseDetailSelectionTableViewCell: UITableViewCell {
+class IncomeDetailSelectionTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var label: UILabel!
     @IBOutlet weak var selection: UILabel!
-    @IBOutlet weak var icon: UIImageView!
     
     override func awakeFromNib() {
         
@@ -25,9 +25,16 @@ class ExpenseDetailSelectionTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+
+    // MARK: - function
+    func setLabel(_ label: String) {
+        
+        self.label.text = label
+    }
     
     func setSelection(_ selection: String) {
         
         self.selection.text = selection
     }
 }
+ */

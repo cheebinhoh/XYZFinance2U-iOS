@@ -672,7 +672,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 cell = datecell
             
             case "repeat":
-                guard let repeatcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailSelectionCell", for: indexPath) as? IncomeDetailSelectionTableViewCell else {
+                guard let repeatcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailSelectionCell", for: indexPath) as? XYZSelectionTableViewCell else {
                     
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
@@ -703,7 +703,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 cell = repeatcell
             
             case "currency":
-                guard let currencycell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailSelectionCell", for: indexPath) as? IncomeDetailSelectionTableViewCell else {
+                guard let currencycell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailSelectionCell", for: indexPath) as? XYZSelectionTableViewCell else {
                     
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
@@ -734,7 +734,7 @@ class IncomeDetailTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         
-        if let _ = tableView.cellForRow(at: indexPath) as? IncomeDetailSelectionTableViewCell {
+        if let _ = tableView.cellForRow(at: indexPath) as? XYZSelectionTableViewCell {
             
             return indexPath
         } else {
@@ -745,7 +745,7 @@ class IncomeDetailTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if let _ = tableView.cellForRow(at: indexPath) as? IncomeDetailSelectionTableViewCell {
+        if let _ = tableView.cellForRow(at: indexPath) as? XYZSelectionTableViewCell {
        
             let cellId = tableSectionCellList[indexPath.section].cellList[indexPath.row];
        

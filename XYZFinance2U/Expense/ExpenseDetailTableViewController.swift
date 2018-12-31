@@ -1239,7 +1239,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 cell = textcell
             
             case "currency":
-                guard let currencycell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailSelectionCell", for: indexPath) as? ExpenseDetailSelectionTableViewCell else {
+                guard let currencycell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailSelectionCell", for: indexPath) as? XYZSelectionTableViewCell else {
                     
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
@@ -1250,7 +1250,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 cell = currencycell
             
             case "budget":
-                guard let budgetcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailSelectionCell", for: indexPath) as? ExpenseDetailSelectionTableViewCell else {
+                guard let budgetcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailSelectionCell", for: indexPath) as? XYZSelectionTableViewCell else {
                     
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
@@ -1317,7 +1317,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 cell = datecell
             
             case "recurring":
-                guard let recurringcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailSelectionCell", for: indexPath) as? ExpenseDetailSelectionTableViewCell else {
+                guard let recurringcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailSelectionCell", for: indexPath) as? XYZSelectionTableViewCell else {
                     
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
@@ -1529,7 +1529,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if let _ = tableView.cellForRow(at: indexPath) as? ExpenseDetailSelectionTableViewCell {
+        if let _ = tableView.cellForRow(at: indexPath) as? XYZSelectionTableViewCell {
             
             switch sectionList[indexPath.section].cellList[indexPath.row]  {
             
