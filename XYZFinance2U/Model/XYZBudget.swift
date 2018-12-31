@@ -93,14 +93,14 @@ class XYZBudget : NSManagedObject {
         
         var value: Date? = nil
         let effectivebudget = self.getEffectiveBudgetDateAmount()
-        let length = XYZBudget.Length(rawValue: effectivebudget.Length ?? XYZBudget.Length.none.rawValue)
+        let length = XYZBudget.Length(rawValue: effectivebudget.length ?? XYZBudget.Length.none.rawValue)
         
-        if let _ = effectivebudget.Length {
+        if let _ = effectivebudget.length {
         
             switch length! {
                 
                 case .none:
-                    let startComponents = Calendar.current.dateComponents([.day, .month, .year], from: effectivebudget.Start!)
+                    let startComponents = Calendar.current.dateComponents([.day, .month, .year], from: effectivebudget.start!)
                     let startDateOnly = Calendar.current.date(from: startComponents)
                     value = startDateOnly!
                 
@@ -109,7 +109,7 @@ class XYZBudget : NSManagedObject {
                     let today = Calendar.current.date(from: todayComponents)
                     let afterToday = Calendar.current.date(byAdding: .day, value: 1, to: today!)
                     
-                    let startComponents = Calendar.current.dateComponents([.day, .month, .year], from: effectivebudget.Start!)
+                    let startComponents = Calendar.current.dateComponents([.day, .month, .year], from: effectivebudget.start!)
                     let startDateOnly = Calendar.current.date(from: startComponents)
                     
                     let untilDate = afterToday
@@ -144,15 +144,15 @@ class XYZBudget : NSManagedObject {
     var currentEnd: Date? {
         
         let effectivebudget = self.getEffectiveBudgetDateAmount()
-        let length = XYZBudget.Length(rawValue: effectivebudget.Length ?? XYZBudget.Length.none.rawValue )
+        let length = XYZBudget.Length(rawValue: effectivebudget.length ?? XYZBudget.Length.none.rawValue )
         
-        if let _ = effectivebudget.Start {
+        if let _ = effectivebudget.start {
             
             let todayComponents = Calendar.current.dateComponents([.day, .month, .year], from: Date())
             let today = Calendar.current.date(from: todayComponents)
             let afterToday = Calendar.current.date(byAdding: .day, value: 1, to: today!)
             
-            let startComponents = Calendar.current.dateComponents([.day, .month, .year], from: effectivebudget.Start!)
+            let startComponents = Calendar.current.dateComponents([.day, .month, .year], from: effectivebudget.start!)
             let startDateOnly = Calendar.current.date(from: startComponents)
             
             let untilDate = afterToday
@@ -176,7 +176,7 @@ class XYZBudget : NSManagedObject {
             dateOnly = Calendar.current.date(byAdding: .day, value: 1, to: dateOnly!)
             
             let allbudgets = self.getAllBudgetDateAmount()
-            let nextBudgetStart = allbudgets.Starts[0]
+            let nextBudgetStart = allbudgets.starts[0]
 
             return max( startDateOnly!, dateOnly!, nextBudgetStart )
         }
@@ -227,9 +227,9 @@ class XYZBudget : NSManagedObject {
         }
     }
     
-    func getEffectiveBudgetDateAmount() -> (Length: String?,
-                                                Start: Date?,
-                                                Amount: Double?) {
+    func getEffectiveBudgetDateAmount() -> (length: String?,
+                                                start: Date?,
+                                                amount: Double?) {
         
         let dataAmount = self.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
         let historicalAmount = (NSKeyedUnarchiver.unarchiveObject(with: dataAmount) as? [Double]) ?? [Double]()
@@ -288,9 +288,9 @@ class XYZBudget : NSManagedObject {
     }
     
     func getAllBudgetDateAmount() -> (count: Int,
-                                        Lengths: [String],
-                                        Starts: [Date],
-                                        Amounts: [Double]) {
+                                        lengths: [String],
+                                        starts: [Date],
+                                        amounts: [Double]) {
         
         var dates = [Date]()
         var amounts = [Double]()

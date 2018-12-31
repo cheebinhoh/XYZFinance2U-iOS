@@ -863,7 +863,7 @@ class BudgetTableViewController: UITableViewController,
         let effectivebudget = budget.getEffectiveBudgetDateAmount()
         
         let name = budget.value(forKey: XYZBudget.name) as? String
-        let amount = effectivebudget.Amount ?? 0.0
+        let amount = effectivebudget.amount ?? 0.0
         let currency = budget.value(forKey: XYZBudget.currency) as? String
         let budgetColor = XYZColor(rawValue: budget.value(forKey: XYZBudget.color) as? String ?? "")
         
