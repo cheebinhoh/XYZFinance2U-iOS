@@ -706,7 +706,7 @@ class BudgetTableViewController: UITableViewController,
             self.present(optionMenu, animated: true, completion: nil)
         }
         
-        more.image = UIImage(named: "Calendar")
+        more.image = UIImage(named: "more")
         
         commands.append(more)
         
