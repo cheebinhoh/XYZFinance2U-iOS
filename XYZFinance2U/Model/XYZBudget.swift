@@ -145,13 +145,13 @@ class XYZBudget : NSManagedObject {
         let effectivebudget = self.getEffectiveBudgetDateAmount()
         let length = XYZBudget.Length(rawValue: effectivebudget.length ?? XYZBudget.Length.none.rawValue )
         
-        if let _ = effectivebudget.start {
+        if let start = effectivebudget.start {
             
             let todayComponents = Calendar.current.dateComponents([.day, .month, .year], from: Date())
             let today = Calendar.current.date(from: todayComponents)
             let afterToday = Calendar.current.date(byAdding: .day, value: 1, to: today!)
             
-            let startComponents = Calendar.current.dateComponents([.day, .month, .year], from: effectivebudget.start!)
+            let startComponents = Calendar.current.dateComponents([.day, .month, .year], from: start)
             let startDateOnly = Calendar.current.date(from: startComponents)
             
             let untilDate = afterToday
