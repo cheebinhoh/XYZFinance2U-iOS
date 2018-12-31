@@ -1074,7 +1074,7 @@
                                 <rect key="frame" x="0.0" y="640.5" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YaX-RK-lUZ" id="qwM-kl-Jqy">
-                                    <rect key="frame" x="0.0" y="0.0" width="341" height="79.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="349" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4e5-q3-Ybb">
@@ -2065,7 +2065,7 @@ Chee Bin HOH, 2017</string>
                                     <outlet property="label" destination="qqc-CG-kLc" id="tLq-V1-PP2"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="budgetDetailSelectionCell" rowHeight="80" id="1y6-oA-PeM" userLabel="budgetDetailSelectionCell" customClass="BudgetDetailSelectionTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="budgetDetailSelectionCell" rowHeight="80" id="1y6-oA-PeM" userLabel="budgetDetailSelectionCell" customClass="XYZSelectionTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="135.5" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1y6-oA-PeM" id="6cy-XD-vcH">

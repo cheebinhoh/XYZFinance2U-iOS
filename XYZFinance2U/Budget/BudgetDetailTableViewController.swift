@@ -620,20 +620,20 @@ class BudgetDetailTableViewController: UITableViewController,
                 cell = textcell
 
             case "currency":
-                guard let currencycell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? BudgetDetailSelectionTableViewCell else {
+                guard let currencycell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? XYZSelectionTableViewCell else {
                     
                     fatalError("Exception: budgetDetailSelectionCell is failed to be created")
                 }
-                
+
                 currencycell.setLabel("Currency".localized())
                 currencycell.setSelection(currencyCode ?? "USD")
                 currencycell.selectionStyle = .none
                 currencycell.icon.image = UIImage(named: "empty")
-                
+
                 cell = currencycell
             
             case "length":
-                guard let lengthcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? BudgetDetailSelectionTableViewCell else {
+                guard let lengthcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? XYZSelectionTableViewCell else {
                     
                     fatalError("Exception: budgetDetailSelectionCell is failed to be created")
                 }
@@ -648,15 +648,15 @@ class BudgetDetailTableViewController: UITableViewController,
                     default:
                         lengthRawValue = length.rawValue.localized()
                 }
-                
+
                 lengthcell.setSelection(lengthRawValue)
                 lengthcell.selectionStyle = .none
                 lengthcell.icon.image = UIImage(named: "empty")
-                
+
                 cell = lengthcell
             
             case "lasteffective":
-                guard let lasteffectivecell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? BudgetDetailSelectionTableViewCell else {
+                guard let lasteffectivecell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? XYZSelectionTableViewCell else {
                     
                     fatalError("Exception: budgetDetailSelectionCell is failed to be created")
                 }
@@ -684,29 +684,29 @@ class BudgetDetailTableViewController: UITableViewController,
                     
                     lasteffectivecell.accessoryType = .disclosureIndicator
                 }
-                
+
                 lasteffectivecell.selectionStyle = .none
                 lasteffectivecell.colorView.backgroundColor = UIColor.clear
                 lasteffectivecell.icon.image = UIImage(named: "empty")
-                
+
                 cell = lasteffectivecell
             
                 lastEffectiveIndexPath = indexPath
             
             case "icon":
-                guard let iconcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? BudgetDetailSelectionTableViewCell else {
+                guard let iconcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? XYZSelectionTableViewCell else {
                     
                     fatalError("Exception: budgetDetailSelectionCell is failed to be created")
                 }
-                
+
                 iconcell.setLabel("Icon".localized())
-                iconcell.icon.image = UIImage(named: iconName)
-                
+                iconcell.icon.image = UIImage(named: iconName == "" ? "empty" : iconName)
+
                 iconcell.selectionStyle = .none
                 cell = iconcell
             
             case "color":
-                guard let colorcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? BudgetDetailSelectionTableViewCell else {
+                guard let colorcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailSelectionCell", for: indexPath) as? XYZSelectionTableViewCell else {
                     
                     fatalError("Exception: budgetDetailSelectionCell is failed to be created")
                 }
@@ -764,7 +764,7 @@ class BudgetDetailTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
 
-        if let _ = tableView.cellForRow(at: indexPath) as? BudgetDetailSelectionTableViewCell {
+        if let _ = tableView.cellForRow(at: indexPath) as? XYZSelectionTableViewCell {
             
             return indexPath
         } else {
