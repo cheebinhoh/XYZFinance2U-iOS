@@ -139,7 +139,8 @@ class XYZExpense: NSManagedObject {
                                                          value:1,
                                                          to: date!)
                     }
-                } while date! <= stopDate
+                }
+                while date! <= stopDate
         }
         
         return outputDate.sorted(by: { (date1, date2) -> Bool in
@@ -269,15 +270,19 @@ class XYZExpense: NSManagedObject {
         
         for existingPerson in personList {
             
-            if let existingSequenceNr = existingPerson.value(forKey: XYZExpensePerson.sequenceNr) as? Int, existingSequenceNr == sequenceNr {
+            if let existingSequenceNr = existingPerson.value(forKey: XYZExpensePerson.sequenceNr) as? Int,
+                existingSequenceNr == sequenceNr {
                 
-                if let existingName = existingPerson.value(forKey: XYZExpensePerson.name) as? String, existingName != name {
+                if let existingName = existingPerson.value(forKey: XYZExpensePerson.name) as? String,
+                    existingName != name {
                     
                     hasChange = true
-                } else if let existingEmail = existingPerson.value(forKey: XYZExpensePerson.email) as? String, existingEmail != email {
+                } else if let existingEmail = existingPerson.value(forKey: XYZExpensePerson.email) as? String,
+                    existingEmail != email {
                     
                     hasChange = true
-                } else if let existingPaid = existingPerson.value(forKey: XYZExpensePerson.paid) as? Bool, existingPaid != paid {
+                } else if let existingPaid = existingPerson.value(forKey: XYZExpensePerson.paid) as? Bool,
+                    existingPaid != paid {
                 
                     hasChange = true
                 }

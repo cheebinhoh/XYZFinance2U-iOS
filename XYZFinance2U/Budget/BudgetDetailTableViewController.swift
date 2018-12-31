@@ -66,7 +66,7 @@ class BudgetDetailTableViewController: UITableViewController,
         if let _ = budget {
             
             if nrOfHistoricalItems >= historicalStart.count {
-                
+        
                 if sender.date! > date {
                     
                     historicalStart.append(date)
@@ -352,12 +352,11 @@ class BudgetDetailTableViewController: UITableViewController,
     
     func saveData() {
         
-        
         // post processing
         var processedHistoricalAmount = [Double]()
         var processedHistoricalStart = [Date]()
         var processedHistoricalLength = [String]()
-        
+
         for (index, start) in historicalStart.enumerated() {
             
             let result = Calendar.current.compare(start, to: date, toGranularity: .day)
