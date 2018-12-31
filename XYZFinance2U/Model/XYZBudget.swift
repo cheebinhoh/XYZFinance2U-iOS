@@ -93,11 +93,10 @@ class XYZBudget : NSManagedObject {
         
         var value: Date? = nil
         let effectivebudget = self.getEffectiveBudgetDateAmount()
-        let length = XYZBudget.Length(rawValue: effectivebudget.length ?? XYZBudget.Length.none.rawValue)
         
-        if let _ = effectivebudget.length {
+        if let length = XYZBudget.Length(rawValue: effectivebudget.length ?? XYZBudget.Length.none.rawValue) {
         
-            switch length! {
+            switch length {
                 
                 case .none:
                     let startComponents = Calendar.current.dateComponents([.day, .month, .year], from: effectivebudget.start!)
@@ -115,16 +114,16 @@ class XYZBudget : NSManagedObject {
                     let untilDate = afterToday
                     
                     value = startDateOnly
-                    var endOfStart = XYZBudget.getEndDate(of: value!, in: length!) ?? untilDate
+                    var endOfStart = XYZBudget.getEndDate(of: value!, in: length) ?? untilDate
                     
                     while (endOfStart! < untilDate!) {
                         
                         value = endOfStart
-                        endOfStart = XYZBudget.getEndDate(of: value!, in: length!) ?? untilDate
+                        endOfStart = XYZBudget.getEndDate(of: value!, in: length) ?? untilDate
                     }
             }
  
-        } else if let _ = self.currentEnd {
+        } else if let currentEnd = self.currentEnd {
             
             var dateComponents = DateComponents()
             
@@ -135,7 +134,7 @@ class XYZBudget : NSManagedObject {
             dateComponents.hour = 0
             dateComponents.minute = 0
             
-            value = min( Calendar.current.date(from: dateComponents)!, self.currentEnd! )
+            value = min(Calendar.current.date(from: dateComponents)!, currentEnd)
         }
 
         return value
@@ -178,7 +177,7 @@ class XYZBudget : NSManagedObject {
             let allbudgets = self.getAllBudgetDateAmount()
             let nextBudgetStart = allbudgets.starts[0]
 
-            return max( startDateOnly!, dateOnly!, nextBudgetStart )
+            return max(startDateOnly!, dateOnly!, nextBudgetStart)
         }
     }
     
@@ -186,44 +185,45 @@ class XYZBudget : NSManagedObject {
                            in length: XYZBudget.Length) -> Date? {
         
         switch length {
-        case .none:
-            let yearAfterToday = Calendar.current.date(byAdding: .year,
-                                                        value:1,
-                                                        to: Date())
-            let yearAfterStart = Calendar.current.date(byAdding: .year,
-                                                        value:1,
-                                                        to: start)
-            return max( yearAfterToday!, yearAfterStart! )
             
-        case .daily:
-            return Calendar.current.date(byAdding: .day,
-                                         value:1,
-                                         to: start)
+            case .none:
+                let yearAfterToday = Calendar.current.date(byAdding: .year,
+                                                            value:1,
+                                                            to: Date())
+                let yearAfterStart = Calendar.current.date(byAdding: .year,
+                                                            value:1,
+                                                            to: start)
+                return max(yearAfterToday!, yearAfterStart!)
             
-        case .weekly:
-            return Calendar.current.date(byAdding: .weekOfYear,
-                                         value:1,
-                                         to: start)
+            case .daily:
+                return Calendar.current.date(byAdding: .day,
+                                             value:1,
+                                             to: start)
             
-        case .biweekly:
-            return Calendar.current.date(byAdding: .weekOfYear,
-                                          value:2,
-                                          to: start)
+            case .weekly:
+                return Calendar.current.date(byAdding: .weekOfYear,
+                                             value:1,
+                                             to: start)
             
-        case .monthly:
-            return Calendar.current.date(byAdding: .month,
-                                         value:1,
-                                         to: start)
+            case .biweekly:
+                return Calendar.current.date(byAdding: .weekOfYear,
+                                              value:2,
+                                              to: start)
             
-        case .halfyearly:
-            return Calendar.current.date(byAdding: .month,
-                                         value:6,
-                                         to: start)
+            case .monthly:
+                return Calendar.current.date(byAdding: .month,
+                                             value:1,
+                                             to: start)
             
-        case .yearly:
-            return Calendar.current.date(byAdding: .year,
-                                         value:1,
-                                         to: start)
+            case .halfyearly:
+                return Calendar.current.date(byAdding: .month,
+                                             value:6,
+                                             to: start)
+            
+            case .yearly:
+                return Calendar.current.date(byAdding: .year,
+                                             value:1,
+                                             to: start)
         }
     }
     
@@ -240,7 +240,7 @@ class XYZBudget : NSManagedObject {
         let dataLength = self.value(forKey: XYZBudget.historicalLength) as? Data ?? NSData() as Data
         let historicalLength = (NSKeyedUnarchiver.unarchiveObject(with: dataLength) as? [String]) ?? [String]()
         
-        let length = self.value(forKey: XYZBudget.length) as? String ?? ""
+        let length = self.value(forKey: XYZBudget.length) as? String ?? Length.none.rawValue
         let amount = self.value(forKey: XYZBudget.amount) as? Double ?? 0.0
         let start = self.value(forKey: XYZBudget.start) as? Date ?? Date()
         
@@ -255,9 +255,9 @@ class XYZBudget : NSManagedObject {
                                              amount: Double,
                                              lengths: [String],
                                              starts: [Date],
-                                             amounts: [Double]) -> (String?,
-                                                                        Date?,
-                                                                        Double?) {
+                                             amounts: [Double]) -> (length: String?,
+                                                                        start: Date?,
+                                                                        amount: Double?) {
         
         var retLength: String?
         var retAmount: Double?
@@ -307,18 +307,18 @@ class XYZBudget : NSManagedObject {
         
         let date = self.value(forKey: XYZBudget.start) as? Date
         dates.append(date!)
-        
-        dates = dates.map({ (date) -> Date in
-            
-            let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: date)
-            return Calendar.current.date(from: dateComponent)!
-        })
-        
+    
         let amount = self.value(forKey: XYZBudget.amount) as? Double
         amounts.append(amount!)
         
         let length = self.value(forKey: XYZBudget.length) as? String
         lengths.append(length!)
+                                            
+        dates = dates.map({ (date) -> Date in
+            
+            let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: date)
+            return Calendar.current.date(from: dateComponent)!
+        })
         
         return (dates.count, lengths, dates, amounts)
     }
@@ -361,13 +361,13 @@ class XYZBudget : NSManagedObject {
         self.setValue("", forKey: XYZBudget.color)
         self.setValue("", forKey: XYZBudget.iconName)
         
-        let dataAmount = NSKeyedArchiver.archivedData(withRootObject: [Double]() )
+        let dataAmount = NSKeyedArchiver.archivedData(withRootObject: [Double]())
         self.setValue(dataAmount, forKey: XYZBudget.historicalAmount)
         
-        let dataDate = NSKeyedArchiver.archivedData(withRootObject: [Date]() )
+        let dataDate = NSKeyedArchiver.archivedData(withRootObject: [Date]())
         self.setValue(dataDate, forKey: XYZBudget.historicalStart)
         
-        let dataLength = NSKeyedArchiver.archivedData(withRootObject: [String]() )
+        let dataLength = NSKeyedArchiver.archivedData(withRootObject: [String]())
         self.setValue(dataLength, forKey: XYZBudget.historicalLength)
     }
 
