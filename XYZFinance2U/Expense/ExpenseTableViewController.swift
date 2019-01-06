@@ -1040,6 +1040,56 @@ class ExpenseTableViewController: UITableViewController,
             copy.backgroundColor = UIColor.blue
             commands.append(copy)
             
+            guard let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense] else {
+                
+                fatalError("Exception: [XYZExpense] is expected")
+            }
+            
+            let expense = sectionExpenseList[indexPath.row - 1]
+            let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
+            
+            if !(isShared!) {
+                
+                if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
+                    
+                    let more = UIContextualAction(style: .normal, title: "More".localized()) { _, _, handler in
+                        
+                        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                            
+                            fatalError("Exception: UISplitViewController is expected" )
+                        }
+                        
+                        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                        let copyUrlOption = UIAlertAction(title: "Share expense url".localized(), style: .default, handler: { (action) in
+                            
+                            let vc = UIActivityViewController(activityItems: [url], applicationActivities: [])
+                            self.present(vc, animated: true, completion: nil)
+                            //UIPasteboard.general.string = "\(url)"
+                            
+                            mainSplitView.popOverAlertController = nil
+                            handler(true)
+                        })
+                        
+                        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                            
+                            mainSplitView.popOverAlertController = nil
+                            handler(true)
+                        })
+                        
+                        optionMenu.addAction(copyUrlOption)
+                        optionMenu.addAction(cancelAction)
+                        
+                        mainSplitView.popOverAlertController = optionMenu
+                        self.present(optionMenu, animated: true, completion: nil)
+                    }
+                    
+                    more.image = UIImage(named: "more")
+                    
+                    commands.append(more)
+                }
+            }
+            
             return UISwipeActionsConfiguration(actions: commands)
         }
         
@@ -1066,6 +1116,7 @@ class ExpenseTableViewController: UITableViewController,
             reloadData()
         } else {
             
+            /*
             guard let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense] else {
                 
                 fatalError("Exception: [XYZExpense] is expected")
@@ -1073,6 +1124,7 @@ class ExpenseTableViewController: UITableViewController,
         
             let expense = sectionExpenseList[indexPath.row - 1]
             let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
+            */
             
             let delete = UIContextualAction(style: .destructive, title: "Delete".localized()) { _, _, handler in
                 
@@ -1090,7 +1142,8 @@ class ExpenseTableViewController: UITableViewController,
             }
         
             commands.append(delete)
-        
+            /* move it to heading
+             
             if !(isShared!) {
                 
                 if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
@@ -1130,6 +1183,7 @@ class ExpenseTableViewController: UITableViewController,
                     commands.append(more)
                 }
             }
+             */
         }
         
         return UISwipeActionsConfiguration(actions: commands)
