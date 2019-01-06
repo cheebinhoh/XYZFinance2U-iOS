@@ -401,6 +401,55 @@ class BudgetExpensesTableViewController: UITableViewController,
             commands.append(copy)
         }
         
+        var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
+        let expense = sectionExpenseList![indexPath.row]
+
+        let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
+        
+        if !(isShared!) {
+            
+            if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
+                
+                let more = UIContextualAction(style: .normal, title: "More".localized()) { _, _, handler in
+                    
+                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                    guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                        
+                        fatalError("Exception: UISplitViewController is expected" )
+                    }
+                    
+                    let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                    let copyUrlOption = UIAlertAction(title: "Share expense url".localized(), style: .default, handler: { (action) in
+                        
+                        let vc = UIActivityViewController(activityItems: [url], applicationActivities: [])
+                        self.present(vc, animated: true, completion: {
+                            
+                            self.delegate?.reloadData()
+                            self.loadData()
+                        })
+                        
+                        mainSplitView.popOverAlertController = nil
+                        handler(true)
+                    })
+                    
+                    let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: { (action) in
+                        
+                        mainSplitView.popOverAlertController = nil
+                        handler(true)
+                    })
+                    
+                    optionMenu.addAction(copyUrlOption)
+                    optionMenu.addAction(cancelAction)
+                    
+                    mainSplitView.popOverAlertController = optionMenu
+                    self.present(optionMenu, animated: true, completion: nil)
+                }
+                
+                more.image = UIImage(named: "more")
+                commands.append(more)
+            }
+        }
+        
         return UISwipeActionsConfiguration(actions: commands)
     }
     
@@ -411,7 +460,7 @@ class BudgetExpensesTableViewController: UITableViewController,
         if !readonly {
             
             var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
-            let expense = sectionExpenseList![indexPath.row]
+            // let expense = sectionExpenseList![indexPath.row]
 
             let delete = UIContextualAction(style: .destructive, title: "Delete".localized()) { _, _, handler in
                 
@@ -449,6 +498,7 @@ class BudgetExpensesTableViewController: UITableViewController,
             
             commands.append(delete)
             
+            /*
             let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
             
             if !(isShared!) {
@@ -490,9 +540,11 @@ class BudgetExpensesTableViewController: UITableViewController,
                         self.present(optionMenu, animated: true, completion: nil)
                     }
                     
+                    more.image = UIImage(named: "more")
                     commands.append(more)
                 }
             }
+            */
         }
         
         return UISwipeActionsConfiguration(actions: commands)
