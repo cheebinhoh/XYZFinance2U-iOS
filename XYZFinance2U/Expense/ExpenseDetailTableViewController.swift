@@ -763,6 +763,15 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         }
         
         tableView.reloadData()
+        
+        if showDatePicker || showRecurringStopDatePicker {
+            
+            tableView.scrollToRow(at: indexPath!, at: .middle, animated: true)
+        }
+        else {
+            let topIndexPath = IndexPath(row: 0, section: 0)
+            tableView.scrollToRow(at: topIndexPath, at: .top, animated: true)
+        }
     }
     
     // MARK: - text mamipulation
@@ -1203,7 +1212,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         
         let cell: UITableViewCell
 
-        switch  sectionList[indexPath.section].cellList[indexPath.row] {
+        switch sectionList[indexPath.section].cellList[indexPath.row] {
             
             case "text":
                 guard let textcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailTextCell", for: indexPath) as? XYZTextTableViewCell else {
@@ -1291,7 +1300,21 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 datecell.delegate = self
                 
                 datecell.enableEditing = modalEditing
-            
+                
+                if sectionList[indexPath.section].cellList[indexPath.row + 1] != "datepicker" {
+                    
+                    datecell.accessoryView = nil
+                    datecell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                } else {
+                    
+                    datecell.accessoryType = UITableViewCell.AccessoryType.none
+                    
+                    var imageView : UIImageView
+                    imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 20, y: 20), size: CGSize(width: 18, height: 15)))
+                    imageView.image = UIImage(named:"down_disclosure_indicator")
+                    datecell.accessoryView = imageView
+                }
+                
                 self.datecell = datecell
                 cell = datecell
             
@@ -1312,6 +1335,20 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 datecell.delegate = self
                 
                 datecell.enableEditing = modalEditing
+                
+                if sectionList[indexPath.section].cellList[indexPath.row + 1] != "recurringStopDatePicker" {
+                    
+                    datecell.accessoryView = nil
+                    datecell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                } else {
+                    
+                    datecell.accessoryType = UITableViewCell.AccessoryType.none
+                    
+                    var imageView : UIImageView
+                    imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 20, y: 20), size: CGSize(width: 18, height: 15)))
+                    imageView.image = UIImage(named:"down_disclosure_indicator")
+                    datecell.accessoryView = imageView
+                }
                 
                 self.recurringStopDateCell = datecell
                 cell = datecell

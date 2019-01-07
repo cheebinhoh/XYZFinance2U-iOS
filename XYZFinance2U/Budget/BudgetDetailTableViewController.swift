@@ -120,6 +120,15 @@ class BudgetDetailTableViewController: UITableViewController,
         }
         
         tableView.reloadData()
+
+        if showDatePicker {
+            
+            let topIndexPath = IndexPath(row: 0, section: 0)
+            tableView.scrollToRow(at: topIndexPath, at: .top, animated: true)
+        } else {
+            
+            tableView.scrollToRow(at: indexPath!, at: .middle, animated: true)
+        }
     }
     
     func selection(_ sender: SelectionTableViewController, item: String?) {
@@ -729,34 +738,49 @@ class BudgetDetailTableViewController: UITableViewController,
                 datecell.delegate = self
                 datecell.label.text = "Start date".localized()
                 datecell.enableEditing = modalEditing
+                
+                if sectionList[indexPath.section].cellList.count == indexPath.row + 1 {
+            
+                    datecell.accessoryView = nil
+                    datecell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                } else {
+                    
+                    datecell.accessoryType = UITableViewCell.AccessoryType.none
+                    
+                    var imageView : UIImageView
+                    imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 20, y: 20), size: CGSize(width: 18, height: 15)))
+                    imageView.image = UIImage(named:"down_disclosure_indicator")
+                    datecell.accessoryView = imageView
+                }
+                
                 self.datecell = datecell
                 
                 cell = datecell
             
-        case "datepicker":
-            guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailDatePickerCell", for: indexPath) as? BudgetDetailDatePickerTableViewCell else {
+            case "datepicker":
+                guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailDatePickerCell", for: indexPath) as? BudgetDetailDatePickerTableViewCell else {
+                    
+                    fatalError("Exception: incomeDetailDatePickerCell is failed to be created")
+                }
                 
-                fatalError("Exception: incomeDetailDatePickerCell is failed to be created")
-            }
-            
-            datepickercell.setDate(date)
-            datepickercell.delegate = self
-            
-            cell = datepickercell
-            
-        case "delete":
-            guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailCommandTextCell", for: indexPath) as? BudgetDetailCommandTableViewCell else {
+                datepickercell.setDate(date)
+                datepickercell.delegate = self
                 
-                fatalError("Exception: budjectDetailCommandTextCell is failed to be created")
-            }
+                cell = datepickercell
             
-            deletecell.delegate = self
-            deletecell.setCommand(command: "\("Delete Budget".localized())")
+            case "delete":
+                guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailCommandTextCell", for: indexPath) as? BudgetDetailCommandTableViewCell else {
+                    
+                    fatalError("Exception: budjectDetailCommandTextCell is failed to be created")
+                }
+                
+                deletecell.delegate = self
+                deletecell.setCommand(command: "\("Delete Budget".localized())")
+                
+                cell = deletecell
             
-            cell = deletecell
-            
-            default:
-                fatalError("Exception: \(sectionList[indexPath.section].cellList[indexPath.row]) not handle")
+                default:
+                    fatalError("Exception: \(sectionList[indexPath.section].cellList[indexPath.row]) not handle")
         }
         
         return cell

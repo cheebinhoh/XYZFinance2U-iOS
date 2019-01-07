@@ -157,6 +157,11 @@ class IncomeDetailTableViewController: UITableViewController,
             case "balance":
                 datecell?.dateInput.text = formattingDate(date: sender.date ?? Date(), style: .medium)
                 date = sender.date ?? Date()
+            
+                if let oldDate = income?.value(forKey: XYZAccount.lastUpdate) as? Date {
+                    
+                    dateUpdatedExplicitly = oldDate != date
+                }
 
             case "remind":
                 dateremindcell?.dateInput.text = formattingDateTime(date: sender.date ?? Date())
@@ -183,6 +188,16 @@ class IncomeDetailTableViewController: UITableViewController,
         }
         
         tableView.reloadData()
+        
+        if showDatePicker {
+            
+            let topIndexPath = IndexPath(row: tableSectionCellList[(indexPath?.section)!].cellList.count - 1,
+                                         section: indexPath!.section)
+            tableView.scrollToRow(at: topIndexPath, at: .bottom, animated: true)
+        } else {
+            
+            tableView.scrollToRow(at: indexPath!, at: .middle, animated: true)
+        }
     }
     
     func textDidEndEditing(_ sender: XYZTextTableViewCell) {
@@ -202,6 +217,21 @@ class IncomeDetailTableViewController: UITableViewController,
                 
                 case "amount":
                     amount = formattingDoubleValueAsDouble(input: sender.input.text!)
+                    if let oldAmount = income?.value(forKey: XYZAccount.amount) as? Double {
+                        
+                        if nil == dateUpdatedExplicitly || !(dateUpdatedExplicitly!) {
+                            
+                            if oldAmount != amount {
+                                
+                                date = Date()
+                            } else {
+                                
+                                date = income?.value(forKey: XYZAccount.lastUpdate) as? Date ?? Date()
+                            }
+                            
+                            datecell?.dateInput.text = formattingDate(date: date!, style: .medium)
+                        }
+                    }
                 
                 case "principal":
                     principal = formattingDoubleValueAsDouble(input: sender.input.text!)
@@ -241,6 +271,7 @@ class IncomeDetailTableViewController: UITableViewController,
     var amount: Double?
     var principal: Double?
     var date: Date?
+    var dateUpdatedExplicitly: Bool?
     var reminddate: Date?
     var repeatAction: String?
     var currencyCode: String? = Locale.current.currencyCode
@@ -615,6 +646,21 @@ class IncomeDetailTableViewController: UITableViewController,
                 datecell.delegate = self
                 datecell.label.text = "Last update".localized()
                 datecell.enableEditing = modalEditing
+
+                if tableSectionCellList[indexPath.section].cellList.count == indexPath.row + 1 {
+                    
+                    datecell.accessoryView = nil
+                    datecell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                } else {
+                    
+                    datecell.accessoryType = UITableViewCell.AccessoryType.none
+                    
+                    var imageView : UIImageView
+                    imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 20, y: 20), size: CGSize(width: 18, height: 15)))
+                    imageView.image = UIImage(named:"down_disclosure_indicator")
+                    datecell.accessoryView = imageView
+                }
+                
                 self.datecell = datecell
                 
                 cell = datecell
@@ -649,6 +695,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 
                 remindOptionCell.setOption("Remind update on a day".localized(), default: hasUpdateReminder)
                 remindOptionCell.delegate = self
+                remindOptionCell.accessoryType = .none
                 
                 cell = remindOptionCell
             
@@ -667,6 +714,22 @@ class IncomeDetailTableViewController: UITableViewController,
                 datecell.delegate = self
                 datecell.label.text = "Remind date".localized()
                 datecell.enableEditing = modalEditing
+                datecell.accessoryType = .disclosureIndicator
+                
+                if tableSectionCellList[indexPath.section].cellList[indexPath.row + 1] != "reminddatepicker" {
+                    
+                    datecell.accessoryView = nil
+                    datecell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+                } else {
+                    
+                    datecell.accessoryType = UITableViewCell.AccessoryType.none
+                    
+                    var imageView : UIImageView
+                    imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 20, y: 20), size: CGSize(width: 18, height: 15)))
+                    imageView.image = UIImage(named:"down_disclosure_indicator")
+                    datecell.accessoryView = imageView
+                }
+                
                 dateremindcell = datecell
                 
                 cell = datecell
