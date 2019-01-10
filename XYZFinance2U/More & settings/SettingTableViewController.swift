@@ -933,7 +933,7 @@ class SettingTableViewController: UITableViewController,
 
     func incomeFileContent() -> String {
 
-        var text = "Number\tBank\tAccountNr\tBalance\tCurrency\tLastUpdate\n"
+        var text = "Number\tBank\tAccountNr\tBalance\tPrincipal\tCurrency\tLastUpdate\n"
         let incomeList = sortAcounts(loadAccounts()!)
         
         for (index, income) in incomeList.enumerated() {
@@ -942,9 +942,10 @@ class SettingTableViewController: UITableViewController,
             let accountNr = income.value(forKey: XYZAccount.accountNr) as? String ?? ""
             let amount = income.value(forKey: XYZAccount.amount) as? Double ?? 0.0
             let currency = income.value(forKey: XYZAccount.currencyCode) as? String ?? ""
+            let principal = income.value(forKey: XYZAccount.principal) as? Double ?? 0.0
             let lastUpdate = formattingDate(date: income.value(forKey: XYZAccount.lastUpdate) as? Date ?? Date(), style: .short )
             
-            text = text + "\(index)\t\(bank)\t\(accountNr.isEmpty ? " " : accountNr)\t\(amount)\t\(currency)\t\(lastUpdate)\n"
+            text = text + "\(index)\t\(bank)\t\(accountNr.isEmpty ? " " : accountNr)\t\(amount)\t\(principal)\t\(currency)\t\(lastUpdate)\n"
         }
         
         return text

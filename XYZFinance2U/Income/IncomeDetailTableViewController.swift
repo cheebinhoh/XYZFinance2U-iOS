@@ -581,6 +581,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.input.placeholder = "Source".localized()
                 textcell.input.text = bank
                 textcell.label.text = "Source".localized()
+                textcell.enableMonetaryEditing(false)
                 
                 cell = textcell
             
@@ -596,6 +597,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.input.placeholder = "Description".localized()
                 textcell.input.text = accountNr
                 textcell.label.text = "Description".localized()
+                textcell.enableMonetaryEditing(false)
                 
                 cell = textcell
             

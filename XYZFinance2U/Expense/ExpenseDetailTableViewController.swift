@@ -1227,6 +1227,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 textcell.delegate = self
                 textcell.input.placeholder = "description".localized()
                 textcell.input.text = detail
+                textcell.enableMonetaryEditing(false)
                 
                 cell = textcell
             

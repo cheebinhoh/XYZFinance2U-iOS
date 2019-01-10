@@ -94,13 +94,13 @@ class XYZTextTableViewCell: UITableViewCell,
         delegate?.textDidEndEditing(self)
     }
     
-    func enableMonetaryEditing(_ enanble: Bool, _ currencyCode: String) {
+    func enableMonetaryEditing(_ enanble: Bool, _ currencyCode: String? = nil) {
         
         monetory = enanble
         
         if enanble {
             
-            self.currencyCode = currencyCode
+            self.currencyCode = currencyCode ?? Locale.current.currencyCode ?? "USD"
             input.addDoneToolbar(onDone: nil)
             input.clearButtonMode = .never
             input.keyboardType = .numberPad

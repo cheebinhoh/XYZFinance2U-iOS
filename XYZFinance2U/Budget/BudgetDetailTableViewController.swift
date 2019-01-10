@@ -608,6 +608,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 textcell.input.placeholder = "budget".localized()
                 textcell.input.text = budgetType
                 textcell.label.text = "Category".localized()
+                textcell.enableMonetaryEditing(false)
                 
                 cell = textcell
             
