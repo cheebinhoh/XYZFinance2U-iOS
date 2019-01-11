@@ -108,7 +108,7 @@ class XYZTextTableViewCell: UITableViewCell,
         } else {
             
             input.keyboardType = .default
-            input.text = ""
+            //input.text = ""
         }
     }
     
