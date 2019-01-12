@@ -47,7 +47,7 @@ class SettingTableViewController: UITableViewController,
     
     // MARK: - property
     
-    var tableSectionCellList = [TableSectionCell]()
+    var sectionList = [TableSectionCell]()
     var delegate: UIViewController?
     var popoverView: UIViewController?
     var isCollapsed: Bool {
@@ -98,10 +98,10 @@ class SettingTableViewController: UITableViewController,
     
     func loadDataIntoSection() {
         
-        tableSectionCellList = [TableSectionCell]()
+        sectionList = [TableSectionCell]()
         
         let mainSection = TableSectionCell(identifier: "main", title: "", cellList: ["About"], data: nil)
-        tableSectionCellList.append(mainSection)
+        sectionList.append(mainSection)
         
         //https://fixer.io is no longer available as a free service, discommision it.
         //let helperSection = TableSectionCell(identifier: "ex", title: "", cellList: ["ExchangeRate"], data: nil)
@@ -115,7 +115,7 @@ class SettingTableViewController: UITableViewController,
                                                  cellList: ["Export",
                                                             // "SynciCloud", we do not need this but merge the sync into refreesh pull down of each page
                                                             "DeleteData"], data: nil)
-            tableSectionCellList.append(exportSection)
+            sectionList.append(exportSection)
         }
         
         if tableViewController.authenticatedMechanismExist {
@@ -130,7 +130,7 @@ class SettingTableViewController: UITableViewController,
             }
             
             let logoutSection = TableSectionCell(identifier: "authentication", title: "", cellList: celllist, data: nil)
-            tableSectionCellList.append(logoutSection)
+            sectionList.append(logoutSection)
         }
     }
     
@@ -162,19 +162,19 @@ class SettingTableViewController: UITableViewController,
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         
-        return tableSectionCellList.count
+        return sectionList.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return tableSectionCellList[section].cellList.count
+        return sectionList[section].cellList.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell: UITableViewCell?
         
-        switch tableSectionCellList[indexPath.section].cellList[indexPath.row] {
+        switch sectionList[indexPath.section].cellList[indexPath.row] {
             
             case "About" :
                 guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
@@ -258,7 +258,7 @@ class SettingTableViewController: UITableViewController,
                 cell = newcell
             
                 default:
-                    fatalError("Exception: \(tableSectionCellList[indexPath.section].cellList[indexPath.row]) is not supported")
+                    fatalError("Exception: \(sectionList[indexPath.section].cellList[indexPath.row]) is not supported")
         }
         
         return cell!
@@ -720,7 +720,7 @@ class SettingTableViewController: UITableViewController,
             fatalError("Exception: UISplitViewController is expected" )
         }
         
-        if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "Export" {
+        if sectionList[indexPath.section].cellList[indexPath.row] == "Export" {
         
             let dateFormatter = DateFormatter();
             
@@ -757,7 +757,7 @@ class SettingTableViewController: UITableViewController,
             mainSplitView.popOverAlertController = optionMenu
             
             present(optionMenu, animated: true, completion: nil)
-        } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "DeleteData" {
+        } else if sectionList[indexPath.section].cellList[indexPath.row] == "DeleteData" {
         
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let deleteIncomes = UIAlertAction(title: "Delete incomes".localized(), style: .default, handler: { (action) in
@@ -790,7 +790,7 @@ class SettingTableViewController: UITableViewController,
             mainSplitView.popOverAlertController = optionMenu
             
             present(optionMenu, animated: true, completion: nil)
-        } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "SynciCloud" {
+        } else if sectionList[indexPath.section].cellList[indexPath.row] == "SynciCloud" {
             
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let deleteOption = UIAlertAction(title: "Update to iCloud".localized(), style: .default, handler: { (action) in
@@ -811,7 +811,7 @@ class SettingTableViewController: UITableViewController,
             
             mainSplitView.popOverAlertController = optionMenu
             present(optionMenu, animated: true, completion: nil)
-        } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "Lockout" {
+        } else if sectionList[indexPath.section].cellList[indexPath.row] == "Lockout" {
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             appDelegate?.lastAuthenticated = nil
@@ -819,7 +819,7 @@ class SettingTableViewController: UITableViewController,
             let tableViewController = getMainTableView()
             
             tableViewController.lockout()
-        } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "requiredauthentication" {
+        } else if sectionList[indexPath.section].cellList[indexPath.row] == "requiredauthentication" {
         
             /*
             let defaults = UserDefaults.standard;
@@ -847,7 +847,7 @@ class SettingTableViewController: UITableViewController,
                 }
             }
             */
-        } else if tableSectionCellList[indexPath.section].cellList[indexPath.row] == "ExchangeRate" {
+        } else if sectionList[indexPath.section].cellList[indexPath.row] == "ExchangeRate" {
             
             showExchangeRate(indexPath)
         } else {
@@ -928,7 +928,7 @@ class SettingTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        return tableSectionCellList[section].title
+        return sectionList[section].title
     }
 
     func incomeFileContent() -> String {
