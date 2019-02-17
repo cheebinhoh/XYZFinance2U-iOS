@@ -94,8 +94,9 @@ class BudgetDetailTableViewController: UITableViewController,
         }
         
         date = sender.date!
-        
+
         let indexPath = tableView.indexPath(for: sender)
+ 
         let dateIndexPath = IndexPath(row: (indexPath?.row)! - 1, section: (indexPath?.section)!)
         
         tableView.reloadRows(at: [dateIndexPath], with: .none)
@@ -684,7 +685,7 @@ class BudgetDetailTableViewController: UITableViewController,
                     lasteffectivecell.setSelection("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!.localized()), \(formattingDate(date: retstart!, style: .medium))")
                 } else {
                     
-                    lasteffectivecell.setSelection("nil")
+                    lasteffectivecell.setSelection("")
                 }
                 
                 if historicalAmount.isEmpty {
@@ -709,6 +710,7 @@ class BudgetDetailTableViewController: UITableViewController,
                     fatalError("Exception: budgetDetailSelectionCell is failed to be created")
                 }
 
+                iconcell.selection.text = ""
                 iconcell.setLabel("Icon".localized())
                 iconcell.icon.image = UIImage(named: iconName == "" ? "empty" : iconName)
 

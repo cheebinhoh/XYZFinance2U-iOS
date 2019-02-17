@@ -265,7 +265,7 @@ class XYZBudget : NSManagedObject {
         let now = Date()
         
         if now >= start {
-            
+
             retStart = start
             retAmount = amount
             retLength = length
@@ -283,8 +283,8 @@ class XYZBudget : NSManagedObject {
                 }
             }
         }
-        
-        return (retLength, retStart, retAmount)
+                                                                            
+        return (retLength ?? length, retStart ?? start, retAmount ?? amount) 
     }
     
     func getAllBudgetDateAmount() -> (count: Int,
