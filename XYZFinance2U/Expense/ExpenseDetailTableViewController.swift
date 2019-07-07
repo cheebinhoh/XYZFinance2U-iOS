@@ -185,7 +185,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         if !budgetList.isEmpty {
             
-            let currencyIndex = mainSectionCellList.index(of: "text")
+            let currencyIndex = mainSectionCellList.firstIndex(of: "text")
             mainSectionCellList.insert("budget", at: currencyIndex! + 1)
         }
         
@@ -199,13 +199,13 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         if let _ = recurring, recurring != XYZExpense.Length.none {
             
-            let currencyIndex = otherSectionCellList.index(of: "recurring")
+            let currencyIndex = otherSectionCellList.firstIndex(of: "recurring")
             otherSectionCellList.insert("recurringStopDate", at: currencyIndex! + 1)
         }
         
         if hasLocation {
             
-            let locationIndex = otherSectionCellList.index(of: "location")
+            let locationIndex = otherSectionCellList.firstIndex(of: "location")
             otherSectionCellList.insert("locationPicker", at: locationIndex! + 1)
         }
         

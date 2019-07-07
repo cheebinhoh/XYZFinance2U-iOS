@@ -645,7 +645,7 @@ func createUpdateExpense(_ oldChangeToken: Data,
             
             let image = "image\(index)"
             let ckasset = record[image] as? CKAsset
-            let fileURL = ckasset?.fileURL
+            let fileURL = ckasset?.fileURL!
             
             if let _ = fileURL {
             

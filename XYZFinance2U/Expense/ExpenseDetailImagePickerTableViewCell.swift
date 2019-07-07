@@ -73,7 +73,7 @@ class ExpenseDetailImagePickerTableViewCell: UITableViewCell,
             fatalError("Exception: UIImageView is expected for UITapGestureRecognizer")
         }
         
-        delegate?.viewImage(self, imageView, imageViewList.index(of: imageView)! )
+        delegate?.viewImage(self, imageView, imageViewList.firstIndex(of: imageView)! )
     }
     
     @objc
@@ -86,7 +86,7 @@ class ExpenseDetailImagePickerTableViewCell: UITableViewCell,
                 fatalError("Exception: UIImageView is expected for UITapGestureRecognizer")
             }
             
-            delegate?.pickImage(self, imageView, imageViewList.index(of: imageView)! )
+            delegate?.pickImage(self, imageView, imageViewList.firstIndex(of: imageView)! )
         }
     }
 }

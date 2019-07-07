@@ -338,7 +338,7 @@ class IncomeTableViewController: UITableViewController,
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let aContext = managedContext()
-        let index = appDelegate?.incomeList.index(of: income)
+        let index = appDelegate?.incomeList.firstIndex(of: income)
         let oldIncome = appDelegate?.incomeList.remove(at: index!)
         aContext?.delete(oldIncome!)
         
@@ -355,7 +355,7 @@ class IncomeTableViewController: UITableViewController,
             
             let currency = income.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
             
-            if let _ = currencyList.index(of: currency) {
+            if let _ = currencyList.firstIndex(of: currency) {
                 
             } else {
                 
@@ -1281,7 +1281,7 @@ class IncomeTableViewController: UITableViewController,
             notificationCenter.removeAllDeliveredNotifications()
   
             let aContext = managedContext()
-            let oldIncome = appDelegate?.incomeList.remove(at: (appDelegate?.incomeList.index(of: incomeToBeDeleted)!)!)
+            let oldIncome = appDelegate?.incomeList.remove(at: (appDelegate?.incomeList.firstIndex(of: incomeToBeDeleted)!)!)
             aContext?.delete(oldIncome!)
             
             self.delegate?.incomeDeleted(deletedIncome: oldIncome!)

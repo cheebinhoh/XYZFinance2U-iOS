@@ -304,7 +304,7 @@ class AppDelegate: UIResponder,
             completionHandler(.noData)
         } else {
             
-            guard let notification:CKRecordZoneNotification = CKNotification(fromRemoteNotificationDictionary: userInfo) as? CKRecordZoneNotification else {
+            guard let notification:CKRecordZoneNotification = CKNotification(fromRemoteNotificationDictionary: userInfo)! as? CKRecordZoneNotification else {
                 
                 os_log("-------- failed to get zone notification", log: OSLog.default, type: .default)
                 completionHandler(.failed)

@@ -26,7 +26,7 @@ class ExpenseTableViewMonthCell: UITableViewCell {
     @IBAction func button(_ sender: Any) {
         
         let count = stackView.arrangedSubviews.count
-        let newIndex = stackView.arrangedSubviews.index(of: sender as! UIView)
+        let newIndex = stackView.arrangedSubviews.firstIndex(of: sender as! UIView)
         var monthYear: Date? 
         
         if nil == index || index! != newIndex! {

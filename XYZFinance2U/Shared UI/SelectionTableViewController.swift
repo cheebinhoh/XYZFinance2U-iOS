@@ -257,7 +257,7 @@ class SelectionTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
         
-        guard let index = sectionTitles.index(of: title) else {
+        guard let index = sectionTitles.firstIndex(of: title) else {
             
             return -1;
         }
