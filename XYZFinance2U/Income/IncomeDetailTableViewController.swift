@@ -322,8 +322,37 @@ class IncomeDetailTableViewController: UITableViewController,
         tableView.reloadData()
     }
 
+    func registerUndoSave(_ income: XYZAccount?)
+    {
+        let oldBank = income?.value(forKey: XYZAccount.bank)
+        let oldAccountNr = income?.value(forKey: XYZAccount.accountNr)
+        let oldAmount = income?.value(forKey: XYZAccount.amount)
+        
+        let oldPrincipal = income?.value(forKey: XYZAccount.principal)
+        let oldDate = income?.value(forKey: XYZAccount.lastUpdate)
+        let oldRepeatAction = income?.value(forKey: XYZAccount.repeatAction)
+        let oldRemindDate = income?.value(forKey: XYZAccount.repeatDate)
+        let oldCurrencyCode = income?.value(forKey: XYZAccount.currencyCode)
+        
+        undoManager?.registerUndo(withTarget: income!, handler: { (income) in
+            
+            income.setValue(oldBank, forKey: XYZAccount.bank)
+            income.setValue(oldAccountNr, forKey: XYZAccount.accountNr)
+            income.setValue(oldAmount, forKey: XYZAccount.amount)
+            income.setValue(oldPrincipal, forKey: XYZAccount.principal)
+            income.setValue(oldDate, forKey: XYZAccount.lastUpdate)
+            income.setValue(oldRepeatAction, forKey: XYZAccount.repeatAction)
+            income.setValue(oldRemindDate, forKey: XYZAccount.repeatDate)
+            income.setValue(oldCurrencyCode, forKey: XYZAccount.currencyCode)
+            income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
+            
+            self.incomeDelegate?.saveIncome(income: income)
+        })
+    }
+    
     @IBAction func save(_ sender: Any) {
         
+
         if isPushinto {
             
             fatalError("Exception: todo")
@@ -341,6 +370,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 incomeDelegate?.saveNewIncome(income: income!)
             } else {
                 
+                registerUndoSave(income)
                 saveData()
                 incomeDelegate?.saveIncome(income: income!)
             }
@@ -348,6 +378,7 @@ class IncomeDetailTableViewController: UITableViewController,
             dismiss(animated: true, completion: nil)
         } else {
             
+            registerUndoSave(income)
             saveData()
             navigationItem.leftBarButtonItem?.isEnabled = false
             modalEditing = false

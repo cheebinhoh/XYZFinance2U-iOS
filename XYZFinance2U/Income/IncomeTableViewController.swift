@@ -116,6 +116,29 @@ class IncomeTableViewController: UITableViewController,
          */
     }
     
+    override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        // code you want to implement
+        
+    }
+    
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        // code here
+        
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let deleteOption = UIAlertAction(title: "Undo last change".localized(), style: .default, handler: { (action) in
+            
+            self.undoManager?.undo()
+            self.undoManager?.removeAllActions()
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler:nil)
+        
+        optionMenu.addAction(deleteOption)
+        optionMenu.addAction(cancelAction)
+        
+        present(optionMenu, animated: true, completion: nil)
+    }
+ 
     // MARK: - 3d touch delegate (peek & pop)
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
