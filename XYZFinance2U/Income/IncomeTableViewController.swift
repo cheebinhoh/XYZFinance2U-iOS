@@ -223,6 +223,16 @@ class IncomeTableViewController: UITableViewController,
     }
     
     func saveNewIncome(income: XYZAccount) {
+        
+        undoManager?.registerUndo(withTarget: self, handler: { (controller) in
+            
+            self.deleteIncomeWithoutUndo(income: income)
+        })
+        
+        saveNewIncomeWithoutUndo(income: income)
+    }
+    
+    func saveNewIncomeWithoutUndo(income: XYZAccount) {
 
         let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
         
@@ -355,28 +365,7 @@ class IncomeTableViewController: UITableViewController,
         }
     }
     
-    func deleteIncome(income: XYZAccount) {
-
-        let oldBank = income.value(forKey: XYZAccount.bank) as! String
-        let oldAccountNr = income.value(forKey: XYZAccount.accountNr) as! String
-        let oldAmount = income.value(forKey: XYZAccount.amount) as! Double
-        let oldPrincipal = income.value(forKey: XYZAccount.principal) as! Double
-        let oldDate = income.value(forKey: XYZAccount.lastUpdate) as! Date
-        let oldRepeatAction = income.value(forKey: XYZAccount.repeatAction) as? String ?? ""
-        let oldRemindDate = income.value(forKey: XYZAccount.repeatDate) as? Date 
-        let oldCurrencyCode = income.value(forKey: XYZAccount.currencyCode) as? String ?? ""
-
-        undoManager?.registerUndo(withTarget: self, handler: { (controller) in
-            
-            let income = XYZAccount(id: nil, sequenceNr: 0, bank: oldBank, accountNr: oldAccountNr, amount: oldAmount, principal: oldPrincipal, date: oldDate, context: managedContext())
-            
-            income.setValue(oldRepeatAction, forKey: XYZAccount.repeatAction)
-            income.setValue(oldRemindDate, forKey: XYZAccount.repeatDate)
-            income.setValue(oldCurrencyCode, forKey: XYZAccount.currencyCode)
-            income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
-            
-            self.saveNewIncome(income: income)
-        })
+    func deleteIncomeWithoutUndo(income: XYZAccount) {
         
         softDeleteIncome(income: income)
         
@@ -388,6 +377,32 @@ class IncomeTableViewController: UITableViewController,
         
         self.delegate?.incomeDeleted(deletedIncome: oldIncome!)
         reloadData()
+    }
+    
+    func deleteIncome(income: XYZAccount) {
+
+        let oldBank = income.value(forKey: XYZAccount.bank) as! String
+        let oldAccountNr = income.value(forKey: XYZAccount.accountNr) as! String
+        let oldAmount = income.value(forKey: XYZAccount.amount) as! Double
+        let oldPrincipal = income.value(forKey: XYZAccount.principal) as! Double
+        let oldDate = income.value(forKey: XYZAccount.lastUpdate) as! Date
+        let oldRepeatAction = income.value(forKey: XYZAccount.repeatAction) as? String ?? ""
+        let oldRemindDate = income.value(forKey: XYZAccount.repeatDate) as? Date
+        let oldCurrencyCode = income.value(forKey: XYZAccount.currencyCode) as? String ?? ""
+
+        undoManager?.registerUndo(withTarget: self, handler: { (controller) in
+            
+            let income = XYZAccount(id: nil, sequenceNr: 0, bank: oldBank, accountNr: oldAccountNr, amount: oldAmount, principal: oldPrincipal, date: oldDate, context: managedContext())
+            
+            income.setValue(oldRepeatAction, forKey: XYZAccount.repeatAction)
+            income.setValue(oldRemindDate, forKey: XYZAccount.repeatDate)
+            income.setValue(oldCurrencyCode, forKey: XYZAccount.currencyCode)
+            income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
+            
+            self.saveNewIncomeWithoutUndo(income: income)
+        })
+        
+        deleteIncomeWithoutUndo(income: income)
     }
     
     private func loadDataInTableSectionCell() {
