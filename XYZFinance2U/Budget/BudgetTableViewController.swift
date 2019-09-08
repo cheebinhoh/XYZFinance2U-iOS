@@ -68,10 +68,15 @@ class BudgetTableViewController: UITableViewController,
     
     
     // MARK: budget detail protocol
-    func saveNewBudget(budget: XYZBudget) {
-
+    func saveNewBudgetWithoutUndo(budget: XYZBudget) {
+        
+        undoManager?.registerUndo(withTarget: self, handler: { (controller) in
+            
+            self.deleteBudgetWithoutUndo(budget: budget)
+        })
+        
         if let currencyCode = budget.value(forKey: XYZBudget.currency) as? String, currencyCodes.contains(currencyCode) {
-         
+            
             for (sectionIndex, section) in sectionList.enumerated() {
                 
                 if section.identifier == currencyCode {
@@ -86,7 +91,7 @@ class BudgetTableViewController: UITableViewController,
         }
         
         saveManageContext()
-
+        
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         var budgetList = (appDelegate?.budgetList)!
         budgetList.append(budget)
@@ -98,6 +103,11 @@ class BudgetTableViewController: UITableViewController,
         
         let ip = indexPath(budget)
         tableView.scrollToRow(at: ip!, at: UITableView.ScrollPosition.top, animated: true)
+    }
+    
+    func saveNewBudget(budget: XYZBudget) {
+
+        saveNewBudgetWithoutUndo(budget: budget)
     }
     
     func saveBudget(budget: XYZBudget) {
@@ -133,8 +143,8 @@ class BudgetTableViewController: UITableViewController,
         expenseView.reloadData()
     }
     
-    func deleteBudget(budget: XYZBudget) {
-
+    func deleteBudgetWithoutUndo(budget: XYZBudget) {
+    
         let oldBudget = softdeletebudget(budget)
         
         self.delegate?.budgetDeleted(deletedBudget: oldBudget)
@@ -163,6 +173,43 @@ class BudgetTableViewController: UITableViewController,
         }
         
         expenseView.reloadData()
+    }
+    
+    func registerDeleteUndo(budget: XYZBudget)
+    {
+        print("------- register")
+        let oldName = budget.value(forKey: XYZBudget.name) as? String ?? ""
+        let oldAmount = budget.value(forKey: XYZBudget.amount) as? Double ?? 0.0
+        let oldCurrencyCode = budget.value(forKey: XYZBudget.currency) as? String ?? ""
+        let oldDate = budget.value(forKey: XYZBudget.start) as? Date ?? Date()
+        let oldLength = budget.value(forKey: XYZBudget.length) as? String ?? XYZBudget.Length.none.rawValue
+        let oldColor = budget.value(forKey: XYZBudget.color)
+        let oldHistoricalAmount = budget.value(forKey: XYZBudget.historicalAmount)
+        let oldHistoricalStart = budget.value(forKey: XYZBudget.historicalStart)
+        let oldHistoricalLength = budget.value(forKey: XYZBudget.historicalLength)
+        let oldIconName = budget.value(forKey: XYZBudget.iconName)
+        
+        undoManager?.registerUndo(withTarget: self, handler: { (controller) in
+            
+            print("------- restorig")
+            let budget = XYZBudget(id: nil, name: oldName, amount: oldAmount, currency: oldCurrencyCode,
+                                   length: XYZBudget.Length(rawValue: oldLength)!,
+                                   start: oldDate, sequenceNr: 0, context: managedContext())
+            
+            budget.setValue(oldColor, forKey: XYZBudget.color)
+            budget.setValue(oldHistoricalAmount, forKey: XYZBudget.historicalAmount)
+            budget.setValue(oldHistoricalStart, forKey: XYZBudget.historicalStart)
+            budget.setValue(oldHistoricalLength, forKey: XYZBudget.historicalLength)
+            budget.setValue(oldIconName, forKey: XYZBudget.iconName)
+            
+            self.saveNewBudgetWithoutUndo(budget: budget)
+        })
+    }
+    
+    func deleteBudget(budget: XYZBudget) {
+
+        registerDeleteUndo(budget: budget)
+        deleteBudgetWithoutUndo(budget: budget)
     }
     
     // MARK: - property
@@ -563,9 +610,13 @@ class BudgetTableViewController: UITableViewController,
     
     func delete(of indexPath:IndexPath) {
 
+        print("---- hello")
         var sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]
         
         let oldBudget = sectionBudgetList?.remove(at: indexPath.row)
+        
+        registerDeleteUndo(budget: oldBudget!)
+        
         self.sectionList[indexPath.section].data = sectionBudgetList
         
         softdeletebudget(oldBudget!)
@@ -741,16 +792,7 @@ class BudgetTableViewController: UITableViewController,
             let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]
             let budget = sectionBudgetList![indexPath.row]
             
-            self.softdeletebudget(budget)
-            
-            self.reloadData()
-            
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            if (appDelegate?.budgetList.isEmpty)! {
-                
-                self.setEditing(false, animated: true)
-                self.tableView.setEditing(false, animated: false)
-            }
+            self.deleteBudget(budget: budget)
             
             handler(true)
         }
