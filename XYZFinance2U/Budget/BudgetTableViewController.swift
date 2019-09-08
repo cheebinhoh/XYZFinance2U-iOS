@@ -28,8 +28,6 @@ class BudgetTableViewController: UITableViewController,
 
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         appDelegate?.expenseList.append(expense)
-        
-        saveManageContext()
 
         guard let splitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
             
@@ -51,6 +49,19 @@ class BudgetTableViewController: UITableViewController,
             fatalError("Exception: ExpenseTableViewController is expected")
         }
         
+        undoManager?.registerUndo(withTarget: self, handler: { (controller) in
+         
+            expenseView.deleteExpenseWithoutUndo(expense: expense)
+            
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            
+            appDelegate?.expenseList = loadExpenses()!
+            expenseView.reloadData()
+            self.reloadData()
+        })
+        
+        saveManageContext()
+
         expenseView.updateToiCloud(expense)
         expenseView.reloadData()
         reloadData()
