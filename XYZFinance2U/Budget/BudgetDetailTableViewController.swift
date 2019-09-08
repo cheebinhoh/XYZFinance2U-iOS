@@ -302,13 +302,16 @@ class BudgetDetailTableViewController: UITableViewController,
             
             if nil == budget {
              
-                budget = XYZBudget(id: nil, name: budgetType, amount: amount, currency: currencyCode!, length: length, start: date, sequenceNr: 0, context: managedContext())
+                budget = XYZBudget(id: nil,
+                                   name: budgetType, amount: amount, currency: currencyCode!,
+                                   length: length, start: date, sequenceNr: 0,
+                                   context: managedContext())
                 
                 saveData()
                 budgetDelegate?.saveNewBudget(budget: budget!)
             } else {
                 
-                registerUndoSave(budget)
+                registerUndoSave(budget: budget!)
                 saveData()
                 budgetDelegate?.saveBudget(budget: budget!)
             }
@@ -317,6 +320,7 @@ class BudgetDetailTableViewController: UITableViewController,
         } else {
             
             fatalError("TODO")
+            
             /*
             saveData()
             navigationItem.leftBarButtonItem?.isEnabled = false
@@ -361,31 +365,33 @@ class BudgetDetailTableViewController: UITableViewController,
         return (navController.topViewController as? BudgetTableViewController)!
     }
 
-    func registerUndoSave(_ budget: XYZBudget?)
+    func registerUndoSave(budget: XYZBudget)
     {
-        let oldName = budget?.value(forKey: XYZBudget.name)
-        let oldAmount = budget?.value(forKey: XYZBudget.amount)
-        let oldCurrencyCode = budget?.value(forKey: XYZBudget.currency)
-        let oldDate = budget?.value(forKey: XYZBudget.start)
-        let oldLength = budget?.value(forKey: XYZBudget.length)
-        let oldColor = budget?.value(forKey: XYZBudget.color)
-        let oldHistoricalAmount = budget?.value(forKey: XYZBudget.historicalAmount)
-        let oldHistoricalStart = budget?.value(forKey: XYZBudget.historicalStart)
-        let oldHistoricalLength = budget?.value(forKey: XYZBudget.historicalLength)
-        let oldIconName = budget?.value(forKey: XYZBudget.iconName)
+        let oldName = budget.value(forKey: XYZBudget.name)
+        let oldAmount = budget.value(forKey: XYZBudget.amount)
+        let oldCurrency = budget.value(forKey: XYZBudget.currency)
+        let oldStart = budget.value(forKey: XYZBudget.start)
+        let oldLength = budget.value(forKey: XYZBudget.length)
+        let oldColor = budget.value(forKey: XYZBudget.color)
+        let oldHistoricalAmount = budget.value(forKey: XYZBudget.historicalAmount)
+        let oldHistoricalStart = budget.value(forKey: XYZBudget.historicalStart)
+        let oldHistoricalLength = budget.value(forKey: XYZBudget.historicalLength)
+        let oldIconName = budget.value(forKey: XYZBudget.iconName)
+        let oldSequenceNr = budget.value(forKey: XYZBudget.sequenceNr)
         
-        undoManager?.registerUndo(withTarget: budget!, handler: { (budget) in
+        undoManager?.registerUndo(withTarget: budget, handler: { (budget) in
           
             budget.setValue(oldName, forKey: XYZBudget.name)
             budget.setValue(oldAmount, forKey: XYZBudget.amount)
-            budget.setValue(oldCurrencyCode, forKey: XYZBudget.currency)
-            budget.setValue(oldDate, forKey: XYZBudget.start)
+            budget.setValue(oldCurrency, forKey: XYZBudget.currency)
+            budget.setValue(oldStart, forKey: XYZBudget.start)
             budget.setValue(oldLength, forKey: XYZBudget.length)
             budget.setValue(oldColor, forKey: XYZBudget.color)
             budget.setValue(oldHistoricalAmount, forKey: XYZBudget.historicalAmount)
             budget.setValue(oldHistoricalStart, forKey: XYZBudget.historicalStart)
             budget.setValue(oldHistoricalLength, forKey: XYZBudget.historicalLength)
             budget.setValue(oldIconName, forKey: XYZBudget.iconName)
+            budget.setValue(oldSequenceNr, forKey: XYZBudget.sequenceNr)
             budget.setValue(Date(), forKey: XYZBudget.lastRecordChange)
             
             self.budgetDelegate?.saveBudget(budget: budget)
