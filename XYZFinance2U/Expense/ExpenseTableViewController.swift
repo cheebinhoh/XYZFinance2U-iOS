@@ -232,7 +232,7 @@ class ExpenseTableViewController: UITableViewController,
         return ( total, hasMultipleCurrency ? nil : usedCurrencyCode )
     }
     
-    func delete(of indexPath:IndexPath) {
+    func deleteWithoutUndo(of indexPath:IndexPath) {
         
         let aContext = managedContext()
         
@@ -252,12 +252,22 @@ class ExpenseTableViewController: UITableViewController,
             
             self.delegate?.expenseDeleted(deletedExpense: oldExpense!)
             aContext?.delete(oldExpense!)
-    
+            
             self.loadExpensesFromSections()
             self.reloadData()
             
             self.updateToiCloud(nil)
         }
+    }
+    
+    func delete(of indexPath:IndexPath) {
+        
+        var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
+        
+        let oldExpense = sectionExpenseList?.remove(at: indexPath.row - 1)
+        registerUndoDeleteExpense(expense: oldExpense!)
+        
+        deleteWithoutUndo(of: indexPath)
     }
     
     func indexPath(of expense:XYZExpense) -> IndexPath? {
@@ -279,11 +289,61 @@ class ExpenseTableViewController: UITableViewController,
         
         return nil
     }
+
+    func registerUndoDeleteExpense(expense: XYZExpense)
+    {
+        let oldDetail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
+        let oldAmount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
+        let oldDate = expense.value(forKey: XYZExpense.date) as? Date ?? Date()
+        let oldIsShared = expense.value(forKey: XYZExpense.isShared) // if we can save it, it means it is not readonly
+        let oldHasLocation = expense.value(forKey: XYZExpense.hasLocation)
+        let oldCurrencyCode = expense.value(forKey: XYZExpense.currencyCode)
+        let oldBudgetCategory = expense.value(forKey: XYZExpense.budgetCategory)
+        let oldRecurring = expense.value(forKey: XYZExpense.recurring)
+        let oldRecurringStopDate = expense.value(forKey: XYZExpense.recurringStopDate)
+        let oldLocation = expense.value(forKey: XYZExpense.loction)
+        let oldReceiptList = expense.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>
+        let oldPersonList = expense.getPersons()
+        
+        undoManager?.registerUndo(withTarget: self, handler: { (viewController) in
+            
+            let newExpense = XYZExpense(id: nil, detail: oldDetail, amount: oldAmount, date: oldDate, context: managedContext())
+            
+            newExpense.setValue(oldDetail, forKey: XYZExpense.detail)
+            newExpense.setValue(oldAmount, forKey: XYZExpense.amount)
+            newExpense.setValue(oldDate, forKey: XYZExpense.date)
+            newExpense.setValue(oldIsShared, forKey: XYZExpense.isShared)
+            newExpense.setValue(oldHasLocation, forKey: XYZExpense.hasLocation)
+            newExpense.setValue(oldCurrencyCode, forKey: XYZExpense.currencyCode)
+            newExpense.setValue(oldBudgetCategory, forKey: XYZExpense.budgetCategory)
+            newExpense.setValue(oldRecurring, forKey: XYZExpense.recurring)
+            newExpense.setValue(oldRecurringStopDate, forKey: XYZExpense.recurringStopDate)
+            newExpense.setValue(oldLocation, forKey: XYZExpense.loction)
+            newExpense.setValue(oldReceiptList, forKey: XYZExpense.receipts)
+            newExpense.setValue(oldPersonList, forKey: XYZExpense.persons)
+            
+            self.saveNewIncomeWithoutUndo(expense: newExpense)
+        })
+        
+    }
     
     func deleteExpense(expense: XYZExpense) {
+
+        registerUndoDeleteExpense(expense: expense)
+        deleteExpenseWithoutUndo(expense: expense)
+    }
+    
+    func deleteExpenseWithoutUndo(expense: XYZExpense) {
         
         if let selectedIndexPath = indexPath(of: expense) {
+
+            // for some reason that the row is missing header
+            var index = selectedIndexPath
+            index.row = index.row + 1;
             
+            deleteWithoutUndo(of: index)
+            
+            /*
             let aContext = managedContext()
             var sectionExpenseList = sectionList[selectedIndexPath.section].data as? [XYZExpense]
             
@@ -308,6 +368,7 @@ class ExpenseTableViewController: UITableViewController,
             reloadData()
             
             updateToiCloud(nil)
+            */
         }
     }
     
@@ -530,6 +591,16 @@ class ExpenseTableViewController: UITableViewController,
     }
     
     func saveNewExpense(expense: XYZExpense) {
+        
+        undoManager?.registerUndo(withTarget: self, handler: { (controller) in
+            
+            self.deleteExpenseWithoutUndo(expense: expense)
+        })
+        
+        saveNewIncomeWithoutUndo(expense: expense)
+    }
+    
+    func saveNewIncomeWithoutUndo(expense: XYZExpense) {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         appDelegate?.expenseList.append(expense)

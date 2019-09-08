@@ -399,6 +399,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     }
                     
                     receiptList.remove(receiptToBeDeleted!)
+
                     expense?.setValue(receiptList, forKey: XYZExpense.receipts)
                 }
             }
