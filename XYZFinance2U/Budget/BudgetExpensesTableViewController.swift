@@ -55,7 +55,7 @@ class BudgetExpensesTableViewController: UITableViewController,
         delegate?.reloadData()
     }
     
-    func saveNewExpense(expense: XYZExpense) {
+    func saveNewExpenseWithoutUndo(expense: XYZExpense) {
         
         guard let calendarViewController = delegate as? CalendarCollectionViewController else {
             
@@ -63,6 +63,11 @@ class BudgetExpensesTableViewController: UITableViewController,
         }
         
         calendarViewController.saveNewExpense(expense: expense)
+    }
+    
+    func saveNewExpense(expense: XYZExpense) {
+        
+        saveNewExpenseWithoutUndo(expense: expense)
     }
     
     func saveExpense(expense: XYZExpense) {
@@ -78,7 +83,49 @@ class BudgetExpensesTableViewController: UITableViewController,
         delegate?.reloadData()
     }
     
+    func registerUndoDeleteExpense(expense: XYZExpense)
+    {
+        let oldDetail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
+        let oldAmount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
+        let oldDate = expense.value(forKey: XYZExpense.date) as? Date ?? Date()
+        let oldIsShared = expense.value(forKey: XYZExpense.isShared) // if we can save it, it means it is not readonly
+        let oldHasLocation = expense.value(forKey: XYZExpense.hasLocation)
+        let oldCurrencyCode = expense.value(forKey: XYZExpense.currencyCode)
+        let oldBudgetCategory = expense.value(forKey: XYZExpense.budgetCategory)
+        let oldRecurring = expense.value(forKey: XYZExpense.recurring)
+        let oldRecurringStopDate = expense.value(forKey: XYZExpense.recurringStopDate)
+        let oldLocation = expense.value(forKey: XYZExpense.loction)
+        let oldReceiptList = expense.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>
+        let oldPersonList = expense.getPersons()
+        
+        undoManager?.registerUndo(withTarget: self, handler: { (viewController) in
+            
+            let newExpense = XYZExpense(id: nil, detail: oldDetail, amount: oldAmount, date: oldDate, context: managedContext())
+            
+            newExpense.setValue(oldDetail, forKey: XYZExpense.detail)
+            newExpense.setValue(oldAmount, forKey: XYZExpense.amount)
+            newExpense.setValue(oldDate, forKey: XYZExpense.date)
+            newExpense.setValue(oldIsShared, forKey: XYZExpense.isShared)
+            newExpense.setValue(oldHasLocation, forKey: XYZExpense.hasLocation)
+            newExpense.setValue(oldCurrencyCode, forKey: XYZExpense.currencyCode)
+            newExpense.setValue(oldBudgetCategory, forKey: XYZExpense.budgetCategory)
+            newExpense.setValue(oldRecurring, forKey: XYZExpense.recurring)
+            newExpense.setValue(oldRecurringStopDate, forKey: XYZExpense.recurringStopDate)
+            newExpense.setValue(oldLocation, forKey: XYZExpense.loction)
+            newExpense.setValue(oldReceiptList, forKey: XYZExpense.receipts)
+            newExpense.setValue(oldPersonList, forKey: XYZExpense.persons)
+            
+            self.saveNewExpenseWithoutUndo(expense: newExpense)
+        })
+    }
+
     func deleteExpense(expense: XYZExpense) {
+        
+        registerUndoDeleteExpense(expense: expense)
+        deleteExpenseWithoutUndo(expense: expense)
+    }
+    
+    func deleteExpenseWithoutUndo(expense: XYZExpense) {
         
         let aContext = managedContext()
         var indexPath = IndexPath(row: 0, section: 0)
@@ -168,7 +215,7 @@ class BudgetExpensesTableViewController: UITableViewController,
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -464,34 +511,10 @@ class BudgetExpensesTableViewController: UITableViewController,
 
             let delete = UIContextualAction(style: .destructive, title: "Delete".localized()) { _, _, handler in
                 
-                let aContext = managedContext()
+                //let aContext = managedContext()
                 
                 let oldExpense = sectionExpenseList?.remove(at: indexPath.row)
-                self.sectionList[indexPath.section].data = sectionExpenseList
-                self.expenseList = sectionExpenseList
-                
-                let isSoftDelete = self.softDeleteExpense(expense: oldExpense!)
-                
-                saveManageContext()
-                
-                if isSoftDelete {
-                    
-                    self.updateToiCloud(oldExpense!)
-                } else {
-                    
-                    aContext?.delete(oldExpense!)
-
-                    self.updateToiCloud(nil)
-                }
-                
-                self.delegate?.deleteExpense(expense: oldExpense!)
-
-                let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                
-                appDelegate?.expenseList = loadExpenses()!
-                
-                self.delegate?.reloadData()
-                self.loadData()
+                self.deleteExpense(expense: oldExpense!)
                 
                 handler(true)
             }

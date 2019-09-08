@@ -324,7 +324,6 @@ class ExpenseTableViewController: UITableViewController,
             
             self.saveNewIncomeWithoutUndo(expense: newExpense)
         })
-        
     }
     
     func deleteExpense(expense: XYZExpense) {
