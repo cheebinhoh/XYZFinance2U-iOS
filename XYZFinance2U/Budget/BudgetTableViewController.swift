@@ -81,7 +81,6 @@ class BudgetTableViewController: UITableViewController,
     // MARK: budget detail protocol
     func saveNewBudgetWithoutUndo(budget: XYZBudget) {
         
-        
         if let currencyCode = budget.value(forKey: XYZBudget.currency) as? String, currencyCodes.contains(currencyCode) {
             
             for (sectionIndex, section) in sectionList.enumerated() {
