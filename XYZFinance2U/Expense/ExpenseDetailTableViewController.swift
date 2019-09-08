@@ -1022,6 +1022,40 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         expenseDelegate?.cancelExpense()
     }
     
+    func registerUndoSave(_ expense: XYZExpense?)
+    {
+        let oldDetail = expense?.value(forKey: XYZExpense.detail)
+        let oldAmount = expense?.value(forKey: XYZExpense.amount)
+        let oldDate = expense?.value(forKey: XYZExpense.date)
+        let oldIsShared = expense?.value(forKey: XYZExpense.isShared) // if we can save it, it means it is not readonly
+        let oldHasLocation = expense?.value(forKey: XYZExpense.hasLocation)
+        let oldCurrencyCode = expense?.value(forKey: XYZExpense.currencyCode)
+        let oldBudgetCategory = expense?.value(forKey: XYZExpense.budgetCategory)
+        let oldRecurring = expense?.value(forKey: XYZExpense.recurring)
+        let oldRecurringStopDate = expense?.value(forKey: XYZExpense.recurringStopDate)
+        let oldLocation = expense?.value(forKey: XYZExpense.loction)
+        let oldReceiptList = expense?.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>
+        let oldPersonList = expense?.getPersons()
+        
+        undoManager?.registerUndo(withTarget: expense!, handler: { (expense) in
+
+            expense.setValue(oldDetail, forKey: XYZExpense.detail)
+            expense.setValue(oldAmount, forKey: XYZExpense.amount)
+            expense.setValue(oldDate, forKey: XYZExpense.date)
+            expense.setValue(oldIsShared, forKey: XYZExpense.isShared)
+            expense.setValue(oldHasLocation, forKey: XYZExpense.hasLocation)
+            expense.setValue(oldCurrencyCode, forKey: XYZExpense.currencyCode)
+            expense.setValue(oldBudgetCategory, forKey: XYZExpense.budgetCategory)
+            expense.setValue(oldRecurring, forKey: XYZExpense.recurring)
+            expense.setValue(oldRecurringStopDate, forKey: XYZExpense.recurringStopDate)
+            expense.setValue(oldLocation, forKey: XYZExpense.loction)
+            expense.setValue(oldReceiptList, forKey: XYZExpense.receipts)
+            expense.setValue(oldPersonList, forKey: XYZExpense.persons)
+            
+            self.expenseDelegate?.saveExpense(expense: expense)
+        })
+    }
+    
     func saveExpense() {
         
         if isPushinto {
@@ -1039,6 +1073,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 expenseDelegate?.saveNewExpense(expense: expense!)
             } else {
                 
+                registerUndoSave(expense)
                 saveData()
                 expenseDelegate?.saveExpense(expense: expense!)
             }
@@ -1046,6 +1081,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             dismiss(animated: true, completion: nil)
         } else {
             
+            registerUndoSave(expense)
             saveData()
             navigationItem.leftBarButtonItem?.isEnabled = false
             modalEditing = false
