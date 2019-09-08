@@ -1029,6 +1029,8 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         let oldAmount = expense?.value(forKey: XYZExpense.amount)
         let oldDate = expense?.value(forKey: XYZExpense.date)
         let oldIsShared = expense?.value(forKey: XYZExpense.isShared) // if we can save it, it means it is not readonly
+        let oldShareUrl = expense?.value(forKey: XYZExpense.shareUrl)
+        let oldShareRecordId = expense?.value(forKey: XYZExpense.shareRecordId)
         let oldHasLocation = expense?.value(forKey: XYZExpense.hasLocation)
         let oldCurrencyCode = expense?.value(forKey: XYZExpense.currencyCode)
         let oldBudgetCategory = expense?.value(forKey: XYZExpense.budgetCategory)
@@ -1040,6 +1042,8 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         
         undoManager?.registerUndo(withTarget: expense!, handler: { (expense) in
 
+            expense.setValue(oldShareUrl, forKey: XYZExpense.shareUrl)
+            expense.setValue(oldShareRecordId, forKey: XYZExpense.shareRecordId)
             expense.setValue(oldDetail, forKey: XYZExpense.detail)
             expense.setValue(oldAmount, forKey: XYZExpense.amount)
             expense.setValue(oldDate, forKey: XYZExpense.date)
