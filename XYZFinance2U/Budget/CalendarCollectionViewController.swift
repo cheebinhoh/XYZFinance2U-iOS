@@ -15,6 +15,11 @@ class CalendarCollectionViewController: UICollectionViewController,
     
     func saveNewExpense(expense: XYZExpense) {
         
+        undoManager?.registerUndo(withTarget: self, handler: { (controller) in
+            
+            self.deleteExpense(expense: expense)
+        })
+        
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         appDelegate?.expenseList.append(expense)
         
