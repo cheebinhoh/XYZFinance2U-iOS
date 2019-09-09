@@ -116,6 +116,7 @@ class BudgetExpensesTableViewController: UITableViewController,
             newExpense.setValue(oldPersonList, forKey: XYZExpense.persons)
             newExpense.setValue(oldShareUrl, forKey: XYZExpense.shareUrl)
             newExpense.setValue(oldShareRecordId, forKey: XYZExpense.shareRecordId)
+            newExpense.setValue(Date(), forKey: XYZExpense.lastRecordChange)
             
             self.saveNewExpenseWithoutUndo(expense: newExpense)
         })

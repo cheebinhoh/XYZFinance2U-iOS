@@ -1056,6 +1056,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             expense.setValue(oldLocation, forKey: XYZExpense.loction)
             expense.setValue(oldReceiptList, forKey: XYZExpense.receipts)
             expense.setValue(oldPersonList, forKey: XYZExpense.persons)
+            expense.setValue(Date(), forKey: XYZExpense.lastRecordChange)
             
             self.expenseDelegate?.saveExpense(expense: expense)
         })

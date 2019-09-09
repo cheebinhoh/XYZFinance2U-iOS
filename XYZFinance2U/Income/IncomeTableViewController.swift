@@ -389,7 +389,8 @@ class IncomeTableViewController: UITableViewController,
         let oldRepeatAction = income.value(forKey: XYZAccount.repeatAction) as? String ?? ""
         let oldRemindDate = income.value(forKey: XYZAccount.repeatDate) as? Date
         let oldCurrencyCode = income.value(forKey: XYZAccount.currencyCode) as? String ?? ""
-
+        let oldSequenceNr = income.value(forKey: XYZAccount.sequenceNr)
+        
         undoManager?.registerUndo(withTarget: self, handler: { (controller) in
             
             let income = XYZAccount(id: nil, sequenceNr: 0, bank: oldBank, accountNr: oldAccountNr, amount: oldAmount, principal: oldPrincipal, date: oldDate, context: managedContext())
@@ -397,6 +398,7 @@ class IncomeTableViewController: UITableViewController,
             income.setValue(oldRepeatAction, forKey: XYZAccount.repeatAction)
             income.setValue(oldRemindDate, forKey: XYZAccount.repeatDate)
             income.setValue(oldCurrencyCode, forKey: XYZAccount.currencyCode)
+            income.setValue(oldSequenceNr, forKey: XYZAccount.sequenceNr)
             income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
             
             self.saveNewIncomeWithoutUndo(income: income)

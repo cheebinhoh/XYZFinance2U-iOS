@@ -322,19 +322,19 @@ class IncomeDetailTableViewController: UITableViewController,
         tableView.reloadData()
     }
 
-    func registerUndoSave(_ income: XYZAccount?)
+    func registerUndoSave(income: XYZAccount)
     {
-        let oldBank = income?.value(forKey: XYZAccount.bank)
-        let oldAccountNr = income?.value(forKey: XYZAccount.accountNr)
-        let oldAmount = income?.value(forKey: XYZAccount.amount)
+        let oldBank = income.value(forKey: XYZAccount.bank)
+        let oldAccountNr = income.value(forKey: XYZAccount.accountNr)
+        let oldAmount = income.value(forKey: XYZAccount.amount)
+        let oldPrincipal = income.value(forKey: XYZAccount.principal)
+        let oldDate = income.value(forKey: XYZAccount.lastUpdate)
+        let oldRepeatAction = income.value(forKey: XYZAccount.repeatAction)
+        let oldRemindDate = income.value(forKey: XYZAccount.repeatDate)
+        let oldCurrencyCode = income.value(forKey: XYZAccount.currencyCode)
+        let oldSequenceNr = income.value(forKey: XYZAccount.sequenceNr)
         
-        let oldPrincipal = income?.value(forKey: XYZAccount.principal)
-        let oldDate = income?.value(forKey: XYZAccount.lastUpdate)
-        let oldRepeatAction = income?.value(forKey: XYZAccount.repeatAction)
-        let oldRemindDate = income?.value(forKey: XYZAccount.repeatDate)
-        let oldCurrencyCode = income?.value(forKey: XYZAccount.currencyCode)
-        
-        undoManager?.registerUndo(withTarget: income!, handler: { (income) in
+        undoManager?.registerUndo(withTarget: income, handler: { (income) in
             
             income.setValue(oldBank, forKey: XYZAccount.bank)
             income.setValue(oldAccountNr, forKey: XYZAccount.accountNr)
@@ -344,6 +344,7 @@ class IncomeDetailTableViewController: UITableViewController,
             income.setValue(oldRepeatAction, forKey: XYZAccount.repeatAction)
             income.setValue(oldRemindDate, forKey: XYZAccount.repeatDate)
             income.setValue(oldCurrencyCode, forKey: XYZAccount.currencyCode)
+            income.setValue(oldSequenceNr, forKey: XYZAccount.sequenceNr)
             income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
             
             self.incomeDelegate?.saveIncome(income: income)
@@ -370,7 +371,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 incomeDelegate?.saveNewIncome(income: income!)
             } else {
                 
-                registerUndoSave(income)
+                registerUndoSave(income: income!)
                 saveData()
                 incomeDelegate?.saveIncome(income: income!)
             }
@@ -378,7 +379,7 @@ class IncomeDetailTableViewController: UITableViewController,
             dismiss(animated: true, completion: nil)
         } else {
             
-            registerUndoSave(income)
+            registerUndoSave(income: income!)
             saveData()
             navigationItem.leftBarButtonItem?.isEnabled = false
             modalEditing = false
