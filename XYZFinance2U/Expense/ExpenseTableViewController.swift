@@ -292,10 +292,13 @@ class ExpenseTableViewController: UITableViewController,
 
     func registerUndoDeleteExpense(expense: XYZExpense)
     {
+        let oldRecordId = expense.value(forKey: XYZExpense.recordId) as? String
         let oldDetail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
         let oldAmount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
         let oldDate = expense.value(forKey: XYZExpense.date) as? Date ?? Date()
         let oldIsShared = expense.value(forKey: XYZExpense.isShared) // if we can save it, it means it is not readonly
+        let oldShareUrl = expense.value(forKey: XYZExpense.shareUrl)
+        let oldShareRecordId = expense.value(forKey: XYZExpense.shareRecordId)
         let oldHasLocation = expense.value(forKey: XYZExpense.hasLocation)
         let oldCurrencyCode = expense.value(forKey: XYZExpense.currencyCode)
         let oldBudgetCategory = expense.value(forKey: XYZExpense.budgetCategory)
@@ -307,11 +310,10 @@ class ExpenseTableViewController: UITableViewController,
         
         undoManager?.registerUndo(withTarget: self, handler: { (viewController) in
             
-            let newExpense = XYZExpense(id: nil, detail: oldDetail, amount: oldAmount, date: oldDate, context: managedContext())
+            let newExpense = XYZExpense(id: oldRecordId, detail: oldDetail, amount: oldAmount, date: oldDate, context: managedContext())
             
-            newExpense.setValue(oldDetail, forKey: XYZExpense.detail)
-            newExpense.setValue(oldAmount, forKey: XYZExpense.amount)
-            newExpense.setValue(oldDate, forKey: XYZExpense.date)
+            newExpense.setValue(oldShareRecordId, forKey: XYZExpense.shareRecordId)
+            newExpense.setValue(oldShareUrl, forKey: XYZExpense.shareUrl)
             newExpense.setValue(oldIsShared, forKey: XYZExpense.isShared)
             newExpense.setValue(oldHasLocation, forKey: XYZExpense.hasLocation)
             newExpense.setValue(oldCurrencyCode, forKey: XYZExpense.currencyCode)
