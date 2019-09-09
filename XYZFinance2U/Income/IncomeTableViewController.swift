@@ -401,7 +401,42 @@ class IncomeTableViewController: UITableViewController,
             income.setValue(oldSequenceNr, forKey: XYZAccount.sequenceNr)
             income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
             
-            self.saveNewIncomeWithoutUndo(income: income)
+            for (index, section) in self.sectionList.enumerated() {
+                
+                if oldCurrencyCode == section.title {
+                    
+                    guard var sectionIncomeList = section.data as? [XYZAccount] else {
+                        
+                        fatalError("Exception: [XYZAccount] is expected")
+                    }
+                    
+                    sectionIncomeList.insert(income, at: oldSequenceNr as? Int ?? 0)
+                    
+                    self.sectionList[index].data = sectionIncomeList
+                    break
+                }
+            }
+            
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            
+            appDelegate?.incomeList.append(income)
+            
+            self.reloadData()
+            
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                
+                fatalError("Exception: UISplitViewController is expected" )
+            }
+            
+            if !mainSplitView.isCollapsed  {
+                
+                if let indexPath = self.incomeIndex(of: income) {
+                    
+                    self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)
+                    self.delegate?.incomeSelected(newIncome: income)
+                }
+            }
+            //self.saveNewIncomeWithoutUndo(income: income)
         })
         
         deleteIncomeWithoutUndo(income: income)
