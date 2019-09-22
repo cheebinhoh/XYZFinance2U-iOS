@@ -66,6 +66,7 @@ class ExpenseTableViewCell: UITableViewCell {
   
         if let _ = colorView {
         
+            dotColorView.isHidden = false
             dotColorView.backgroundColor = color?.uiColor()
         }
 

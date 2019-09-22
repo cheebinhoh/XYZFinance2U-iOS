@@ -1388,6 +1388,7 @@ class ExpenseTableViewController: UITableViewController,
                         totalCell.detail.text = currency
                         totalCell.amount.text = formattingCurrencyValue(input: total, code: currency)
                         totalCell.date.text = sectionList[indexPath.section].title
+                        totalCell.dotColorView.isHidden = true
                         
                         if sectionExpandStatus[indexPath.section] {
                             
