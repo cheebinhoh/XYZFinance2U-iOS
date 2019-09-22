@@ -59,6 +59,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 if let _ = item, item! != "" {
                     
+               
                     budgetCategory = item!
                     
                     let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -70,6 +71,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     })
                     
                     iconName = budget?.value(forKey: XYZBudget.iconName) as? String ?? ""
+                    
                 } else {
                     
                     iconName = ""
@@ -77,14 +79,14 @@ class ExpenseDetailTableViewController: UITableViewController,
                 }
             
             default:
-                if currencyCode != item {
+                /*if currencyCode != item {
                     
                     budgetCategory = ""
-                }
+                }*/
                 
                 currencyCode = item
                 budgetList = getBudgets(of: item!)
-                loadDataInTableSectionCell()
+                //loadDataInTableSectionCell()
         }
         
         tableView.reloadData()
@@ -1312,10 +1314,10 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 
                 if "" != budgetCategory {
                     
-                    budgetcell.selection.textColor = UIColor.black
+                    //budgetcell.selection.textColor = UIColor.black
                 } else {
                     
-                    budgetcell.selection.textColor = UIColor.lightGray
+                    //budgetcell.selection.textColor = UIColor.lightGray
                 }
                 
                 if iconName != "" {
