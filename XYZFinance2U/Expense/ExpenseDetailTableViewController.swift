@@ -1312,14 +1312,6 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 budgetcell.setSelection( budgetCategory == "" ? "budget category".localized() : budgetCategory )
                 budgetcell.selectionStyle = .none
                 
-                if "" != budgetCategory {
-                    
-                    //budgetcell.selection.textColor = UIColor.black
-                } else {
-                    
-                    //budgetcell.selection.textColor = UIColor.lightGray
-                }
-                
                 if iconName != "" {
                     
                     budgetcell.icon.image = UIImage(named: iconName)
