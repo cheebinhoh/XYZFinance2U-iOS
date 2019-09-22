@@ -451,7 +451,7 @@ class BudgetExpensesTableViewController: UITableViewController,
             commands.append(copy)
         }
         
-        var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
+        let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
         let expense = sectionExpenseList![indexPath.row]
 
         let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool

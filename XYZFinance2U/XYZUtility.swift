@@ -210,7 +210,7 @@ func formattingDoubleValue(input: String) -> String {
     var startWithNegativeSign = false
     let digitSet = CharacterSet.decimalDigits
     
-    var inputToBeProcessed = input
+    let inputToBeProcessed = input
     
     for c in inputToBeProcessed.unicodeScalars {
         

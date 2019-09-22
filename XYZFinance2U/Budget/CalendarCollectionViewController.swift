@@ -62,8 +62,8 @@ class CalendarCollectionViewController: UICollectionViewController,
 
         let date = expense.value(forKey: XYZExpense.date) as? Date
         
-        var dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: date!)
-        var startDateOfMonthComponent = Calendar.current.dateComponents([.day, .month, .year], from: startDateOfMonth!)
+        let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: date!)
+        let startDateOfMonthComponent = Calendar.current.dateComponents([.day, .month, .year], from: startDateOfMonth!)
 
         var step = 0
         
@@ -532,8 +532,8 @@ class CalendarCollectionViewController: UICollectionViewController,
     
     func indexPath(of date: Date) -> IndexPath? {
         
-        var dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: date)
-        var startDateOfMonthComponent = Calendar.current.dateComponents([.day, .month, .year], from: startDateOfMonth!)
+        let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: date)
+        let startDateOfMonthComponent = Calendar.current.dateComponents([.day, .month, .year], from: startDateOfMonth!)
         
         if monthLevel {
             

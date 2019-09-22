@@ -68,7 +68,7 @@ class ExpenseTableViewCell: UITableViewCell {
         
             dotColorView.backgroundColor = color?.uiColor()
         }
-        
+
         let recurring = XYZExpense.Length(rawValue: expense.value(forKey: XYZExpense.recurring) as? String ?? XYZExpense.Length.none.rawValue )
         let theDate = (expense.value(forKey: XYZExpense.date) as? Date) ?? Date()
         switch recurring! {
