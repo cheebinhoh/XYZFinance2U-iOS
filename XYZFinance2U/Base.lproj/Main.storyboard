@@ -36,7 +36,7 @@
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0W-8X-FqE">
                                         <rect key="frame" x="0.0" y="135" width="300" height="50"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="5e2-Pv-NcN"/>
                                             <constraint firstAttribute="width" constant="300" id="7zS-Pd-1Hg"/>
@@ -53,7 +53,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="lId-0z-eBX" firstAttribute="centerY" secondItem="zvC-Ic-M8f" secondAttribute="centerY" id="1DC-WK-8Jc"/>
                             <constraint firstItem="lId-0z-eBX" firstAttribute="centerX" secondItem="QU2-3B-aSy" secondAttribute="centerX" id="lAj-Zz-R9r"/>
