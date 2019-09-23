@@ -701,6 +701,7 @@ class IncomeTableViewController: UITableViewController,
         lockScreenView.mainTableViewController = self
         let lockScreenViewNavigatorController = UINavigationController(rootViewController: lockScreenView)
         
+        lockScreenViewNavigatorController.modalPresentationStyle = .overFullScreen
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             
             //appDelegate.lastAuthenticated = nil
