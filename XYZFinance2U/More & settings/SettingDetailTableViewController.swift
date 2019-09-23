@@ -104,7 +104,15 @@ class SettingDetailTableViewController: UITableViewController {
 
 """
                 
-                let attributes: [NSAttributedString.Key: Any]? = [NSAttributedString.Key.font: newcell.content.font!]
+                var attributes: [NSAttributedString.Key: Any]? = [NSAttributedString.Key.font: newcell.content.font!]
+                
+                if #available(iOS 13.0, *) {
+                    
+                    attributes?[NSAttributedString.Key.foregroundColor] = UIColor.label
+                } else {
+                    // Fallback on earlier versions
+                }
+                
                 let attributeText = NSAttributedString(string: text, attributes: attributes)
                 
                 headingAttributeText.append(attributeText)
@@ -141,9 +149,10 @@ class SettingDetailTableViewController: UITableViewController {
 \("The icons are from Noun Project by".localized()) Yoraslav Samoylov, Sumhi_icon, Shmidt Sergey, Sandy Priyasa, Sophia Bai, ProSymbols, Mike Ashley, Krishna, Gregor Cresnar, Dinosoft Lab, Delwar Hossain, Arien Coquet.
 
 """
-                let attributes: [NSAttributedString.Key: Any]? = [NSAttributedString.Key.font: newcell.content.font!]
-                let attributeText = NSAttributedString(string: text, attributes: attributes)
-                newcell.content.attributedText = attributeText
+                //let attributes: [NSAttributedString.Key: Any]? = [NSAttributedString.Key.font: newcell.content.font!]
+                //let attributeText = NSAttributedString(string: text, attributes: attributes)
+                newcell.content.text = text
+                //newcell.content.attributedText = attributeText
                 cell = newcell
             
                 default:

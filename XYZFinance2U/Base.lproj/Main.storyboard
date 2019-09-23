@@ -1686,7 +1686,7 @@
                                     <subviews>
                                         <textView multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="350" placeholderIntrinsicHeight="299.5" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YPQ-k2-nft">
                                             <rect key="frame" x="15" y="0.0" width="350" height="300"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             <dataDetectorType key="dataDetectorTypes" link="YES"/>
