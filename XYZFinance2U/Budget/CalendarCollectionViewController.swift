@@ -780,8 +780,14 @@ class CalendarCollectionViewController: UICollectionViewController,
     }
     */
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        // Trait collection has already changed
+        
+        reloadData()
+    }
+    
     // MARK: UICollectionViewDataSource
-
+    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
 
         return sectionList.count
@@ -985,8 +991,22 @@ class CalendarCollectionViewController: UICollectionViewController,
                     cell.label.textColor = UIColor.white
                 } else {
                     
-                    cell.label.backgroundColor = UIColor.black
-                    cell.label.textColor = UIColor.white
+                    if #available(iOS 12.0, *) {
+                        if self.traitCollection.userInterfaceStyle == .light {
+                            
+                            cell.label.backgroundColor = UIColor.black
+                            cell.label.textColor = UIColor.white
+                        } else {
+                            
+                            cell.label.backgroundColor = UIColor.white
+                            cell.label.textColor = UIColor.black
+                        }
+                    } else {
+                
+                        cell.label.backgroundColor = UIColor.black
+                        cell.label.textColor = UIColor.white
+                    }
+                    
                 }
             } else {
                 
@@ -999,7 +1019,18 @@ class CalendarCollectionViewController: UICollectionViewController,
                     cell.label.textColor = UIColor.red
                 } else {
                     
-                    cell.label.textColor = UIColor.black
+                    if #available(iOS 12.0, *) {
+                        if self.traitCollection.userInterfaceStyle == .light {
+                            
+                            cell.label.textColor = UIColor.black
+                        } else {
+                            
+                            cell.label.textColor = UIColor.white
+                        }
+                    } else {
+                
+                        cell.label.textColor = UIColor.white
+                    }
                 }
             }
             
