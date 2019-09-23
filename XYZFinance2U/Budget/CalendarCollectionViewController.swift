@@ -894,8 +894,21 @@ class CalendarCollectionViewController: UICollectionViewController,
                     cell.label.textColor = UIColor.white
                 } else {
                     
-                    cell.label.backgroundColor = UIColor.black
-                    cell.label.textColor = UIColor.white
+                    if #available(iOS 12.0, *) {
+                        if self.traitCollection.userInterfaceStyle == .light {
+                            
+                            cell.label.backgroundColor = UIColor.black
+                            cell.label.textColor = UIColor.white
+                        } else {
+                            
+                            cell.label.backgroundColor = UIColor.white
+                            cell.label.textColor = UIColor.black
+                        }
+                    } else {
+                
+                        cell.label.backgroundColor = UIColor.black
+                        cell.label.textColor = UIColor.white
+                    }
                 }
             } else {
                 
@@ -903,13 +916,25 @@ class CalendarCollectionViewController: UICollectionViewController,
                 
                 if nil == thisDate {
                     
-                    cell.label.textColor = UIColor.lightGray
+                    if #available(iOS 13.0, *) {
+                        
+                        cell.label.textColor = UIColor.label
+                    } else {
+                        
+                        cell.label.textColor = UIColor.lightGray
+                    }
                 } else if nowDate == thisDate {
                  
                     cell.label.textColor = UIColor.red
                 } else {
                     
-                    cell.label.textColor = UIColor.black
+                    if #available(iOS 13.0, *) {
+                        
+                        cell.label.textColor = UIColor.label
+                    } else {
+                        
+                        cell.label.textColor = UIColor.black
+                    }
                 }
             }
             

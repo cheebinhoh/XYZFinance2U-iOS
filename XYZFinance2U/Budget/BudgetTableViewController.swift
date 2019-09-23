@@ -960,7 +960,11 @@ class BudgetTableViewController: UITableViewController,
             color = UIColor.red
         } else {
             
-            color = UIColor.black
+            if #available(iOS 13.0, *) {
+                color = UIColor.label
+            } else {
+                color = UIColor.black
+            } 
         }
         
         cell.balanceAmount.textColor = color

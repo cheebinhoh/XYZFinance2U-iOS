@@ -667,7 +667,7 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="abo-q4-m1t">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="5" id="vDt-t2-67N">
                             <size key="itemSize" width="50" height="40"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -695,7 +695,6 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="eWo-xS-el7" secondAttribute="bottom" id="2Se-eZ-Pq2"/>
                                                         <constraint firstItem="eWo-xS-el7" firstAttribute="top" secondItem="DLl-s7-jIf" secondAttribute="top" id="FIa-n5-ECv"/>
