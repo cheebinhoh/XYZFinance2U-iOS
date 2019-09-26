@@ -1173,6 +1173,8 @@ class IncomeTableViewController: UITableViewController,
                     detailTableViewController.currencyCodes = currencyCodes
                     delegate?.incomeSelected(newIncome: sectionIncomeList?[indexPath.row])
                 }
+            
+                tableView.deselectRow(at: indexPath, animated: false)
         }
     }
     

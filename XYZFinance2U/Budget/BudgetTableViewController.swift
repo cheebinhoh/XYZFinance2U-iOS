@@ -870,6 +870,8 @@ class BudgetTableViewController: UITableViewController,
             detailTableViewController.currencyCodes = currencyCodes
             delegate?.budgetSelected(newBudget: sectionBudgetList?[indexPath.row])
         }
+        
+        tableView.deselectRow(at: indexPath, animated: false)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

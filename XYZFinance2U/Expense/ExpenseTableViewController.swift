@@ -1553,6 +1553,8 @@ class ExpenseTableViewController: UITableViewController,
                     
                     delegate?.expenseSelected(newExpense: sectionExpenseList?[indexPath.row - 1])
                 }
+            
+                tableView.deselectRow(at: indexPath, animated: false)
         }
     }
     
