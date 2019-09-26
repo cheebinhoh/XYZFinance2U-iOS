@@ -967,7 +967,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         
         let nav = UINavigationController(rootViewController: expenseDetailLocationViewController)
         
-        nav.modalPresentationStyle = .popover
+        //nav.modalPresentationStyle = .popover
         self.present(nav, animated: true, completion: nil)
     }
     

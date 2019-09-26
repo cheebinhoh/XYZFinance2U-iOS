@@ -39,8 +39,9 @@ class ExpenseDetailLocationViewController: UIViewController,
         map.delegate = self
         clmanager.delegate = self
         clmanager.desiredAccuracy = kCLLocationAccuracyBest
-        clmanager.requestWhenInUseAuthorization()
-
+        // clmanager.requestWhenInUseAuthorization()
+        clmanager.requestAlwaysAuthorization()
+        
         if let _ = coordinate {
             
             displayCoordinate(coordinate!, "Selected location".localized())
@@ -164,6 +165,7 @@ class ExpenseDetailLocationViewController: UIViewController,
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
+
         let location = locations[0]
         
         displayCoordinate(location.coordinate, "Location".localized())
