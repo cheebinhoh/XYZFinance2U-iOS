@@ -695,7 +695,7 @@ class BudgetTableViewController: UITableViewController,
             self.present(expenseDetailNavigationController, animated: true, completion: nil)
         }
         
-        new.backgroundColor = UIColor.blue
+        new.backgroundColor = UIColor.systemBlue
         commands.append(new)
         
         let more = UIContextualAction(style: .normal, title: "More".localized() ) { _, _, handler in
@@ -897,7 +897,7 @@ class BudgetTableViewController: UITableViewController,
         stackView.isLayoutMarginsRelativeArrangement = true
         
         title.text = sectionList[section].title
-        title.textColor = UIColor.gray
+        title.textColor = UIColor.systemGray
         stackView.axis = .horizontal
         stackView.addArrangedSubview(title)
         

@@ -197,7 +197,8 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         var otherSectionCellList = ["date",
                                     "recurring",
-                                    "location"]
+                                   // "location"
+                                   ]
         
         if let _ = recurring, recurring != XYZExpense.Length.none {
             
@@ -207,8 +208,10 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         if hasLocation {
             
-            let locationIndex = otherSectionCellList.firstIndex(of: "location")
-            otherSectionCellList.insert("locationPicker", at: locationIndex! + 1)
+            if let locationIndex = otherSectionCellList.firstIndex(of: "location") {
+            
+                otherSectionCellList.insert("locationPicker", at: locationIndex + 1)
+            }
         }
         
         let mainSection = TableSectionCell(identifier: "main",
@@ -790,9 +793,10 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     
     func textDidBeginEditing(_ sender:XYZTextTableViewCell) {
         
+        
         guard let index = tableView.indexPath(for: sender) else {
             
-            fatalError("Exception: index path is expected")
+           return 
         }
         
         switch sectionList[index.section].cellList[index.row] {
@@ -1373,7 +1377,9 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 
                 datecell.enableEditing = modalEditing
                 
-                if sectionList[indexPath.section].cellList[indexPath.row + 1] != "recurringStopDatePicker" {
+              
+                if sectionList[indexPath.section].cellList.count <= indexPath.row + 1
+                   || sectionList[indexPath.section].cellList[indexPath.row + 1] != "recurringStopDatePicker" {
                     
                     datecell.accessoryView = nil
                     datecell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator

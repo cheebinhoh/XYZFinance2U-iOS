@@ -447,7 +447,7 @@ class BudgetExpensesTableViewController: UITableViewController,
                 self.present(expenseDetailNavigationController, animated: true, completion: nil)
             }
             
-            copy.backgroundColor = UIColor.blue
+            copy.backgroundColor = UIColor.systemBlue
             commands.append(copy)
         }
         

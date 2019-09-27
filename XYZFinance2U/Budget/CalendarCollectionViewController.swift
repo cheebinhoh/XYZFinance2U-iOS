@@ -879,7 +879,7 @@ class CalendarCollectionViewController: UICollectionViewController,
             
             if let _ = expenseList, !(expenseList?.isEmpty)! {
                 
-                cell.indicator.backgroundColor = UIColor.blue
+                cell.indicator.backgroundColor = UIColor.systemBlue
             } else {
                 
                 cell.indicator.backgroundColor = UIColor.clear
@@ -972,7 +972,7 @@ class CalendarCollectionViewController: UICollectionViewController,
             
             if !(filteredExpenseList.isEmpty) && indexPath.row > 0 {
                 
-                cell.indicator.backgroundColor = UIColor.blue
+                cell.indicator.backgroundColor = UIColor.systemBlue
             } else {
                 
                 cell.indicator.backgroundColor = UIColor.clear

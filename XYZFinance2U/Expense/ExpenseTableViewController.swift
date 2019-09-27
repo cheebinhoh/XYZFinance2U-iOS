@@ -584,11 +584,14 @@ class ExpenseTableViewController: UITableViewController,
         
         reloadData()
         
+        /*
         if let indexPath = self.indexPath(of: expense) {
         
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableView.ScrollPosition.bottom)
             delegate?.expenseSelected(newExpense: expense)
         }
+
+        */
     }
     
     func saveNewExpense(expense: XYZExpense) {
@@ -1132,15 +1135,17 @@ class ExpenseTableViewController: UITableViewController,
                 self.present(expenseDetailNavigationController, animated: true, completion: nil)
             }
             
-            copy.backgroundColor = UIColor.blue
+            copy.backgroundColor = UIColor.systemBlue
             commands.append(copy)
             
+            /* deprrcated
             guard let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense] else {
                 
                 fatalError("Exception: [XYZExpense] is expected")
             }
             
             let expense = sectionExpenseList[indexPath.row - 1]
+            
             let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
             
             if !(isShared!) {
@@ -1184,6 +1189,7 @@ class ExpenseTableViewController: UITableViewController,
                     commands.append(more)
                 }
             }
+            */
             
             return UISwipeActionsConfiguration(actions: commands)
         }
@@ -1524,6 +1530,8 @@ class ExpenseTableViewController: UITableViewController,
                         fatalError("Exception: ExpenseDetailTableViewController is expected" )
                     }
                     
+                    tableView.deselectRow(at: indexPath, animated: false)
+                    
                     expenseTableView.setPopover(delegate: self)
                     let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
                     
@@ -1553,8 +1561,6 @@ class ExpenseTableViewController: UITableViewController,
                     
                     delegate?.expenseSelected(newExpense: sectionExpenseList?[indexPath.row - 1])
                 }
-            
-                tableView.deselectRow(at: indexPath, animated: false)
         }
     }
     

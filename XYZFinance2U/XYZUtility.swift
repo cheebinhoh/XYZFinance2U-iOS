@@ -124,6 +124,11 @@ func formattingAndProcessDoubleValue(input: String) -> String {
     let digitSet = CharacterSet.decimalDigits
     let numberOfFixedDecimalPoints = 2
     
+    if ( input.isEmpty )
+    {
+        return "0.00"
+    }
+    
     let lastChar = input[input.index(before: input.endIndex)]
     
     if Locale.current.decimalSeparator ?? "" == "\(lastChar)" {
