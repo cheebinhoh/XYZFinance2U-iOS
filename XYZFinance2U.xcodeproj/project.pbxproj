@@ -49,8 +49,6 @@
 		658F73601FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F735F1FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift */; };
 		658FD1D82037DB3F00ABDD55 /* BudgetDetailDatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658FD1D72037DB3F00ABDD55 /* BudgetDetailDatePickerTableViewCell.swift */; };
 		6590AFAA1FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6590AFA91FFADAA80004F641 /* IncomeDetailSwitchTableViewCell.swift */; };
-		65B16854233D725100AFB497 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B16853233D725100AFB497 /* Metal.framework */; };
-		65B16856233D725B00AFB497 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65B16855233D725A00AFB497 /* MetalKit.framework */; };
 		65D1AF2221DAD93700484096 /* XYZSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D1AF2121DAD93700484096 /* XYZSelectionTableViewCell.swift */; };
 		65D870C42033B17700DE991E /* BudgetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C32033B17700DE991E /* BudgetTableViewCell.swift */; };
 		65D870C6203673BB00DE991E /* BudgetDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C5203673BB00DE991E /* BudgetDetailTableViewController.swift */; };
@@ -185,8 +183,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				65EEC4AC1FF2B9BD00D638CD /* CoreLocation.framework in Frameworks */,
-				65B16856233D725B00AFB497 /* MetalKit.framework in Frameworks */,
-				65B16854233D725100AFB497 /* Metal.framework in Frameworks */,
 				657455BA200587D100AAB2E3 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -743,7 +739,7 @@
 				CODE_SIGN_ENTITLEMENTS = XYZFinance2U/XYZFinance2U.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = BKU6P4Y9G4;
 				INFOPLIST_FILE = XYZFinance2U/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -766,7 +762,7 @@
 				CODE_SIGN_ENTITLEMENTS = XYZFinance2U/XYZFinance2U.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = BKU6P4Y9G4;
 				INFOPLIST_FILE = XYZFinance2U/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

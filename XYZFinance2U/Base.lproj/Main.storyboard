@@ -29,13 +29,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lId-0z-eBX">
-                                <rect key="frame" x="37.5" y="241" width="300" height="185"/>
+                                <rect key="frame" x="-2" y="173.5" width="379" height="320"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" translatesAutoresizingMaskIntoConstraints="NO" id="Cjo-OQ-P7h">
-                                        <rect key="frame" x="55.5" y="0.0" width="189.5" height="135"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="379" height="270"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0W-8X-FqE">
-                                        <rect key="frame" x="0.0" y="135" width="300" height="50"/>
+                                        <rect key="frame" x="39.5" y="270" width="300" height="50"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="5e2-Pv-NcN"/>
@@ -205,7 +205,6 @@
                     <tabBarItem key="tabBarItem" title="Incomes" image="plus" id="RqA-tQ-dzY"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1kI-jh-OGb">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1129,7 +1128,6 @@
             <objects>
                 <navigationController storyboardIdentifier="ExpenseDetailNavigationController" id="PvD-tW-xPv" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Wh7-Vh-kXb">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -1519,7 +1517,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="N5E-ct-ZyE">
-                                <rect key="frame" x="0.0" y="44" width="375" height="525"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1535,26 +1533,11 @@
                     <navigationItem key="navigationItem" title="Location" id="LDj-vD-hFl"/>
                     <connections>
                         <outlet property="map" destination="N5E-ct-ZyE" id="XlK-1X-TCb"/>
-                        <outlet property="searchDisplayController" destination="eEP-8k-HSc" id="sxd-M6-DqS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7je-2b-wrQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="BKa-hg-6Iu">
-                    <connections>
-                        <outlet property="delegate" destination="ibw-Ip-Vg5" id="dPe-qK-eYj"/>
-                        <outlet property="searchContentsController" destination="ibw-Ip-Vg5" id="1fU-Mt-MTG"/>
-                        <outlet property="searchResultsDataSource" destination="ibw-Ip-Vg5" id="ikh-47-Zeh"/>
-                        <outlet property="searchResultsDelegate" destination="ibw-Ip-Vg5" id="kRg-7k-ZyZ"/>
-                    </connections>
-                </searchDisplayController>
-                <searchDisplayController id="eEP-8k-HSc">
-                    <connections>
-                        <outlet property="delegate" destination="ibw-Ip-Vg5" id="mTX-od-NrD"/>
-                        <outlet property="searchContentsController" destination="ibw-Ip-Vg5" id="LHb-9Q-2Tg"/>
-                        <outlet property="searchResultsDataSource" destination="ibw-Ip-Vg5" id="m8S-u1-cwz"/>
-                        <outlet property="searchResultsDelegate" destination="ibw-Ip-Vg5" id="4V7-3X-Hpb"/>
-                    </connections>
-                </searchDisplayController>
+                <searchDisplayController id="BKa-hg-6Iu"/>
+                <searchDisplayController id="eEP-8k-HSc"/>
             </objects>
             <point key="canvasLocation" x="8236" y="785.75712143928047"/>
         </scene>
@@ -1567,10 +1550,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SfN-xw-rth">
-                                <rect key="frame" x="0.0" y="44" width="375" height="525"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
                                 <subviews>
                                     <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="65b-9C-Wat">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="525"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="ANL-Bn-bhJ" appends="YES" id="rC4-iu-7AU"/>
@@ -2366,7 +2349,6 @@ Chee Bin HOH, 2017</string>
                 <navigationController storyboardIdentifier="ExchangeRateNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="gTl-aa-IoE" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="OXJ-cl-3X2">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -2439,7 +2421,6 @@ Chee Bin HOH, 2017</string>
                 <navigationController storyboardIdentifier="BudgetListNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="mat-72-PNR" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="AWF-OQ-J7m">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -2457,7 +2438,6 @@ Chee Bin HOH, 2017</string>
                 <navigationController storyboardIdentifier="BudgetExpensesNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="jwF-Vq-6Np" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="H2R-5A-ruj">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -2481,7 +2461,7 @@ Chee Bin HOH, 2017</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Vbr-uz-1K0"/>
-        <segue reference="n4x-5K-QOe"/>
-        <segue reference="p2p-KG-gtc"/>
+        <segue reference="ve4-y6-Yqm"/>
+        <segue reference="12h-Ii-8y1"/>
     </inferredMetricsTieBreakers>
 </document>
