@@ -110,6 +110,7 @@ class SettingDetailTableViewController: UITableViewController {
                     
                     attributes?[NSAttributedString.Key.foregroundColor] = UIColor.label
                 } else {
+                    
                     // Fallback on earlier versions
                 }
                 
@@ -131,10 +132,8 @@ class SettingDetailTableViewController: UITableViewController {
 \("The icons are from Noun Project by".localized()) Yoraslav Samoylov, Sumhi_icon, Shmidt Sergey, Sandy Priyasa, Sophia Bai, ProSymbols, Mike Ashley, Krishna, Gregor Cresnar, Dinosoft Lab, Delwar Hossain, Arien Coquet.
 
 """
-                //let attributes: [NSAttributedString.Key: Any]? = [NSAttributedString.Key.font: newcell.content.font!]
-                //let attributeText = NSAttributedString(string: text, attributes: attributes)
+                
                 newcell.content.text = text
-                //newcell.content.attributedText = attributeText
                 cell = newcell
             
                 default:
