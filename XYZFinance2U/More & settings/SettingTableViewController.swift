@@ -3,18 +3,36 @@
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/14/17.
-//  Copyright © 2017 CB Hoh. All rights reserved.
+//  Copyright © 2017 - 2019 CB Hoh. All rights reserved.
 //
 
-import UIKit
 import os.log
 import LocalAuthentication
 import CloudKit
+import UIKit
 
 class SettingTableViewController: UITableViewController,
     UISplitViewControllerDelegate,
     UIDocumentPickerDelegate,
     SettingTextTableViewCellDelegate {
+    
+    // MARK: - property
+    let requiredauthenticationKey = "requiredauthentication"
+    var sectionList = [TableSectionCell]()
+    var delegate: UIViewController?
+    var popoverView: UIViewController?
+    var isCollapsed: Bool {
+        
+        if let split = self.parent?.parent as? UISplitViewController {
+            
+            return split.isCollapsed
+        } else {
+            
+            return true
+        }
+    }
+    
+    // MARK: - function
     
     func switchChanged(_ yesno: Bool, _ sender: SettingTableViewCell) {
     
@@ -34,8 +52,8 @@ class SettingTableViewController: UITableViewController,
                         
                         if success {
                             
-                            let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
-                            defaults.set(!required, forKey: "requiredauthentication")
+                            let required = defaults.value(forKey: self.requiredauthenticationKey) as? Bool ?? false
+                            defaults.set(!required, forKey: self.requiredauthenticationKey)
                         }
                         
                         self.reload()
@@ -44,24 +62,6 @@ class SettingTableViewController: UITableViewController,
             }
         }
     }
-    
-    // MARK: - property
-    
-    var sectionList = [TableSectionCell]()
-    var delegate: UIViewController?
-    var popoverView: UIViewController?
-    var isCollapsed: Bool {
-        
-        if let split = self.parent?.parent as? UISplitViewController {
-            
-            return split.isCollapsed
-        } else {
-            
-            return true
-        }
-    }
-    
-    // MARK: - function
     
     func getMainTableView() -> IncomeTableViewController {
         
@@ -103,17 +103,12 @@ class SettingTableViewController: UITableViewController,
         let mainSection = TableSectionCell(identifier: "main", title: "", cellList: ["About"], data: nil)
         sectionList.append(mainSection)
         
-        //https://fixer.io is no longer available as a free service, discommision it.
-        //let helperSection = TableSectionCell(identifier: "ex", title: "", cellList: ["ExchangeRate"], data: nil)
-        //tableSectionCellList.append(helperSection)
-        
         let tableViewController = getMainTableView()
         
         if tableViewController.iCloudEnable {
             
             let exportSection = TableSectionCell(identifier: "export", title: "",
                                                  cellList: ["Export",
-                                                            // "SynciCloud", we do not need this but merge the sync into refreesh pull down of each page
                                                             "DeleteData"], data: nil)
             sectionList.append(exportSection)
         }
@@ -121,7 +116,7 @@ class SettingTableViewController: UITableViewController,
         if tableViewController.authenticatedMechanismExist {
             
             let defaults = UserDefaults.standard;
-            let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
+            let required = defaults.value(forKey: requiredauthenticationKey) as? Bool ?? false
             var celllist = ["requiredauthentication"]
             
             if required {
@@ -185,15 +180,6 @@ class SettingTableViewController: UITableViewController,
                 newcell.title.text = "About".localized()
                 cell = newcell
             
-            case "ExchangeRate" :
-                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
-                    
-                    fatalError("Exception: error on creating settingTableCell")
-                }
-                
-                newcell.title.text = "Foreign exchange rate".localized()
-                cell = newcell
-            
             case "Export" :
                 guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
                     
@@ -241,7 +227,7 @@ class SettingTableViewController: UITableViewController,
                 }
 
                 let defaults = UserDefaults.standard;
-                let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
+                let required = defaults.value(forKey: requiredauthenticationKey) as? Bool ?? false
                 
                 newcell.title.text = "Require authentication".localized()
                 newcell.accessoryType = .none
@@ -284,155 +270,6 @@ class SettingTableViewController: UITableViewController,
         settingDetail.tableView.reloadData()
     }
     
-    func showExchangeRate(_ indexPath: IndexPath) {
-        
-        var settingDetail: ExchangeRateTableViewController?
-        
-        if let _ = delegate, delegate is ExchangeRateTableViewController {
-            
-            settingDetail = delegate as? ExchangeRateTableViewController
-        } else {
-            
-            guard let exDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExchangeRateNavigationController") as? UINavigationController else {
-                
-                fatalError("Exception: error on instantiating SettingDetailNavigationController")
-            }
-            
-            settingDetail = exDetailNavigationController.viewControllers.first as? ExchangeRateTableViewController
-
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
-                
-                fatalError("Exception: UISplitViewController is expected" )
-            }
-            
-            if mainSplitView.isCollapsed {
-                
-                mainSplitView.popOverAlertController = exDetailNavigationController
-                settingDetail?.setPopover(true)
-                popoverView = settingDetail
-                self.present(exDetailNavigationController, animated: false, completion: nil)
-            } else {
-                
-                delegate = settingDetail!
-                mainSplitView.viewControllers.remove(at: 1)
-                mainSplitView.viewControllers.insert(exDetailNavigationController, at: 1)
-            }
-        }
-        
-        if nil != settingDetail {
-            
-            let aContext = managedContext()
-            var exchangeRates = loadExchangeRates()
-            var exchangeRatesNeed = [XYZExchangeRate]()
-            let incomeList = loadAccounts()
-            var currencyCodes = [String]()
-            
-            for income in incomeList! {
-                
-                let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
-                
-                if !currencyCodes.contains(currencyCode!) {
-                    
-                    currencyCodes.append(currencyCode!)
-                }
-            }
-            
-            for currencyCodeFrom in currencyCodes {
-                
-                for currencyCodeTo in currencyCodes {
-                    
-                    if currencyCodeFrom != currencyCodeTo {
-                        
-                        let id = "\(currencyCodeFrom)-\(currencyCodeTo)"
-                        
-                        var exchangeRateToBeUpdated: XYZExchangeRate?
-                        
-                        for exchangeRate in exchangeRates! {
-                            
-                            if id == ( exchangeRate.value(forKey: XYZExchangeRate.recordId) as? String ?? "") {
-                                
-                                exchangeRateToBeUpdated = exchangeRate
-                                break
-                            }
-                        }
-                        
-                        if nil == exchangeRateToBeUpdated {
-                            
-                            exchangeRateToBeUpdated = XYZExchangeRate(recordId: id,
-                                                                      base: currencyCodeFrom,
-                                                                      target: currencyCodeTo,
-                                                                      rate: 0.0,
-                                                                      date: Date(),
-                                                                      context: aContext)
-                            
-                            exchangeRates?.append(exchangeRateToBeUpdated!)
-                        } else {
-                            
-                            // do nothing
-                        }
-                        
-                        exchangeRatesNeed.append(exchangeRateToBeUpdated!)
-                        
-                        let url = URL(string: "https://api.fixer.io/latest?base=\(currencyCodeFrom)&symbols=\(currencyCodeTo)")
-                        
-                        let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
-                            
-                            do {
-                                
-                                if nil != error {
-                                    
-                                    print("-------- error = \(String(describing: error))")
-                                } else {
-                                    
-                                    let dictResult = try JSONSerialization.jsonObject(with: data!,
-                                                                                      options: JSONSerialization.ReadingOptions.mutableContainers) as! [String: Any]
-                                    let rates = dictResult["rates"] as! [String: Double]
-                                    let dateString = dictResult["date"] as? String
-                                    let value = rates[currencyCodeTo]
-                                    
-                                    let dateFormatter = DateFormatter()
-                                    dateFormatter.dateFormat = "yyyy-MM-dd"
-                                    guard let date = dateFormatter.date(from: dateString!) else {
-                                        
-                                        fatalError("Exception: string to date failed")
-                                    }
-
-                                    exchangeRateToBeUpdated?.setValue(value, forKey: XYZExchangeRate.rate)
-                                    exchangeRateToBeUpdated?.setValue(date, forKey: XYZExchangeRate.date)
-                                    
-                                    DispatchQueue.main.async {
-
-                                        settingDetail?.reloadExchangeRate( exchangeRateToBeUpdated! )
-                                        saveManageContext()
-                                    }
-                                }
-                            } catch {
-                                
-                                print("-------- error in JSONSerialization = \(String(describing: error))")
-                            }
-                        }
-                        
-                        task.resume()
-                    }
-                }
-            }
-            
-            for exchangeRate in exchangeRates! {
-                
-                if !exchangeRatesNeed.contains(exchangeRate) {
-                    
-                    aContext?.delete(exchangeRate)
-                }
-            }
-            
-            settingDetail?.exchangeRates = exchangeRatesNeed
-            settingDetail?.currencyCodes = currencyCodes
-            settingDetail?.loadDataInTableSectionCell()
-            
-            saveManageContext()
-        }
-    }
     
     func showAbout(_ indexPath: IndexPath) {
         
@@ -847,9 +684,6 @@ class SettingTableViewController: UITableViewController,
                 }
             }
             */
-        } else if sectionList[indexPath.section].cellList[indexPath.row] == "ExchangeRate" {
-            
-            showExchangeRate(indexPath)
         } else {
             
             showAbout(indexPath)

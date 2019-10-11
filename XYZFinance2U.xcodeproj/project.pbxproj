@@ -53,9 +53,7 @@
 		65D870C42033B17700DE991E /* BudgetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C32033B17700DE991E /* BudgetTableViewCell.swift */; };
 		65D870C6203673BB00DE991E /* BudgetDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C5203673BB00DE991E /* BudgetDetailTableViewController.swift */; };
 		65D870CE2037D76100DE991E /* BudgetDetailDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870CD2037D76100DE991E /* BudgetDetailDateTableViewCell.swift */; };
-		65D8BA7B201391D500944C2D /* ExchangeRateTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D8BA7A201391D500944C2D /* ExchangeRateTableViewController.swift */; };
 		65D8BA7F2013ADD200944C2D /* XYZExchangeRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D8BA7E2013ADD200944C2D /* XYZExchangeRate.swift */; };
-		65D8BA812013BD9300944C2D /* ExchangeRateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D8BA802013BD9300944C2D /* ExchangeRateTableViewCell.swift */; };
 		65ECB04D20418D57009F01A9 /* CalendarCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ECB04C20418D57009F01A9 /* CalendarCollectionViewController.swift */; };
 		65EE339D20013F4600DEA680 /* UITextField-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE339C20013F4600DEA680 /* UITextField-Extension.swift */; };
 		65EE339F2001A5EF00DEA680 /* SettingDetailAboutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE339E2001A5EF00DEA680 /* SettingDetailAboutTableViewCell.swift */; };
@@ -155,9 +153,7 @@
 		65D870C32033B17700DE991E /* BudgetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetTableViewCell.swift; sourceTree = "<group>"; };
 		65D870C5203673BB00DE991E /* BudgetDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailTableViewController.swift; sourceTree = "<group>"; };
 		65D870CD2037D76100DE991E /* BudgetDetailDateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailDateTableViewCell.swift; sourceTree = "<group>"; };
-		65D8BA7A201391D500944C2D /* ExchangeRateTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateTableViewController.swift; sourceTree = "<group>"; };
 		65D8BA7E2013ADD200944C2D /* XYZExchangeRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZExchangeRate.swift; sourceTree = "<group>"; };
-		65D8BA802013BD9300944C2D /* ExchangeRateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateTableViewCell.swift; sourceTree = "<group>"; };
 		65ECB04C20418D57009F01A9 /* CalendarCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewController.swift; sourceTree = "<group>"; };
 		65EE339C20013F4600DEA680 /* UITextField-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField-Extension.swift"; sourceTree = "<group>"; };
 		65EE339E2001A5EF00DEA680 /* SettingDetailAboutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDetailAboutTableViewCell.swift; sourceTree = "<group>"; };
@@ -241,8 +237,6 @@
 				65F48F201FE377EC006951F7 /* SettingTableViewCell.swift */,
 				650024041FF6B423001281EA /* SettingDetailTableViewController.swift */,
 				65EE339E2001A5EF00DEA680 /* SettingDetailAboutTableViewCell.swift */,
-				65D8BA7A201391D500944C2D /* ExchangeRateTableViewController.swift */,
-				65D8BA802013BD9300944C2D /* ExchangeRateTableViewCell.swift */,
 			);
 			path = "More & settings";
 			sourceTree = "<group>";
@@ -488,7 +482,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				657C29C82041E78D00CF3165 /* CalendarCollectionViewCell.swift in Sources */,
-				65D8BA812013BD9300944C2D /* ExchangeRateTableViewCell.swift in Sources */,
 				658DE92C206B17E9006C5D17 /* BudgetListTableViewController.swift in Sources */,
 				658F735C1FDF8CF300AF7F8D /* ExpenseDetailDatePickerTableViewCell.swift in Sources */,
 				657C29D220433D6900CF3165 /* BudgetExpensesTableViewController.swift in Sources */,
@@ -521,7 +514,6 @@
 				65EEC49B1FF05ED500D638CD /* IncomeDetailTableViewController.swift in Sources */,
 				65F48F1F1FE370A1006951F7 /* SettingTableViewController.swift in Sources */,
 				657C39102038F7D400276A6E /* BudgetDetailCommandTableViewCell.swift in Sources */,
-				65D8BA7B201391D500944C2D /* ExchangeRateTableViewController.swift in Sources */,
 				65F48F2B1FE5828E006951F7 /* XYZExpenseReceipt.swift in Sources */,
 				658F735A1FDE145D00AF7F8D /* ExpenseDetailDateTableViewCell.swift in Sources */,
 				655C979D1FCCCC210098D58D /* AppDelegate.swift in Sources */,
@@ -739,12 +731,12 @@
 				CODE_SIGN_ENTITLEMENTS = XYZFinance2U/XYZFinance2U.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = BKU6P4Y9G4;
 				INFOPLIST_FILE = XYZFinance2U/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 4.15;
+				MARKETING_VERSION = 4.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cbHOH.XYZFinance2U;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -762,12 +754,12 @@
 				CODE_SIGN_ENTITLEMENTS = XYZFinance2U/XYZFinance2U.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = BKU6P4Y9G4;
 				INFOPLIST_FILE = XYZFinance2U/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 4.15;
+				MARKETING_VERSION = 4.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cbHOH.XYZFinance2U;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

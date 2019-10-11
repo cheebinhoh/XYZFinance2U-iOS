@@ -120,24 +120,6 @@ class SettingDetailTableViewController: UITableViewController {
 
                 cell = newcell
             
-            case "disclaimer":
-                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingDetailAboutCell", for: indexPath) as? SettingDetailAboutTableViewCell else {
-                    
-                    fatalError("Exception: errpr on creating settingDetailAboutCell")
-                }
-            
-                let text = """
-                
-\("The foreign exchange rates are from http://fixer.io".localized())
-
-\("It does not come with warranty of any sort.".localized())
-
-"""
-                let attributes: [NSAttributedString.Key: Any]? = [NSAttributedString.Key.font: newcell.content.font!]
-                let attributeText = NSAttributedString(string: text, attributes: attributes)
-                newcell.content.attributedText = attributeText
-                cell = newcell
-            
             case "credit":
                 guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingDetailAboutCell", for: indexPath) as? SettingDetailAboutTableViewCell else {
                     
