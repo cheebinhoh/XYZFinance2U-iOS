@@ -94,7 +94,7 @@ class SettingDetailTableViewController: UITableViewController {
 \(AppDelegate.appName)
 """
                 let headingAttributes: [NSAttributedString.Key: Any]? = [NSAttributedString.Key.font: newcell.content.font!,
-                                                                        NSAttributedString.Key.link: "https://twitter.com/XYZFinance2U"]
+                                                                         NSAttributedString.Key.link: "https://apps.apple.com/us/app/xyzfinance2u-finance/id1341502993"]
                 let headingAttributeText = NSMutableAttributedString(string: textHeading, attributes: headingAttributes)
                 
                 let text = """
