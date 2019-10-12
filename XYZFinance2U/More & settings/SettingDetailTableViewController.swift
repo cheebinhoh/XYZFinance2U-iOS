@@ -96,14 +96,7 @@ class SettingDetailTableViewController: UITableViewController {
                 let headingAttributes: [NSAttributedString.Key: Any]? = [NSAttributedString.Key.font: newcell.content.font!,
                                                                          NSAttributedString.Key.link: "https://apps.apple.com/us/app/xyzfinance2u-finance/id1341502993"]
                 let headingAttributeText = NSMutableAttributedString(string: textHeading, attributes: headingAttributes)
-                
-                let text = """
- (\(textVersion)) \("was created by Chee Bin Hoh.".localized())
-
-\u{A9} \("2017-2019 Chee Bin Hoh, All rights reserved.".localized())
-
-"""
-                
+   
                 var attributes: [NSAttributedString.Key: Any]? = [NSAttributedString.Key.font: newcell.content.font!]
                 
                 if #available(iOS 13.0, *) {
@@ -114,9 +107,34 @@ class SettingDetailTableViewController: UITableViewController {
                     // Fallback on earlier versions
                 }
                 
-                let attributeText = NSAttributedString(string: text, attributes: attributes)
+                let authorPreText = """
+                (\(textVersion)) \("was created by ".localized())
+                """
                 
-                headingAttributeText.append(attributeText)
+                let attributeAuthorPreText = NSAttributedString(string: authorPreText, attributes: attributes)
+                headingAttributeText.append(attributeAuthorPreText)
+
+                let authorText = """
+                \("Chee Bin Hoh".localized())
+
+                """
+                
+                let authorTextAttributes: [NSAttributedString.Key: Any]? = [NSAttributedString.Key.font: newcell.content.font!,
+                                                                            NSAttributedString.Key.link: "https://www.linkedin.com/in/cheebinhoh"]
+                
+                let attributeAuthorText = NSAttributedString(string: authorText, attributes: authorTextAttributes)
+                headingAttributeText.append(attributeAuthorText)
+
+                
+                let copyRightText = """
+                
+                \u{A9} \("2017-2019 Chee Bin Hoh, All rights reserved.".localized())
+
+                """
+                
+                let attributeCopyRightText = NSAttributedString(string: copyRightText, attributes: attributes)
+                headingAttributeText.append(attributeCopyRightText)
+                
                 newcell.content.attributedText = headingAttributeText
 
                 cell = newcell
