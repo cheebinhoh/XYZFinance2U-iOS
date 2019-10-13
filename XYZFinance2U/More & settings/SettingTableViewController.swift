@@ -801,8 +801,11 @@ class SettingTableViewController: UITableViewController,
             currencyCodes.insert(currencyCode!)
         }
         
+        // now but only year, month, day
         let nowDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: Date())
         let nowDate = Calendar.current.date(from: nowDateComponents)
+        
+        // 12 month ago and 1st day of the month
         var startDate = Calendar.current.date(byAdding: .month, value: -12, to: nowDate!)
         startDate = Calendar.current.date(byAdding: .day, value: (nowDateComponents.day! * -1) + 1, to: startDate!)
         
