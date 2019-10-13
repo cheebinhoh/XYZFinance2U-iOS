@@ -105,13 +105,15 @@ class SettingTableViewController: UITableViewController,
         
         let tableViewController = getMainTableView()
         
+        var exportSection = TableSectionCell(identifier: "export", title: "",
+                                             cellList: ["Export"], data: nil)
+        
         if tableViewController.iCloudEnable {
             
-            let exportSection = TableSectionCell(identifier: "export", title: "",
-                                                 cellList: ["Export",
-                                                            "DeleteData"], data: nil)
-            sectionList.append(exportSection)
+            exportSection.cellList.append("DeleteData")
         }
+
+        sectionList.append(exportSection)
         
         if tableViewController.authenticatedMechanismExist {
             
@@ -767,6 +769,7 @@ class SettingTableViewController: UITableViewController,
 
     func incomeFileContent() -> String {
 
+        
         var text = "Number\tBank\tAccountNr\tBalance\tPrincipal\tCurrency\tLastUpdate\n"
         let incomeList = sortAcounts(loadAccounts()!)
         
@@ -786,6 +789,7 @@ class SettingTableViewController: UITableViewController,
     }
     
     func expenseFileContent() -> String {
+        
         
         var currencyCodes: Set<String> = []
         var text = "Number\tDetail\tDate\tCurrency\tAmount\tCategory\n"
