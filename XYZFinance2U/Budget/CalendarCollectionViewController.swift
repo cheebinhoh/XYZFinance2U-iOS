@@ -1038,7 +1038,7 @@ class CalendarCollectionViewController: UICollectionViewController,
                 
                cell.label.textColor = UIColor.lightGray
             }
-            
+
             returnCell = cell
         }
     
