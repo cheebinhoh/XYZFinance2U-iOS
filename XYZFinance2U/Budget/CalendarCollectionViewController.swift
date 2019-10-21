@@ -944,6 +944,12 @@ class CalendarCollectionViewController: UICollectionViewController,
                 }
             }
             
+            // radius
+            let radius: CGFloat = 5
+            cell.label.clipsToBounds = true
+            cell.label.layer.masksToBounds = true
+            cell.label.layer.cornerRadius = radius
+            
             returnCell = cell
         } else {
             
