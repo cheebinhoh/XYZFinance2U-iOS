@@ -10,9 +10,9 @@ import UIKit
 
 @objc
 protocol XYZTextTableViewCellDelegate : class {
-    
-    func textDidEndEditing(_ sender:XYZTextTableViewCell)
-    func textDidBeginEditing(_ sender:XYZTextTableViewCell)
+
+    func textDidBeginEditing(_ sender: XYZTextTableViewCell)
+    func textDidEndEditing(_ sender: XYZTextTableViewCell)
     @objc optional func switchChanged(_ yesno: Bool, _ sender: XYZTextTableViewCell)
 }
 
@@ -20,24 +20,23 @@ class XYZTextTableViewCell: UITableViewCell,
     UITextFieldDelegate {
 
     // MARK: - property
-    var monetory = false
     weak var delegate: XYZTextTableViewCellDelegate?
-    var currencyCode: String = Locale.current.currencyCode!
+    var monetory = false
+    var currencyCode = Locale.current.currencyCode!
+    var isEditable = true
     
     // MARK: - IBOutlet
-    
     @IBOutlet weak var input: UITextField!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var optionSwitch: UISwitch!
     @IBOutlet weak var stack: UIStackView!
-    var isEditable = true
-    
+
     // MARK: - function
     
     func addUISwitch() {
         
         let cgpoint = CGPoint(x: 0.0, y: 0.0)
-        let frame = CGRect(origin: cgpoint , size: CGSize(width: 20, height: 35))
+        let frame = CGRect(origin: cgpoint, size: CGSize(width: 20, height: 35))
         let uiswitch = UISwitch(frame: frame)
         
         uiswitch.addTarget(self, action: #selector(switchChanged(_:)), for: UIControl.Event.valueChanged)
@@ -47,11 +46,9 @@ class XYZTextTableViewCell: UITableViewCell,
     }
     
     @objc
-    func switchChanged(_ locationSwitch: UISwitch) {
+    func switchChanged(_ switchValue: UISwitch) {
         
-        let value = locationSwitch.isOn
-        
-        delegate?.switchChanged!(value, self)
+        delegate?.switchChanged!(switchValue.isOn, self)
         // Do something
     }
     
@@ -100,7 +97,7 @@ class XYZTextTableViewCell: UITableViewCell,
         
         if enanble {
             
-            self.currencyCode = currencyCode ?? Locale.current.currencyCode ?? "USD"
+            self.currencyCode = currencyCode ?? Locale.current.currencyCode!
             input.addDoneToolbar(onDone: nil)
             input.clearButtonMode = .never
             input.keyboardType = .numberPad
@@ -108,7 +105,6 @@ class XYZTextTableViewCell: UITableViewCell,
         } else {
             
             input.keyboardType = .default
-            //input.text = ""
         }
     }
     
@@ -125,12 +121,8 @@ class XYZTextTableViewCell: UITableViewCell,
             text = formattingAndProcessDoubleValue(input: text)
             text = formattingCurrencyValue(input: text, code: currencyCode)
             textField.text = text
-            delegate?.textDidEndEditing(self)
         }
-        else {
-            
-            delegate?.textDidEndEditing(self)
-        }
+        
+        delegate?.textDidEndEditing(self)
     }
-
 }
