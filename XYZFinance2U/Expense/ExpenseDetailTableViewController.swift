@@ -45,7 +45,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     
     // MARK: - protocol implementation
     
-    func selection(_ sender: SelectionTableViewController, item: String?) {
+    func selectedItem(_ item: String?, sender: SelectionTableViewController) {
         
         switch sender.selectionIdentifier! {
             

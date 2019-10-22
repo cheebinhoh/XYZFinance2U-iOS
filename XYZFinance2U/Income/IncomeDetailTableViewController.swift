@@ -27,7 +27,7 @@ class IncomeDetailTableViewController: UITableViewController,
     IncomeDetailSwitchDelegate,
     SelectionDelegate {
     
-    func selection(_ sender: SelectionTableViewController, item: String?) {
+    func selectedItem(_ item: String?, sender: SelectionTableViewController) {
         
         if sender.selectionIdentifier == "currency" {
             

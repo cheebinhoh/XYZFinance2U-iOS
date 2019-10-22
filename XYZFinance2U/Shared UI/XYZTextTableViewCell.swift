@@ -13,7 +13,7 @@ protocol XYZTextTableViewCellDelegate : class {
 
     func textDidBeginEditing(_ sender: XYZTextTableViewCell)
     func textDidEndEditing(_ sender: XYZTextTableViewCell)
-    @objc optional func switchChanged(_ yesno: Bool, _ sender: XYZTextTableViewCell)
+    @objc optional func switchChanged(_ yesno: Bool, sender: XYZTextTableViewCell)
 }
 
 class XYZTextTableViewCell: UITableViewCell,
@@ -48,7 +48,7 @@ class XYZTextTableViewCell: UITableViewCell,
     @objc
     func switchChanged(_ switchValue: UISwitch) {
         
-        delegate?.switchChanged!(switchValue.isOn, self)
+        delegate?.switchChanged!(switchValue.isOn, sender: self)
         // Do something
     }
     

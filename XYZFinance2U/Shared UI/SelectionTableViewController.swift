@@ -10,7 +10,7 @@ import UIKit
 
 protocol SelectionDelegate: class {
     
-    func selection(_ sender: SelectionTableViewController, item: String?)
+    func selectedItem(_ item: String?, sender: SelectionTableViewController)
 }
 
 class SelectionTableViewController: UITableViewController {
@@ -63,10 +63,9 @@ class SelectionTableViewController: UITableViewController {
     }
 
     // MARK: - IBAction
-    
     @IBAction func backAction(_ sender: UIButton) {
 
-        delegate?.selection(self, item: selectedItem)
+        delegate?.selectedItem(selectedItem, sender: self)
         dismiss(animated: true, completion: nil)
     }
 
@@ -75,13 +74,7 @@ class SelectionTableViewController: UITableViewController {
         
         self.selectedItem = item
         
-        if let _ = displayedItem {
-         
-            navigationItem.title = displayedItem
-        } else  {
-            
-            navigationItem.title = self.selectedItem?.localized() ?? "";
-        }
+        navigationItem.title = displayedItem ?? ( self.selectedItem?.localized() ?? "" )
         
         found:
             for (sectionIndex, section) in tableSectionList.enumerated() {
@@ -121,7 +114,7 @@ class SelectionTableViewController: UITableViewController {
             sectionTitles.append(sectionIdentifier)
         }
         
-        var sectionIndex = -1
+        var sectionIndex: Int?
         
         for (index, section) in tableSectionList.enumerated() {
             
@@ -132,15 +125,15 @@ class SelectionTableViewController: UITableViewController {
             }
         }
         
-        if sectionIndex == -1 {
+        if sectionIndex == nil {
             
             let newSection = TableSectionCell(identifier: sectionIdentifier, title: sectionIdentifier, cellList: [], data: nil)
-            sectionIndex = tableSectionList.count
+            sectionIndex = tableSectionList.count /// tihis is old count before we insert new one below.
             
-            tableSectionList.insert(newSection, at: sectionIndex)
+            tableSectionList.insert(newSection, at: sectionIndex!)
         }
     
-        tableSectionList[sectionIndex].cellList = selection
+        tableSectionList[sectionIndex!].cellList = selection
     }
     
 
@@ -214,13 +207,7 @@ class SelectionTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        if section == 0 {
-            
-            return 35
-        } else {
-            
-            return 17.5
-        }
+        return section == 0 ? 35 : 17.5
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -240,13 +227,8 @@ class SelectionTableViewController: UITableViewController {
         
         selectedItem = tableSectionList[indexPath.section].cellList[indexPath.row];
 
-        var displayedSelectedItem = (selectedItem!).localized()
+        let displayedSelectedItem = displayedString.isEmpty ? (selectedItem!).localized() : displayedString[indexPath.row]
 
-        if !displayedString.isEmpty {
-            
-            displayedSelectedItem = displayedString[indexPath.row]
-        }
-        
         navigationItem.title = displayedSelectedItem
     }
 
@@ -267,13 +249,7 @@ class SelectionTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
 
-        if readonly {
-            
-            return nil
-        } else {
-            
-            return indexPath
-        }
+        return readonly ? nil : indexPath
     }
     
     /*
