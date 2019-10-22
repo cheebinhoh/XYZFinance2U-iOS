@@ -12,14 +12,14 @@ extension UITextField {
     
     func addDoneToolbar(onDone: (target: Any, action: Selector)?) {
         
-        let onDone = onDone ?? (target: self, action:#selector(doneButtonTapped))
+        let (target, action) = onDone ?? (target: self, action:#selector(doneButtonTapped))
         
         let toolbar = UIToolbar()
         toolbar.barStyle = .default
         toolbar.items = [
             
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-            UIBarButtonItem(title: "Done".localized(), style: .done, target: onDone.target, action: onDone.action)
+            UIBarButtonItem(title: "Done".localized(), style: .done, target: target, action: action)
         ]
         
         toolbar.sizeToFit()
