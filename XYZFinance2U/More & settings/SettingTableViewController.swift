@@ -34,7 +34,7 @@ class SettingTableViewController: UITableViewController,
     
     // MARK: - function
     
-    func switchChanged(_ yesno: Bool, _ sender: SettingTableViewCell) {
+    func switchChanged(_ value: Bool, _ sender: SettingTableViewCell) {
     
         let defaults = UserDefaults.standard;
         let laContext = LAContext()
@@ -245,8 +245,8 @@ class SettingTableViewController: UITableViewController,
                 // newcell.accessoryType = required ? .checkmark : .none
                 cell = newcell
             
-                default:
-                    fatalError("Exception: \(sectionList[indexPath.section].cellList[indexPath.row]) is not supported")
+            default:
+                fatalError("Exception: \(sectionList[indexPath.section].cellList[indexPath.row]) is not supported")
         }
         
         return cell!
@@ -269,6 +269,7 @@ class SettingTableViewController: UITableViewController,
         settingDetail.navigationItem.title = "About".localized()
         let footerSection = TableSectionCell(identifier: "footer", title: "", cellList: [String](), data: nil)
         settingDetail.tableSectionCellList.append(footerSection)
+        
         settingDetail.tableView.reloadData()
     }
     
@@ -516,7 +517,7 @@ class SettingTableViewController: UITableViewController,
             managedContext()?.delete(budget)
         }
         
-        let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
+        let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset)
         zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
         
         saveManageContext()
@@ -547,8 +548,8 @@ class SettingTableViewController: UITableViewController,
         
         fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
                              [ckrecordzone],
-                             [zone], {
-        })
+                             [zone],
+                             { })
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -753,13 +754,7 @@ class SettingTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        if section == 0 {
-            
-            return 35
-        } else {
-            
-            return 17.5
-        }
+        return section == 0 ? 35 : 17.5
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -789,7 +784,6 @@ class SettingTableViewController: UITableViewController,
     }
     
     func expenseFileContent() -> String {
-        
         
         var currencyCodes: Set<String> = []
         var text = "Number\tDetail\tDate\tCurrency\tAmount\tCategory\n"

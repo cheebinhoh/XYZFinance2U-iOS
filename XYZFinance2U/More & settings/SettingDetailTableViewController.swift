@@ -91,8 +91,9 @@ class SettingDetailTableViewController: UITableViewController {
                 
                 let textHeading = """
                 
-\(AppDelegate.appName)
-"""
+                \(AppDelegate.appName)
+                """
+                
                 let headingAttributes: [NSAttributedString.Key: Any]? = [NSAttributedString.Key.font: newcell.content.font!,
                                                                          NSAttributedString.Key.link: "https://apps.apple.com/us/app/xyzfinance2u-finance/id1341502993"]
                 let headingAttributeText = NSMutableAttributedString(string: textHeading, attributes: headingAttributes)
@@ -147,9 +148,9 @@ class SettingDetailTableViewController: UITableViewController {
                 
                 let text = """
                 
-\("The icons are from Noun Project by".localized()) Yoraslav Samoylov, Sumhi_icon, Shmidt Sergey, Sandy Priyasa, Sophia Bai, ProSymbols, Mike Ashley, Krishna, Gregor Cresnar, Dinosoft Lab, Delwar Hossain, Arien Coquet.
+                \("The icons are from Noun Project by".localized()) Yoraslav Samoylov, Sumhi_icon, Shmidt Sergey, Sandy Priyasa, Sophia Bai, ProSymbols, Mike Ashley, Krishna, Gregor Cresnar, Dinosoft Lab, Delwar Hossain, Arien Coquet.
 
-"""
+                """
                 
                 newcell.content.text = text
                 cell = newcell
@@ -163,13 +164,7 @@ class SettingDetailTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        if section == 0 {
-            
-            return 35
-        } else {
-            
-            return 17.5
-        }
+        return section == 0 ? 35 : 17.5
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

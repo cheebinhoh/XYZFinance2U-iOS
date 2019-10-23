@@ -52,11 +52,9 @@ class SettingTableViewCell: UITableViewCell {
     }
     
     @objc
-    func switchChanged(_ locationSwitch: UISwitch) {
+    func switchChanged(_ value: UISwitch) {
         
-        let value = locationSwitch.isOn
-        
-        delegate?.switchChanged(value, self)
+        delegate?.switchChanged(value.isOn, self)
         // Do something
     }
     
