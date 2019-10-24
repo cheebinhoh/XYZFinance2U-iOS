@@ -10,7 +10,7 @@ import UIKit
 
 protocol ExpenseTableViewMonthChange: class {
     
-    func change(_ monthYear: Date! )
+    func change(_ monthYear: Date!)
 }
 
 class ExpenseTableViewMonthCell: UITableViewCell {
@@ -123,15 +123,17 @@ class ExpenseTableViewMonthCell: UITableViewCell {
     }
     
     override func awakeFromNib() {
+        
         super.awakeFromNib()
         
         setDate(Date())
-        
         drawSelectionState()
+        
         // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
+        
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
