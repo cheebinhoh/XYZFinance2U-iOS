@@ -27,6 +27,7 @@ class ExpenseTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         colorView?.backgroundColor = UIColor.clear
+        
         // Initialization code
     }
 
@@ -39,7 +40,8 @@ class ExpenseTableViewCell: UITableViewCell {
 
     func setExpense(expense: XYZExpense) {
         
-        amount.text = formattingCurrencyValue(input: (expense.value(forKey: XYZExpense.amount) as? Double) ?? 0.0, code: expense.value(forKey: XYZExpense.currencyCode) as? String )
+        amount.text = formattingCurrencyValue(input: (expense.value(forKey: XYZExpense.amount) as? Double) ?? 0.0,
+                                              code: expense.value(forKey: XYZExpense.currencyCode) as? String )
         detail.text = ( expense.value(forKey: XYZExpense.detail) as? String ) ?? ""
         date.text = formattingDate(date: (expense.value(forKey: XYZExpense.date) as? Date) ?? Date(), style: .medium )
         
@@ -53,7 +55,7 @@ class ExpenseTableViewCell: UITableViewCell {
         
         if let _ = icon {
             
-            if let _ = budget, let iconName = budget?.value(forKey: XYZBudget.iconName) as? String, iconName != "" {
+            if let iconName = budget?.value(forKey: XYZBudget.iconName) as? String, iconName != "" {
                 
                 icon.image = UIImage(named: iconName)
             } else {
@@ -76,64 +78,9 @@ class ExpenseTableViewCell: UITableViewCell {
             
             case .none:
                 date.text = formattingDate(date: theDate, style: .medium )
-            
-            case .daily:
-                date.text = "\("daily".localized())" //: \(formattingDate(date: theDate, style: .medium ))"
-            
-            case .biweekly:
-                //let f = DateFormatter()
-                date.text = "\("biweekly".localized())" //: \(f.weekdaySymbols[Calendar.current.component(.weekday, from: theDate)])"
-            
-            case .weekly:
-                //let f = DateFormatter()
-                date.text = "\("weekly".localized())" //: \(f.weekdaySymbols[Calendar.current.component(.weekday, from: theDate)])"
-            
-            case .monthly:
-                /*
-                let occurrenceDates = expense.getOccurenceDates(until: Date())
-                var nowDate: Date?
-                let monthYearDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: monthYearDate!)
-                for occurence in occurrenceDates {
-                    
-                    let nowDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: occurence)
-                    if nowDateComponents.month! == monthYearDateComponents.month!
-                        && nowDateComponents.year! == monthYearDateComponents.year! {
-                        
-                        nowDate = occurence
-                    }
-                }
-                */
-                
-                date.text = "\("monthly".localized())" //: \(formattingDate(date: nowDate!, style: .medium ))"
-            
-            case .halfyearly:
-                /*
-                let occurrenceDates = expense.getOccurenceDates(until: Date())
-                var nowDate: Date?
-                let monthYearDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: monthYearDate!)
-          
-                for occurence in occurrenceDates {
-                    
-                    let nowDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: occurence)
-                    if nowDateComponents.month! == monthYearDateComponents.month!
-                        && nowDateComponents.year! == monthYearDateComponents.year! {
-                        
-                        nowDate = occurence
-                    }
-                }
-                 */
-                
-                date.text = "\("half yearly".localized())" //: \(formattingDate(date: nowDate!, style: .medium ))"
-            
-            case .yearly:
-                /*
-                let f = DateFormatter()
-                f.dateFormat = "YYYY"
-
-                let theDateComponents = Calendar.current.dateComponents([.day], from: theDate)
-                 */
-                //let nowDate = Calendar.current.date(byAdding: .day, value: theDateComponents.day! - 1, to: monthYearDate!)
-                date.text = "\("yearly".localized())" //": \(formattingDate(date: nowDate!, style: .medium ))"
+           
+            case let other:
+                date.text = other.description().localized()
         }
     }
 }

@@ -14,8 +14,8 @@ import CloudKit
 // MARK: - protocol
 protocol ExpenseTableViewDelegate: class {
     
-    func expenseSelected(newExpense: XYZExpense?)
-    func expenseDeleted(deletedExpense: XYZExpense)
+    func expenseSelected(expense: XYZExpense?)
+    func expenseDeleted(expense: XYZExpense)
 }
 
 class ExpenseTableViewController: UITableViewController,
@@ -106,26 +106,6 @@ class ExpenseTableViewController: UITableViewController,
         self.present(expenseDetailNavigationController, animated: true, completion: nil)
     }
     
-    /* DEPRECATED: we do not need it anymore
-    @IBAction func unwindToExpenseTableView(sender: UIStoryboardSegue)
-    {
-        modalEditing = false
-        guard let expenseDetail = sender.source as? ExpenseDetailTableViewController, let expense = expenseDetail.expense else  
-        {
-            return
-        }
-        
-        if tableView.indexPathForSelectedRow == nil
-        {
-            expenseList.append(expense)
-        }
-        
-        saveManageContext()
-        
-        reloadData()
-    }
-     */
-    
     // MARK: - 3d touch delegate (peek & pop)
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
@@ -152,8 +132,7 @@ class ExpenseTableViewController: UITableViewController,
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
-        if let indexPath = tableView.indexPathForRow(at: location), sectionList[indexPath.section].identifier != "searchBar"
-            && indexPath.row > 0 {
+        if let indexPath = tableView.indexPathForRow(at: location), indexPath.row > 0 {
     
             guard let viewController = storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailViewController") as? ExpenseDetailViewController else  {
                 
@@ -174,16 +153,15 @@ class ExpenseTableViewController: UITableViewController,
             viewController.indexPath = indexPath
 
             return viewController
-        }
-        else {
+        } else {
             
             return nil
         }
     }
     
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+    
         // code you want to implement
-        
     }
     
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
@@ -250,7 +228,7 @@ class ExpenseTableViewController: UITableViewController,
             self.updateToiCloud(oldExpense!)
         } else {
             
-            self.delegate?.expenseDeleted(deletedExpense: oldExpense!)
+            self.delegate?.expenseDeleted(expense: oldExpense!)
             aContext?.delete(oldExpense!)
             
             self.loadExpensesFromSections()
@@ -274,15 +252,12 @@ class ExpenseTableViewController: UITableViewController,
         
         for (sectionIndex, section) in sectionList.enumerated() {
             
-            if section.identifier != "searchBar" {
-            
-                let sectionExpenseList = section.data as? [XYZExpense]
-                for (rowIndex, cell) in (sectionExpenseList?.enumerated())! {  //(section.expenseList?.enumerated())! {
+            let sectionExpenseList = section.data as? [XYZExpense]
+            for (rowIndex, cell) in (sectionExpenseList?.enumerated())! {  //(section.expenseList?.enumerated())! {
+                
+                if cell == expense {
                     
-                    if cell == expense {
-                        
-                        return IndexPath(row: rowIndex, section: sectionIndex)
-                    }
+                    return IndexPath(row: rowIndex, section: sectionIndex)
                 }
             }
         }
@@ -343,33 +318,6 @@ class ExpenseTableViewController: UITableViewController,
             index.row = index.row + 1;
             
             deleteWithoutUndo(of: index)
-            
-            /*
-            let aContext = managedContext()
-            var sectionExpenseList = sectionList[selectedIndexPath.section].data as? [XYZExpense]
-            
-            let oldExpense = sectionExpenseList?.remove(at: selectedIndexPath.row - 1)
-            sectionList[selectedIndexPath.section].data = sectionExpenseList
-            
-            guard oldExpense == expense else {
-                
-                fatalError("Exception: expense selectedd is not what is to be deleted")
-            }
-
-            let isSoftDelete = softDeleteExpense(expense: oldExpense!)
-            
-            if !isSoftDelete {
-                
-                delegate?.expenseDeleted(deletedExpense: oldExpense!)
-                aContext?.delete(oldExpense!)
-            }
-            
-            saveManageContext()
-            loadExpensesFromSections()
-            reloadData()
-            
-            updateToiCloud(nil)
-            */
         }
     }
     
@@ -706,13 +654,10 @@ class ExpenseTableViewController: UITableViewController,
         
         for section in sectionList {
             
-            if section.identifier != "searchBar" {
+            let sectionExpenseList = section.data as? [XYZExpense]
+            for expense in sectionExpenseList! {
                 
-                let sectionExpenseList = section.data as? [XYZExpense]
-                for expense in sectionExpenseList! {
-                    
-                    expenseList.append(expense)
-                }
+                expenseList.append(expense)
             }
         }
         
@@ -983,8 +928,6 @@ class ExpenseTableViewController: UITableViewController,
     // MARK: - Search delegate
     func didDismissSearchController(_ searchController: UISearchController) {
     
-        print("************* dismiss")
-        
         if let _ = searchText, !((searchText?.isEmpty)!), searchActive  {
             
             searchBar?.text = searchText
@@ -998,23 +941,17 @@ class ExpenseTableViewController: UITableViewController,
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         
-        print("************* begin editing")
-        
         //searchActive = true;
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        
-        print("************* end editing")
         
         searchText = searchBar.text
         //searchActive = false;
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        
-        print("************* cancel button")
-        
+          
         searchBar.showsCancelButton = false
         searchBar.text = ""
         searchActive = false;
@@ -1027,8 +964,6 @@ class ExpenseTableViewController: UITableViewController,
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        print("************* search button")
-        
         searchActive = true;
         searchBar.resignFirstResponder()
         
@@ -1037,8 +972,6 @@ class ExpenseTableViewController: UITableViewController,
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        print("************* textDidChange")
-
         searchBar.showsCancelButton = !searchText.isEmpty
         
         if searchText.isEmpty {
@@ -1048,20 +981,6 @@ class ExpenseTableViewController: UITableViewController,
                 filteredExpenseList = nil
                 reloadData()
             }
-        } else {
-            
-            /*
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            let expenseList = (appDelegate?.expenseList)!
-            filteredExpenseList = expenseList.filter({ (expense) -> Bool in
-            
-                let detail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
-                let category = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
-                
-                return detail.lowercased().range(of: searchText.lowercased()) != nil
-                       || category.lowercased().range(of: searchText.lowercased()) != nil
-            })
-            */
         }
     }
     
@@ -1077,122 +996,50 @@ class ExpenseTableViewController: UITableViewController,
 
         var commands = [UIContextualAction]()
         
-        if sectionList[indexPath.section].identifier == "searchBar" {
+        let copy = UIContextualAction(style: .normal, title: "Copy".localized() ) { _, _, handler in
             
-            guard let cell = tableView.cellForRow(at: indexPath) as? ExpenseTableViewMonthCell else {
+            guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
                 
-                fatalError("Exception: ExpenseTableViewMonthCell is expected")
+                fatalError("Exception: ExpenseDetailNavigationController is expected")
             }
             
-            let prevMonthDate = Calendar.current.date(byAdding: .month, value: -1, to: cell.date!)
-            cell.setDate(prevMonthDate!)
-            cell.drawSelectionState()
-            
-            filteredMonthYear = nil
-            filteredExpenseList = nil
-            reloadData()
-        } else {
-
-            let copy = UIContextualAction(style: .normal, title: "Copy".localized() ) { _, _, handler in
+            guard let expenseDetailTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
                 
-                guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
-                    
-                    fatalError("Exception: ExpenseDetailNavigationController is expected")
-                }
-                
-                guard let expenseDetailTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
-                    
-                    fatalError("Exception: ExpenseDetailTableViewController is expected" )
-                }
-                
-                let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
-                    
-                    fatalError("Exception: UISplitViewController is expected" )
-                }
-                
-                mainSplitView.popOverNavigatorController = expenseDetailNavigationController
-                
-                //let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]
-                let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
-                let expense = sectionExpenseList![indexPath.row - 1 ]
-                let detail = expense.value(forKey: XYZExpense.detail) as? String
-                let amount = expense.value(forKey: XYZExpense.amount) as? Double
-                let budgetGroup = expense.value(forKey: XYZExpense.budgetCategory) as? String
-                let date = Date()
-                let currency = expense.value(forKey: XYZExpense.currencyCode) as? String
-                
-                expenseDetailTableView.presetAmount = amount
-                expenseDetailTableView.presetDate = date
-                expenseDetailTableView.presetDetail = detail
-                expenseDetailTableView.presetBudgetCategory = budgetGroup
-                expenseDetailTableView.presetCurrencyCode = currency
-                expenseDetailTableView.setPopover(delegate: self)
-                self.isPopover = true
-                
-                expenseDetailNavigationController.modalPresentationStyle = .popover
-                handler(true)
-                self.present(expenseDetailNavigationController, animated: true, completion: nil)
+                fatalError("Exception: ExpenseDetailTableViewController is expected" )
             }
             
-            copy.backgroundColor = UIColor.systemBlue
-            commands.append(copy)
-            
-            /* deprrcated
-            guard let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense] else {
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
                 
-                fatalError("Exception: [XYZExpense] is expected")
+                fatalError("Exception: UISplitViewController is expected" )
             }
             
-            let expense = sectionExpenseList[indexPath.row - 1]
+            mainSplitView.popOverNavigatorController = expenseDetailNavigationController
             
-            let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
+            //let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]
+            let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
+            let expense = sectionExpenseList![indexPath.row - 1 ]
+            let detail = expense.value(forKey: XYZExpense.detail) as? String
+            let amount = expense.value(forKey: XYZExpense.amount) as? Double
+            let budgetGroup = expense.value(forKey: XYZExpense.budgetCategory) as? String
+            let date = Date()
+            let currency = expense.value(forKey: XYZExpense.currencyCode) as? String
             
-            if !(isShared!) {
-                
-                if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
-                    
-                    let more = UIContextualAction(style: .normal, title: "More".localized()) { _, _, handler in
-                        
-                        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
-                            
-                            fatalError("Exception: UISplitViewController is expected" )
-                        }
-                        
-                        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                        let copyUrlOption = UIAlertAction(title: "Share expense url".localized(), style: .default, handler: { (action) in
-                            
-                            let vc = UIActivityViewController(activityItems: [url], applicationActivities: [])
-                            self.present(vc, animated: true, completion: nil)
-                            //UIPasteboard.general.string = "\(url)"
-                            
-                            mainSplitView.popOverAlertController = nil
-                            handler(true)
-                        })
-                        
-                        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-                            
-                            mainSplitView.popOverAlertController = nil
-                            handler(true)
-                        })
-                        
-                        optionMenu.addAction(copyUrlOption)
-                        optionMenu.addAction(cancelAction)
-                        
-                        mainSplitView.popOverAlertController = optionMenu
-                        self.present(optionMenu, animated: true, completion: nil)
-                    }
-                    
-                    more.image = UIImage(named: "more")
-                    
-                    commands.append(more)
-                }
-            }
-            */
+            expenseDetailTableView.presetAmount = amount
+            expenseDetailTableView.presetDate = date
+            expenseDetailTableView.presetDetail = detail
+            expenseDetailTableView.presetBudgetCategory = budgetGroup
+            expenseDetailTableView.presetCurrencyCode = currency
+            expenseDetailTableView.setPopover(delegate: self)
+            self.isPopover = true
             
-            return UISwipeActionsConfiguration(actions: commands)
+            expenseDetailNavigationController.modalPresentationStyle = .popover
+            handler(true)
+            self.present(expenseDetailNavigationController, animated: true, completion: nil)
         }
+        
+        copy.backgroundColor = UIColor.systemBlue
+        commands.append(copy)
         
         return UISwipeActionsConfiguration(actions: commands)
     }
@@ -1201,92 +1048,23 @@ class ExpenseTableViewController: UITableViewController,
         
         var commands = [UIContextualAction]()
         
-        if sectionList[indexPath.section].identifier == "searchBar" {
+        let delete = UIContextualAction(style: .destructive, title: "Delete".localized()) { _, _, handler in
             
-            guard let cell = tableView.cellForRow(at: indexPath) as? ExpenseTableViewMonthCell else {
+            // Delete the row from the data source
+            self.delete(of: indexPath)
+            
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            if (appDelegate?.expenseList.isEmpty)! {
                 
-                fatalError("Exception: ExpenseTableViewMonthCell is expected")
+                self.setEditing(false, animated: true)
+                self.tableView.setEditing(false, animated: false)
             }
             
-            let nextMonthDate = Calendar.current.date(byAdding: .month, value: 1, to: cell.date!)
-            cell.setDate(nextMonthDate!)
-            cell.drawSelectionState()
-    
-            filteredMonthYear = nil
-            filteredExpenseList = nil
-            reloadData()
-        } else {
-            
-            /*
-            guard let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense] else {
-                
-                fatalError("Exception: [XYZExpense] is expected")
-            }
-        
-            let expense = sectionExpenseList[indexPath.row - 1]
-            let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
-            */
-            
-            let delete = UIContextualAction(style: .destructive, title: "Delete".localized()) { _, _, handler in
-                
-                // Delete the row from the data source
-                self.delete(of: indexPath)
-                
-                let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                if (appDelegate?.expenseList.isEmpty)! {
-                    
-                    self.setEditing(false, animated: true)
-                    self.tableView.setEditing(false, animated: false)
-                }
-                
-                handler(true)
-            }
-        
-            commands.append(delete)
-            /* move it to heading
-             
-            if !(isShared!) {
-                
-                if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
-                    
-                    let more = UIContextualAction(style: .normal, title: "More".localized()) { _, _, handler in
-                        
-                        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
-                            
-                            fatalError("Exception: UISplitViewController is expected" )
-                        }
-                        
-                        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                        let copyUrlOption = UIAlertAction(title: "Share expense url".localized(), style: .default, handler: { (action) in
-                            
-                            let vc = UIActivityViewController(activityItems: [url], applicationActivities: [])
-                            self.present(vc, animated: true, completion: nil)
-                            //UIPasteboard.general.string = "\(url)"
-
-                            mainSplitView.popOverAlertController = nil
-                            handler(true)
-                        })
-                        
-                        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-                            
-                            mainSplitView.popOverAlertController = nil
-                            handler(true)
-                        })
-                        
-                        optionMenu.addAction(copyUrlOption)
-                        optionMenu.addAction(cancelAction)
-                        
-                        mainSplitView.popOverAlertController = optionMenu
-                        self.present(optionMenu, animated: true, completion: nil)
-                    }
-                    
-                    commands.append(more)
-                }
-            }
-             */
+            handler(true)
         }
-        
+    
+        commands.append(delete)
+
         return UISwipeActionsConfiguration(actions: commands)
     }
     
@@ -1299,19 +1077,13 @@ class ExpenseTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         
-        return sectionList[indexPath.section].identifier != "searchBar"
+        return true
     }
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         
-        var result = UITableViewCell.EditingStyle.none
-        
-        if sectionList[indexPath.section].identifier != "searchBar" {
-            
-            result = UITableViewCell.EditingStyle.delete
-        }
-        
-        return result
+
+        return UITableViewCell.EditingStyle.delete
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -1321,21 +1093,15 @@ class ExpenseTableViewController: UITableViewController,
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if sectionList[section].identifier == "searchBar" {
+        let sectionExpenseList = sectionList[section].data as? [XYZExpense]
+    
+        var numRows = ( sectionExpenseList?.count ?? 0 ) + 1
+        if !sectionExpandStatus[section] {
             
-            return sectionList[section].cellList.count
-        } else {
-            
-            let sectionExpenseList = sectionList[section].data as? [XYZExpense]
-        
-            var numRows = ( sectionExpenseList?.count ?? 0 ) + 1
-            if !sectionExpandStatus[section] {
-                
-                numRows = 1
-            }
-            
-            return numRows
+            numRows = 1
         }
+        
+        return numRows
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -1343,36 +1109,9 @@ class ExpenseTableViewController: UITableViewController,
         var cell: UITableViewCell?
         
         switch sectionList[indexPath.section].identifier {
-          /*
-            case "searchBar":
-                guard let expenseCell = tableView.dequeueReusableCell(withIdentifier: "expenseTableViewSearchCell", for: indexPath) as? ExpenseTableViewSearchCell else {
-                    
-                    fatalError("error on ExpenseTableViewSearchCell cell")
-                }
-                
-                searchBar = expenseCell.searchBar
-                searchBar?.delegate = self
-                cell = expenseCell
-          */
-            
-            case "searchBar":
-                guard let expenseCell = tableView.dequeueReusableCell(withIdentifier: "expenseTableViewMonthCell", for: indexPath) as? ExpenseTableViewMonthCell else {
-                    
-                    fatalError("error on ExpenseTableViewMonthCell cell")
-                }
-            
-                expenseCell.delegate = self
-                
-                if nil == filteredMonthYear {
-                    
-                    expenseCell.index = nil
-                }
-                
-                expenseCell.drawSelectionState()
-                cell = expenseCell
+            // used to have other
 
             default:
-                
                 switch indexPath.row {
                     
                     case 0:
@@ -1473,34 +1212,27 @@ class ExpenseTableViewController: UITableViewController,
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     
-        if sectionList[section].identifier == "searchBar" {
+        let stackView = UIStackView()
+        let title = UILabel()
+        let subtotal = UILabel()
+        let (amount, currencyCode) = sectionTotal(section)
+        
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 45)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        
+        title.text = sectionList[section].title
+        title.textColor = UIColor.gray
+        stackView.axis = .horizontal
+        stackView.addArrangedSubview(title)
+        
+        if let currencyCode = currencyCode {
             
-            return nil
-        } else {
-            
-            let stackView = UIStackView()
-            let title = UILabel()
-            let subtotal = UILabel()
-            let (amount, currencyCode) = sectionTotal(section)
-            
-            stackView.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 45)
-            stackView.isLayoutMarginsRelativeArrangement = true
-            
-            title.text = sectionList[section].title
-            title.textColor = UIColor.gray
-            stackView.axis = .horizontal
-            stackView.addArrangedSubview(title)
-            
-            if let currencyCode = currencyCode {
-                
-                subtotal.text = formattingCurrencyValue(input: amount, code: currencyCode)
-                subtotal.textColor = UIColor.gray
-                stackView.addArrangedSubview(subtotal)
-            }
-            
-            // return stackView
-            return UIView(frame: .zero)
+            subtotal.text = formattingCurrencyValue(input: amount, code: currencyCode)
+            subtotal.textColor = UIColor.gray
+            stackView.addArrangedSubview(subtotal)
         }
+
+        return UIView(frame: .zero)
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -1559,14 +1291,14 @@ class ExpenseTableViewController: UITableViewController,
                    
                     let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
                     
-                    delegate?.expenseSelected(newExpense: sectionExpenseList?[indexPath.row - 1])
+                    delegate?.expenseSelected(expense: sectionExpenseList?[indexPath.row - 1])
                 }
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        return sectionList[section].identifier == "searchBar" ?  CGFloat.leastNormalMagnitude :      10 //35
+        return 10
     }
 
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

@@ -153,14 +153,14 @@ class ExpenseDetailTableViewController: UITableViewController,
         present(optionMenu, animated: true, completion: nil)
     }
     
-    func expenseSelected(newExpense: XYZExpense?) {
+    func expenseSelected(expense: XYZExpense?) {
         
         let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit(_:)))
         navigationItem.setRightBarButton(editButton, animated: true)
         navigationItem.setLeftBarButton(nil, animated: true)
         
         modalEditing = false
-        expense = newExpense
+        self.expense = expense
         reloadData()
         
         if isShared {
@@ -172,9 +172,9 @@ class ExpenseDetailTableViewController: UITableViewController,
         }
     }
     
-    func expenseDeleted(deletedExpense: XYZExpense) {
+    func expenseDeleted(expense: XYZExpense) {
         
-        expense = nil
+        self.expense = nil
         reloadData()
     }
     
@@ -1023,7 +1023,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             
             masterViewController.navigationItem.leftBarButtonItem?.isEnabled = true
             masterViewController.navigationItem.rightBarButtonItem?.isEnabled = true
-            expenseSelected(newExpense: expense)
+            expenseSelected(expense: expense)
         }
         
         expenseDelegate?.cancelExpense()

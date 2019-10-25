@@ -431,82 +431,6 @@
                                     <outlet property="searchBar" destination="6QW-5Q-V6M" id="feH-ww-Pra"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseTableViewMonthCell" rowHeight="50" id="fdt-gm-ZHu" userLabel="ExpenseTableViewMonthCell" customClass="ExpenseTableViewMonthCell" customModule="XYZFinance2U" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="255.5" width="375" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fdt-gm-ZHu" id="fxt-eN-Art">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="98c-fv-9rP">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="81d-b9-oBr">
-                                                    <rect key="frame" x="0.0" y="0.0" width="75" height="50"/>
-                                                    <state key="normal" title="...">
-                                                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="button:" destination="fdt-gm-ZHu" eventType="touchUpInside" id="DbZ-rk-YWK"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ggJ-wy-Ror">
-                                                    <rect key="frame" x="75" y="0.0" width="75" height="50"/>
-                                                    <state key="normal" title="Jan, 18">
-                                                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="button:" destination="fdt-gm-ZHu" eventType="touchUpInside" id="Ffj-Hy-bOh"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BKD-ry-fhY">
-                                                    <rect key="frame" x="150" y="0.0" width="75" height="50"/>
-                                                    <state key="normal" title="Feb, 18">
-                                                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="button:" destination="fdt-gm-ZHu" eventType="touchUpInside" id="irM-C8-Egs"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gax-js-UNZ">
-                                                    <rect key="frame" x="225" y="0.0" width="75" height="50"/>
-                                                    <state key="normal" title="Mar, 18">
-                                                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="button:" destination="fdt-gm-ZHu" eventType="touchUpInside" id="R2J-kL-csj"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DXs-6s-KmU">
-                                                    <rect key="frame" x="300" y="0.0" width="75" height="50"/>
-                                                    <state key="normal" title="...">
-                                                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="button:" destination="fdt-gm-ZHu" eventType="touchUpInside" id="tnP-hw-xlz"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Gax-js-UNZ" firstAttribute="width" secondItem="81d-b9-oBr" secondAttribute="width" id="6v9-NE-srr"/>
-                                                <constraint firstItem="ggJ-wy-Ror" firstAttribute="width" secondItem="81d-b9-oBr" secondAttribute="width" id="Bds-tz-aod"/>
-                                                <constraint firstItem="DXs-6s-KmU" firstAttribute="width" secondItem="81d-b9-oBr" secondAttribute="width" id="PvQ-Ty-fmU"/>
-                                                <constraint firstItem="BKD-ry-fhY" firstAttribute="width" secondItem="81d-b9-oBr" secondAttribute="width" id="pT3-J7-lKb"/>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="999" constant="40" id="syw-DR-aZ7"/>
-                                            </constraints>
-                                        </stackView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="98c-fv-9rP" secondAttribute="bottom" id="7Dk-KC-gLt"/>
-                                        <constraint firstItem="98c-fv-9rP" firstAttribute="top" secondItem="fxt-eN-Art" secondAttribute="top" id="QT5-Th-FsA"/>
-                                        <constraint firstAttribute="trailing" secondItem="98c-fv-9rP" secondAttribute="trailing" id="XJV-xu-ITk"/>
-                                        <constraint firstItem="98c-fv-9rP" firstAttribute="leading" secondItem="fxt-eN-Art" secondAttribute="leading" id="b0M-Ww-D3i"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="stackView" destination="98c-fv-9rP" id="r8O-Bp-Btr"/>
-                                </connections>
-                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="NFk-oL-P9f" id="mxB-Cd-wpi"/>
@@ -1451,7 +1375,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="N5E-ct-ZyE">
-                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="525"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1484,10 +1408,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SfN-xw-rth">
-                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="525"/>
                                 <subviews>
                                     <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="65b-9C-Wat">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="525"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="ANL-Bn-bhJ" appends="YES" id="rC4-iu-7AU"/>
@@ -2380,7 +2304,7 @@ Chee Bin HOH, 2017</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Vbr-uz-1K0"/>
-        <segue reference="ve4-y6-Yqm"/>
+        <segue reference="n4x-5K-QOe"/>
         <segue reference="12h-Ii-8y1"/>
     </inferredMetricsTieBreakers>
 </document>
