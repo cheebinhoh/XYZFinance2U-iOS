@@ -39,5 +39,10 @@ class XYZSelectionTableViewCell: UITableViewCell {
         
         self.selection.text = selection.localized()
     }
+    
+    func setSeletionTextColor(_ color: UIColor) {
+    
+        self.selection.textColor = color
+    }
 
 }

@@ -1313,7 +1313,30 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                     fatalError("Exception: incomeDetailSelectionCell is failed to be created")
                 }
                 
-                budgetcell.setSelection( budgetCategory == "" ? "budget category".localized() : budgetCategory )
+                var selection = "budget category".localized();
+                var selectionColor = UIColor.placeholderGray
+                
+                if #available(iOS 13.0, *) {
+                    
+                    selectionColor = UIColor.placeholderText
+                }
+        
+                if budgetCategory != "" {
+                    
+                    selection = budgetCategory
+                    
+                    if #available(iOS 13.0, *) {
+                        
+                        selectionColor = UIColor.label
+                    } else {
+                        
+                        selectionColor = UIColor.black
+                    }
+                }
+                
+                budgetcell.setSelection(selection)
+                budgetcell.setSeletionTextColor(selectionColor)
+         
                 budgetcell.selectionStyle = .none
                 
                 if iconName != "" {

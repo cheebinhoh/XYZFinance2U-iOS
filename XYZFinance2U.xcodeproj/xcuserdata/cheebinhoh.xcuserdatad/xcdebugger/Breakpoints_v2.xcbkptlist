@@ -202,8 +202,8 @@
             timestampString = "589681305.0969011"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1432"
-            endingLineNumber = "1432"
+            startingLineNumber = "1448"
+            endingLineNumber = "1448"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
