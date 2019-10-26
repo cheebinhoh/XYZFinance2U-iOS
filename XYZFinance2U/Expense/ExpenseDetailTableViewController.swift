@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreLocation
 import CloudKit
 import ContactsUI
 
@@ -30,9 +29,6 @@ class ExpenseDetailTableViewController: UITableViewController,
     ExpenseDetailImageViewTableViewCellDelegate,
     ExpenseTableViewDelegate,
     ExpenseDetailCommandDelegate,
-    ExpenseDetailLocationDelegate,
-    ExpenseDetailLocationPickerDelegate,
-    ExpenseDetailLocationViewDelegate,
     SelectionDelegate,
     CNContactPickerDelegate {
  
@@ -82,32 +78,6 @@ class ExpenseDetailTableViewController: UITableViewController,
                 budgetList = getBudgets(of: item!)
         }
         
-        tableView.reloadData()
-    }
-    
-    func newlocation(coordinte: CLLocationCoordinate2D?) {
-        
-        if let _ = coordinte {
-            
-            cllocation = CLLocation(latitude: (coordinte?.latitude)!, longitude: (coordinte?.longitude)!)
-        } else {
-            
-            cllocation = nil
-        }
-
-        hasgeolocation = nil != cllocation
-    }
-
-    func locationTouchUp(_ sender: ExpenseDetailLocationPickerTableViewCell) {
-        
-        showLocationView()
-    }
-    
-    func locationSwitch(_ yesno: Bool, _ sender: ExpenseDetailLocationTableViewCell) {
-        
-        hasLocation = yesno
-        
-        loadDataInTableSectionCell()
         tableView.reloadData()
     }
     
@@ -184,22 +154,12 @@ class ExpenseDetailTableViewController: UITableViewController,
     
         
         var otherSectionCellList = ["date",
-                                    "recurring",
-                                    // "location" // decommissioned it as it is crashed.
-                                   ]
+                                    "recurring"]
         
         if let _ = recurring, recurring != XYZExpense.Length.none {
             
             let currencyIndex = otherSectionCellList.firstIndex(of: "recurring")
             otherSectionCellList.insert("recurringStopDate", at: currencyIndex! + 1)
-        }
-        
-        if hasLocation {
-            
-            if let locationIndex = otherSectionCellList.firstIndex(of: "location") {
-            
-                otherSectionCellList.insert("locationPicker", at: locationIndex + 1)
-            }
         }
         
         let mainSection = TableSectionCell(identifier: "main",
@@ -277,10 +237,8 @@ class ExpenseDetailTableViewController: UITableViewController,
         } else if let existingDate = expense?.value(forKey: XYZExpense.date) as? Date, existingDate != date {
             
             hasChanged = true
-        } else if let existingHasLocation = expense?.value(forKey: XYZExpense.hasLocation) as? Bool, existingHasLocation != hasLocation {
-            
-            hasChanged = true
-        } else if let existingCurrencCode = expense?.value(forKey: XYZExpense.currencyCode) as? String, existingCurrencCode != currencyCode {
+        }
+        else if let existingCurrencCode = expense?.value(forKey: XYZExpense.currencyCode) as? String, existingCurrencCode != currencyCode {
             
             hasChanged = true
         } else if let existingBudgetCategory = expense?.value(forKey: XYZExpense.budgetCategory) as? String, existingBudgetCategory != budgetCategory {
@@ -300,25 +258,10 @@ class ExpenseDetailTableViewController: UITableViewController,
         expense?.setValue(amount, forKey: XYZExpense.amount)
         expense?.setValue(date, forKey: XYZExpense.date)
         expense?.setValue(false, forKey: XYZExpense.isShared) // if we can save it, it means it is not readonly
-        expense?.setValue(hasLocation, forKey: XYZExpense.hasLocation)
         expense?.setValue(currencyCode, forKey: XYZExpense.currencyCode)
         expense?.setValue(budgetCategory, forKey: XYZExpense.budgetCategory)
         expense?.setValue(recurring?.rawValue, forKey: XYZExpense.recurring)
         expense?.setValue(recurringStopDate!, forKey: XYZExpense.recurringStopDate)
-    
-        if hasLocation, let _ = cllocation {
-            
-            let data = NSKeyedArchiver.archivedData(withRootObject: cllocation!)
-            
-            if let existingData = expense?.value(forKey: XYZExpense.loction) as? Data, existingData == data {
-                
-            } else {
-                
-                hasChanged = true
-            }
-            
-            expense?.setValue(data, forKey: XYZExpense.loction)
-        }
         
         for (index, image) in imageSet!.enumerated() {
             
@@ -438,9 +381,6 @@ class ExpenseDetailTableViewController: UITableViewController,
         emails = [String]()
         paids = [Bool]()
         imageSet = Array(repeating: ImageSet(image: UIImage(named:"defaultPhoto")!, selected: false ), count: imageSetCount)
-        cllocation = nil
-        hasgeolocation = false
-        hasLocation = false
         currencyCode = Locale.current.currencyCode
         budgetCategory = ""
         recurring = XYZExpense.Length.none
@@ -460,14 +400,6 @@ class ExpenseDetailTableViewController: UITableViewController,
                 modalEditing = false
             }
 
-            if let data = expense?.value(forKey: XYZExpense.loction) as? Data {
-                
-                cllocation = NSKeyedUnarchiver.unarchiveObject(with: data) as? CLLocation
-            }
-
-            hasLocation = expense?.value(forKey: XYZExpense.hasLocation) as? Bool ?? false
-            hasgeolocation = hasLocation
-            
             guard let receiptList = expense?.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt> else {
                 
                 fatalError("Exception: [XYZExpenseReceipt] is expected")
@@ -871,10 +803,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     var budgetList = [XYZBudget]()
     var currencyCode = Locale.current.currencyCode
     var currencyCodes: [String]?
-    var location = "Location"
     var isShared = false
-    var cllocation: CLLocation?
-    var hasLocation = false
     var detail = ""
     var amount: Double?
     var emails = [String]()
@@ -882,7 +811,6 @@ class ExpenseDetailTableViewController: UITableViewController,
     var imageSet: [ImageSet]?
     var date: Date?
     let imageSetCount = 2
-    var hasgeolocation = false
     var modalEditing = true
     var newImageIndex: Int?
     var showDatePicker = false
@@ -911,26 +839,6 @@ class ExpenseDetailTableViewController: UITableViewController,
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     // MARK: - function
-    func showLocationView() {
-        
-        guard let expenseDetailLocationViewController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailLocationViewController") as? ExpenseDetailLocationViewController
-            else {
-                
-            fatalError("Exception: ExpenseDetailImageViewController is expected")
-        }
-        
-        expenseDetailLocationViewController.delegate = self
-        
-        if let _ = cllocation {
-            
-            expenseDetailLocationViewController.setCoordinate((cllocation?.coordinate)!)
-        }
-        
-        let nav = UINavigationController(rootViewController: expenseDetailLocationViewController)
-        
-        //nav.modalPresentationStyle = .popover
-        self.present(nav, animated: true, completion: nil)
-    }
     
     func setPopover(delegate: ExpenseDetailDelegate) {
         
@@ -994,12 +902,10 @@ class ExpenseDetailTableViewController: UITableViewController,
         let oldIsShared = expense?.value(forKey: XYZExpense.isShared) // if we can save it, it means it is not readonly
         let oldShareUrl = expense?.value(forKey: XYZExpense.shareUrl)
         let oldShareRecordId = expense?.value(forKey: XYZExpense.shareRecordId)
-        let oldHasLocation = expense?.value(forKey: XYZExpense.hasLocation)
         let oldCurrencyCode = expense?.value(forKey: XYZExpense.currencyCode)
         let oldBudgetCategory = expense?.value(forKey: XYZExpense.budgetCategory)
         let oldRecurring = expense?.value(forKey: XYZExpense.recurring)
         let oldRecurringStopDate = expense?.value(forKey: XYZExpense.recurringStopDate)
-        let oldLocation = expense?.value(forKey: XYZExpense.loction)
         let oldReceiptList = expense?.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>
         let oldPersonList = expense?.getPersons()
         
@@ -1011,12 +917,10 @@ class ExpenseDetailTableViewController: UITableViewController,
             expense.setValue(oldAmount, forKey: XYZExpense.amount)
             expense.setValue(oldDate, forKey: XYZExpense.date)
             expense.setValue(oldIsShared, forKey: XYZExpense.isShared)
-            expense.setValue(oldHasLocation, forKey: XYZExpense.hasLocation)
             expense.setValue(oldCurrencyCode, forKey: XYZExpense.currencyCode)
             expense.setValue(oldBudgetCategory, forKey: XYZExpense.budgetCategory)
             expense.setValue(oldRecurring, forKey: XYZExpense.recurring)
             expense.setValue(oldRecurringStopDate, forKey: XYZExpense.recurringStopDate)
-            expense.setValue(oldLocation, forKey: XYZExpense.loction)
             expense.setValue(oldReceiptList, forKey: XYZExpense.receipts)
             expense.setValue(oldPersonList, forKey: XYZExpense.persons)
             expense.setValue(Date(), forKey: XYZExpense.lastRecordChange)
@@ -1486,29 +1390,6 @@ class ExpenseDetailTableViewController: UITableViewController,
                 imagecell = imagepickercell
                 cell = imagepickercell
             
-            case "location":
-                guard let locationcell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailLocationTextCell", for: indexPath) as? ExpenseDetailLocationTableViewCell else {
-                    
-                    fatalError("Exception: expenseDetailLocationTextCell is failed to be created")
-                }
-                
-                locationcell.location.isOn = hasLocation
-                locationcell.delegate = self
-                
-                cell = locationcell
-            
-            case "locationPicker":
-                guard let locationpicker = tableView.dequeueReusableCell(withIdentifier: "expenseDetailLocationPickerTextCell", for: indexPath) as? ExpenseDetailLocationPickerTableViewCell else {
-                    
-                    fatalError("Exception: expenseDetailLocationPickerTextCell is failed to be created")
-                }
-                
-                locationpicker.selectionStyle = .none
-                locationpicker.location.text = location.localized()
-                locationpicker.delegate = self
-                
-                cell = locationpicker
-            
             case "delete":
                 guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailCommandTextCell", for: indexPath) as? ExpenseDetailCommandTableViewCell else {
                     
@@ -1712,9 +1593,6 @@ class ExpenseDetailTableViewController: UITableViewController,
                     
                     self.present(nav, animated: true, completion: nil)
             }
-        } else {
-            
-            showLocationView()
         }
     }
     
@@ -1723,10 +1601,8 @@ class ExpenseDetailTableViewController: UITableViewController,
         if !modalEditing {
             
             return nil
-        } else if sectionList[indexPath.section].cellList[indexPath.row] == "locationPicker" {
-            
-            return indexPath
-        } else if sectionList[indexPath.section].cellList[indexPath.row] == "currency" {
+        }
+        else if sectionList[indexPath.section].cellList[indexPath.row] == "currency" {
             
             return presetCurrencyCode == nil ? indexPath : nil
         } else if sectionList[indexPath.section].cellList[indexPath.row] == "budget" {
