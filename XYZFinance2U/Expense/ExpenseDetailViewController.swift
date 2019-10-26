@@ -21,44 +21,6 @@ class ExpenseDetailViewController: UIViewController {
     @IBOutlet weak var amount: UILabel!
     @IBOutlet weak var date: UILabel!
     
-    // MARK: 3d touch
-    
-    override var previewActionItems : [UIPreviewActionItem] {
-        
-        return previewActions
-    }
-    
-    lazy var previewActions: [UIPreviewActionItem] = {
-
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
-            
-            fatalError("Exception: UISplitViewController is expected" )
-        }
-        
-        let copyAction = UIPreviewAction(title: "Copy share url", style: .default, handler: { (action, viewcontroller) in
-            
-            if let expense = self.expense {
-                
-                if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
-                    
-                    UIPasteboard.general.string = "\(url)"
-                }
-            }
-
-            mainSplitView.popOverAlertController = nil
-        })
-        
-        let cancelAction = UIPreviewAction(title: "Cancel", style: .default, handler: { (action, viewcontroller) in
-            
-            mainSplitView.popOverAlertController = nil
-        })
-        
-        mainSplitView.popOverAlertController = self
-        
-        return [copyAction, cancelAction]
-    }()
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()

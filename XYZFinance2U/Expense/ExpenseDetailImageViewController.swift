@@ -74,12 +74,14 @@ class ExpenseDetailImageViewController: UIViewController,
     func addSingleAndDoubleTapToZoomAndSelectOtherImage() {
         
         let tapDouble = UITapGestureRecognizer(target: self, action: #selector(zoomIn(_:)))
+        
         tapDouble.numberOfTapsRequired = 2
         imageView.addGestureRecognizer(tapDouble)
 
         if isEditable {
             
             let tap = UITapGestureRecognizer(target: self, action: #selector(selectImage(_:)))
+            
             tap.require(toFail: tapDouble)
             imageView.addGestureRecognizer(tap)
         }
@@ -88,8 +90,8 @@ class ExpenseDetailImageViewController: UIViewController,
     private func addSlideRightToUnwind() {
         
         let gesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight(_:)))
-        gesture.direction = .right
         
+        gesture.direction = .right
         self.view.addGestureRecognizer(gesture)
     }
     
@@ -189,9 +191,9 @@ class ExpenseDetailImageViewController: UIViewController,
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-// Local variable inserted by Swift 4.2 migrator.
-let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
-
+        
+        // Local variable inserted by Swift 4.2 migrator.
+        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         
         guard let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage else  {
             
@@ -216,10 +218,12 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+    
 	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
 }
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+    
 	return input.rawValue
 }

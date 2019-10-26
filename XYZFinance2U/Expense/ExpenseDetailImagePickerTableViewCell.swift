@@ -42,10 +42,12 @@ class ExpenseDetailImagePickerTableViewCell: UITableViewCell,
         for imageView in imageViewList {
             
             let tapDouble = UITapGestureRecognizer(target: self, action: #selector(newImageDoubleTouchUp(_:)))
+            
             tapDouble.numberOfTapsRequired = 2
             imageView.addGestureRecognizer(tapDouble)
             
             let tap = UITapGestureRecognizer(target: self, action: #selector(newImageTouchUp(_:)))
+            
             tap.require(toFail: tapDouble)
             imageView.addGestureRecognizer(tap)
         }
