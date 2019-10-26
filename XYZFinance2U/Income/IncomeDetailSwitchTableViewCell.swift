@@ -10,7 +10,7 @@ import UIKit
 
 protocol IncomeDetailSwitchDelegate : class {
     
-    func optionUpdate(_ sender: IncomeDetailSwitchTableViewCell, option: Bool)
+    func optionUpdated(option: Bool, sender: IncomeDetailSwitchTableViewCell)
 }
 
 class IncomeDetailSwitchTableViewCell: UITableViewCell {
@@ -54,7 +54,7 @@ class IncomeDetailSwitchTableViewCell: UITableViewCell {
         
         let value = switchOption.isOn
         
-        delegate?.optionUpdate(self, option: value )
+        delegate?.optionUpdated(option: value, sender: self)
         // Do something
     }
 }

@@ -11,7 +11,7 @@ import UIKit
 
 protocol IncomeDetailCommandDelegate: class {
     
-    func executeCommand(_ sender: IncomeDetailCommandTableViewCell)
+    func commandExecuted(sender: IncomeDetailCommandTableViewCell)
 }
 
 class IncomeDetailCommandTableViewCell: UITableViewCell {
@@ -52,7 +52,7 @@ class IncomeDetailCommandTableViewCell: UITableViewCell {
     @objc
     @IBAction func touchToRun(_ sender: UITapGestureRecognizer) {
         
-        self.delegate?.executeCommand(self)
+        self.delegate?.commandExecuted(sender: self)
     }
     
 }

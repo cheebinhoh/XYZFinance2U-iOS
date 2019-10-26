@@ -40,7 +40,7 @@ class IncomeDetailTableViewController: UITableViewController,
         tableView.reloadData()
     }
     
-    func optionUpdate(_ sender: IncomeDetailSwitchTableViewCell, option: Bool) {
+    func optionUpdated(option: Bool, sender: IncomeDetailSwitchTableViewCell) {
         
         let indexPath = tableView.indexPath(for: sender)
         
@@ -88,7 +88,6 @@ class IncomeDetailTableViewController: UITableViewController,
     func reloadData() {
         
         loadData()
-        
         tableView.reloadData()
     }
 
@@ -113,7 +112,7 @@ class IncomeDetailTableViewController: UITableViewController,
         return (navController.topViewController as? IncomeTableViewController)!
     }
     
-    func executeCommand(_ sender: IncomeDetailCommandTableViewCell) {
+    func commandExecuted(sender: IncomeDetailCommandTableViewCell) {
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let deleteOption = UIAlertAction(title: sender.command.text, style: .default, handler: { (action) in
@@ -140,7 +139,7 @@ class IncomeDetailTableViewController: UITableViewController,
             }
         })
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:nil)
+        let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler:nil)
         
         optionMenu.addAction(deleteOption)
         optionMenu.addAction(cancelAction)
@@ -148,7 +147,7 @@ class IncomeDetailTableViewController: UITableViewController,
         present(optionMenu, animated: true, completion: nil)
     }
     
-    func dateDidPick(_ sender: IncomeDetailDatePickerTableViewCell) {
+    func dateDidPick(sender: IncomeDetailDatePickerTableViewCell) {
         
         let indexPath = tableView.indexPath(for: sender)
         
@@ -172,7 +171,7 @@ class IncomeDetailTableViewController: UITableViewController,
         }
     }
     
-    func dateInputTouchUp(_ sender: IncomeDetailDateTableViewCell) {
+    func dateInputTouchUp(sender: IncomeDetailDateTableViewCell) {
         
         let indexPath = tableView.indexPath(for: sender)
         let showDatePicker = tableSectionCellList[indexPath!.section].cellList.count > ( (indexPath?.row)! + 1 )
@@ -485,7 +484,7 @@ class IncomeDetailTableViewController: UITableViewController,
         
         // we do not set reminddate as it is used to indicate if we have remind option checked
         
-        if nil != income {
+        if let _ = income {
             
             bank = (income?.value(forKey: XYZAccount.bank) as! String)
             accountNr = (income?.value(forKey: XYZAccount.accountNr) as! String)
@@ -571,13 +570,7 @@ class IncomeDetailTableViewController: UITableViewController,
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        if section == 0 {
-            
-            return 35
-        } else {
-            
-            return 17.5
-        }
+        return section == 0 ? 35 : 17.5
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -599,7 +592,7 @@ class IncomeDetailTableViewController: UITableViewController,
         
         let cell: UITableViewCell
         
-        switch  tableSectionCellList[indexPath.section].cellList[indexPath.row] {
+        switch tableSectionCellList[indexPath.section].cellList[indexPath.row] {
             
             case "bank":
                 guard let textcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailTextCell", for: indexPath) as? XYZTextTableViewCell else {
@@ -649,21 +642,21 @@ class IncomeDetailTableViewController: UITableViewController,
                 
                 cell = textcell
 
-        case "principal":
-            guard let textcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailTextCell", for: indexPath) as? XYZTextTableViewCell else {
+            case "principal":
+                guard let textcell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailTextCell", for: indexPath) as? XYZTextTableViewCell else {
+                    
+                    fatalError("Exception: incomeDetailTextCell is failed to be created")
+                }
                 
-                fatalError("Exception: incomeDetailTextCell is failed to be created")
-            }
-            
-            textcell.input.isEnabled = modalEditing
-            textcell.delegate = self
-            textcell.enableMonetaryEditing(true, currencyCode!)
-            
-            textcell.input.placeholder = formattingCurrencyValue(input: 0.0, code: currencyCode)
-            textcell.input.text = formattingCurrencyValue(input: principal ?? 0.0, code: currencyCode)
-            textcell.label.text = "Principal".localized()
-            
-            cell = textcell
+                textcell.input.isEnabled = modalEditing
+                textcell.delegate = self
+                textcell.enableMonetaryEditing(true, currencyCode!)
+                
+                textcell.input.placeholder = formattingCurrencyValue(input: 0.0, code: currencyCode)
+                textcell.input.text = formattingCurrencyValue(input: principal ?? 0.0, code: currencyCode)
+                textcell.label.text = "Principal".localized()
+                
+                cell = textcell
             
             case "date":
                 guard let datecell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailDateTextCell", for: indexPath) as? IncomeDetailDateTableViewCell else {
@@ -676,7 +669,7 @@ class IncomeDetailTableViewController: UITableViewController,
                     date = Date()
                 }
                 
-                datecell.dateInput.text = formattingDate(date: date ?? Date(), style: .medium)
+                datecell.dateInput.text = formattingDate(date: date!, style: .medium)
                 datecell.delegate = self
                 datecell.label.text = "Last update".localized()
                 datecell.enableEditing = modalEditing
@@ -873,8 +866,7 @@ class IncomeDetailTableViewController: UITableViewController,
                         codes.append(code)
                     } else {
                         
-                        var identifier = ""
-                        identifier.append(codeIndex!)
+                        let identifier = "\(codeIndex!)"
                         
                         selectionTableViewController.setSelections(identifier, true, codes )
                         codes.removeAll()
@@ -883,8 +875,7 @@ class IncomeDetailTableViewController: UITableViewController,
                     }
                 }
   
-                var identifier = ""
-                identifier.append(codeIndex!)
+                let identifier = "\(codeIndex!)"
                 
                 selectionTableViewController.setSelections(identifier, true, codes )
                 selectionTableViewController.setSelectedItem(currencyCode ?? "USD")

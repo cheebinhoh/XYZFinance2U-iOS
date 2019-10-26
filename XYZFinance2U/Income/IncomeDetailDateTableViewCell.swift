@@ -11,7 +11,7 @@ import UIKit
 
 protocol IncomeDetailDateTableViewCellDelegate : class {
     
-    func dateInputTouchUp(_ sender:IncomeDetailDateTableViewCell)
+    func dateInputTouchUp(sender:IncomeDetailDateTableViewCell)
 }
 
 class IncomeDetailDateTableViewCell: UITableViewCell {
@@ -51,7 +51,7 @@ class IncomeDetailDateTableViewCell: UITableViewCell {
         
         if enableEditing {
             
-            delegate?.dateInputTouchUp(self)
+            delegate?.dateInputTouchUp(sender: self)
         }
     }
     

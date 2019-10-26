@@ -11,7 +11,7 @@ import UIKit
 
 protocol IncomeDetailDatePickerTableViewCellDelegate : class {
     
-    func dateDidPick(_ sender:IncomeDetailDatePickerTableViewCell)
+    func dateDidPick(sender:IncomeDetailDatePickerTableViewCell)
 }
 
 class IncomeDetailDatePickerTableViewCell: UITableViewCell {
@@ -51,6 +51,6 @@ class IncomeDetailDatePickerTableViewCell: UITableViewCell {
     @IBAction func datePick(_ sender: UIDatePicker) {
         
         date = sender.date
-        delegate?.dateDidPick(self)
+        delegate?.dateDidPick(sender: self)
     }
 }

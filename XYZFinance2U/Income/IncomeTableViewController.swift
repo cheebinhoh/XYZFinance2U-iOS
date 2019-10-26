@@ -187,12 +187,7 @@ class IncomeTableViewController: UITableViewController,
                 
                 viewController.income = sectionIncomeList[(indexPath.row) - 1]
                 viewController.indexPath = indexPath
-            } else {
-             
-                let (amount, currency) =  sectionTotal(section: indexPath.section - 1)
-                viewController.total = amount
-                viewController.currencyCode = currency
-            }
+            } 
             
             return viewController
         } else {
@@ -316,23 +311,6 @@ class IncomeTableViewController: UITableViewController,
                 delegate?.incomeSelected(newIncome: income)
             }
         }
-        
-        /* DEPRECATED: we do not need that when we have 
-        let selectedIndexPath = incomeIndex(of: income)
-        let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
-        
-        if sectionList[(selectedIndexPath?.section)!].title == currencyCode! {
-    
-            let summaryIndex = IndexPath(row:0, section: (selectedIndexPath?.section)! + 1)
-            tableView.reloadRows(at: [selectedIndexPath!, summaryIndex], with: .automatic)
-            
-            saveAccounts()
-        } else {
-        
-            reloadData()
-            saveAccounts()
-        }
-        */
     }
     
     func softDeleteIncome(income: XYZAccount) {
@@ -436,7 +414,6 @@ class IncomeTableViewController: UITableViewController,
                     self.delegate?.incomeSelected(newIncome: income)
                 }
             }
-            //self.saveNewIncomeWithoutUndo(income: income)
         })
         
         deleteIncomeWithoutUndo(income: income)
@@ -704,8 +681,6 @@ class IncomeTableViewController: UITableViewController,
         lockScreenViewNavigatorController.modalPresentationStyle = .overFullScreen
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             
-            //appDelegate.lastAuthenticated = nil
-            
             lockScreenDisplayed = true
             
             // NOTE: to avoid warning "Unbalanced calls to begin/end appearance transitions for"
@@ -782,9 +757,7 @@ class IncomeTableViewController: UITableViewController,
                                     }
                                 }
                             } else {
-                                
-                                print("authentication fail = \(String(describing: error))")
-                                
+
                                 if !self.lockScreenDisplayed {
                         
                                     DispatchQueue.main.async {
@@ -919,21 +892,21 @@ class IncomeTableViewController: UITableViewController,
                 
                 switch zName! {
                     
-                case XYZAccount.type:
-                    appDelegate?.incomeList = (icloudzone.data as? [XYZAccount])!
-                    appDelegate?.incomeList = sortAcounts((appDelegate?.incomeList)!)
-                    
-                    DispatchQueue.main.async {
+                    case XYZAccount.type:
+                        appDelegate?.incomeList = (icloudzone.data as? [XYZAccount])!
+                        appDelegate?.incomeList = sortAcounts((appDelegate?.incomeList)!)
                         
-                        self.reloadData()
-                        
-                        pushChangeToiCloudZone(CKContainer.default().privateCloudDatabase, zonesToBeFetched, icloudZones!, {
-                        
-                        })
-                    }
- 
-                default:
-                    fatalError("Exception: \(String(describing: zName)) is not supported")
+                        DispatchQueue.main.async {
+                            
+                            self.reloadData()
+                            
+                            pushChangeToiCloudZone(CKContainer.default().privateCloudDatabase, zonesToBeFetched, icloudZones!, {
+                            
+                            })
+                        }
+     
+                    default:
+                        fatalError("Exception: \(String(describing: zName)) is not supported")
                 }
             }
         })
@@ -979,7 +952,6 @@ class IncomeTableViewController: UITableViewController,
                     
                     mainSplitView.popOverNavigatorController = navigationController
                     
-                    //OperationQueue.main.addOperation
                     DispatchQueue.main.async {
                         
                         self.present(navigationController, animated: true, completion: nil)
@@ -1039,15 +1011,12 @@ class IncomeTableViewController: UITableViewController,
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         var commands = [UIContextualAction]()
-        //var amount = 0.0
-        
+
         if sectionList[indexPath.section].identifier == "main" {
             
             let incomeList = sectionList[indexPath.section].data as? [XYZAccount]
             let income = incomeList![indexPath.row - 1]
-            
-            //amount = income.value(forKey: XYZExpense.amount) as? Double ?? 0.0
-            
+
             let delete = UIContextualAction(style: .destructive, title: "Delete".localized()) { _, _, handler in
                 
                 self.deleteIncome(income: income)
@@ -1063,47 +1032,8 @@ class IncomeTableViewController: UITableViewController,
             }
             
             commands.append(delete)
-        } else {
-            
-            //(amount, _) = sectionTotal(section: indexPath.section - 1)
         }
         
-        /*
-        let more = UIContextualAction(style: .normal, title: "More") { _, _, handler in
-            
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
-                
-                fatalError("Exception: UISplitViewController is expected" )
-            }
-            
-            let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let copyUrlOption = UIAlertAction(title: "Copy amount", style: .default, handler: { (action) in
-                
-                mainSplitView.popOverAlertController = nil
-                UIPasteboard.general.string = "\(amount)"
-                handler(true)
-            })
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-                
-                mainSplitView.popOverAlertController = nil
-                handler(true)
-            })
-            
-            optionMenu.addAction(copyUrlOption)
-        
-            optionMenu.addAction(cancelAction)
-            
-            self.present(optionMenu, animated: true, completion: {
-              
-                mainSplitView.popOverAlertController = optionMenu
-            })
-        }
-        
-        commands.append(more)
-        */
- 
         return UISwipeActionsConfiguration(actions: commands)
     }
     
@@ -1466,8 +1396,6 @@ class IncomeTableViewController: UITableViewController,
         subtotal.textColor = UIColor.gray
         stackView.addArrangedSubview(subtotal)
         
-        // return stackView
-        // return nil
         return UIView(frame: .zero)
     }
     
@@ -1477,9 +1405,7 @@ class IncomeTableViewController: UITableViewController,
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        
-        // return 35
-        //return CGFloat.leastNormalMagnitude
+
         return 10
     }
     

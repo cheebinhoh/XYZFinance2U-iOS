@@ -13,7 +13,6 @@ class IncomeDetailViewController: UIViewController {
     // MARK: property
     
     var income: XYZAccount?
-    var total: Double?
     var currencyCode: String?
     var indexPath: IndexPath?
     
@@ -38,23 +37,20 @@ class IncomeDetailViewController: UIViewController {
             fatalError("Exception: UISplitViewController is expected" )
         }
         
-        let copyAction = UIPreviewAction(title: "Copy balance", style: .default, handler: { (action, viewcontroller) in
+        let copyAction = UIPreviewAction(title: "Copy balance".localized(), style: .default, handler: { (action, viewcontroller) in
             
             var balance = 0.0
             
             if let _ = self.income {
             
                 balance = (self.income?.value(forKey: XYZAccount.amount) as? Double)!
-            } else {
-                
-                balance = self.total!
             }
             
             mainSplitView.popOverAlertController  = nil
             UIPasteboard.general.string = "\(balance)"
         })
         
-        let cancelAction = UIPreviewAction(title: "Cancel", style: .default, handler: { (action, viewcontroller) in
+        let cancelAction = UIPreviewAction(title: "Cancel".localized(), style: .default, handler: { (action, viewcontroller) in
             
             mainSplitView.popOverAlertController  = nil
         })
@@ -72,23 +68,17 @@ class IncomeDetailViewController: UIViewController {
 
         if let _ = income {
             
-            bank.text = income?.value(forKey: XYZAccount.bank) as? String
-            accountNr.text = income?.value(forKey: XYZAccount.accountNr) as? String
-            
+            let bankValue = income?.value(forKey: XYZAccount.bank) as? String
+            let accountNrValue = income?.value(forKey: XYZAccount.accountNr) as? String
             let currencyCode = income?.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode
             let balance = income?.value(forKey: XYZAccount.amount) as? Double
             let principalAmount = income?.value(forKey: XYZAccount.principal) as? Double ?? 0.0
-                
+
+            bank.text = bankValue
+            accountNr.text = accountNrValue
             amount.text = formattingCurrencyValue(input: balance!, code:currencyCode)
             principal.text = formattingCurrencyValue(input: principalAmount, code:currencyCode)
             date.text = formattingDate(date: (income?.value(forKey: XYZAccount.lastUpdate) as? Date )!, style: .medium)
-        } else if let _ = total {
-            
-            bank.text = "-"
-            accountNr.text = "-"
-            date.text = "-"
-            
-            amount.text = formattingCurrencyValue(input: total!, code: currencyCode ?? Locale.current.currencyCode)
         }
         
         // Do any additional setup after loading the view.

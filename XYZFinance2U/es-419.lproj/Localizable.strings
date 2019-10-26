@@ -110,7 +110,8 @@
 "Expenses -" = "Los gastos -";
 "Principal" = "Capital";
 "Source" = "Fuente de ingresos";
-"Authenticate to change the setting" = "인증 설정을 변경하려면";
+"Authenticate to change the setting" = "Autenticar para cambiar la configuración";
 "Expense" = "Gastos";
 "Income" = "Ingresos";
 "Undo last change" = "deshacer el último cambio";
+"Copy balance" = "copia de saldo";
