@@ -59,7 +59,6 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 if let _ = item, item! != "" {
                     
-               
                     budgetCategory = item!
                     
                     let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -79,14 +78,8 @@ class ExpenseDetailTableViewController: UITableViewController,
                 }
             
             default:
-                /*if currencyCode != item {
-                    
-                    budgetCategory = ""
-                }*/
-                
                 currencyCode = item
                 budgetList = getBudgets(of: item!)
-                //loadDataInTableSectionCell()
         }
         
         tableView.reloadData()
@@ -156,6 +149,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     func expenseSelected(expense: XYZExpense?) {
         
         let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit(_:)))
+        
         navigationItem.setRightBarButton(editButton, animated: true)
         navigationItem.setLeftBarButton(nil, animated: true)
         
@@ -163,13 +157,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         self.expense = expense
         reloadData()
         
-        if isShared {
-            
-            navigationItem.title = "Shared"
-        } else {
-            
-            navigationItem.title = ""
-        }
+        navigationItem.title = ""
     }
     
     func expenseDeleted(expense: XYZExpense) {
@@ -197,7 +185,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         var otherSectionCellList = ["date",
                                     "recurring",
-                                   // "location"
+                                    // "location" // decommissioned it as it is crashed.
                                    ]
         
         if let _ = recurring, recurring != XYZExpense.Length.none {
@@ -307,32 +295,6 @@ class ExpenseDetailTableViewController: UITableViewController,
             
             hasChanged = true
         }
-        
-        /*
-        if !isNew && hasChanged {
-            
-            let occurenceDates = expense?.getOccurenceDates(until: Date())
-            if (occurenceDates?.count)! > 1 && false {
-                
-                // if we already have recurring expense, prompt a dialog to ask if we want to create a new record or save
-                // old one
-                
-                let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                let applyToExistingOption = UIAlertAction(title: "Apply to all recurring expenses?", style: .default, handler: { (action) in
-                    
-
-                })
-                
-                optionMenu.addAction(applyToExistingOption)
-            
-                let addNewAction = UIAlertAction(title: "Add a new expense", style: .cancel, handler: nil)
-                
-                optionMenu.addAction(addNewAction)
-                
-                present(optionMenu, animated: true, completion: nil)
-            }
-        }
-        */
         
         expense?.setValue(detail, forKey: XYZExpense.detail)
         expense?.setValue(amount, forKey: XYZExpense.amount)
@@ -536,9 +498,9 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 let email = person.value(forKey: XYZExpensePerson.email) as? String
                 let paid = person.value(forKey: XYZExpensePerson.paid) as? Bool
-                emails.append( email! )
+                emails.append(email!)
                 
-                paids.append( paid! )
+                paids.append(paid!)
             }
             
             if isShared {
@@ -547,12 +509,12 @@ class ExpenseDetailTableViewController: UITableViewController,
                 
                 if isPopover {
                 
-                    let backButton = UIBarButtonItem(title: " Back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.cancel(_:)))
+                    let backButton = UIBarButtonItem(title: "Back".localized(), style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.cancel(_:)))
                     navigationItem.setLeftBarButton(backButton, animated: true)
                 }
             }
             
-            recurring = XYZExpense.Length(rawValue: expense?.value(forKey: XYZExpense.recurring) as? String ?? "none" )
+            recurring = XYZExpense.Length(rawValue: expense?.value(forKey: XYZExpense.recurring) as? String ?? XYZExpense.Length.none.rawValue)
             recurringStopDate = expense?.value(forKey: XYZExpense.recurringStopDate) as? Date ?? date
         } else {
             
@@ -584,7 +546,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         
         newImageIndex = index
         
-        guard let expenseDetailImageNavigationController = self.storyboard?.instantiateViewController(withIdentifier:    "ExpenseDetailImageViewController") as? ExpenseDetailImageViewController else {
+        guard let expenseDetailImageNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailImageViewController") as? ExpenseDetailImageViewController else {
             
             fatalError("Exception: ExpenseDetailImageViewController is expected")
         }
@@ -622,10 +584,10 @@ class ExpenseDetailTableViewController: UITableViewController,
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-// Local variable inserted by Swift 4.2 migrator.
-let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
-
         
+        // Local variable inserted by Swift 4.2 migrator.
+        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
         guard let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage else {
             
             fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
@@ -707,7 +669,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         switch sectionList[(indexPath?.section)!].cellList[(indexPath?.row)!] {
             
             case "datepicker":
-                datecell?.dateInput.text = formattingDate(date: sender.date ?? Date(), style: .medium )
+                datecell?.dateInput.text = formattingDate(date: sender.date ?? Date(), style: .medium)
                 if date == recurringStopDate {
                     
                     recurringStopDateCell?.dateInput.text = "\("Recurring stop:".localized()) -"
@@ -717,12 +679,11 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 date = sender.date ?? Date()
             
             case "recurringStopDatePicker":
-                
                 if let _ = sender.date {
                     
                     if sender.date! > date! {
                         
-                        recurringStopDateCell?.dateInput.text = "\("Recurring stop:".localized()) \(formattingDate(date: sender.date ?? Date(), style: .medium ))"
+                        recurringStopDateCell?.dateInput.text = "\("Recurring stop:".localized()) \(formattingDate(date: sender.date ?? Date(), style: .medium))"
                     } else {
                         
                        recurringStopDateCell?.dateInput.text = "\("Recurring stop:".localized()) -"
@@ -732,6 +693,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 recurringStopDate = sender.date
             
             default:
+                
                 fatalError("Exception: dateDidPick is not handled")
         }
     }
@@ -773,8 +735,8 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         if showDatePicker || showRecurringStopDatePicker {
             
             tableView.scrollToRow(at: indexPath!, at: .middle, animated: true)
-        }
-        else {
+        } else {
+            
             let topIndexPath = IndexPath(row: 0, section: 0)
             tableView.scrollToRow(at: topIndexPath, at: .top, animated: true)
         }
@@ -806,7 +768,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                     
                     sender.input.becomeFirstResponder()
                     sectionList[index.section].cellList.insert("email",
-                                                                        at: sectionList[index.section].cellList.count - 1)
+                                                                at: sectionList[index.section].cellList.count - 1)
                     emails.append("")
                     paids.append(false)
                     
@@ -869,13 +831,11 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     func contactPicker(picker: CNContactPickerViewController, didSelectContact contact: CNContact) {
         
         emailcell = nil
-        print("-------- didSelectContact")
     }
     
     func contactPickerDidCancel(picker: CNContactPickerViewController) {
      
         emailcell = nil
-        print("-------- contactPickerDidCancel")
     }
     
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
@@ -892,13 +852,10 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             emails[index.row] = email! as String
             tableView.reloadRows(at: [index], with: .none)
         }
-        
-        print("-------- didSelect \(String(describing: email))")
     }
     
     func contactPicker(_ picker: CNContactPickerViewController, didSelectContactProperties contactProperties: [CNContactProperty]) {
-        
-        print("-------- didSelectContactProperties \(contactProperties)")
+
     }
     
     // MARK: - property
@@ -1232,13 +1189,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        if section == 0 {
-            
-            return 35
-        } else {
-            
-            return 17.5
-        }
+        return section == 0 ? 35 : 17.5
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -1400,7 +1351,6 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                 
                 datecell.enableEditing = modalEditing
                 
-              
                 if sectionList[indexPath.section].cellList.count <= indexPath.row + 1
                    || sectionList[indexPath.section].cellList[indexPath.row + 1] != "recurringStopDatePicker" {
                     
@@ -1431,7 +1381,7 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                         recurringRawValue = ""
                     
                     default:
-                        recurringRawValue = (recurring?.rawValue)!.localized()
+                        recurringRawValue = (recurring?.description())!.localized()
                 }
                 
                 recurringcell.setSelection( "\("Recurring:".localized()) \(recurringRawValue)" )
@@ -1618,7 +1568,6 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
             
             let contactPicker = CNContactPickerViewController()
             contactPicker.delegate = self
-            //contactPicker.displayedPropertyKeys = [CNContactEmailAddressesKey]
             contactPicker.predicateForEnablingContact = NSPredicate(format: "emailAddresses.@count > 0")
             contactPicker.predicateForSelectionOfContact = NSPredicate(format: "emailAddresses.@count > 0")
             emailcell = textcell
@@ -1703,12 +1652,12 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
                     selectionTableViewController.caseInsensitive = true
                     selectionTableViewController.selectionIdentifier = "budget"
 
-                    selectionTableViewController.setSelections("", false,
+                    selectionTableViewController.setSelections("",
+                                                               false,
                                                                budgetCategories)
                     selectionTableViewController.setSelectionIcons(imageNames: iconNames)
                     selectionTableViewController.setSelectedItem(budgetCategory)
                     selectionTableViewController.delegate = self
-                    
                     
                     let nav = UINavigationController(rootViewController: selectionTableViewController)
                     nav.modalPresentationStyle = .popover
@@ -1857,10 +1806,12 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+    
 	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
 }
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+    
 	return input.rawValue
 }
