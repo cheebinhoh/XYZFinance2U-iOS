@@ -10,7 +10,7 @@ import UIKit
 
 protocol BudgetDetailCommandDelegate: class {
     
-    func executeCommand(_ sender: BudgetDetailCommandTableViewCell)
+    func executeCommand(sender: BudgetDetailCommandTableViewCell)
 }
 
 class BudgetDetailCommandTableViewCell: UITableViewCell {
@@ -26,11 +26,13 @@ class BudgetDetailCommandTableViewCell: UITableViewCell {
     // MARK: - function
     
     override func awakeFromNib() {
+        
         super.awakeFromNib()
         // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
+        
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -49,7 +51,7 @@ class BudgetDetailCommandTableViewCell: UITableViewCell {
     @objc
     @IBAction func touchToRun(_ sender: UITapGestureRecognizer) {
         
-        self.delegate?.executeCommand(self)
+        self.delegate?.executeCommand(sender: self)
     }
     
 }

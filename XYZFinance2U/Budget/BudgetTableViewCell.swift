@@ -19,6 +19,7 @@ class BudgetTableViewCell: UITableViewCell {
     @IBOutlet weak var icon: UIImageView!
     
     override func awakeFromNib() {
+        
         super.awakeFromNib()
 
         colorView.backgroundColor = UIColor.clear
@@ -31,6 +32,7 @@ class BudgetTableViewCell: UITableViewCell {
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
+        
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

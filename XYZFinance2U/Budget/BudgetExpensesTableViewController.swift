@@ -83,8 +83,8 @@ class BudgetExpensesTableViewController: UITableViewController,
         delegate?.reloadData()
     }
     
-    func registerUndoDeleteExpense(expense: XYZExpense)
-    {
+    func registerUndoDeleteExpense(expense: XYZExpense) {
+        
         let oldRecordId = expense.value(forKey: XYZExpense.recordId) as? String
         let oldDetail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
         let oldAmount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0

@@ -1060,7 +1060,8 @@ class CalendarCollectionViewController: UICollectionViewController,
                 
                 let height = 1.0
                 
-                let lineView = UIView(frame: CGRect(x: 0, y: 0,
+                let lineView = UIView(frame: CGRect(x: 0,
+                                                    y: 0,
                                                     width: 500,
                                                     height: height))
 

@@ -10,7 +10,7 @@ import UIKit
 
 protocol BudgetDetailDateTableViewCellDelegate : class {
     
-    func dateInputTouchUp(_ sender:BudgetDetailDateTableViewCell)
+    func dateInputTouchUp(sender:BudgetDetailDateTableViewCell)
 }
 
 class BudgetDetailDateTableViewCell: UITableViewCell {
@@ -47,7 +47,7 @@ class BudgetDetailDateTableViewCell: UITableViewCell {
         
         if enableEditing {
             
-            delegate?.dateInputTouchUp(self)
+            delegate?.dateInputTouchUp(sender: self)
         }
     }
 }

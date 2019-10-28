@@ -49,10 +49,10 @@
             timestampString = "589681305.095888"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1380"
-            endingLineNumber = "1380"
-            landmarkName = "tableView(_:viewForHeaderInSection:)"
-            landmarkType = "7">
+            startingLineNumber = "1379"
+            endingLineNumber = "1379"
+            landmarkName = "IncomeTableViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -187,8 +187,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "415"
             endingLineNumber = "415"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "doubleTap(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

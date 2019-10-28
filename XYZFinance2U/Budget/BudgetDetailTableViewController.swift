@@ -24,7 +24,7 @@ class BudgetDetailTableViewController: UITableViewController,
     SelectionDelegate {
     
     // MARK: - call back
-    func executeCommand(_ sender: BudgetDetailCommandTableViewCell) {
+    func executeCommand(sender: BudgetDetailCommandTableViewCell) {
 
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let deleteOption = UIAlertAction(title: sender.command.text, style: .default, handler: { (action) in
@@ -61,7 +61,7 @@ class BudgetDetailTableViewController: UITableViewController,
         present(optionMenu, animated: true, completion: nil)
     }
     
-    func dateDidPick(_ sender: BudgetDetailDatePickerTableViewCell) {
+    func dateDidPick(sender: BudgetDetailDatePickerTableViewCell) {
     
         if let _ = budget {
             
@@ -107,7 +107,7 @@ class BudgetDetailTableViewController: UITableViewController,
         }
     }
     
-    func dateInputTouchUp(_ sender: BudgetDetailDateTableViewCell) {
+    func dateInputTouchUp(sender: BudgetDetailDateTableViewCell) {
 
         let indexPath = tableView.indexPath(for: sender)
         let showDatePicker = sectionList[(indexPath?.section)!].cellList.count - 1 > (indexPath?.row)!
@@ -294,10 +294,7 @@ class BudgetDetailTableViewController: UITableViewController,
         if isPushinto {
             
             fatalError("Exception: todo")
-            
-            //saveData()
-            //expenseDelegate?.saveExpense(expense: expense!)
-            //navigationController?.popViewController(animated: true)
+
         } else if isPopover {
             
             if nil == budget {
@@ -320,25 +317,6 @@ class BudgetDetailTableViewController: UITableViewController,
         } else {
             
             fatalError("TODO")
-            
-            /*
-            saveData()
-            navigationItem.leftBarButtonItem?.isEnabled = false
-            modalEditing = false
-            loadDataInTableSectionCell()
-            tableView.reloadData()
-            
-            let masterViewController = getMasterTableViewController()
-            
-            let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit(_:)))
-            navigationItem.setRightBarButton(editButton, animated: true)
-            navigationItem.leftBarButtonItem = nil
-            
-            masterViewController.navigationItem.leftBarButtonItem?.isEnabled = true
-            masterViewController.navigationItem.rightBarButtonItem?.isEnabled = true
-            
-            incomeDelegate?.saveIncome(income: income!)
-            */
         }
     }
     
@@ -365,8 +343,8 @@ class BudgetDetailTableViewController: UITableViewController,
         return (navController.topViewController as? BudgetTableViewController)!
     }
 
-    func registerUndoSave(budget: XYZBudget)
-    {
+    func registerUndoSave(budget: XYZBudget) {
+        
         let oldName = budget.value(forKey: XYZBudget.name)
         let oldAmount = budget.value(forKey: XYZBudget.amount)
         let oldCurrency = budget.value(forKey: XYZBudget.currency)
@@ -598,6 +576,7 @@ class BudgetDetailTableViewController: UITableViewController,
     }
     
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
@@ -606,13 +585,7 @@ class BudgetDetailTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        if section == 0 {
-            
-            return 35
-        } else {
-            
-            return 17.5
-        }
+        return section == 0 ? 35 : 17.5
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -828,8 +801,8 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 cell = deletecell
             
-                default:
-                    fatalError("Exception: \(sectionList[indexPath.section].cellList[indexPath.row]) not handle")
+             default:
+                fatalError("Exception: \(sectionList[indexPath.section].cellList[indexPath.row]) not handle")
         }
         
         return cell
@@ -877,8 +850,7 @@ class BudgetDetailTableViewController: UITableViewController,
                     codes.append(code)
                 } else {
                     
-                    var identifier = ""
-                    identifier.append(codeIndex!)
+                    let identifier = "\(codeIndex!)"
                     
                     selectionTableViewController.setSelections(identifier, true, codes )
                     codes.removeAll()
@@ -887,8 +859,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 }
             }
             
-            var identifier = ""
-            identifier.append(codeIndex!)
+            let identifier = "\(codeIndex!)"
             
             selectionTableViewController.setSelections(identifier, true, codes )
             selectionTableViewController.setSelectedItem(currencyCode ?? "USD")
@@ -998,7 +969,8 @@ class BudgetDetailTableViewController: UITableViewController,
             }
             
             selectionTableViewController.selectionIdentifier = "icon"
-            selectionTableViewController.setSelections("", false,
+            selectionTableViewController.setSelections("",
+                                                       false,
                                                        iconNameList)
             selectionTableViewController.setSelectionIcons(imageNames: iconNameList)
 
@@ -1017,19 +989,20 @@ class BudgetDetailTableViewController: UITableViewController,
             }
             
             selectionTableViewController.selectionIdentifier = "color"
-            selectionTableViewController.setSelections("", false,
-                                                        [XYZColor.none.rawValue,
-                                                         XYZColor.black.rawValue,
-                                                         XYZColor.blue.rawValue,
-                                                         XYZColor.brown.rawValue,
-                                                         XYZColor.cyan.rawValue,
-                                                         XYZColor.green.rawValue,
-                                                         XYZColor.magenta.rawValue,
-                                                         XYZColor.orange.rawValue,
-                                                         XYZColor.purple.rawValue,
-                                                         XYZColor.red.rawValue,
-                                                         XYZColor.yellow.rawValue,
-                                                         XYZColor.white.rawValue])
+            selectionTableViewController.setSelections("",
+                                                       false,
+                                                       [XYZColor.none.rawValue,
+                                                        XYZColor.black.rawValue,
+                                                        XYZColor.blue.rawValue,
+                                                        XYZColor.brown.rawValue,
+                                                        XYZColor.cyan.rawValue,
+                                                        XYZColor.green.rawValue,
+                                                        XYZColor.magenta.rawValue,
+                                                        XYZColor.orange.rawValue,
+                                                        XYZColor.purple.rawValue,
+                                                        XYZColor.red.rawValue,
+                                                        XYZColor.yellow.rawValue,
+                                                        XYZColor.white.rawValue])
             
             selectionTableViewController.setSelectionColors(colors: [XYZColor.none.uiColor(),
                                                                      XYZColor.black.uiColor(),

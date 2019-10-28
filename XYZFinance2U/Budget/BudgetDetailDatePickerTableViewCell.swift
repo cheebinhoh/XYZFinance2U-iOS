@@ -10,7 +10,7 @@ import UIKit
 
 protocol BudgetDetailDatePickerTableViewCellDelegate : class {
     
-    func dateDidPick(_ sender:BudgetDetailDatePickerTableViewCell)
+    func dateDidPick(sender:BudgetDetailDatePickerTableViewCell)
 }
 
 class BudgetDetailDatePickerTableViewCell: UITableViewCell {
@@ -33,12 +33,14 @@ class BudgetDetailDatePickerTableViewCell: UITableViewCell {
     }
     
     override func awakeFromNib() {
+        
         super.awakeFromNib()
         
         // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
+        
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -49,6 +51,6 @@ class BudgetDetailDatePickerTableViewCell: UITableViewCell {
     @IBAction func datePick(_ sender: UIDatePicker) {
         
         date = sender.date
-        delegate?.dateDidPick(self)
+        delegate?.dateDidPick(sender: self)
     }
 }
