@@ -751,7 +751,15 @@ class BudgetDetailTableViewController: UITableViewController,
                 iconcell.selection.text = ""
                 iconcell.setLabel("Icon".localized())
                 iconcell.icon.image = UIImage(named: iconName == "" ? "empty" : iconName)
-
+                iconcell.icon.image = iconcell.icon.image?.withRenderingMode(.alwaysTemplate)
+                
+                if #available(iOS 13.0, *) {
+                    
+                    iconcell.icon.image?.withTintColor(UIColor.systemBlue)
+                } else {
+                    // Fallback on earlier versions
+                }
+                
                 iconcell.selectionStyle = .none
                 cell = iconcell
             

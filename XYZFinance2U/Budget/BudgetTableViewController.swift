@@ -976,6 +976,14 @@ class BudgetTableViewController: UITableViewController,
 
             cell.icon.isHidden = false
             cell.icon.image = UIImage(named: iconName)
+            cell.icon.image = cell.icon.image?.withRenderingMode(.alwaysTemplate)
+            
+            if #available(iOS 13.0, *) {
+                
+                cell.icon.image?.withTintColor(UIColor.systemBlue)
+            } else {
+                // Fallback on earlier versions
+            }
         } else {
 
             cell.icon.image = UIImage(named: "empty")

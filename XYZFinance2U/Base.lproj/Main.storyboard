@@ -39,7 +39,7 @@
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="5e2-Pv-NcN"/>
-                                            <constraint firstAttribute="width" constant="300" id="7zS-Pd-1Hg"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="7zS-Pd-1Hg"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                         <state key="normal" title="Unlock">

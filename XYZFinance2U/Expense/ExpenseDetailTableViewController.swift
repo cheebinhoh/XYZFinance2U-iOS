@@ -1197,6 +1197,14 @@ class ExpenseDetailTableViewController: UITableViewController,
                 if iconName != "" {
                     
                     budgetcell.icon.image = UIImage(named: iconName)
+                    budgetcell.icon.image = budgetcell.icon.image?.withRenderingMode(.alwaysTemplate)
+                    
+                    if #available(iOS 13.0, *) {
+                        
+                        budgetcell.icon.image?.withTintColor(UIColor.systemBlue)
+                    } else {
+                        // Fallback on earlier versions
+                    }
                 } else {
                     
                     budgetcell.icon.image = UIImage(named: "empty")

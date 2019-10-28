@@ -58,6 +58,14 @@ class ExpenseTableViewCell: UITableViewCell {
             if let iconName = budget?.value(forKey: XYZBudget.iconName) as? String, iconName != "" {
                 
                 icon.image = UIImage(named: iconName)
+                icon.image = icon.image?.withRenderingMode(.alwaysTemplate)
+                
+                if #available(iOS 13.0, *) {
+                    
+                    icon.image?.withTintColor(UIColor.systemBlue)
+                } else {
+                    // Fallback on earlier versions
+                }
             } else {
                 
                 icon.image = UIImage(named: "empty")
