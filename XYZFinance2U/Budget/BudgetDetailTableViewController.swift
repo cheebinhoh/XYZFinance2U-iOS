@@ -188,10 +188,10 @@ class BudgetDetailTableViewController: UITableViewController,
     }
     
     
-    func budgetSelected(newBudget: XYZBudget?) {
+    func budgetSelected(budget: XYZBudget?) {
 
         modalEditing = false
-        budget = newBudget
+        self.budget = budget
         reloadData()
         
         let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit(_:)))
@@ -199,7 +199,7 @@ class BudgetDetailTableViewController: UITableViewController,
         navigationItem.leftBarButtonItem = nil
     }
     
-    func budgetDeleted(deletedBudget: XYZBudget) {
+    func budgetDeleted(budget: XYZBudget) {
     
     }
 
@@ -267,7 +267,7 @@ class BudgetDetailTableViewController: UITableViewController,
             
             masterViewController.navigationItem.leftBarButtonItem?.isEnabled = true
             masterViewController.navigationItem.rightBarButtonItem?.isEnabled = true
-            budgetSelected(newBudget: budget)
+            budgetSelected(budget: budget)
         }
     }
     
@@ -294,14 +294,17 @@ class BudgetDetailTableViewController: UITableViewController,
         if isPushinto {
             
             fatalError("Exception: todo")
-
         } else if isPopover {
             
             if nil == budget {
              
                 budget = XYZBudget(id: nil,
-                                   name: budgetType, amount: amount, currency: currencyCode!,
-                                   length: length, start: date, sequenceNr: 0,
+                                   name: budgetType,
+                                   amount: amount,
+                                   currency: currencyCode!,
+                                   length: length,
+                                   start: date,
+                                   sequenceNr: 0,
                                    context: managedContext())
                 
                 saveData()
@@ -624,7 +627,6 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 cell = textcell
             
-            
             case "amount":
                 guard let textcell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailTextCell", for: indexPath) as? XYZTextTableViewCell else {
                     
@@ -879,7 +881,6 @@ class BudgetDetailTableViewController: UITableViewController,
             selectionTableViewController.selectionIdentifier = "length"
             selectionTableViewController.setSelections("", false,
                                                        [XYZBudget.Length.none.rawValue,
-                                                        //DEPRECATED: XYZBudget.Length.hourly.rawValue,
                                                         XYZBudget.Length.daily.rawValue,
                                                         XYZBudget.Length.weekly.rawValue,
                                                         XYZBudget.Length.biweekly.rawValue,
@@ -887,7 +888,6 @@ class BudgetDetailTableViewController: UITableViewController,
                                                         XYZBudget.Length.halfyearly.rawValue,
                                                         XYZBudget.Length.yearly.rawValue],
                                                        ["",
-                                                        //DEPRECATED: XYZBudget.Length.hourly.rawValue,
                                                         XYZBudget.Length.daily.rawValue.localized(),
                                                         XYZBudget.Length.weekly.rawValue.localized(),
                                                         XYZBudget.Length.biweekly.rawValue.localized(),

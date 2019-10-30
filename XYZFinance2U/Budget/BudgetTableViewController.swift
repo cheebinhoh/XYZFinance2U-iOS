@@ -11,8 +11,8 @@ import CloudKit
 
 protocol BudgetSelectionDelegate: class {
     
-    func budgetSelected(newBudget: XYZBudget?)
-    func budgetDeleted(deletedBudget: XYZBudget)
+    func budgetSelected(budget: XYZBudget?)
+    func budgetDeleted(budget: XYZBudget)
 }
 
 class BudgetTableViewController: UITableViewController,
@@ -158,7 +158,7 @@ class BudgetTableViewController: UITableViewController,
     
         let oldBudget = softdeletebudget(budget)
         
-        self.delegate?.budgetDeleted(deletedBudget: oldBudget)
+        self.delegate?.budgetDeleted(budget: oldBudget)
         reloadData()
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -186,8 +186,8 @@ class BudgetTableViewController: UITableViewController,
         expenseView.reloadData()
     }
     
-    func registerDeleteUndo(budget: XYZBudget)
-    {
+    func registerDeleteUndo(budget: XYZBudget) {
+        
         let oldName = budget.value(forKey: XYZBudget.name) as? String ?? ""
         let oldAmount = budget.value(forKey: XYZBudget.amount) as? Double ?? 0.0
         let oldCurrency = budget.value(forKey: XYZBudget.currency) as? String ?? ""
@@ -204,8 +204,11 @@ class BudgetTableViewController: UITableViewController,
         undoManager?.registerUndo(withTarget: self, handler: { (controller) in
             
             let budget = XYZBudget(id: nil,
-                                   name: oldName, amount: oldAmount,
-                                   currency: oldCurrency, length: oldLength!, start: oldStart,
+                                   name: oldName,
+                                   amount: oldAmount,
+                                   currency: oldCurrency,
+                                   length: oldLength!,
+                                   start: oldStart,
                                    sequenceNr: oldSequenceNr,
                                    context: managedContext())
             
@@ -388,6 +391,7 @@ class BudgetTableViewController: UITableViewController,
         
         var zonesToBeFetched = [CKRecordZone]()
         let incomeCustomZone = CKRecordZone(zoneName: XYZBudget.type)
+        
         zonesToBeFetched.append(incomeCustomZone)
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -687,7 +691,7 @@ class BudgetTableViewController: UITableViewController,
             expenseDetailTableView.presetBudgetCategory = budgetGroup
             expenseDetailTableView.presetCurrencyCode = currrency
             expenseDetailTableView.setPopover(delegate: self)
-            //expenseDetailTableView.currencyCodes = currencyCodes
+
             self.isPopover = true
             
             expenseDetailNavigationController.modalPresentationStyle = .popover
@@ -868,7 +872,7 @@ class BudgetTableViewController: UITableViewController,
             let sectionBudgetList = sectionList[indexPath.section].data as? [XYZBudget]
             detailTableViewController.budgetDelegate = self
             detailTableViewController.currencyCodes = currencyCodes
-            delegate?.budgetSelected(newBudget: sectionBudgetList?[indexPath.row])
+            delegate?.budgetSelected(budget: sectionBudgetList?[indexPath.row])
         }
         
         tableView.deselectRow(at: indexPath, animated: false)
@@ -890,8 +894,6 @@ class BudgetTableViewController: UITableViewController,
         
         let stackView = UIStackView()
         let title = UILabel()
-        //let subtotal = UILabel()
-        //let (amount, currency) = sectionSpentAmount(section: section)
 
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 45)
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -900,10 +902,6 @@ class BudgetTableViewController: UITableViewController,
         title.textColor = UIColor.systemGray
         stackView.axis = .horizontal
         stackView.addArrangedSubview(title)
-        
-        //subtotal.text = formattingCurrencyValue(input: amount, code: currency)
-        //subtotal.textColor = UIColor.gray
-        //stackView.addArrangedSubview(subtotal)
         
         return stackView
     }
@@ -957,14 +955,17 @@ class BudgetTableViewController: UITableViewController,
         cell.name.text = name
         cell.length.text = period
         var color = UIColor.black
+        
         if balance < 0.0 {
             
             color = UIColor.red
         } else {
             
             if #available(iOS 13.0, *) {
+                
                 color = UIColor.label
             } else {
+                
                 color = UIColor.black
             } 
         }
@@ -1154,7 +1155,7 @@ class BudgetTableViewController: UITableViewController,
         }
         
         self.delegate = nil
-        secondaryViewController.navigationItem.title = "New" //TODO: check if we need this
+        secondaryViewController.navigationItem.title = "New budget".localized()
         
         if let navigationController = secondaryViewController as? UINavigationController {
             
@@ -1177,7 +1178,6 @@ class BudgetTableViewController: UITableViewController,
                     
                     mainSplitView.popOverNavigatorController = navigationController
                     
-                    //OperationQueue.main.addOperation
                     DispatchQueue.main.async {
                         
                         self.present(navigationController, animated: true, completion: nil)
