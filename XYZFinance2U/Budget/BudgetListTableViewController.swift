@@ -253,12 +253,19 @@ class BudgetListTableViewController: UITableViewController {
                                                    code: budget?.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode)
         cell.balanceAmount.text = formattingCurrencyValue(input: balanceAmount,
                                                           code: budget?.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode)
+        cell.dotColorView.isHidden = true
         if balanceAmount < 0.0 {
             
             cell.balanceAmount.textColor = UIColor.red
         } else {
             
-            cell.balanceAmount.textColor = UIColor.black
+            if #available(iOS 13.0, *) {
+                
+                cell.balanceAmount.textColor = UIColor.label
+            } else {
+                
+                cell.balanceAmount.textColor = UIColor.black
+            }
         }
         
         return cell
