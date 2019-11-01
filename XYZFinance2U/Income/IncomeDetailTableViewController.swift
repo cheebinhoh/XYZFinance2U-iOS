@@ -636,8 +636,8 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.delegate = self
                 textcell.enableMonetaryEditing(true, currencyCode!)
 
-                textcell.input.placeholder = formattingCurrencyValue(input: 0.0, code: currencyCode)
-                textcell.input.text = formattingCurrencyValue(input: amount ?? 0.0, code: currencyCode)
+                textcell.input.placeholder = formattingCurrencyValue(of: 0.0, as: currencyCode)
+                textcell.input.text = formattingCurrencyValue(of: amount ?? 0.0, as: currencyCode)
                 textcell.label.text = "Balance".localized()
                 
                 cell = textcell
@@ -652,8 +652,8 @@ class IncomeDetailTableViewController: UITableViewController,
                 textcell.delegate = self
                 textcell.enableMonetaryEditing(true, currencyCode!)
                 
-                textcell.input.placeholder = formattingCurrencyValue(input: 0.0, code: currencyCode)
-                textcell.input.text = formattingCurrencyValue(input: principal ?? 0.0, code: currencyCode)
+                textcell.input.placeholder = formattingCurrencyValue(of: 0.0, as: currencyCode)
+                textcell.input.text = formattingCurrencyValue(of: principal ?? 0.0, as: currencyCode)
                 textcell.label.text = "Principal".localized()
                 
                 cell = textcell

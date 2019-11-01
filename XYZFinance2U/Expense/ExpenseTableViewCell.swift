@@ -40,8 +40,8 @@ class ExpenseTableViewCell: UITableViewCell {
 
     func setExpense(expense: XYZExpense) {
         
-        amount.text = formattingCurrencyValue(input: (expense.value(forKey: XYZExpense.amount) as? Double) ?? 0.0,
-                                              code: expense.value(forKey: XYZExpense.currencyCode) as? String )
+        amount.text = formattingCurrencyValue(of: (expense.value(forKey: XYZExpense.amount) as? Double) ?? 0.0,
+                                              as: expense.value(forKey: XYZExpense.currencyCode) as? String )
         detail.text = ( expense.value(forKey: XYZExpense.detail) as? String ) ?? ""
         date.text = formattingDate((expense.value(forKey: XYZExpense.date) as? Date) ?? Date(), style: .medium )
         

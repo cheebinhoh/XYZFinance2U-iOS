@@ -101,7 +101,7 @@ class XYZTextTableViewCell: UITableViewCell,
             input.addDoneToolbar(onDone: nil)
             input.clearButtonMode = .never
             input.keyboardType = .numberPad
-            input.text = formattingCurrencyValue(input: 0.0, code: self.currencyCode)
+            input.text = formattingCurrencyValue(of: 0.0, as: self.currencyCode)
         } else {
             
             input.keyboardType = .default
@@ -117,9 +117,9 @@ class XYZTextTableViewCell: UITableViewCell,
             
             var text = textField.text ?? "0.00"
             
-            text = formattingDoubleValue(input: text)
-            text = formattingAndProcessDoubleValue(input: text)
-            text = formattingCurrencyValue(input: text, code: currencyCode)
+            text = formattingDoubleValue(of: text)
+            text = formattingAndProcessDoubleValue(of: text)
+            text = formattingCurrencyValue(of: text, as: currencyCode)
             textField.text = text
         }
         

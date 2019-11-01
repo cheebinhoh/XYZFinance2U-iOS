@@ -76,8 +76,8 @@ class IncomeDetailViewController: UIViewController {
 
             bank.text = bankValue
             accountNr.text = accountNrValue
-            amount.text = formattingCurrencyValue(input: balance!, code:currencyCode)
-            principal.text = formattingCurrencyValue(input: principalAmount, code:currencyCode)
+            amount.text = formattingCurrencyValue(of: balance!, as: currencyCode)
+            principal.text = formattingCurrencyValue(of: principalAmount, as: currencyCode)
             date.text = formattingDate((income?.value(forKey: XYZAccount.lastUpdate) as? Date )!, style: .medium)
         }
         

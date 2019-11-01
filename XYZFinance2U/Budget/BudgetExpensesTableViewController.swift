@@ -391,7 +391,7 @@ class BudgetExpensesTableViewController: UITableViewController,
         
         if let currencyCode = currencyCode {
             
-            subtotal.text = formattingCurrencyValue(input: total, code: currencyCode)
+            subtotal.text = formattingCurrencyValue(of: total, as: currencyCode)
             subtotal.textColor = UIColor.gray
             stackView.addArrangedSubview(subtotal)
         }

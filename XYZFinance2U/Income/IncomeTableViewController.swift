@@ -1192,10 +1192,10 @@ class IncomeTableViewController: UITableViewController,
                                 break
                         }
                         
-                        incomecell.account.text = incomecell.account.text! + "\(percentageSign)\(formattingCurrencyValue(input: earnedAmount, code: currencyCode)) (\(percentageDiff))"
+                        incomecell.account.text = incomecell.account.text! + "\(percentageSign)\(formattingCurrencyValue(of: earnedAmount, as: currencyCode)) (\(percentageDiff))"
                     }
                     
-                    incomecell.amount.text = formattingCurrencyValue(input: (account.value(forKey: XYZAccount.amount) as? Double)!, code: currencyCode)
+                    incomecell.amount.text = formattingCurrencyValue(of: (account.value(forKey: XYZAccount.amount) as? Double)!, as: currencyCode)
                     
                     incomecell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 
@@ -1218,7 +1218,7 @@ class IncomeTableViewController: UITableViewController,
                         currencyCode = account.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
                     }
                     
-                    totalCell.amount.text = formattingCurrencyValue(input: total, code: currencyCode)
+                    totalCell.amount.text = formattingCurrencyValue(of: total, as: currencyCode)
                     totalCell.currency.text = currencyCode.localized()
                     
                     if sectionExpandStatus[indexPath.section] {
@@ -1392,7 +1392,7 @@ class IncomeTableViewController: UITableViewController,
         stackView.axis = .horizontal
         stackView.addArrangedSubview(title)
         
-        subtotal.text = formattingCurrencyValue(input: amount, code: currency)
+        subtotal.text = formattingCurrencyValue(of: amount, as: currency)
         subtotal.textColor = UIColor.gray
         stackView.addArrangedSubview(subtotal)
         

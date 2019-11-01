@@ -249,8 +249,8 @@ func formattingDoubleValue(of input: String) -> String {
     return startWithNegativeSign ? "-\(processedInput)" : processedInput
 }
 
-func formattingCurrencyValue(input: Double,
-                             code: String?) -> String {
+func formattingCurrencyValue(of input: Double,
+                             as code: String?) -> String {
     
     let value = "\(input)"
     

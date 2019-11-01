@@ -249,10 +249,10 @@ class BudgetListTableViewController: UITableViewController {
         let periodEnd = cellList[indexPath.row].until
         
         cell.length.text = "\(formattingDate(cellList[indexPath.row].start, style: .short)) ... \(formattingDate(periodEnd, style: .short))"
-        cell.amount.text = formattingCurrencyValue(input: cellList[indexPath.row].amount,
-                                                   code: budget?.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode)
-        cell.balanceAmount.text = formattingCurrencyValue(input: balanceAmount,
-                                                          code: budget?.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode)
+        cell.amount.text = formattingCurrencyValue(of: cellList[indexPath.row].amount,
+                                                   as: budget?.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode)
+        cell.balanceAmount.text = formattingCurrencyValue(of: balanceAmount,
+                                                          as: budget?.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode)
         cell.dotColorView.isHidden = true
         if balanceAmount < 0.0 {
             

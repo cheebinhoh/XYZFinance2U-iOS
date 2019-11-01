@@ -950,8 +950,8 @@ class BudgetTableViewController: UITableViewController,
         let spendAmount = getTotalSpendAmount(of: budget, from: (appDelegate?.expenseList)!)
 
         let balance = amount - spendAmount
-        cell.balanceAmount.text = formattingCurrencyValue(input: balance, code: currency!)
-        cell.amount.text = formattingCurrencyValue(input: amount, code: currency!)
+        cell.balanceAmount.text = formattingCurrencyValue(of: balance, as: currency!)
+        cell.amount.text = formattingCurrencyValue(of: amount, as: currency!)
         cell.name.text = name
         cell.length.text = period
         var color = UIColor.black

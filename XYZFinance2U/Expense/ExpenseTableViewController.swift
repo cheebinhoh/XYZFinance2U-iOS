@@ -1131,7 +1131,7 @@ class ExpenseTableViewController: UITableViewController,
                         }
                         
                         totalCell.detail.text = currency
-                        totalCell.amount.text = formattingCurrencyValue(input: total, code: currency)
+                        totalCell.amount.text = formattingCurrencyValue(of: total, as: currency)
                         totalCell.date.text = sectionList[indexPath.section].title
                         totalCell.dotColorView.isHidden = true
                         
@@ -1227,7 +1227,7 @@ class ExpenseTableViewController: UITableViewController,
         
         if let currencyCode = currencyCode {
             
-            subtotal.text = formattingCurrencyValue(input: amount, code: currencyCode)
+            subtotal.text = formattingCurrencyValue(of: amount, as: currencyCode)
             subtotal.textColor = UIColor.gray
             stackView.addArrangedSubview(subtotal)
         }

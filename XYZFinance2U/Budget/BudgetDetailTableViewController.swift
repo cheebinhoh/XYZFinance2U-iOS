@@ -637,8 +637,8 @@ class BudgetDetailTableViewController: UITableViewController,
                 textcell.delegate = self
                 textcell.enableMonetaryEditing(true, currencyCode!)
                 
-                textcell.input.placeholder = formattingCurrencyValue(input: 0.0, code: currencyCode)
-                textcell.input.text = formattingCurrencyValue(input: amount, code: currencyCode)
+                textcell.input.placeholder = formattingCurrencyValue(of: 0.0, as: currencyCode)
+                textcell.input.text = formattingCurrencyValue(of: amount, as: currencyCode)
                 textcell.label.text = "Amount".localized()
                 
                 cell = textcell
@@ -695,7 +695,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 lasteffectivecell.setLabel("Current effective".localized())
                 if let _ = retstart {
                     
-                    lasteffectivecell.setSelection("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!.localized()), \(formattingDate(retstart!, style: .medium))")
+                    lasteffectivecell.setSelection("\(formattingCurrencyValue(of: retamount!, as: currencyCode)), \(retlength!.localized()), \(formattingDate(retstart!, style: .medium))")
                 } else {
                     
                     lasteffectivecell.setSelection("")
@@ -918,17 +918,17 @@ class BudgetDetailTableViewController: UITableViewController,
                 for (index, amount) in historicalAmount.enumerated() {
                     
                     let date = historicalStart[index]
-                    let string = "\(formattingCurrencyValue(input: amount, code: currencyCode)), \(historicalLength[index]), \(formattingDate(date, style: .medium))"
+                    let string = "\(formattingCurrencyValue(of: amount, as: currencyCode)), \(historicalLength[index]), \(formattingDate(date, style: .medium))"
 
                     selectionStrings.append(string)
                     
-                    let displayedString = "\(formattingCurrencyValue(input: amount, code: currencyCode)), \(historicalLength[index].localized()), \(formattingDate(date, style: .medium))"
+                    let displayedString = "\(formattingCurrencyValue(of: amount, as: currencyCode)), \(historicalLength[index].localized()), \(formattingDate(date, style: .medium))"
                     displayedStrings.append(displayedString)
                 }
                 
-                displayedStrings.append("\(formattingCurrencyValue(input: amount, code: currencyCode)), \(length.rawValue.localized()), \(formattingDate(date, style: .medium))")
+                displayedStrings.append("\(formattingCurrencyValue(of: amount, as: currencyCode)), \(length.rawValue.localized()), \(formattingDate(date, style: .medium))")
                 
-                selectionStrings.append("\(formattingCurrencyValue(input: amount, code: currencyCode)), \(length.rawValue), \(formattingDate(date, style: .medium))")
+                selectionStrings.append("\(formattingCurrencyValue(of: amount, as: currencyCode)), \(length.rawValue), \(formattingDate(date, style: .medium))")
                 
                 selectionStrings.reverse()
                 displayedStrings.reverse()
@@ -947,8 +947,8 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 if let _ = retstart {
                     
-                    selectionTableViewController.setSelectedItem("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!), \(formattingDate(retstart!, style: .medium))",
-                    "\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!.localized()), \(formattingDate(retstart!, style: .medium))")
+                    selectionTableViewController.setSelectedItem("\(formattingCurrencyValue(of: retamount!, as: currencyCode)), \(retlength!), \(formattingDate(retstart!, style: .medium))",
+                    "\(formattingCurrencyValue(of: retamount!, as: currencyCode)), \(retlength!.localized()), \(formattingDate(retstart!, style: .medium))")
                 } else {
                     
                    selectionTableViewController.setSelectedItem("")
