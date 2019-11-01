@@ -248,7 +248,7 @@ class BudgetListTableViewController: UITableViewController {
         
         let periodEnd = cellList[indexPath.row].until
         
-        cell.length.text = "\(formattingDate(date: cellList[indexPath.row].start, style: .short)) ... \(formattingDate(date: periodEnd, style: .short))"
+        cell.length.text = "\(formattingDate(cellList[indexPath.row].start, style: .short)) ... \(formattingDate(periodEnd, style: .short))"
         cell.amount.text = formattingCurrencyValue(input: cellList[indexPath.row].amount,
                                                    code: budget?.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode)
         cell.balanceAmount.text = formattingCurrencyValue(input: balanceAmount,
@@ -286,7 +286,7 @@ class BudgetListTableViewController: UITableViewController {
         expenseListViewController.expenseList = cellList[indexPath.row].expenseList
         expenseListViewController.addBackButton()
         expenseListViewController.loadData()
-        expenseListViewController.headerPretext = "\(formattingDate(date: cellList[indexPath.row].start, style: .short)) ... \(formattingDate(date: cellList[indexPath.row].until, style: .short))"
+        expenseListViewController.headerPretext = "\(formattingDate(cellList[indexPath.row].start, style: .short)) ... \(formattingDate(cellList[indexPath.row].until, style: .short))"
         expenseListViewController.navigationItem.title = budget?.value(forKey: XYZBudget.name) as? String
         expenseListViewController.readonly = true
         expenseListViewController.tableView.allowsSelection = false

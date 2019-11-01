@@ -104,7 +104,7 @@ enum XYZColor: String {
 
 // MARK: - formatting
 
-func formattingDate(date: Date,
+func formattingDate(_ date: Date,
                     style: DateFormatter.Style) -> String {
     
     let dateFormatter = DateFormatter();
@@ -114,7 +114,7 @@ func formattingDate(date: Date,
     return dateFormatter.string(from: date)
 }
 
-func formattingDateTime(date: Date) -> String {
+func formattingDateTime(_ date: Date) -> String {
     
     let dateFormatter = DateFormatter();
     

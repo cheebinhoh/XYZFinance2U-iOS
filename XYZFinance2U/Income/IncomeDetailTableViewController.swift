@@ -154,7 +154,7 @@ class IncomeDetailTableViewController: UITableViewController,
         switch tableSectionCellList[indexPath!.section].identifier {
             
             case "balance":
-                datecell?.dateInput.text = formattingDate(date: sender.date ?? Date(), style: .medium)
+                datecell?.dateInput.text = formattingDate(sender.date ?? Date(), style: .medium)
                 date = sender.date ?? Date()
             
                 if let oldDate = income?.value(forKey: XYZAccount.lastUpdate) as? Date {
@@ -163,7 +163,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 }
 
             case "remind":
-                dateremindcell?.dateInput.text = formattingDateTime(date: sender.date ?? Date())
+                dateremindcell?.dateInput.text = formattingDateTime(sender.date ?? Date())
                 reminddate = sender.date ?? Date()
             
             default:
@@ -228,7 +228,7 @@ class IncomeDetailTableViewController: UITableViewController,
                                 date = income?.value(forKey: XYZAccount.lastUpdate) as? Date ?? Date()
                             }
                             
-                            datecell?.dateInput.text = formattingDate(date: date!, style: .medium)
+                            datecell?.dateInput.text = formattingDate(date!, style: .medium)
                         }
                     }
                 
@@ -669,7 +669,7 @@ class IncomeDetailTableViewController: UITableViewController,
                     date = Date()
                 }
                 
-                datecell.dateInput.text = formattingDate(date: date!, style: .medium)
+                datecell.dateInput.text = formattingDate(date!, style: .medium)
                 datecell.delegate = self
                 datecell.label.text = "Last update".localized()
                 datecell.enableEditing = modalEditing
@@ -737,7 +737,7 @@ class IncomeDetailTableViewController: UITableViewController,
                     reminddate = Date()
                 }
                 
-                datecell.dateInput.text = formattingDateTime(date: reminddate ?? Date())
+                datecell.dateInput.text = formattingDateTime(reminddate ?? Date())
                 datecell.delegate = self
                 datecell.label.text = "Remind date".localized()
                 datecell.enableEditing = modalEditing

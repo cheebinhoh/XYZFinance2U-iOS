@@ -775,7 +775,7 @@ class SettingTableViewController: UITableViewController,
             let amount = income.value(forKey: XYZAccount.amount) as? Double ?? 0.0
             let currency = income.value(forKey: XYZAccount.currencyCode) as? String ?? ""
             let principal = income.value(forKey: XYZAccount.principal) as? Double ?? 0.0
-            let lastUpdate = formattingDate(date: income.value(forKey: XYZAccount.lastUpdate) as? Date ?? Date(), style: .short )
+            let lastUpdate = formattingDate(income.value(forKey: XYZAccount.lastUpdate) as? Date ?? Date(), style: .short )
             
             text = text + "\(index)\t\(bank)\t\(accountNr.isEmpty ? " " : accountNr)\t\(amount)\t\(principal)\t\(currency)\t\(lastUpdate)\n"
         }
@@ -855,7 +855,7 @@ class SettingTableViewController: UITableViewController,
                     
                     let detail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
                     let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
-                    let date = formattingDate(date: startDate!, style: .short)
+                    let date = formattingDate(startDate!, style: .short)
                     
                     let category = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
                     

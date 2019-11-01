@@ -942,7 +942,7 @@ class BudgetTableViewController: UITableViewController,
         if let currentStart = budget.currentStart, let currentEnd = budget.currentEnd {
             
             let periodEnd = Calendar.current.date(byAdding: .day, value: -1, to: currentEnd)
-            period = "\(formattingDate(date: currentStart, style: .short)) ... \(formattingDate(date: periodEnd!, style: .short))"
+            period = "\(formattingDate(currentStart, style: .short)) ... \(formattingDate(periodEnd!, style: .short))"
         }
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate

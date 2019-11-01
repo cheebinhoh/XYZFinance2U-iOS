@@ -695,7 +695,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 lasteffectivecell.setLabel("Current effective".localized())
                 if let _ = retstart {
                     
-                    lasteffectivecell.setSelection("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!.localized()), \(formattingDate(date: retstart!, style: .medium))")
+                    lasteffectivecell.setSelection("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!.localized()), \(formattingDate(retstart!, style: .medium))")
                 } else {
                     
                     lasteffectivecell.setSelection("")
@@ -758,7 +758,7 @@ class BudgetDetailTableViewController: UITableViewController,
                     fatalError("Exception: budgetDetailDateTextCell is failed to be created")
                 }
                 
-                datecell.dateInput.text = formattingDate(date: date, style: .medium)
+                datecell.dateInput.text = formattingDate(date, style: .medium)
                 datecell.delegate = self
                 datecell.label.text = "Start date".localized()
                 datecell.enableEditing = modalEditing
@@ -918,17 +918,17 @@ class BudgetDetailTableViewController: UITableViewController,
                 for (index, amount) in historicalAmount.enumerated() {
                     
                     let date = historicalStart[index]
-                    let string = "\(formattingCurrencyValue(input: amount, code: currencyCode)), \(historicalLength[index]), \(formattingDate(date: date, style: .medium))"
+                    let string = "\(formattingCurrencyValue(input: amount, code: currencyCode)), \(historicalLength[index]), \(formattingDate(date, style: .medium))"
 
                     selectionStrings.append(string)
                     
-                    let displayedString = "\(formattingCurrencyValue(input: amount, code: currencyCode)), \(historicalLength[index].localized()), \(formattingDate(date: date, style: .medium))"
+                    let displayedString = "\(formattingCurrencyValue(input: amount, code: currencyCode)), \(historicalLength[index].localized()), \(formattingDate(date, style: .medium))"
                     displayedStrings.append(displayedString)
                 }
                 
-                displayedStrings.append("\(formattingCurrencyValue(input: amount, code: currencyCode)), \(length.rawValue.localized()), \(formattingDate(date: date, style: .medium))")
+                displayedStrings.append("\(formattingCurrencyValue(input: amount, code: currencyCode)), \(length.rawValue.localized()), \(formattingDate(date, style: .medium))")
                 
-                selectionStrings.append("\(formattingCurrencyValue(input: amount, code: currencyCode)), \(length.rawValue), \(formattingDate(date: date, style: .medium))")
+                selectionStrings.append("\(formattingCurrencyValue(input: amount, code: currencyCode)), \(length.rawValue), \(formattingDate(date, style: .medium))")
                 
                 selectionStrings.reverse()
                 displayedStrings.reverse()
@@ -947,8 +947,8 @@ class BudgetDetailTableViewController: UITableViewController,
                 
                 if let _ = retstart {
                     
-                    selectionTableViewController.setSelectedItem("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!), \(formattingDate(date: retstart!, style: .medium))",
-                    "\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!.localized()), \(formattingDate(date: retstart!, style: .medium))")
+                    selectionTableViewController.setSelectedItem("\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!), \(formattingDate(retstart!, style: .medium))",
+                    "\(formattingCurrencyValue(input: retamount!, code: currencyCode)), \(retlength!.localized()), \(formattingDate(retstart!, style: .medium))")
                 } else {
                     
                    selectionTableViewController.setSelectedItem("")

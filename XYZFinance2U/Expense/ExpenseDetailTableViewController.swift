@@ -601,7 +601,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         switch sectionList[(indexPath?.section)!].cellList[(indexPath?.row)!] {
             
             case "datepicker":
-                datecell?.dateInput.text = formattingDate(date: sender.date ?? Date(), style: .medium)
+                datecell?.dateInput.text = formattingDate(sender.date ?? Date(), style: .medium)
                 if date == recurringStopDate {
                     
                     recurringStopDateCell?.dateInput.text = "\("Recurring stop:".localized()) -"
@@ -615,7 +615,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     
                     if sender.date! > date! {
                         
-                        recurringStopDateCell?.dateInput.text = "\("Recurring stop:".localized()) \(formattingDate(date: sender.date ?? Date(), style: .medium))"
+                        recurringStopDateCell?.dateInput.text = "\("Recurring stop:".localized()) \(formattingDate(sender.date ?? Date(), style: .medium))"
                     } else {
                         
                        recurringStopDateCell?.dateInput.text = "\("Recurring stop:".localized()) -"
@@ -1223,7 +1223,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     date = Date()
                 }
                 
-                datecell.dateInput.text = formattingDate(date: date ?? Date(), style: .medium)
+                datecell.dateInput.text = formattingDate(date ?? Date(), style: .medium)
                 datecell.delegate = self
                 
                 datecell.enableEditing = modalEditing
@@ -1256,7 +1256,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     datecell.dateInput.text = "\("Recurring stop:".localized()) -"
                 } else {
                     
-                    datecell.dateInput.text = "\("Recurring stop:".localized()) \(formattingDate(date: recurringStopDate!, style: .medium))"
+                    datecell.dateInput.text = "\("Recurring stop:".localized()) \(formattingDate(recurringStopDate!, style: .medium))"
                 }
                 
                 datecell.delegate = self
