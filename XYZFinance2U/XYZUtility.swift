@@ -124,7 +124,7 @@ func formattingDateTime(_ date: Date) -> String {
     return dateFormatter.string(from: date)
 }
 
-func formattingAndProcessDoubleValue(input: String) -> String {
+func formattingAndProcessDoubleValue(of input: String) -> String {
     
     var processedInput = ""
     var afterPoint = false
@@ -141,7 +141,7 @@ func formattingAndProcessDoubleValue(input: String) -> String {
     
     if Locale.current.decimalSeparator ?? "" == "\(lastChar)" {
         
-        processedInput = shiftingDecimalPoint(input: input)
+        processedInput = shiftingDecimalPoint(of: input)
         numberOfDigitsAfterPoint = numberOfFixedDecimalPoints
     } else {
         
@@ -181,12 +181,12 @@ func formattingAndProcessDoubleValue(input: String) -> String {
     return "\(doubleValue)"
 }
 
-func shiftingDecimalPoint(input: String) -> String {
+func shiftingDecimalPoint(of input: String) -> String {
     
     var processedInput = ""
-    let reversedInput = input.reversed()
     var decimalPointFound = false
-    
+    let reversedInput = input.reversed()
+
     for c in String(reversedInput).unicodeScalars {
         
         if Locale.current.decimalSeparator ?? "" == "\(c)" {
@@ -211,12 +211,12 @@ func shiftingDecimalPoint(input: String) -> String {
     return String(processedInput.reversed())
 }
 
-func formattingDoubleValueAsDouble(input: String) -> Double {
+func formattingDoubleValueAsDouble(of input: String) -> Double {
     
-    return Double(formattingDoubleValue(input: input)) ?? 0.0
+    return Double(formattingDoubleValue(of: input)) ?? 0.0
 }
 
-func formattingDoubleValue(input: String) -> String {
+func formattingDoubleValue(of input: String) -> String {
     
     var processedInput = ""
     var startWithDecimalDigit = false
@@ -254,13 +254,13 @@ func formattingCurrencyValue(input: Double,
     
     let value = "\(input)"
     
-    return formattingCurrencyValue(input: value, code: code)
+    return formattingCurrencyValue(of: value, as: code)
 }
 
-func formattingCurrencyValue(input: String,
-                             code: String?) -> String {
+func formattingCurrencyValue(of input: String,
+                             as code: String?) -> String {
     
-    let processedInput = formattingDoubleValue(input: input)
+    let processedInput = formattingDoubleValue(of: input)
     
     let formatter = NumberFormatter()
 

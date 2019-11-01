@@ -215,7 +215,7 @@ class IncomeDetailTableViewController: UITableViewController,
                     bank = sender.input.text!
                 
                 case "amount":
-                    amount = formattingDoubleValueAsDouble(input: sender.input.text!)
+                    amount = formattingDoubleValueAsDouble(of: sender.input.text!)
                     if let oldAmount = income?.value(forKey: XYZAccount.amount) as? Double {
                         
                         if nil == dateUpdatedExplicitly || !(dateUpdatedExplicitly!) {
@@ -233,7 +233,7 @@ class IncomeDetailTableViewController: UITableViewController,
                     }
                 
                 case "principal":
-                    principal = formattingDoubleValueAsDouble(input: sender.input.text!)
+                    principal = formattingDoubleValueAsDouble(of: sender.input.text!)
                 
                 case "accountNr":
                     accountNr = sender.input.text!

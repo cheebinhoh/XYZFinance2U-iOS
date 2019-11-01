@@ -741,7 +741,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     detail = sender.input.text!
                 
                 case "amount":
-                    amount = formattingDoubleValueAsDouble(input: sender.input.text!)
+                    amount = formattingDoubleValueAsDouble(of: sender.input.text!)
                 
                 case "email":
                     emails[index.row] = sender.input.text!

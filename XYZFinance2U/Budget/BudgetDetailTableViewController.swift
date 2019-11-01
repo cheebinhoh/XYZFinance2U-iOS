@@ -168,7 +168,7 @@ class BudgetDetailTableViewController: UITableViewController,
                     navigationItem.rightBarButtonItem?.isEnabled = !budgetType.isEmpty
                 
                 case "amount":
-                    amount = formattingDoubleValueAsDouble(input: sender.input.text!)
+                    amount = formattingDoubleValueAsDouble(of: sender.input.text!)
                     
                     if let _ = lastEffectiveIndexPath {
                     
