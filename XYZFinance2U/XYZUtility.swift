@@ -1177,14 +1177,16 @@ func pushChangeToiCloudZone(_ database: CKDatabase,
     for zone in zones {
         
         let name = zone.zoneID.zoneName
-
+        guard let iCloudZone = GetiCloudZone(of: zone,
+                                             share: CKContainer.default().sharedCloudDatabase == database,
+                                             icloudZones) else {
+            
+            continue
+        }
+            
         switch name {
             
             case XYZAccount.type:
-                if let iCloudZone = GetiCloudZone(of: zone,
-                                                  share: CKContainer.default().sharedCloudDatabase == database,
-                                                  icloudZones) {
-                    
                     guard let incomeList = iCloudZone.data as? [XYZAccount] else {
                         
                         fatalError("Exception: [XYZAccount] is expected")
@@ -1201,13 +1203,8 @@ func pushChangeToiCloudZone(_ database: CKDatabase,
                             completionblock()
                         }
                     })
-                }
             
-        case XYZExpense.type:
-            if let iCloudZone = GetiCloudZone(of: zone,
-                                              share: CKContainer.default().sharedCloudDatabase == database,
-                                              icloudZones) {
-            
+            case XYZExpense.type:
                 guard let expenseList = iCloudZone.data as? [XYZExpense] else {
                     
                     fatalError("Exception: [XYZAccount] is expected")
@@ -1223,13 +1220,8 @@ func pushChangeToiCloudZone(_ database: CKDatabase,
                         })
                     }
                 })
-            }
-            
+
             case XYZBudget.type:
-                if let iCloudZone = GetiCloudZone(of: zone,
-                                                  share: CKContainer.default().sharedCloudDatabase == database,
-                                                  icloudZones) {
-                    
                     guard let budgetList = iCloudZone.data as? [XYZBudget] else {
                         
                         fatalError("Exception: [XYZBudget] is expected")
@@ -1246,7 +1238,6 @@ func pushChangeToiCloudZone(_ database: CKDatabase,
                             completionblock()
                         }
                     })
-                }
             
             default:
                 fatalError("Exception: zone \(name) is not supported")
@@ -1286,9 +1277,6 @@ func saveExpensesToiCloud(_ database: CKDatabase,
         
         for expense in expenseList {
             
-            //if let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool, isShared {
-            
-            //} else
             if let lastChanged = expense.value(forKey: XYZExpense.lastRecordChange) as? Date {
                 
                 if lastChanged > lastChangeTokenFetch {
@@ -1645,10 +1633,10 @@ func saveAccountsToiCloud(_ database: CKDatabase,
 }
 
 func saveBudgetsToiCloud(_ database: CKDatabase,
-                          _ zone: CKRecordZone,
-                          _ iCloudZone: XYZiCloudZone,
-                          _ budgetList: [XYZBudget],
-                          _ completionblock: @escaping () -> Void ) {
+                         _ zone: CKRecordZone,
+                         _ iCloudZone: XYZiCloudZone,
+                         _ budgetList: [XYZBudget],
+                         _ completionblock: @escaping () -> Void ) {
     
     var budgetListToBeSaved: [XYZBudget]?
     
