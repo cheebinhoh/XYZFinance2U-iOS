@@ -333,22 +333,11 @@ class XYZBudget : NSManagedObject {
          start: Date,
          sequenceNr: Int,
          context: NSManagedObjectContext?) {
-        
-        let aContext = context!
-        
+
+        let recordName = id ?? UUID.init().uuidString
         let entity = NSEntityDescription.entity(forEntityName: XYZBudget.type,
-                                                in: aContext)!
-        super.init(entity: entity, insertInto: aContext)
-        
-        var recordName = ""
-        
-        if nil == id {
-            
-            recordName = UUID.init().uuidString
-        } else {
-            
-            recordName = id!
-        }
+                                                in: context!)!
+        super.init(entity: entity, insertInto: context!)
         
         self.setValue(recordName, forKey: XYZBudget.recordId)
         self.setValue(name, forKey: XYZBudget.name)

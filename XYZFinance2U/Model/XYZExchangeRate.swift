@@ -24,7 +24,6 @@ class XYZExchangeRate : NSManagedObject {
     static let recordId = "recordId"
     static let target = "target"
 
-    
     // MARK: - property
 
     var base: String = ""
@@ -33,7 +32,6 @@ class XYZExchangeRate : NSManagedObject {
     var recordId: String = ""
     var target: String = ""
 
-    
     // MARK: - function
     
     init(recordId: String,
@@ -43,11 +41,9 @@ class XYZExchangeRate : NSManagedObject {
          date: Date,
          context: NSManagedObjectContext?) {
         
-        let aContext = context!
-        
         let entity = NSEntityDescription.entity(forEntityName: XYZExchangeRate.type,
-                                                in: aContext)!
-        super.init(entity: entity, insertInto: aContext)
+                                                in: context!)!
+        super.init(entity: entity, insertInto: context!)
         
         self.setValue(recordId, forKey: XYZExchangeRate.recordId)
         self.setValue(base, forKey: XYZExchangeRate.base)

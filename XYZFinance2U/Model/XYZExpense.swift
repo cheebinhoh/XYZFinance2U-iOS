@@ -80,7 +80,7 @@ class XYZExpense: NSManagedObject {
     func getOccurenceDates(until: Date) -> [Date] {
         
         var outputDate = [Date]()
-        let recurring = XYZExpense.Length(rawValue: self.value(forKey: XYZExpense.recurring) as! String )
+        let recurring = XYZExpense.Length(rawValue: self.value(forKey: XYZExpense.recurring) as! String)
         
         switch recurring {
             
@@ -160,22 +160,12 @@ class XYZExpense: NSManagedObject {
          amount: Double,
          date: Date,
          context: NSManagedObjectContext?) {
-        
-        let aContext = context!
-        let entity = NSEntityDescription.entity(forEntityName: XYZExpense.type,
-                                                in: aContext)!
-        super.init(entity: entity, insertInto: aContext)
     
-        var recordName = ""
-        
-        if nil == id {
-            
-            recordName = UUID.init().uuidString
-        } else {
-            
-            recordName = id!
-        }
-        
+        let recordName = id ?? UUID.init().uuidString
+        let entity = NSEntityDescription.entity(forEntityName: XYZExpense.type,
+                                                in: context!)!
+        super.init(entity: entity, insertInto: context!)
+    
         self.setValue(recordName, forKey: XYZExpense.recordId)
         self.setValue(detail, forKey: XYZExpense.detail)
         self.setValue(amount, forKey: XYZExpense.amount)
@@ -227,10 +217,9 @@ class XYZExpense: NSManagedObject {
         }
         
         for person in personList {
-            
-            let personSequenceNr = person.value(forKey: XYZExpensePerson.sequenceNr) as? Int
-            
-            if personSequenceNr == sequenceNr {
+                       
+            if let personSequenceNr = person.value(forKey: XYZExpensePerson.sequenceNr) as? Int,
+                personSequenceNr == sequenceNr {
                 
                 personRemoved = person
                 personList.remove(person)
@@ -249,7 +238,7 @@ class XYZExpense: NSManagedObject {
     func addPerson(sequenceNr: Int,
                    name: String,
                    email: String,
-                   paid: Bool) -> ( XYZExpensePerson, Bool ) {
+                   paid: Bool) -> (XYZExpensePerson, Bool) {
         
         return addPerson(sequenceNr: sequenceNr, name: name, email: email, paid: paid, context: managedContext()!)
     }
@@ -259,10 +248,11 @@ class XYZExpense: NSManagedObject {
                    name: String,
                    email: String,
                    paid: Bool,
-                   context: NSManagedObjectContext?) -> ( XYZExpensePerson, Bool ) {
+                   context: NSManagedObjectContext?) -> (XYZExpensePerson, Bool) {
         
         var hasChange = false
         var person: XYZExpensePerson?
+        
         guard var personList = self.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
             
             fatalError("Exception: [XYZExpensePerson] is expected")

@@ -38,11 +38,10 @@ class XYZExpenseReceipt: NSManagedObject
          image: NSData,
          context: NSManagedObjectContext?) {
         
-        let aContext = context!
         let entity = NSEntityDescription.entity(forEntityName: XYZExpenseReceipt.type,
-                                                in: aContext)!
+                                                in: context!)!
         
-        super.init(entity: entity, insertInto: aContext)
+        super.init(entity: entity, insertInto: context!)
         self.setValue(expense, forKey: XYZExpenseReceipt.expense)
         self.setValue(sequenceNr, forKey: XYZExpenseReceipt.sequenceNr)
         self.setValue(image, forKey: XYZExpenseReceipt.image)

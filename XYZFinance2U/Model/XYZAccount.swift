@@ -46,7 +46,6 @@ class XYZAccount : NSManagedObject {
     static let repeatAction = "repeatAction"
     static let sequenceNr = "sequenceNr"
 
-
     // MARK: - property
     
     var accountNr: String = ""
@@ -72,22 +71,12 @@ class XYZAccount : NSManagedObject {
          principal: Double,
          date: Date,
          context: NSManagedObjectContext?) {
-        
-        let aContext = context!
 
+        let recordName = id ?? UUID.init().uuidString
         let entity = NSEntityDescription.entity(forEntityName: XYZAccount.type,
-                                                in: aContext)!
-        super.init(entity: entity, insertInto: aContext)
+                                                in: context!)!
         
-        var recordName = ""
-        
-        if nil == id {
-            
-            recordName = UUID.init().uuidString
-        } else {
-            
-            recordName = id!
-        }
+        super.init(entity: entity, insertInto: context!)
         
         self.setValue(recordName, forKey: XYZAccount.recordId)
         self.setValue(bank, forKey: XYZAccount.bank)
@@ -99,79 +88,8 @@ class XYZAccount : NSManagedObject {
     }
     
      override init(entity: NSEntityDescription,
-                  insertInto context: NSManagedObjectContext?) {
+                   insertInto context: NSManagedObjectContext?) {
         
         super.init(entity: entity, insertInto: context)
     }
-
-    /* DEPRECATED
-    func saveToiCloud() {
-        
-        let recordName = self.value(forKey: XYZAccount.recordId) as? String
-        let ckrecordId = CKRecordID(recordName: recordName!)
-        
-        let container = CKContainer.default()
-        let database = container.privateCloudDatabase
-        
-        database.fetch(withRecordID: ckrecordId, completionHandler: { (existingRecord, error) in
-            
-            var record = existingRecord
-            
-            if nil != error {
-
-                record = CKRecord(recordType: XYZAccount.type, recordID: ckrecordId)
-            } else {
-
-                // do nothing
-            }
-            
-            let bank = self.value(forKey: XYZAccount.bank) as? String
-            let accountNr = self.value(forKey: XYZAccount.accountNr) as? String ?? ""
-            let amount = self.value(forKey: XYZAccount.amount) as? Double
-            let lastUpdate = self.value(forKey: XYZAccount.lastUpdate) as? Date
-            let currencyCode = self.value(forKey: XYZAccount.currencyCode) as? String
-            let repeatDate = self.value(forKey: XYZAccount.repeatDate) as? Date
-            let repeatAction = self.value(forKey: XYZAccount.repeatAction) as? String
-            
-            record?.setValue(bank, forKey: XYZAccount.bank)
-            record?.setValue(accountNr, forKey: XYZAccount.accountNr)
-            record?.setValue(amount, forKey: XYZAccount.amount)
-            record?.setValue(lastUpdate, forKey: XYZAccount.lastUpdate)
-            record?.setValue(currencyCode, forKey: XYZAccount.currencyCode)
-
-            let uploadDate = Date()
-            record?.setValue(uploadDate, forKey: XYZAccount.lastRecordUpload)
-            
-            if nil != repeatDate {
-                
-                record?.setValue(repeatDate, forKey: XYZAccount.repeatDate)
-                record?.setValue(repeatAction, forKey: XYZAccount.repeatAction)
-            }
-        
-            let modifyOperation = CKModifyRecordsOperation(recordsToSave: [record!], recordIDsToDelete: [])
-            modifyOperation.savePolicy = .ifServerRecordUnchanged
-            modifyOperation.modifyRecordsCompletionBlock = { ( saveRecords, deleteRecords, error ) in
-                
-                if nil != error {
-                    
-                    print("-------- error on saving to icloud \(String(describing: error))")
-                } else {
-                    
-                    print("-------- save done for records" )
-                }
-            }
-            
-            let blockOperation = BlockOperation(block: {
-                
-                self.setValue(uploadDate, forKey: XYZAccount.lastRecordUpload)
-                saveManageContext()
-            })
-            
-            blockOperation.addDependency(modifyOperation)
-            OperationQueue.main.addOperation(blockOperation)
-            
-            database.add(modifyOperation)
-        })
-    }
-     */
 }

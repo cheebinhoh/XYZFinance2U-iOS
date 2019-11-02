@@ -49,10 +49,9 @@ class XYZiCloudZone: NSManagedObject {
          owner: String,
          context: NSManagedObjectContext?) {
         
-        let aContext = context!
         let entity = NSEntityDescription.entity(forEntityName: XYZiCloudZone.type,
-                                                in: aContext)!
-        super.init(entity: entity, insertInto: aContext)
+                                                in: context!)!
+        super.init(entity: entity, insertInto: context!)
         
         self.setValue(name, forKey: XYZiCloudZone.name)
         self.setValue(owner, forKey: XYZiCloudZone.ownerName)

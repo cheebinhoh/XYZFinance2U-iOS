@@ -12,7 +12,6 @@ import CoreData
 @objc(XYZExpensePerson)
 class XYZExpensePerson: NSManagedObject
 {
-    
     // MARK: - static property
     
     static let type = "XYZExpensePerson"
@@ -44,11 +43,10 @@ class XYZExpensePerson: NSManagedObject
          email: String,
          context: NSManagedObjectContext?) {
         
-        let aContext = context!
         let entity = NSEntityDescription.entity(forEntityName: XYZExpensePerson.type,
-                                                in: aContext)!
+                                                in: context!)!
         
-        super.init(entity: entity, insertInto: aContext)
+        super.init(entity: entity, insertInto: context!)
         
         self.setValue(sequenceNr, forKey: XYZExpensePerson.sequenceNr)
         self.setValue(expense, forKey: XYZExpensePerson.expense)
