@@ -332,6 +332,17 @@ func sortAcounts(_ incomeList: [XYZAccount]) -> [XYZAccount] {
     }
 }
 
+func sortExpenses(_ expenses: [XYZExpense]) -> [XYZExpense] {
+    
+    return expenses.sorted(by: { (exp1, exp2) -> Bool in
+        
+        let date1 = exp1.value(forKey: XYZExpense.date) as! Date
+        let date2 = exp2.value(forKey: XYZExpense.date) as! Date
+        
+        return date1 > date2
+    })
+}
+
 func loadAccounts() -> [XYZAccount]? {
     
     var output: [XYZAccount]?
@@ -406,17 +417,6 @@ func loadBudgets() -> [XYZBudget]? {
     }
     
     return budgets
-}
-
-func sortExpenses(_ expenses: [XYZExpense]) -> [XYZExpense] {
-    
-    return expenses.sorted(by: { (exp1, exp2) -> Bool in
-        
-        let date1 = exp1.value(forKey: XYZExpense.date) as! Date
-        let date2 = exp2.value(forKey: XYZExpense.date) as! Date
-        
-        return date1 > date2
-    })
 }
 
 func loadExchangeRates() -> [XYZExchangeRate]? {
@@ -631,7 +631,6 @@ func createUpdateExpense(_ oldChangeToken: Data,
                 expenseToBeUpdated?.addPerson(sequenceNr: sequenceNr!, name: name!, email: email!, paid: paid!, context: context)
 
                 indexToBeRemoved.append(index)
-                //outputUnprocessedCkrecords.remove(at: index)
             }
         }
 
@@ -685,7 +684,6 @@ func createUpdateExpense(_ oldChangeToken: Data,
             let data = NSKeyedArchiver.archivedData(withRootObject: locationData)
             
             expenseToBeUpdated?.setValue(data, forKey: XYZExpense.loction)
-            //expenseToBeUpdated?.setValue(true, forKey: XYZExpense.hasgeolocation)
         }
         
         var ckshareFound: CKShare? = nil
@@ -893,7 +891,6 @@ func fetchiCloudZoneChange(_ database: CKDatabase,
                 
                 budgetList = createUpdateBudget(record, budgetList, aContext!)
                 icloudZone?.data = budgetList
-            
             
             default:
                 fatalError("Exception: zone type \(String(describing: zoneName)) is not supported")
