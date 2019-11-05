@@ -350,10 +350,11 @@ class AppDelegate: UIResponder,
     
     func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
 
-        guard let shortCutType = shortcutItem.type as String? else { return false }
+        guard let _ = shortcutItem.type as String? else {
+            
+            return false
+        }
 
-        print("*********** \(shortCutType)")
-        
         return true
     }
     
@@ -716,6 +717,7 @@ class AppDelegate: UIResponder,
         var zonesToBeSaved = [CKRecordZone]()
         let incomeCustomZone = CKRecordZone(zoneName: XYZAccount.type)
         let budgetCustomZone = CKRecordZone(zoneName: XYZBudget.type)
+        let expenseCustomZone = CKRecordZone(zoneName: XYZExpense.type)
         
         if incomeiCloudZone == nil {
             
@@ -725,13 +727,12 @@ class AppDelegate: UIResponder,
             zonesToBeFetched.append(incomeCustomZone)
         }
         
-        let expenseCustomZone = CKRecordZone(zoneName: XYZExpense.type)
-        if let _ = expenseiCloudZone {
-            
-            zonesToBeFetched.append(expenseCustomZone)
-        } else {
+        if expenseiCloudZone == nil {
             
             zonesToBeSaved.append(expenseCustomZone)
+        } else {
+            
+            zonesToBeFetched.append(expenseCustomZone)
         }
         
         if let _ = expenseShareiCloudZone {
@@ -871,49 +872,49 @@ class AppDelegate: UIResponder,
                     
                     switch zName! {
                         
-                    case XYZAccount.type:
-                        self.incomeList = (icloudzone.data as? [XYZAccount])!
-                        self.incomeList = sortAcounts(self.incomeList)
-                        
-                        DispatchQueue.main.async {
+                        case XYZAccount.type:
+                            self.incomeList = (icloudzone.data as? [XYZAccount])!
+                            self.incomeList = sortAcounts(self.incomeList)
                             
-                            if needreload {
+                            DispatchQueue.main.async {
                                 
-                                incomeView.reloadData()
+                                if needreload {
+                                    
+                                    incomeView.reloadData()
+                                }
+                                
+                                registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
                             }
                             
-                            registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
-                        }
-                        
-                    case XYZExpense.type:
-                        self.expenseList = (icloudzone.data as? [XYZExpense])!
-                        
-                        DispatchQueue.main.async {
+                        case XYZExpense.type:
+                            self.expenseList = (icloudzone.data as? [XYZExpense])!
                             
-                            if needreload {
+                            DispatchQueue.main.async {
                                 
-                                expenseView.reloadData()
+                                if needreload {
+                                    
+                                    expenseView.reloadData()
+                                }
+                                
+                                registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
                             }
                             
-                            registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
-                        }
-                        
-                    case XYZBudget.type:
-                        self.budgetList = (icloudzone.data as? [XYZBudget])!
-                        self.budgetList = sortBudgets(self.budgetList)
-                        
-                        DispatchQueue.main.async {
+                        case XYZBudget.type:
+                            self.budgetList = (icloudzone.data as? [XYZBudget])!
+                            self.budgetList = sortBudgets(self.budgetList)
                             
-                            if needreload {
+                            DispatchQueue.main.async {
                                 
-                                budgetView.reloadData()
+                                if needreload {
+                                    
+                                    budgetView.reloadData()
+                                }
+                                
+                                registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
                             }
-                            
-                            registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
-                        }
-            
-                    default:
-                        fatalError("Exception: \(String(describing: zName)) is not supported")
+                
+                        default:
+                            fatalError("Exception: \(String(describing: zName)) is not supported")
                     }
                 }
             })
