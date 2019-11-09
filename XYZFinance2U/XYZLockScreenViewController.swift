@@ -1,37 +1,54 @@
 //
-//  MainSplitViewController.swift
+//  XYZLockScreenViewController.swift
 //  XYZFinance2U
 //
-//  Created by Chee Bin Hoh on 12/29/17.
+//  Created by Chee Bin Hoh on 12/27/17.
 //  Copyright © 2017 CB Hoh. All rights reserved.
 //
 //  QA status: checked on dec-29, 2017
 
 import UIKit
-import LocalAuthentication
 
-class MainSplitViewController: UISplitViewController {
-    
+class XYZLockScreenViewController: UIViewController {
+
     // MARK: - property
     
-    weak var popOverNavigatorController: UINavigationController?
-    weak var popOverAlertController: UIViewController?
+    weak var mainTableViewController: IncomeTableViewController?
+    
+    // MARK: - outlet
+    
+    @IBOutlet weak var unlock: UILabel!
+    @IBOutlet weak var unlockButton: UIButton!
     
     // MARK: - function
-
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
 
+        //let tap = UITapGestureRecognizer(target: self, action: #selector(touchToUnlock(_:)))
+        //self.unlock.addGestureRecognizer(tap)
+    }
+    
     override func didReceiveMemoryWarning() {
         
         super.didReceiveMemoryWarning()
+        
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - target-action
+    
+    @objc
+    @IBAction func touchToUnlock(_ sender: UITapGestureRecognizer) {
+        
+        mainTableViewController?.authenticate()
+    }
 
+    @IBAction func unlock(_ sender: Any) {
+        
+        mainTableViewController?.authenticate()
+    }
     /*
     // MARK: - Navigation
 

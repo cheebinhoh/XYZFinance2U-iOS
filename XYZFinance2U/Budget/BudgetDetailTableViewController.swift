@@ -328,9 +328,9 @@ class BudgetDetailTableViewController: UITableViewController,
     private func getMasterTableViewController() -> BudgetTableViewController {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
             
-            fatalError("Exception: UISplitViewController is expected" )
+            fatalError("Exception: XYZMainSplitViewController is expected" )
         }
         
         guard let tabBarController = mainSplitView.viewControllers.first as? UITabBarController else {

@@ -32,9 +32,9 @@ class IncomeDetailViewController: UIViewController {
     lazy var previewActions: [UIPreviewActionItem] = {
 
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
             
-            fatalError("Exception: UISplitViewController is expected" )
+            fatalError("Exception: XYZMainSplitViewController is expected" )
         }
         
         let copyAction = UIPreviewAction(title: "Copy balance".localized(), style: .default, handler: { (action, viewcontroller) in

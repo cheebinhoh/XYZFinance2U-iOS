@@ -25,14 +25,14 @@ class CalendarCollectionViewController: UICollectionViewController,
         
         saveManageContext()
         
-        guard let splitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+        guard let splitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
             
-            fatalError("Exception: MainSplitViewController is expected")
+            fatalError("Exception: XYZMainSplitViewController is expected")
         }
         
-        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+        guard let tabbarView = splitView.viewControllers.first as? XYZMainUITabBarController else {
             
-            fatalError("Exception: MainUITabBarController is expected")
+            fatalError("Exception: XYZMainUITabBarController is expected")
         }
         
         guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
@@ -284,14 +284,14 @@ class CalendarCollectionViewController: UICollectionViewController,
         
         appDelegate?.expenseList = loadExpenses()!
         
-        guard let splitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+        guard let splitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
             
-            fatalError("Exception: UISplitViewController is expected" )
+            fatalError("Exception: XYZMainSplitViewController is expected" )
         }
         
-        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+        guard let tabbarView = splitView.viewControllers.first as? XYZMainUITabBarController else {
             
-            fatalError("Exception: MainUITabBarController is expected")
+            fatalError("Exception: XYZMainUITabBarController is expected")
         }
         
         guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
@@ -416,9 +416,9 @@ class CalendarCollectionViewController: UICollectionViewController,
             if monthLevel {
                 
                 let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
                     
-                    fatalError("Exception: UISplitViewController is expected" )
+                    fatalError("Exception: XYZMainSplitViewController is expected" )
                 }
                 
                 let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

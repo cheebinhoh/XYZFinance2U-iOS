@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		650023FF1FF49D43001281EA /* LockScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650023FE1FF49D43001281EA /* LockScreenViewController.swift */; };
-		650024011FF67B4F001281EA /* MainSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650024001FF67B4E001281EA /* MainSplitViewController.swift */; };
+		650023FF1FF49D43001281EA /* XYZLockScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650023FE1FF49D43001281EA /* XYZLockScreenViewController.swift */; };
+		650024011FF67B4F001281EA /* XYZMainSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650024001FF67B4E001281EA /* XYZMainSplitViewController.swift */; };
 		650024051FF6B423001281EA /* SettingDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650024041FF6B423001281EA /* SettingDetailTableViewController.swift */; };
 		650068FE200814F8003B6469 /* XYZiCloudZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650068FD200814F8003B6469 /* XYZiCloudZone.swift */; };
-		6522F8B51FE9BBC7005686B6 /* MainUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6522F8B41FE9BBC7005686B6 /* MainUITabBarController.swift */; };
+		6522F8B51FE9BBC7005686B6 /* XYZMainUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6522F8B41FE9BBC7005686B6 /* XYZMainUITabBarController.swift */; };
 		65343E8D1FFD93B1002C5D39 /* SelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65343E8C1FFD93B1002C5D39 /* SelectionTableViewController.swift */; };
 		65343E901FFD9FC1002C5D39 /* SelectionItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65343E8F1FFD9FC1002C5D39 /* SelectionItemTableViewCell.swift */; };
 		653462191FD0FFB700F88218 /* XYZUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653462181FD0FFB700F88218 /* XYZUtility.swift */; };
@@ -81,13 +81,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		650023FE1FF49D43001281EA /* LockScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenViewController.swift; sourceTree = "<group>"; };
-		650024001FF67B4E001281EA /* MainSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSplitViewController.swift; sourceTree = "<group>"; };
+		650023FE1FF49D43001281EA /* XYZLockScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZLockScreenViewController.swift; sourceTree = "<group>"; };
+		650024001FF67B4E001281EA /* XYZMainSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZMainSplitViewController.swift; sourceTree = "<group>"; };
 		650024041FF6B423001281EA /* SettingDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDetailTableViewController.swift; sourceTree = "<group>"; };
 		650068FD200814F8003B6469 /* XYZiCloudZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZiCloudZone.swift; sourceTree = "<group>"; };
 		65170569208A46ED000355C6 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6517056A208A46ED000355C6 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		6522F8B41FE9BBC7005686B6 /* MainUITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainUITabBarController.swift; sourceTree = "<group>"; };
+		6522F8B41FE9BBC7005686B6 /* XYZMainUITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZMainUITabBarController.swift; sourceTree = "<group>"; };
 		652938B5208D7EF100876FC7 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Main.strings"; sourceTree = "<group>"; };
 		652938B6208D7EF100876FC7 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		652938B7208D7EF100876FC7 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -283,9 +283,9 @@
 				65343E8E1FFD969A002C5D39 /* Shared UI */,
 				658EF95D237739DE00BF129A /* Miscallenous */,
 				655C979C1FCCCC210098D58D /* AppDelegate.swift */,
-				650024001FF67B4E001281EA /* MainSplitViewController.swift */,
-				6522F8B41FE9BBC7005686B6 /* MainUITabBarController.swift */,
-				650023FE1FF49D43001281EA /* LockScreenViewController.swift */,
+				650024001FF67B4E001281EA /* XYZMainSplitViewController.swift */,
+				6522F8B41FE9BBC7005686B6 /* XYZMainUITabBarController.swift */,
+				650023FE1FF49D43001281EA /* XYZLockScreenViewController.swift */,
 				655C97A21FCCCC210098D58D /* Main.storyboard */,
 				655C97A71FCCCC210098D58D /* LaunchScreen.storyboard */,
 				655C97A51FCCCC210098D58D /* Assets.xcassets */,
@@ -492,7 +492,7 @@
 				65EE339D20013F4600DEA680 /* UITextField-Extension.swift in Sources */,
 				65343E8D1FFD93B1002C5D39 /* SelectionTableViewController.swift in Sources */,
 				653462191FD0FFB700F88218 /* XYZUtility.swift in Sources */,
-				650023FF1FF49D43001281EA /* LockScreenViewController.swift in Sources */,
+				650023FF1FF49D43001281EA /* XYZLockScreenViewController.swift in Sources */,
 				6567E13020327DF300058238 /* BudgetTableViewController.swift in Sources */,
 				6576938D1FDA3ACB00BFFB6B /* ExpenseTableViewController.swift in Sources */,
 				658F735E1FE08F5E00AF7F8D /* ExpenseDetailImagePickerTableViewCell.swift in Sources */,
@@ -502,7 +502,7 @@
 				6567E1322032866C00058238 /* XYZBudget.swift in Sources */,
 				65D8BA7F2013ADD200944C2D /* XYZExchangeRate.swift in Sources */,
 				655C97BF1FCCCF320098D58D /* IncomeTableViewController.swift in Sources */,
-				650024011FF67B4F001281EA /* MainSplitViewController.swift in Sources */,
+				650024011FF67B4F001281EA /* XYZMainSplitViewController.swift in Sources */,
 				650068FE200814F8003B6469 /* XYZiCloudZone.swift in Sources */,
 				658FD1D82037DB3F00ABDD55 /* BudgetDetailDatePickerTableViewCell.swift in Sources */,
 				65EEC4A31FF07E1400D638CD /* IncomeDetailCommandTableViewCell.swift in Sources */,
@@ -515,7 +515,7 @@
 				658F735A1FDE145D00AF7F8D /* ExpenseDetailDateTableViewCell.swift in Sources */,
 				658EF96123773C3500BF129A /* XYZiCloudUtility.swift in Sources */,
 				655C979D1FCCCC210098D58D /* AppDelegate.swift in Sources */,
-				6522F8B51FE9BBC7005686B6 /* MainUITabBarController.swift in Sources */,
+				6522F8B51FE9BBC7005686B6 /* XYZMainUITabBarController.swift in Sources */,
 				653BFB4E2030E55A0076C184 /* ExpenseTableViewSearchCell.swift in Sources */,
 				65EEC49F1FF070B400D638CD /* IncomeDetailDateTableViewCell.swift in Sources */,
 				65EE339F2001A5EF00DEA680 /* SettingDetailAboutTableViewCell.swift in Sources */,

@@ -94,9 +94,9 @@ class IncomeDetailTableViewController: UITableViewController,
     private func getMasterTableViewController() -> IncomeTableViewController {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
             
-            fatalError("Exception: UISplitViewController is expected" )
+            fatalError("Exception: XYZMainSplitViewController is expected" )
         }
         
         guard let tabBarController = mainSplitView.viewControllers.first as? UITabBarController else {

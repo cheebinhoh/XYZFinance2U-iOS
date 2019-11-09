@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MlQ-tP-LrG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MlQ-tP-LrG">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,7 +11,7 @@
         <!--Main Split View Controller-->
         <scene sceneID="qf3-5F-tw1">
             <objects>
-                <splitViewController id="MlQ-tP-LrG" customClass="MainSplitViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                <splitViewController id="MlQ-tP-LrG" customClass="XYZMainSplitViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
                         <segue destination="49e-Tb-3d3" kind="relationship" relationship="masterViewController" id="88b-6r-zLd"/>
                     </connections>
@@ -23,7 +23,7 @@
         <!--XYZFinance2U-->
         <scene sceneID="cBa-xZ-YhF">
             <objects>
-                <viewController storyboardIdentifier="lockScreenView" title="XYZFinance2U" id="ho8-Yj-zuC" customClass="LockScreenViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="lockScreenView" title="XYZFinance2U" id="ho8-Yj-zuC" customClass="XYZLockScreenViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zvC-Ic-M8f">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -71,7 +71,7 @@
         <!--MainUI Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController id="49e-Tb-3d3" customClass="MainUITabBarController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController id="49e-Tb-3d3" customClass="XYZMainUITabBarController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>

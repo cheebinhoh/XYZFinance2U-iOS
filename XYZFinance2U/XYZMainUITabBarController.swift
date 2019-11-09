@@ -1,5 +1,5 @@
 //
-//  MainUITabBarController.swift
+//  XYZMainUITabBarController.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/19/17.
@@ -9,7 +9,7 @@
 
 import UIKit
 
-class MainUITabBarController: UITabBarController,
+class XYZMainUITabBarController: UITabBarController,
     UITabBarControllerDelegate {
 
     // MARK: - function

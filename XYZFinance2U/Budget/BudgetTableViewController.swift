@@ -30,14 +30,14 @@ class BudgetTableViewController: UITableViewController,
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         appDelegate?.expenseList.append(expense)
 
-        guard let splitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+        guard let splitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
             
-            fatalError("Exception: MainSplitViewController is expected")
+            fatalError("Exception: XYZMainSplitViewController is expected")
         }
         
-        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+        guard let tabbarView = splitView.viewControllers.first as? XYZMainUITabBarController else {
             
-            fatalError("Exception: MainUITabBarController is expected")
+            fatalError("Exception: XYZMainUITabBarController is expected")
         }
         
         guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
@@ -132,14 +132,14 @@ class BudgetTableViewController: UITableViewController,
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
 
-        guard let splitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+        guard let splitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
             
-            fatalError("Exception: MainSplitViewController is expected")
+            fatalError("Exception: XYZMainSplitViewController is expected")
         }
         
-        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+        guard let tabbarView = splitView.viewControllers.first as? XYZMainUITabBarController else {
             
-            fatalError("Exception: MainUITabBarController is expected")
+            fatalError("Exception: XYZMainUITabBarController is expected")
         }
         
         guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
@@ -164,14 +164,14 @@ class BudgetTableViewController: UITableViewController,
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
-        guard let splitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+        guard let splitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
             
-            fatalError("Exception: MainSplitViewController is expected")
+            fatalError("Exception: XYZMainSplitViewController is expected")
         }
         
-        guard let tabbarView = splitView.viewControllers.first as? MainUITabBarController else {
+        guard let tabbarView = splitView.viewControllers.first as? XYZMainUITabBarController else {
             
-            fatalError("Exception: MainUITabBarController is expected")
+            fatalError("Exception: XYZMainUITabBarController is expected")
         }
         
         guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
@@ -249,9 +249,9 @@ class BudgetTableViewController: UITableViewController,
         }
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
             
-            fatalError("Exception: UISplitViewController is expected" )
+            fatalError("Exception: XYZMainSplitViewController is expected" )
         }
         
         mainSplitView.popOverNavigatorController = budgetDetailNavigationController
@@ -677,9 +677,9 @@ class BudgetTableViewController: UITableViewController,
             }
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
                 
-                fatalError("Exception: UISplitViewController is expected" )
+                fatalError("Exception: XYZMainSplitViewController is expected" )
             }
             
             mainSplitView.popOverNavigatorController = expenseDetailNavigationController
@@ -736,9 +736,9 @@ class BudgetTableViewController: UITableViewController,
                 calendarCollectionViewController.setDate(Date())
                 calendarCollectionViewController.budget = budget
                 
-                guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
                     
-                    fatalError("Exception: UISplitViewController is expected" )
+                    fatalError("Exception: XYZMainSplitViewController is expected" )
                 }
                 
                 mainSplitView.popOverNavigatorController = calendarViewNavigationController
@@ -766,9 +766,9 @@ class BudgetTableViewController: UITableViewController,
                 let appDelegate = UIApplication.shared.delegate as? AppDelegate
                 appDelegate?.orientation = UIInterfaceOrientationMask.portrait
                 
-                guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
                     
-                    fatalError("Exception: UISplitViewController is expected" )
+                    fatalError("Exception: XYZMainSplitViewController is expected" )
                 }
                 
                 mainSplitView.popOverNavigatorController = budgetListViewNavigationController
@@ -778,9 +778,9 @@ class BudgetTableViewController: UITableViewController,
             })
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
                 
-                fatalError("Exception: UISplitViewController is expected" )
+                fatalError("Exception: XYZMainSplitViewController is expected" )
             }
             
             optionMenu.addAction(calendarViewAction)
@@ -828,9 +828,9 @@ class BudgetTableViewController: UITableViewController,
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
             
-            fatalError("Exception: UISplitViewController is expected" )
+            fatalError("Exception: XYZMainSplitViewController is expected" )
         }
         
         if mainSplitView.isCollapsed  {
@@ -855,9 +855,9 @@ class BudgetTableViewController: UITableViewController,
             budgetDetailNavigationController.modalPresentationStyle = .popover
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
                 
-                fatalError("Exception: UISplitViewController is expected" )
+                fatalError("Exception: XYZMainSplitViewController is expected" )
             }
             
             mainSplitView.popOverNavigatorController = budgetDetailNavigationController
@@ -1172,9 +1172,9 @@ class BudgetTableViewController: UITableViewController,
                     navigationController.modalPresentationStyle = .popover
                     
                     let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                    guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                    guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
                         
-                        fatalError("Exception: UISplitViewController is expected" )
+                        fatalError("Exception: XYZMainSplitViewController is expected" )
                     }
                     
                     mainSplitView.popOverNavigatorController = navigationController

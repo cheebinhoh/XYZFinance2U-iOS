@@ -65,9 +65,9 @@ class ExpenseTableViewController: UITableViewController,
     var isCollapsed: Bool {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
             
-            fatalError("Exception: UISplitViewController is expected" )
+            fatalError("Exception: XYZMainSplitViewController is expected" )
         }
         
         return mainSplitView.isCollapsed
@@ -92,9 +92,9 @@ class ExpenseTableViewController: UITableViewController,
         }
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
             
-            fatalError("Exception: UISplitViewController is expected" )
+            fatalError("Exception: XYZMainSplitViewController is expected" )
         }
         
         mainSplitView.popOverNavigatorController = expenseDetailNavigationController
@@ -120,9 +120,9 @@ class ExpenseTableViewController: UITableViewController,
         if let _ = viewController.expense {
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
                 
-                fatalError("Exception: UISplitViewController is expected" )
+                fatalError("Exception: XYZMainSplitViewController is expected" )
             }
             
             mainSplitView.popOverAlertController = nil
@@ -1010,9 +1010,9 @@ class ExpenseTableViewController: UITableViewController,
             }
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+            guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
                 
-                fatalError("Exception: UISplitViewController is expected" )
+                fatalError("Exception: XYZMainSplitViewController is expected" )
             }
             
             mainSplitView.popOverNavigatorController = expenseDetailNavigationController
@@ -1274,9 +1274,9 @@ class ExpenseTableViewController: UITableViewController,
                     self.present(expenseDetailNavigationController, animated: true, completion: nil)
                     
                     let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                    guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                    guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
                         
-                        fatalError("Exception: UISplitViewController is expected" )
+                        fatalError("Exception: XYZMainSplitViewController is expected" )
                     }
                     
                     mainSplitView.popOverNavigatorController = expenseDetailNavigationController
@@ -1402,9 +1402,9 @@ class ExpenseTableViewController: UITableViewController,
                     navigationController.modalPresentationStyle = .popover
 
                     let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                    guard let mainSplitView = appDelegate?.window?.rootViewController as? MainSplitViewController else {
+                    guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
                         
-                        fatalError("Exception: UISplitViewController is expected" )
+                        fatalError("Exception: XYZMainSplitViewController is expected" )
                     }
                     
                     mainSplitView.popOverNavigatorController = navigationController
