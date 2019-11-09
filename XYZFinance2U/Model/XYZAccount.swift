@@ -60,7 +60,6 @@ class XYZAccount : NSManagedObject {
     var repeatDate: Date = Date()
     var sequenceNr = 0
     
-    
     // MARK: - function
     
     init(id: String?,

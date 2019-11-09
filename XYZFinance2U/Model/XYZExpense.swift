@@ -6,6 +6,7 @@
 //  Copyright © 2017 CB Hoh. All rights reserved.
 //
 
+import os.log
 import Foundation
 import CoreData
 import CoreLocation
@@ -143,10 +144,7 @@ class XYZExpense: NSManagedObject {
                 while date! <= stopDate
         }
         
-        return outputDate.sorted(by: { (date1, date2) -> Bool in
-        
-            return date1 >= date2
-        })
+        return outputDate.sorted(by: >= )
     }
     
     override init(entity: NSEntityDescription,
@@ -216,19 +214,22 @@ class XYZExpense: NSManagedObject {
             fatalError("Exception: [XYZExpensePerson] is expected")
         }
         
-        for person in personList {
-                       
-            if let personSequenceNr = person.value(forKey: XYZExpensePerson.sequenceNr) as? Int,
-                personSequenceNr == sequenceNr {
+        personRemoved = personList.first(where: { (person) -> Bool in
+            
+            if let personSequenceNr = person.value(forKey: XYZExpensePerson.sequenceNr) as? Int {
                 
-                personRemoved = person
-                personList.remove(person)
-                context?.delete(personRemoved!)
-                
-                self.setValue(personList, forKey: XYZExpense.persons)
-                
-                break
+                return personSequenceNr == sequenceNr
             }
+            
+            return false;
+        })
+        
+        if let _ = personRemoved {
+            
+            personList.remove(personRemoved!)
+            context?.delete(personRemoved!)
+             
+            self.setValue(personList, forKey: XYZExpense.persons)
         }
         
         return personRemoved
