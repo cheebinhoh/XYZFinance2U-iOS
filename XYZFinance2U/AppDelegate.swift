@@ -18,6 +18,24 @@ import os.log
 class AppDelegate: UIResponder,
     UIApplicationDelegate,
     UNUserNotificationCenterDelegate {
+
+    // MARK: - static
+    static let appName: String = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? ""
+    
+    // MARK: - property
+    var lastAuthenticated: Date?
+    var expenseList = [XYZExpense]()
+    var incomeList = [XYZAccount]()
+    var budgetList = [XYZBudget]()
+    var iCloudZones = [XYZiCloudZone]()
+    var shareiCloudZones = [XYZiCloudZone]()
+    var privateiCloudZones = [XYZiCloudZone]()
+    var window: UIWindow?
+    var orientation = UIInterfaceOrientationMask.all
+    var authentictatedAlready = false
+    
+    /// Saved shortcut item used as a result of an app launch, used later when app is activated.
+    /// var launchedShortcutItem: UIApplicationShortcutItem?
     
     func fetchSharediCloudZone() {
 
@@ -99,6 +117,7 @@ class AppDelegate: UIResponder,
                      userDidAcceptCloudKitShareWith cloudKitShareMetadata: CKShare.Metadata) {
         
         let acceptSharesOp = CKAcceptSharesOperation(shareMetadatas: [cloudKitShareMetadata])
+        
         acceptSharesOp.acceptSharesCompletionBlock = { error in
             
             if let _ = error {
@@ -108,14 +127,15 @@ class AppDelegate: UIResponder,
             else
             {
                 let recordName = cloudKitShareMetadata.rootRecordID.recordName
-                
                 let database = CKContainer.default().sharedCloudDatabase
+                
                 var zones = [CKRecordZone]()
                 var shareicloudZone: XYZiCloudZone?
                 
                 for icloudZone in self.shareiCloudZones {
                     
-                    if let name = icloudZone.value(forKey: XYZiCloudZone.name) as? String, name == cloudKitShareMetadata.share.recordID.zoneID.zoneName {
+                    if let name = icloudZone.value(forKey: XYZiCloudZone.name) as? String,
+                        name == cloudKitShareMetadata.share.recordID.zoneID.zoneName {
                      
                         if let owner = icloudZone.value(forKey: XYZiCloudZone.ownerName) as? String, owner == cloudKitShareMetadata.share.recordID.zoneID.ownerName {
                             
@@ -124,7 +144,8 @@ class AppDelegate: UIResponder,
                             
                             for privateiCloudZone in self.privateiCloudZones {
                                 
-                                if let privateName = privateiCloudZone.value(forKey: XYZiCloudZone.name) as? String, privateName == name {
+                                if let privateName = privateiCloudZone.value(forKey: XYZiCloudZone.name) as? String,
+                                    privateName == name {
                                     
                                     icloudZone.data = privateiCloudZone.data
                                     
@@ -144,7 +165,8 @@ class AppDelegate: UIResponder,
                     if zones.isEmpty {
                         
                         let icloudZone = XYZiCloudZone(name: cloudKitShareMetadata.share.recordID.zoneID.zoneName,
-                                                       owner: cloudKitShareMetadata.share.recordID.zoneID.ownerName, context: managedContext())
+                                                       owner: cloudKitShareMetadata.share.recordID.zoneID.ownerName,
+                                                       context: managedContext())
                         
                         icloudZone.setValue(true, forKey: XYZiCloudZone.inShareDB)
                         self.shareiCloudZones.append(icloudZone)
@@ -244,9 +266,6 @@ class AppDelegate: UIResponder,
                                                 expenseView.reloadData()
                                             }
                                         })
-
-                                        // subscription is not supported in shared DB
-                                        //registeriCloudSubscription(CKContainer.default().sharedCloudDatabase, [shareicloudZone!])
                                     
                                     default:
                                         fatalError("Exception: \(String(describing: name)) is not supported")
@@ -325,25 +344,6 @@ class AppDelegate: UIResponder,
         // FIXME: throw alert to user
     }
 
-    
-    // MARK: - static
-    
-    static let appName: String = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? ""
-    
-    // MARK: - property
-    var lastAuthenticated: Date?
-    var expenseList = [XYZExpense]()
-    var incomeList = [XYZAccount]()
-    var budgetList = [XYZBudget]()
-    var iCloudZones = [XYZiCloudZone]()
-    var shareiCloudZones = [XYZiCloudZone]()
-    var privateiCloudZones = [XYZiCloudZone]()
-    var window: UIWindow?
-    var orientation = UIInterfaceOrientationMask.all
-    var authentictatedAlready = false
-    
-    /// Saved shortcut item used as a result of an app launch, used later when app is activated.
-    /// var launchedShortcutItem: UIApplicationShortcutItem?
     
     // MARK: - function
     
@@ -435,8 +435,6 @@ class AppDelegate: UIResponder,
         // If a shortcut was launched, display its information and take the appropriate action.
         if let _ = launchOptions?[UIApplication.LaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
 
-            //launchedShortcutItem = shortcutItem
-            
             // This will block "performActionForShortcutItem:completionHandler" from being called.
             shouldPerformAdditionalDelegateHandling = true
         }
@@ -505,7 +503,7 @@ class AppDelegate: UIResponder,
             && nil == split.popOverNavigatorController {
             
             let defaults = UserDefaults.standard;
-            let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
+            let required = defaults.value(forKey: requiredauthenticationKey) as? Bool ?? false
             
             if ( required ) {
             
@@ -584,6 +582,7 @@ class AppDelegate: UIResponder,
                 self.authentictatedAlready = true
             }
         }
+        
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
@@ -793,37 +792,35 @@ class AppDelegate: UIResponder,
                             
                             for icloudzone in self.privateiCloudZones {
                                 
+                                var tableViewToBeReload : XYZTableViewReloadData?
                                 let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
+                                
                                 switch zName! {
                                     
-                                case XYZAccount.type:
-                                    self.incomeList = (icloudzone.data as? [XYZAccount])!
-                                    self.incomeList = sortAcounts(self.incomeList)
+                                    case XYZAccount.type:
+                                        self.incomeList = (icloudzone.data as? [XYZAccount])!
+                                        self.incomeList = sortAcounts(self.incomeList)
+                                        tableViewToBeReload = incomeView
+                                        
+                                    case XYZExpense.type:
+                                        self.expenseList = (icloudzone.data as? [XYZExpense])!
+                                        tableViewToBeReload = expenseView
+                                        
+                                    case XYZBudget.type:
+                                        self.budgetList = (icloudzone.data as? [XYZBudget])!
+                                        self.budgetList = sortBudgets(self.budgetList)
+                                        tableViewToBeReload = budgetView
+                                        
+                                    default:
+                                        fatalError("Exception: \(String(describing: zName)) is not supported")
+                                }
+                                
+                                if let tableViewToBeReload = tableViewToBeReload {
                                     
                                     DispatchQueue.main.async {
                                         
-                                        incomeView.reloadData()
+                                        tableViewToBeReload.reloadData()
                                     }
-                                    
-                                case XYZExpense.type:
-                                    self.expenseList = (icloudzone.data as? [XYZExpense])!
-                                    
-                                    DispatchQueue.main.async {
-                                        
-                                        expenseView.reloadData()
-                                    }
-                                    
-                                case XYZBudget.type:
-                                    self.budgetList = (icloudzone.data as? [XYZBudget])!
-                                    self.budgetList = sortBudgets(self.budgetList)
-                                    
-                                    DispatchQueue.main.async {
-                                        
-                                        budgetView.reloadData()
-                                    }
-                                    
-                                default:
-                                    fatalError("Exception: \(String(describing: zName)) is not supported")
                                 }
                             }
                         })
@@ -870,51 +867,39 @@ class AppDelegate: UIResponder,
 
                     let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
                     
+                    var tableViewToBeReload : XYZTableViewReloadData?
+                    
                     switch zName! {
                         
                         case XYZAccount.type:
                             self.incomeList = (icloudzone.data as? [XYZAccount])!
                             self.incomeList = sortAcounts(self.incomeList)
-                            
-                            DispatchQueue.main.async {
-                                
-                                if needreload {
-                                    
-                                    incomeView.reloadData()
-                                }
-                                
-                                registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
-                            }
+                            tableViewToBeReload = incomeView
                             
                         case XYZExpense.type:
                             self.expenseList = (icloudzone.data as? [XYZExpense])!
-                            
-                            DispatchQueue.main.async {
-                                
-                                if needreload {
-                                    
-                                    expenseView.reloadData()
-                                }
-                                
-                                registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
-                            }
+                            tableViewToBeReload = expenseView
                             
                         case XYZBudget.type:
                             self.budgetList = (icloudzone.data as? [XYZBudget])!
                             self.budgetList = sortBudgets(self.budgetList)
-                            
-                            DispatchQueue.main.async {
-                                
-                                if needreload {
-                                    
-                                    budgetView.reloadData()
-                                }
-                                
-                                registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
-                            }
-                
+                            tableViewToBeReload = budgetView
+                        
                         default:
                             fatalError("Exception: \(String(describing: zName)) is not supported")
+                    }
+                    
+                    if let tableViewToBeReload = tableViewToBeReload {
+                        
+                        DispatchQueue.main.async {
+                            
+                            if needreload {
+                                
+                                tableViewToBeReload.reloadData()
+                            }
+                            
+                            registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
+                        }
                     }
                 }
             })

@@ -22,6 +22,7 @@ protocol IncomeSelectionDelegate: class {
 }
 
 class IncomeTableViewController: UITableViewController,
+    XYZTableViewReloadData,
     UISplitViewControllerDelegate,
     UIViewControllerPreviewingDelegate,
     IncomeDetailDelegate {
@@ -710,7 +711,7 @@ class IncomeTableViewController: UITableViewController,
                 self.authenticatedMechanismExist = true
                 
                 let defaults = UserDefaults.standard;
-                let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
+                let required = defaults.value(forKey: requiredauthenticationKey) as? Bool ?? false
      
                 if required {
                     

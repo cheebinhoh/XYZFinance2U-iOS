@@ -19,6 +19,7 @@ protocol ExpenseTableViewDelegate: class {
 }
 
 class ExpenseTableViewController: UITableViewController,
+    XYZTableViewReloadData,
     UISplitViewControllerDelegate,
     UIViewControllerPreviewingDelegate,
     UISearchControllerDelegate,

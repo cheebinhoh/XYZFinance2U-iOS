@@ -17,7 +17,6 @@ class SettingTableViewController: UITableViewController,
     SettingTextTableViewCellDelegate {
     
     // MARK: - property
-    let requiredauthenticationKey = "requiredauthentication"
     var sectionList = [TableSectionCell]()
     var delegate: UIViewController?
     var popoverView: UIViewController?
@@ -52,8 +51,8 @@ class SettingTableViewController: UITableViewController,
                         
                         if success {
                             
-                            let required = defaults.value(forKey: self.requiredauthenticationKey) as? Bool ?? false
-                            defaults.set(!required, forKey: self.requiredauthenticationKey)
+                            let required = defaults.value(forKey: requiredauthenticationKey) as? Bool ?? false
+                            defaults.set(!required, forKey: requiredauthenticationKey)
                         }
                         
                         self.reload()
