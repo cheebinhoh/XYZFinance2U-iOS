@@ -290,9 +290,9 @@
 				655C97A71FCCCC210098D58D /* LaunchScreen.storyboard */,
 				655C97A51FCCCC210098D58D /* Assets.xcassets */,
 				655C97AA1FCCCC210098D58D /* Info.plist */,
-				653BFB4A2030A2530076C184 /* Document */,
-				656BF682208838EB00EE6280 /* Localizable.strings */,
 				6539D74C208A4270000BBC1D /* InfoPlist.strings */,
+				656BF682208838EB00EE6280 /* Localizable.strings */,
+				653BFB4A2030A2530076C184 /* Document */,
 			);
 			path = XYZFinance2U;
 			sourceTree = "<group>";
