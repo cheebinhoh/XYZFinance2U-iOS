@@ -1,5 +1,5 @@
 //
-//  SelectionTableViewController.swift
+//  XYZSelectionTableViewController.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 1/3/18.
@@ -10,10 +10,10 @@ import UIKit
 
 protocol SelectionDelegate: class {
     
-    func selectedItem(_ item: String?, sender: SelectionTableViewController)
+    func selectedItem(_ item: String?, sender: XYZSelectionTableViewController)
 }
 
-class SelectionTableViewController: UITableViewController {
+class XYZSelectionTableViewController: UITableViewController {
 
     // MARK: - property
     
@@ -151,7 +151,7 @@ class SelectionTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "selectionItemCell", for: indexPath) as? SelectionItemTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "selectionItemCell", for: indexPath) as? XYZSelectionItemTableViewCell else {
             
             fatalError("Exception: errpt on creating selectionItemCell")
         }

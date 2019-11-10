@@ -1,5 +1,5 @@
 //
-//  SelectionItemTableViewCell.swift
+//  XYZSelectionItemTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 1/3/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SelectionItemTableViewCell: UITableViewCell {
+class XYZSelectionItemTableViewCell: UITableViewCell {
 
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var colorView: UIView!

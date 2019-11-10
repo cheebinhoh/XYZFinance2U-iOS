@@ -31,7 +31,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lId-0z-eBX">
                                 <rect key="frame" x="37.5" y="241" width="300" height="185"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock" translatesAutoresizingMaskIntoConstraints="NO" id="Cjo-OQ-P7h">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locked" translatesAutoresizingMaskIntoConstraints="NO" id="Cjo-OQ-P7h">
                                         <rect key="frame" x="55.5" y="0.0" width="189.5" height="135"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0W-8X-FqE">
@@ -2065,13 +2065,13 @@ Chee Bin HOH, 2017</string>
         <!--Selection Table View Controller-->
         <scene sceneID="mHF-3H-NQg">
             <objects>
-                <tableViewController storyboardIdentifier="SelectionTableViewController" id="qMP-z0-vPH" customClass="SelectionTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="XYZSelectionTableViewController" id="qMP-z0-vPH" customClass="XYZSelectionTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="jdF-D9-k3i">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="selectionItemCell" id="Toc-ZZ-uBG" customClass="SelectionItemTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="selectionItemCell" id="Toc-ZZ-uBG" customClass="XYZSelectionItemTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Toc-ZZ-uBG" id="B02-ge-3JC">
@@ -2263,7 +2263,7 @@ Chee Bin HOH, 2017</string>
         <image name="budget" width="25" height="25"/>
         <image name="defaultPhoto" width="540" height="540"/>
         <image name="empty" width="1" height="0.5"/>
-        <image name="lock" width="189.5" height="135"/>
+        <image name="locked" width="189.5" height="135"/>
         <image name="minus" width="25" height="25"/>
         <image name="more" width="24.5" height="6.5"/>
         <image name="plus" width="25" height="25"/>

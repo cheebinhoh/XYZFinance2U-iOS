@@ -132,7 +132,7 @@ class BudgetDetailTableViewController: UITableViewController,
         }
     }
     
-    func selectedItem(_ item: String?, sender: SelectionTableViewController) {
+    func selectedItem(_ item: String?, sender: XYZSelectionTableViewController) {
 
         switch sender.selectionIdentifier! {
             case "length":
@@ -827,7 +827,7 @@ class BudgetDetailTableViewController: UITableViewController,
         switch sectionList[indexPath.section].cellList[indexPath.row] {
             
         case "currency":
-            guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+            guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "XYZSelectionTableViewController") as? XYZSelectionTableViewController else {
                 
                 fatalError("Exception: error on instantiating SelectionNavigationController")
             }
@@ -873,7 +873,7 @@ class BudgetDetailTableViewController: UITableViewController,
             self.present(nav, animated: true, completion: nil)
 
         case "length":
-            guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+            guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "XYZSelectionTableViewController") as? XYZSelectionTableViewController else {
                 
                 fatalError("Exception: error on instantiating SelectionNavigationController")
             }
@@ -906,7 +906,7 @@ class BudgetDetailTableViewController: UITableViewController,
         case "lasteffective":
             if !historicalAmount.isEmpty {
                 
-                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "XYZSelectionTableViewController") as? XYZSelectionTableViewController else {
                     
                     fatalError("Exception: error on instantiating SelectionNavigationController")
                 }
@@ -963,7 +963,7 @@ class BudgetDetailTableViewController: UITableViewController,
             }
             
         case "icon":
-            guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+            guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "XYZSelectionTableViewController") as? XYZSelectionTableViewController else {
                 
                 fatalError("Exception: error on instantiating SelectionNavigationController")
             }
@@ -983,7 +983,7 @@ class BudgetDetailTableViewController: UITableViewController,
             self.present(nav, animated: true, completion: nil)
             
         case "color":
-            guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+            guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "XYZSelectionTableViewController") as? XYZSelectionTableViewController else {
                 
                 fatalError("Exception: error on instantiating SelectionNavigationController")
             }

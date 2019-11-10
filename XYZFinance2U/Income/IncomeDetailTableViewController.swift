@@ -27,7 +27,7 @@ class IncomeDetailTableViewController: UITableViewController,
     IncomeDetailSwitchDelegate,
     SelectionDelegate {
     
-    func selectedItem(_ item: String?, sender: SelectionTableViewController) {
+    func selectedItem(_ item: String?, sender: XYZSelectionTableViewController) {
         
         if sender.selectionIdentifier == "currency" {
             
@@ -841,7 +841,7 @@ class IncomeDetailTableViewController: UITableViewController,
        
             if cellId == "currency" {
 
-                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "XYZSelectionTableViewController") as? XYZSelectionTableViewController else {
                     
                     fatalError("Exception: error on instantiating SelectionNavigationController")
                 }
@@ -887,7 +887,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 self.present(nav, animated: true, completion: nil)
             } else {
                 
-                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "XYZSelectionTableViewController") as? XYZSelectionTableViewController else {
                     
                         fatalError("Exception: error on instantiating SelectionNavigationController")
                 }

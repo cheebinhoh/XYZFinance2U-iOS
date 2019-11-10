@@ -41,7 +41,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     
     // MARK: - protocol implementation
     
-    func selectedItem(_ item: String?, sender: SelectionTableViewController) {
+    func selectedItem(_ item: String?, sender: XYZSelectionTableViewController) {
         
         switch sender.selectionIdentifier! {
             
@@ -1475,7 +1475,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             switch sectionList[indexPath.section].cellList[indexPath.row]  {
             
                 case "recurring":
-                    guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+                    guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "XYZSelectionTableViewController") as? XYZSelectionTableViewController else {
                         
                         fatalError("Exception: error on instantiating SelectionNavigationController")
                     }
@@ -1533,7 +1533,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                         iconNames.append(icon)
                     }
                 
-                    guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+                    guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "XYZSelectionTableViewController") as? XYZSelectionTableViewController else {
                         
                         fatalError("Exception: error on instantiating SelectionNavigationController")
                     }
@@ -1554,7 +1554,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                     self.present(nav, animated: true, completion: nil)
                
                 default:
-                    guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectionTableViewController") as? SelectionTableViewController else {
+                    guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "XYZSelectionTableViewController") as? XYZSelectionTableViewController else {
                         
                         fatalError("Exception: error on instantiating SelectionNavigationController")
                     }
