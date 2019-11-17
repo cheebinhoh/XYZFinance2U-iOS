@@ -30,12 +30,12 @@ class XYZMainUITabBarController: UITabBarController,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        if let incomeRoot = navController.viewControllers.first as? IncomeTableViewController {
+        if let incomeRoot = navController.viewControllers.first as? XYZIncomeTableViewController {
             
             split.delegate = incomeRoot
         } else {
             
-            fatalError("Exception: IncomeTableViewController is expected")
+            fatalError("Exception: XYZIncomeTableViewController is expected")
         }
         
         /* We do not need notification action and category as identifier itself is enough for us now.
@@ -79,14 +79,14 @@ class XYZMainUITabBarController: UITabBarController,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        if let incomeRoot = navController.viewControllers.first as? IncomeTableViewController {
+        if let incomeRoot = navController.viewControllers.first as? XYZIncomeTableViewController {
             
             split.delegate = incomeRoot
             
             if nil == masterViewNavController {
                 
                 // empty
-            } else if let _ = masterViewNavController?.viewControllers.last as? IncomeDetailTableViewController {
+            } else if let _ = masterViewNavController?.viewControllers.last as? XYZIncomeDetailTableViewController {
                 
                 // empty
             } else {
@@ -96,9 +96,9 @@ class XYZMainUITabBarController: UITabBarController,
                     fatalError("Exception: error on instantiating IncomeDetailNavigationController")
                 }
                 
-                guard let incomeDetailTableViewController = incomeDetailNavigationController.viewControllers.first as? IncomeDetailTableViewController else {
+                guard let incomeDetailTableViewController = incomeDetailNavigationController.viewControllers.first as? XYZIncomeDetailTableViewController else {
                     
-                    fatalError("Exception: IncomeDetailTableViewController is expected")
+                    fatalError("Exception: XYZIncomeDetailTableViewController is expected")
                 }
                 
                 incomeDetailTableViewController.navigationItem.title = ""

@@ -1,5 +1,5 @@
 //
-//  IncomeTotalTableViewCell.swift
+//  XYZIncomeTotalTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/14/17.
@@ -9,7 +9,7 @@
 
 import UIKit
 
-class IncomeTotalTableViewCell: UITableViewCell {
+class XYZIncomeTotalTableViewCell: UITableViewCell {
 
     // MARK: IBOutlet
     

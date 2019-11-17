@@ -403,9 +403,9 @@ class AppDelegate: UIResponder,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        guard let tableViewController = navController.viewControllers.first as? IncomeTableViewController else {
+        guard let tableViewController = navController.viewControllers.first as? XYZIncomeTableViewController else {
             
-            fatalError("Exception: IncomeTableViewController is expected" )
+            fatalError("Exception: XYZIncomeTableViewController is expected" )
         }
         
         DispatchQueue.main.async {
@@ -493,9 +493,9 @@ class AppDelegate: UIResponder,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        guard let tableViewController = navController.viewControllers.first as? IncomeTableViewController else {
+        guard let tableViewController = navController.viewControllers.first as? XYZIncomeTableViewController else {
             
-            fatalError("Exception: IncomeTableViewController is expected" )
+            fatalError("Exception: XYZIncomeTableViewController is expected" )
         }
         
         print("-------- prior to show lock screen" )
@@ -537,9 +537,9 @@ class AppDelegate: UIResponder,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        guard let tableViewController = navController.viewControllers.first as? IncomeTableViewController else {
+        guard let tableViewController = navController.viewControllers.first as? XYZIncomeTableViewController else {
             
-            fatalError("Exception: IncomeTableViewController is expected" )
+            fatalError("Exception: XYZIncomeTableViewController is expected" )
         }
 
         application.registerForRemoteNotifications()
@@ -570,9 +570,9 @@ class AppDelegate: UIResponder,
                 fatalError("Exception: UINavigationController is expected")
             }
             
-            guard let tableViewController = navController.viewControllers.first as? IncomeTableViewController else {
+            guard let tableViewController = navController.viewControllers.first as? XYZIncomeTableViewController else {
                 
-                fatalError("Exception: IncomeTableViewController is expected" )
+                fatalError("Exception: XYZIncomeTableViewController is expected" )
             }
             
             DispatchQueue.main.async {
@@ -643,9 +643,9 @@ class AppDelegate: UIResponder,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        guard let incomeView = navController.viewControllers.first as? IncomeTableViewController else {
+        guard let incomeView = navController.viewControllers.first as? XYZIncomeTableViewController else {
             
-            fatalError("Exception: IncomeTableViewController is expected")
+            fatalError("Exception: XYZIncomeTableViewController is expected")
         }
         
         guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {

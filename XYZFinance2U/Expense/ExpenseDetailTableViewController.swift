@@ -29,7 +29,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     ExpenseDetailImageViewTableViewCellDelegate,
     ExpenseTableViewDelegate,
     ExpenseDetailCommandDelegate,
-    SelectionDelegate,
+    XYZSelectionDelegate,
     CNContactPickerDelegate {
  
     // MARK: - nested type

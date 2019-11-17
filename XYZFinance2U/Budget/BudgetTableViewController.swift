@@ -245,7 +245,7 @@ class BudgetTableViewController: UITableViewController,
         
         guard let budgetDetailTableView = budgetDetailNavigationController.viewControllers.first as? BudgetDetailTableViewController else {
             
-            fatalError("Exception: eror on casting first view controller to IncomeDetailTableViewController" )
+            fatalError("Exception: eror on casting first view controller to BudgetDetailTableViewController" )
         }
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate

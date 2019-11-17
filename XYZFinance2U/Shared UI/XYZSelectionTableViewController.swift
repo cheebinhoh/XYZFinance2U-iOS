@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SelectionDelegate: class {
+protocol XYZSelectionDelegate: class {
     
     func selectedItem(_ item: String?, sender: XYZSelectionTableViewController)
 }
@@ -17,7 +17,7 @@ class XYZSelectionTableViewController: UITableViewController {
 
     // MARK: - property
     
-    var delegate: SelectionDelegate?
+    var delegate: XYZSelectionDelegate?
     var tableSectionList = [TableSectionCell]()
     var selectedItem: String?
     var selectionIdentifier: String?

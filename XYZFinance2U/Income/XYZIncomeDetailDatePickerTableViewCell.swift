@@ -1,5 +1,5 @@
 //
-//  IncomeDetailDatePickerTableViewCell.swift
+//  XYZIncomeDetailDatePickerTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/24/17.
@@ -9,12 +9,12 @@
 
 import UIKit
 
-protocol IncomeDetailDatePickerTableViewCellDelegate : class {
+protocol XYZIncomeDetailDatePickerTableViewCellDelegate : class {
     
-    func dateDidPick(sender:IncomeDetailDatePickerTableViewCell)
+    func dateDidPick(sender:XYZIncomeDetailDatePickerTableViewCell)
 }
 
-class IncomeDetailDatePickerTableViewCell: UITableViewCell {
+class XYZIncomeDetailDatePickerTableViewCell: UITableViewCell {
     
     // MARK: - IBOutlet
     
@@ -22,7 +22,7 @@ class IncomeDetailDatePickerTableViewCell: UITableViewCell {
     
     // MARK: - property
     
-    weak var delegate: IncomeDetailDatePickerTableViewCellDelegate?
+    weak var delegate: XYZIncomeDetailDatePickerTableViewCellDelegate?
     var date: Date?
     
     // MARK: - function

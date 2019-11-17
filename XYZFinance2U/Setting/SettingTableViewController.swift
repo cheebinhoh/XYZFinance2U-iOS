@@ -62,7 +62,7 @@ class SettingTableViewController: UITableViewController,
         }
     }
     
-    func getMainTableView() -> IncomeTableViewController {
+    func getMainTableView() -> XYZIncomeTableViewController {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
@@ -81,9 +81,9 @@ class SettingTableViewController: UITableViewController,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        guard let tableViewController = navController.viewControllers.first as? IncomeTableViewController else {
+        guard let tableViewController = navController.viewControllers.first as? XYZIncomeTableViewController else {
             
-            fatalError("Exception: IncomeTableViewController is expected" )
+            fatalError("Exception: XYZIncomeTableViewController is expected" )
         }
         
         return tableViewController
@@ -392,9 +392,9 @@ class SettingTableViewController: UITableViewController,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        guard let incomeView = incomeNavController.viewControllers.first as? IncomeTableViewController else {
+        guard let incomeView = incomeNavController.viewControllers.first as? XYZIncomeTableViewController else {
             
-            fatalError("Exception: ExpenseTableViewController is expected")
+            fatalError("Exception: XYZIncomeTableViewController is expected")
         }
         
         incomeView.reloadData()

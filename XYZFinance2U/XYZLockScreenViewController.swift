@@ -13,7 +13,7 @@ class XYZLockScreenViewController: UIViewController {
 
     // MARK: - property
     
-    weak var mainTableViewController: IncomeTableViewController?
+    weak var mainTableViewController: XYZIncomeTableViewController?
     
     // MARK: - outlet
     

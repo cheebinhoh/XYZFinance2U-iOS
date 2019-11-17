@@ -1,5 +1,5 @@
 //
-//  IncomeDetailCommandTableViewCell.swift
+//  XYZIncomeDetailCommandTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/24/17.
@@ -9,16 +9,16 @@
 
 import UIKit
 
-protocol IncomeDetailCommandDelegate: class {
+protocol XYZIncomeDetailCommandDelegate: class {
     
-    func commandExecuted(sender: IncomeDetailCommandTableViewCell)
+    func commandExecuted(sender: XYZIncomeDetailCommandTableViewCell)
 }
 
-class IncomeDetailCommandTableViewCell: UITableViewCell {
+class XYZIncomeDetailCommandTableViewCell: UITableViewCell {
     
     // MARK: - property
     
-    weak var delegate: IncomeDetailCommandDelegate?
+    weak var delegate: XYZIncomeDetailCommandDelegate?
     
     // MARK: - IBOutlet
     

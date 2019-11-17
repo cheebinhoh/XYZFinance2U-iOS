@@ -91,13 +91,13 @@
         <!--IncomeListTableView-->
         <scene sceneID="xYr-ZI-4yL">
             <objects>
-                <tableViewController id="f2j-x7-CLG" userLabel="IncomeListTableView" customClass="IncomeTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="f2j-x7-CLG" userLabel="IncomeListTableView" customClass="XYZIncomeTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="DOy-6q-Sit">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="IncomeTableViewCell" rowHeight="70" id="j7T-3u-Niu" userLabel="IncomeTableViewCell" customClass="IncomeTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="XYZIncomeTableViewCell" rowHeight="70" id="j7T-3u-Niu" userLabel="XYZIncomeTableViewCell" customClass="XYZIncomeTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="j7T-3u-Niu" id="eLK-LZ-xE9">
@@ -141,7 +141,7 @@
                                     <outlet property="bank" destination="wuV-kR-Y7q" id="bwF-QU-cg1"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="IncomeTotalTableViewCell" rowHeight="70" id="4Xn-4a-N0D" userLabel="IncomeTotalTableViewCell" customClass="IncomeTotalTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="XYZIncomeTotalTableViewCell" rowHeight="70" id="4Xn-4a-N0D" userLabel="XYZIncomeTotalTableViewCell" customClass="XYZIncomeTotalTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="125.5" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4Xn-4a-N0D" id="kSB-Oh-7wh">
@@ -665,7 +665,7 @@
         <!--Income Detail View Controller-->
         <scene sceneID="moN-AA-wde">
             <objects>
-                <viewController storyboardIdentifier="IncomeDetailViewController" id="FT0-su-8qQ" customClass="IncomeDetailViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="XYZIncomeDetailViewController" id="FT0-su-8qQ" customClass="XYZIncomeDetailViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ODs-R5-d3T">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -759,7 +759,7 @@
         <!--New Income-->
         <scene sceneID="A0K-c5-nvb">
             <objects>
-                <tableViewController id="zzE-10-YcG" customClass="IncomeDetailTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="zzE-10-YcG" customClass="XYZIncomeDetailTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="nXX-J0-4SF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -802,7 +802,7 @@
                                     <outlet property="label" destination="M1a-nl-R47" id="YI8-kg-7AJ"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="incomeDetailDateTextCell" rowHeight="80" id="liG-zw-pa8" customClass="IncomeDetailDateTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="XYZIncomeDetailDateTableViewCell" rowHeight="80" id="liG-zw-pa8" customClass="XYZIncomeDetailDateTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="135.5" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="liG-zw-pa8" id="3hr-fv-0ca">
@@ -840,7 +840,7 @@
                                     <outlet property="label" destination="ZZK-TY-NKE" id="tae-N4-AUn"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="incomeDetailDatePickerCell" rowHeight="300" id="4Am-P5-1k1" customClass="IncomeDetailDatePickerTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="XYZIncomeDetailDatePickerTableViewCell" rowHeight="300" id="4Am-P5-1k1" customClass="XYZIncomeDetailDatePickerTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="215.5" width="375" height="300"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4Am-P5-1k1" id="Bbx-2K-C80">
@@ -865,7 +865,7 @@
                                     <outlet property="datePicker" destination="nEV-42-Iqx" id="EoL-oy-o9t"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="incomeDetailCommandTextCell" rowHeight="80" id="cxo-31-Gd4" customClass="IncomeDetailCommandTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="XYZIncomeDetailCommandTableViewCell" rowHeight="80" id="cxo-31-Gd4" customClass="XYZIncomeDetailCommandTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="515.5" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cxo-31-Gd4" id="qpd-Fy-Tug">
@@ -889,7 +889,7 @@
                                     <outlet property="command" destination="qDS-1l-Ky4" id="Km6-U3-Sbv"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="incomeDetailSwitchCell" rowHeight="45" id="CpF-Fj-TY1" customClass="IncomeDetailSwitchTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="XYZIncomeDetailSwitchTableViewCell" rowHeight="45" id="CpF-Fj-TY1" customClass="XYZIncomeDetailSwitchTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="595.5" width="375" height="45"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CpF-Fj-TY1" id="Mse-1O-yeL">
@@ -2271,6 +2271,6 @@ Chee Bin HOH, 2017</string>
     <inferredMetricsTieBreakers>
         <segue reference="Vbr-uz-1K0"/>
         <segue reference="n4x-5K-QOe"/>
-        <segue reference="12h-Ii-8y1"/>
+        <segue reference="p2p-KG-gtc"/>
     </inferredMetricsTieBreakers>
 </document>

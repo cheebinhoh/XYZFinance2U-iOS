@@ -21,7 +21,7 @@ class BudgetDetailTableViewController: UITableViewController,
     BudgetDetailDateTableViewCellDelegate,
     BudgetDetailDatePickerTableViewCellDelegate,
     BudgetDetailCommandDelegate,
-    SelectionDelegate {
+    XYZSelectionDelegate {
     
     // MARK: - call back
     func executeCommand(sender: BudgetDetailCommandTableViewCell) {

@@ -1,5 +1,5 @@
 //
-//  IncomeDetailTableViewController.swift
+//  XYZIncomeDetailTableViewController.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/24/17.
@@ -11,21 +11,21 @@ import UIKit
 import UserNotifications
 import NotificationCenter
 
-protocol IncomeDetailDelegate: class {
+protocol XYZIncomeDetailDelegate: class {
     
     func saveNewIncome(income: XYZAccount)
     func saveIncome(income: XYZAccount)
     func deleteIncome(income: XYZAccount)
 }
 
-class IncomeDetailTableViewController: UITableViewController,
+class XYZIncomeDetailTableViewController: UITableViewController,
     XYZTextTableViewCellDelegate,
-    IncomeDetailDateTableViewCellDelegate,
-    IncomeDetailDatePickerTableViewCellDelegate,
-    IncomeDetailCommandDelegate,
-    IncomeSelectionDelegate,
-    IncomeDetailSwitchDelegate,
-    SelectionDelegate {
+    XYZIncomeDetailDateTableViewCellDelegate,
+    XYZIncomeDetailDatePickerTableViewCellDelegate,
+    XYZIncomeDetailCommandDelegate,
+    XYZIncomeSelectionDelegate,
+    XYZIncomeDetailSwitchDelegate,
+    XYZSelectionDelegate {
     
     func selectedItem(_ item: String?, sender: XYZSelectionTableViewController) {
         
@@ -40,7 +40,7 @@ class IncomeDetailTableViewController: UITableViewController,
         tableView.reloadData()
     }
     
-    func optionUpdated(option: Bool, sender: IncomeDetailSwitchTableViewCell) {
+    func optionUpdated(option: Bool, sender: XYZIncomeDetailSwitchTableViewCell) {
         
         let indexPath = tableView.indexPath(for: sender)
         
@@ -61,7 +61,7 @@ class IncomeDetailTableViewController: UITableViewController,
                 tableView.reloadData()
             
             default:
-                fatalError("Exception: index of IncomeDetailSwitchTableViewCell is not found in tableview")
+                fatalError("Exception: index of XYZIncomeDetailSwitchTableViewCell is not found in tableview")
         }
     }
     
@@ -91,7 +91,7 @@ class IncomeDetailTableViewController: UITableViewController,
         tableView.reloadData()
     }
 
-    private func getMasterTableViewController() -> IncomeTableViewController {
+    private func getMasterTableViewController() -> XYZIncomeTableViewController {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
@@ -109,10 +109,10 @@ class IncomeDetailTableViewController: UITableViewController,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        return (navController.topViewController as? IncomeTableViewController)!
+        return (navController.topViewController as? XYZIncomeTableViewController)!
     }
     
-    func commandExecuted(sender: IncomeDetailCommandTableViewCell) {
+    func commandExecuted(sender: XYZIncomeDetailCommandTableViewCell) {
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let deleteOption = UIAlertAction(title: sender.command.text, style: .default, handler: { (action) in
@@ -147,7 +147,7 @@ class IncomeDetailTableViewController: UITableViewController,
         present(optionMenu, animated: true, completion: nil)
     }
     
-    func dateDidPick(sender: IncomeDetailDatePickerTableViewCell) {
+    func dateDidPick(sender: XYZIncomeDetailDatePickerTableViewCell) {
         
         let indexPath = tableView.indexPath(for: sender)
         
@@ -171,11 +171,11 @@ class IncomeDetailTableViewController: UITableViewController,
         }
     }
     
-    func dateInputTouchUp(sender: IncomeDetailDateTableViewCell) {
+    func dateInputTouchUp(sender: XYZIncomeDetailDateTableViewCell) {
         
         let indexPath = tableView.indexPath(for: sender)
         let showDatePicker = tableSectionCellList[indexPath!.section].cellList.count > ( (indexPath?.row)! + 1 )
-            && tableView.cellForRow(at: IndexPath(row: (indexPath?.row)! + 1, section: indexPath!.section)) is IncomeDetailDatePickerTableViewCell
+            && tableView.cellForRow(at: IndexPath(row: (indexPath?.row)! + 1, section: indexPath!.section)) is XYZIncomeDetailDatePickerTableViewCell
         let datepickeridentifier = tableSectionCellList[indexPath!.section].identifier == "remind" ? "reminddatepicker" : "datepicker"
         
         if !showDatePicker {
@@ -253,7 +253,7 @@ class IncomeDetailTableViewController: UITableViewController,
     var modalEditing = true
     var isPopover = false
     var isPushinto = false
-    var incomeDelegate: IncomeDetailDelegate?
+    var incomeDelegate: XYZIncomeDetailDelegate?
     var hasUpdateReminder = false
     var currencyCodes: [String]?
     
@@ -287,8 +287,8 @@ class IncomeDetailTableViewController: UITableViewController,
     }
     
     var tableSectionCellList = [TableSectionCell]()
-    weak var datecell: IncomeDetailDateTableViewCell?
-    weak var dateremindcell: IncomeDetailDateTableViewCell?
+    weak var datecell: XYZIncomeDetailDateTableViewCell?
+    weak var dateremindcell: XYZIncomeDetailDateTableViewCell?
     
     // MARK: - IBOutlet
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -513,7 +513,7 @@ class IncomeDetailTableViewController: UITableViewController,
         // Dispose of any resources that can be recreated.
     }
     
-    func setPopover(delegate: IncomeDetailDelegate) {
+    func setPopover(delegate: XYZIncomeDetailDelegate) {
         
         isPopover = true
         incomeDelegate = delegate
@@ -659,9 +659,9 @@ class IncomeDetailTableViewController: UITableViewController,
                 cell = textcell
             
             case "date":
-                guard let datecell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailDateTextCell", for: indexPath) as? IncomeDetailDateTableViewCell else {
+                guard let datecell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeDetailDateTableViewCell", for: indexPath) as? XYZIncomeDetailDateTableViewCell else {
                     
-                    fatalError("Exception: incomeDetailDateTextCell is failed to be created")
+                    fatalError("Exception: XYZIncomeDetailDateTableViewCell is failed to be created")
                 }
                 
                 if nil == date {
@@ -693,9 +693,9 @@ class IncomeDetailTableViewController: UITableViewController,
                 cell = datecell
             
             case "datepicker":
-                guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailDatePickerCell", for: indexPath) as? IncomeDetailDatePickerTableViewCell else {
+                guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeDetailDatePickerTableViewCell", for: indexPath) as? XYZIncomeDetailDatePickerTableViewCell else {
                     
-                    fatalError("Exception: incomeDetailDatePickerCell is failed to be created")
+                    fatalError("Exception: XYZIncomeDetailDatePickerTableViewCell is failed to be created")
                 }
                 
                 datepickercell.setDate(date ?? Date())
@@ -704,9 +704,9 @@ class IncomeDetailTableViewController: UITableViewController,
                 cell = datepickercell
             
             case "reminddatepicker":
-                guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailDatePickerCell", for: indexPath) as? IncomeDetailDatePickerTableViewCell else {
+                guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeDetailDatePickerTableViewCell", for: indexPath) as? XYZIncomeDetailDatePickerTableViewCell else {
                     
-                    fatalError("Exception: incomeDetailDatePickerCell is failed to be created")
+                    fatalError("Exception: XYZIncomeDetailDatePickerTableViewCell is failed to be created")
                 }
                 
                 datepickercell.setDate(reminddate ?? Date())
@@ -715,9 +715,9 @@ class IncomeDetailTableViewController: UITableViewController,
                 cell = datepickercell
             
             case "remind":
-                guard let remindOptionCell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailSwitchCell", for: indexPath) as? IncomeDetailSwitchTableViewCell else {
+                guard let remindOptionCell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeDetailSwitchTableViewCell", for: indexPath) as? XYZIncomeDetailSwitchTableViewCell else {
                     
-                    fatalError("Exception: incomeDetailSwitchCell is failed to be created")
+                    fatalError("Exception: XYZIncomeDetailSwitchTableViewCell is failed to be created")
                 }
                 
                 remindOptionCell.setOption("Remind update on a day".localized(), default: hasUpdateReminder)
@@ -727,9 +727,9 @@ class IncomeDetailTableViewController: UITableViewController,
                 cell = remindOptionCell
             
             case "reminddate":
-                guard let datecell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailDateTextCell", for: indexPath) as? IncomeDetailDateTableViewCell else {
+                guard let datecell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeDetailDateTableViewCell", for: indexPath) as? XYZIncomeDetailDateTableViewCell else {
                     
-                    fatalError("Exception: incomeDetailDateTextCell is failed to be created")
+                    fatalError("Exception: XYZIncomeDetailDateTableViewCell is failed to be created")
                 }
                 
                 if nil == reminddate {
@@ -805,9 +805,9 @@ class IncomeDetailTableViewController: UITableViewController,
                 cell = currencycell
             
             case "delete":
-                guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailCommandTextCell", for: indexPath) as? IncomeDetailCommandTableViewCell else {
+                guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeDetailCommandTableViewCell", for: indexPath) as? XYZIncomeDetailCommandTableViewCell else {
                     
-                    fatalError("Exception: incomeDetailCommandTextCell is failed to be created")
+                    fatalError("Exception: XYZIncomeDetailCommandTableViewCell is failed to be created")
                 }
        
                 deletecell.delegate = self

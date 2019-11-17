@@ -1,5 +1,5 @@
 //
-//  IncomeDetailSwitchTableViewCell.swift
+//  XYZIncomeDetailSwitchTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 1/1/18.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol IncomeDetailSwitchDelegate : class {
+protocol XYZIncomeDetailSwitchDelegate : class {
     
-    func optionUpdated(option: Bool, sender: IncomeDetailSwitchTableViewCell)
+    func optionUpdated(option: Bool, sender: XYZIncomeDetailSwitchTableViewCell)
 }
 
-class IncomeDetailSwitchTableViewCell: UITableViewCell {
+class XYZIncomeDetailSwitchTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlet
     
@@ -22,7 +22,7 @@ class IncomeDetailSwitchTableViewCell: UITableViewCell {
     
     // MARK: - property
     
-    weak var delegate: IncomeDetailSwitchDelegate?
+    weak var delegate: XYZIncomeDetailSwitchDelegate?
     
     override func awakeFromNib() {
         

@@ -1,5 +1,5 @@
 //
-//  IncomeDetailViewController.swift
+//  XYZIncomeDetailViewController.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 1/19/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IncomeDetailViewController: UIViewController {
+class XYZIncomeDetailViewController: UIViewController {
 
     // MARK: property
     

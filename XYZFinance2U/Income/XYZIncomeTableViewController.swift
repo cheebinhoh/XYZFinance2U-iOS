@@ -1,5 +1,5 @@
 //
-//  IncomeTableViewController.swift
+//  XYZIncomeTableViewController.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 11/27/17.
@@ -15,17 +15,17 @@ import UserNotifications
 import NotificationCenter
 import os.log
 
-protocol IncomeSelectionDelegate: class {
+protocol XYZIncomeSelectionDelegate: class {
     
     func incomeSelected(newIncome: XYZAccount?)
     func incomeDeleted(deletedIncome: XYZAccount)
 }
 
-class IncomeTableViewController: UITableViewController,
-    XYZTableViewReloadData,
+class XYZIncomeTableViewController: UITableViewController,
     UISplitViewControllerDelegate,
     UIViewControllerPreviewingDelegate,
-    IncomeDetailDelegate {
+    XYZTableViewReloadData,
+    XYZIncomeDetailDelegate {
     
     // MARK: - property
 
@@ -40,9 +40,9 @@ class IncomeTableViewController: UITableViewController,
     var iCloudEnable = false
     var lockScreenDisplayed = false
     
-    weak var delegate: IncomeSelectionDelegate?
+    weak var delegate: XYZIncomeSelectionDelegate?
     weak var detailViewController: UIViewController?
-    weak var totalCell: IncomeTotalTableViewCell?
+    weak var totalCell: XYZIncomeTotalTableViewCell?
     
     var total: Double {
         
@@ -70,9 +70,9 @@ class IncomeTableViewController: UITableViewController,
             fatalError("Exception: error on instantiating IncomeDetailNavigationController")
         }
         
-        guard let incomeDetailTableView = incomeDetailNavigationController.viewControllers.first as? IncomeDetailTableViewController else {
+        guard let incomeDetailTableView = incomeDetailNavigationController.viewControllers.first as? XYZIncomeDetailTableViewController else {
             
-            fatalError("Exception: eror on casting first view controller to IncomeDetailTableViewController" )
+            fatalError("Exception: eror on casting first view controller to XYZIncomeDetailTableViewController" )
         }
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -96,7 +96,7 @@ class IncomeTableViewController: UITableViewController,
         fatalError("Exception: execution should not be reached here")
         
         /*
-         guard let incomeDetail = sender.source as? IncomeDetailViewController, let income = incomeDetail.account else
+         guard let incomeDetail = sender.source as? XYZIncomeDetailViewController, let income = incomeDetail.account else
          {
          return
          }
@@ -146,9 +146,9 @@ class IncomeTableViewController: UITableViewController,
         
         // Reuse the "Peek" view controller for presentation.
         
-        guard let viewController = viewControllerToCommit as? IncomeDetailViewController else {
+        guard let viewController = viewControllerToCommit as? XYZIncomeDetailViewController else {
             
-            fatalError("Exception: IncomeDetailViewController is expected")
+            fatalError("Exception: XYZIncomeDetailViewController is expected")
         }
  
         if let _ = viewController.income {
@@ -169,9 +169,9 @@ class IncomeTableViewController: UITableViewController,
         
         if let indexPath = tableView.indexPathForRow(at: location), indexPath.row > 0 {
 
-            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "IncomeDetailViewController") as? IncomeDetailViewController else  {
+            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "XYZIncomeDetailViewController") as? XYZIncomeDetailViewController else  {
                 
-                fatalError("Exception: IncomeDetailViewController is expected")
+                fatalError("Exception: XYZIncomeDetailViewController is expected")
             }
             
             let cell = tableView.cellForRow(at: indexPath)
@@ -934,7 +934,7 @@ class IncomeTableViewController: UITableViewController,
         
         if let navigationController = secondaryViewController as? UINavigationController {
             
-            if let incomeDetailTableViewController = navigationController.viewControllers.first as? IncomeDetailTableViewController {
+            if let incomeDetailTableViewController = navigationController.viewControllers.first as? XYZIncomeDetailTableViewController {
                 
                 incomeDetailTableViewController.incomeDelegate = self
                 incomeDetailTableViewController.isPushinto = true
@@ -990,9 +990,9 @@ class IncomeTableViewController: UITableViewController,
             fatalError("Exception: error on instantiating IncomeDetailNavigationController")
         }
         
-        guard let incomeDetailTableViewController = incomeDetailNavigationController.viewControllers.first as? IncomeDetailTableViewController else {
+        guard let incomeDetailTableViewController = incomeDetailNavigationController.viewControllers.first as? XYZIncomeDetailTableViewController else {
             
-            fatalError("Exception: ExpenseDetailTableViewController is expected")
+            fatalError("Exception: XYZIncomeDetailTableViewController is expected")
         }
         
         incomeDetailTableViewController.navigationItem.title = ""
@@ -1071,9 +1071,9 @@ class IncomeTableViewController: UITableViewController,
                         fatalError("Exception: error on instantiating ExpenseDetailNavigationController")
                     }
                     
-                    guard let incomeTableView = incomeDetailNavigationController.viewControllers.first as? IncomeDetailTableViewController else {
+                    guard let incomeTableView = incomeDetailNavigationController.viewControllers.first as? XYZIncomeDetailTableViewController else {
                         
-                        fatalError("Exception: IncomeDetailTableViewController is expected" )
+                        fatalError("Exception: XYZIncomeDetailTableViewController is expected" )
                     }
                     
                     incomeTableView.setPopover(delegate: self)
@@ -1094,9 +1094,9 @@ class IncomeTableViewController: UITableViewController,
                     mainSplitView.popOverNavigatorController = incomeDetailNavigationController
                 } else {
                     
-                    guard let detailTableViewController = delegate as? IncomeDetailTableViewController else {
+                    guard let detailTableViewController = delegate as? XYZIncomeDetailTableViewController else {
                         
-                        fatalError("Exception: IncomeDetailTableViewController is expedted" )
+                        fatalError("Exception: XYZIncomeDetailTableViewController is expedted" )
                     }
                     
                     let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
@@ -1148,9 +1148,9 @@ class IncomeTableViewController: UITableViewController,
                 
                 if indexPath.row > 0 
                 {
-                    guard let incomecell = tableView.dequeueReusableCell(withIdentifier: "IncomeTableViewCell", for: indexPath) as? IncomeTableViewCell else {
+                    guard let incomecell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeTableViewCell", for: indexPath) as? XYZIncomeTableViewCell else {
                         
-                        fatalError("error on creating cell")
+                        fatalError("error on creating XYZIncomeTableViewCell")
                     }
                     
                     let account = incomeListStored![indexPath.row - 1]
@@ -1204,9 +1204,9 @@ class IncomeTableViewController: UITableViewController,
                     
                 } else {
                     
-                    guard let totalCell = tableView.dequeueReusableCell(withIdentifier: "IncomeTotalTableViewCell", for: indexPath) as? IncomeTotalTableViewCell else {
+                    guard let totalCell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeTotalTableViewCell", for: indexPath) as? XYZIncomeTotalTableViewCell else {
                         
-                        fatalError("Exception: error on creating IncomeTotalTableViewCell")
+                        fatalError("Exception: error on creating XYZIncomeTotalTableViewCell")
                     }
                     
                     var total = 0.0;
@@ -1240,9 +1240,9 @@ class IncomeTableViewController: UITableViewController,
                 }
        
             case "summary":
-                guard let newTotalcell = tableView.dequeueReusableCell(withIdentifier: "IncomeTotalTableViewCell", for: indexPath) as? IncomeTotalTableViewCell else {
+                guard let newTotalcell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeTotalTableViewCell", for: indexPath) as? XYZIncomeTotalTableViewCell else {
                     
-                    fatalError("Exception: error on creating IncomeTotalTableViewCell")
+                    fatalError("Exception: error on creating XYZIncomeTotalTableViewCell")
                 }
 
                 totalCell = newTotalcell
@@ -1290,9 +1290,9 @@ class IncomeTableViewController: UITableViewController,
             
             if !mainSplitView.isCollapsed  {
                 
-                guard let detailTableViewController = delegate as? IncomeDetailTableViewController else {
+                guard let detailTableViewController = delegate as? XYZIncomeDetailTableViewController else {
                     
-                    fatalError("Exception: IncomeDetailTableViewController is expedted" )
+                    fatalError("Exception: XYZIncomeDetailTableViewController is expedted" )
                 }
                 
                 if detailTableViewController.income == incomeToBeDeleted {
@@ -1467,12 +1467,12 @@ class IncomeTableViewController: UITableViewController,
                 fatalError("Exception: AddIncomeDetail is not longer supported")
 
             case "ShowIncomeDetail":
-                guard let incomeDetailView = segue.destination as? IncomeDetailViewController else {
+                guard let incomeDetailView = segue.destination as? XYZIncomeDetailViewController else {
                     
                     fatalError("Exception: Unexpected error on casting segue.destination for prepare from table view controller")
                 }
                 
-                if let accountDetail = sender as? IncomeTableViewCell {
+                if let accountDetail = sender as? XYZIncomeTableViewCell {
                     
                     guard let indexPath = tableView.indexPath(for: accountDetail) else {
                         
