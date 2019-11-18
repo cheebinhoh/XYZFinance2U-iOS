@@ -162,7 +162,7 @@ class XYZMainUITabBarController: UITabBarController,
                 
                 masterViewNavController?.setViewControllers([budgetDetailTableViewController], animated: false)
             }
-        } else if let settingRoot = navController.viewControllers.first as? SettingTableViewController {
+        } else if let settingRoot = navController.viewControllers.first as? XYZSettingTableViewController {
             
             split.delegate = settingRoot
             

@@ -1,5 +1,5 @@
 //
-//  SettingTableViewController.swift
+//  XYZSettingTableViewController.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/14/17.
@@ -11,7 +11,7 @@ import LocalAuthentication
 import CloudKit
 import UIKit
 
-class SettingTableViewController: UITableViewController,
+class XYZSettingTableViewController: UITableViewController,
     UISplitViewControllerDelegate,
     UIDocumentPickerDelegate,
     SettingTextTableViewCellDelegate {
