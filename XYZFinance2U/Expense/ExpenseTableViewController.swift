@@ -1139,11 +1139,7 @@ class ExpenseTableViewController: UITableViewController,
                         if sectionExpandStatus[indexPath.section] {
                             
                             totalCell.accessoryType = UITableViewCell.AccessoryType.none
-                            
-                            var imageView : UIImageView
-                            imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 20, y: 20), size: CGSize(width: 18, height: 15)))
-                            imageView.image = UIImage(named:"down_disclosure_indicator")
-                            totalCell.accessoryView = imageView
+                            totalCell.accessoryView = createDownDisclosureIndicatorImage()
                         } else {
                             
                             totalCell.accessoryView = nil

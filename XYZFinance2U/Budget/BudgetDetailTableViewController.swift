@@ -770,11 +770,7 @@ class BudgetDetailTableViewController: UITableViewController,
                 } else {
                     
                     datecell.accessoryType = UITableViewCell.AccessoryType.none
-                    
-                    var imageView : UIImageView
-                    imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 20, y: 20), size: CGSize(width: 18, height: 15)))
-                    imageView.image = UIImage(named:"down_disclosure_indicator")
-                    datecell.accessoryView = imageView
+                    datecell.accessoryView = createDownDisclosureIndicatorImage()
                 }
                 
                 self.datecell = datecell

@@ -27,6 +27,7 @@
 		655C97BF1FCCCF320098D58D /* XYZIncomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C97BE1FCCCF320098D58D /* XYZIncomeTableViewController.swift */; };
 		655C97C11FCCD09C0098D58D /* XYZIncomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C97C01FCCD09C0098D58D /* XYZIncomeTableViewCell.swift */; };
 		655C97C31FCCD5140098D58D /* XYZAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C97C21FCCD5130098D58D /* XYZAccount.swift */; };
+		6564897C2381F2DC00D8BE38 /* XYZUIUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6564897B2381F2DC00D8BE38 /* XYZUIUtility.swift */; };
 		6567E13020327DF300058238 /* BudgetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E12F20327DF300058238 /* BudgetTableViewController.swift */; };
 		6567E1322032866C00058238 /* XYZBudget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E1312032866C00058238 /* XYZBudget.swift */; };
 		656BF680208838EB00EE6280 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 656BF682208838EB00EE6280 /* Localizable.strings */; };
@@ -113,6 +114,7 @@
 		655C97BE1FCCCF320098D58D /* XYZIncomeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZIncomeTableViewController.swift; sourceTree = "<group>"; };
 		655C97C01FCCD09C0098D58D /* XYZIncomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZIncomeTableViewCell.swift; sourceTree = "<group>"; };
 		655C97C21FCCD5130098D58D /* XYZAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZAccount.swift; sourceTree = "<group>"; };
+		6564897B2381F2DC00D8BE38 /* XYZUIUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZUIUtility.swift; sourceTree = "<group>"; };
 		6567E12F20327DF300058238 /* BudgetTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetTableViewController.swift; sourceTree = "<group>"; };
 		6567E1312032866C00058238 /* XYZBudget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZBudget.swift; sourceTree = "<group>"; };
 		656BF67E208838BE00EE6280 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 				65EE339C20013F4600DEA680 /* XYZUITextField-Extension.swift */,
 				657DCA1921D2F8EF00C30F3B /* XYZTextTableViewCell.swift */,
 				65D1AF2121DAD93700484096 /* XYZSelectionTableViewCell.swift */,
+				6564897B2381F2DC00D8BE38 /* XYZUIUtility.swift */,
 			);
 			path = "Shared UI";
 			sourceTree = "<group>";
@@ -515,6 +518,7 @@
 				658F735A1FDE145D00AF7F8D /* ExpenseDetailDateTableViewCell.swift in Sources */,
 				658EF96123773C3500BF129A /* XYZiCloudUtility.swift in Sources */,
 				655C979D1FCCCC210098D58D /* AppDelegate.swift in Sources */,
+				6564897C2381F2DC00D8BE38 /* XYZUIUtility.swift in Sources */,
 				6522F8B51FE9BBC7005686B6 /* XYZMainUITabBarController.swift in Sources */,
 				653BFB4E2030E55A0076C184 /* ExpenseTableViewSearchCell.swift in Sources */,
 				65EEC49F1FF070B400D638CD /* XYZIncomeDetailDateTableViewCell.swift in Sources */,
@@ -729,7 +733,7 @@
 				CODE_SIGN_ENTITLEMENTS = XYZFinance2U/XYZFinance2U.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = BKU6P4Y9G4;
 				INFOPLIST_FILE = XYZFinance2U/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -752,7 +756,7 @@
 				CODE_SIGN_ENTITLEMENTS = XYZFinance2U/XYZFinance2U.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = BKU6P4Y9G4;
 				INFOPLIST_FILE = XYZFinance2U/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
