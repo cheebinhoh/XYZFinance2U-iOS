@@ -169,7 +169,7 @@ class XYZMainUITabBarController: UITabBarController,
             if nil == masterViewNavController {
                 
                 // empty
-            } else if let _ = masterViewNavController?.viewControllers.last as? SettingDetailTableViewController {
+            } else if let _ = masterViewNavController?.viewControllers.last as? XYZSettingDetailTableViewController {
                 
                 // empty
             } else {
@@ -179,9 +179,9 @@ class XYZMainUITabBarController: UITabBarController,
                     fatalError("Exception: error on instantiating SettingDetailEmptyViewController")
                 }
                 
-                guard let settingDetailTableViewController = settingDetailNavigationController.viewControllers.first as? SettingDetailTableViewController else {
+                guard let settingDetailTableViewController = settingDetailNavigationController.viewControllers.first as? XYZSettingDetailTableViewController else {
                     
-                    fatalError("Exception: SettingDetailTableViewController is expected")
+                    fatalError("Exception: XYZSettingDetailTableViewController is expected")
                 }
                 
                 settingRoot.delegate = settingDetailTableViewController

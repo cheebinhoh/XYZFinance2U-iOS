@@ -1,5 +1,5 @@
 //
-//  SettingDetailAboutTableViewCell.swift
+//  XYZSettingDetailAboutTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 1/6/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingDetailAboutTableViewCell: UITableViewCell {
+class XYZSettingDetailAboutTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlet
 

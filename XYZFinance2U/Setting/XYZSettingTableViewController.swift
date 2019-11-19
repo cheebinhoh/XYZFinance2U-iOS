@@ -33,7 +33,7 @@ class XYZSettingTableViewController: UITableViewController,
     
     // MARK: - function
     
-    func switchChanged(_ value: Bool, _ sender: SettingTableViewCell) {
+    func switchChanged(_ value: Bool, _ sender: XYZSettingTableViewCell) {
     
         let defaults = UserDefaults.standard;
         let laContext = LAContext()
@@ -173,18 +173,18 @@ class XYZSettingTableViewController: UITableViewController,
         switch sectionList[indexPath.section].cellList[indexPath.row] {
             
             case "About" :
-                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableViewCell", for: indexPath) as? XYZSettingTableViewCell else {
                     
-                    fatalError("Exception: error on creating settingTableCell")
+                    fatalError("Exception: error on creating settingTableViewCell")
                 }
                 
                 newcell.title.text = "About".localized()
                 cell = newcell
             
             case "Export" :
-                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableViewCell", for: indexPath) as? XYZSettingTableViewCell else {
                     
-                    fatalError("Exception: error on creating settingTableCell")
+                    fatalError("Exception: error on creating settingTableViewCell")
                 }
                 
                 newcell.title.text = "Save to file".localized()
@@ -192,9 +192,9 @@ class XYZSettingTableViewController: UITableViewController,
                 cell = newcell
             
             case "SynciCloud" :
-                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableViewCell", for: indexPath) as? XYZSettingTableViewCell else {
                     
-                    fatalError("Exception: error on creating settingTableCell")
+                    fatalError("Exception: error on creating settingTableViewCell")
                 }
                 
                 newcell.title.text = "Update to iCloud".localized()
@@ -202,9 +202,9 @@ class XYZSettingTableViewController: UITableViewController,
                 cell = newcell
             
             case "DeleteData":
-                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableViewCell", for: indexPath) as? XYZSettingTableViewCell else {
                     
-                    fatalError("Exception: error on creating settingTableCell")
+                    fatalError("Exception: error on creating settingTableViewCell")
                 }
                 
                 newcell.title.text = "Delete data".localized()
@@ -212,9 +212,9 @@ class XYZSettingTableViewController: UITableViewController,
                 cell = newcell
             
             case "Lockout" :
-                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableViewCell", for: indexPath) as? XYZSettingTableViewCell else {
                     
-                    fatalError("Exception: error on creating settingTableCell")
+                    fatalError("Exception: error on creating settingTableViewCell")
                 }
                 
                 newcell.title.text = "Lock out".localized()
@@ -222,9 +222,9 @@ class XYZSettingTableViewController: UITableViewController,
                 cell = newcell
 
             case "requiredauthentication" :
-                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableCell", for: indexPath) as? SettingTableViewCell else {
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableViewCell", for: indexPath) as? XYZSettingTableViewCell else {
                     
-                    fatalError("Exception: error on creating settingTableCell")
+                    fatalError("Exception: error on creating settingTableViewCell")
                 }
 
                 let defaults = UserDefaults.standard;
@@ -251,7 +251,7 @@ class XYZSettingTableViewController: UITableViewController,
         return cell!
     }
     
-    func loadSettingDetailTableView(_ settingDetail: SettingDetailTableViewController, _ indexPath: IndexPath) {
+    func loadSettingDetailTableView(_ settingDetail: XYZSettingDetailTableViewController, _ indexPath: IndexPath) {
         
         settingDetail.tableSectionCellList.removeAll()
 
@@ -275,11 +275,11 @@ class XYZSettingTableViewController: UITableViewController,
     
     func showAbout(_ indexPath: IndexPath) {
         
-        var settingDetail: SettingDetailTableViewController?
+        var settingDetail: XYZSettingDetailTableViewController?
         
-        if let _ = delegate, delegate is SettingDetailTableViewController {
+        if let _ = delegate, delegate is XYZSettingDetailTableViewController {
             
-            settingDetail = delegate as? SettingDetailTableViewController
+            settingDetail = delegate as? XYZSettingDetailTableViewController
         } else {
             
             guard let settingDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingDetailNavigationController") as? UINavigationController else {
@@ -287,7 +287,7 @@ class XYZSettingTableViewController: UITableViewController,
                 fatalError("Exception: error on instantiating SettingDetailNavigationController")
             }
             
-            settingDetail = settingDetailNavigationController.viewControllers.first as? SettingDetailTableViewController
+            settingDetail = settingDetailNavigationController.viewControllers.first as? XYZSettingDetailTableViewController
 
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
@@ -705,9 +705,9 @@ class XYZSettingTableViewController: UITableViewController,
             fatalError("Exception: error on instantiating ExpenseDetailNavigationController")
         }
 
-        guard let settingDetailTableViewController = settingDetailNavigationController.viewControllers.first as? SettingDetailTableViewController else {
+        guard let settingDetailTableViewController = settingDetailNavigationController.viewControllers.first as? XYZSettingDetailTableViewController else {
             
-            fatalError("Exception: SettingDetailTableViewController is expected")
+            fatalError("Exception: XYZSettingDetailTableViewController is expected")
         }
         
         delegate = settingDetailTableViewController
@@ -729,7 +729,7 @@ class XYZSettingTableViewController: UITableViewController,
         
         if let navigationController = secondaryViewController as? UINavigationController {
             
-            if let settingDetailTableViewController = navigationController.viewControllers.first as? SettingDetailTableViewController {
+            if let settingDetailTableViewController = navigationController.viewControllers.first as? XYZSettingDetailTableViewController {
                 
                 if !settingDetailTableViewController.isPopover {
                     

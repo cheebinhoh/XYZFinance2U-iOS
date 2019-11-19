@@ -1,5 +1,5 @@
 //
-//  SettingTableViewCell.swift
+//  XYZSettingTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/14/17.
@@ -10,10 +10,10 @@ import UIKit
 
 protocol SettingTextTableViewCellDelegate: class {
     
-    func switchChanged(_ yesno: Bool, _ sender:SettingTableViewCell)
+    func switchChanged(_ yesno: Bool, _ sender:XYZSettingTableViewCell)
 }
 
-class SettingTableViewCell: UITableViewCell {
+class XYZSettingTableViewCell: UITableViewCell {
     
     // MARK: - outlet
     
