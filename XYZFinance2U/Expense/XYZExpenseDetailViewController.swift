@@ -1,5 +1,5 @@
 //
-//  ExpenseDetailViewController.swift
+//  XYZExpenseDetailViewController.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 1/27/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExpenseDetailViewController: UIViewController {
+class XYZExpenseDetailViewController: UIViewController {
 
     // MARK: - property
     

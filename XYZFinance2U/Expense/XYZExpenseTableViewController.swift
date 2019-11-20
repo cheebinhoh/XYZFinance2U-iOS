@@ -112,7 +112,7 @@ class XYZExpenseTableViewController: UITableViewController,
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         // Reuse the "Peek" view controller for presentation.
         
-        guard let viewController = viewControllerToCommit as? ExpenseDetailViewController else {
+        guard let viewController = viewControllerToCommit as? XYZExpenseDetailViewController else {
             
             fatalError("Exception: IncomeDetailViewController is expected")
         }
@@ -135,7 +135,7 @@ class XYZExpenseTableViewController: UITableViewController,
         
         if let indexPath = tableView.indexPathForRow(at: location), indexPath.row > 0 {
     
-            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailViewController") as? ExpenseDetailViewController else  {
+            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "XYZExpenseDetailViewController") as? XYZExpenseDetailViewController else  {
                 
                 fatalError("Exception: IncomeDetailViewController is expected")
             }

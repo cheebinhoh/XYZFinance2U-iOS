@@ -455,7 +455,7 @@
         <!--Expense Detail View Controller-->
         <scene sceneID="66M-Ug-AJf">
             <objects>
-                <viewController storyboardIdentifier="ExpenseDetailViewController" id="te8-Fa-622" customClass="ExpenseDetailViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="XYZExpenseDetailViewController" id="te8-Fa-622" customClass="XYZExpenseDetailViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AnI-Pb-w9k">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

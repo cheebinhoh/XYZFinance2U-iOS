@@ -41,7 +41,7 @@
 		657C29D220433D6900CF3165 /* BudgetExpensesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657C29D120433D6900CF3165 /* BudgetExpensesTableViewController.swift */; };
 		657C39102038F7D400276A6E /* BudgetDetailCommandTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657C390F2038F7D400276A6E /* BudgetDetailCommandTableViewCell.swift */; };
 		657DCA1A21D2F8EF00C30F3B /* XYZTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657DCA1921D2F8EF00C30F3B /* XYZTextTableViewCell.swift */; };
-		657F1EB6201D5C1000FEB385 /* ExpenseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657F1EB5201D5C1000FEB385 /* ExpenseDetailViewController.swift */; };
+		657F1EB6201D5C1000FEB385 /* XYZExpenseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657F1EB5201D5C1000FEB385 /* XYZExpenseDetailViewController.swift */; };
 		658DE92C206B17E9006C5D17 /* BudgetListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658DE92B206B17E9006C5D17 /* BudgetListTableViewController.swift */; };
 		658EF96123773C3500BF129A /* XYZiCloudUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658EF96023773C3500BF129A /* XYZiCloudUtility.swift */; };
 		658F73541FDD961600AF7F8D /* ExpenseDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658F73531FDD961600AF7F8D /* ExpenseDetailTableViewController.swift */; };
@@ -137,7 +137,7 @@
 		657C29D120433D6900CF3165 /* BudgetExpensesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetExpensesTableViewController.swift; sourceTree = "<group>"; };
 		657C390F2038F7D400276A6E /* BudgetDetailCommandTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailCommandTableViewCell.swift; sourceTree = "<group>"; };
 		657DCA1921D2F8EF00C30F3B /* XYZTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZTextTableViewCell.swift; sourceTree = "<group>"; };
-		657F1EB5201D5C1000FEB385 /* ExpenseDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailViewController.swift; sourceTree = "<group>"; };
+		657F1EB5201D5C1000FEB385 /* XYZExpenseDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZExpenseDetailViewController.swift; sourceTree = "<group>"; };
 		658DE92B206B17E9006C5D17 /* BudgetListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetListTableViewController.swift; sourceTree = "<group>"; };
 		658EF96023773C3500BF129A /* XYZiCloudUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZiCloudUtility.swift; sourceTree = "<group>"; };
 		658F73531FDD961600AF7F8D /* ExpenseDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseDetailTableViewController.swift; sourceTree = "<group>"; };
@@ -200,7 +200,7 @@
 				658F735D1FE08F5E00AF7F8D /* ExpenseDetailImagePickerTableViewCell.swift */,
 				658F735F1FE1F28100AF7F8D /* ExpenseDetailImageViewController.swift */,
 				65402D951FEE0B740051367F /* ExpenseDetailCommandTableViewCell.swift */,
-				657F1EB5201D5C1000FEB385 /* ExpenseDetailViewController.swift */,
+				657F1EB5201D5C1000FEB385 /* XYZExpenseDetailViewController.swift */,
 				653BFB4D2030E55A0076C184 /* XYZExpenseTableViewSearchCell.swift */,
 				65EF6AE82054D5B20058BD75 /* XYZExpenseTableViewMonthCell.swift */,
 			);
@@ -532,7 +532,7 @@
 				65EF6AE92054D5B20058BD75 /* XYZExpenseTableViewMonthCell.swift in Sources */,
 				655C97C31FCCD5140098D58D /* XYZAccount.swift in Sources */,
 				650024051FF6B423001281EA /* XYZSettingDetailTableViewController.swift in Sources */,
-				657F1EB6201D5C1000FEB385 /* ExpenseDetailViewController.swift in Sources */,
+				657F1EB6201D5C1000FEB385 /* XYZExpenseDetailViewController.swift in Sources */,
 				657C29D020430EF800CF3165 /* CalendarCollectionTableViewCell.swift in Sources */,
 				65D870C42033B17700DE991E /* BudgetTableViewCell.swift in Sources */,
 				65D870CE2037D76100DE991E /* BudgetDetailDateTableViewCell.swift in Sources */,
