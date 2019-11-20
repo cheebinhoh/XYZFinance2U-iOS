@@ -9,7 +9,7 @@
 
 import UIKit
 
-protocol ExpenseDetailImageViewTableViewCellDelegate: class {
+protocol XYZExpenseDetailImageViewTableViewCellDelegate: class {
     
     func viewImage(_ sender:ExpenseDetailImageViewController )
 }
@@ -21,7 +21,7 @@ class ExpenseDetailImageViewController: UIViewController,
     
     // MARK: - property
     
-    var delegate: ExpenseDetailImageViewTableViewCellDelegate?
+    var delegate: XYZExpenseDetailImageViewTableViewCellDelegate?
     var image: UIImage?
     var imagePickerModalPresentationStyle: UIModalPresentationStyle?
     var isEditable = true

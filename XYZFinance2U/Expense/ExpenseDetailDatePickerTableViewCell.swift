@@ -9,7 +9,7 @@
 
 import UIKit
 
-protocol ExpenseDetailDatePickerTableViewCellDelegate: class {
+protocol XYZExpenseDetailDatePickerTableViewCellDelegate: class {
     
     func dateDidPick(_ sender:ExpenseDetailDatePickerTableViewCell)
 }
@@ -23,7 +23,7 @@ class ExpenseDetailDatePickerTableViewCell: UITableViewCell {
     // MARK: - property
     
     var date: Date?
-    weak var delegate: ExpenseDetailDatePickerTableViewCellDelegate?
+    weak var delegate: XYZExpenseDetailDatePickerTableViewCellDelegate?
     
     // MARK: function
     

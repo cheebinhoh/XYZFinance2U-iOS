@@ -9,7 +9,7 @@
 
 import UIKit
 
-protocol ExpenseDetailImagePickerTableViewCellDelegate: class {
+protocol XYZExpenseDetailImagePickerTableViewCellDelegate: class {
     
     func pickImage(_ sender:ExpenseDetailImagePickerTableViewCell, _ imageView: UIImageView, _ index: Int)
     func viewImage(_ sender:ExpenseDetailImagePickerTableViewCell, _ imageView: UIImageView, _ index: Int)
@@ -21,7 +21,7 @@ class ExpenseDetailImagePickerTableViewCell: UITableViewCell,
     
     // MARK: - property
     
-    weak var delegate: ExpenseDetailImagePickerTableViewCellDelegate?
+    weak var delegate: XYZExpenseDetailImagePickerTableViewCellDelegate?
     var imageViewList = [UIImageView]()
     var isEditable = false
     

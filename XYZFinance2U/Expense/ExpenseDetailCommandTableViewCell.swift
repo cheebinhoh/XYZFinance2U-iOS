@@ -9,7 +9,7 @@
 
 import UIKit
 
-protocol ExpenseDetailCommandDelegate: class {
+protocol XYZExpenseDetailCommandDelegate: class {
     
     func executeCommand(_ sender: ExpenseDetailCommandTableViewCell)
 }
@@ -18,7 +18,7 @@ class ExpenseDetailCommandTableViewCell: UITableViewCell {
 
     // MARK: - property
     
-    var delegate: ExpenseDetailCommandDelegate?
+    var delegate: XYZExpenseDetailCommandDelegate?
 
     // MARK: - IBOutlet
     

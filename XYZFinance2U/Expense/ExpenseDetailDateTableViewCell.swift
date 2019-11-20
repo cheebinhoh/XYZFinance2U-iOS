@@ -9,7 +9,7 @@
 
 import UIKit
 
-protocol ExpenseDetailDateTableViewCellDelegate: class {
+protocol XYZExpenseDetailDateTableViewCellDelegate: class {
     
     func dateInputTouchUp(_ sender:ExpenseDetailDateTableViewCell)
 }
@@ -17,7 +17,7 @@ protocol ExpenseDetailDateTableViewCellDelegate: class {
 class ExpenseDetailDateTableViewCell: UITableViewCell {
     
     // MARK: - property
-    weak var delegate: ExpenseDetailDateTableViewCellDelegate?
+    weak var delegate: XYZExpenseDetailDateTableViewCellDelegate?
     var enableEditing = true
     
     // MARK: - IBOutlet
