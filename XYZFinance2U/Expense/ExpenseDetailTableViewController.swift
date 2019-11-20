@@ -11,7 +11,7 @@ import CloudKit
 import ContactsUI
 
 // MARK: - protocol
-protocol ExpenseDetailDelegate: class {
+protocol XYZExpenseDetailDelegate: class {
     
     func saveNewExpense(expense: XYZExpense)
     func saveExpense(expense: XYZExpense)
@@ -832,7 +832,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     
     var isPushinto = false
     var isPopover = false
-    var expenseDelegate: ExpenseDetailDelegate?
+    var expenseDelegate: XYZExpenseDetailDelegate?
     var sectionList = [TableSectionCell]()
     var emailcell : XYZTextTableViewCell?
     
@@ -840,7 +840,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     
     // MARK: - function
     
-    func setPopover(delegate: ExpenseDetailDelegate) {
+    func setPopover(delegate: XYZExpenseDetailDelegate) {
         
         isPopover = true
         expenseDelegate = delegate

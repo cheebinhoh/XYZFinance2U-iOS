@@ -18,7 +18,7 @@ protocol BudgetSelectionDelegate: class {
 class BudgetTableViewController: UITableViewController,
     XYZTableViewReloadData,
     UISplitViewControllerDelegate,
-    ExpenseDetailDelegate,
+    XYZExpenseDetailDelegate,
     BudgetDetailDelegate {
     
     func cancelExpense() {

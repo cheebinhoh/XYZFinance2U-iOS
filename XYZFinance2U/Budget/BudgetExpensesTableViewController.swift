@@ -17,7 +17,7 @@ protocol BudgetExpenseDelegate: class {
 }
 
 class BudgetExpensesTableViewController: UITableViewController,
-    ExpenseDetailDelegate {
+    XYZExpenseDetailDelegate {
 
     // MARK: - Properties
     

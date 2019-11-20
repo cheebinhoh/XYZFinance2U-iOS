@@ -24,7 +24,7 @@ class XYZExpenseTableViewController: UITableViewController,
     UIViewControllerPreviewingDelegate,
     UISearchControllerDelegate,
     UISearchBarDelegate,
-    ExpenseDetailDelegate,
+    XYZExpenseDetailDelegate,
     XYZExpenseTableViewMonthChange {
     
     func change(_ monthYear: Date!) {

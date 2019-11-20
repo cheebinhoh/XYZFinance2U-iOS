@@ -10,7 +10,7 @@ import UIKit
 
 class CalendarCollectionViewController: UICollectionViewController,
     UICollectionViewDelegateFlowLayout,
-    ExpenseDetailDelegate,
+    XYZExpenseDetailDelegate,
     BudgetExpenseDelegate {
     
     func saveNewExpense(expense: XYZExpense) {
