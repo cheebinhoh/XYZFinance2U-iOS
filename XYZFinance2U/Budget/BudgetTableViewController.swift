@@ -671,9 +671,9 @@ class BudgetTableViewController: UITableViewController,
                 fatalError("Exception: ExpenseDetailNavigationController is expected")
             }
             
-            guard let expenseDetailTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
+            guard let expenseDetailTableView = expenseDetailNavigationController.viewControllers.first as? XYZExpenseDetailTableViewController else {
                 
-                fatalError("Exception: ExpenseDetailTableViewController is expected" )
+                fatalError("Exception: XYZExpenseDetailTableViewController is expected" )
             }
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate

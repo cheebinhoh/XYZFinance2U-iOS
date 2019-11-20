@@ -1,5 +1,5 @@
 //
-//  ExpenseDetailTableViewController.swift
+//  XYZExpenseDetailTableViewController.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/10/17.
@@ -19,7 +19,7 @@ protocol XYZExpenseDetailDelegate: class {
     func cancelExpense()
 }
 
-class ExpenseDetailTableViewController: UITableViewController,
+class XYZExpenseDetailTableViewController: UITableViewController,
     UIImagePickerControllerDelegate,
     UINavigationControllerDelegate,
     XYZTextTableViewCellDelegate,

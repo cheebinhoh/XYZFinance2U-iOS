@@ -113,7 +113,7 @@ class XYZMainUITabBarController: UITabBarController,
             if nil == masterViewNavController {
                 
                 // empty
-            } else if let _ = masterViewNavController?.viewControllers.last as? ExpenseDetailTableViewController {
+            } else if let _ = masterViewNavController?.viewControllers.last as? XYZExpenseDetailTableViewController {
                 
                 // empty
             } else {
@@ -123,9 +123,9 @@ class XYZMainUITabBarController: UITabBarController,
                     fatalError("Exception: error on instantiating ExpenseDetailNavigationController")
                 }
                 
-                guard let expenseDetailTableViewController = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
+                guard let expenseDetailTableViewController = expenseDetailNavigationController.viewControllers.first as? XYZExpenseDetailTableViewController else {
                     
-                    fatalError("Exception: ExpenseDetailTableViewController is expected")
+                    fatalError("Exception: XYZExpenseDetailTableViewController is expected")
                 }
                 
                 expenseDetailTableViewController.navigationItem.title = ""

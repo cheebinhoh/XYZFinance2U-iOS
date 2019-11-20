@@ -86,9 +86,9 @@ class XYZExpenseTableViewController: UITableViewController,
             fatalError("Exception: ExpenseDetailNavigationController is expected")
         }
         
-        guard let expenseDetailTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
+        guard let expenseDetailTableView = expenseDetailNavigationController.viewControllers.first as? XYZExpenseDetailTableViewController else {
             
-            fatalError("Exception: ExpenseDetailTableViewController is expected" )
+            fatalError("Exception: XYZExpenseDetailTableViewController is expected" )
         }
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -1004,9 +1004,9 @@ class XYZExpenseTableViewController: UITableViewController,
                 fatalError("Exception: ExpenseDetailNavigationController is expected")
             }
             
-            guard let expenseDetailTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
+            guard let expenseDetailTableView = expenseDetailNavigationController.viewControllers.first as? XYZExpenseDetailTableViewController else {
                 
-                fatalError("Exception: ExpenseDetailTableViewController is expected" )
+                fatalError("Exception: XYZExpenseDetailTableViewController is expected" )
             }
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -1254,9 +1254,9 @@ class XYZExpenseTableViewController: UITableViewController,
                         fatalError("Exception: ExpenseDetailNavigationController is expected")
                     }
                     
-                    guard let expenseTableView = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
+                    guard let expenseTableView = expenseDetailNavigationController.viewControllers.first as? XYZExpenseDetailTableViewController else {
                         
-                        fatalError("Exception: ExpenseDetailTableViewController is expected" )
+                        fatalError("Exception: XYZExpenseDetailTableViewController is expected" )
                     }
                     
                     tableView.deselectRow(at: indexPath, animated: false)
@@ -1278,9 +1278,9 @@ class XYZExpenseTableViewController: UITableViewController,
                     mainSplitView.popOverNavigatorController = expenseDetailNavigationController
                 } else {
                     
-                    guard let detailTableViewController = delegate as? ExpenseDetailTableViewController else {
+                    guard let detailTableViewController = delegate as? XYZExpenseDetailTableViewController else {
                         
-                        fatalError("Exception: ExpenseDetailTableViewController is expedted" )
+                        fatalError("Exception: XYZExpenseDetailTableViewController is expedted" )
                     }
                     
                     detailTableViewController.currencyCodes = currencyCodes
@@ -1317,9 +1317,9 @@ class XYZExpenseTableViewController: UITableViewController,
         switch segue.identifier ?? ""
         {
         case "ShowExpenseDetail":
-            guard let expenseDetailView = segue.destination as? ExpenseDetailTableViewController else
+            guard let expenseDetailView = segue.destination as? XYZExpenseDetailTableViewController else
             {
-                fatalError("Exception: Unexpected error on casting segue.destination to ExpenseDetailTableViewController")
+                fatalError("Exception: Unexpected error on casting segue.destination to XYZExpenseDetailTableViewController")
             }
             
             if let accountDetail = sender as? XYZExpenseTableViewCell
@@ -1357,9 +1357,9 @@ class XYZExpenseTableViewController: UITableViewController,
             fatalError("Exception: ExpenseDetailNavigationController is expected")
         }
         
-        guard let expenseDetailTableViewController = expenseDetailNavigationController.viewControllers.first as? ExpenseDetailTableViewController else {
+        guard let expenseDetailTableViewController = expenseDetailNavigationController.viewControllers.first as? XYZExpenseDetailTableViewController else {
             
-            fatalError("Exception: ExpenseDetailTableViewController is expected")
+            fatalError("Exception: XYZExpenseDetailTableViewController is expected")
         }
         
         expenseDetailTableViewController.navigationItem.title = ""
@@ -1386,7 +1386,7 @@ class XYZExpenseTableViewController: UITableViewController,
         
         if let navigationController = secondaryViewController as? UINavigationController {
             
-            if let expenseDetailTableViewController = navigationController.viewControllers.first as? ExpenseDetailTableViewController {
+            if let expenseDetailTableViewController = navigationController.viewControllers.first as? XYZExpenseDetailTableViewController {
                 
                 expenseDetailTableViewController.expenseDelegate = self
                 expenseDetailTableViewController.isPushinto = true
