@@ -1,5 +1,5 @@
 //
-//  ExpenseTableViewController.swift
+//  XYZExpenseTableViewController.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/7/17.
@@ -18,7 +18,7 @@ protocol XYZExpenseTableViewDelegate: class {
     func expenseDeleted(expense: XYZExpense)
 }
 
-class ExpenseTableViewController: UITableViewController,
+class XYZExpenseTableViewController: UITableViewController,
     XYZTableViewReloadData,
     UISplitViewControllerDelegate,
     UIViewControllerPreviewingDelegate,
@@ -1116,9 +1116,9 @@ class ExpenseTableViewController: UITableViewController,
                 switch indexPath.row {
                     
                     case 0:
-                        guard let totalCell = tableView.dequeueReusableCell(withIdentifier: "expenseTotalTableViewCell", for: indexPath) as? ExpenseTableViewCell else {
+                        guard let totalCell = tableView.dequeueReusableCell(withIdentifier: "expenseTotalTableViewCell", for: indexPath) as? XYZExpenseTableViewCell else {
                             
-                            fatalError("error on ExpenseTableViewCell cell")
+                            fatalError("error on XYZExpenseTableViewCell cell")
                         }
                     
                         var currency = "";
@@ -1149,9 +1149,9 @@ class ExpenseTableViewController: UITableViewController,
                         cell = totalCell
                     
                     default:
-                        guard let expenseCell = tableView.dequeueReusableCell(withIdentifier: "expenseTableViewCell", for: indexPath) as? ExpenseTableViewCell else {
+                        guard let expenseCell = tableView.dequeueReusableCell(withIdentifier: "expenseTableViewCell", for: indexPath) as? XYZExpenseTableViewCell else {
                         
-                            fatalError("error on ExpenseTableViewCell cell")
+                            fatalError("error on XYZExpenseTableViewCell cell")
                         }
                         
                         let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
@@ -1322,7 +1322,7 @@ class ExpenseTableViewController: UITableViewController,
                 fatalError("Exception: Unexpected error on casting segue.destination to ExpenseDetailTableViewController")
             }
             
-            if let accountDetail = sender as? ExpenseTableViewCell
+            if let accountDetail = sender as? XYZExpenseTableViewCell
             {
                 guard let indexPath = tableView.indexPath(for: accountDetail) else
                 {

@@ -846,9 +846,9 @@ class ExpenseDetailTableViewController: UITableViewController,
         expenseDelegate = delegate
     }
     
-    private func getMasterTableViewController() -> ExpenseTableViewController {
+    private func getMasterTableViewController() -> XYZExpenseTableViewController {
         
-        var masterViewController: ExpenseTableViewController?
+        var masterViewController: XYZExpenseTableViewController?
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
@@ -866,7 +866,7 @@ class ExpenseDetailTableViewController: UITableViewController,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        masterViewController = (navController.viewControllers.first as? ExpenseTableViewController)!
+        masterViewController = (navController.viewControllers.first as? XYZExpenseTableViewController)!
         
         return masterViewController!
     }

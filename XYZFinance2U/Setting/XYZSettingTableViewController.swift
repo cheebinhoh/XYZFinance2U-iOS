@@ -474,9 +474,9 @@ class XYZSettingTableViewController: UITableViewController,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+        guard let expenseView = expenseNavController.viewControllers.first as? XYZExpenseTableViewController else {
             
-            fatalError("Exception: ExpenseTableViewController is expected")
+            fatalError("Exception: XYZExpenseTableViewController is expected")
         }
         
         expenseView.reloadData()
@@ -540,7 +540,7 @@ class XYZSettingTableViewController: UITableViewController,
         
         guard let budgetView = budgetNavController.viewControllers.first as? BudgetTableViewController else {
             
-            fatalError("Exception: ExpenseTableViewController is expected")
+            fatalError("Exception: BudgetTableViewController is expected")
         }
         
         budgetView.reloadData()

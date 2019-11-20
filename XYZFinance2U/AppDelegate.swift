@@ -92,9 +92,9 @@ class AppDelegate: UIResponder,
                                 fatalError("Exception: UINavigationController is expected")
                             }
                             
-                            guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+                            guard let expenseView = expenseNavController.viewControllers.first as? XYZExpenseTableViewController else {
                                 
-                                fatalError("Exception: ExpenseTableViewController is expected")
+                                fatalError("Exception: XYZExpenseTableViewController is expected")
                             }
                             
                             let zone = CKRecordZone(zoneName: XYZExpense.type)
@@ -223,9 +223,9 @@ class AppDelegate: UIResponder,
                                             fatalError("Exception: UINavigationController is expected")
                                         }
                                         
-                                        guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+                                        guard let expenseView = expenseNavController.viewControllers.first as? XYZExpenseTableViewController else {
                                             
-                                            fatalError("Exception: ExpenseTableViewController is expected")
+                                            fatalError("Exception: XYZExpenseTableViewController is expected")
                                         }
                                     
                                         let zone = CKRecordZone(zoneName: XYZExpense.type)
@@ -418,9 +418,9 @@ class AppDelegate: UIResponder,
                 split.popOverNavigatorController = navController
             }
             
-            guard let tableViewController = navigationController.viewControllers[0] as? ExpenseTableViewController else {
+            guard let tableViewController = navigationController.viewControllers[0] as? XYZExpenseTableViewController else {
                 
-                fatalError("Exception: ExpenseTableViewController is expected")
+                fatalError("Exception: XYZExpenseTableViewController is expected")
             }
             
             tableViewController.add(tableViewController.navigationItem.rightBarButtonItem!)
@@ -653,9 +653,9 @@ class AppDelegate: UIResponder,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+        guard let expenseView = expenseNavController.viewControllers.first as? XYZExpenseTableViewController else {
             
-            fatalError("Exception: ExpenseTableViewController is expected")
+            fatalError("Exception: XYZExpenseTableViewController is expected")
         }
         
         guard let budgetNavController = tabbarView.viewControllers?[2] as? UINavigationController else {

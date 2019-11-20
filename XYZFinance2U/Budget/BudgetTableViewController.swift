@@ -45,9 +45,9 @@ class BudgetTableViewController: UITableViewController,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+        guard let expenseView = expenseNavController.viewControllers.first as? XYZExpenseTableViewController else {
             
-            fatalError("Exception: ExpenseTableViewController is expected")
+            fatalError("Exception: XYZExpenseTableViewController is expected")
         }
         
         undoManager?.registerUndo(withTarget: self, handler: { (controller) in
@@ -147,9 +147,9 @@ class BudgetTableViewController: UITableViewController,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+        guard let expenseView = expenseNavController.viewControllers.first as? XYZExpenseTableViewController else {
             
-            fatalError("Exception: ExpenseTableViewController is expected")
+            fatalError("Exception: XYZExpenseTableViewController is expected")
         }
         
         expenseView.reloadData()
@@ -179,9 +179,9 @@ class BudgetTableViewController: UITableViewController,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+        guard let expenseView = expenseNavController.viewControllers.first as? XYZExpenseTableViewController else {
             
-            fatalError("Exception: ExpenseTableViewController is expected")
+            fatalError("Exception: XYZExpenseTableViewController is expected")
         }
         
         expenseView.reloadData()

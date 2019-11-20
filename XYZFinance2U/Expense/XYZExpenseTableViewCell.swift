@@ -1,5 +1,5 @@
 //
-//  ExpenseTableViewCell.swift
+//  XYZExpenseTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/8/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExpenseTableViewCell: UITableViewCell {
+class XYZExpenseTableViewCell: UITableViewCell {
     
     // MARK: - IBOutlet
     @IBOutlet weak var date: UILabel!

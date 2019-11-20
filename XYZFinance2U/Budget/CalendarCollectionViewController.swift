@@ -40,9 +40,9 @@ class CalendarCollectionViewController: UICollectionViewController,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+        guard let expenseView = expenseNavController.viewControllers.first as? XYZExpenseTableViewController else {
             
-            fatalError("Exception: ExpenseTableViewController is expected")
+            fatalError("Exception: XYZExpenseTableViewController is expected")
         }
     
         guard let budgetNavController = tabbarView.viewControllers?[2] as? UINavigationController else {
@@ -52,7 +52,7 @@ class CalendarCollectionViewController: UICollectionViewController,
         
         guard let budgetView = budgetNavController.viewControllers.first as? BudgetTableViewController else {
             
-            fatalError("Exception: ExpenseTableViewController is expected")
+            fatalError("Exception: BudgetTableViewController is expected")
         }
 
         expenseView.updateToiCloud(expense)
@@ -299,9 +299,9 @@ class CalendarCollectionViewController: UICollectionViewController,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        guard let expenseView = expenseNavController.viewControllers.first as? ExpenseTableViewController else {
+        guard let expenseView = expenseNavController.viewControllers.first as? XYZExpenseTableViewController else {
             
-            fatalError("Exception: ExpenseTableViewController is expected")
+            fatalError("Exception: XYZExpenseTableViewController is expected")
         }
         
         expenseView.reloadData()
@@ -313,7 +313,7 @@ class CalendarCollectionViewController: UICollectionViewController,
         
         guard let budgetView = budgetNavController.viewControllers.first as? BudgetTableViewController else {
             
-            fatalError("Exception: ExpenseTableViewController is expected")
+            fatalError("Exception: BudgetTableViewController is expected")
         }
         
         budgetView.reloadData()

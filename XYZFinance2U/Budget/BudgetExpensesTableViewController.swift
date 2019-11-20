@@ -236,7 +236,7 @@ class BudgetExpensesTableViewController: UITableViewController,
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "expenseTableViewCell", for: indexPath) as? ExpenseTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "expenseTableViewCell", for: indexPath) as? XYZExpenseTableViewCell else {
             
             fatalError("Exception: expenseTableViewCell is expected" )
         }

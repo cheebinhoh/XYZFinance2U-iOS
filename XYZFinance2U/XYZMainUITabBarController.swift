@@ -106,7 +106,7 @@ class XYZMainUITabBarController: UITabBarController,
 
                 masterViewNavController?.setViewControllers([incomeDetailTableViewController], animated: false)
             }
-        } else if let expenseRoot = navController.viewControllers.first as? ExpenseTableViewController  {
+        } else if let expenseRoot = navController.viewControllers.first as? XYZExpenseTableViewController  {
             
             split.delegate = expenseRoot
             
