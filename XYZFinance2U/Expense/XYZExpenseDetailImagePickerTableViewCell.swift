@@ -1,5 +1,5 @@
 //
-//  ExpenseDetailImagePickerTableViewCell.swift
+//  XYZExpenseDetailImagePickerTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/12/17.
@@ -11,11 +11,11 @@ import UIKit
 
 protocol XYZExpenseDetailImagePickerTableViewCellDelegate: class {
     
-    func pickImage(_ sender:ExpenseDetailImagePickerTableViewCell, _ imageView: UIImageView, _ index: Int)
-    func viewImage(_ sender:ExpenseDetailImagePickerTableViewCell, _ imageView: UIImageView, _ index: Int)
+    func pickImage(_ sender:XYZExpenseDetailImagePickerTableViewCell, _ imageView: UIImageView, _ index: Int)
+    func viewImage(_ sender:XYZExpenseDetailImagePickerTableViewCell, _ imageView: UIImageView, _ index: Int)
 }
 
-class ExpenseDetailImagePickerTableViewCell: UITableViewCell,
+class XYZExpenseDetailImagePickerTableViewCell: UITableViewCell,
     UIImagePickerControllerDelegate,
     UINavigationControllerDelegate {
     

@@ -474,13 +474,13 @@ class ExpenseDetailTableViewController: UITableViewController,
     }
     
     // MARK: - image mamipulation
-    func viewImage(_ sender: ExpenseDetailImagePickerTableViewCell, _ imageView: UIImageView, _ index: Int) {
+    func viewImage(_ sender: XYZExpenseDetailImagePickerTableViewCell, _ imageView: UIImageView, _ index: Int) {
         
         newImageIndex = index
         
-        guard let expenseDetailImageNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailImageViewController") as? ExpenseDetailImageViewController else {
+        guard let expenseDetailImageNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "XYZExpenseDetailImageViewController") as? XYZExpenseDetailImageViewController else {
             
-            fatalError("Exception: ExpenseDetailImageViewController is expected")
+            fatalError("Exception: XYZExpenseDetailImageViewController is expected")
         }
         
         expenseDetailImageNavigationController.isEditable = modalEditing
@@ -492,7 +492,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         self.present(nav, animated: true, completion: nil)
     }
     
-    func viewImage(_ sender: ExpenseDetailImageViewController) {
+    func viewImage(_ sender: XYZExpenseDetailImageViewController) {
         
         if let image = sender.image {
             
@@ -533,7 +533,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         dismiss( animated: true, completion: nil )
     }
     
-    func pickImage(_ sender:ExpenseDetailImagePickerTableViewCell, _ imageView: UIImageView, _ index: Int) {
+    func pickImage(_ sender:XYZExpenseDetailImagePickerTableViewCell, _ imageView: UIImageView, _ index: Int) {
         
         newImageIndex = index
         
@@ -594,7 +594,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     }
     
     // MARK: - date mamipulation
-    func dateDidPick(_ sender: ExpenseDetailDatePickerTableViewCell) {
+    func dateDidPick(_ sender: XYZExpenseDetailDatePickerTableViewCell) {
         
         let indexPath = tableView.indexPath(for: sender)
         
@@ -630,7 +630,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         }
     }
     
-    func dateInputTouchUp(_ sender:ExpenseDetailDateTableViewCell) {
+    func dateInputTouchUp(_ sender:XYZExpenseDetailDateTableViewCell) {
         
         let indexPath = tableView.indexPath(for: sender)
         
@@ -815,9 +815,9 @@ class ExpenseDetailTableViewController: UITableViewController,
     var newImageIndex: Int?
     var showDatePicker = false
     var showRecurringStopDatePicker = false
-    weak var datecell : ExpenseDetailDateTableViewCell?
-    weak var recurringStopDateCell: ExpenseDetailDateTableViewCell?
-    weak var imagecell : ExpenseDetailImagePickerTableViewCell?
+    weak var datecell : XYZExpenseDetailDateTableViewCell?
+    weak var recurringStopDateCell: XYZExpenseDetailDateTableViewCell?
+    weak var imagecell : XYZExpenseDetailImagePickerTableViewCell?
     var expense: XYZExpense?
     var isCollapsed: Bool {
         
@@ -1213,7 +1213,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 cell = budgetcell
             
             case "date":
-                guard let datecell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailDateTextCell", for: indexPath) as? ExpenseDetailDateTableViewCell else {
+                guard let datecell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailDateTextCell", for: indexPath) as? XYZExpenseDetailDateTableViewCell else {
                     
                     fatalError("Exception: expenseDetailDateTextCell is failed to be created")
                 }
@@ -1242,7 +1242,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 cell = datecell
             
             case "recurringStopDate":
-                guard let datecell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailDateTextCell", for: indexPath) as? ExpenseDetailDateTableViewCell else {
+                guard let datecell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailDateTextCell", for: indexPath) as? XYZExpenseDetailDateTableViewCell else {
                     
                     fatalError("Exception: expenseDetailDateTextCell is failed to be created")
                 }
@@ -1294,7 +1294,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 cell = recurringcell
             
             case "recurringStopDatePicker":
-                guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailDatePickerCell", for: indexPath) as? ExpenseDetailDatePickerTableViewCell else {
+                guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailDatePickerCell", for: indexPath) as? XYZExpenseDetailDatePickerTableViewCell else {
                     
                     fatalError("Exception: expenseDetailDatePickerCell is failed to be created")
                 }
@@ -1305,7 +1305,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 cell = datepickercell
             
             case "datepicker":
-                guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailDatePickerCell", for: indexPath) as? ExpenseDetailDatePickerTableViewCell else {
+                guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailDatePickerCell", for: indexPath) as? XYZExpenseDetailDatePickerTableViewCell else {
                     
                     fatalError("Exception: expenseDetailDatePickerCell is failed to be created")
                 }
@@ -1367,7 +1367,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 cell = textcell
             
             case "image":
-                guard let imagepickercell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailImagePickerCell", for: indexPath) as? ExpenseDetailImagePickerTableViewCell else {
+                guard let imagepickercell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailImagePickerCell", for: indexPath) as? XYZExpenseDetailImagePickerTableViewCell else {
                     
                     fatalError("Exception: expenseDetailImagePickerCell is failed to be created")
                 }
@@ -1647,9 +1647,9 @@ class ExpenseDetailTableViewController: UITableViewController,
         switch segue.identifier {
             
             case "ShowExpenseDetailImage"?:
-                guard let detailView = segue.destination as? ExpenseDetailImageViewController else {
+                guard let detailView = segue.destination as? XYZExpenseDetailImageViewController else {
                     
-                    fatalError("Exception: destination is not ExpenseDetailImageViewController")
+                    fatalError("Exception: destination is not XYZExpenseDetailImageViewController")
                 }
         
                 if !isCollapsed {

@@ -1,5 +1,5 @@
 //
-//  ExpenseDetailDateTableViewCell.swift
+//  XYZExpenseDetailDateTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/10/17.
@@ -11,10 +11,10 @@ import UIKit
 
 protocol XYZExpenseDetailDateTableViewCellDelegate: class {
     
-    func dateInputTouchUp(_ sender:ExpenseDetailDateTableViewCell)
+    func dateInputTouchUp(_ sender:XYZExpenseDetailDateTableViewCell)
 }
 
-class ExpenseDetailDateTableViewCell: UITableViewCell {
+class XYZExpenseDetailDateTableViewCell: UITableViewCell {
     
     // MARK: - property
     weak var delegate: XYZExpenseDetailDateTableViewCellDelegate?

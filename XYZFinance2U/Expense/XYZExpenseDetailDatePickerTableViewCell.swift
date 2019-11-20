@@ -1,5 +1,5 @@
 //
-//  ExpenseDetailDatePickerTableViewCell.swift
+//  XYZExpenseDetailDatePickerTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/11/17.
@@ -11,10 +11,10 @@ import UIKit
 
 protocol XYZExpenseDetailDatePickerTableViewCellDelegate: class {
     
-    func dateDidPick(_ sender:ExpenseDetailDatePickerTableViewCell)
+    func dateDidPick(_ sender:XYZExpenseDetailDatePickerTableViewCell)
 }
 
-class ExpenseDetailDatePickerTableViewCell: UITableViewCell {
+class XYZExpenseDetailDatePickerTableViewCell: UITableViewCell {
     
     // MARK: - IBOutlet
     

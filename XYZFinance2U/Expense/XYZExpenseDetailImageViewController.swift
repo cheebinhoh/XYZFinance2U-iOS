@@ -1,5 +1,5 @@
 //
-//  ExpenseDetailImageViewController.swift
+//  XYZExpenseDetailImageViewController.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/13/17.
@@ -11,10 +11,10 @@ import UIKit
 
 protocol XYZExpenseDetailImageViewTableViewCellDelegate: class {
     
-    func viewImage(_ sender:ExpenseDetailImageViewController )
+    func viewImage(_ sender:XYZExpenseDetailImageViewController )
 }
 
-class ExpenseDetailImageViewController: UIViewController,
+class XYZExpenseDetailImageViewController: UIViewController,
     UIImagePickerControllerDelegate,
     UINavigationControllerDelegate,
     UIScrollViewDelegate {
