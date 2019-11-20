@@ -12,7 +12,7 @@ import CoreData
 import CloudKit
 
 // MARK: - protocol
-protocol ExpenseTableViewDelegate: class {
+protocol XYZExpenseTableViewDelegate: class {
     
     func expenseSelected(expense: XYZExpense?)
     func expenseDeleted(expense: XYZExpense)
@@ -60,7 +60,7 @@ class ExpenseTableViewController: UITableViewController,
     var sectionList = [TableSectionCell]()
     var sectionMonthYearList = [Date]()
     var filteredExpenseList: [XYZExpense]?
-    var delegate: ExpenseTableViewDelegate?
+    var delegate: XYZExpenseTableViewDelegate?
     var isPopover = false
     var isCollapsed: Bool {
         

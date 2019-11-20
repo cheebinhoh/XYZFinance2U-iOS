@@ -27,7 +27,7 @@ class ExpenseDetailTableViewController: UITableViewController,
     ExpenseDetailDatePickerTableViewCellDelegate,
     ExpenseDetailImagePickerTableViewCellDelegate,
     ExpenseDetailImageViewTableViewCellDelegate,
-    ExpenseTableViewDelegate,
+    XYZExpenseTableViewDelegate,
     ExpenseDetailCommandDelegate,
     XYZSelectionDelegate,
     CNContactPickerDelegate {
