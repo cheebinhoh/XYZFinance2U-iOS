@@ -81,7 +81,7 @@ class ExpenseDetailTableViewController: UITableViewController,
         tableView.reloadData()
     }
     
-    func executeCommand(_ sender: ExpenseDetailCommandTableViewCell) {
+    func executeCommand(_ sender: XYZExpenseDetailCommandTableViewCell) {
         
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let deleteOption = UIAlertAction(title: sender.command.text, style: .default, handler: { (action) in
@@ -1391,7 +1391,7 @@ class ExpenseDetailTableViewController: UITableViewController,
                 cell = imagepickercell
             
             case "delete":
-                guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailCommandTextCell", for: indexPath) as? ExpenseDetailCommandTableViewCell else {
+                guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "expenseDetailCommandTextCell", for: indexPath) as? XYZExpenseDetailCommandTableViewCell else {
                     
                     fatalError("Exception: expenseDetailCommandTextCell is failed to be created")
                 }

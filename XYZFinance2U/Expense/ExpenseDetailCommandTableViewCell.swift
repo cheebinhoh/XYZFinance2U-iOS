@@ -1,5 +1,5 @@
 //
-//  ExpenseDetailCommandTableViewCell.swift
+//  XYZExpenseDetailCommandTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/22/17.
@@ -11,10 +11,10 @@ import UIKit
 
 protocol XYZExpenseDetailCommandDelegate: class {
     
-    func executeCommand(_ sender: ExpenseDetailCommandTableViewCell)
+    func executeCommand(_ sender: XYZExpenseDetailCommandTableViewCell)
 }
 
-class ExpenseDetailCommandTableViewCell: UITableViewCell {
+class XYZExpenseDetailCommandTableViewCell: UITableViewCell {
 
     // MARK: - property
     

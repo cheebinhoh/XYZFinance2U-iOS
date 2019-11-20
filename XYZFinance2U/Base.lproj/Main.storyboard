@@ -1140,7 +1140,7 @@
                                     <outlet property="newImage2" destination="5Ph-X0-QHq" id="Eo9-MD-9Q7"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseDetailCommandTextCell" id="Tjk-9B-3vc" userLabel="expenseDetailCommandTextCell" customClass="ExpenseDetailCommandTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseDetailCommandTextCell" id="Tjk-9B-3vc" userLabel="expenseDetailCommandTextCell" customClass="XYZExpenseDetailCommandTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="630.5" width="375" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Tjk-9B-3vc" id="Ril-0t-baW">
