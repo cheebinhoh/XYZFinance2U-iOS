@@ -1,5 +1,5 @@
 //
-//  ExpenseTableViewMonthCell.swift
+//  XYZExpenseTableViewMonthCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 3/10/18.
@@ -8,18 +8,18 @@
 
 import UIKit
 
-protocol ExpenseTableViewMonthChange: class {
+protocol XYZExpenseTableViewMonthChange: class {
     
     func change(_ monthYear: Date!)
 }
 
-class ExpenseTableViewMonthCell: UITableViewCell {
+class XYZExpenseTableViewMonthCell: UITableViewCell {
 
     var index: Int?
     var highlightIndex: Int?
     var buttonText = [String]()
     var date: Date?
-    var delegate: ExpenseTableViewMonthChange?
+    var delegate: XYZExpenseTableViewMonthChange?
     
     @IBOutlet weak var stackView: UIStackView!
     

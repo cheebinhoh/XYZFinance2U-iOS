@@ -1013,7 +1013,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N0q-eN-DLE">
-                                            <rect key="frame" x="45" y="10" width="320" height="35"/>
+                                            <rect key="frame" x="45" y="5" width="320" height="35"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="lXA-Ed-2cL">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
@@ -1031,7 +1031,7 @@
                                         </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="N0q-eN-DLE" firstAttribute="top" secondItem="QsZ-tI-XN9" secondAttribute="top" constant="10" id="Q18-v2-daA"/>
+                                        <constraint firstItem="N0q-eN-DLE" firstAttribute="centerY" secondItem="QsZ-tI-XN9" secondAttribute="centerY" id="Q18-v2-daA"/>
                                         <constraint firstItem="N0q-eN-DLE" firstAttribute="leading" relation="lessThanOrEqual" secondItem="QsZ-tI-XN9" secondAttribute="leading" priority="998" constant="45" id="et4-XJ-FQ2"/>
                                         <constraint firstAttribute="trailing" secondItem="N0q-eN-DLE" secondAttribute="trailing" constant="10" id="jJW-7d-y8b"/>
                                     </constraints>
@@ -1049,7 +1049,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AUe-LX-3CZ">
-                                            <rect key="frame" x="45" y="10" width="330" height="35"/>
+                                            <rect key="frame" x="45" y="5" width="330" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="pIS-nD-e14"/>
                                             </constraints>
@@ -1059,7 +1059,7 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="AUe-LX-3CZ" firstAttribute="top" secondItem="fl0-XW-sjP" secondAttribute="top" constant="10" id="JNp-yf-B0I"/>
+                                        <constraint firstItem="AUe-LX-3CZ" firstAttribute="centerY" secondItem="fl0-XW-sjP" secondAttribute="centerY" id="JNp-yf-B0I"/>
                                         <constraint firstItem="AUe-LX-3CZ" firstAttribute="leading" secondItem="fl0-XW-sjP" secondAttribute="leading" constant="45" id="Mxn-z4-jq2"/>
                                         <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="AUe-LX-3CZ" secondAttribute="trailing" id="aoY-uw-Bc2"/>
                                     </constraints>
