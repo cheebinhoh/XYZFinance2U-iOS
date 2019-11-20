@@ -1,5 +1,5 @@
 //
-//  ExpenseTableViewSearchCell.swift
+//  XYZExpenseTableViewSearchCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 2/11/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExpenseTableViewSearchCell: UITableViewCell {
+class XYZExpenseTableViewSearchCell: UITableViewCell {
 
     @IBOutlet weak var searchBar: UISearchBar!
     

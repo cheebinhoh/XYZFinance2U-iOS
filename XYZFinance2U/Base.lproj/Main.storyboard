@@ -408,7 +408,7 @@
                                     <outlet property="icon" destination="HG2-gx-Rty" id="cuW-xf-3xi"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseTableViewSearchCell" rowHeight="60" id="Kjj-1U-uiF" userLabel="ExpenseTableViewSearchCell" customClass="ExpenseTableViewSearchCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseTableViewSearchCell" rowHeight="60" id="Kjj-1U-uiF" userLabel="XYZExpenseTableViewSearchCell" customClass="XYZExpenseTableViewSearchCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="195.5" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Kjj-1U-uiF" id="peC-v4-isS">
