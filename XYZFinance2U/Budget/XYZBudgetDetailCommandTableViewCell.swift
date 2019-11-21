@@ -1,5 +1,5 @@
 //
-//  BudgetDetailCommandTableViewCell.swift
+//  XYZBudgetDetailCommandTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 2/17/18.
@@ -8,16 +8,16 @@
 
 import UIKit
 
-protocol BudgetDetailCommandDelegate: class {
+protocol XYZBudgetDetailCommandDelegate: class {
     
-    func executeCommand(sender: BudgetDetailCommandTableViewCell)
+    func executeCommand(sender: XYZBudgetDetailCommandTableViewCell)
 }
 
-class BudgetDetailCommandTableViewCell: UITableViewCell {
+class XYZBudgetDetailCommandTableViewCell: UITableViewCell {
 
     // MARK: - property
     
-    weak var delegate: BudgetDetailCommandDelegate?
+    weak var delegate: XYZBudgetDetailCommandDelegate?
     
     // MARK: - IBOutlet
     

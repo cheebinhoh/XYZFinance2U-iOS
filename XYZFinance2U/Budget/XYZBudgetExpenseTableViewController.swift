@@ -57,9 +57,9 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
     
     func saveNewExpenseWithoutUndo(expense: XYZExpense) {
         
-        guard let calendarViewController = delegate as? CalendarCollectionViewController else {
+        guard let calendarViewController = delegate as? XYZCalendarCollectionViewController else {
             
-            fatalError("Exception: CalendarCollectionViewController is expected")
+            fatalError("Exception: XYZCalendarCollectionViewController is expected")
         }
         
         calendarViewController.saveNewExpense(expense: expense)

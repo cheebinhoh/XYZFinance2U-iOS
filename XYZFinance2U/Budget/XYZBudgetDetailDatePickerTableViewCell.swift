@@ -1,5 +1,5 @@
 //
-//  BudgetDetailDatePickerTableViewCell.swift
+//  XYZBudgetDetailDatePickerTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 2/16/18.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol BudgetDetailDatePickerTableViewCellDelegate : class {
+protocol XYZBudgetDetailDatePickerTableViewCellDelegate : class {
     
-    func dateDidPick(sender:BudgetDetailDatePickerTableViewCell)
+    func dateDidPick(sender:XYZBudgetDetailDatePickerTableViewCell)
 }
 
-class BudgetDetailDatePickerTableViewCell: UITableViewCell {
+class XYZBudgetDetailDatePickerTableViewCell: UITableViewCell {
 
     // MARK: - IBOutlet
     
@@ -21,7 +21,7 @@ class BudgetDetailDatePickerTableViewCell: UITableViewCell {
     
     // MARK: - property
     
-    weak var delegate: BudgetDetailDatePickerTableViewCellDelegate?
+    weak var delegate: XYZBudgetDetailDatePickerTableViewCellDelegate?
     var date: Date?
     
     // MARK: - function

@@ -1,5 +1,5 @@
 //
-//  CalendarCollectionTableViewCell.swift
+//  XYZCalendarCollectionTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 2/25/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CalendarCollectionTableViewCell: UICollectionViewCell {
+class XYZCalendarCollectionTableViewCell: UICollectionViewCell {
     
     @IBOutlet weak var stack: UIStackView!
 }

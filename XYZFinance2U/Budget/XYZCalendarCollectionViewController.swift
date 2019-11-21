@@ -1,5 +1,5 @@
 //
-//  CalendarCollectionViewController.swift
+//  XYZCalendarCollectionViewController.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 2/24/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CalendarCollectionViewController: UICollectionViewController,
+class XYZCalendarCollectionViewController: UICollectionViewController,
     UICollectionViewDelegateFlowLayout,
     XYZExpenseDetailDelegate,
     BudgetExpenseDelegate {
@@ -375,9 +375,9 @@ class CalendarCollectionViewController: UICollectionViewController,
         
         if let _ = startDateOfMonth {
             
-            guard let cell = collectionView?.cellForItem(at: indexPath) as? CalendarCollectionViewCell else {
+            guard let cell = collectionView?.cellForItem(at: indexPath) as? XYZCalendarCollectionViewCell else {
                 
-                fatalError("Exception: CalendarCollectionViewCell is expected")
+                fatalError("Exception: XYZCalendarCollectionViewCell is expected")
             }
             
             if monthLevel {
@@ -804,9 +804,9 @@ class CalendarCollectionViewController: UICollectionViewController,
         
         if sectionList[indexPath.section].identifier == "table" {
             
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCollectionTableViewCell", for: indexPath) as? CalendarCollectionTableViewCell else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCollectionTableViewCell", for: indexPath) as? XYZCalendarCollectionTableViewCell else {
                 
-                fatalError("Exception: calendarCollectionViewCell is expected")
+                fatalError("Exception: XYZCalendarCollectionTableViewCell is expected")
             }
             
             if !cell.stack.subviews.isEmpty {
@@ -853,9 +853,9 @@ class CalendarCollectionViewController: UICollectionViewController,
             returnCell = cell
         } else if monthLevel {
             
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCollectionViewCell", for: indexPath) as? CalendarCollectionViewCell else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCollectionViewCell", for: indexPath) as? XYZCalendarCollectionViewCell else {
                 
-                fatalError("Exception: calendarCollectionViewCell is expected")
+                fatalError("Exception: XYZCalendarCollectionViewCell is expected")
             }
         
             let dayString = sectionList[indexPath.section].cellList[indexPath.row]
@@ -953,9 +953,9 @@ class CalendarCollectionViewController: UICollectionViewController,
             returnCell = cell
         } else {
             
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCollectionViewCell", for: indexPath) as? CalendarCollectionViewCell else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCollectionViewCell", for: indexPath) as? XYZCalendarCollectionViewCell else {
                 
-                fatalError("Exception: calendarCollectionViewCell is expected")
+                fatalError("Exception: XYZCalendarCollectionViewCell is expected")
             }
             
             let dayString = sectionList[indexPath.section].cellList[indexPath.row]

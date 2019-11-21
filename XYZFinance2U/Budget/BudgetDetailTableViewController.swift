@@ -18,13 +18,13 @@ protocol BudgetDetailDelegate: class {
 class BudgetDetailTableViewController: UITableViewController,
     BudgetSelectionDelegate,
     XYZTextTableViewCellDelegate,
-    BudgetDetailDateTableViewCellDelegate,
-    BudgetDetailDatePickerTableViewCellDelegate,
-    BudgetDetailCommandDelegate,
+    XYZBudgetDetailDateTableViewCellDelegate,
+    XYZBudgetDetailDatePickerTableViewCellDelegate,
+    XYZBudgetDetailCommandDelegate,
     XYZSelectionDelegate {
     
     // MARK: - call back
-    func executeCommand(sender: BudgetDetailCommandTableViewCell) {
+    func executeCommand(sender: XYZBudgetDetailCommandTableViewCell) {
 
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let deleteOption = UIAlertAction(title: sender.command.text, style: .default, handler: { (action) in
@@ -61,7 +61,7 @@ class BudgetDetailTableViewController: UITableViewController,
         present(optionMenu, animated: true, completion: nil)
     }
     
-    func dateDidPick(sender: BudgetDetailDatePickerTableViewCell) {
+    func dateDidPick(sender: XYZBudgetDetailDatePickerTableViewCell) {
     
         if let _ = budget {
             
@@ -107,7 +107,7 @@ class BudgetDetailTableViewController: UITableViewController,
         }
     }
     
-    func dateInputTouchUp(sender: BudgetDetailDateTableViewCell) {
+    func dateInputTouchUp(sender: XYZBudgetDetailDateTableViewCell) {
 
         let indexPath = tableView.indexPath(for: sender)
         let showDatePicker = sectionList[(indexPath?.section)!].cellList.count - 1 > (indexPath?.row)!
@@ -215,7 +215,7 @@ class BudgetDetailTableViewController: UITableViewController,
     var currencyCode = Locale.current.currencyCode
     var length: XYZBudget.Length = XYZBudget.Length.none
     var date = Date() 
-    var datecell: BudgetDetailDateTableViewCell?
+    var datecell: XYZBudgetDetailDateTableViewCell?
     var currencyCodes = [String]()
     var color = XYZColor.none
     var historicalAmount = [Double]()
@@ -753,9 +753,9 @@ class BudgetDetailTableViewController: UITableViewController,
                 cell = colorcell
             
             case "date":
-                guard let datecell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailDateTextCell", for: indexPath) as? BudgetDetailDateTableViewCell else {
+                guard let datecell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailDateTextCell", for: indexPath) as? XYZBudgetDetailDateTableViewCell else {
                     
-                    fatalError("Exception: budgetDetailDateTextCell is failed to be created")
+                    fatalError("Exception: XYZBudgetDetailDateTableViewCell is failed to be created")
                 }
                 
                 datecell.dateInput.text = formattingDate(date, style: .medium)
@@ -778,9 +778,9 @@ class BudgetDetailTableViewController: UITableViewController,
                 cell = datecell
             
             case "datepicker":
-                guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailDatePickerCell", for: indexPath) as? BudgetDetailDatePickerTableViewCell else {
+                guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailDatePickerCell", for: indexPath) as? XYZBudgetDetailDatePickerTableViewCell else {
                     
-                    fatalError("Exception: incomeDetailDatePickerCell is failed to be created")
+                    fatalError("Exception: XYZBudgetDetailDatePickerTableViewCell is failed to be created")
                 }
                 
                 datepickercell.setDate(date)
@@ -789,9 +789,9 @@ class BudgetDetailTableViewController: UITableViewController,
                 cell = datepickercell
             
             case "delete":
-                guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailCommandTextCell", for: indexPath) as? BudgetDetailCommandTableViewCell else {
+                guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "budgetDetailCommandTextCell", for: indexPath) as? XYZBudgetDetailCommandTableViewCell else {
                     
-                    fatalError("Exception: budjectDetailCommandTextCell is failed to be created")
+                    fatalError("Exception: XYZBudgetDetailCommandTableViewCell is failed to be created")
                 }
                 
                 deletecell.delegate = self

@@ -718,9 +718,9 @@ class BudgetTableViewController: UITableViewController,
                     fatalError("Exception: ExpenseDetailNavigationController is expected")
                 }
                 
-                guard let calendarCollectionViewController = calendarViewNavigationController.viewControllers.first as? CalendarCollectionViewController else {
+                guard let calendarCollectionViewController = calendarViewNavigationController.viewControllers.first as? XYZCalendarCollectionViewController else {
                     
-                    fatalError("Exception: CalendarCollectionViewController is expected" )
+                    fatalError("Exception: XYZCalendarCollectionViewController is expected" )
                 }
                 
                 let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]

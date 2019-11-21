@@ -1,5 +1,5 @@
 //
-//  BudgetDetailDateTableViewCell.swift
+//  XYZBudgetDetailDateTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 2/16/18.
@@ -8,16 +8,16 @@
 
 import UIKit
 
-protocol BudgetDetailDateTableViewCellDelegate : class {
+protocol XYZBudgetDetailDateTableViewCellDelegate : class {
     
-    func dateInputTouchUp(sender:BudgetDetailDateTableViewCell)
+    func dateInputTouchUp(sender:XYZBudgetDetailDateTableViewCell)
 }
 
-class BudgetDetailDateTableViewCell: UITableViewCell {
+class XYZBudgetDetailDateTableViewCell: UITableViewCell {
 
     // MARK: - property
     
-    weak var delegate: BudgetDetailDateTableViewCellDelegate?
+    weak var delegate: XYZBudgetDetailDateTableViewCellDelegate?
     var enableEditing = true
     
     // MARK: - IBOutlet

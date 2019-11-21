@@ -1,5 +1,5 @@
 //
-//  CalendarCollectionViewCell.swift
+//  XYZCalendarCollectionViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 2/24/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CalendarCollectionViewCell: UICollectionViewCell {
+class XYZCalendarCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var labelView: UIView!
     @IBOutlet weak var indicator: UIView!
