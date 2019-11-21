@@ -28,7 +28,7 @@
 		655C97C11FCCD09C0098D58D /* XYZIncomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C97C01FCCD09C0098D58D /* XYZIncomeTableViewCell.swift */; };
 		655C97C31FCCD5140098D58D /* XYZAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C97C21FCCD5130098D58D /* XYZAccount.swift */; };
 		6564897C2381F2DC00D8BE38 /* XYZUIUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6564897B2381F2DC00D8BE38 /* XYZUIUtility.swift */; };
-		6567E13020327DF300058238 /* BudgetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E12F20327DF300058238 /* BudgetTableViewController.swift */; };
+		6567E13020327DF300058238 /* XYZBudgetTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E12F20327DF300058238 /* XYZBudgetTableViewController.swift */; };
 		6567E1322032866C00058238 /* XYZBudget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6567E1312032866C00058238 /* XYZBudget.swift */; };
 		656BF680208838EB00EE6280 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 656BF682208838EB00EE6280 /* Localizable.strings */; };
 		657455BA200587D100AAB2E3 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 657455B9200587D100AAB2E3 /* CloudKit.framework */; };
@@ -52,8 +52,8 @@
 		658FD1D82037DB3F00ABDD55 /* XYZBudgetDetailDatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658FD1D72037DB3F00ABDD55 /* XYZBudgetDetailDatePickerTableViewCell.swift */; };
 		6590AFAA1FFADAA80004F641 /* XYZIncomeDetailSwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6590AFA91FFADAA80004F641 /* XYZIncomeDetailSwitchTableViewCell.swift */; };
 		65D1AF2221DAD93700484096 /* XYZSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D1AF2121DAD93700484096 /* XYZSelectionTableViewCell.swift */; };
-		65D870C42033B17700DE991E /* BudgetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C32033B17700DE991E /* BudgetTableViewCell.swift */; };
-		65D870C6203673BB00DE991E /* BudgetDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C5203673BB00DE991E /* BudgetDetailTableViewController.swift */; };
+		65D870C42033B17700DE991E /* XYZBudgetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C32033B17700DE991E /* XYZBudgetTableViewCell.swift */; };
+		65D870C6203673BB00DE991E /* XYZBudgetDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C5203673BB00DE991E /* XYZBudgetDetailTableViewController.swift */; };
 		65D870CE2037D76100DE991E /* XYZBudgetDetailDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870CD2037D76100DE991E /* XYZBudgetDetailDateTableViewCell.swift */; };
 		65D8BA7F2013ADD200944C2D /* XYZExchangeRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D8BA7E2013ADD200944C2D /* XYZExchangeRate.swift */; };
 		65ECB04D20418D57009F01A9 /* XYZCalendarCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ECB04C20418D57009F01A9 /* XYZCalendarCollectionViewController.swift */; };
@@ -115,7 +115,7 @@
 		655C97C01FCCD09C0098D58D /* XYZIncomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZIncomeTableViewCell.swift; sourceTree = "<group>"; };
 		655C97C21FCCD5130098D58D /* XYZAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZAccount.swift; sourceTree = "<group>"; };
 		6564897B2381F2DC00D8BE38 /* XYZUIUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZUIUtility.swift; sourceTree = "<group>"; };
-		6567E12F20327DF300058238 /* BudgetTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetTableViewController.swift; sourceTree = "<group>"; };
+		6567E12F20327DF300058238 /* XYZBudgetTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZBudgetTableViewController.swift; sourceTree = "<group>"; };
 		6567E1312032866C00058238 /* XYZBudget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZBudget.swift; sourceTree = "<group>"; };
 		656BF67E208838BE00EE6280 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		656BF681208838EB00EE6280 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -150,8 +150,8 @@
 		65B16853233D725100AFB497 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		65B16855233D725A00AFB497 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		65D1AF2121DAD93700484096 /* XYZSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZSelectionTableViewCell.swift; sourceTree = "<group>"; };
-		65D870C32033B17700DE991E /* BudgetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetTableViewCell.swift; sourceTree = "<group>"; };
-		65D870C5203673BB00DE991E /* BudgetDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailTableViewController.swift; sourceTree = "<group>"; };
+		65D870C32033B17700DE991E /* XYZBudgetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZBudgetTableViewCell.swift; sourceTree = "<group>"; };
+		65D870C5203673BB00DE991E /* XYZBudgetDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZBudgetDetailTableViewController.swift; sourceTree = "<group>"; };
 		65D870CD2037D76100DE991E /* XYZBudgetDetailDateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZBudgetDetailDateTableViewCell.swift; sourceTree = "<group>"; };
 		65D8BA7E2013ADD200944C2D /* XYZExchangeRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZExchangeRate.swift; sourceTree = "<group>"; };
 		65ECB04C20418D57009F01A9 /* XYZCalendarCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZCalendarCollectionViewController.swift; sourceTree = "<group>"; };
@@ -312,9 +312,9 @@
 		6567E12E20327DAC00058238 /* Budget */ = {
 			isa = PBXGroup;
 			children = (
-				6567E12F20327DF300058238 /* BudgetTableViewController.swift */,
-				65D870C32033B17700DE991E /* BudgetTableViewCell.swift */,
-				65D870C5203673BB00DE991E /* BudgetDetailTableViewController.swift */,
+				6567E12F20327DF300058238 /* XYZBudgetTableViewController.swift */,
+				65D870C32033B17700DE991E /* XYZBudgetTableViewCell.swift */,
+				65D870C5203673BB00DE991E /* XYZBudgetDetailTableViewController.swift */,
 				65D870CD2037D76100DE991E /* XYZBudgetDetailDateTableViewCell.swift */,
 				658FD1D72037DB3F00ABDD55 /* XYZBudgetDetailDatePickerTableViewCell.swift */,
 				657C390F2038F7D400276A6E /* XYZBudgetDetailCommandTableViewCell.swift */,
@@ -496,7 +496,7 @@
 				65343E8D1FFD93B1002C5D39 /* XYZSelectionTableViewController.swift in Sources */,
 				653462191FD0FFB700F88218 /* XYZUtility.swift in Sources */,
 				650023FF1FF49D43001281EA /* XYZLockScreenViewController.swift in Sources */,
-				6567E13020327DF300058238 /* BudgetTableViewController.swift in Sources */,
+				6567E13020327DF300058238 /* XYZBudgetTableViewController.swift in Sources */,
 				6576938D1FDA3ACB00BFFB6B /* XYZExpenseTableViewController.swift in Sources */,
 				658F735E1FE08F5E00AF7F8D /* XYZExpenseDetailImagePickerTableViewCell.swift in Sources */,
 				65343E901FFD9FC1002C5D39 /* XYZSelectionItemTableViewCell.swift in Sources */,
@@ -534,9 +534,9 @@
 				650024051FF6B423001281EA /* XYZSettingDetailTableViewController.swift in Sources */,
 				657F1EB6201D5C1000FEB385 /* XYZExpenseDetailViewController.swift in Sources */,
 				657C29D020430EF800CF3165 /* XYZCalendarCollectionTableViewCell.swift in Sources */,
-				65D870C42033B17700DE991E /* BudgetTableViewCell.swift in Sources */,
+				65D870C42033B17700DE991E /* XYZBudgetTableViewCell.swift in Sources */,
 				65D870CE2037D76100DE991E /* XYZBudgetDetailDateTableViewCell.swift in Sources */,
-				65D870C6203673BB00DE991E /* BudgetDetailTableViewController.swift in Sources */,
+				65D870C6203673BB00DE991E /* XYZBudgetDetailTableViewController.swift in Sources */,
 				658F73541FDD961600AF7F8D /* XYZExpenseDetailTableViewController.swift in Sources */,
 				657DCA1A21D2F8EF00C30F3B /* XYZTextTableViewCell.swift in Sources */,
 			);

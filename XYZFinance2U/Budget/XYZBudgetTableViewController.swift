@@ -1,5 +1,5 @@
 //
-//  BudgetTableViewController.swift
+//  XYZBudgetTableViewController.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 2/12/18.
@@ -9,17 +9,17 @@
 import UIKit
 import CloudKit
 
-protocol BudgetSelectionDelegate: class {
+protocol XYZBudgetSelectionDelegate: class {
     
     func budgetSelected(budget: XYZBudget?)
     func budgetDeleted(budget: XYZBudget)
 }
 
-class BudgetTableViewController: UITableViewController,
-    XYZTableViewReloadData,
+class XYZBudgetTableViewController: UITableViewController,
     UISplitViewControllerDelegate,
+    XYZTableViewReloadData,
     XYZExpenseDetailDelegate,
-    BudgetDetailDelegate {
+    XYZBudgetDetailDelegate {
     
     func cancelExpense() {
 
@@ -234,7 +234,7 @@ class BudgetTableViewController: UITableViewController,
     var isPopover = false
     var sectionList = [TableSectionCell]()
     var currencyCodes = [String]()
-    var delegate: BudgetSelectionDelegate?
+    var delegate: XYZBudgetSelectionDelegate?
     
     @IBAction func add(_ sender: UIBarButtonItem) {
     
@@ -243,9 +243,9 @@ class BudgetTableViewController: UITableViewController,
             fatalError("Exception: error on instantiating BudgetDetailNavigationController")
         }
         
-        guard let budgetDetailTableView = budgetDetailNavigationController.viewControllers.first as? BudgetDetailTableViewController else {
+        guard let budgetDetailTableView = budgetDetailNavigationController.viewControllers.first as? XYZBudgetDetailTableViewController else {
             
-            fatalError("Exception: eror on casting first view controller to BudgetDetailTableViewController" )
+            fatalError("Exception: eror on casting first view controller to XYZBudgetDetailTableViewController" )
         }
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -840,9 +840,9 @@ class BudgetTableViewController: UITableViewController,
                 fatalError("Exception: error on instantiating BudgetDetailNavigationController")
             }
             
-            guard let budgetDetailTableViewController = budgetDetailNavigationController.viewControllers.first as? BudgetDetailTableViewController else {
+            guard let budgetDetailTableViewController = budgetDetailNavigationController.viewControllers.first as? XYZBudgetDetailTableViewController else {
                 
-                fatalError("Exception: BudgetDetailTableViewController is expected")
+                fatalError("Exception: XYZBudgetDetailTableViewController is expected")
             }
 
             budgetDetailTableViewController.setPopover(delegate: self)
@@ -865,9 +865,9 @@ class BudgetTableViewController: UITableViewController,
             self.present(budgetDetailNavigationController, animated: true, completion: nil)
         } else {
             
-            guard let detailTableViewController = delegate as? BudgetDetailTableViewController else {
+            guard let detailTableViewController = delegate as? XYZBudgetDetailTableViewController else {
                 
-                fatalError("Exception: BudgetDetailTableViewController is expedted" )
+                fatalError("Exception: XYZBudgetDetailTableViewController is expedted" )
             }
             
             let sectionBudgetList = sectionList[indexPath.section].data as? [XYZBudget]
@@ -924,9 +924,9 @@ class BudgetTableViewController: UITableViewController,
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "budgetTableCell", for: indexPath) as? BudgetTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "budgetTableCell", for: indexPath) as? XYZBudgetTableViewCell else {
             
-            fatalError("Exception: BudgetTableViewCell is expected")
+            fatalError("Exception: XYZBudgetTableViewCell is expected")
         }
         
         let sectionBudgetList = sectionList[indexPath.section].data as? [XYZBudget]
@@ -1160,7 +1160,7 @@ class BudgetTableViewController: UITableViewController,
         
         if let navigationController = secondaryViewController as? UINavigationController {
             
-            if let budgetDetailTableViewController = navigationController.viewControllers.first as? BudgetDetailTableViewController {
+            if let budgetDetailTableViewController = navigationController.viewControllers.first as? XYZBudgetDetailTableViewController {
                 
                 budgetDetailTableViewController.budgetDelegate = self
                 budgetDetailTableViewController.isPushinto = true
@@ -1216,9 +1216,9 @@ class BudgetTableViewController: UITableViewController,
             fatalError("Exception: error on instantiating BudgetDetailNavigationController")
         }
         
-        guard let budgetDetailTableViewController = budgetDetailNavigationController.viewControllers.first as? BudgetDetailTableViewController else {
+        guard let budgetDetailTableViewController = budgetDetailNavigationController.viewControllers.first as? XYZBudgetDetailTableViewController else {
             
-            fatalError("Exception: BudgetDetailTableViewController is expected")
+            fatalError("Exception: XYZBudgetDetailTableViewController is expected")
         }
         
         budgetDetailNavigationController.navigationItem.title = ""

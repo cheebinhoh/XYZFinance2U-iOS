@@ -1,5 +1,5 @@
 //
-//  BudgetDetailTableViewController.swift
+//  XYZBudgetDetailTableViewController.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 2/15/18.
@@ -8,15 +8,15 @@
 
 import UIKit
 
-protocol BudgetDetailDelegate: class {
+protocol XYZBudgetDetailDelegate: class {
     
     func saveNewBudget(budget: XYZBudget)
     func saveBudget(budget: XYZBudget)
     func deleteBudget(budget: XYZBudget)
 }
 
-class BudgetDetailTableViewController: UITableViewController,
-    BudgetSelectionDelegate,
+class XYZBudgetDetailTableViewController: UITableViewController,
+    XYZBudgetSelectionDelegate,
     XYZTextTableViewCellDelegate,
     XYZBudgetDetailDateTableViewCellDelegate,
     XYZBudgetDetailDatePickerTableViewCellDelegate,
@@ -204,7 +204,7 @@ class BudgetDetailTableViewController: UITableViewController,
     }
 
     // MARK: - properties
-    var budgetDelegate: BudgetDetailDelegate?
+    var budgetDelegate: XYZBudgetDetailDelegate?
     var isPopover: Bool = false
     var isPushinto: Bool = false
     var modalEditing = true
@@ -325,7 +325,7 @@ class BudgetDetailTableViewController: UITableViewController,
     
     // MARK: - functions
     
-    private func getMasterTableViewController() -> BudgetTableViewController {
+    private func getMasterTableViewController() -> XYZBudgetTableViewController {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
@@ -343,7 +343,7 @@ class BudgetDetailTableViewController: UITableViewController,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        return (navController.topViewController as? BudgetTableViewController)!
+        return (navController.topViewController as? XYZBudgetTableViewController)!
     }
 
     func registerUndoSave(budget: XYZBudget) {
@@ -572,7 +572,7 @@ class BudgetDetailTableViewController: UITableViewController,
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
-    func setPopover(delegate: BudgetDetailDelegate) {
+    func setPopover(delegate: XYZBudgetDetailDelegate) {
         
         isPopover = true
         budgetDelegate = delegate

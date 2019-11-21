@@ -133,7 +133,7 @@ class XYZMainUITabBarController: UITabBarController,
 
                 masterViewNavController?.setViewControllers([expenseDetailTableViewController], animated: false)
             }
-        } else if let budgetRoot = navController.viewControllers.first as? BudgetTableViewController {
+        } else if let budgetRoot = navController.viewControllers.first as? XYZBudgetTableViewController {
             
             split.delegate = budgetRoot
             
@@ -142,7 +142,7 @@ class XYZMainUITabBarController: UITabBarController,
             if nil == masterViewNavController {
                 
                 // empty
-            } else if let _ = masterViewNavController?.viewControllers.last as? BudgetDetailTableViewController {
+            } else if let _ = masterViewNavController?.viewControllers.last as? XYZBudgetDetailTableViewController {
                 
                 // empty
             } else {
@@ -152,9 +152,9 @@ class XYZMainUITabBarController: UITabBarController,
                     fatalError("Exception: error on instantiating BudgetDetailNavigationController")
                 }
                 
-                guard let budgetDetailTableViewController = budgetDetailNavigationController.viewControllers.first as? BudgetDetailTableViewController else {
+                guard let budgetDetailTableViewController = budgetDetailNavigationController.viewControllers.first as? XYZBudgetDetailTableViewController else {
                     
-                    fatalError("Exception: BudgetDetailTableViewController is expected")
+                    fatalError("Exception: XYZBudgetDetailTableViewController is expected")
                 }
                 
                 budgetDetailTableViewController.navigationItem.title = ""

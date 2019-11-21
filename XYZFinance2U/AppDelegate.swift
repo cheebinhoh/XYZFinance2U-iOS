@@ -663,9 +663,9 @@ class AppDelegate: UIResponder,
             fatalError("Exception: budgetNavController is expected")
         }
         
-        guard let budgetView = budgetNavController.viewControllers.first as? BudgetTableViewController else {
+        guard let budgetView = budgetNavController.viewControllers.first as? XYZBudgetTableViewController else {
             
-            fatalError("Exception: BudgetTableViewController is expected")
+            fatalError("Exception: XYZBudgetTableViewController is expected")
         }
         
         // fetch global data list

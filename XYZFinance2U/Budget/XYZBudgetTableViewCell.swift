@@ -1,5 +1,5 @@
 //
-//  BudgetTableViewCell.swift
+//  XYZBudgetTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 2/13/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BudgetTableViewCell: UITableViewCell {
+class XYZBudgetTableViewCell: UITableViewCell {
 
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var length: UILabel!

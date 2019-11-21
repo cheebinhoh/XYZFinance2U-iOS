@@ -50,9 +50,9 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        guard let budgetView = budgetNavController.viewControllers.first as? BudgetTableViewController else {
+        guard let budgetView = budgetNavController.viewControllers.first as? XYZBudgetTableViewController else {
             
-            fatalError("Exception: BudgetTableViewController is expected")
+            fatalError("Exception: XYZBudgetTableViewController is expected")
         }
 
         expenseView.updateToiCloud(expense)
@@ -311,9 +311,9 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
             fatalError("Exception: UINavigationController is expected")
         }
         
-        guard let budgetView = budgetNavController.viewControllers.first as? BudgetTableViewController else {
+        guard let budgetView = budgetNavController.viewControllers.first as? XYZBudgetTableViewController else {
             
-            fatalError("Exception: BudgetTableViewController is expected")
+            fatalError("Exception: XYZBudgetTableViewController is expected")
         }
         
         budgetView.reloadData()
