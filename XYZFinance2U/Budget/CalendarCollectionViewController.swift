@@ -167,7 +167,7 @@ class CalendarCollectionViewController: UICollectionViewController,
     var date: Date?
     var selectedDate: Date?
     var startDateOfMonth: Date?
-    var budgetExpensesTableViewController: BudgetExpensesTableViewController?
+    var budgetExpensesTableViewController: XYZBudgetExpenseTableViewController?
     
     @IBOutlet weak var previousPeriod: UIBarButtonItem!
     @IBOutlet weak var nextPeriod: UIBarButtonItem!
@@ -819,9 +819,9 @@ class CalendarCollectionViewController: UICollectionViewController,
                 self.budgetExpensesTableViewController = nil
             }
 
-            guard let budgetExpensesTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "budgetExpensesTableViewController") as? BudgetExpensesTableViewController else {
+            guard let budgetExpensesTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "XYZBudgetExpenseTableViewController") as? XYZBudgetExpenseTableViewController else {
             
-                fatalError("Exception: budgetExpensesTableViewController is expected")
+                fatalError("Exception: XYZBudgetExpenseTableViewController is expected")
             }
         
             budgetExpensesTableViewController.hasDisclosureIndicator = true

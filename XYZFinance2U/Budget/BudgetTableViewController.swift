@@ -754,9 +754,9 @@ class BudgetTableViewController: UITableViewController,
                     fatalError("Exception: BudgetListNavigationController is expected")
                 }
             
-                guard let budgetListViewController = budgetListViewNavigationController.viewControllers.first as? BudgetListTableViewController else {
+                guard let budgetListViewController = budgetListViewNavigationController.viewControllers.first as? XYZBudgetListTableViewController else {
                     
-                    fatalError("Exception: BudgetListTableViewController is expected" )
+                    fatalError("Exception: XYZBudgetListTableViewController is expected" )
                 }
                 
                 let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]

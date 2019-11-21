@@ -1,5 +1,5 @@
 //
-//  BudgetListTableViewController.swift
+//  XYZBudgetListTableViewController.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 3/27/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BudgetListTableViewController: UITableViewController {
+class XYZBudgetListTableViewController: UITableViewController {
     
     // MARK: - type
     
@@ -278,9 +278,9 @@ class BudgetListTableViewController: UITableViewController {
             fatalError("Exception: BudgetListNavigationController is expected")
         }
         
-        guard let expenseListViewController = expenseListNavigationController.viewControllers.first as? BudgetExpensesTableViewController else {
+        guard let expenseListViewController = expenseListNavigationController.viewControllers.first as? XYZBudgetExpenseTableViewController else {
             
-            fatalError("Exception: BudgetListTableViewController is expected" )
+            fatalError("Exception: XYZBudgetExpenseTableViewController is expected" )
         }
         
         expenseListViewController.expenseList = cellList[indexPath.row].expenseList

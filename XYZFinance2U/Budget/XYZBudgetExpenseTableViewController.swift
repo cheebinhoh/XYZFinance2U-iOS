@@ -1,5 +1,5 @@
 //
-//  BudgetExpensesTableViewController.swift
+//  XYZBudgetExpenseTableViewController.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 2/25/18.
@@ -16,7 +16,7 @@ protocol BudgetExpenseDelegate: class {
     func deleteExpense(expense: XYZExpense)
 }
 
-class BudgetExpensesTableViewController: UITableViewController,
+class XYZBudgetExpenseTableViewController: UITableViewController,
     XYZExpenseDetailDelegate {
 
     // MARK: - Properties

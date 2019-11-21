@@ -1294,10 +1294,10 @@
             </objects>
             <point key="canvasLocation" x="7200.8000000000002" y="34.632683658170919"/>
         </scene>
-        <!--Budget Expenses Table View Controller-->
+        <!--Budget Expense Table View Controller-->
         <scene sceneID="ASU-4Z-IPu">
             <objects>
-                <tableViewController storyboardIdentifier="budgetExpensesTableViewController" id="N85-kI-nMs" customClass="BudgetExpensesTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="XYZBudgetExpenseTableViewController" id="N85-kI-nMs" customClass="XYZBudgetExpenseTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="g5U-yS-H2M">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1715,7 +1715,7 @@ Chee Bin HOH, 2017</string>
         <!--Budget List Table View Controller-->
         <scene sceneID="Ks6-83-kJF">
             <objects>
-                <tableViewController id="9h7-ZW-Cai" customClass="BudgetListTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="9h7-ZW-Cai" customClass="XYZBudgetListTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="lw7-MU-M6Z">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
