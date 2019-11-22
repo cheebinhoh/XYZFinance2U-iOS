@@ -24,8 +24,7 @@ class XYZExpenseTableViewController: UITableViewController,
     UIViewControllerPreviewingDelegate,
     UISearchControllerDelegate,
     UISearchBarDelegate,
-    XYZExpenseDetailDelegate,
-    XYZExpenseTableViewMonthChange {
+    XYZExpenseDetailDelegate {
     
     func change(_ monthYear: Date!) {
 
@@ -135,7 +134,7 @@ class XYZExpenseTableViewController: UITableViewController,
         
         if let indexPath = tableView.indexPathForRow(at: location), indexPath.row > 0 {
     
-            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "XYZExpenseDetailViewController") as? XYZExpenseDetailViewController else  {
+            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "expenseDetailViewController") as? XYZExpenseDetailViewController else  {
                 
                 fatalError("Exception: IncomeDetailViewController is expected")
             }

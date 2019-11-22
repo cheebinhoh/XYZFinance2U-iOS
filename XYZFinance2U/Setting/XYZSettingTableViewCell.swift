@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SettingTextTableViewCellDelegate: class {
+protocol XYZSettingTextTableViewCellDelegate: class {
     
     func switchChanged(_ yesno: Bool, _ sender:XYZSettingTableViewCell)
 }
@@ -20,7 +20,7 @@ class XYZSettingTableViewCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var optionSwitch: UISwitch!
     @IBOutlet weak var stack: UIStackView!
-    var delegate: SettingTextTableViewCellDelegate?
+    var delegate: XYZSettingTextTableViewCellDelegate?
     
     // MARK: - function
     

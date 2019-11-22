@@ -226,7 +226,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="expenseTableViewCell" rowHeight="70" id="2Mj-ez-myH" userLabel="XYZExpenseTableViewCell" customClass="XYZExpenseTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="expenseTableViewCell" rowHeight="70" id="2Mj-ez-myH" customClass="XYZExpenseTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2Mj-ez-myH" id="Rt8-ns-G36">
@@ -317,7 +317,7 @@
                                     <outlet property="icon" destination="Thd-SS-YV1" id="apw-en-K9l"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="expenseTotalTableViewCell" rowHeight="70" id="e6e-7N-6TQ" userLabel="ExpenseTotalTableViewCell" customClass="XYZExpenseTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="expenseTotalTableViewCell" rowHeight="70" id="e6e-7N-6TQ" customClass="XYZExpenseTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="125.5" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e6e-7N-6TQ" id="qIR-dd-Z4b">
@@ -408,7 +408,7 @@
                                     <outlet property="icon" destination="HG2-gx-Rty" id="cuW-xf-3xi"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseTableViewSearchCell" rowHeight="60" id="Kjj-1U-uiF" userLabel="XYZExpenseTableViewSearchCell" customClass="XYZExpenseTableViewSearchCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseTableViewSearchCell" rowHeight="60" id="Kjj-1U-uiF" customClass="XYZExpenseTableViewSearchCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="195.5" width="375" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Kjj-1U-uiF" id="peC-v4-isS">
@@ -455,7 +455,7 @@
         <!--Expense Detail View Controller-->
         <scene sceneID="66M-Ug-AJf">
             <objects>
-                <viewController storyboardIdentifier="XYZExpenseDetailViewController" id="te8-Fa-622" customClass="XYZExpenseDetailViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="expenseDetailViewController" id="te8-Fa-622" customClass="XYZExpenseDetailViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AnI-Pb-w9k">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1297,13 +1297,13 @@
         <!--Budget Expense Table View Controller-->
         <scene sceneID="ASU-4Z-IPu">
             <objects>
-                <tableViewController storyboardIdentifier="XYZBudgetExpenseTableViewController" id="N85-kI-nMs" customClass="XYZBudgetExpenseTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="budgetExpenseTableViewController" id="N85-kI-nMs" customClass="XYZBudgetExpenseTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="g5U-yS-H2M">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseTableViewCell" rowHeight="70" id="feI-Hf-jnI" userLabel="XYZExpenseTableViewCell" customClass="XYZExpenseTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseTableViewCell" rowHeight="70" id="feI-Hf-jnI" customClass="XYZExpenseTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="feI-Hf-jnI" id="dNJ-3a-29C">
@@ -1368,7 +1368,7 @@
         <!--Image-->
         <scene sceneID="o3a-Ws-fSG">
             <objects>
-                <viewController storyboardIdentifier="XYZExpenseDetailImageViewController" id="FHL-b3-PJb" customClass="XYZExpenseDetailImageViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="expenseDetailImageViewController" id="FHL-b3-PJb" customClass="XYZExpenseDetailImageViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="haS-Sk-fRv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2065,7 +2065,7 @@ Chee Bin HOH, 2017</string>
         <!--Selection Table View Controller-->
         <scene sceneID="mHF-3H-NQg">
             <objects>
-                <tableViewController storyboardIdentifier="XYZSelectionTableViewController" id="qMP-z0-vPH" customClass="XYZSelectionTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="selectionTableViewController" id="qMP-z0-vPH" customClass="XYZSelectionTableViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="jdF-D9-k3i">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

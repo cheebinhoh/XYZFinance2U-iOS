@@ -478,7 +478,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         
         newImageIndex = index
         
-        guard let expenseDetailImageNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "XYZExpenseDetailImageViewController") as? XYZExpenseDetailImageViewController else {
+        guard let expenseDetailImageNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "expenseDetailImageViewController") as? XYZExpenseDetailImageViewController else {
             
             fatalError("Exception: XYZExpenseDetailImageViewController is expected")
         }
@@ -1467,7 +1467,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
             switch sectionList[indexPath.section].cellList[indexPath.row]  {
             
                 case "recurring":
-                    guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "XYZSelectionTableViewController") as? XYZSelectionTableViewController else {
+                    guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "selectionTableViewController") as? XYZSelectionTableViewController else {
                         
                         fatalError("Exception: error on instantiating SelectionNavigationController")
                     }
@@ -1525,7 +1525,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                         iconNames.append(icon)
                     }
                 
-                    guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "XYZSelectionTableViewController") as? XYZSelectionTableViewController else {
+                    guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "selectionTableViewController") as? XYZSelectionTableViewController else {
                         
                         fatalError("Exception: error on instantiating SelectionNavigationController")
                     }
@@ -1546,7 +1546,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                     self.present(nav, animated: true, completion: nil)
                
                 default:
-                    guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "XYZSelectionTableViewController") as? XYZSelectionTableViewController else {
+                    guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "selectionTableViewController") as? XYZSelectionTableViewController else {
                         
                         fatalError("Exception: error on instantiating SelectionNavigationController")
                     }

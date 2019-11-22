@@ -819,7 +819,7 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
                 self.budgetExpensesTableViewController = nil
             }
 
-            guard let budgetExpensesTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "XYZBudgetExpenseTableViewController") as? XYZBudgetExpenseTableViewController else {
+            guard let budgetExpensesTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "budgetExpenseTableViewController") as? XYZBudgetExpenseTableViewController else {
             
                 fatalError("Exception: XYZBudgetExpenseTableViewController is expected")
             }

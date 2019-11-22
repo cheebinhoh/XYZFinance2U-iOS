@@ -14,7 +14,7 @@ import UIKit
 class XYZSettingTableViewController: UITableViewController,
     UISplitViewControllerDelegate,
     UIDocumentPickerDelegate,
-    SettingTextTableViewCellDelegate {
+    XYZSettingTextTableViewCellDelegate {
     
     // MARK: - property
     var sectionList = [TableSectionCell]()

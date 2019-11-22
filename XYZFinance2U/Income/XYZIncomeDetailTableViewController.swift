@@ -833,7 +833,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
        
             if cellId == "currency" {
 
-                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "XYZSelectionTableViewController") as? XYZSelectionTableViewController else {
+                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "selectionTableViewController") as? XYZSelectionTableViewController else {
                     
                     fatalError("Exception: error on instantiating SelectionNavigationController")
                 }
@@ -879,7 +879,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
                 self.present(nav, animated: true, completion: nil)
             } else {
                 
-                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "XYZSelectionTableViewController") as? XYZSelectionTableViewController else {
+                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "selectionTableViewController") as? XYZSelectionTableViewController else {
                     
                         fatalError("Exception: error on instantiating SelectionNavigationController")
                 }
