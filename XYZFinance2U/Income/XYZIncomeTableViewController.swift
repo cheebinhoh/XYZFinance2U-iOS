@@ -169,7 +169,7 @@ class XYZIncomeTableViewController: UITableViewController,
         
         if let indexPath = tableView.indexPathForRow(at: location), indexPath.row > 0 {
 
-            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "XYZIncomeDetailViewController") as? XYZIncomeDetailViewController else  {
+            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "incomeDetailViewController") as? XYZIncomeDetailViewController else  {
                 
                 fatalError("Exception: XYZIncomeDetailViewController is expected")
             }
@@ -1148,7 +1148,7 @@ class XYZIncomeTableViewController: UITableViewController,
                 
                 if indexPath.row > 0 
                 {
-                    guard let incomecell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeTableViewCell", for: indexPath) as? XYZIncomeTableViewCell else {
+                    guard let incomecell = tableView.dequeueReusableCell(withIdentifier: "incomeTableViewCell", for: indexPath) as? XYZIncomeTableViewCell else {
                         
                         fatalError("error on creating XYZIncomeTableViewCell")
                     }
@@ -1204,7 +1204,7 @@ class XYZIncomeTableViewController: UITableViewController,
                     
                 } else {
                     
-                    guard let totalCell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeTotalTableViewCell", for: indexPath) as? XYZIncomeTotalTableViewCell else {
+                    guard let totalCell = tableView.dequeueReusableCell(withIdentifier: "incomeTotalTableViewCell", for: indexPath) as? XYZIncomeTotalTableViewCell else {
                         
                         fatalError("Exception: error on creating XYZIncomeTotalTableViewCell")
                     }
@@ -1236,7 +1236,7 @@ class XYZIncomeTableViewController: UITableViewController,
                 }
        
             case "summary":
-                guard let newTotalcell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeTotalTableViewCell", for: indexPath) as? XYZIncomeTotalTableViewCell else {
+                guard let newTotalcell = tableView.dequeueReusableCell(withIdentifier: "incomeTotalTableViewCell", for: indexPath) as? XYZIncomeTotalTableViewCell else {
                     
                     fatalError("Exception: error on creating XYZIncomeTotalTableViewCell")
                 }

@@ -659,7 +659,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
                 cell = textcell
             
             case "date":
-                guard let datecell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeDetailDateTableViewCell", for: indexPath) as? XYZIncomeDetailDateTableViewCell else {
+                guard let datecell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailDateTableViewCell", for: indexPath) as? XYZIncomeDetailDateTableViewCell else {
                     
                     fatalError("Exception: XYZIncomeDetailDateTableViewCell is failed to be created")
                 }
@@ -689,7 +689,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
                 cell = datecell
             
             case "datepicker":
-                guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeDetailDatePickerTableViewCell", for: indexPath) as? XYZIncomeDetailDatePickerTableViewCell else {
+                guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailDatePickerTableViewCell", for: indexPath) as? XYZIncomeDetailDatePickerTableViewCell else {
                     
                     fatalError("Exception: XYZIncomeDetailDatePickerTableViewCell is failed to be created")
                 }
@@ -700,7 +700,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
                 cell = datepickercell
             
             case "reminddatepicker":
-                guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeDetailDatePickerTableViewCell", for: indexPath) as? XYZIncomeDetailDatePickerTableViewCell else {
+                guard let datepickercell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailDatePickerTableViewCell", for: indexPath) as? XYZIncomeDetailDatePickerTableViewCell else {
                     
                     fatalError("Exception: XYZIncomeDetailDatePickerTableViewCell is failed to be created")
                 }
@@ -711,7 +711,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
                 cell = datepickercell
             
             case "remind":
-                guard let remindOptionCell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeDetailSwitchTableViewCell", for: indexPath) as? XYZIncomeDetailSwitchTableViewCell else {
+                guard let remindOptionCell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailSwitchTableViewCell", for: indexPath) as? XYZIncomeDetailSwitchTableViewCell else {
                     
                     fatalError("Exception: XYZIncomeDetailSwitchTableViewCell is failed to be created")
                 }
@@ -723,7 +723,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
                 cell = remindOptionCell
             
             case "reminddate":
-                guard let datecell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeDetailDateTableViewCell", for: indexPath) as? XYZIncomeDetailDateTableViewCell else {
+                guard let datecell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailDateTableViewCell", for: indexPath) as? XYZIncomeDetailDateTableViewCell else {
                     
                     fatalError("Exception: XYZIncomeDetailDateTableViewCell is failed to be created")
                 }
@@ -797,7 +797,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
                 cell = currencycell
             
             case "delete":
-                guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "XYZIncomeDetailCommandTableViewCell", for: indexPath) as? XYZIncomeDetailCommandTableViewCell else {
+                guard let deletecell = tableView.dequeueReusableCell(withIdentifier: "incomeDetailCommandTableViewCell", for: indexPath) as? XYZIncomeDetailCommandTableViewCell else {
                     
                     fatalError("Exception: XYZIncomeDetailCommandTableViewCell is failed to be created")
                 }
