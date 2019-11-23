@@ -347,7 +347,7 @@ class XYZSettingTableViewController: UITableViewController,
         let ckrecordzone = CKRecordZone(zoneName: XYZAccount.type)
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
-        guard let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
+        guard let zone = GetiCloudZone(of: ckrecordzone, share: false, icloudZones: (appDelegate?.iCloudZones)!) else {
             
             fatalError("Exception: iCloudZoen is expected")
         }
@@ -399,9 +399,9 @@ class XYZSettingTableViewController: UITableViewController,
         
         incomeView.reloadData()
         
-        fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
-                             [ckrecordzone],
-                             [zone], {
+        fetchAndUpdateiCloud(database: CKContainer.default().privateCloudDatabase,
+                             zones: [ckrecordzone],
+                             iCloudZones: [zone], completionblock: {
                                 
         })
     }
@@ -411,7 +411,7 @@ class XYZSettingTableViewController: UITableViewController,
         let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
 
-        guard let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
+        guard let zone = GetiCloudZone(of: ckrecordzone, share: false, icloudZones: (appDelegate?.iCloudZones)!) else {
             
             fatalError("Exception: iCloudZoen is expected")
         }
@@ -481,9 +481,9 @@ class XYZSettingTableViewController: UITableViewController,
         
         expenseView.reloadData()
         
-        fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
-                             [ckrecordzone],
-                             [zone], {
+        fetchAndUpdateiCloud(database: CKContainer.default().privateCloudDatabase,
+                             zones: [ckrecordzone],
+                             iCloudZones: [zone], completionblock: {
 
         })
     }
@@ -493,7 +493,7 @@ class XYZSettingTableViewController: UITableViewController,
         let ckrecordzone = CKRecordZone(zoneName: XYZBudget.type)
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
-        guard let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
+        guard let zone = GetiCloudZone(of: ckrecordzone, share: false, icloudZones: (appDelegate?.iCloudZones)!) else {
             
             fatalError("Exception: iCloudZoen is expected")
         }
@@ -545,10 +545,10 @@ class XYZSettingTableViewController: UITableViewController,
         
         budgetView.reloadData()
         
-        fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
-                             [ckrecordzone],
-                             [zone],
-                             { })
+        fetchAndUpdateiCloud(database: CKContainer.default().privateCloudDatabase,
+                             zones: [ckrecordzone],
+                             iCloudZones: [zone],
+                             completionblock: { })
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

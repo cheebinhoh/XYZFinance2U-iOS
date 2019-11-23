@@ -324,16 +324,16 @@ class XYZExpenseTableViewController: UITableViewController,
         
         let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        let iCloudZone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!)
+        let iCloudZone = GetiCloudZone(of: ckrecordzone, share: false, icloudZones: (appDelegate?.iCloudZones)!)
         iCloudZone?.data = appDelegate?.expenseList
     
         let lastTokenChangeFetch = iCloudZone?.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date
         
         if let _ = iCloudZone {
         
-            fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
-                             [ckrecordzone],
-                             [iCloudZone!], {
+            fetchAndUpdateiCloud(database: CKContainer.default().privateCloudDatabase,
+                                 zones: [ckrecordzone],
+                                 iCloudZones: [iCloudZone!], completionblock: {
             
             // if we implement synchronization of content, then time to refresh it.
             DispatchQueue.main.async {
@@ -411,8 +411,8 @@ class XYZExpenseTableViewController: UITableViewController,
                                                 
                                                     DispatchQueue.main.async {
                                                     
-                                                        fetchiCloudZoneChange(CKContainer.default().privateCloudDatabase,
-                                                                          [ckrecordzone], [iCloudZone!]) {
+                                                        fetchiCloudZoneChange(database: CKContainer.default().privateCloudDatabase,
+                                                                              zones: [ckrecordzone], icloudZones: [iCloudZone!]) {
                                                     
                                                             DispatchQueue.main.async {
                                                             
@@ -478,8 +478,8 @@ class XYZExpenseTableViewController: UITableViewController,
                                         
                                             DispatchQueue.main.async {
                                             
-                                                fetchiCloudZoneChange(CKContainer.default().privateCloudDatabase,
-                                                                      [ckrecordzone], [iCloudZone!]) {
+                                                fetchiCloudZoneChange(database: CKContainer.default().privateCloudDatabase,
+                                                                      zones: [ckrecordzone], icloudZones: [iCloudZone!]) {
                                                 
                                                     DispatchQueue.main.async {
                                                     
@@ -590,7 +590,7 @@ class XYZExpenseTableViewController: UITableViewController,
                 
             } else {
                 
-                guard let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
+                guard let zone = GetiCloudZone(of: ckrecordzone, share: false, icloudZones: (appDelegate?.iCloudZones)!) else {
                     
                     fatalError("Exception: iCloudZoen is expected")
                 }
@@ -883,7 +883,7 @@ class XYZExpenseTableViewController: UITableViewController,
             return name == XYZExpense.type
         })
         
-        fetchiCloudZoneChange(CKContainer.default().privateCloudDatabase, zonesToBeFetched, icloudZones!, {
+        fetchiCloudZoneChange(database: CKContainer.default().privateCloudDatabase, zones: zonesToBeFetched, icloudZones: icloudZones!, completionblock: {
             
             for (_, icloudzone) in (icloudZones?.enumerated())! {
                 
@@ -899,7 +899,7 @@ class XYZExpenseTableViewController: UITableViewController,
 
                             self.reloadData()
                             
-                            pushChangeToiCloudZone(CKContainer.default().privateCloudDatabase, zonesToBeFetched, icloudZones!, {
+                            pushChangeToiCloudZone(database: CKContainer.default().privateCloudDatabase, zones: zonesToBeFetched, icloudZones: icloudZones!, completionblock: {
                                 
                             })
                         }

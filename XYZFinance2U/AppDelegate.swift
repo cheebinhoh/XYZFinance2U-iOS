@@ -65,7 +65,7 @@ class AppDelegate: UIResponder,
         
         if !zones.isEmpty {
             
-            fetchiCloudZoneChange(database, zones, self.shareiCloudZones, {
+            fetchiCloudZoneChange(database: database, zones: zones, icloudZones: self.shareiCloudZones, completionblock: {
                 
                 DispatchQueue.main.async {
                     
@@ -96,7 +96,7 @@ class AppDelegate: UIResponder,
                             }
                             
                             let zone = CKRecordZone(zoneName: XYZExpense.type)
-                            let privateiCloudZone = GetiCloudZone(of: zone, share: false, self.privateiCloudZones)
+                            let privateiCloudZone = GetiCloudZone(of: zone, share: false, icloudZones: self.privateiCloudZones)
                             
                             privateiCloudZone?.data = iCloudZone.data
                             self.expenseList = (iCloudZone.data as? [XYZExpense])!
@@ -195,7 +195,7 @@ class AppDelegate: UIResponder,
                     
                     saveManageContext()
                     
-                    fetchiCloudZoneChange(database, zones, [shareicloudZone!], {
+                    fetchiCloudZoneChange(database: database, zones: zones, icloudZones: [shareicloudZone!], completionblock: {
                         
                         DispatchQueue.main.async {
                             
@@ -226,7 +226,7 @@ class AppDelegate: UIResponder,
                                         }
                                     
                                         let zone = CKRecordZone(zoneName: XYZExpense.type)
-                                        let privateiCloudZone = GetiCloudZone(of: zone, share: false, self.privateiCloudZones)
+                                        let privateiCloudZone = GetiCloudZone(of: zone, share: false, icloudZones: self.privateiCloudZones)
                                     
                                         privateiCloudZone?.data = iCloudZone.data
                                         self.expenseList = (iCloudZone.data as? [XYZExpense])!
@@ -252,9 +252,9 @@ class AppDelegate: UIResponder,
                                         let appDelegate = UIApplication.shared.delegate as? AppDelegate
                                         let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
                     
-                                        fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
-                                                             [ckrecordzone],
-                                                             [privateiCloudZone!], {
+                                        fetchAndUpdateiCloud(database: CKContainer.default().privateCloudDatabase,
+                                                             zones: [ckrecordzone],
+                                                             iCloudZones: [privateiCloudZone!], completionblock: {
                                                                 
                                             // if we implement synchronization of content, then time to refresh it.
                                             DispatchQueue.main.async {
@@ -773,9 +773,9 @@ class AppDelegate: UIResponder,
                         
                         saveManageContext()
                         
-                        fetchiCloudZoneChange(CKContainer.default().privateCloudDatabase,
-                                              saved!,
-                                              self.privateiCloudZones, {
+                        fetchiCloudZoneChange(database: CKContainer.default().privateCloudDatabase,
+                                              zones: saved!,
+                                              icloudZones: self.privateiCloudZones, completionblock: {
                             
                             for icloudzone in self.privateiCloudZones {
                                 
@@ -837,7 +837,7 @@ class AppDelegate: UIResponder,
                 changeTokens.append(changeToken)
             }
             
-            fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase, zonesToBeFetched, self.privateiCloudZones, {
+            fetchAndUpdateiCloud(database: CKContainer.default().privateCloudDatabase, zones: zonesToBeFetched, iCloudZones: self.privateiCloudZones, completionblock: {
 
                 for (index, icloudzone) in self.privateiCloudZones.enumerated() {
 
@@ -885,7 +885,7 @@ class AppDelegate: UIResponder,
                                 tableViewToBeReload.reloadData()
                             }
                             
-                            registeriCloudSubscription(CKContainer.default().privateCloudDatabase, [icloudzone])
+                            registeriCloudSubscription(database: CKContainer.default().privateCloudDatabase, iCloudZones: [icloudzone])
                         }
                     }
                 }

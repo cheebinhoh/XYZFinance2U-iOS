@@ -321,7 +321,7 @@ class XYZIncomeTableViewController: UITableViewController,
         
         if !(appDelegate?.iCloudZones.isEmpty)! {
             
-            guard let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
+            guard let zone = GetiCloudZone(of: ckrecordzone, share: false, icloudZones: (appDelegate?.iCloudZones)!) else {
                 
                 fatalError("Exception: iCloudZoen is expected")
             }
@@ -613,11 +613,11 @@ class XYZIncomeTableViewController: UITableViewController,
         }
         
         let ckrecordzone = CKRecordZone(zoneName: XYZAccount.type)
-        let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.privateiCloudZones)!)
+        let zone = GetiCloudZone(of: ckrecordzone, share: false, icloudZones: (appDelegate?.privateiCloudZones)!)
         zone?.data = appDelegate?.incomeList
         
-        fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
-                             [ckrecordzone], (appDelegate?.privateiCloudZones)!, {
+        fetchAndUpdateiCloud(database: CKContainer.default().privateCloudDatabase,
+                             zones: [ckrecordzone], iCloudZones: (appDelegate?.privateiCloudZones)!, completionblock: {
             
         })
     }
@@ -880,7 +880,7 @@ class XYZIncomeTableViewController: UITableViewController,
             return name == XYZAccount.type
         })
 
-        fetchiCloudZoneChange(CKContainer.default().privateCloudDatabase, zonesToBeFetched, icloudZones!, {
+        fetchiCloudZoneChange(database: CKContainer.default().privateCloudDatabase, zones: zonesToBeFetched, icloudZones: icloudZones!, completionblock: {
             
             for (_, icloudzone) in (icloudZones?.enumerated())! {
                 
@@ -896,7 +896,7 @@ class XYZIncomeTableViewController: UITableViewController,
                             
                             self.reloadData()
                             
-                            pushChangeToiCloudZone(CKContainer.default().privateCloudDatabase, zonesToBeFetched, icloudZones!, {
+                            pushChangeToiCloudZone(database: CKContainer.default().privateCloudDatabase, zones: zonesToBeFetched, icloudZones: icloudZones!, completionblock: {
                             
                             })
                         }

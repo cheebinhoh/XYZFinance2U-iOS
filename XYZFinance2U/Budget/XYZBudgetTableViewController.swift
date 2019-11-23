@@ -403,7 +403,7 @@ class XYZBudgetTableViewController: UITableViewController,
             return name == XYZBudget.type
         })
         
-        fetchiCloudZoneChange(CKContainer.default().privateCloudDatabase, zonesToBeFetched, icloudZones!, {
+        fetchiCloudZoneChange(database: CKContainer.default().privateCloudDatabase, zones: zonesToBeFetched, icloudZones: icloudZones!, completionblock: {
             
             for (_, icloudzone) in (icloudZones?.enumerated())! {
                 
@@ -418,7 +418,7 @@ class XYZBudgetTableViewController: UITableViewController,
 
                             self.reloadData()
                             
-                            pushChangeToiCloudZone(CKContainer.default().privateCloudDatabase, zonesToBeFetched, icloudZones!, {
+                            pushChangeToiCloudZone(database: CKContainer.default().privateCloudDatabase, zones: zonesToBeFetched, icloudZones: icloudZones!, completionblock: {
                                 
                             })
                         }
@@ -618,11 +618,11 @@ class XYZBudgetTableViewController: UITableViewController,
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
         let ckrecordzone = CKRecordZone(zoneName: XYZBudget.type)
-        let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.privateiCloudZones)!)
+        let zone = GetiCloudZone(of: ckrecordzone, share: false, icloudZones: (appDelegate?.privateiCloudZones)!)
         zone?.data = appDelegate?.budgetList
         
-        fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
-                             [ckrecordzone], (appDelegate?.privateiCloudZones)!, {
+        fetchAndUpdateiCloud(database: CKContainer.default().privateCloudDatabase,
+                             zones: [ckrecordzone], iCloudZones: (appDelegate?.privateiCloudZones)!, completionblock: {
                                 
         })
     }
@@ -1038,7 +1038,7 @@ class XYZBudgetTableViewController: UITableViewController,
         
         if !(appDelegate?.iCloudZones.isEmpty)! {
             
-            guard let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.iCloudZones)!) else {
+            guard let zone = GetiCloudZone(of: ckrecordzone, share: false, icloudZones: (appDelegate?.iCloudZones)!) else {
                 
                 fatalError("Exception: iCloudZoen is expected")
             }
@@ -1114,11 +1114,11 @@ class XYZBudgetTableViewController: UITableViewController,
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             let ckrecordzone = CKRecordZone(zoneName: XYZBudget.type)
-            let zone = GetiCloudZone(of: ckrecordzone, share: false, (appDelegate?.privateiCloudZones)!)
+            let zone = GetiCloudZone(of: ckrecordzone, share: false, icloudZones: (appDelegate?.privateiCloudZones)!)
             zone?.data = appDelegate?.budgetList
             
-            fetchAndUpdateiCloud(CKContainer.default().privateCloudDatabase,
-                                 [ckrecordzone], (appDelegate?.privateiCloudZones)!, {
+            fetchAndUpdateiCloud(database: CKContainer.default().privateCloudDatabase,
+                                 zones: [ckrecordzone], iCloudZones: (appDelegate?.privateiCloudZones)!, completionblock: {
                                     
             })
         }
