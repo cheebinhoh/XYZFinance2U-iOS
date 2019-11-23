@@ -23,7 +23,6 @@
 		655C97A41FCCCC210098D58D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 655C97A21FCCCC210098D58D /* Main.storyboard */; };
 		655C97A61FCCCC210098D58D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 655C97A51FCCCC210098D58D /* Assets.xcassets */; };
 		655C97A91FCCCC210098D58D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 655C97A71FCCCC210098D58D /* LaunchScreen.storyboard */; };
-		655C97B41FCCCC210098D58D /* XYZFinance2UTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C97B31FCCCC210098D58D /* XYZFinance2UTests.swift */; };
 		655C97BF1FCCCF320098D58D /* XYZIncomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C97BE1FCCCF320098D58D /* XYZIncomeTableViewController.swift */; };
 		655C97C11FCCD09C0098D58D /* XYZIncomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C97C01FCCD09C0098D58D /* XYZIncomeTableViewCell.swift */; };
 		655C97C31FCCD5140098D58D /* XYZAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C97C21FCCD5130098D58D /* XYZAccount.swift */; };
@@ -107,7 +106,6 @@
 		655C97A81FCCCC210098D58D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		655C97AA1FCCCC210098D58D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		655C97AF1FCCCC210098D58D /* XYZFinance2UTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XYZFinance2UTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		655C97B31FCCCC210098D58D /* XYZFinance2UTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZFinance2UTests.swift; sourceTree = "<group>"; };
 		655C97B51FCCCC210098D58D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		655C97BE1FCCCF320098D58D /* XYZIncomeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZIncomeTableViewController.swift; sourceTree = "<group>"; };
 		655C97C01FCCD09C0098D58D /* XYZIncomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZIncomeTableViewCell.swift; sourceTree = "<group>"; };
@@ -290,7 +288,6 @@
 		655C97B21FCCCC210098D58D /* XYZFinance2UTests */ = {
 			isa = PBXGroup;
 			children = (
-				655C97B31FCCCC210098D58D /* XYZFinance2UTests.swift */,
 				655C97B51FCCCC210098D58D /* Info.plist */,
 			);
 			path = XYZFinance2UTests;
@@ -532,7 +529,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				655C97B41FCCCC210098D58D /* XYZFinance2UTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
