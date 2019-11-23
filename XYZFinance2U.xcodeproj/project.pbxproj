@@ -97,7 +97,6 @@
 		653462181FD0FFB700F88218 /* XYZUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZUtility.swift; sourceTree = "<group>"; };
 		6539D74B208A4270000BBC1D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6539D74D208A427D000BBC1D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		653BFB4C2030E3100076C184 /* XYZFinance2U-Mini-Guide.pages */ = {isa = PBXFileReference; lastKnownFileType = file; path = "XYZFinance2U-Mini-Guide.pages"; sourceTree = "<group>"; };
 		653BFB4D2030E55A0076C184 /* XYZExpenseTableViewSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZExpenseTableViewSearchCell.swift; sourceTree = "<group>"; };
 		65402D951FEE0B740051367F /* XYZExpenseDetailCommandTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZExpenseDetailCommandTableViewCell.swift; sourceTree = "<group>"; };
 		65425E8B2012C92E0078E6C2 /* XYZIncomeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZIncomeDetailViewController.swift; sourceTree = "<group>"; };
@@ -244,14 +243,6 @@
 			path = "Shared UI";
 			sourceTree = "<group>";
 		};
-		653BFB4A2030A2530076C184 /* Document */ = {
-			isa = PBXGroup;
-			children = (
-				653BFB4C2030E3100076C184 /* XYZFinance2U-Mini-Guide.pages */,
-			);
-			path = Document;
-			sourceTree = "<group>";
-		};
 		655C97901FCCCC210098D58D = {
 			isa = PBXGroup;
 			children = (
@@ -292,7 +283,6 @@
 				655C97AA1FCCCC210098D58D /* Info.plist */,
 				6539D74C208A4270000BBC1D /* InfoPlist.strings */,
 				656BF682208838EB00EE6280 /* Localizable.strings */,
-				653BFB4A2030A2530076C184 /* Document */,
 			);
 			path = XYZFinance2U;
 			sourceTree = "<group>";
@@ -729,7 +719,7 @@
 				CODE_SIGN_ENTITLEMENTS = XYZFinance2U/XYZFinance2U.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = BKU6P4Y9G4;
 				INFOPLIST_FILE = XYZFinance2U/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -752,7 +742,7 @@
 				CODE_SIGN_ENTITLEMENTS = XYZFinance2U/XYZFinance2U.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = BKU6P4Y9G4;
 				INFOPLIST_FILE = XYZFinance2U/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

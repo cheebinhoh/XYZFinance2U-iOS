@@ -3,9 +3,7 @@
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 11/27/17.
-//  Copyright © 2017 CB Hoh. All rights reserved.
-//
-//  QA status: checked on dec-29, 2017
+//  Copyright © 2017 - 2019 CB Hoh. All rights reserved.
 
 import UIKit
 import CoreData
@@ -122,7 +120,6 @@ class AppDelegate: UIResponder,
             
             if let _ = error {
                 
-                print("-------- error in accept share = \(String(describing: error))")
             }
             else
             {
@@ -283,9 +280,7 @@ class AppDelegate: UIResponder,
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
-        
-        os_log("-------- userNotificationCenter", log: OSLog.default, type: .default)
-        
+           
         let userinfo = response.notification.request.content.userInfo
         
         if userinfo[XYZAccount.type] != nil {
@@ -310,8 +305,6 @@ class AppDelegate: UIResponder,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
-        os_log("-------- userNotificationCenter", log: OSLog.default, type: .default)
-        
         completionHandler(UNNotificationPresentationOptions.sound)
     }
     
@@ -319,13 +312,11 @@ class AppDelegate: UIResponder,
      
         if UIApplication.shared.applicationState == .background {
             
-            os_log("-------- app is in background ignore, icloud push notification, we will process them when we are active again", log: OSLog.default, type: .default)
             completionHandler(.noData)
         } else {
             
             guard let notification:CKRecordZoneNotification = CKNotification(fromRemoteNotificationDictionary: userInfo)! as? CKRecordZoneNotification else {
                 
-                os_log("-------- failed to get zone notification", log: OSLog.default, type: .default)
                 completionHandler(.failed)
                 
                 return
@@ -443,9 +434,8 @@ class AppDelegate: UIResponder,
         notificationCenter.delegate = self
         notificationCenter.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
             
-            if let theError = error {
+            if let _ = error {
                 
-                print("-------- requestAuthorization error = \(theError.localizedDescription)")
             } else {
              
             }
@@ -472,8 +462,7 @@ class AppDelegate: UIResponder,
         
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        print("-------- applicationDidEnterBackground")
-        
+
         self.authentictatedAlready = false
         
         self.lastAuthenticated = Date()
@@ -498,7 +487,6 @@ class AppDelegate: UIResponder,
             fatalError("Exception: XYZIncomeTableViewController is expected" )
         }
         
-        print("-------- prior to show lock screen" )
         if tableViewController.authenticatedMechanismExist
             && nil == split.popOverNavigatorController {
             
@@ -513,7 +501,6 @@ class AppDelegate: UIResponder,
                     split.popOverAlertController = nil
                 }
                 
-                print("-------- show lock screen")
                 tableViewController.lockout()
             }
         }

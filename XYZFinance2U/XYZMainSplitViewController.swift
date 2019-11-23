@@ -3,12 +3,9 @@
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/29/17.
-//  Copyright © 2017 CB Hoh. All rights reserved.
-//
-//  QA status: checked on dec-29, 2017
+//  Copyright © 2017 - 2019 CB Hoh. All rights reserved.
 
 import UIKit
-import LocalAuthentication
 
 class XYZMainSplitViewController: UISplitViewController {
     
@@ -31,7 +28,6 @@ class XYZMainSplitViewController: UISplitViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
     /*
     // MARK: - Navigation
 

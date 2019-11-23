@@ -65,7 +65,7 @@ class XYZIncomeTableViewController: UITableViewController,
     
     @IBAction func add(_ sender: UIBarButtonItem) {
         
-        guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "IncomeDetailNavigationController") as? UINavigationController else {
+        guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "incomeDetailNavigationController") as? UINavigationController else {
             
             fatalError("Exception: error on instantiating IncomeDetailNavigationController")
         }
@@ -558,12 +558,10 @@ class XYZIncomeTableViewController: UITableViewController,
             
             notificationCenter.add(request) { (error : Error?) in
                 
-                if let theError = error {
+                if let _ = error {
                     
-                    print("-------- notification scheduling error = \(theError.localizedDescription)")
                 } else {
                     
-                    print("-------- success in register notification")
                 }
             }
         }
@@ -661,7 +659,6 @@ class XYZIncomeTableViewController: UITableViewController,
                     
                     if nil != error {
                         
-                        print("-------- request application permission error = \(String(describing: error))")
                     }
                 })
                 
@@ -800,8 +797,6 @@ class XYZIncomeTableViewController: UITableViewController,
             } else {
                 
                 self.authenticatedOk = true
-
-                print("no auth support")
             }
         } else {
             
@@ -985,7 +980,7 @@ class XYZIncomeTableViewController: UITableViewController,
     
     func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {
         
-        guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "IncomeDetailNavigationController") as? UINavigationController else {
+        guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "incomeDetailNavigationController") as? UINavigationController else {
             
             fatalError("Exception: error on instantiating IncomeDetailNavigationController")
         }
@@ -1066,9 +1061,9 @@ class XYZIncomeTableViewController: UITableViewController,
                 
                 if mainSplitView.isCollapsed  {
                     
-                    guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "IncomeDetailNavigationController") as? UINavigationController else {
+                    guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "incomeDetailNavigationController") as? UINavigationController else {
                         
-                        fatalError("Exception: error on instantiating ExpenseDetailNavigationController")
+                        fatalError("Exception: error on instantiating incomeDetailNavigationController")
                     }
                     
                     guard let incomeTableView = incomeDetailNavigationController.viewControllers.first as? XYZIncomeDetailTableViewController else {
@@ -1480,7 +1475,6 @@ class XYZIncomeTableViewController: UITableViewController,
                     incomeDetailView.account = account
                 } else if let addButtonSender = sender as? UIBarButtonItem, add === addButtonSender {
                     
-                    os_log("Adding a new income", log: OSLog.default, type: .debug)
                 } else {
                     
                     fatalError("Exception: unknown sender \(segue.identifier ?? "")")

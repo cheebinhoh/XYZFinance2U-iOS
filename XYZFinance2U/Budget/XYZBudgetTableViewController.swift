@@ -238,9 +238,9 @@ class XYZBudgetTableViewController: UITableViewController,
     
     @IBAction func add(_ sender: UIBarButtonItem) {
     
-        guard let budgetDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "BudgetDetailNavigationController") as? UINavigationController else {
+        guard let budgetDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "budgetDetailNavigationController") as? UINavigationController else {
             
-            fatalError("Exception: error on instantiating BudgetDetailNavigationController")
+            fatalError("Exception: error on instantiating budgetDetailNavigationController")
         }
         
         guard let budgetDetailTableView = budgetDetailNavigationController.viewControllers.first as? XYZBudgetDetailTableViewController else {
@@ -666,7 +666,7 @@ class XYZBudgetTableViewController: UITableViewController,
         
         let new = UIContextualAction(style: .normal, title: "New expense".localized() ) { _, _, handler in
             
-            guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+            guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "expenseDetailNavigationController") as? UINavigationController else {
                 
                 fatalError("Exception: ExpenseDetailNavigationController is expected")
             }
@@ -715,7 +715,7 @@ class XYZBudgetTableViewController: UITableViewController,
 
                 guard let calendarViewNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "CalendarViewNavigationController") as? UINavigationController else {
                     
-                    fatalError("Exception: ExpenseDetailNavigationController is expected")
+                    fatalError("Exception: CalendarViewNavigationController is expected")
                 }
                 
                 guard let calendarCollectionViewController = calendarViewNavigationController.viewControllers.first as? XYZCalendarCollectionViewController else {
@@ -835,9 +835,9 @@ class XYZBudgetTableViewController: UITableViewController,
         
         if mainSplitView.isCollapsed  {
             
-            guard let budgetDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "BudgetDetailNavigationController") as? UINavigationController else {
+            guard let budgetDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "budgetDetailNavigationController") as? UINavigationController else {
                 
-                fatalError("Exception: error on instantiating BudgetDetailNavigationController")
+                fatalError("Exception: error on instantiating budgetDetailNavigationController")
             }
             
             guard let budgetDetailTableViewController = budgetDetailNavigationController.viewControllers.first as? XYZBudgetDetailTableViewController else {
@@ -1211,9 +1211,9 @@ class XYZBudgetTableViewController: UITableViewController,
     
     func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {
         
-        guard let budgetDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "BudgetDetailNavigationController") as? UINavigationController else {
+        guard let budgetDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "budgetDetailNavigationController") as? UINavigationController else {
             
-            fatalError("Exception: error on instantiating BudgetDetailNavigationController")
+            fatalError("Exception: error on instantiating budgetDetailNavigationController")
         }
         
         guard let budgetDetailTableViewController = budgetDetailNavigationController.viewControllers.first as? XYZBudgetDetailTableViewController else {

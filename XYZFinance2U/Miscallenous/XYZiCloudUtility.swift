@@ -221,7 +221,6 @@ func createUpdateExpense(_ oldChangeToken: Data,
                     
                     if nil != error {
                         
-                        print("-------- \(String(describing: error))")
                     } else {
                         
                         OperationQueue.main.addOperation {
@@ -580,7 +579,6 @@ func fetchiCloudZoneChange(_ database: CKDatabase,
     
     opZoneChange.recordZoneChangeTokensUpdatedBlock = { (zoneId, token, data) in
         
-        print("----- token \(String(describing: token))")
         OperationQueue.main.addOperation {
             
             for icloudzone in icloudZones {
@@ -652,8 +650,6 @@ func fetchiCloudZoneChange(_ database: CKDatabase,
                     break
             }
             
-            print("Error fetching zone changes for database:", error!)
-            
             return
         }
         
@@ -690,9 +686,8 @@ func fetchiCloudZoneChange(_ database: CKDatabase,
     
     opZoneChange.fetchRecordZoneChangesCompletionBlock = { (error) in
 
-        if let error = error {
+        if let _ = error {
             
-            print("Error fetching zone changes for database:", error)
             return
         }
         
@@ -1351,7 +1346,6 @@ func registeriCloudSubscription(_ database: CKDatabase,
                     
                     if let _ = error {
                         
-                        print("******** modify subscription completion error = \(String(describing: error))")
                     }
                 }
                 

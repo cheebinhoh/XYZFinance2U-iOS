@@ -411,7 +411,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
             
             let copy = UIContextualAction(style: .normal, title: "Copy".localized() ) { _, _, handler in
                 
-                guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+                guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "expenseDetailNavigationController") as? UINavigationController else {
                     
                     fatalError("Exception: ExpenseDetailNavigationController is expected")
                 }
@@ -529,7 +529,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+        guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "expenseDetailNavigationController") as? UINavigationController else {
             
             fatalError("Exception: ExpenseDetailNavigationController is expected")
         }

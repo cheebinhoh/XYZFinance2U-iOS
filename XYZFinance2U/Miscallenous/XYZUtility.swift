@@ -361,9 +361,8 @@ func loadAccounts() -> [XYZAccount]? {
         output = try aContext?.fetch(fetchRequest)
         
         output = sortAcounts(output!)
-    } catch let error as NSError {
+    } catch {
         
-        print("Could not fetch. \(error), \(error.userInfo)")
     }
     
     return output
@@ -379,9 +378,8 @@ func loadExpenses() -> [XYZExpense]? {
     do {
         
         expenses = try aContext?.fetch(fetchRequest)
-    } catch let error as NSError {
+    } catch  {
         
-        print("******** Could not fetch. \(error), \(error.userInfo)")
     }
     
     let fetchRequestExpPerson = NSFetchRequest<XYZExpensePerson>(entityName: "XYZExpensePerson")
@@ -389,9 +387,8 @@ func loadExpenses() -> [XYZExpense]? {
     do {
         
         _ = try aContext?.fetch(fetchRequestExpPerson)
-    } catch let error as NSError {
+    } catch {
         
-        print("******** Could not fetch. \(error), \(error.userInfo)")
     }
     
     let fetchRequestExpReceipt = NSFetchRequest<XYZExpenseReceipt>(entityName: "XYZExpenseReceipt")
@@ -399,9 +396,8 @@ func loadExpenses() -> [XYZExpense]? {
     do {
         
         _ = try aContext?.fetch(fetchRequestExpReceipt)
-    } catch let error as NSError {
+    } catch {
         
-        print("******** Could not fetch. \(error), \(error.userInfo)")
     }
     
     return sortExpenses(expenses!)
@@ -417,9 +413,8 @@ func loadBudgets() -> [XYZBudget]? {
     do {
         
         budgets = try aContext?.fetch(fetchRequest)
-    } catch let error as NSError {
+    } catch  {
         
-        print("******** Could not fetch. \(error), \(error.userInfo)")
     }
     
     return budgets
@@ -435,9 +430,8 @@ func loadExchangeRates() -> [XYZExchangeRate]? {
     do {
         
         output = try aContext?.fetch(fetchRequest)
-    } catch let error as NSError {
+    } catch {
         
-        print("Could not fetch. \(error), \(error.userInfo)")
     }
     
     return output
@@ -453,9 +447,8 @@ func loadiCloudZone() -> [XYZiCloudZone]? {
     do {
         
         output = try aContext?.fetch(fetchRequest)
-    } catch let error as NSError {
-        
-        print("Could not fetch. \(error), \(error.userInfo)")
+    } catch {
+
     }
     
     return output

@@ -75,12 +75,11 @@ class XYZExpenseTableViewController: UITableViewController,
     // MARK: - IBAction
     @IBAction func navigationTap(_ sender: UITapGestureRecognizer) {
      
-        print("****** double tap")
     }
     
     @IBAction func add(_ sender: UIBarButtonItem) {
         
-        guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+        guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "expenseDetailNavigationController") as? UINavigationController else {
             
             fatalError("Exception: ExpenseDetailNavigationController is expected")
         }
@@ -359,7 +358,6 @@ class XYZExpenseTableViewController: UITableViewController,
                         // after fetching share record
                             if let _ = error {
                             
-                                print("-------- error in getting shared record = \(String(describing: error))")
                             } else {
                             
                                 guard let ckshare = ckrecord as? CKShare else {
@@ -390,8 +388,7 @@ class XYZExpenseTableViewController: UITableViewController,
                                     fetchsharedparticipantOp.fetchShareParticipantsCompletionBlock = { error in
                                     
                                         if let _ = error {
-                                        
-                                            print("-------- fetchShareParticipantsCompletionBlock error = \(String(describing: error))")
+
                                         } else {
                                         
                                             if !existingParticipants.isEmpty {
@@ -410,7 +407,6 @@ class XYZExpenseTableViewController: UITableViewController,
                                             
                                                 if let _ = error {
                                                 
-                                                    print("-------- \(String(describing: error))")
                                                 } else {
                                                 
                                                     DispatchQueue.main.async {
@@ -478,7 +474,6 @@ class XYZExpenseTableViewController: UITableViewController,
                                     
                                         if let _ = error {
                                         
-                                            print("-------- \(String(describing: error))")
                                         } else {
                                         
                                             DispatchQueue.main.async {
@@ -897,17 +892,17 @@ class XYZExpenseTableViewController: UITableViewController,
                 switch zName! {
                     
                     case XYZExpense.type:
-                    print("-------- refresh XYZExpense")
-                    appDelegate?.expenseList = (icloudzone.data as? [XYZExpense])!
-
-                    DispatchQueue.main.async {
-
-                        self.reloadData()
                         
-                        pushChangeToiCloudZone(CKContainer.default().privateCloudDatabase, zonesToBeFetched, icloudZones!, {
+                        appDelegate?.expenseList = (icloudzone.data as? [XYZExpense])!
+
+                        DispatchQueue.main.async {
+
+                            self.reloadData()
                             
-                        })
-                    }
+                            pushChangeToiCloudZone(CKContainer.default().privateCloudDatabase, zonesToBeFetched, icloudZones!, {
+                                
+                            })
+                        }
                     
                 default:
                     fatalError("Exception: \(String(describing: zName)) is not supported")
@@ -998,7 +993,7 @@ class XYZExpenseTableViewController: UITableViewController,
         
         let copy = UIContextualAction(style: .normal, title: "Copy".localized() ) { _, _, handler in
             
-            guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+            guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "expenseDetailNavigationController") as? UINavigationController else {
                 
                 fatalError("Exception: ExpenseDetailNavigationController is expected")
             }
@@ -1248,7 +1243,7 @@ class XYZExpenseTableViewController: UITableViewController,
             default:
                 if self.isCollapsed {
                     
-                    guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+                    guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "expenseDetailNavigationController") as? UINavigationController else {
                         
                         fatalError("Exception: ExpenseDetailNavigationController is expected")
                     }
@@ -1351,7 +1346,7 @@ class XYZExpenseTableViewController: UITableViewController,
     // MARK: - splitview delegate
     func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {
         
-        guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+        guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "expenseDetailNavigationController") as? UINavigationController else {
             
             fatalError("Exception: ExpenseDetailNavigationController is expected")
         }

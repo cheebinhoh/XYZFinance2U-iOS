@@ -424,7 +424,7 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
                 let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 let copyUrlOption = UIAlertAction(title: "New expense".localized(), style: .default, handler: { (action) in
                     
-                    guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+                    guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "expenseDetailNavigationController") as? UINavigationController else {
                         
                         fatalError("Exception: ExpenseDetailNavigationController is expected")
                     }

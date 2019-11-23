@@ -3,9 +3,7 @@
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/27/17.
-//  Copyright © 2017 CB Hoh. All rights reserved.
-//
-//  QA status: checked on dec-29, 2017
+//  Copyright © 2017 - 2019 CB Hoh. All rights reserved.
 
 import UIKit
 
@@ -49,6 +47,7 @@ class XYZLockScreenViewController: UIViewController {
         
         mainTableViewController?.authenticate()
     }
+    
     /*
     // MARK: - Navigation
 

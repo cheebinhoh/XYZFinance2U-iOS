@@ -282,9 +282,9 @@ class XYZSettingTableViewController: UITableViewController,
             settingDetail = delegate as? XYZSettingDetailTableViewController
         } else {
             
-            guard let settingDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingDetailNavigationController") as? UINavigationController else {
+            guard let settingDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "settingDetailNavigationController") as? UINavigationController else {
                 
-                fatalError("Exception: error on instantiating SettingDetailNavigationController")
+                fatalError("Exception: error on instantiating settingDetailNavigationController")
             }
             
             settingDetail = settingDetailNavigationController.viewControllers.first as? XYZSettingDetailTableViewController
@@ -700,9 +700,9 @@ class XYZSettingTableViewController: UITableViewController,
             popoverView = nil
         }
         
-        guard let settingDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingDetailNavigationController") as? UINavigationController else {
+        guard let settingDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "settingDetailNavigationController") as? UINavigationController else {
             
-            fatalError("Exception: error on instantiating ExpenseDetailNavigationController")
+            fatalError("Exception: error on instantiating settingDetailNavigationController")
         }
 
         guard let settingDetailTableViewController = settingDetailNavigationController.viewControllers.first as? XYZSettingDetailTableViewController else {

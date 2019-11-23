@@ -1454,8 +1454,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
             emailcell = textcell
             
             self.present(contactPicker, animated: true, completion: {
-                
-                print("-------- done presenting CNContactPickerViewController")
+
             })
         }    
     }

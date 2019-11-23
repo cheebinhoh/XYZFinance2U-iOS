@@ -983,7 +983,7 @@
         <!--Navigation Controller-->
         <scene sceneID="afk-6l-vS2">
             <objects>
-                <navigationController storyboardIdentifier="ExpenseDetailNavigationController" id="PvD-tW-xPv" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="expenseDetailNavigationController" id="PvD-tW-xPv" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Wh7-Vh-kXb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1374,10 +1374,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SfN-xw-rth">
-                                <rect key="frame" x="0.0" y="44" width="375" height="525"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
                                 <subviews>
                                     <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="65b-9C-Wat">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="525"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="ANL-Bn-bhJ" appends="YES" id="rC4-iu-7AU"/>
@@ -2047,7 +2047,7 @@ Chee Bin HOH, 2017</string>
         <!--Navigation Controller-->
         <scene sceneID="ebr-GF-a8h">
             <objects>
-                <navigationController storyboardIdentifier="IncomeDetailNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="qE7-Wb-Nt1" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="incomeDetailNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="qE7-Wb-Nt1" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4KR-W4-1Pb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -2134,7 +2134,7 @@ Chee Bin HOH, 2017</string>
         <!--Navigation Controller-->
         <scene sceneID="rQc-gR-7Ul">
             <objects>
-                <navigationController storyboardIdentifier="SettingDetailNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="qDJ-Cv-NAd" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="settingDetailNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="qDJ-Cv-NAd" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="byk-GT-EsY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -2189,7 +2189,7 @@ Chee Bin HOH, 2017</string>
         <!--Navigation Controller-->
         <scene sceneID="VcF-23-Kp0">
             <objects>
-                <navigationController storyboardIdentifier="BudgetDetailNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="RRo-xe-oKW" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="budgetDetailNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="RRo-xe-oKW" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="EPw-vX-Wxc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -2269,8 +2269,8 @@ Chee Bin HOH, 2017</string>
         <image name="plus" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Vbr-uz-1K0"/>
-        <segue reference="n4x-5K-QOe"/>
-        <segue reference="p2p-KG-gtc"/>
+        <segue reference="Yzc-xO-mr2"/>
+        <segue reference="ve4-y6-Yqm"/>
+        <segue reference="12h-Ii-8y1"/>
     </inferredMetricsTieBreakers>
 </document>

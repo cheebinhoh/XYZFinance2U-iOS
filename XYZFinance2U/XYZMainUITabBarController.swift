@@ -3,9 +3,7 @@
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/19/17.
-//  Copyright © 2017 CB Hoh. All rights reserved.
-//
-//  QA status: checked on dec-29, 2017
+//  Copyright © 2017 - 2019 CB Hoh. All rights reserved.
 
 import UIKit
 
@@ -57,13 +55,13 @@ class XYZMainUITabBarController: UITabBarController,
     // when we switch the tab, we want to create proper secondary detail view in the master-detail view.
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         
+        var masterViewNavController: UINavigationController?
+        
         guard let split = self.parent as? UISplitViewController else {
             
             fatalError("Exception: UISplitViewController is expected")
         }
-    
-        var masterViewNavController: UINavigationController?
-        
+
         if !split.isCollapsed && split.viewControllers.count > 1 {
             
             masterViewNavController = split.viewControllers.last as? UINavigationController
@@ -91,7 +89,7 @@ class XYZMainUITabBarController: UITabBarController,
                 // empty
             } else {
                 
-                guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "IncomeDetailNavigationController") as? UINavigationController else {
+                guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "incomeDetailNavigationController") as? UINavigationController else {
                     
                     fatalError("Exception: error on instantiating IncomeDetailNavigationController")
                 }
@@ -118,7 +116,7 @@ class XYZMainUITabBarController: UITabBarController,
                 // empty
             } else {
                 
-                guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "ExpenseDetailNavigationController") as? UINavigationController else {
+                guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "expenseDetailNavigationController") as? UINavigationController else {
                     
                     fatalError("Exception: error on instantiating ExpenseDetailNavigationController")
                 }
@@ -147,9 +145,9 @@ class XYZMainUITabBarController: UITabBarController,
                 // empty
             } else {
                 
-                guard let budgetDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "BudgetDetailNavigationController") as? UINavigationController else {
+                guard let budgetDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "budgetDetailNavigationController") as? UINavigationController else {
                     
-                    fatalError("Exception: error on instantiating BudgetDetailNavigationController")
+                    fatalError("Exception: error on instantiating budgetDetailNavigationController")
                 }
                 
                 guard let budgetDetailTableViewController = budgetDetailNavigationController.viewControllers.first as? XYZBudgetDetailTableViewController else {
@@ -174,9 +172,9 @@ class XYZMainUITabBarController: UITabBarController,
                 // empty
             } else {
                 
-                guard let settingDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "SettingDetailNavigationController") as? UINavigationController else {
+                guard let settingDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "settingDetailNavigationController") as? UINavigationController else {
                     
-                    fatalError("Exception: error on instantiating SettingDetailEmptyViewController")
+                    fatalError("Exception: error on instantiating settingDetailNavigationController")
                 }
                 
                 guard let settingDetailTableViewController = settingDetailNavigationController.viewControllers.first as? XYZSettingDetailTableViewController else {
