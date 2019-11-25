@@ -3,7 +3,7 @@
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 11/27/17.
-//  Copyright © 2017 - 2019 CB Hoh. All rights reserved.
+//  Copyright © 2017 - 2019 - 2019 CB Hoh. All rights reserved.
 
 import UIKit
 import CoreData
