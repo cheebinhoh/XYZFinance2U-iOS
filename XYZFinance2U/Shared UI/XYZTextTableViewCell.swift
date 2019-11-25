@@ -91,7 +91,7 @@ class XYZTextTableViewCell: UITableViewCell,
         delegate?.textDidEndEditing(sender: self)
     }
     
-    func enableMonetaryEditing(_ enanble: Bool, _ currencyCode: String? = nil) {
+    func enableMonetaryEditing(_ enanble: Bool, of currencyCode: String? = nil) {
         
         monetory = enanble
         

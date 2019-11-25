@@ -1145,7 +1145,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                 textcell.isEditable = modalEditing
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
-                textcell.enableMonetaryEditing(true, currencyCode!)
+                textcell.enableMonetaryEditing(true, of: currencyCode!)
                 textcell.input.placeholder = formattingCurrencyValue(of: 0.0, as: currencyCode)
                 textcell.input.text = formattingCurrencyValue(of: amount ?? 0.0, as: currencyCode)
                 
