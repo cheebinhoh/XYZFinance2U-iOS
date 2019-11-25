@@ -199,7 +199,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         }
     }
     
-    func textDidEndEditing(_ sender: XYZTextTableViewCell) {
+    func textDidEndEditing(sender: XYZTextTableViewCell) {
 
         if modalEditing {
             
@@ -244,7 +244,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         }
     }
     
-    func textDidBeginEditing(_ sender: XYZTextTableViewCell) {
+    func textDidBeginEditing(sender: XYZTextTableViewCell) {
         
     }
     

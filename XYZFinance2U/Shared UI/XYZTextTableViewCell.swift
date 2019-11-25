@@ -11,8 +11,8 @@ import UIKit
 @objc
 protocol XYZTextTableViewCellDelegate : class {
 
-    func textDidBeginEditing(_ sender: XYZTextTableViewCell)
-    func textDidEndEditing(_ sender: XYZTextTableViewCell)
+    func textDidBeginEditing(sender: XYZTextTableViewCell)
+    func textDidEndEditing(sender: XYZTextTableViewCell)
     @objc optional func switchChanged(_ yesno: Bool, sender: XYZTextTableViewCell)
 }
 
@@ -83,12 +83,12 @@ class XYZTextTableViewCell: UITableViewCell,
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         
-        delegate?.textDidBeginEditing(self)
+        delegate?.textDidBeginEditing(sender: self)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         
-        delegate?.textDidEndEditing(self)
+        delegate?.textDidEndEditing(sender: self)
     }
     
     func enableMonetaryEditing(_ enanble: Bool, _ currencyCode: String? = nil) {
@@ -123,6 +123,6 @@ class XYZTextTableViewCell: UITableViewCell,
             textField.text = text
         }
         
-        delegate?.textDidEndEditing(self)
+        delegate?.textDidEndEditing(sender: self)
     }
 }

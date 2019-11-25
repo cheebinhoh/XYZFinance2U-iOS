@@ -157,7 +157,7 @@ class XYZBudgetDetailTableViewController: UITableViewController,
         tableView.reloadData() // TODO: how do we improve by just the row, does it worth it?
     }
         
-    func textDidEndEditing(_ sender: XYZTextTableViewCell) {
+    func textDidEndEditing(sender: XYZTextTableViewCell) {
         
         if let index = tableView.indexPath(for: sender) {
             
@@ -183,7 +183,7 @@ class XYZBudgetDetailTableViewController: UITableViewController,
         }
     }
     
-    func textDidBeginEditing(_ sender: XYZTextTableViewCell) {
+    func textDidBeginEditing(sender: XYZTextTableViewCell) {
     
     }
     

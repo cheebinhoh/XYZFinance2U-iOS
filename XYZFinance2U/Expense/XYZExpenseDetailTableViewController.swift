@@ -685,7 +685,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         paids[index.row] = yesno
     }
     
-    func textDidBeginEditing(_ sender:XYZTextTableViewCell) {
+    func textDidBeginEditing(sender:XYZTextTableViewCell) {
         
         
         guard let index = tableView.indexPath(for: sender) else {
@@ -726,7 +726,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         }
     }
     
-    func textDidEndEditing(_ sender: XYZTextTableViewCell)
+    func textDidEndEditing(sender: XYZTextTableViewCell)
     {
         if modalEditing {
             
