@@ -3,7 +3,7 @@
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 1/11/18.
-//  Copyright © 2018 - 2019 CB Hoh. All rights reserved.
+//  Copyright © 2018 - 2019 Chee Bin Hoh. All rights reserved.
 //
 
 //  XYZiCloudZone class models state of iCloud zones. It stores last change token of the zone in iCloud, date time
