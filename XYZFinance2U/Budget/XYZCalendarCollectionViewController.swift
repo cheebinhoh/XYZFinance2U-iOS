@@ -583,7 +583,15 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
         
         if monthLevel {
         
-            let headingSection = TableSectionCell(identifier: "heading", title: "", cellList: ["S", "M", "T", "W", "T", "F", "S"], data: nil)
+            let headingSection = TableSectionCell(identifier: "heading", title: "",
+                                                  cellList: ["Sunday heading".localized(),
+                                                             "Monday heading".localized(),
+                                                             "Tuesday heading".localized(),
+                                                             "Wednesday heading".localized(),
+                                                             "Thursday heading".localized(),
+                                                             "Friday heading".localized(),
+                                                             "Saturday heading".localized()],
+                                                  data: nil)
             sectionList.append(headingSection)
             
             let dateFormatter = DateFormatter()

@@ -5,3 +5,11 @@
   Created by Chee Bin Hoh on 3/4/18.
   Copyright © 2018 - 2019 Chee Bin Hoh. All rights reserved.
 */
+
+"Monday heading" = "M";
+"Tuesday heading" = "T";
+"Wednesday heading" = "W";
+"Thursday heading" = "T";
+"Friday heading" = "F";
+"Saturday heading" = "S";
+"Sunday heading" = "S";

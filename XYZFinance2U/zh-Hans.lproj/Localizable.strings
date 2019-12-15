@@ -8,7 +8,7 @@
 
 "About" = "关于";
 "Foreign exchange rate" = "外汇牌价";
-"Save to file" = "保存到文件";
+"Save to file" = "保存到文档";
 "Update to iCloud" = "更新到iCloud";
 "Delete data" = "删除数据";
 "Lock out" = "闭锁";
@@ -115,3 +115,10 @@
 "Income" = "收益";
 "Undo last change" = "撤消上次更改";
 "Copy balance" = "复制余额";
+"Monday heading" = "一";
+"Tuesday heading" = "二";
+"Wednesday heading" = "三";
+"Thursday heading" = "四";
+"Friday heading" = "五";
+"Saturday heading" = "六";
+"Sunday heading" = "日";
