@@ -944,7 +944,7 @@ class XYZBudgetDetailTableViewController: UITableViewController,
                 if let _ = retstart {
                     
                     selectionTableViewController.setSelectedItem("\(formattingCurrencyValue(of: retamount!, as: currencyCode)), \(retlength!), \(formattingDate(retstart!, style: .medium))",
-                    "\(formattingCurrencyValue(of: retamount!, as: currencyCode)), \(retlength!.localized()), \(formattingDate(retstart!, style: .medium))")
+                        "\(formattingCurrencyValue(of: retamount!, as: currencyCode)), \(retlength!.localized()), \(formattingDate(retstart!, style: .medium))")
                 } else {
                     
                    selectionTableViewController.setSelectedItem("")

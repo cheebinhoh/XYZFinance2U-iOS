@@ -27,7 +27,7 @@ class XYZSelectionTableViewController: UITableViewController {
     var selectionColors = [UIColor]()
     var readonly = false
     var imageNames: [String]?
-    var displayedString = [String]()
+    var displayStrings = [String]()
     
     // MARK: - function
     
@@ -70,11 +70,28 @@ class XYZSelectionTableViewController: UITableViewController {
     }
 
     func setSelectedItem(_ item: String?,
-                         _ displayedItem: String? = nil) {
+                         _ displayString: String? = nil) {
         
         self.selectedItem = item
         
-        navigationItem.title = displayedItem ?? ( self.selectedItem?.localized() ?? "" )
+        var title = item?.localized()
+        
+        if let _ = displayString {
+            
+            title = displayString!
+        } else if !self.displayStrings.isEmpty {
+            
+            toplevel: for tablesection in self.tableSectionList {
+                
+                if let index = tablesection.cellList.firstIndex(of: item ?? "") {
+                    
+                    title = self.displayStrings[index]
+                    break
+                }
+            }
+        }
+        
+        navigationItem.title = title
         
         found:
             for (sectionIndex, section) in tableSectionList.enumerated() {
@@ -105,9 +122,9 @@ class XYZSelectionTableViewController: UITableViewController {
     func setSelections(_ sectionIdentifier: String,
                        _ indexing: Bool,
                        _ selection: [String],
-                       _ displayedString: [String] = [String]()) {
+                       _ displayStrings: [String] = [String]()) {
         
-        self.displayedString = displayedString
+        self.displayStrings = displayStrings
         
         if indexing {
         
@@ -156,12 +173,12 @@ class XYZSelectionTableViewController: UITableViewController {
             fatalError("Exception: errpt on creating selectionItemCell")
         }
         
-        if displayedString.isEmpty {
+        if displayStrings.isEmpty {
             
             cell.label.text = tableSectionList[indexPath.section].cellList[indexPath.row].localized()
         } else {
             
-            cell.label.text = displayedString[indexPath.row]
+            cell.label.text = displayStrings[indexPath.row]
         }
         
         if !selectionColors.isEmpty {
@@ -236,7 +253,7 @@ class XYZSelectionTableViewController: UITableViewController {
         
         selectedItem = tableSectionList[indexPath.section].cellList[indexPath.row];
 
-        let displayedSelectedItem = displayedString.isEmpty ? (selectedItem!).localized() : displayedString[indexPath.row]
+        let displayedSelectedItem = displayStrings.isEmpty ? (selectedItem!).localized() : displayStrings[indexPath.row]
 
         navigationItem.title = displayedSelectedItem
     }
