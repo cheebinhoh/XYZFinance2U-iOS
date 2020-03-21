@@ -700,11 +700,11 @@ class XYZIncomeTableViewController: UITableViewController,
         var lockoutNavigationController: UINavigationController? = nil
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        
-        if #available(iOS 8.0, macOS 10.12.1, *) {
-            
-            if laContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
 
+        if #available(iOS 8.0, macOS 10.12.1, *) {
+
+            if laContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
+ 
                 self.authenticatedMechanismExist = true
                 
                 let defaults = UserDefaults.standard;

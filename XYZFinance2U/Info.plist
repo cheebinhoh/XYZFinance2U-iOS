@@ -28,6 +28,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Allow access to camera in order to capture image of the receipt for your expense</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>This app uses Face ID to confirm your identity</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Allow access to location in order to remark occurenace place for your expense</string>
 	<key>NSLocationAlwaysUsageDescription</key>
