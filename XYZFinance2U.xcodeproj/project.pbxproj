@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		650023FF1FF49D43001281EA /* XYZLockScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650023FE1FF49D43001281EA /* XYZLockScreenViewController.swift */; };
-		650024011FF67B4F001281EA /* XYZMainSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650024001FF67B4E001281EA /* XYZMainSplitViewController.swift */; };
 		650024051FF6B423001281EA /* XYZSettingDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650024041FF6B423001281EA /* XYZSettingDetailTableViewController.swift */; };
 		650068FE200814F8003B6469 /* XYZiCloudZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650068FD200814F8003B6469 /* XYZiCloudZone.swift */; };
 		6522F8B51FE9BBC7005686B6 /* XYZMainUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6522F8B41FE9BBC7005686B6 /* XYZMainUITabBarController.swift */; };
@@ -81,7 +80,6 @@
 
 /* Begin PBXFileReference section */
 		650023FE1FF49D43001281EA /* XYZLockScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZLockScreenViewController.swift; sourceTree = "<group>"; };
-		650024001FF67B4E001281EA /* XYZMainSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZMainSplitViewController.swift; sourceTree = "<group>"; };
 		650024041FF6B423001281EA /* XYZSettingDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZSettingDetailTableViewController.swift; sourceTree = "<group>"; };
 		650068FD200814F8003B6469 /* XYZiCloudZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZiCloudZone.swift; sourceTree = "<group>"; };
 		65170569208A46ED000355C6 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -272,7 +270,6 @@
 				65343E8E1FFD969A002C5D39 /* Shared UI */,
 				658EF95D237739DE00BF129A /* Miscallenous */,
 				655C979C1FCCCC210098D58D /* AppDelegate.swift */,
-				650024001FF67B4E001281EA /* XYZMainSplitViewController.swift */,
 				6522F8B41FE9BBC7005686B6 /* XYZMainUITabBarController.swift */,
 				650023FE1FF49D43001281EA /* XYZLockScreenViewController.swift */,
 				655C97A21FCCCC210098D58D /* Main.storyboard */,
@@ -391,7 +388,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "CB Hoh";
 				TargetAttributes = {
 					655C97981FCCCC210098D58D = {
@@ -489,7 +486,6 @@
 				6567E1322032866C00058238 /* XYZBudget.swift in Sources */,
 				65D8BA7F2013ADD200944C2D /* XYZExchangeRate.swift in Sources */,
 				655C97BF1FCCCF320098D58D /* XYZIncomeTableViewController.swift in Sources */,
-				650024011FF67B4F001281EA /* XYZMainSplitViewController.swift in Sources */,
 				650068FE200814F8003B6469 /* XYZiCloudZone.swift in Sources */,
 				658FD1D82037DB3F00ABDD55 /* XYZBudgetDetailDatePickerTableViewCell.swift in Sources */,
 				65EEC4A31FF07E1400D638CD /* XYZIncomeDetailCommandTableViewCell.swift in Sources */,
@@ -619,6 +615,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -644,7 +641,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -679,6 +676,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -699,7 +697,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -718,7 +716,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = BKU6P4Y9G4;
 				INFOPLIST_FILE = XYZFinance2U/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 4.19;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cbHOH.XYZFinance2U;
@@ -741,7 +739,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = BKU6P4Y9G4;
 				INFOPLIST_FILE = XYZFinance2U/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 4.19;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cbHOH.XYZFinance2U;

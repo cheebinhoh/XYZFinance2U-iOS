@@ -1,25 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MlQ-tP-LrG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17140" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17115"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Main Split View Controller-->
-        <scene sceneID="qf3-5F-tw1">
-            <objects>
-                <splitViewController id="MlQ-tP-LrG" customClass="XYZMainSplitViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
-                    <connections>
-                        <segue destination="49e-Tb-3d3" kind="relationship" relationship="masterViewController" id="88b-6r-zLd"/>
-                    </connections>
-                </splitViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LdT-fL-lMi" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-2764" y="-769"/>
-        </scene>
         <!--XYZFinance2U-->
         <scene sceneID="cBa-xZ-YhF">
             <objects>
@@ -34,9 +23,9 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="locked" translatesAutoresizingMaskIntoConstraints="NO" id="Cjo-OQ-P7h">
                                         <rect key="frame" x="55.5" y="0.0" width="189.5" height="135"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0W-8X-FqE">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0W-8X-FqE">
                                         <rect key="frame" x="0.0" y="135" width="300" height="50"/>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="5e2-Pv-NcN"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="7zS-Pd-1Hg"/>
@@ -53,12 +42,12 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <viewLayoutGuide key="safeArea" id="QU2-3B-aSy"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="lId-0z-eBX" firstAttribute="centerY" secondItem="zvC-Ic-M8f" secondAttribute="centerY" id="1DC-WK-8Jc"/>
                             <constraint firstItem="lId-0z-eBX" firstAttribute="centerX" secondItem="QU2-3B-aSy" secondAttribute="centerX" id="lAj-Zz-R9r"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="QU2-3B-aSy"/>
                     </view>
                     <connections>
                         <outlet property="unlockButton" destination="e0W-8X-FqE" id="Qf5-0y-hY2"/>
@@ -95,7 +84,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="DOy-6q-Sit">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="incomeTableViewCell" rowHeight="70" id="j7T-3u-Niu" customClass="XYZIncomeTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="70"/>
@@ -170,7 +159,7 @@
                                         <constraint firstItem="Oqt-fr-z7l" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kSB-Oh-7wh" secondAttribute="leadingMargin" id="vsV-Ao-AsQ"/>
                                     </constraints>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
                                 <connections>
                                     <outlet property="amount" destination="Oqt-fr-z7l" id="Cz5-Nx-zh4"/>
                                     <outlet property="currency" destination="lvN-dn-FNt" id="T9H-7U-u7c"/>
@@ -224,7 +213,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="CLy-VR-T8h">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="expenseTableViewCell" rowHeight="70" id="2Mj-ez-myH" customClass="XYZExpenseTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="70"/>
@@ -503,8 +492,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <viewLayoutGuide key="safeArea" id="69E-lO-9ER"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                     </view>
                     <connections>
                         <outlet property="amount" destination="HJl-4x-LvT" id="HdB-69-DPF"/>
@@ -523,7 +512,7 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="abo-q4-m1t">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="5" id="vDt-t2-67N">
                             <size key="itemSize" width="50" height="40"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -741,8 +730,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <viewLayoutGuide key="safeArea" id="Am8-0M-WYB"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                     </view>
                     <connections>
                         <outlet property="accountNr" destination="Ojl-1W-I0N" id="P4i-5N-sEC"/>
@@ -763,7 +752,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="nXX-J0-4SF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="incomeDetailTextCell" rowHeight="80" id="tYI-qA-rAC" customClass="XYZTextTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="80"/>
@@ -1003,7 +992,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="KGv-uw-D67">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseDetailTextCell" rowHeight="45" id="7ZH-Tx-63y" customClass="XYZTextTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="45"/>
@@ -1148,7 +1137,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HtK-nY-joS" userLabel="Command">
-                                            <rect key="frame" x="166.5" y="4.5" width="42" height="35"/>
+                                            <rect key="frame" x="167" y="4.5" width="41.5" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="zF5-Sr-6uZ"/>
                                             </constraints>
@@ -1301,7 +1290,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="g5U-yS-H2M">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseTableViewCell" rowHeight="70" id="feI-Hf-jnI" customClass="XYZExpenseTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="70"/>
@@ -1394,6 +1383,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="kWp-V1-hf7"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="kWp-V1-hf7" firstAttribute="bottom" secondItem="SfN-xw-rth" secondAttribute="bottom" id="kCs-fh-FS6"/>
@@ -1401,7 +1391,6 @@
                             <constraint firstItem="kWp-V1-hf7" firstAttribute="trailing" secondItem="SfN-xw-rth" secondAttribute="trailing" id="rqy-se-kHg"/>
                             <constraint firstItem="SfN-xw-rth" firstAttribute="leading" secondItem="kWp-V1-hf7" secondAttribute="leading" id="wPM-UV-dnE"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="kWp-V1-hf7"/>
                     </view>
                     <navigationItem key="navigationItem" title="Image" id="pBm-V2-iuL">
                         <barButtonItem key="rightBarButtonItem" systemItem="trash" id="ERR-Z4-XdS">
@@ -1427,7 +1416,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="8pt-Wx-DBo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="settingTableViewCell" rowHeight="50" id="fDn-An-pxj" customClass="XYZSettingTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="50"/>
@@ -1482,7 +1471,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="UPT-PC-2xT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingDetailAboutCell" id="bYA-dM-YhX" customClass="XYZSettingDetailAboutTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="300"/>
@@ -1493,7 +1482,7 @@
                                     <subviews>
                                         <textView multipleTouchEnabled="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="350" placeholderIntrinsicHeight="299.5" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YPQ-k2-nft">
                                             <rect key="frame" x="15" y="0.0" width="350" height="300"/>
-                                            <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" systemColor="labelColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             <dataDetectorType key="dataDetectorTypes" link="YES"/>
@@ -1549,6 +1538,7 @@ Chee Bin HOH, 2017</string>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="73c-T2-h6D"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="73c-T2-h6D" firstAttribute="trailing" secondItem="5P9-Ea-pOH" secondAttribute="trailing" constant="16" id="5Va-tH-Eeh"/>
@@ -1562,7 +1552,6 @@ Chee Bin HOH, 2017</string>
                             <constraint firstItem="5P9-Ea-pOH" firstAttribute="leading" secondItem="73c-T2-h6D" secondAttribute="leading" constant="16" id="pon-Zj-sSr"/>
                             <constraint firstItem="5P9-Ea-pOH" firstAttribute="leading" secondItem="73c-T2-h6D" secondAttribute="leading" constant="16" id="qrl-WM-FpO"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="73c-T2-h6D"/>
                     </view>
                     <navigationItem key="navigationItem" title="About" id="IhD-2T-avI"/>
                 </viewController>
@@ -1596,7 +1585,7 @@ Chee Bin HOH, 2017</string>
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="OGd-9B-xxR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="budgetTableCell" rowHeight="70" id="YLF-7c-7IH" customClass="XYZBudgetTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="70"/>
@@ -1821,7 +1810,7 @@ Chee Bin HOH, 2017</string>
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="oeq-AZ-sgW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="budgetDetailTextCell" rowHeight="80" id="qwa-b4-zTT" customClass="XYZTextTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="80"/>
@@ -2069,7 +2058,7 @@ Chee Bin HOH, 2017</string>
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="jdF-D9-k3i">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="selectionItemCell" id="Toc-ZZ-uBG" customClass="XYZSelectionItemTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="43.5"/>
@@ -2259,6 +2248,11 @@ Chee Bin HOH, 2017</string>
             <point key="canvasLocation" x="6721" y="771"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Yzc-xO-mr2"/>
+        <segue reference="ve4-y6-Yqm"/>
+        <segue reference="12h-Ii-8y1"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="budget" width="25" height="25"/>
         <image name="defaultPhoto" width="540" height="540"/>
@@ -2267,10 +2261,56 @@ Chee Bin HOH, 2017</string>
         <image name="minus" width="25" height="25"/>
         <image name="more" width="24.5" height="6.5"/>
         <image name="plus" width="25" height="25"/>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="tableCellGroupedBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="Yzc-xO-mr2"/>
-        <segue reference="ve4-y6-Yqm"/>
-        <segue reference="12h-Ii-8y1"/>
-    </inferredMetricsTieBreakers>
 </document>

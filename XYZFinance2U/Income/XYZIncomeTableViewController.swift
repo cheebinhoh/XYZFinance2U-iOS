@@ -22,7 +22,6 @@ protocol XYZIncomeSelectionDelegate: class {
 }
 
 class XYZIncomeTableViewController: UITableViewController,
-    UISplitViewControllerDelegate,
     UIViewControllerPreviewingDelegate,
     XYZTableViewReloadData,
     XYZIncomeDetailDelegate {
@@ -76,12 +75,13 @@ class XYZIncomeTableViewController: UITableViewController,
         }
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-            
-            fatalError("Exception: XYZMainSplitViewController is expected" )
-        }
         
-        mainSplitView.popOverNavigatorController = incomeDetailNavigationController
+        guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
+            
+            fatalError("Exception: XYZMainUITabBarController is expected" )
+        }
+
+        tabBarController.popOverNavigatorController = incomeDetailNavigationController
         
         incomeDetailTableView.currencyCodes = currencyCodes
         incomeDetailTableView.setPopover(delegate: self)
@@ -154,12 +154,13 @@ class XYZIncomeTableViewController: UITableViewController,
         if let _ = viewController.income {
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
+            
+            guard let tarBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
                 
-                fatalError("Exception: XYZMainSplitViewController is expected" )
+                fatalError("Exception: XYZMainUITabBarController is expected")
             }
             
-            mainSplitView.popOverAlertController = nil
+            tarBarController.popOverAlertController = nil
             
             tableView(tableView, didSelectRowAt: viewController.indexPath!)
         }
@@ -258,20 +259,6 @@ class XYZIncomeTableViewController: UITableViewController,
         appDelegate?.incomeList.append(income)
         
         reloadData()
-        
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-            
-            fatalError("Exception: XYZMainSplitViewController is expected" )
-        }
-        
-        if !mainSplitView.isCollapsed  {
-         
-            if let indexPath = incomeIndex(of: income) {
-                
-                tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)
-                delegate?.incomeSelected(newIncome: income)
-            }
-        }
     }
     
     func incomeIndex(of income: XYZAccount) -> IndexPath? {
@@ -297,21 +284,6 @@ class XYZIncomeTableViewController: UITableViewController,
 
         reloadData()
         saveAccounts()
-        
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-            
-            fatalError("Exception: XYZMainSplitViewController is expected" )
-        }
-        
-        if !mainSplitView.isCollapsed {
-         
-            if let indexPath = incomeIndex(of: income) {
-             
-                tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-                delegate?.incomeSelected(newIncome: income)
-            }
-        }
     }
     
     func softDeleteIncome(income: XYZAccount) {
@@ -401,20 +373,6 @@ class XYZIncomeTableViewController: UITableViewController,
             appDelegate?.incomeList.append(income)
             
             self.reloadData()
-            
-            guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-                
-                fatalError("Exception: XYZMainSplitViewController is expected" )
-            }
-            
-            if !mainSplitView.isCollapsed  {
-                
-                if let indexPath = self.incomeIndex(of: income) {
-                    
-                    self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)
-                    self.delegate?.incomeSelected(newIncome: income)
-                }
-            }
         })
         
         deleteIncomeWithoutUndo(income: income)
@@ -631,11 +589,12 @@ class XYZIncomeTableViewController: UITableViewController,
                 DispatchQueue.main.async {
                     
                     let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                    guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-                        
-                        fatalError("Exception: XYZMainSplitViewController is expected" )
-                    }
                     
+                    guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
+                        
+                        fatalError("Exception: XYZMainUITabBarController is expected")
+                    }
+             
                     self.iCloudEnable = false
                     let alert = UIAlertController(title: "Sign in to icloud",
                                                   message: "Sign in to your iCloud account to keep records in iCloud",
@@ -644,11 +603,11 @@ class XYZIncomeTableViewController: UITableViewController,
                         
                         alert.dismiss(animated: false, completion: {
                         
-                            mainSplitView.popOverAlertController = nil
+                            tabBarController.popOverAlertController = nil
                         })
                     }))
                     
-                    mainSplitView.popOverAlertController = alert
+                    tabBarController.popOverAlertController = alert
                     self.present(alert, animated: false, completion: nil)
                 }
             } else {
@@ -714,20 +673,20 @@ class XYZIncomeTableViewController: UITableViewController,
                     
                     if !lockScreenDisplayed {
                         
-                        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-                            
-                            fatalError("Exception: XYZMainSplitViewController is expected" )
+                        guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
+                        
+                            fatalError("Exception: XYZMainUITabBarController is expected")
                         }
                         
-                        if let _ = mainSplitView.popOverAlertController {
+                        if let _ = tabBarController.popOverAlertController {
                             
                             dismiss(animated: false, completion: {
                             
-                                mainSplitView.popOverAlertController = nil
+                                tabBarController.popOverAlertController = nil
                             })
                         }
                         
-                        if nil == mainSplitView.popOverNavigatorController {
+                        if nil == tabBarController.popOverNavigatorController {
                            
                             lockoutNavigationController = lockout()
                         }
@@ -760,13 +719,13 @@ class XYZIncomeTableViewController: UITableViewController,
                         
                                     DispatchQueue.main.async {
                                         
-                                        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-                                            
-                                            fatalError("Exception: XYZMainSplitViewController is expected" )
+                                        guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
+                                        
+                                            fatalError("Exception: XYZMainUITabBarController is expected")
                                         }
                                         
-                                        mainSplitView.popOverNavigatorController?.popToRootViewController(animated: false)
-                                        mainSplitView.popOverNavigatorController?.dismiss(animated: false, completion: {
+                                        tabBarController.popOverNavigatorController?.popToRootViewController(animated: false)
+                                        tabBarController.popOverNavigatorController?.dismiss(animated: false, completion: {
                                         
                                         })
                                         
@@ -818,25 +777,8 @@ class XYZIncomeTableViewController: UITableViewController,
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-            
-            fatalError("Exception: XYZMainSplitViewController is expected" )
-        }
-        
-        if mainSplitView.isCollapsed {
-            
-            self.navigationItem.setLeftBarButton(self.editButtonItem, animated: true)
-        }
-        
-        if mainSplitView.viewControllers.count > 1 {
-            
-            guard let _ = mainSplitView.viewControllers.last as? UINavigationController else {
+        self.navigationItem.setLeftBarButton(self.editButtonItem, animated: true)
                 
-                fatalError( "Exception: navigation controller is expected" )
-            }
-        }
-        
         tableView.tableFooterView = UIView(frame: .zero)
         navigationItem.setLeftBarButton(self.editButtonItem, animated: true)
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -911,97 +853,6 @@ class XYZIncomeTableViewController: UITableViewController,
         refreshControl.endRefreshing()
     }
     
-    // MARK: - split view delegate
-    
-    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
-        
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        
-        for row in 0..<(appDelegate?.incomeList)!.count {
-            
-            let indexPath = IndexPath(row: row, section: 0)
-            
-            tableView.deselectRow(at: indexPath, animated: true)
-        }
-        
-        self.delegate = nil
-        secondaryViewController.navigationItem.title = "New" //TODO: check if we need this
-        
-        if let navigationController = secondaryViewController as? UINavigationController {
-            
-            if let incomeDetailTableViewController = navigationController.viewControllers.first as? XYZIncomeDetailTableViewController {
-                
-                incomeDetailTableViewController.incomeDelegate = self
-                incomeDetailTableViewController.isPushinto = true
-
-                if !isPopover && incomeDetailTableViewController.modalEditing {
-                    
-                    incomeDetailTableViewController.isPushinto = false
-                    incomeDetailTableViewController.isPopover = true
-                    navigationController.modalPresentationStyle = .popover
-                    
-                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                    guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-                        
-                        fatalError("Exception: XYZMainSplitViewController is expected" )
-                    }
-                    
-                    mainSplitView.popOverNavigatorController = navigationController
-                    
-                    DispatchQueue.main.async {
-                        
-                        self.present(navigationController, animated: true, completion: nil)
-                    }
-                }
-            }
-        }
-        
-        navigationItem.leftBarButtonItem?.isEnabled = true
-        navigationItem.rightBarButtonItem?.isEnabled = true
-        
-        isPopover = false
-        
-        return true
-    }
-    
-    func splitViewController(_ svc: UISplitViewController, willChangeTo displayMode: UISplitViewController.DisplayMode) {
-        
-    }
-
-    func splitViewController(_ splitViewController: UISplitViewController, show vc: UIViewController, sender: Any?) -> Bool {
-        
-        return false
-    }
-    
-    func splitViewController(_ splitViewController: UISplitViewController, showDetail vc: UIViewController, sender: Any?) -> Bool {
-        
-        return false
-    }
-    
-    func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {
-        
-        guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "incomeDetailNavigationController") as? UINavigationController else {
-            
-            fatalError("Exception: error on instantiating IncomeDetailNavigationController")
-        }
-        
-        guard let incomeDetailTableViewController = incomeDetailNavigationController.viewControllers.first as? XYZIncomeDetailTableViewController else {
-            
-            fatalError("Exception: XYZIncomeDetailTableViewController is expected")
-        }
-        
-        incomeDetailTableViewController.navigationItem.title = ""
-        self.delegate = incomeDetailTableViewController
-        
-        return incomeDetailNavigationController
-    }
-    
-    func primaryViewController(forExpanding splitViewController: UISplitViewController) -> UIViewController? {
-        
-        return nil
-    }
-        
-
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -1054,52 +905,33 @@ class XYZIncomeTableViewController: UITableViewController,
             
             default:
                 let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
+                 
+                guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "incomeDetailNavigationController") as? UINavigationController else {
                     
-                    fatalError("Exception: XYZMainSplitViewController is expected" )
+                    fatalError("Exception: error on instantiating incomeDetailNavigationController")
                 }
                 
-                if mainSplitView.isCollapsed  {
+                guard let incomeTableView = incomeDetailNavigationController.viewControllers.first as? XYZIncomeDetailTableViewController else {
                     
-                    guard let incomeDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "incomeDetailNavigationController") as? UINavigationController else {
-                        
-                        fatalError("Exception: error on instantiating incomeDetailNavigationController")
-                    }
+                    fatalError("Exception: XYZIncomeDetailTableViewController is expected" )
+                }
+                
+                incomeTableView.setPopover(delegate: self)
+                
+                let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
+                
+                incomeTableView.income = sectionIncomeList![indexPath.row - 1]
+                incomeDetailNavigationController.modalPresentationStyle = .popover
+                incomeTableView.currencyCodes = currencyCodes
+                self.present(incomeDetailNavigationController, animated: true, completion: nil)
+            
+                guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
                     
-                    guard let incomeTableView = incomeDetailNavigationController.viewControllers.first as? XYZIncomeDetailTableViewController else {
-                        
-                        fatalError("Exception: XYZIncomeDetailTableViewController is expected" )
-                    }
-                    
-                    incomeTableView.setPopover(delegate: self)
-                    
-                    let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
-                    
-                    incomeTableView.income = sectionIncomeList![indexPath.row - 1]
-                    incomeDetailNavigationController.modalPresentationStyle = .popover
-                    incomeTableView.currencyCodes = currencyCodes
-                    self.present(incomeDetailNavigationController, animated: true, completion: nil)
-                    
-                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                    guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-                        
-                        fatalError("Exception: XYZMainSplitViewController is expected" )
-                    }
-                    
-                    mainSplitView.popOverNavigatorController = incomeDetailNavigationController
-                } else {
-                    
-                    guard let detailTableViewController = delegate as? XYZIncomeDetailTableViewController else {
-                        
-                        fatalError("Exception: XYZIncomeDetailTableViewController is expedted" )
-                    }
-                    
-                    let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
-                    detailTableViewController.incomeDelegate = self
-                    detailTableViewController.currencyCodes = currencyCodes
-                    delegate?.incomeSelected(newIncome: sectionIncomeList?[indexPath.row])
+                    fatalError("Exception: XYZMainUITabBarControllerXYZMainUITabBarController is expected" )
                 }
             
+                tabBarController.popOverNavigatorController = incomeDetailNavigationController
+
                 tableView.deselectRow(at: indexPath, animated: false)
         }
     }
@@ -1274,24 +1106,6 @@ class XYZIncomeTableViewController: UITableViewController,
             let incomeToBeDeleted = sectionIncomeList![indexPath.row]
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-                
-                fatalError("Exception: XYZMainSplitViewController is expected" )
-            }
-            
-            if !mainSplitView.isCollapsed  {
-                
-                guard let detailTableViewController = delegate as? XYZIncomeDetailTableViewController else {
-                    
-                    fatalError("Exception: XYZIncomeDetailTableViewController is expedted" )
-                }
-                
-                if detailTableViewController.income == incomeToBeDeleted {
-                    
-                    detailTableViewController.income = nil
-                    detailTableViewController.reloadData()
-                }
-            }
             
             softDeleteIncome(income: incomeToBeDeleted)
             let identifier = incomeToBeDeleted.value(forKey: XYZAccount.recordId) as? String

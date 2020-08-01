@@ -422,12 +422,13 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
                 }
                 
                 let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
+                
+                guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
                     
-                    fatalError("Exception: XYZMainSplitViewController is expected" )
+                    fatalError("Exception: XYZMainUITabBarController is expected")
                 }
                 
-                mainSplitView.popOverNavigatorController = expenseDetailNavigationController
+                tabBarController.popOverNavigatorController = expenseDetailNavigationController
                 
                 let detail = expense.value(forKey: XYZExpense.detail) as? String
                 let amount = expense.value(forKey: XYZExpense.amount) as? Double
@@ -474,54 +475,6 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
             }
             
             commands.append(delete)
-            
-            /*
-            let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
-            
-            if !(isShared!) {
-                
-                if let url = expense.value(forKey: XYZExpense.shareUrl) as? String {
-                    
-                    let more = UIContextualAction(style: .normal, title: "More".localized()) { _, _, handler in
-                        
-                        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-                            
-                            fatalError("Exception: XYZMainSplitViewController is expected" )
-                        }
-                        
-                        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-                        let copyUrlOption = UIAlertAction(title: "Share expense url".localized(), style: .default, handler: { (action) in
-                            
-                            let vc = UIActivityViewController(activityItems: [url], applicationActivities: [])
-                            self.present(vc, animated: true, completion: {
-
-                                self.delegate?.reloadData()
-                                self.loadData()
-                            })
-                            
-                            mainSplitView.popOverAlertController = nil
-                            handler(true)
-                        })
-                        
-                        let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: { (action) in
-                            
-                            mainSplitView.popOverAlertController = nil
-                            handler(true)
-                        })
-                        
-                        optionMenu.addAction(copyUrlOption)
-                        optionMenu.addAction(cancelAction)
-                        
-                        mainSplitView.popOverAlertController = optionMenu
-                        self.present(optionMenu, animated: true, completion: nil)
-                    }
-                    
-                    more.image = UIImage(named: "more")
-                    commands.append(more)
-                }
-            }
-            */
         }
         
         return UISwipeActionsConfiguration(actions: commands)
@@ -547,12 +500,13 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         self.present(expenseDetailNavigationController, animated: true, completion: nil)
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
+        
+        guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
             
-            fatalError("Exception: XYZMainSplitViewController is expected" )
+            fatalError("Exception: XYZMainUITabBarController is expected")
         }
         
-        mainSplitView.popOverNavigatorController = expenseDetailNavigationController
+        tabBarController.popOverNavigatorController = expenseDetailNavigationController
     }
 
     /*

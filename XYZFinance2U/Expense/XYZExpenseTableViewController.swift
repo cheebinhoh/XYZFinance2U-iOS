@@ -20,7 +20,6 @@ protocol XYZExpenseTableViewDelegate: class {
 
 class XYZExpenseTableViewController: UITableViewController,
     XYZTableViewReloadData,
-    UISplitViewControllerDelegate,
     UIViewControllerPreviewingDelegate,
     UISearchControllerDelegate,
     UISearchBarDelegate,
@@ -63,13 +62,7 @@ class XYZExpenseTableViewController: UITableViewController,
     var isPopover = false
     var isCollapsed: Bool {
         
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-            
-            fatalError("Exception: XYZMainSplitViewController is expected" )
-        }
-        
-        return mainSplitView.isCollapsed
+        return true
     }
     
     // MARK: - IBAction
@@ -90,12 +83,13 @@ class XYZExpenseTableViewController: UITableViewController,
         }
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
+        
+        guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
             
-            fatalError("Exception: XYZMainSplitViewController is expected" )
+            fatalError("Exception: XYZMainUITabBarControllerXYZMainUITabBarController is expected" )
         }
         
-        mainSplitView.popOverNavigatorController = expenseDetailNavigationController
+        tabBarController.popOverNavigatorController = expenseDetailNavigationController
         
         expenseDetailTableView.setPopover(delegate: self)
         expenseDetailTableView.currencyCodes = currencyCodes
@@ -118,12 +112,13 @@ class XYZExpenseTableViewController: UITableViewController,
         if let _ = viewController.expense {
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
+            
+            guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
                 
-                fatalError("Exception: XYZMainSplitViewController is expected" )
+                fatalError("Exception: XYZMainUITabBarControllerXYZMainUITabBarController is expected" )
             }
             
-            mainSplitView.popOverAlertController = nil
+            tabBarController.popOverAlertController = nil
             
             tableView(tableView, didSelectRowAt: viewController.indexPath!)
         }
@@ -1004,12 +999,13 @@ class XYZExpenseTableViewController: UITableViewController,
             }
             
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
+
+            guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
                 
-                fatalError("Exception: XYZMainSplitViewController is expected" )
+                fatalError("Exception: XYZMainUITabBarControllerXYZMainUITabBarController is expected" )
             }
             
-            mainSplitView.popOverNavigatorController = expenseDetailNavigationController
+            tabBarController.popOverNavigatorController = expenseDetailNavigationController
             
             //let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]
             let sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
@@ -1264,12 +1260,13 @@ class XYZExpenseTableViewController: UITableViewController,
                     self.present(expenseDetailNavigationController, animated: true, completion: nil)
                     
                     let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                    guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
+                    
+                    guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
                         
-                        fatalError("Exception: XYZMainSplitViewController is expected" )
+                        fatalError("Exception: XYZMainUITabBarControllerXYZMainUITabBarController is expected" )
                     }
                     
-                    mainSplitView.popOverNavigatorController = expenseDetailNavigationController
+                    tabBarController.popOverNavigatorController = expenseDetailNavigationController
                 } else {
                     
                     guard let detailTableViewController = delegate as? XYZExpenseDetailTableViewController else {
@@ -1342,84 +1339,4 @@ class XYZExpenseTableViewController: UITableViewController,
         }
     }
      */
- 
-    // MARK: - splitview delegate
-    func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {
-        
-        guard let expenseDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "expenseDetailNavigationController") as? UINavigationController else {
-            
-            fatalError("Exception: ExpenseDetailNavigationController is expected")
-        }
-        
-        guard let expenseDetailTableViewController = expenseDetailNavigationController.viewControllers.first as? XYZExpenseDetailTableViewController else {
-            
-            fatalError("Exception: XYZExpenseDetailTableViewController is expected")
-        }
-        
-        expenseDetailTableViewController.navigationItem.title = ""
-        self.delegate = expenseDetailTableViewController
-        
-        return expenseDetailNavigationController
-    }
-    
-    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
-        
-        self.delegate = nil
-        secondaryViewController.navigationItem.title = "New"
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        
-        for expense in (appDelegate?.expenseList)! {
-            
-            let indexPath = self.indexPath(of: expense)
-            
-            if let _ = indexPath {
-                
-                tableView.deselectRow(at: indexPath!, animated: false)
-            }
-        }
-        
-        if let navigationController = secondaryViewController as? UINavigationController {
-            
-            if let expenseDetailTableViewController = navigationController.viewControllers.first as? XYZExpenseDetailTableViewController {
-                
-                expenseDetailTableViewController.expenseDelegate = self
-                expenseDetailTableViewController.isPushinto = true
-                
-                if !isPopover && expenseDetailTableViewController.modalEditing {
-                    
-                    expenseDetailTableViewController.isPushinto = false
-                    expenseDetailTableViewController.isPopover = true
-                    navigationController.modalPresentationStyle = .popover
-
-                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                    guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-                        
-                        fatalError("Exception: XYZMainSplitViewController is expected" )
-                    }
-                    
-                    mainSplitView.popOverNavigatorController = navigationController
-                    
-                    OperationQueue.main.addOperation {
-                        
-                       self.present(navigationController, animated: true, completion: nil)
-                    }
-                }
-            }
-        }
-        
-        navigationItem.leftBarButtonItem?.isEnabled = true
-        navigationItem.rightBarButtonItem?.isEnabled = true
-        
-        isPopover = false
-        
-        return true
-    }
-    
-    /* Deprecated need: we do not need to prevent landscape mode as we use PopOver view for adding Expense
-    func splitViewControllerSupportedInterfaceOrientations(_ splitViewController: UISplitViewController) -> UIInterfaceOrientationMask
-    {
-        return modalEditing ? UIInterfaceOrientationMask.portrait : UIInterfaceOrientationMask.all
-    }
-     */
-    
 }

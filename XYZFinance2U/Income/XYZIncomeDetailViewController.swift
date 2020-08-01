@@ -32,9 +32,10 @@ class XYZIncomeDetailViewController: UIViewController {
     lazy var previewActions: [UIPreviewActionItem] = {
 
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
+        
+        guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
             
-            fatalError("Exception: XYZMainSplitViewController is expected" )
+            fatalError("Exception: XYZMainUITabBarController is expected" )
         }
         
         let copyAction = UIPreviewAction(title: "Copy balance".localized(), style: .default, handler: { (action, viewcontroller) in
@@ -46,16 +47,16 @@ class XYZIncomeDetailViewController: UIViewController {
                 balance = (self.income?.value(forKey: XYZAccount.amount) as? Double)!
             }
             
-            mainSplitView.popOverAlertController  = nil
+            tabBarController.popOverAlertController  = nil
             UIPasteboard.general.string = "\(balance)"
         })
         
         let cancelAction = UIPreviewAction(title: "Cancel".localized(), style: .default, handler: { (action, viewcontroller) in
             
-            mainSplitView.popOverAlertController  = nil
+            tabBarController.popOverAlertController  = nil
         })
 
-        mainSplitView.popOverAlertController = self
+        tabBarController.popOverAlertController = self
         
         return [copyAction, cancelAction]
     }()

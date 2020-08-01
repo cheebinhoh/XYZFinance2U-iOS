@@ -241,13 +241,7 @@ class XYZBudgetDetailTableViewController: UITableViewController,
     
     var isCollapsed: Bool {
     
-        if let split = self.parent?.parent as? UISplitViewController {
-            
-            return split.isCollapsed
-        } else {
-            
-            return true
-        }
+        return true
     }
     
     // MARK: - IBAction
@@ -328,12 +322,8 @@ class XYZBudgetDetailTableViewController: UITableViewController,
     private func getMasterTableViewController() -> XYZBudgetTableViewController {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-            
-            fatalError("Exception: XYZMainSplitViewController is expected" )
-        }
         
-        guard let tabBarController = mainSplitView.viewControllers.first as? UITabBarController else {
+        guard let tabBarController = appDelegate?.window?.rootViewController as? UITabBarController else {
             
             fatalError("Exception: UITabBarController is expected")
         }
@@ -545,17 +535,6 @@ class XYZBudgetDetailTableViewController: UITableViewController,
         tableView.tableFooterView = UIView(frame: .zero)
 
         navigationItem.largeTitleDisplayMode = .never
-        
-        if let split = self.parent?.parent as? UISplitViewController {
-            
-            if !split.isCollapsed {
-                
-                navigationItem.rightBarButtonItem = nil
-                navigationItem.leftBarButtonItem = nil
-                
-                modalEditing = false
-            }
-        }
         
         if isPopover {
             

@@ -13,7 +13,7 @@ import NotificationCenter
 import os.log
 
 @UIApplicationMain
-class AppDelegate: UIResponder,
+        class AppDelegate: UIResponder,
     UIApplicationDelegate,
     UNUserNotificationCenterDelegate {
 
@@ -75,17 +75,13 @@ class AppDelegate: UIResponder,
                         
                         switch name! {
                         case XYZExpense.type:
-                            guard let splitView = self.window?.rootViewController as? XYZMainSplitViewController else {
-                                
-                                fatalError("Exception: XYZMainSplitViewController is expected")
-                            }
                             
-                            guard let tabbarView = splitView.viewControllers.first as? XYZMainUITabBarController else {
+                            guard let tabBarController = self.window?.rootViewController as? XYZMainUITabBarController else {
                                 
                                 fatalError("Exception: XYZMainUITabBarController is expected")
                             }
                             
-                            guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
+                            guard let expenseNavController = tabBarController.viewControllers?[1] as? UINavigationController else {
                                 
                                 fatalError("Exception: UINavigationController is expected")
                             }
@@ -205,17 +201,13 @@ class AppDelegate: UIResponder,
                             
                                 switch name! {
                                     case XYZExpense.type:
-                                        guard let splitView = self.window?.rootViewController as? XYZMainSplitViewController else {
-                                            
-                                            fatalError("Exception: XYZMainSplitViewController is expected")
-                                        }
-                                        
-                                        guard let tabbarView = splitView.viewControllers.first as? XYZMainUITabBarController else {
+
+                                        guard let tabBarController = self.window?.rootViewController as? XYZMainUITabBarController else {
                                             
                                             fatalError("Exception: XYZMainUITabBarController is expected")
                                         }
                                 
-                                        guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
+                                        guard let expenseNavController = tabBarController.viewControllers?[1] as? UINavigationController else {
                                             
                                             fatalError("Exception: UINavigationController is expected")
                                         }
@@ -284,13 +276,8 @@ class AppDelegate: UIResponder,
         let userinfo = response.notification.request.content.userInfo
         
         if userinfo[XYZAccount.type] != nil {
-            
-            guard let split = self.window?.rootViewController as? UISplitViewController else {
-                
-                fatalError("Exception: UISplitViewController is expected" )
-            }
-            
-            guard let tabBarController = split.viewControllers.first as? UITabBarController else {
+
+            guard let tabBarController = self.window?.rootViewController as? UITabBarController else {
                 
                 fatalError("Exception: UITabBarController is expected" )
             }
@@ -372,12 +359,7 @@ class AppDelegate: UIResponder,
      */
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
 
-        guard let split = self.window?.rootViewController as? XYZMainSplitViewController else {
-            
-            fatalError("Exception: XYZMainSplitViewController is expected" )
-        }
-        
-        guard let tabBarController = split.viewControllers.first as? UITabBarController else {
+        guard let tabBarController = self.window?.rootViewController as? XYZMainUITabBarController else {
             
             fatalError("Exception: UITabBarController is expected" )
         }
@@ -403,10 +385,10 @@ class AppDelegate: UIResponder,
             
             if tableViewController.lockScreenDisplayed {
                 
-                split.dismiss(animated: false, completion: nil)
+                tabBarController.dismiss(animated: false, completion: nil)
                 
                 tableViewController.lockScreenDisplayed = false
-                split.popOverNavigatorController = navController
+                tabBarController.popOverNavigatorController = navController
             }
             
             guard let tableViewController = navigationController.viewControllers[0] as? XYZExpenseTableViewController else {
@@ -467,12 +449,7 @@ class AppDelegate: UIResponder,
         
         self.lastAuthenticated = Date()
         
-        guard let split = self.window?.rootViewController as? XYZMainSplitViewController else {
-            
-            fatalError("Exception: XYZMainSplitViewController is expected" )
-        }
-        
-        guard let tabBarController = split.viewControllers.first as? UITabBarController else {
+        guard let tabBarController = self.window?.rootViewController as? XYZMainUITabBarController else {
             
             fatalError("Exception: UITabBarController is expected" )
         }
@@ -488,17 +465,17 @@ class AppDelegate: UIResponder,
         }
         
         if tableViewController.authenticatedMechanismExist
-            && nil == split.popOverNavigatorController {
+            && nil == tabBarController.popOverNavigatorController {
             
             let defaults = UserDefaults.standard;
             let required = defaults.value(forKey: requiredauthenticationKey) as? Bool ?? false
             
             if ( required ) {
             
-                if nil != split.popOverAlertController {
+                if nil != tabBarController.popOverAlertController {
                     
-                    split.dismiss(animated: true, completion: nil)
-                    split.popOverAlertController = nil
+                    tabBarController.dismiss(animated: true, completion: nil)
+                    tabBarController.popOverAlertController = nil
                 }
                 
                 tableViewController.lockout()
@@ -509,12 +486,8 @@ class AppDelegate: UIResponder,
     func applicationWillEnterForeground(_ application: UIApplication) {
 
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-        guard let split = self.window?.rootViewController as? UISplitViewController else {
-            
-            fatalError("Exception: UISplitViewController is expected" )
-        }
-        
-        guard let tabBarController = split.viewControllers.first as? UITabBarController else {
+
+        guard let tabBarController = self.window?.rootViewController as? UITabBarController else {
             
             fatalError("Exception: UITabBarController is expected" )
         }
@@ -542,12 +515,7 @@ class AppDelegate: UIResponder,
         
         if !authentictatedAlready {
             
-            guard let split = self.window?.rootViewController as? UISplitViewController else {
-                
-                fatalError("Exception: UISplitViewController is expected" )
-            }
-            
-            guard let tabBarController = split.viewControllers.first as? UITabBarController else {
+            guard let tabBarController = self.window?.rootViewController as? UITabBarController else {
                 
                 fatalError("Exception: UITabBarController is expected" )
             }
@@ -615,17 +583,12 @@ class AppDelegate: UIResponder,
     
     func syncWithiCloudAndCoreData() {
         
-        guard let splitView = self.window?.rootViewController as? XYZMainSplitViewController else {
-            
-            fatalError("Exception: XYZMainSplitViewController is expected")
-        }
-        
-        guard let tabbarView = splitView.viewControllers.first as? XYZMainUITabBarController else {
+        guard let tabBarController = self.window?.rootViewController as? XYZMainUITabBarController else {
             
             fatalError("Exception: XYZMainUITabBarController is expected")
         }
         
-        guard let navController = tabbarView.viewControllers?.first as? UINavigationController else {
+        guard let navController = tabBarController.viewControllers?.first as? UINavigationController else {
             
             fatalError("Exception: UINavigationController is expected")
         }
@@ -635,7 +598,7 @@ class AppDelegate: UIResponder,
             fatalError("Exception: XYZIncomeTableViewController is expected")
         }
         
-        guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
+        guard let expenseNavController = tabBarController.viewControllers?[1] as? UINavigationController else {
             
             fatalError("Exception: UINavigationController is expected")
         }
@@ -645,7 +608,7 @@ class AppDelegate: UIResponder,
             fatalError("Exception: XYZExpenseTableViewController is expected")
         }
         
-        guard let budgetNavController = tabbarView.viewControllers?[2] as? UINavigationController else {
+        guard let budgetNavController = tabBarController.viewControllers?[2] as? UINavigationController else {
             
             fatalError("Exception: budgetNavController is expected")
         }

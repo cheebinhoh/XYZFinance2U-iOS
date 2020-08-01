@@ -10,6 +10,9 @@ import UIKit
 class XYZMainUITabBarController: UITabBarController,
     UITabBarControllerDelegate {
 
+    weak var popOverNavigatorController: UINavigationController?
+    weak var popOverAlertController: UIViewController?
+    
     // MARK: - function
     
     override func viewDidLoad() {
@@ -17,24 +20,6 @@ class XYZMainUITabBarController: UITabBarController,
         super.viewDidLoad()
 
         self.delegate = self
-
-        guard let split = self.parent as? UISplitViewController else {
-            
-            fatalError("Exception: UISplitViewController is expected")
-        }
-        
-        guard let navController = self.viewControllers?.first as? UINavigationController else {
-            
-            fatalError("Exception: UINavigationController is expected")
-        }
-        
-        if let incomeRoot = navController.viewControllers.first as? XYZIncomeTableViewController {
-            
-            split.delegate = incomeRoot
-        } else {
-            
-            fatalError("Exception: XYZIncomeTableViewController is expected")
-        }
         
         /* We do not need notification action and category as identifier itself is enough for us now.
         let updateAction = UNNotificationAction(identifier: "review", title: "Review", options: [])
@@ -54,23 +39,9 @@ class XYZMainUITabBarController: UITabBarController,
     
     // when we switch the tab, we want to create proper secondary detail view in the master-detail view.
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        
-        var masterViewNavController: UINavigationController?
-        
-        guard let split = self.parent as? UISplitViewController else {
-            
-            fatalError("Exception: UISplitViewController is expected")
-        }
-
-        if !split.isCollapsed && split.viewControllers.count > 1 {
-            
-            masterViewNavController = split.viewControllers.last as? UINavigationController
-            
-            guard nil != masterViewNavController else {
-                
-                fatalError("Exception: UINavigationController is expected")
-            }
-        }
+  
+        /*
+        let masterViewNavController: UINavigationController?
         
         guard let navController = viewController as? UINavigationController else {
             
@@ -78,8 +49,6 @@ class XYZMainUITabBarController: UITabBarController,
         }
         
         if let incomeRoot = navController.viewControllers.first as? XYZIncomeTableViewController {
-            
-            split.delegate = incomeRoot
             
             if nil == masterViewNavController {
                 
@@ -105,9 +74,7 @@ class XYZMainUITabBarController: UITabBarController,
                 masterViewNavController?.setViewControllers([incomeDetailTableViewController], animated: false)
             }
         } else if let expenseRoot = navController.viewControllers.first as? XYZExpenseTableViewController  {
-            
-            split.delegate = expenseRoot
-            
+
             if nil == masterViewNavController {
                 
                 // empty
@@ -132,9 +99,7 @@ class XYZMainUITabBarController: UITabBarController,
                 masterViewNavController?.setViewControllers([expenseDetailTableViewController], animated: false)
             }
         } else if let budgetRoot = navController.viewControllers.first as? XYZBudgetTableViewController {
-            
-            split.delegate = budgetRoot
-            
+                     
             budgetRoot.reloadData()
             
             if nil == masterViewNavController {
@@ -161,9 +126,7 @@ class XYZMainUITabBarController: UITabBarController,
                 masterViewNavController?.setViewControllers([budgetDetailTableViewController], animated: false)
             }
         } else if let settingRoot = navController.viewControllers.first as? XYZSettingTableViewController {
-            
-            split.delegate = settingRoot
-            
+           
             if nil == masterViewNavController {
                 
                 // empty
@@ -185,7 +148,7 @@ class XYZMainUITabBarController: UITabBarController,
                 settingRoot.delegate = settingDetailTableViewController
                 masterViewNavController?.setViewControllers([settingDetailTableViewController], animated: false)
             }
-        }
+        } */
     }
     
     /*

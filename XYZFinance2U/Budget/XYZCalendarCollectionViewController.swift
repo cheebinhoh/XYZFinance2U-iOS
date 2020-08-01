@@ -24,18 +24,13 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
         appDelegate?.expenseList.append(expense)
         
         saveManageContext()
-        
-        guard let splitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-            
-            fatalError("Exception: XYZMainSplitViewController is expected")
-        }
-        
-        guard let tabbarView = splitView.viewControllers.first as? XYZMainUITabBarController else {
+  
+        guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
             
             fatalError("Exception: XYZMainUITabBarController is expected")
         }
         
-        guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
+        guard let expenseNavController = tabBarController.viewControllers?[1] as? UINavigationController else {
             
             fatalError("Exception: UINavigationController is expected")
         }
@@ -45,7 +40,7 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
             fatalError("Exception: XYZExpenseTableViewController is expected")
         }
     
-        guard let budgetNavController = tabbarView.viewControllers?[2] as? UINavigationController else {
+        guard let budgetNavController = tabBarController.viewControllers?[2] as? UINavigationController else {
             
             fatalError("Exception: UINavigationController is expected")
         }
@@ -283,18 +278,13 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
         appDelegate?.expenseList = loadExpenses()!
-        
-        guard let splitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-            
-            fatalError("Exception: XYZMainSplitViewController is expected" )
-        }
-        
-        guard let tabbarView = splitView.viewControllers.first as? XYZMainUITabBarController else {
+  
+        guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
             
             fatalError("Exception: XYZMainUITabBarController is expected")
         }
         
-        guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
+        guard let expenseNavController = tabBarController.viewControllers?[1] as? UINavigationController else {
             
             fatalError("Exception: UINavigationController is expected")
         }
@@ -306,7 +296,7 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
         
         expenseView.reloadData()
         
-        guard let budgetNavController = tabbarView.viewControllers?[2] as? UINavigationController else {
+        guard let budgetNavController = tabBarController.viewControllers?[2] as? UINavigationController else {
             
             fatalError("Exception: UINavigationController is expected")
         }
@@ -416,9 +406,10 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
             if monthLevel {
                 
                 let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
+
+                guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
                     
-                    fatalError("Exception: XYZMainSplitViewController is expected" )
+                    fatalError("Exception: XYZMainUITabBarController is expected")
                 }
                 
                 let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -434,7 +425,7 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
                         fatalError("Exception: XYZExpenseDetailTableViewController is expected" )
                     }
                     
-                    mainSplitView.popOverNavigatorController = expenseDetailNavigationController
+                    tabBarController.popOverNavigatorController = expenseDetailNavigationController
                     
                     let currrency = self.budget?.value(forKey: XYZBudget.currency) as? String
                     let budgetGroup = self.budget?.value(forKey: XYZBudget.name) as? String
@@ -452,13 +443,13 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
                 
                 let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: { (action) in
                     
-                    mainSplitView.popOverAlertController = nil
+                    tabBarController.popOverAlertController = nil
                 })
                 
                 optionMenu.addAction(copyUrlOption)
                 optionMenu.addAction(cancelAction)
                 
-                mainSplitView.popOverAlertController = optionMenu
+                tabBarController.popOverAlertController = optionMenu
                 self.present(optionMenu, animated: true, completion: nil)
             } else if (tapIndexPath?.row)! > 0 {
                 

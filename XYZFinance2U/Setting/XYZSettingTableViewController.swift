@@ -12,7 +12,6 @@ import CloudKit
 import UIKit
 
 class XYZSettingTableViewController: UITableViewController,
-    UISplitViewControllerDelegate,
     UIDocumentPickerDelegate,
     XYZSettingTextTableViewCellDelegate {
     
@@ -21,14 +20,8 @@ class XYZSettingTableViewController: UITableViewController,
     var delegate: UIViewController?
     var popoverView: UIViewController?
     var isCollapsed: Bool {
-        
-        if let split = self.parent?.parent as? UISplitViewController {
-            
-            return split.isCollapsed
-        } else {
-            
-            return true
-        }
+
+        return true
     }
     
     // MARK: - function
@@ -66,14 +59,9 @@ class XYZSettingTableViewController: UITableViewController,
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
-        guard let split = appDelegate?.window?.rootViewController as? UISplitViewController else {
-            
-            fatalError("Exception: UISplitViewController is expected" )
-        }
+        guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
         
-        guard let tabBarController = split.viewControllers.first as? UITabBarController else {
-            
-            fatalError("Exception: UITabBarController is expected" )
+            fatalError("Exception: XYZMainUITabBarController is expected")
         }
         
         guard let navController = tabBarController.viewControllers?.first as? UINavigationController else {
@@ -290,23 +278,15 @@ class XYZSettingTableViewController: UITableViewController,
             settingDetail = settingDetailNavigationController.viewControllers.first as? XYZSettingDetailTableViewController
 
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
+            guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
                 
-                fatalError("Exception: XYZMainSplitViewController is expected" )
+                fatalError("Exception: XYZMainUITabBarController is expected")
             }
             
-            if mainSplitView.isCollapsed {
-                
-                mainSplitView.popOverAlertController = settingDetailNavigationController
-                settingDetail?.setPopover(true)
-                popoverView = settingDetail
-                self.present(settingDetailNavigationController, animated: false, completion: nil)
-            } else {
-                
-                delegate = settingDetail!
-                mainSplitView.viewControllers.remove(at: 1)
-                mainSplitView.viewControllers.insert(settingDetailNavigationController, at: 1)
-            }
+            tabBarController.popOverAlertController = settingDetailNavigationController
+            settingDetail?.setPopover(true)
+            popoverView = settingDetail
+            self.present(settingDetailNavigationController, animated: false, completion: nil)
         }
         
         loadSettingDetailTableView(settingDetail!, indexPath)
@@ -327,12 +307,12 @@ class XYZSettingTableViewController: UITableViewController,
                 uiDocumentPicker.modalPresentationStyle = UIModalPresentationStyle.formSheet
                 
                 let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
+                guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
                     
-                    fatalError("Exception: XYZMainSplitViewController is expected" )
+                    fatalError("Exception: XYZMainUITabBarController is expected" )
                 }
                 
-                mainSplitView.popOverAlertController = uiDocumentPicker
+                tabBarController.popOverAlertController = uiDocumentPicker
                 
                 self.present(uiDocumentPicker, animated: true, completion: nil)
             } catch {/* error handling here */
@@ -377,17 +357,12 @@ class XYZSettingTableViewController: UITableViewController,
         appDelegate?.incomeList = [XYZAccount]()
         zone.data = appDelegate?.incomeList
         
-        guard let splitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-            
-            fatalError("Exception: XYZMainSplitViewController is expected" )
-        }
-        
-        guard let tabbarView = splitView.viewControllers.first as? XYZMainUITabBarController else {
+        guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
             
             fatalError("Exception: XYZMainUITabBarController is expected")
         }
         
-        guard let incomeNavController = tabbarView.viewControllers?[0] as? UINavigationController else {
+        guard let incomeNavController = tabBarController.viewControllers?[0] as? UINavigationController else {
             
             fatalError("Exception: UINavigationController is expected")
         }
@@ -459,17 +434,12 @@ class XYZSettingTableViewController: UITableViewController,
         appDelegate?.expenseList = [XYZExpense]()
         zone.data = appDelegate?.expenseList
         
-        guard let splitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-            
-            fatalError("Exception: XYZMainSplitViewController is expected" )
-        }
-        
-        guard let tabbarView = splitView.viewControllers.first as? XYZMainUITabBarController else {
+        guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
             
             fatalError("Exception: XYZMainUITabBarController is expected")
         }
         
-        guard let expenseNavController = tabbarView.viewControllers?[1] as? UINavigationController else {
+        guard let expenseNavController = tabBarController.viewControllers?[1] as? UINavigationController else {
             
             fatalError("Exception: UINavigationController is expected")
         }
@@ -523,17 +493,12 @@ class XYZSettingTableViewController: UITableViewController,
         appDelegate?.budgetList = [XYZBudget]()
         zone.data = appDelegate?.budgetList
         
-        guard let splitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-            
-            fatalError("Exception: XYZMainSplitViewController is expected" )
-        }
-        
-        guard let tabbarView = splitView.viewControllers.first as? XYZMainUITabBarController else {
+        guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
             
             fatalError("Exception: XYZMainUITabBarController is expected")
         }
         
-        guard let budgetNavController = tabbarView.viewControllers?[2] as? UINavigationController else {
+        guard let budgetNavController = tabBarController.viewControllers?[2] as? UINavigationController else {
             
             fatalError("Exception: UINavigationController is expected")
         }
@@ -554,9 +519,9 @@ class XYZSettingTableViewController: UITableViewController,
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
+        guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {
             
-            fatalError("Exception: XYZMainSplitViewController is expected" )
+            fatalError("Exception: XYZMainUITabBarController is expected" )
         }
         
         if sectionList[indexPath.section].cellList[indexPath.row] == "Export" {
@@ -589,11 +554,11 @@ class XYZSettingTableViewController: UITableViewController,
             
             let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler:{ (action) in
                 
-                mainSplitView.popOverAlertController = nil
+                tabBarController.popOverAlertController = nil
             })
             
             optionMenu.addAction(cancelAction)
-            mainSplitView.popOverAlertController = optionMenu
+            tabBarController.popOverAlertController = optionMenu
             
             present(optionMenu, animated: true, completion: nil)
         } else if sectionList[indexPath.section].cellList[indexPath.row] == "DeleteData" {
@@ -622,11 +587,11 @@ class XYZSettingTableViewController: UITableViewController,
             
             let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler:{ (action) in
                 
-                mainSplitView.popOverAlertController = nil
+                tabBarController.popOverAlertController = nil
             })
             
             optionMenu.addAction(cancelAction)
-            mainSplitView.popOverAlertController = optionMenu
+            tabBarController.popOverAlertController = optionMenu
             
             present(optionMenu, animated: true, completion: nil)
         } else if sectionList[indexPath.section].cellList[indexPath.row] == "SynciCloud" {
@@ -634,7 +599,7 @@ class XYZSettingTableViewController: UITableViewController,
             let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             let deleteOption = UIAlertAction(title: "Update to iCloud".localized(), style: .default, handler: { (action) in
                 
-                mainSplitView.popOverAlertController = nil
+                tabBarController.popOverAlertController = nil
                 let appDelegate = UIApplication.shared.delegate as? AppDelegate
                 
                 appDelegate?.syncWithiCloudAndCoreData()
@@ -642,13 +607,13 @@ class XYZSettingTableViewController: UITableViewController,
             
             let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler:{ (action) in
              
-                mainSplitView.popOverAlertController = nil
+                tabBarController.popOverAlertController = nil
             })
             
             optionMenu.addAction(deleteOption)
             optionMenu.addAction(cancelAction)
             
-            mainSplitView.popOverAlertController = optionMenu
+            tabBarController.popOverAlertController = optionMenu
             present(optionMenu, animated: true, completion: nil)
         } else if sectionList[indexPath.section].cellList[indexPath.row] == "Lockout" {
             
@@ -690,65 +655,6 @@ class XYZSettingTableViewController: UITableViewController,
             
             showAbout(indexPath)
         }
-    }
-    
-    func splitViewController(_ splitViewController: UISplitViewController, separateSecondaryFrom primaryViewController: UIViewController) -> UIViewController? {
-        
-        if let _ = popoverView {
-            
-            dismiss(animated: false, completion: nil)
-            popoverView = nil
-        }
-        
-        guard let settingDetailNavigationController = self.storyboard?.instantiateViewController(withIdentifier: "settingDetailNavigationController") as? UINavigationController else {
-            
-            fatalError("Exception: error on instantiating settingDetailNavigationController")
-        }
-
-        guard let settingDetailTableViewController = settingDetailNavigationController.viewControllers.first as? XYZSettingDetailTableViewController else {
-            
-            fatalError("Exception: XYZSettingDetailTableViewController is expected")
-        }
-        
-        delegate = settingDetailTableViewController
-    
-        return settingDetailNavigationController
-    }
-    
-    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
-        
-        /* DEPRECATED
-        for (sectionIndex, section) in tableSectionCellList.enumerated() {
-            
-            for (rowIndex, _) in section.cellList.enumerated() {
-                
-                let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
-                tableView.deselectRow(at: indexPath, animated: false)
-            }
-        }
-        
-        if let navigationController = secondaryViewController as? UINavigationController {
-            
-            if let settingDetailTableViewController = navigationController.viewControllers.first as? XYZSettingDetailTableViewController {
-                
-                if !settingDetailTableViewController.isPopover {
-                    
-                    //settingDetailTableViewController.setPopover(true)
-                    //navigationController.modalPresentationStyle = .popover
-                    //OperationQueue.main.addOperation {
-                    //
-                    //    self.present(navigationController, animated: true, completion: nil)
-                    //}
-                }
-            }
-        }
-    
-        return true
-        */
-        
-        delegate = nil
-        
-        return true
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

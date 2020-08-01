@@ -3,7 +3,7 @@
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 11/27/17.
-//  Copyright © 2017 - 2019 Chee Bin Hoh. All rights reserved.
+//  Copyright © 2017 - 2020 Chee Bin Hoh. All rights reserved.
 //
 
 import os.log
@@ -48,16 +48,16 @@ class XYZAccount : NSManagedObject {
 
     // MARK: - property
     
-    var accountNr: String = ""
-    var amount: Double = 0.0
-    var bank: String = ""
+    var accountNr = ""
+    var amount = 0.0
+    var bank = ""
     var currencyCode: String = Locale.current.currencyCode!
-    var lastRecordChange: Date = Date()
-    var lastUpdate: Date = Date()
-    var principal: Double = 0.0
-    var recordId: String = ""
-    var repeatAction: String = ""
-    var repeatDate: Date = Date()
+    var lastRecordChange = Date()
+    var lastUpdate = Date()
+    var principal = 0.0
+    var recordId = ""
+    var repeatAction = ""
+    var repeatDate = Date()
     var sequenceNr = 0
     
     // MARK: - function
@@ -86,9 +86,9 @@ class XYZAccount : NSManagedObject {
         self.setValue(principal, forKey: XYZAccount.principal)
     }
     
-     override init(entity: NSEntityDescription,
-                   insertInto context: NSManagedObjectContext?) {
-        
+    override init(entity: NSEntityDescription,
+                  insertInto context: NSManagedObjectContext?) {
+
         super.init(entity: entity, insertInto: context)
     }
 }

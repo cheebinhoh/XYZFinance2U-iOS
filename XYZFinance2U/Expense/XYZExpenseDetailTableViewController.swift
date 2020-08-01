@@ -821,13 +821,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
     var expense: XYZExpense?
     var isCollapsed: Bool {
         
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-            
-            fatalError("Exception: XYZMainSplitViewController is expected" )
-        }
-        
-        return mainSplitView.isCollapsed
+        return true
     }
     
     var isPushinto = false
@@ -851,12 +845,8 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         var masterViewController: XYZExpenseTableViewController?
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        guard let mainSplitView = appDelegate?.window?.rootViewController as? XYZMainSplitViewController else {
-            
-            fatalError("Exception: XYZMainSplitViewController is expected" )
-        }
         
-        guard let tabBarController = mainSplitView.viewControllers.first as? UITabBarController else {
+        guard let tabBarController = appDelegate?.window?.rootViewController  as? UITabBarController else {
             
             fatalError("Exception: UITabBarController is expected")
         }

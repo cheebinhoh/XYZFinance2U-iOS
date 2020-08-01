@@ -81,7 +81,7 @@ class XYZExpense: NSManagedObject {
     func getOccurenceDates(until: Date) -> [Date] {
         
         var outputDate = [Date]()
-        let recurring = XYZExpense.Length(rawValue: self.value(forKey: XYZExpense.recurring) as! String)
+        let recurring = XYZExpense.Length(rawValue: self.value(forKey: XYZExpense.recurring) as! String) ?? .none
         
         switch recurring {
             
@@ -105,7 +105,7 @@ class XYZExpense: NSManagedObject {
                 repeat {
                     outputDate.append(date!)
                     
-                    switch recurring! {
+                    switch recurring {
                         case .none:
                             date = Calendar.current.date(byAdding: .day,
                                                          value:1,
