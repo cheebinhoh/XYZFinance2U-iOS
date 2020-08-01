@@ -230,7 +230,7 @@ func createUpdateExpense(record: CKRecord,
     
         if let locationData = record[XYZExpense.loction] as? CLLocation {
             
-            let data = NSKeyedArchiver.archivedData(withRootObject: locationData)
+            let data = try! NSKeyedArchiver.archivedData(withRootObject: locationData, requiringSecureCoding: false)
             
             expenseToBeUpdated?.setValue(data, forKey: XYZExpense.loction)
         }
@@ -358,7 +358,8 @@ func fetchiCloudZoneChange(database: CKDatabase,
  
     let aContext = managedContext()
     var changedZoneIDs: [CKRecordZone.ID] = []
-    var optionsByRecordZoneID = [CKRecordZone.ID: CKFetchRecordZoneChangesOperation.ZoneOptions]()
+    var optionsByRecordZoneID = [CKRecordZone.ID: CKFetchRecordZoneChangesOperation.ZoneConfiguration]()
+    // [CKRecordZone.ID: CKFetchRecordZoneChangesOperation.ZoneOptions]()
     var unprocessedCkrecords = [CKRecord]()
     
     for zone in zones {
@@ -374,7 +375,7 @@ func fetchiCloudZoneChange(database: CKDatabase,
                 
                 if let data = icloudzone.value(forKey: XYZiCloudZone.changeToken) as? Data {
                 
-                    changeToken = (NSKeyedUnarchiver.unarchiveObject(with: data) as? CKServerChangeToken)
+                    changeToken = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? CKServerChangeToken
                 } else {
                     
                 }
@@ -383,14 +384,14 @@ func fetchiCloudZoneChange(database: CKDatabase,
             }
         }
         
-        let option = CKFetchRecordZoneChangesOperation.ZoneOptions()
+        let option = CKFetchRecordZoneChangesOperation.ZoneConfiguration()
         option.previousServerChangeToken = changeToken
         
         optionsByRecordZoneID[zone.zoneID] = option
     }
     
-    let opZoneChange = CKFetchRecordZoneChangesOperation(recordZoneIDs: changedZoneIDs, optionsByRecordZoneID: optionsByRecordZoneID )
-    
+    let opZoneChange = CKFetchRecordZoneChangesOperation(recordZoneIDs: changedZoneIDs, configurationsByRecordZoneID: optionsByRecordZoneID)
+
     opZoneChange.recordChangedBlock = { (record) in
         
         let ckrecordzone = CKRecordZone(zoneName: record.recordID.zoneID.zoneName)
@@ -579,7 +580,7 @@ func fetchiCloudZoneChange(database: CKDatabase,
                     
                     if let data = icloudzone.value(forKey: XYZiCloudZone.changeToken) as? Data {
                         
-                        let previousChangeToken = (NSKeyedUnarchiver.unarchiveObject(with: data) as? CKServerChangeToken)
+                        let previousChangeToken = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? CKServerChangeToken
                         hasChangeToken = previousChangeToken != token!
                     }
                     
@@ -587,7 +588,7 @@ func fetchiCloudZoneChange(database: CKDatabase,
                         
                         let lastTokenFetchDate = Date()
                         
-                        let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: token! )
+                        let archivedChangeToken = try! NSKeyedArchiver.archivedData(withRootObject: token!, requiringSecureCoding: false)
                         icloudzone.setValue(archivedChangeToken, forKey: XYZiCloudZone.changeToken)
                         icloudzone.setValue(lastTokenFetchDate, forKey: XYZiCloudZone.changeTokenLastFetch)
                     }
@@ -653,7 +654,7 @@ func fetchiCloudZoneChange(database: CKDatabase,
               
                     if let data = icloudzone.value(forKey: XYZiCloudZone.changeToken) as? Data {
                         
-                        let previousChangeToken = (NSKeyedUnarchiver.unarchiveObject(with: data) as? CKServerChangeToken)
+                        let previousChangeToken = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? CKServerChangeToken
                         hasChangeToken = previousChangeToken != changeToken!
                     }
                     
@@ -661,7 +662,7 @@ func fetchiCloudZoneChange(database: CKDatabase,
 
                         let lastTokenFetchDate = Date()
                         
-                        let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: changeToken! )
+                        let archivedChangeToken = try! NSKeyedArchiver.archivedData(withRootObject: changeToken!, requiringSecureCoding: false)
                         icloudzone.setValue(archivedChangeToken, forKey: XYZiCloudZone.changeToken)
                         icloudzone.setValue(lastTokenFetchDate, forKey: XYZiCloudZone.changeTokenLastFetch)
                     }
@@ -837,13 +838,13 @@ func saveExpensesToiCloud(database: CKDatabase,
         
         fatalError("Exception: data is expected for deleteRecordIdList")
     }
-    
-    guard let deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+
+    guard let deleteRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
         
         fatalError("Exception: deleteRecordList is expected as [String]")
     }
-
-    for deleteRecordName in deleteRecordLiset {
+    
+    for deleteRecordName in deleteRecordList {
         
         if deleteRecordName != "" {
             
@@ -859,13 +860,13 @@ func saveExpensesToiCloud(database: CKDatabase,
         
         fatalError("Exception: data is expected for deleteRecordIdList")
     }
-    
-    guard let deleteShareRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: shareData) as? [String]) else {
+
+    guard let deleteShareRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(shareData) as? [String] else {
         
-        fatalError("Exception: deleteRecordList is expected as [String]")
+        fatalError("Exception: deleteShareRecordList is expected as [String]")
     }
-    
-    for deleteRecordName in deleteShareRecordLiset {
+
+    for deleteRecordName in deleteShareRecordList {
         
         if deleteRecordName != "" {
             
@@ -964,7 +965,7 @@ func saveExpensesToiCloud(database: CKDatabase,
         
         if hasLocation, let data = expense.value(forKey: XYZExpense.loction) as? Data {
             
-            if let cllocation = NSKeyedUnarchiver.unarchiveObject(with: data) as? CLLocation {
+            if let cllocation = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? CLLocation {
             
                 record.setValue(cllocation, forKey: XYZExpense.loction)
             }
@@ -1026,7 +1027,7 @@ func saveExpensesToiCloud(database: CKDatabase,
         
         OperationQueue.main.addOperation {
             
-            let data = NSKeyedArchiver.archivedData(withRootObject: [String]())
+            let data = try! NSKeyedArchiver.archivedData(withRootObject: [String](), requiringSecureCoding: false)
             iCloudZone.setValue(data, forKey: XYZiCloudZone.deleteRecordIdList)
             
             for (index, expense) in expenseList.enumerated() {
@@ -1091,12 +1092,12 @@ func saveAccountsToiCloud(database: CKDatabase,
         fatalError("Exception: data is expected for deleteRecordIdList")
     }
     
-    guard let deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+    guard let deleteRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
         
         fatalError("Exception: deleteRecordList is expected as [String]")
     }
     
-    for deleteRecordName in deleteRecordLiset {
+    for deleteRecordName in deleteRecordList {
         
         let customZone = CKRecordZone(zoneName: XYZAccount.type)
 
@@ -1165,7 +1166,7 @@ func saveAccountsToiCloud(database: CKDatabase,
     
         OperationQueue.main.addOperation {
             
-            let data = NSKeyedArchiver.archivedData(withRootObject: [String]())
+            let data = try! NSKeyedArchiver.archivedData(withRootObject: [String](), requiringSecureCoding: false)
             iCloudZone.setValue(data, forKey: XYZiCloudZone.deleteRecordIdList)
             iCloudZone.setValue(data, forKey: XYZiCloudZone.deleteShareRecordIdList)
             
@@ -1214,13 +1215,13 @@ func saveBudgetsToiCloud(database: CKDatabase,
         
         fatalError("Exception: data is expected for deleteRecordIdList")
     }
-    
-    guard let deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+
+    guard let deleteRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
         
         fatalError("Exception: deleteRecordList is expected as [String]")
     }
-    
-    for deleteRecordName in deleteRecordLiset {
+
+    for deleteRecordName in deleteRecordList {
         
         let customZone = CKRecordZone(zoneName: XYZBudget.type)
         
@@ -1289,7 +1290,7 @@ func saveBudgetsToiCloud(database: CKDatabase,
         
         OperationQueue.main.addOperation {
             
-            let data = NSKeyedArchiver.archivedData(withRootObject: [String]())
+            let data = try! NSKeyedArchiver.archivedData(withRootObject: [String](), requiringSecureCoding: false)
             iCloudZone.setValue(data, forKey: XYZiCloudZone.deleteRecordIdList)
             iCloudZone.setValue(data, forKey: XYZiCloudZone.deleteShareRecordIdList)
             

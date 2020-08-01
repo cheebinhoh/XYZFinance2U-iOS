@@ -393,10 +393,10 @@ class XYZBudgetDetailTableViewController: UITableViewController,
         }
         
         var hasChanged = false
-        let dataAmount = NSKeyedArchiver.archivedData(withRootObject: processedHistoricalAmount)
-        let dataDate = NSKeyedArchiver.archivedData(withRootObject: processedHistoricalStart)
-        let dataLength = NSKeyedArchiver.archivedData(withRootObject: processedHistoricalLength)
-        
+        let dataAmount = try! NSKeyedArchiver.archivedData(withRootObject: processedHistoricalAmount, requiringSecureCoding: false)
+        let dataDate = try! NSKeyedArchiver.archivedData(withRootObject: processedHistoricalStart, requiringSecureCoding: false)
+        let dataLength = try! NSKeyedArchiver.archivedData(withRootObject: processedHistoricalLength, requiringSecureCoding: false)
+
         if let existingBudgetType = budget?.value(forKey: XYZBudget.name) as? String, existingBudgetType != budgetType {
             
             hasChanged = true
@@ -497,14 +497,14 @@ class XYZBudgetDetailTableViewController: UITableViewController,
             color = XYZColor(rawValue: budget?.value(forKey: XYZBudget.color) as? String ?? "")!
             
             let dataAmount = budget?.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
-            historicalAmount = (NSKeyedUnarchiver.unarchiveObject(with: dataAmount) as? [Double]) ?? [Double]()
-            
+            historicalAmount = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataAmount) as? [Double] ?? [Double]()
+
             let dataStart = budget?.value(forKey: XYZBudget.historicalStart) as? Data ?? NSData() as Data
-            historicalStart = (NSKeyedUnarchiver.unarchiveObject(with: dataStart) as? [Date]) ?? [Date]()
-            
+            historicalStart = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataStart) as? [Date] ?? [Date]()
+
             let dataLength = budget?.value(forKey: XYZBudget.historicalLength) as? Data ?? NSData() as Data
-            historicalLength = (NSKeyedUnarchiver.unarchiveObject(with: dataLength) as? [String]) ?? [String]()
-            
+            historicalLength = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataLength) as? [String] ?? [String]()
+
             nrOfHistoricalItems = historicalStart.count
             
             iconName = budget?.value(forKey: XYZBudget.iconName) as? String ?? ""

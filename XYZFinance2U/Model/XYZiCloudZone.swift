@@ -56,7 +56,7 @@ class XYZiCloudZone: NSManagedObject {
         self.setValue(name, forKey: XYZiCloudZone.name)
         self.setValue(owner, forKey: XYZiCloudZone.ownerName)
         
-        let data = NSKeyedArchiver.archivedData(withRootObject: [String]() )
+        let data = try! NSKeyedArchiver.archivedData(withRootObject: [String](), requiringSecureCoding: false)
         self.setValue(data, forKey: XYZiCloudZone.deleteRecordIdList)
         
         self.setValue(data, forKey: XYZiCloudZone.deleteShareRecordIdList)

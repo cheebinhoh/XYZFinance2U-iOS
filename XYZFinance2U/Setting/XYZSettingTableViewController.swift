@@ -337,7 +337,7 @@ class XYZSettingTableViewController: UITableViewController,
             fatalError("Exception: data is expected for deleteRecordIdList")
         }
         
-        guard var deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+        guard var deleteRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
             
             fatalError("Exception: deleteRecordList is expected as [String]")
         }
@@ -345,13 +345,13 @@ class XYZSettingTableViewController: UITableViewController,
         for income in (appDelegate?.incomeList)! {
             
             let recordName = income.value(forKey: XYZAccount.recordId) as? String
-            deleteRecordLiset.append(recordName!)
+            deleteRecordList.append(recordName!)
             
             managedContext()?.delete(income)
         }
         
-        let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
-        zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
+        let savedDeleteRecordList = try? NSKeyedArchiver.archivedData(withRootObject: deleteRecordList, requiringSecureCoding: false)
+        zone.setValue(savedDeleteRecordList, forKey: XYZiCloudZone.deleteRecordIdList)
 
         saveManageContext()
         appDelegate?.incomeList = [XYZAccount]()
@@ -395,8 +395,8 @@ class XYZSettingTableViewController: UITableViewController,
             
             fatalError("Exception: data is expected for deleteRecordIdList")
         }
-        
-        guard var deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+    
+        guard var deleteRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
             
             fatalError("Exception: deleteRecordList is expected as [String]")
         }
@@ -406,29 +406,30 @@ class XYZSettingTableViewController: UITableViewController,
             fatalError("Exception: data is expected for deleteRecordIdList")
         }
         
-        guard var deleteShareRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: shareRecordNameData) as? [String]) else {
+        guard var deleteShareRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(shareRecordNameData) as? [String] else {
             
-            fatalError("Exception: deleteRecordList is expected as [String]")
+            fatalError("Exception: deleteShareRecordList is expected as [String]")
         }
         
         for expense in (appDelegate?.expenseList)! {
             
             let recordName = expense.value(forKey: XYZExpense.recordId) as? String
-            deleteRecordLiset.append(recordName!)
+            deleteRecordList.append(recordName!)
             
             if let shareRecordName = expense.value(forKey: XYZExpense.shareRecordId) as? String {
                 
-                deleteShareRecordLiset.append(shareRecordName)
+                deleteShareRecordList.append(shareRecordName)
             }
             
             managedContext()?.delete(expense)
         }
         
-        let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
-        zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
+        let savedDeleteRecordList = try? NSKeyedArchiver.archivedData(withRootObject: deleteRecordList, requiringSecureCoding: false)
+        zone.setValue(savedDeleteRecordList, forKey: XYZiCloudZone.deleteRecordIdList)
         
-        let savedDeleteShareRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteShareRecordLiset )
-        zone.setValue(savedDeleteShareRecordLiset, forKey: XYZiCloudZone.deleteShareRecordIdList)
+        let savedDeleteShareRecordList = try? NSKeyedArchiver.archivedData(withRootObject: deleteShareRecordList, requiringSecureCoding: false)
+            
+        zone.setValue(savedDeleteShareRecordList, forKey: XYZiCloudZone.deleteShareRecordIdList)
         
         saveManageContext()
         appDelegate?.expenseList = [XYZExpense]()
@@ -473,7 +474,7 @@ class XYZSettingTableViewController: UITableViewController,
             fatalError("Exception: data is expected for deleteRecordIdList")
         }
         
-        guard var deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+        guard var deleteRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
             
             fatalError("Exception: deleteRecordList is expected as [String]")
         }
@@ -481,13 +482,13 @@ class XYZSettingTableViewController: UITableViewController,
         for budget in (appDelegate?.budgetList)! {
             
             let recordName = budget.value(forKey: XYZBudget.recordId) as? String
-            deleteRecordLiset.append(recordName!)
+            deleteRecordList.append(recordName!)
             
             managedContext()?.delete(budget)
         }
         
-        let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset)
-        zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
+        let savedDeleteRecordList = try? NSKeyedArchiver.archivedData(withRootObject: deleteRecordList, requiringSecureCoding: false)
+        zone.setValue(savedDeleteRecordList, forKey: XYZiCloudZone.deleteRecordIdList)
         
         saveManageContext()
         appDelegate?.budgetList = [XYZBudget]()

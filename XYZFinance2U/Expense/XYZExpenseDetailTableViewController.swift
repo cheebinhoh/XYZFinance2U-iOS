@@ -354,16 +354,16 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                 fatalError("Exception: data is expected for deleteRecordIdList")
             }
             
-            guard var deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+            guard var deleteRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
                 
                 fatalError("Exception: deleteRecordList is expected as [String]")
             }
             
             let recordName = "\((expense?.value(forKey: XYZExpense.recordId) as? String)!)-\(index)"
-            deleteRecordLiset.append(recordName)
+            deleteRecordList.append(recordName)
             
-            let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
-            zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
+            let savedDeleteRecordList = try? NSKeyedArchiver.archivedData(withRootObject: deleteRecordList, requiringSecureCoding: false)
+            zone.setValue(savedDeleteRecordList, forKey: XYZiCloudZone.deleteRecordIdList)
         }
         
         if nil == expense?.value(forKey: XYZExpense.lastRecordChange) as? Date

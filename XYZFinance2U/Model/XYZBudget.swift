@@ -232,22 +232,22 @@ class XYZBudget : NSManagedObject {
                                                 amount: Double?) {
         
         let dataAmount = self.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
-        let historicalAmount = (NSKeyedUnarchiver.unarchiveObject(with: dataAmount) as? [Double]) ?? [Double]()
+        let historicalAmount = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataAmount) as? [Double] ?? [Double]()
         
         let dataStart = self.value(forKey: XYZBudget.historicalStart) as? Data ?? NSData() as Data
-        let historicalStart = (NSKeyedUnarchiver.unarchiveObject(with: dataStart) as? [Date]) ?? [Date]()
+        let historicalStart = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataStart) as? [Date] ?? [Date]()
         
         let dataLength = self.value(forKey: XYZBudget.historicalLength) as? Data ?? NSData() as Data
-        let historicalLength = (NSKeyedUnarchiver.unarchiveObject(with: dataLength) as? [String]) ?? [String]()
+        let historicalLength = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataLength) as? [String] ?? [String]()
         
         let length = self.value(forKey: XYZBudget.length) as? String ?? Length.none.rawValue
         let amount = self.value(forKey: XYZBudget.amount) as? Double ?? 0.0
         let start = self.value(forKey: XYZBudget.start) as? Date ?? Date()
         
         return XYZBudget.getEffectiveBudgetDateAmount(length: length, start: start, amount: amount,
-                                                      lengths: historicalLength.reversed(),
-                                                      starts: historicalStart.reversed(),
-                                                      amounts: historicalAmount.reversed())
+                                                      lengths: historicalLength!.reversed(),
+                                                      starts: historicalStart!.reversed(),
+                                                      amounts: historicalAmount!.reversed())
     }
     
     static func getEffectiveBudgetDateAmount(length: String,
@@ -297,14 +297,14 @@ class XYZBudget : NSManagedObject {
         var lengths = [String]()
 
         let dataAmount = self.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
-        amounts = (NSKeyedUnarchiver.unarchiveObject(with: dataAmount) as? [Double] ) ?? [Double]()
-        
+        amounts = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataAmount) as? [Double] ?? [Double]()
+  
         let dataStart = self.value(forKey: XYZBudget.historicalStart) as? Data ?? NSData() as Data
-        dates = (NSKeyedUnarchiver.unarchiveObject(with: dataStart) as? [Date] ) ?? [Date]()
-        
+        dates = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataStart) as? [Date] ?? [Date]()
+            
         let dataLength = self.value(forKey: XYZBudget.historicalLength) as? Data ?? NSData() as Data
-        lengths = (NSKeyedUnarchiver.unarchiveObject(with: dataLength) as? [String] ) ?? [String]()
-        
+        lengths = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataLength) as? [String] ?? [String]()
+ 
         let date = self.value(forKey: XYZBudget.start) as? Date
         dates.append(date!)
     
@@ -350,13 +350,13 @@ class XYZBudget : NSManagedObject {
         self.setValue("", forKey: XYZBudget.color)
         self.setValue("", forKey: XYZBudget.iconName)
         
-        let dataAmount = NSKeyedArchiver.archivedData(withRootObject: [Double]())
+        let dataAmount = try! NSKeyedArchiver.archivedData(withRootObject: [Double](), requiringSecureCoding: false)
         self.setValue(dataAmount, forKey: XYZBudget.historicalAmount)
         
-        let dataDate = NSKeyedArchiver.archivedData(withRootObject: [Date]())
+        let dataDate = try! NSKeyedArchiver.archivedData(withRootObject: [Date](), requiringSecureCoding: false)
         self.setValue(dataDate, forKey: XYZBudget.historicalStart)
         
-        let dataLength = NSKeyedArchiver.archivedData(withRootObject: [String]())
+        let dataLength = try! NSKeyedArchiver.archivedData(withRootObject: [String](), requiringSecureCoding: false)
         self.setValue(dataLength, forKey: XYZBudget.historicalLength)
     }
 

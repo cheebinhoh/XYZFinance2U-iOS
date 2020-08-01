@@ -290,33 +290,33 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
                     fatalError("Exception: data is expected for deleteRecordIdList")
                 }
                 
-                guard var deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+                guard var deleteRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
                     
                     fatalError("Exception: deleteRecordList is expected as [String]")
                 }
                 
                 let recordName = expense.value(forKey: XYZExpense.recordId) as? String
-                deleteRecordLiset.append(recordName!)
+                deleteRecordList.append(recordName!)
                 
-                let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
-                zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
+                let savedDeleteRecordList = try? NSKeyedArchiver.archivedData(withRootObject: deleteRecordList, requiringSecureCoding: false)
+                zone.setValue(savedDeleteRecordList, forKey: XYZiCloudZone.deleteRecordIdList)
                 
                 guard let shareRecordNameData = zone.value(forKey: XYZiCloudZone.deleteShareRecordIdList) as? Data else {
                     
                     fatalError("Exception: data is expected for deleteRecordIdList")
                 }
                 
-                guard var deleteShareRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: shareRecordNameData) as? [String]) else {
+                guard var deleteShareRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(shareRecordNameData) as? [String] else {
                     
-                    fatalError("Exception: deleteRecordList is expected as [String]")
+                    fatalError("Exception: deleteShareRecordList is expected as [String]")
                 }
-                
+    
                 if let shareRecordName = expense.value(forKey: XYZExpense.shareRecordId) as? String {
                     
-                    deleteShareRecordLiset.append(shareRecordName)
+                    deleteShareRecordList.append(shareRecordName)
                     
-                    let savedDeleteShareRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteShareRecordLiset )
-                    zone.setValue(savedDeleteShareRecordLiset, forKey: XYZiCloudZone.deleteShareRecordIdList)
+                    let savedDeleteShareRecordList = try? NSKeyedArchiver.archivedData(withRootObject: deleteShareRecordList, requiringSecureCoding: false)
+                    zone.setValue(savedDeleteShareRecordList, forKey: XYZiCloudZone.deleteShareRecordIdList)
                 }
             }
         }

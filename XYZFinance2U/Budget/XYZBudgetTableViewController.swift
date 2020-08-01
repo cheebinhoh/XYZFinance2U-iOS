@@ -1016,16 +1016,16 @@ class XYZBudgetTableViewController: UITableViewController,
                 fatalError("Exception: data is expected for deleteRecordIdList")
             }
             
-            guard var deleteRecordLiset = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [String]) else {
+            guard var deleteRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
                 
                 fatalError("Exception: deleteRecordList is expected as [String]")
             }
             
             let recordName = budget.value(forKey: XYZBudget.recordId) as? String
-            deleteRecordLiset.append(recordName!)
+            deleteRecordList.append(recordName!)
             
-            let savedDeleteRecordLiset = NSKeyedArchiver.archivedData(withRootObject: deleteRecordLiset )
-            zone.setValue(savedDeleteRecordLiset, forKey: XYZiCloudZone.deleteRecordIdList)
+            let savedDeleteRecordList =  try? NSKeyedArchiver.archivedData(withRootObject: deleteRecordList, requiringSecureCoding: false)
+            zone.setValue(savedDeleteRecordList, forKey: XYZiCloudZone.deleteRecordIdList)
         }
         
         let indexPath = self.indexPath(budget)

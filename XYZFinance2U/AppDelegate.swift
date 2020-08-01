@@ -794,7 +794,8 @@ import os.log
                 
                 if let data = icloudzone.value(forKey: XYZiCloudZone.changeToken) as? Data {
                     
-                    changeToken = (NSKeyedUnarchiver.unarchiveObject(with: data) as? CKServerChangeToken)
+                    changeToken = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? CKServerChangeToken
+                    //changeToken = (NSKeyedUnarchiver.unarchiveObject(with: data) as? CKServerChangeToken)
                 }
                 
                 changeTokens.append(changeToken)
@@ -808,7 +809,7 @@ import os.log
                     
                     if let data = icloudzone.value(forKey: XYZiCloudZone.changeToken) as? Data {
                         
-                        changeToken = (NSKeyedUnarchiver.unarchiveObject(with: data) as? CKServerChangeToken)
+                        changeToken = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? CKServerChangeToken 
                     }
                     
                     let needreload = ( nil == changeToken
