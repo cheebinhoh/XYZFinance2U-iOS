@@ -3,7 +3,7 @@
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/29/17.
-//  Copyright © 2017 - 2019 Chee Bin Hoh. All rights reserved.
+//  Copyright © 2017 - 2020 Chee Bin Hoh. All rights reserved.
 //
 
 import UIKit
@@ -129,7 +129,7 @@ class XYZSettingDetailTableViewController: UITableViewController {
                 
                 let copyRightText = """
                 
-                \u{A9} \("2017 - 2019 Chee Bin Hoh, All rights reserved.".localized())
+                \u{A9} \("2017 - 2020 Chee Bin Hoh, All rights reserved.".localized())
 
                 """
                 
