@@ -26,11 +26,11 @@ class XYZExchangeRate : NSManagedObject {
 
     // MARK: - property
 
-    var base: String = ""
-    var date: Date = Date()
-    var rate: Double = 0.0
-    var recordId: String = ""
-    var target: String = ""
+    var base = ""
+    var date = Date()
+    var rate = 0.0
+    var recordId = ""
+    var target = ""
 
     // MARK: - function
     

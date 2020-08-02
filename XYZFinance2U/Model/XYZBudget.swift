@@ -75,19 +75,19 @@ class XYZBudget : NSManagedObject {
     static let sequenceNr = "sequenceNr"
     static let start = "start"
     
-    var amount: Double = 0.0
-    var color: String = ""
+    var amount = 0.0
+    var color = ""
     var currency: String = Locale.current.currencyCode ?? ""
     var historicalAmount = NSData()
     var historicalStart = NSData()
     var historicalLength = NSData()
     var iconName = ""
-    var lastRecordChange: Date = Date()
+    var lastRecordChange = Date()
     var length: Length = .none
-    var name: String = ""
-    var recordId: String = ""
-    var sequenceNr: Int = 0
-    var start: Date = Date()
+    var name = ""
+    var recordId = ""
+    var sequenceNr = 0
+    var start = Date()
 
     var currentStart: Date? {
         

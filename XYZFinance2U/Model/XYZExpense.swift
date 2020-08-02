@@ -60,7 +60,7 @@ class XYZExpense: NSManagedObject {
     var amount = 0.0
     var budgetCategory = ""
     var currencyCode: String = Locale.current.currencyCode!
-    var date: Date = Date()
+    var date = Date()
     var detail = ""
     var hasLocation = false
     var isShared = false
@@ -70,11 +70,11 @@ class XYZExpense: NSManagedObject {
     var persons: Set<XYZExpensePerson>?
     var preChangeToken = NSData()
     var receipts: Set<XYZExpenseReceipt>?
-    var recordId: String = ""
-    var shareRecordId: String = ""
-    var shareUrl: String = ""
+    var recordId = ""
+    var shareRecordId = ""
+    var shareUrl = ""
     var recurring: Length = .none
-    var recurringStopDate: Date = Date()
+    var recurringStopDate = Date()
     
     // MARK: - function
     
