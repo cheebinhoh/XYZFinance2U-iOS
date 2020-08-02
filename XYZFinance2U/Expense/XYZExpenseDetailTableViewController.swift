@@ -32,6 +32,8 @@ class XYZExpenseDetailTableViewController: UITableViewController,
     XYZSelectionDelegate,
     CNContactPickerDelegate {
  
+    let textcellLeadingAnchor = CGFloat(50)
+    
     // MARK: - nested type
     struct ImageSet {
         
@@ -346,7 +348,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
             let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
             guard let zone = GetiCloudZone(of: ckrecordzone, share: false, icloudZones: (appDelegate?.iCloudZones)!) else {
                 
-                fatalError("Exception: iCloudZoen is expected")
+                fatalError("Exception: iCloudZone is expected")
             }
             
             guard let data = zone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
@@ -1114,7 +1116,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                 }
                 
                 textcell.input.translatesAutoresizingMaskIntoConstraints = false
-                textcell.input.leadingAnchor.constraint(equalTo: textcell.leadingAnchor, constant: 45.0).isActive = true
+                textcell.input.leadingAnchor.constraint(equalTo: textcell.leadingAnchor, constant: textcellLeadingAnchor).isActive = true
                 textcell.isEditable = !isShared
                 textcell.input.isEnabled = modalEditing
                 textcell.delegate = self
@@ -1316,7 +1318,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                 textcell.input.isEnabled = true
                 textcell.input.clearButtonMode = .never
                 textcell.input.translatesAutoresizingMaskIntoConstraints = false
-                textcell.input.leadingAnchor.constraint(equalTo: textcell.leadingAnchor, constant: 45.0).isActive = true
+                textcell.input.leadingAnchor.constraint(equalTo: textcell.leadingAnchor, constant: textcellLeadingAnchor).isActive = true
                 
                 if nil == textcell.optionSwitch {
                     
@@ -1336,7 +1338,8 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                 textcell.delegate = self
                 textcell.input.placeholder = "add email".localized()
                 textcell.input.text = ""
-
+                textcell.disableMonetaryEditing()
+                
                 if modalEditing {
                     
                     textcell.isHidden = false
@@ -1346,7 +1349,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                 }
 
                 textcell.input.translatesAutoresizingMaskIntoConstraints = false
-                textcell.input.leadingAnchor.constraint(equalTo: textcell.leadingAnchor, constant: 45.0).isActive = true
+                textcell.input.leadingAnchor.constraint(equalTo: textcell.leadingAnchor, constant: textcellLeadingAnchor).isActive = true
             
                 if let _ = textcell.optionSwitch {
                     

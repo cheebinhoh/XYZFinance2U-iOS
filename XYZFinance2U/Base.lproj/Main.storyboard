@@ -1002,10 +1002,10 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N0q-eN-DLE">
-                                            <rect key="frame" x="45" y="5" width="320" height="35"/>
+                                            <rect key="frame" x="50" y="5" width="315" height="35"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="lXA-Ed-2cL">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="315" height="35"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="YUQ-S8-qLx"/>
                                                     </constraints>
@@ -1021,7 +1021,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="N0q-eN-DLE" firstAttribute="centerY" secondItem="QsZ-tI-XN9" secondAttribute="centerY" id="Q18-v2-daA"/>
-                                        <constraint firstItem="N0q-eN-DLE" firstAttribute="leading" relation="lessThanOrEqual" secondItem="QsZ-tI-XN9" secondAttribute="leading" priority="998" constant="45" id="et4-XJ-FQ2"/>
+                                        <constraint firstItem="N0q-eN-DLE" firstAttribute="leading" relation="lessThanOrEqual" secondItem="QsZ-tI-XN9" secondAttribute="leading" priority="998" constant="50" id="et4-XJ-FQ2"/>
                                         <constraint firstAttribute="trailing" secondItem="N0q-eN-DLE" secondAttribute="trailing" constant="10" id="jJW-7d-y8b"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -1038,7 +1038,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AUe-LX-3CZ">
-                                            <rect key="frame" x="45" y="5" width="330" height="35"/>
+                                            <rect key="frame" x="50" y="5" width="325" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="pIS-nD-e14"/>
                                             </constraints>
@@ -1049,7 +1049,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="AUe-LX-3CZ" firstAttribute="centerY" secondItem="fl0-XW-sjP" secondAttribute="centerY" id="JNp-yf-B0I"/>
-                                        <constraint firstItem="AUe-LX-3CZ" firstAttribute="leading" secondItem="fl0-XW-sjP" secondAttribute="leading" constant="45" id="Mxn-z4-jq2"/>
+                                        <constraint firstItem="AUe-LX-3CZ" firstAttribute="leading" secondItem="fl0-XW-sjP" secondAttribute="leading" constant="50" id="Mxn-z4-jq2"/>
                                         <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="AUe-LX-3CZ" secondAttribute="trailing" id="aoY-uw-Bc2"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -1065,7 +1065,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ggf-Ds-SYx">
-                                            <rect key="frame" x="45" y="0.0" width="330" height="290"/>
+                                            <rect key="frame" x="50" y="0.0" width="325" height="290"/>
                                             <connections>
                                                 <action selector="datePick:" destination="WW6-GR-tT4" eventType="valueChanged" id="0nu-Az-fmV"/>
                                             </connections>
@@ -1075,7 +1075,7 @@
                                         <constraint firstAttribute="bottom" secondItem="ggf-Ds-SYx" secondAttribute="bottom" constant="10" id="6EB-hy-qTd"/>
                                         <constraint firstItem="ggf-Ds-SYx" firstAttribute="top" secondItem="ias-5L-sdU" secondAttribute="top" id="FYT-uL-7aZ"/>
                                         <constraint firstAttribute="trailing" secondItem="ggf-Ds-SYx" secondAttribute="trailing" id="ZqE-Zt-YLf"/>
-                                        <constraint firstItem="ggf-Ds-SYx" firstAttribute="leading" secondItem="ias-5L-sdU" secondAttribute="leading" constant="45" id="n3s-2s-0ks"/>
+                                        <constraint firstItem="ggf-Ds-SYx" firstAttribute="leading" secondItem="ias-5L-sdU" secondAttribute="leading" constant="50" id="n3s-2s-0ks"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -1165,7 +1165,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark it at a location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ik9-sI-i9T" userLabel="Label">
-                                            <rect key="frame" x="45" y="8" width="330" height="35"/>
+                                            <rect key="frame" x="50" y="8" width="325" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="kuL-R9-xvE"/>
                                             </constraints>
@@ -1180,7 +1180,7 @@
                                     <constraints>
                                         <constraint firstItem="ezE-wQ-CdW" firstAttribute="centerY" secondItem="AZh-ct-Bwh" secondAttribute="centerY" id="1ff-pR-Y2b"/>
                                         <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="Ik9-sI-i9T" secondAttribute="trailing" id="2Hy-Ke-dd9"/>
-                                        <constraint firstItem="Ik9-sI-i9T" firstAttribute="leading" secondItem="AZh-ct-Bwh" secondAttribute="leading" constant="45" id="gu5-sp-1V2"/>
+                                        <constraint firstItem="Ik9-sI-i9T" firstAttribute="leading" secondItem="AZh-ct-Bwh" secondAttribute="leading" constant="50" id="gu5-sp-1V2"/>
                                         <constraint firstAttribute="trailing" secondItem="ezE-wQ-CdW" secondAttribute="trailing" constant="16" id="iO1-Lk-5h5"/>
                                         <constraint firstItem="Ik9-sI-i9T" firstAttribute="top" secondItem="AZh-ct-Bwh" secondAttribute="top" constant="8" id="qIi-jt-kWy"/>
                                     </constraints>
@@ -1197,7 +1197,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="location..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IOq-bn-NVL" userLabel="Label">
-                                            <rect key="frame" x="45" y="8" width="303" height="35"/>
+                                            <rect key="frame" x="50" y="8" width="298" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="uYq-s5-ygV"/>
                                             </constraints>
@@ -1209,7 +1209,7 @@
                                     <constraints>
                                         <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="IOq-bn-NVL" secondAttribute="trailing" id="S7o-q6-i2S"/>
                                         <constraint firstItem="IOq-bn-NVL" firstAttribute="top" secondItem="Q1K-1u-qBP" secondAttribute="top" constant="8" id="UtB-5j-aoM"/>
-                                        <constraint firstItem="IOq-bn-NVL" firstAttribute="leading" secondItem="Q1K-1u-qBP" secondAttribute="leading" constant="45" id="s8U-0o-T2B"/>
+                                        <constraint firstItem="IOq-bn-NVL" firstAttribute="leading" secondItem="Q1K-1u-qBP" secondAttribute="leading" constant="50" id="s8U-0o-T2B"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -1224,7 +1224,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="itQ-eY-ig0" userLabel="Selection">
-                                            <rect key="frame" x="45" y="5.5" width="0.0" height="35"/>
+                                            <rect key="frame" x="50" y="5.5" width="0.0" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="xey-R6-8FU"/>
                                             </constraints>
@@ -1233,7 +1233,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="empty" translatesAutoresizingMaskIntoConstraints="NO" id="lbH-U5-Ew4">
-                                            <rect key="frame" x="8" y="7" width="32" height="32"/>
+                                            <rect key="frame" x="13" y="7" width="32" height="32"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="32" id="He3-VQ-Gp6"/>
                                                 <constraint firstAttribute="height" constant="32" id="e6e-Ov-Uxj"/>
@@ -1245,7 +1245,7 @@
                                         <constraint firstItem="lbH-U5-Ew4" firstAttribute="centerY" secondItem="hsI-TW-jqi" secondAttribute="centerY" id="dGX-OF-CFn"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="itQ-eY-ig0" secondAttribute="trailing" constant="20" symbolic="YES" id="hWF-xe-uJx"/>
                                         <constraint firstItem="itQ-eY-ig0" firstAttribute="centerY" secondItem="hsI-TW-jqi" secondAttribute="centerY" id="rqP-Ch-ovP"/>
-                                        <constraint firstItem="itQ-eY-ig0" firstAttribute="leading" secondItem="hsI-TW-jqi" secondAttribute="leading" constant="45" id="suN-mB-swA"/>
+                                        <constraint firstItem="itQ-eY-ig0" firstAttribute="leading" secondItem="hsI-TW-jqi" secondAttribute="leading" constant="50" id="suN-mB-swA"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -1352,7 +1352,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pPw-p5-dqg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6015" y="770"/>
+            <point key="canvasLocation" x="7068" y="786"/>
         </scene>
         <!--Image-->
         <scene sceneID="o3a-Ws-fSG">
@@ -2245,7 +2245,7 @@ Chee Bin HOH, 2017</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qyQ-7b-OaH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6721" y="771"/>
+            <point key="canvasLocation" x="6124" y="786"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
