@@ -167,6 +167,7 @@ class XYZSettingTableViewController: UITableViewController,
                 }
                 
                 newcell.title.text = "About".localized()
+                newcell.removeUISwitch()
                 cell = newcell
             
             case "Export" :
@@ -177,6 +178,7 @@ class XYZSettingTableViewController: UITableViewController,
                 
                 newcell.title.text = "Save to file".localized()
                 newcell.accessoryType = .none
+                newcell.removeUISwitch()
                 cell = newcell
             
             case "SynciCloud" :
@@ -187,6 +189,7 @@ class XYZSettingTableViewController: UITableViewController,
                 
                 newcell.title.text = "Update to iCloud".localized()
                 newcell.accessoryType = .none
+                newcell.removeUISwitch()
                 cell = newcell
             
             case "DeleteData":
@@ -197,6 +200,7 @@ class XYZSettingTableViewController: UITableViewController,
                 
                 newcell.title.text = "Delete data".localized()
                 newcell.accessoryType = .none
+                newcell.removeUISwitch()
                 cell = newcell
             
             case "Lockout" :
@@ -207,6 +211,7 @@ class XYZSettingTableViewController: UITableViewController,
                 
                 newcell.title.text = "Lock out".localized()
                 newcell.accessoryType = .none
+                newcell.removeUISwitch()
                 cell = newcell
 
             case "requiredauthentication" :

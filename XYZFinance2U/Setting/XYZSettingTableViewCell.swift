@@ -51,6 +51,15 @@ class XYZSettingTableViewCell: UITableViewCell {
         self.stack.addArrangedSubview(uiswitch)
     }
     
+    func removeUISwitch() {
+        
+        if let _ = optionSwitch {
+            
+            self.stack.removeArrangedSubview(optionSwitch)
+            optionSwitch.removeFromSuperview()
+        }
+    }
+    
     @objc
     func switchChanged(_ value: UISwitch) {
         
