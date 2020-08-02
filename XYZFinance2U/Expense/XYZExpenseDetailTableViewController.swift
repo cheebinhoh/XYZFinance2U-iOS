@@ -90,24 +90,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
             
             self.expenseDelegate?.deleteExpense(expense: self.expense!)
             
-            if self.isPushinto {
-                
-                self.navigationController?.popViewController(animated: true)
-            } else if self.isCollapsed {
-                
-                self.dismiss(animated: true, completion: nil)
-            } else {
-                
-                self.navigationItem.rightBarButtonItem = nil
-                self.navigationItem.leftBarButtonItem = nil
-                self.expense = nil
-                self.reloadData()
-                
-                let masterViewController  = self.getMasterTableViewController()
-                
-                masterViewController.navigationItem.leftBarButtonItem?.isEnabled = true
-                masterViewController.navigationItem.rightBarButtonItem?.isEnabled = true
-            }
+            self.dismiss(animated: true, completion: nil)
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler:nil)
@@ -441,11 +424,8 @@ class XYZExpenseDetailTableViewController: UITableViewController,
            
                 navigationItem.setRightBarButton(nil, animated: true)
                 
-                if isPopover {
-                
-                    let backButton = UIBarButtonItem(title: "Back".localized(), style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.cancel(_:)))
-                    navigationItem.setLeftBarButton(backButton, animated: true)
-                }
+                let backButton = UIBarButtonItem(title: "Back".localized(), style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.cancel(_:)))
+                navigationItem.setLeftBarButton(backButton, animated: true)
             }
             
             recurring = XYZExpense.Length(rawValue: expense?.value(forKey: XYZExpense.recurring) as? String ?? XYZExpense.Length.none.rawValue)
@@ -826,8 +806,6 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         return true
     }
     
-    var isPushinto = false
-    var isPopover = false
     var expenseDelegate: XYZExpenseDetailDelegate?
     var sectionList = [TableSectionCell]()
     var emailcell : XYZTextTableViewCell?
@@ -836,9 +814,8 @@ class XYZExpenseDetailTableViewController: UITableViewController,
     
     // MARK: - function
     
-    func setPopover(delegate: XYZExpenseDetailDelegate) {
+    func setDelegate(delegate: XYZExpenseDetailDelegate) {
         
-        isPopover = true
         expenseDelegate = delegate
     }
     
@@ -868,20 +845,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
     @IBAction func cancel(_ sender: Any) {
         
         // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways.
-        if isPushinto {
-            
-            navigationController?.popViewController(animated: true)
-        } else if isPopover {
-            
-            dismiss(animated: true, completion: nil)
-        } else {
-            
-            let masterViewController  = getMasterTableViewController()
-            
-            masterViewController.navigationItem.leftBarButtonItem?.isEnabled = true
-            masterViewController.navigationItem.rightBarButtonItem?.isEnabled = true
-            expenseSelected(expense: expense)
-        }
+        dismiss(animated: true, completion: nil)
         
         expenseDelegate?.cancelExpense()
     }
@@ -923,47 +887,20 @@ class XYZExpenseDetailTableViewController: UITableViewController,
     
     func saveExpense() {
         
-        if isPushinto {
+        if nil == expense {
+            
+            expense = XYZExpense(id: nil, detail: detail, amount: amount!, date: date!, context: managedContext())
             
             saveData()
-            expenseDelegate?.saveExpense(expense: expense!)
-            navigationController?.popViewController(animated: true)
-        } else if isPopover {
-            
-            if nil == expense {
-                
-                expense = XYZExpense(id: nil, detail: detail, amount: amount!, date: date!, context: managedContext())
-                
-                saveData()
-                expenseDelegate?.saveNewExpense(expense: expense!)
-            } else {
-                
-                registerUndoSave(expense)
-                saveData()
-                expenseDelegate?.saveExpense(expense: expense!)
-            }
-            
-            dismiss(animated: true, completion: nil)
+            expenseDelegate?.saveNewExpense(expense: expense!)
         } else {
             
             registerUndoSave(expense)
             saveData()
-            navigationItem.leftBarButtonItem?.isEnabled = false
-            modalEditing = false
-            loadDataInTableSectionCell()
-            tableView.reloadData()
-            
-            let masterViewController = getMasterTableViewController()
-            
-            let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit(_:)))
-            navigationItem.setRightBarButton(editButton, animated: true)
-            navigationItem.leftBarButtonItem = nil
-            
-            masterViewController.navigationItem.leftBarButtonItem?.isEnabled = true
-            masterViewController.navigationItem.rightBarButtonItem?.isEnabled = true
-            
             expenseDelegate?.saveExpense(expense: expense!)
         }
+        
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func save(_ sender: Any) {
@@ -1046,17 +983,8 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         
         navigationItem.largeTitleDisplayMode = .never
         
-        if isPopover {
-            
-            let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save(_:)))
-            navigationItem.setRightBarButton(saveButton, animated: true)
-        } else {
-            
-            navigationItem.rightBarButtonItem = nil
-            navigationItem.leftBarButtonItem = nil
-            
-            modalEditing = false
-        }
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save(_:)))
+        navigationItem.setRightBarButton(saveButton, animated: true)
         
         loadData()
         

@@ -115,24 +115,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
             
             self.incomeDelegate?.deleteIncome(income: self.income!)
             
-            if self.isPushinto {
-                
-                self.navigationController?.popViewController(animated: true)
-            } else if self.isCollapsed {
-                
-                self.dismiss(animated: true, completion: nil)
-            } else {
-                
-                self.navigationItem.rightBarButtonItem = nil
-                self.navigationItem.leftBarButtonItem = nil
-                self.income = nil
-                self.reloadData()
-                
-                let masterViewController  = self.getMasterTableViewController()
-                
-                masterViewController.navigationItem.leftBarButtonItem?.isEnabled = true
-                masterViewController.navigationItem.rightBarButtonItem?.isEnabled = true
-            }
+            self.dismiss(animated: true, completion: nil)
         })
         
         let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler:nil)
@@ -247,8 +230,6 @@ class XYZIncomeDetailTableViewController: UITableViewController,
     // MARK: - property
     var income: XYZAccount?
     var modalEditing = true
-    var isPopover = false
-    var isPushinto = false
     var incomeDelegate: XYZIncomeDetailDelegate?
     var hasUpdateReminder = false
     var currencyCodes: [String]?
@@ -271,10 +252,11 @@ class XYZIncomeDetailTableViewController: UITableViewController,
     var repeatAction: String?
     var currencyCode: String? = Locale.current.currencyCode
     
+    /*
     var isCollapsed: Bool {
         
         return true
-    }
+    }*/
     
     var tableSectionCellList = [TableSectionCell]()
     weak var datecell: XYZIncomeDetailDateTableViewCell?
@@ -342,70 +324,26 @@ class XYZIncomeDetailTableViewController: UITableViewController,
     
     @IBAction func save(_ sender: Any) {
         
-
-        if isPushinto {
+        if nil == income {
             
-            fatalError("Exception: todo")
+            income = XYZAccount(id: nil, sequenceNr: 0, bank: bank, accountNr: accountNr, amount: amount!, principal: principal!, date: date!, context: managedContext())
             
-            //saveData()
-            //expenseDelegate?.saveExpense(expense: expense!)
-            //navigationController?.popViewController(animated: true)
-        } else if isPopover {
-            
-            if nil == income {
-                
-                income = XYZAccount(id: nil, sequenceNr: 0, bank: bank, accountNr: accountNr, amount: amount!, principal: principal!, date: date!, context: managedContext())
-                
-                saveData()
-                incomeDelegate?.saveNewIncome(income: income!)
-            } else {
-                
-                registerUndoSave(income: income!)
-                saveData()
-                incomeDelegate?.saveIncome(income: income!)
-            }
-            
-            dismiss(animated: true, completion: nil)
+            saveData()
+            incomeDelegate?.saveNewIncome(income: income!)
         } else {
             
             registerUndoSave(income: income!)
             saveData()
-            navigationItem.leftBarButtonItem?.isEnabled = false
-            modalEditing = false
-            loadDataInTableSectionCell()
-            tableView.reloadData()
-            
-            let masterViewController = getMasterTableViewController()
-            
-            let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit(_:)))
-            navigationItem.setRightBarButton(editButton, animated: true)
-            navigationItem.leftBarButtonItem = nil
-            
-            masterViewController.navigationItem.leftBarButtonItem?.isEnabled = true
-            masterViewController.navigationItem.rightBarButtonItem?.isEnabled = true
-
             incomeDelegate?.saveIncome(income: income!)
         }
+        
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways.
-        
-        if isPushinto {
-            
-            fatalError("Exception: todo")
-            // navigationController?.popViewController(animated: true)
-        } else if isPopover {
-            
-            dismiss(animated: true, completion: nil)
-        } else {
-            
-            let masterViewController  = getMasterTableViewController()
-            
-            masterViewController.navigationItem.leftBarButtonItem?.isEnabled = true
-            masterViewController.navigationItem.rightBarButtonItem?.isEnabled = true
-            incomeSelected(newIncome: income)
-        }
+
+        dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -416,11 +354,8 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         
         navigationItem.largeTitleDisplayMode = .never
         
-        if isPopover {
-            
-            let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save(_:)))
-            navigationItem.setRightBarButton(saveButton, animated: true)
-        }
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save(_:)))
+        navigationItem.setRightBarButton(saveButton, animated: true)
         
         loadData()
         
@@ -492,9 +427,8 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         // Dispose of any resources that can be recreated.
     }
     
-    func setPopover(delegate: XYZIncomeDetailDelegate) {
+    func setDelegate(delegate: XYZIncomeDetailDelegate) {
         
-        isPopover = true
         incomeDelegate = delegate
     }
     

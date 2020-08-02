@@ -30,26 +30,7 @@ class XYZBudgetDetailTableViewController: UITableViewController,
         let deleteOption = UIAlertAction(title: sender.command.text, style: .default, handler: { (action) in
             
             self.budgetDelegate?.deleteBudget(budget: self.budget!)
-            
-            if self.isPushinto {
-                
-                self.navigationController?.popViewController(animated: true)
-            } else if self.isCollapsed {
-                
-                self.dismiss(animated: true, completion: nil)
-            } else {
-                
-                self.navigationItem.rightBarButtonItem = nil
-                self.navigationItem.leftBarButtonItem = nil
-                self.budget = nil
-                self.reloadData()
-                
-                let masterViewController  = self.getMasterTableViewController()
-                
-                masterViewController.navigationItem.leftBarButtonItem?.isEnabled = true
-                masterViewController.navigationItem.rightBarButtonItem?.isEnabled = true
-            }
-
+            self.dismiss(animated: true, completion: nil)
             self.modalEditing = false
         })
         
@@ -205,8 +186,6 @@ class XYZBudgetDetailTableViewController: UITableViewController,
 
     // MARK: - properties
     var budgetDelegate: XYZBudgetDetailDelegate?
-    var isPopover: Bool = false
-    var isPushinto: Bool = false
     var modalEditing = true
     var budget: XYZBudget?
     var sectionList = [TableSectionCell]()
@@ -249,20 +228,7 @@ class XYZBudgetDetailTableViewController: UITableViewController,
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways.
         
-        if isPushinto {
-            
-            fatalError("Exception: todo")
-        } else if isPopover {
-            
-            dismiss(animated: true, completion: nil)
-        } else {
-            
-            let masterViewController  = getMasterTableViewController()
-            
-            masterViewController.navigationItem.leftBarButtonItem?.isEnabled = true
-            masterViewController.navigationItem.rightBarButtonItem?.isEnabled = true
-            budgetSelected(budget: budget)
-        }
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func edit(_ sender: Any) {
@@ -285,36 +251,28 @@ class XYZBudgetDetailTableViewController: UITableViewController,
     
     @IBAction func save(_ sender: Any) {
         
-        if isPushinto {
-            
-            fatalError("Exception: todo")
-        } else if isPopover {
-            
-            if nil == budget {
+        if nil == budget {
              
-                budget = XYZBudget(id: nil,
-                                   name: budgetType,
-                                   amount: amount,
-                                   currency: currencyCode!,
-                                   length: length,
-                                   start: date,
-                                   sequenceNr: 0,
-                                   context: managedContext())
-                
-                saveData()
-                budgetDelegate?.saveNewBudget(budget: budget!)
-            } else {
-                
-                registerUndoSave(budget: budget!)
-                saveData()
-                budgetDelegate?.saveBudget(budget: budget!)
-            }
-
-            dismiss(animated: true, completion: nil)
+            budget = XYZBudget(id: nil,
+                               name: budgetType,
+                               amount: amount,
+                               currency: currencyCode!,
+                               length: length,
+                               start: date,
+                               sequenceNr: 0,
+                               context: managedContext())
+            
+            saveData()
+            budgetDelegate?.saveNewBudget(budget: budget!)
         } else {
             
-            fatalError("TODO")
+            registerUndoSave(budget: budget!)
+            saveData()
+            budgetDelegate?.saveBudget(budget: budget!)
         }
+
+        dismiss(animated: true, completion: nil)
+        
     }
     
     // MARK: - functions
@@ -536,11 +494,8 @@ class XYZBudgetDetailTableViewController: UITableViewController,
 
         navigationItem.largeTitleDisplayMode = .never
         
-        if isPopover {
-            
-            let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save(_:)))
-            navigationItem.setRightBarButton(saveButton, animated: true)
-        }
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save(_:)))
+        navigationItem.setRightBarButton(saveButton, animated: true)
         
         loadData()
         
@@ -551,9 +506,8 @@ class XYZBudgetDetailTableViewController: UITableViewController,
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
-    func setPopover(delegate: XYZBudgetDetailDelegate) {
+    func setDelegate(delegate: XYZBudgetDetailDelegate) {
         
-        isPopover = true
         budgetDelegate = delegate
     }
     

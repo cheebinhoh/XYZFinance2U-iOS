@@ -21,7 +21,7 @@ class XYZSelectionTableViewController: UITableViewController {
     var tableSectionList = [TableSectionCell]()
     var selectedItem: String?
     var selectionIdentifier: String?
-    var hasIndexing: Bool = false
+    var hasIndexing = false
     var sectionTitles = [String]()
     var caseInsensitive = false
     var selectionColors = [UIColor]()

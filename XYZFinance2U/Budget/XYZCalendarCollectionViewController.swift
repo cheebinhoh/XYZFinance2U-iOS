@@ -432,7 +432,7 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
                     
                     expenseDetailTableView.presetBudgetCategory = budgetGroup
                     expenseDetailTableView.presetCurrencyCode = currrency
-                    expenseDetailTableView.setPopover(delegate: self)
+                    expenseDetailTableView.setDelegate(delegate: self)
                     
                     let date = self.getDate(of: tapIndexPath!)
                     expenseDetailTableView.presetDate = date

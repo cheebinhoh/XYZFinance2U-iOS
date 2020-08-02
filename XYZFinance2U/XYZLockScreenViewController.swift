@@ -23,9 +23,6 @@ class XYZLockScreenViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-
-        //let tap = UITapGestureRecognizer(target: self, action: #selector(touchToUnlock(_:)))
-        //self.unlock.addGestureRecognizer(tap)
     }
     
     override func didReceiveMemoryWarning() {

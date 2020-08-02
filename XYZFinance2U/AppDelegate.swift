@@ -13,7 +13,7 @@ import NotificationCenter
 import os.log
 
 @UIApplicationMain
-        class AppDelegate: UIResponder,
+class AppDelegate: UIResponder,
     UIApplicationDelegate,
     UNUserNotificationCenterDelegate {
 
@@ -795,7 +795,6 @@ import os.log
                 if let data = icloudzone.value(forKey: XYZiCloudZone.changeToken) as? Data {
                     
                     changeToken = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? CKServerChangeToken
-                    //changeToken = (NSKeyedUnarchiver.unarchiveObject(with: data) as? CKServerChangeToken)
                 }
                 
                 changeTokens.append(changeToken)

@@ -12,29 +12,19 @@ class XYZSettingDetailTableViewController: UITableViewController {
 
     // MARK: - property
     
-    var isPopover = false
     var tableSectionCellList = [TableSectionCell]()
-    
-    func setPopover(_ isPopover: Bool) {
-        
-        self.isPopover = isPopover
-        showBarButtons()
-    }
     
     // MARK: - function
     
     func showBarButtons() {
         
-        if isPopover {
-            
-            let backButton = UIButton(type: .custom)
-            backButton.setImage(UIImage(named: "BackButton"), for: .normal) 
-            backButton.setTitle(" \("Back".localized())", for: .normal)
-            backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
-            backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
-            
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-        }
+        let backButton = UIButton(type: .custom)
+        backButton.setImage(UIImage(named: "BackButton"), for: .normal)
+        backButton.setTitle(" \("Back".localized())", for: .normal)
+        backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
+        backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
     override func viewDidLoad() {

@@ -441,7 +441,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
                 expenseDetailTableView.presetDetail = detail
                 expenseDetailTableView.presetBudgetCategory = budgetGroup
                 expenseDetailTableView.presetCurrencyCode = currency
-                expenseDetailTableView.setPopover(delegate: self)
+                expenseDetailTableView.setDelegate(delegate: self)
                 
                 expenseDetailNavigationController.modalPresentationStyle = .popover
                 handler(true)
@@ -492,7 +492,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
             fatalError("Exception: XYZExpenseDetailTableViewController is expected" )
         }
         
-        expenseTableView.setPopover(delegate: self)
+        expenseTableView.setDelegate(delegate: self)
         let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
 
         expenseTableView.expense = sectionExpenseList?[indexPath.row]

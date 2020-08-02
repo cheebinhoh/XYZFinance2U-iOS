@@ -32,7 +32,6 @@ class XYZIncomeTableViewController: UITableViewController,
     
     var sectionExpandStatus = [Bool]()
     var sectionList = [TableSectionCell]()
-    var isPopover = false
     var currencyCodes = [String]()
     var authenticatedMechanismExist = false
     var authenticatedOk = false
@@ -84,9 +83,8 @@ class XYZIncomeTableViewController: UITableViewController,
         tabBarController.popOverNavigatorController = incomeDetailNavigationController
         
         incomeDetailTableView.currencyCodes = currencyCodes
-        incomeDetailTableView.setPopover(delegate: self)
-        isPopover = true
-        
+        incomeDetailTableView.setDelegate(delegate: self)
+
         incomeDetailNavigationController.modalPresentationStyle = .popover
         self.present(incomeDetailNavigationController, animated: true, completion: nil)
     }
@@ -916,7 +914,7 @@ class XYZIncomeTableViewController: UITableViewController,
                     fatalError("Exception: XYZIncomeDetailTableViewController is expected" )
                 }
                 
-                incomeTableView.setPopover(delegate: self)
+                incomeTableView.setDelegate(delegate: self)
                 
                 let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
                 

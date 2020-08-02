@@ -16,13 +16,10 @@ class XYZSettingTableViewController: UITableViewController,
     XYZSettingTextTableViewCellDelegate {
     
     // MARK: - property
+    
     var sectionList = [TableSectionCell]()
     var delegate: UIViewController?
     var popoverView: UIViewController?
-    var isCollapsed: Bool {
-
-        return true
-    }
     
     // MARK: - function
     
@@ -289,7 +286,7 @@ class XYZSettingTableViewController: UITableViewController,
             }
             
             tabBarController.popOverAlertController = settingDetailNavigationController
-            settingDetail?.setPopover(true)
+            settingDetail?.showBarButtons()
             popoverView = settingDetail
             self.present(settingDetailNavigationController, animated: false, completion: nil)
         }

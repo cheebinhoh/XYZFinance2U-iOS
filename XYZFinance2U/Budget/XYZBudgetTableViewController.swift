@@ -215,7 +215,7 @@ class XYZBudgetTableViewController: UITableViewController,
     }
     
     // MARK: - property
-    var isPopover = false
+
     var sectionList = [TableSectionCell]()
     var currencyCodes = [String]()
     var delegate: XYZBudgetSelectionDelegate?
@@ -243,8 +243,7 @@ class XYZBudgetTableViewController: UITableViewController,
         
         budgetDetailTableView.currencyCodes = currencyCodes
         
-        budgetDetailTableView.setPopover(delegate: self)
-        isPopover = true
+        budgetDetailTableView.setDelegate(delegate: self)
         budgetDetailNavigationController.modalPresentationStyle = .popover
         
         self.present(budgetDetailNavigationController, animated: true, completion: nil)
@@ -677,10 +676,8 @@ class XYZBudgetTableViewController: UITableViewController,
             
             expenseDetailTableView.presetBudgetCategory = budgetGroup
             expenseDetailTableView.presetCurrencyCode = currrency
-            expenseDetailTableView.setPopover(delegate: self)
-
-            self.isPopover = true
-            
+            expenseDetailTableView.setDelegate(delegate: self)
+      
             expenseDetailNavigationController.modalPresentationStyle = .popover
             handler(true)
             self.present(expenseDetailNavigationController, animated: true, completion: nil)
@@ -824,13 +821,12 @@ class XYZBudgetTableViewController: UITableViewController,
             fatalError("Exception: XYZBudgetDetailTableViewController is expected")
         }
 
-        budgetDetailTableViewController.setPopover(delegate: self)
+        budgetDetailTableViewController.setDelegate(delegate: self)
         
         let sectionBudgetList = sectionList[indexPath.section].data as? [XYZBudget]
         
         budgetDetailTableViewController.budget = sectionBudgetList?[indexPath.row]
         budgetDetailTableViewController.currencyCodes = currencyCodes
-        isPopover = true
         budgetDetailNavigationController.modalPresentationStyle = .popover
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate

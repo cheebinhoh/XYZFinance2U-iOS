@@ -59,7 +59,6 @@ class XYZExpenseTableViewController: UITableViewController,
     var sectionMonthYearList = [Date]()
     var filteredExpenseList: [XYZExpense]?
     var delegate: XYZExpenseTableViewDelegate?
-    var isPopover = false
     var isCollapsed: Bool {
         
         return true
@@ -91,9 +90,8 @@ class XYZExpenseTableViewController: UITableViewController,
         
         tabBarController.popOverNavigatorController = expenseDetailNavigationController
         
-        expenseDetailTableView.setPopover(delegate: self)
+        expenseDetailTableView.setDelegate(delegate: self)
         expenseDetailTableView.currencyCodes = currencyCodes
-        isPopover = true
         
         expenseDetailNavigationController.modalPresentationStyle = .popover
         self.present(expenseDetailNavigationController, animated: true, completion: nil)
@@ -1023,9 +1021,8 @@ class XYZExpenseTableViewController: UITableViewController,
             expenseDetailTableView.presetDetail = detail
             expenseDetailTableView.presetBudgetCategory = budgetGroup
             expenseDetailTableView.presetCurrencyCode = currency
-            expenseDetailTableView.setPopover(delegate: self)
-            self.isPopover = true
-            
+            expenseDetailTableView.setDelegate(delegate: self)
+        
             expenseDetailNavigationController.modalPresentationStyle = .popover
             handler(true)
             self.present(expenseDetailNavigationController, animated: true, completion: nil)
@@ -1253,7 +1250,7 @@ class XYZExpenseTableViewController: UITableViewController,
                     
                     tableView.deselectRow(at: indexPath, animated: false)
                     
-                    expenseTableView.setPopover(delegate: self)
+                    expenseTableView.setDelegate(delegate: self)
                     let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
                     
                     expenseTableView.currencyCodes = currencyCodes
