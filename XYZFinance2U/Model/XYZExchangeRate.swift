@@ -34,18 +34,20 @@ class XYZExchangeRate : NSManagedObject {
 
     // MARK: - function
     
-    init(recordId: String,
+    init(id: String?,
          base: String,
          target: String,
          rate: Double,
          date: Date,
          context: NSManagedObjectContext?) {
         
+        let recordName = id ?? UUID.init().uuidString
+        
         let entity = NSEntityDescription.entity(forEntityName: XYZExchangeRate.type,
                                                 in: context!)!
         super.init(entity: entity, insertInto: context!)
         
-        self.setValue(recordId, forKey: XYZExchangeRate.recordId)
+        self.setValue(recordName, forKey: XYZExchangeRate.recordId)
         self.setValue(base, forKey: XYZExchangeRate.base)
         self.setValue(target, forKey: XYZExchangeRate.target)
         self.setValue(rate, forKey: XYZExchangeRate.rate)
