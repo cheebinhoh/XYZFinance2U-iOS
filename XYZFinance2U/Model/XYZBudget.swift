@@ -249,16 +249,12 @@ class XYZBudget : NSManagedObject {
             retLength = length
         } else {
             
-            for (index, startElem) in starts.enumerated() {
-                
-                if now >= startElem {
-                    
-                    retStart = startElem
-                    retAmount = amounts[index]
-                    retLength = lengths[index]
-                    
-                    break
-                }
+            let index = starts.firstIndex(where: { now >= $0 })
+            if let index = index {
+
+                retStart = starts[index]
+                retAmount = amounts[index]
+                retLength = lengths[index]
             }
         }
                                                                             
@@ -325,6 +321,8 @@ class XYZBudget : NSManagedObject {
         self.setValue(start, forKey: XYZBudget.start)
         self.setValue(sequenceNr, forKey: XYZBudget.sequenceNr)
         self.setValue(Date(), forKey: XYZBudget.lastRecordChange)
+        
+        // optional ...
         self.setValue("", forKey: XYZBudget.color)
         self.setValue("", forKey: XYZBudget.iconName)
         
