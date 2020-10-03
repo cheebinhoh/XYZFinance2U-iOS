@@ -285,7 +285,7 @@ class XYZBudgetTableViewController: UITableViewController,
         
         budgetLengths = budgetLengths.sorted(by: { (len1, len2) -> Bool in
             
-            return len1.index() < len2.index()
+            return len1.index < len2.index
         })
         
         for currency in currencyCodes {

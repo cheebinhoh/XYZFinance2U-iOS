@@ -14,7 +14,7 @@ import CloudKit
 @objc(XYZBudget)
 class XYZBudget : NSManagedObject {
 
-    enum Length: String {
+    enum Length: String, CaseIterable {
         
         case none
         case daily
@@ -24,31 +24,9 @@ class XYZBudget : NSManagedObject {
         case halfyearly = "half yearly"
         case yearly
         
-        func index() -> Int {
+        var index : Int {
             
-            switch self {
-                
-                case .none:
-                    return 0
-                
-                case .daily:
-                    return 1
-
-                case .weekly:
-                    return 2
-                
-                case .biweekly:
-                    return 3
-
-                case .monthly:
-                    return 4
-                
-                case .halfyearly:
-                    return 5
-                
-                case .yearly:
-                    return 6
-            }
+            return Length.allCases.firstIndex(of: self)!
         }
         
         func description() -> String {
