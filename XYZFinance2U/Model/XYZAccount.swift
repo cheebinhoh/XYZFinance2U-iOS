@@ -42,8 +42,8 @@ class XYZAccount : NSManagedObject {
     static let lastUpdate = "lastUpdate"
     static let principal = "principal"
     static let recordId = "recordId"
-    static let repeatDate = "repeatDate"
     static let repeatAction = "repeatAction"
+    static let repeatDate = "repeatDate"
     static let sequenceNr = "sequenceNr"
 
     // MARK: - property
