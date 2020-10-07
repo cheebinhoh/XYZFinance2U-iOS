@@ -356,13 +356,9 @@ func loadAccounts() -> [XYZAccount]? {
     let aContext = managedContext()
     let fetchRequest = NSFetchRequest<XYZAccount>(entityName: "XYZAccount")
     
-    do {
+    if let unsorted = try? aContext?.fetch(fetchRequest) {
         
-        output = try aContext?.fetch(fetchRequest)
-        
-        output = sortAcounts(output!)
-    } catch {
-        
+        output = sortAcounts(unsorted)
     }
     
     return output
@@ -375,83 +371,41 @@ func loadExpenses() -> [XYZExpense]? {
     let aContext = managedContext()
     let fetchRequest = NSFetchRequest<XYZExpense>(entityName: "XYZExpense")
     
-    do {
-        
-        expenses = try aContext?.fetch(fetchRequest)
-    } catch  {
-        
-    }
+    expenses = try? aContext?.fetch(fetchRequest)
     
     let fetchRequestExpPerson = NSFetchRequest<XYZExpensePerson>(entityName: "XYZExpensePerson")
     
-    do {
-        
-        _ = try aContext?.fetch(fetchRequestExpPerson)
-    } catch {
-        
-    }
+    _ = try? aContext?.fetch(fetchRequestExpPerson)
     
     let fetchRequestExpReceipt = NSFetchRequest<XYZExpenseReceipt>(entityName: "XYZExpenseReceipt")
     
-    do {
-        
-        _ = try aContext?.fetch(fetchRequestExpReceipt)
-    } catch {
-        
-    }
+    _ = try? aContext?.fetch(fetchRequestExpReceipt)
     
     return sortExpenses(expenses!)
 }
 
 func loadBudgets() -> [XYZBudget]? {
     
-    var budgets: [XYZBudget]?
-    
     let aContext = managedContext()
     let fetchRequest = NSFetchRequest<XYZBudget>(entityName: XYZBudget.type)
     
-    do {
-        
-        budgets = try aContext?.fetch(fetchRequest)
-    } catch  {
-        
-    }
-    
-    return budgets
+    return try? aContext?.fetch(fetchRequest)
 }
 
 func loadExchangeRates() -> [XYZExchangeRate]? {
     
-    var output: [XYZExchangeRate]?
-    
     let aContext = managedContext()
     let fetchRequest = NSFetchRequest<XYZExchangeRate>(entityName: XYZExchangeRate.type)
     
-    do {
-        
-        output = try aContext?.fetch(fetchRequest)
-    } catch {
-        
-    }
-    
-    return output
+    return try? aContext?.fetch(fetchRequest)
 }
 
 func loadiCloudZone() -> [XYZiCloudZone]? {
     
-    var output: [XYZiCloudZone]?
-    
     let aContext = managedContext()
     let fetchRequest = NSFetchRequest<XYZiCloudZone>(entityName: XYZiCloudZone.type)
-    
-    do {
-        
-        output = try aContext?.fetch(fetchRequest)
-    } catch {
-
-    }
-    
-    return output
+  
+    return try? aContext?.fetch(fetchRequest)
 }
 
 
