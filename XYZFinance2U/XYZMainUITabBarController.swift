@@ -10,6 +10,8 @@ import UIKit
 class XYZMainUITabBarController: UITabBarController,
     UITabBarControllerDelegate {
 
+    // MARK: - property
+    
     weak var popOverNavigatorController: UINavigationController?
     weak var popOverAlertController: UIViewController?
     
