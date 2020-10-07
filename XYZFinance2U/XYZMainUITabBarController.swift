@@ -3,7 +3,7 @@
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/19/17.
-//  Copyright © 2017 - 2020 - 2020 Chee Bin Hoh. All rights reserved.
+//  Copyright © 2017 - 2020 Chee Bin Hoh. All rights reserved.
 
 import UIKit
 
