@@ -44,13 +44,19 @@ class AppDelegate: UIResponder,
 
             if let name = icloudZone.value(forKey: XYZiCloudZone.name) as? String {
                 
-                for privateiCloudZone in self.privateiCloudZones {
+                let privateiCloudZone = self.privateiCloudZones.first(where: {
                     
-                    if let privateName = privateiCloudZone.value(forKey: XYZiCloudZone.name) as? String, name == privateName {
+                    guard let privateName = $0.value(forKey: XYZiCloudZone.name) as? String else {
                         
-                        icloudZone.data = privateiCloudZone.data
-                        break
+                        return false
                     }
+                    
+                    return name == privateName
+                })
+                
+                if let _ = privateiCloudZone {
+                    
+                    icloudZone.data = privateiCloudZone?.data
                 }
                 
                 if let ownerName = icloudZone.value(forKey: XYZiCloudZone.ownerName) as? String, ownerName != "" {
@@ -74,32 +80,33 @@ class AppDelegate: UIResponder,
                         let name = iCloudZone.value(forKey: XYZiCloudZone.name) as? String
                         
                         switch name! {
-                        case XYZExpense.type:
-                            
-                            guard let tabBarController = self.window?.rootViewController as? XYZMainUITabBarController else {
+                        
+                            case XYZExpense.type:
                                 
-                                fatalError("Exception: XYZMainUITabBarController is expected")
-                            }
-                            
-                            guard let expenseNavController = tabBarController.viewControllers?[1] as? UINavigationController else {
+                                guard let tabBarController = self.window?.rootViewController as? XYZMainUITabBarController else {
+                                    
+                                    fatalError("Exception: XYZMainUITabBarController is expected")
+                                }
                                 
-                                fatalError("Exception: UINavigationController is expected")
-                            }
-                            
-                            guard let expenseView = expenseNavController.viewControllers.first as? XYZExpenseTableViewController else {
+                                guard let expenseNavController = tabBarController.viewControllers?[1] as? UINavigationController else {
+                                    
+                                    fatalError("Exception: UINavigationController is expected")
+                                }
                                 
-                                fatalError("Exception: XYZExpenseTableViewController is expected")
-                            }
-                            
-                            let zone = CKRecordZone(zoneName: XYZExpense.type)
-                            let privateiCloudZone = GetiCloudZone(of: zone, share: false, icloudZones: self.privateiCloudZones)
-                            
-                            privateiCloudZone?.data = iCloudZone.data
-                            self.expenseList = (iCloudZone.data as? [XYZExpense])!
-                            expenseView.reloadData()
-                            
-                        default:
-                            fatalError("Exception: \(String(describing: name)) is not supported")
+                                guard let expenseView = expenseNavController.viewControllers.first as? XYZExpenseTableViewController else {
+                                    
+                                    fatalError("Exception: XYZExpenseTableViewController is expected")
+                                }
+                                
+                                let zone = CKRecordZone(zoneName: XYZExpense.type)
+                                let privateiCloudZone = GetiCloudZone(of: zone, share: false, icloudZones: self.privateiCloudZones)
+                                
+                                privateiCloudZone?.data = iCloudZone.data
+                                self.expenseList = (iCloudZone.data as? [XYZExpense])!
+                                expenseView.reloadData()
+                                
+                            default:
+                                fatalError("Exception: \(String(describing: name)) is not supported")
                         }
                     }
                 }
@@ -114,155 +121,162 @@ class AppDelegate: UIResponder,
         
         acceptSharesOp.acceptSharesCompletionBlock = { error in
             
-            if let _ = error {
+            guard error == nil else {
                 
+                return
             }
-            else
-            {
-                let recordName = cloudKitShareMetadata.rootRecordID.recordName
-                let database = CKContainer.default().sharedCloudDatabase
+            
+            let recordName = cloudKitShareMetadata.rootRecordID.recordName
+            let database = CKContainer.default().sharedCloudDatabase
+            
+            var zones = [CKRecordZone]()
+            var shareicloudZone: XYZiCloudZone?
+            
+            for icloudZone in self.shareiCloudZones {
                 
-                var zones = [CKRecordZone]()
-                var shareicloudZone: XYZiCloudZone?
-                
-                for icloudZone in self.shareiCloudZones {
-                    
-                    if let name = icloudZone.value(forKey: XYZiCloudZone.name) as? String,
-                        name == cloudKitShareMetadata.share.recordID.zoneID.zoneName {
-                     
-                        if let owner = icloudZone.value(forKey: XYZiCloudZone.ownerName) as? String, owner == cloudKitShareMetadata.share.recordID.zoneID.ownerName {
-                            
-                            let newZone = CKRecordZone(zoneID: cloudKitShareMetadata.share.recordID.zoneID)
-                            zones.append(newZone)
-                            
-                            for privateiCloudZone in self.privateiCloudZones {
-                                
-                                if let privateName = privateiCloudZone.value(forKey: XYZiCloudZone.name) as? String,
-                                    privateName == name {
-                                    
-                                    icloudZone.data = privateiCloudZone.data
-                                    
-                                    break
-                                }
-                            }
-
-                            shareicloudZone = icloudZone
-                            
-                            break
-                        }
-                    }
-                }
-                
-                DispatchQueue.main.async {
-                    
-                    if zones.isEmpty {
-                        
-                        let icloudZone = XYZiCloudZone(name: cloudKitShareMetadata.share.recordID.zoneID.zoneName,
-                                                       owner: cloudKitShareMetadata.share.recordID.zoneID.ownerName,
-                                                       context: managedContext())
-                        
-                        icloudZone.setValue(true, forKey: XYZiCloudZone.inShareDB)
-                        self.shareiCloudZones.append(icloudZone)
+                if let name = icloudZone.value(forKey: XYZiCloudZone.name) as? String,
+                    name == cloudKitShareMetadata.share.recordID.zoneID.zoneName {
+                 
+                    if let owner = icloudZone.value(forKey: XYZiCloudZone.ownerName) as? String, owner == cloudKitShareMetadata.share.recordID.zoneID.ownerName {
                         
                         let newZone = CKRecordZone(zoneID: cloudKitShareMetadata.share.recordID.zoneID)
                         zones.append(newZone)
                         
-                        saveManageContext()
-                        
+                        let privateiCloudZone = self.privateiCloudZones.first(where: {
+                                
+                            guard let privateName = $0.value(forKey: XYZiCloudZone.name) as? String else {
+                                    
+                                    return false
+                            }
+                            
+                            return privateName == name
+                        })
+                     
+                        if let _ = privateiCloudZone {
+                            
+                            icloudZone.data = privateiCloudZone?.data
+                        }
+
                         shareicloudZone = icloudZone
                         
-                        for privateiCloudZone in self.privateiCloudZones {
-                            
-                            if let privateName = privateiCloudZone.value(forKey: XYZiCloudZone.name) as? String,
-                                privateName == cloudKitShareMetadata.share.recordID.zoneID.zoneName {
-                                
-                                icloudZone.data = privateiCloudZone.data
-                                
-                                break
-                            }
-                        }
+                        break
                     }
-     
-                    // we always fetch all from the share zone if we accept any, TODO: we need to provide
-                    // a way to keep track of change token per url link
-                    //let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: "" )
-                    //shareicloudZone!.setValue(archivedChangeToken, forKey: XYZiCloudZone.changeToken)
-                    //shareicloudZone!.setValue(Date(), forKey: XYZiCloudZone.changeTokenLastFetch)
+                }
+            }
+            
+            DispatchQueue.main.async {
+                
+                if zones.isEmpty {
+                    
+                    let icloudZone = XYZiCloudZone(name: cloudKitShareMetadata.share.recordID.zoneID.zoneName,
+                                                   owner: cloudKitShareMetadata.share.recordID.zoneID.ownerName,
+                                                   context: managedContext())
+                    
+                    icloudZone.setValue(true, forKey: XYZiCloudZone.inShareDB)
+                    self.shareiCloudZones.append(icloudZone)
+                    
+                    let newZone = CKRecordZone(zoneID: cloudKitShareMetadata.share.recordID.zoneID)
+                    zones.append(newZone)
                     
                     saveManageContext()
                     
-                    fetchiCloudZoneChange(database: database, zones: zones, icloudZones: [shareicloudZone!], completionblock: {
-                        
-                        DispatchQueue.main.async {
-                            
-                            for iCloudZone in [shareicloudZone!]{
-                                
-                                let name = iCloudZone.value(forKey: XYZiCloudZone.name) as? String
-                            
-                                switch name! {
-                                    case XYZExpense.type:
-
-                                        guard let tabBarController = self.window?.rootViewController as? XYZMainUITabBarController else {
-                                            
-                                            fatalError("Exception: XYZMainUITabBarController is expected")
-                                        }
-                                
-                                        guard let expenseNavController = tabBarController.viewControllers?[1] as? UINavigationController else {
-                                            
-                                            fatalError("Exception: UINavigationController is expected")
-                                        }
-                                        
-                                        guard let expenseView = expenseNavController.viewControllers.first as? XYZExpenseTableViewController else {
-                                            
-                                            fatalError("Exception: XYZExpenseTableViewController is expected")
-                                        }
-                                    
-                                        let zone = CKRecordZone(zoneName: XYZExpense.type)
-                                        let privateiCloudZone = GetiCloudZone(of: zone, share: false, icloudZones: self.privateiCloudZones)
-                                    
-                                        privateiCloudZone?.data = iCloudZone.data
-                                        self.expenseList = (iCloudZone.data as? [XYZExpense])!
-                                        
-                                        for expense in self.expenseList {
-                                            
-                                            if let expRecordId = expense.value(forKey: XYZExpense.recordId) as? String, expRecordId == recordName {
-                                                
-                                                if let isShare = expense.value(forKey: XYZExpense.isShared) as? Bool, isShare {
-                                                    
-                                                    expense.setValue(false, forKey: XYZExpense.isSoftDelete)
-                                                    expense.setValue(Date(), forKey: XYZExpense.lastRecordChange)
-                                                    
-                                                    saveManageContext()
-                                                    
-                                                    break
-                                                }
-                                            }
-                                        }
-                                        
-                                        expenseView.reloadData()
-                                        
-                                        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                                        let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
+                    shareicloudZone = icloudZone
                     
-                                        fetchAndUpdateiCloud(database: CKContainer.default().privateCloudDatabase,
-                                                             zones: [ckrecordzone],
-                                                             iCloudZones: [privateiCloudZone!], completionblock: {
-                                                                
-                                            // if we implement synchronization of content, then time to refresh it.
-                                            DispatchQueue.main.async {
-                                                
-                                                appDelegate?.expenseList = (privateiCloudZone?.data as? [XYZExpense])!
-                                                expenseView.reloadData()
-                                            }
-                                        })
+                    let privateiCloudZone = self.privateiCloudZones.first(where: {
+                        
+                        guard let privateName = $0.value(forKey: XYZiCloudZone.name) as? String else {
+                            
+                            return false
+                        }
+                        
+                        return privateName == cloudKitShareMetadata.share.recordID.zoneID.zoneName
+                    })
+                    
+                    if let _ = privateiCloudZone {
+                        
+                        icloudZone.data = privateiCloudZone?.data
+                    }
+                }
+ 
+                // we always fetch all from the share zone if we accept any, TODO: we need to provide
+                // a way to keep track of change token per url link
+                //let archivedChangeToken = NSKeyedArchiver.archivedData(withRootObject: "" )
+                //shareicloudZone!.setValue(archivedChangeToken, forKey: XYZiCloudZone.changeToken)
+                //shareicloudZone!.setValue(Date(), forKey: XYZiCloudZone.changeTokenLastFetch)
+                
+                saveManageContext()
+                
+                fetchiCloudZoneChange(database: database, zones: zones, icloudZones: [shareicloudZone!], completionblock: {
+                    
+                    DispatchQueue.main.async {
+                        
+                        for iCloudZone in [shareicloudZone!]{
+                            
+                            let name = iCloudZone.value(forKey: XYZiCloudZone.name) as? String
+                        
+                            switch name! {
+                                case XYZExpense.type:
+
+                                    guard let tabBarController = self.window?.rootViewController as? XYZMainUITabBarController else {
+                                        
+                                        fatalError("Exception: XYZMainUITabBarController is expected")
+                                    }
+                            
+                                    guard let expenseNavController = tabBarController.viewControllers?[1] as? UINavigationController else {
+                                        
+                                        fatalError("Exception: UINavigationController is expected")
+                                    }
                                     
-                                    default:
-                                        fatalError("Exception: \(String(describing: name)) is not supported")
-                                }
+                                    guard let expenseView = expenseNavController.viewControllers.first as? XYZExpenseTableViewController else {
+                                        
+                                        fatalError("Exception: XYZExpenseTableViewController is expected")
+                                    }
+                                
+                                    let zone = CKRecordZone(zoneName: XYZExpense.type)
+                                    let privateiCloudZone = GetiCloudZone(of: zone, share: false, icloudZones: self.privateiCloudZones)
+                                
+                                    privateiCloudZone?.data = iCloudZone.data
+                                    self.expenseList = (iCloudZone.data as? [XYZExpense])!
+                                    
+                                    for expense in self.expenseList {
+                                        
+                                        if let expRecordId = expense.value(forKey: XYZExpense.recordId) as? String, expRecordId == recordName {
+                                            
+                                            if let isShare = expense.value(forKey: XYZExpense.isShared) as? Bool, isShare {
+                                                
+                                                expense.setValue(false, forKey: XYZExpense.isSoftDelete)
+                                                expense.setValue(Date(), forKey: XYZExpense.lastRecordChange)
+                                                
+                                                saveManageContext()
+                                                
+                                                break
+                                            }
+                                        }
+                                    }
+                                    
+                                    expenseView.reloadData()
+                                    
+                                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                                    let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
+                
+                                    fetchAndUpdateiCloud(database: CKContainer.default().privateCloudDatabase,
+                                                         zones: [ckrecordzone],
+                                                         iCloudZones: [privateiCloudZone!], completionblock: {
+                                                            
+                                        // if we implement synchronization of content, then time to refresh it.
+                                        DispatchQueue.main.async {
+                                            
+                                            appDelegate?.expenseList = (privateiCloudZone?.data as? [XYZExpense])!
+                                            expenseView.reloadData()
+                                        }
+                                    })
+                                
+                                default:
+                                    fatalError("Exception: \(String(describing: name)) is not supported")
                             }
                         }
-                    })
-                }
+                    }
+                })
             }
         }
         
@@ -275,7 +289,7 @@ class AppDelegate: UIResponder,
            
         let userinfo = response.notification.request.content.userInfo
         
-        if userinfo[XYZAccount.type] != nil {
+        if let _ = userinfo[XYZAccount.type] {
 
             guard let tabBarController = self.window?.rootViewController as? UITabBarController else {
                 
@@ -470,9 +484,9 @@ class AppDelegate: UIResponder,
             let defaults = UserDefaults.standard;
             let required = defaults.value(forKey: requiredauthenticationKey) as? Bool ?? false
             
-            if ( required ) {
+            if required {
             
-                if nil != tabBarController.popOverAlertController {
+                if let _ = tabBarController.popOverAlertController {
                     
                     tabBarController.dismiss(animated: true, completion: nil)
                     tabBarController.popOverAlertController = nil
@@ -512,6 +526,7 @@ class AppDelegate: UIResponder,
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        
         
         if !authentictatedAlready {
             
@@ -705,76 +720,76 @@ class AppDelegate: UIResponder,
             
             op.modifyRecordZonesCompletionBlock = { (saved, deleted, error) in
                 
-                if nil != error {
+                guard nil == error  else {
                     
-                } else {
+                    return
+                }
+
+                OperationQueue.main.addOperation {
                     
-                    OperationQueue.main.addOperation {
+                    for zone in saved! {
                         
-                        for zone in saved! {
+                        let icloudzone = XYZiCloudZone(name: zone.zoneID.zoneName, owner: "", context: managedContext())
+                        
+                        switch zone.zoneID.zoneName {
                             
-                            let icloudzone = XYZiCloudZone(name: zone.zoneID.zoneName, owner: "", context: managedContext())
+                            case XYZAccount.type:
+                                icloudzone.data = self.incomeList
                             
-                            switch zone.zoneID.zoneName {
-                                
-                                case XYZAccount.type:
-                                    icloudzone.data = self.incomeList
-                                
-                                case XYZExpense.type:
-                                    icloudzone.data = self.expenseList
-                                
-                                case XYZBudget.type:
-                                    icloudzone.data = self.budgetList
-                                
-                                default:
-                                    fatalError("Exception: \(zone.zoneID.zoneName) is not supported")
-                            }
+                            case XYZExpense.type:
+                                icloudzone.data = self.expenseList
                             
-                            self.iCloudZones.append(icloudzone)
-                            self.privateiCloudZones.append(icloudzone)
+                            case XYZBudget.type:
+                                icloudzone.data = self.budgetList
+                            
+                            default:
+                                fatalError("Exception: \(zone.zoneID.zoneName) is not supported")
                         }
                         
-                        saveManageContext()
+                        self.iCloudZones.append(icloudzone)
+                        self.privateiCloudZones.append(icloudzone)
+                    }
+                    
+                    saveManageContext()
+                    
+                    fetchiCloudZoneChange(database: CKContainer.default().privateCloudDatabase,
+                                          zones: saved!,
+                                          icloudZones: self.privateiCloudZones, completionblock: {
                         
-                        fetchiCloudZoneChange(database: CKContainer.default().privateCloudDatabase,
-                                              zones: saved!,
-                                              icloudZones: self.privateiCloudZones, completionblock: {
+                        for icloudzone in self.privateiCloudZones {
                             
-                            for icloudzone in self.privateiCloudZones {
+                            var tableViewToBeReload : XYZTableViewReloadData?
+                            let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
+                            
+                            switch zName! {
                                 
-                                var tableViewToBeReload : XYZTableViewReloadData?
-                                let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
-                                
-                                switch zName! {
+                                case XYZAccount.type:
+                                    self.incomeList = (icloudzone.data as? [XYZAccount])!
+                                    self.incomeList = sortAcounts(self.incomeList)
+                                    tableViewToBeReload = incomeView
                                     
-                                    case XYZAccount.type:
-                                        self.incomeList = (icloudzone.data as? [XYZAccount])!
-                                        self.incomeList = sortAcounts(self.incomeList)
-                                        tableViewToBeReload = incomeView
-                                        
-                                    case XYZExpense.type:
-                                        self.expenseList = (icloudzone.data as? [XYZExpense])!
-                                        tableViewToBeReload = expenseView
-                                        
-                                    case XYZBudget.type:
-                                        self.budgetList = (icloudzone.data as? [XYZBudget])!
-                                        self.budgetList = sortBudgets(self.budgetList)
-                                        tableViewToBeReload = budgetView
-                                        
-                                    default:
-                                        fatalError("Exception: \(String(describing: zName)) is not supported")
-                                }
-                                
-                                if let tableViewToBeReload = tableViewToBeReload {
+                                case XYZExpense.type:
+                                    self.expenseList = (icloudzone.data as? [XYZExpense])!
+                                    tableViewToBeReload = expenseView
                                     
-                                    DispatchQueue.main.async {
-                                        
-                                        tableViewToBeReload.reloadData()
-                                    }
+                                case XYZBudget.type:
+                                    self.budgetList = (icloudzone.data as? [XYZBudget])!
+                                    self.budgetList = sortBudgets(self.budgetList)
+                                    tableViewToBeReload = budgetView
+                                    
+                                default:
+                                    fatalError("Exception: \(String(describing: zName)) is not supported")
+                            }
+                            
+                            if let tableViewToBeReload = tableViewToBeReload {
+                                
+                                DispatchQueue.main.async {
+                                    
+                                    tableViewToBeReload.reloadData()
                                 }
                             }
-                        })
-                    }
+                        }
+                    })
                 }
             }
             
