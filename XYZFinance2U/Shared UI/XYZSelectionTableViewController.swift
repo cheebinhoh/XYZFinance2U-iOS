@@ -81,7 +81,7 @@ class XYZSelectionTableViewController: UITableViewController {
             title = displayString!
         } else if !self.displayStrings.isEmpty {
             
-            toplevel: for tablesection in self.tableSectionList {
+            for tablesection in self.tableSectionList {
                 
                 if let index = tablesection.cellList.firstIndex(of: item ?? "") {
                     
@@ -133,14 +133,10 @@ class XYZSelectionTableViewController: UITableViewController {
         
         var sectionIndex: Int?
         
-        for (index, section) in tableSectionList.enumerated() {
-            
-            if section.identifier == sectionIdentifier {
-                
-                sectionIndex = index
-                break
-            }
-        }
+        sectionIndex = tableSectionList.firstIndex(where: {
+        
+            return $0.identifier == sectionIdentifier
+        })
         
         if sectionIndex == nil {
             
