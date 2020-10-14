@@ -714,18 +714,16 @@ class XYZSettingTableViewController: UITableViewController,
         let filteredExpenseList = expenseList.filter { (expense) -> Bool in
         
             let occurrenceDates = expense.getOccurenceDates(until: Date())
-            var found = false
             
-            for occurDate in occurrenceDates {
+            guard let _ = occurrenceDates.firstIndex(where: {
                 
-                if occurDate >= startDate! && occurDate <= Date() {
-                    
-                    found = true
-                    break
-                }
+                return $0 >= startDate! && $0 <= Date()
+            }) else {
+                
+                return false
             }
             
-            return found
+            return true
         }
         
         var index = 0
@@ -746,14 +744,12 @@ class XYZSettingTableViewController: UITableViewController,
                         
                         let occurrenceDates = expense.getOccurenceDates(until: startDate!)
                         
-                        for occurDate in occurrenceDates {
+                        let index = occurrenceDates.firstIndex(where: {
                             
-                            if occurDate >= startDate! && occurDate <= startDate! {
-                                
-                                found = true
-                                break
-                            }
-                        }
+                            return $0 >= startDate! && $0 <= startDate!
+                        })
+                        
+                        found = nil != index
                     }
                     
                     return found
