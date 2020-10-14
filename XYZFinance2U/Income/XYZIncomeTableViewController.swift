@@ -44,15 +44,12 @@ class XYZIncomeTableViewController: UITableViewController,
     
     var total: Double {
         
-        var sum = 0.0
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         
-        for account in (appDelegate?.incomeList)! {
-            
-            sum = sum + ( account.value(forKey: XYZAccount.amount) as? Double )!
-        }
+        return (appDelegate?.incomeList)!.reduce(0.0) { (result, account) in
         
-        return sum
+            return result + ( account.value(forKey: XYZAccount.amount) as? Double )!
+        }
     }
     
     // MARK: - IBOutlet
@@ -92,27 +89,6 @@ class XYZIncomeTableViewController: UITableViewController,
     @IBAction func unwindToIncomeTableView(sender: UIStoryboardSegue) {
         
         fatalError("Exception: execution should not be reached here")
-        
-        /*
-         guard let incomeDetail = sender.source as? XYZIncomeDetailViewController, let income = incomeDetail.account else
-         {
-         return
-         }
-         
-         if let selectedIndexPath = tableView.indexPathForSelectedRow
-         {
-         tableView.reloadRows(at: [selectedIndexPath], with: .automatic)
-         // tableView.reloadData()
-         }
-         else
-         {
-         income.setValue(incomeList.count, forKey: XYZAccount.sequenceNr)
-         incomeList.append(income)
-         tableView.reloadData()
-         }
-         
-         saveAccounts()
-         */
     }
     
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
@@ -201,12 +177,11 @@ class XYZIncomeTableViewController: UITableViewController,
 
     func sectionTotal(section: Int) -> (Double, String) {
     
-        var total = 0.0;
         let sectionIncomeList = sectionList[section].data as? [XYZAccount]
         
-        for income in sectionIncomeList! {
+        let total = (sectionIncomeList!).reduce(0.0) { (result, account) in
         
-            total = total + ((income.value(forKey: XYZAccount.amount) as? Double) ?? 0.0 )
+            return result + ( ( account.value(forKey: XYZAccount.amount) as? Double ) ?? 0.0 )
         }
         
         return (total, sectionList[section].title!)
@@ -378,27 +353,24 @@ class XYZIncomeTableViewController: UITableViewController,
     
     private func loadDataInTableSectionCell() {
         
-        var currencyList = [String]()
+        //var currencyList = [String]()
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
 
-        for income in (appDelegate?.incomeList)! {
-            
+        var currencyList = Set<String>()
+        
+        (appDelegate?.incomeList)!.forEach { income in
+
             let currency = income.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
             
-            if let _ = currencyList.firstIndex(of: currency) {
-                
-            } else {
-                
-                currencyList.append(currency)
-            }
+            currencyList.insert(currency)
         }
-        
-        currencyCodes = currencyList
         
         if currencyList.isEmpty {
             
-            currencyList.append(Locale.current.currencyCode!)
+            currencyList.insert(Locale.current.currencyCode!)
         }
+        
+        currencyCodes = Array(currencyList)
         
         sectionList.removeAll()
         sectionExpandStatus.removeAll()
@@ -1034,15 +1006,14 @@ class XYZIncomeTableViewController: UITableViewController,
                         fatalError("Exception: error on creating XYZIncomeTotalTableViewCell")
                     }
                     
-                    var total = 0.0;
                     var currencyCode = ""
                     
-                    for account in incomeListStored! {
-                        
-                        total = total + ( account.value(forKey: XYZAccount.amount) as? Double ?? 0.0 )
-                        
-                        currencyCode = account.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
+                    let total = incomeListStored!.reduce(0.0) { (result, account) in
+                     
+                        return result + ( account.value(forKey: XYZAccount.amount) as? Double ?? 0.0 )
                     }
+                    
+                    currencyCode = incomeListStored?.first?.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
                     
                     totalCell.amount.text = formattingCurrencyValue(of: total, as: currencyCode)
                     totalCell.currency.text = currencyCode.localized()
