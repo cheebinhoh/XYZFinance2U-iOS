@@ -363,33 +363,32 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
     
     func getDate(of indexPath: IndexPath) -> Date? {
         
-        if let _ = startDateOfMonth {
+        guard let _ = startDateOfMonth else {
             
-            guard let cell = collectionView?.cellForItem(at: indexPath) as? XYZCalendarCollectionViewCell else {
-                
-                fatalError("Exception: XYZCalendarCollectionViewCell is expected")
-            }
-            
-            if monthLevel {
-                
-                let day = Int((cell.label.text)!)
-                return Calendar.current.date(byAdding: .day,
-                                             value:day! - 1,
-                                             to: startDateOfMonth!)
-            } else {
-                
-                var monthIndex = (indexPath.section) * 3 + (indexPath.row)
-                if (indexPath.row) <= 0 {
-                    
-                    monthIndex = monthIndex + 1
-                }
-                
-                let targetYearComponent = Calendar.current.dateComponents([.month], from: targetYear!)
-                return Calendar.current.date(byAdding: .month, value: targetYearComponent.month! * -1 + monthIndex, to: targetYear!)
-            }
-        } else {
-        
             return nil
+        }
+        
+        guard let cell = collectionView?.cellForItem(at: indexPath) as? XYZCalendarCollectionViewCell else {
+            
+            fatalError("Exception: XYZCalendarCollectionViewCell is expected")
+        }
+        
+        if monthLevel {
+            
+            let day = Int((cell.label.text)!)
+            return Calendar.current.date(byAdding: .day,
+                                         value:day! - 1,
+                                         to: startDateOfMonth!)
+        } else {
+            
+            var monthIndex = (indexPath.section) * 3 + (indexPath.row)
+            if (indexPath.row) <= 0 {
+                
+                monthIndex = monthIndex + 1
+            }
+            
+            let targetYearComponent = Calendar.current.dateComponents([.month], from: targetYear!)
+            return Calendar.current.date(byAdding: .month, value: targetYearComponent.month! * -1 + monthIndex, to: targetYear!)
         }
     }
     

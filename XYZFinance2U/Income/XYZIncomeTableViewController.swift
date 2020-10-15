@@ -142,36 +142,34 @@ class XYZIncomeTableViewController: UITableViewController,
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
-        if let indexPath = tableView.indexPathForRow(at: location), indexPath.row > 0 {
-
-            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "incomeDetailViewController") as? XYZIncomeDetailViewController else  {
-                
-                fatalError("Exception: XYZIncomeDetailViewController is expected")
-            }
-            
-            let cell = tableView.cellForRow(at: indexPath)
-            
-            viewController.preferredContentSize = CGSize(width: 0.0, height: 175)
-            previewingContext.sourceRect = (cell?.frame)!
-            
-            if sectionList[indexPath.section].identifier == "main" {
-                
-                guard let sectionIncomeList = sectionList[(indexPath.section)].data as? [XYZAccount] else {
-                    
-                    fatalError("Exception: [XYZAccount] is expected")
-                }
-                
-                viewController.income = sectionIncomeList[(indexPath.row) - 1]
-                viewController.indexPath = indexPath
-            } 
-            
-            return viewController
-        } else {
+        guard let indexPath = tableView.indexPathForRow(at: location), indexPath.row > 0 else {
             
             return nil
         }
-    }
     
+        guard let viewController = storyboard?.instantiateViewController(withIdentifier: "incomeDetailViewController") as? XYZIncomeDetailViewController else  {
+            
+            fatalError("Exception: XYZIncomeDetailViewController is expected")
+        }
+        
+        let cell = tableView.cellForRow(at: indexPath)
+        
+        viewController.preferredContentSize = CGSize(width: 0.0, height: 175)
+        previewingContext.sourceRect = (cell?.frame)!
+        
+        if sectionList[indexPath.section].identifier == "main" {
+            
+            guard let sectionIncomeList = sectionList[(indexPath.section)].data as? [XYZAccount] else {
+                
+                fatalError("Exception: [XYZAccount] is expected")
+            }
+            
+            viewController.income = sectionIncomeList[(indexPath.row) - 1]
+            viewController.indexPath = indexPath
+        }
+        
+        return viewController
+    }
     
     // MARK: - function
 
@@ -856,13 +854,12 @@ class XYZIncomeTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         
-        if sectionList[indexPath.section].identifier == "main" {
-        
-            return indexPath
-        } else {
+        guard sectionList[indexPath.section].identifier == "main" else {
             
             return nil
         }
+        
+        return indexPath
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

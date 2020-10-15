@@ -124,31 +124,30 @@ class XYZExpenseTableViewController: UITableViewController,
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
-        if let indexPath = tableView.indexPathForRow(at: location), indexPath.row > 0 {
-    
-            guard let viewController = storyboard?.instantiateViewController(withIdentifier: "expenseDetailViewController") as? XYZExpenseDetailViewController else  {
-                
-                fatalError("Exception: IncomeDetailViewController is expected")
-            }
-
-            let cell = tableView.cellForRow(at: indexPath)
-            
-            viewController.preferredContentSize = CGSize(width: 0.0, height: 110)
-            previewingContext.sourceRect = (cell?.frame)!
-            
-            guard let sectionExpenseList = sectionList[(indexPath.section)].data as? [XYZExpense] else {
-                
-                fatalError("Exception: [XYZAccount] is expected")
-            }
-            
-            viewController.expense = sectionExpenseList[(indexPath.row - 1)]
-            viewController.indexPath = indexPath
-
-            return viewController
-        } else {
+        guard let indexPath = tableView.indexPathForRow(at: location), indexPath.row > 0 else {
             
             return nil
         }
+        
+        guard let viewController = storyboard?.instantiateViewController(withIdentifier: "expenseDetailViewController") as? XYZExpenseDetailViewController else  {
+            
+            fatalError("Exception: IncomeDetailViewController is expected")
+        }
+
+        let cell = tableView.cellForRow(at: indexPath)
+        
+        viewController.preferredContentSize = CGSize(width: 0.0, height: 110)
+        previewingContext.sourceRect = (cell?.frame)!
+        
+        guard let sectionExpenseList = sectionList[(indexPath.section)].data as? [XYZExpense] else {
+            
+            fatalError("Exception: [XYZAccount] is expected")
+        }
+        
+        viewController.expense = sectionExpenseList[(indexPath.row - 1)]
+        viewController.indexPath = indexPath
+
+        return viewController
     }
     
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
@@ -975,8 +974,7 @@ class XYZExpenseTableViewController: UITableViewController,
     }
     
     // MARK: - Table view data source
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]?
-    {
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 
         return nil
     }
