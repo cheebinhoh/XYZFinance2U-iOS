@@ -741,13 +741,12 @@ class XYZBudgetDetailTableViewController: UITableViewController,
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
 
-        if let _ = tableView.cellForRow(at: indexPath) as? XYZSelectionTableViewCell {
-            
-            return indexPath
-        } else {
+        guard let _ = tableView.cellForRow(at: indexPath) as? XYZSelectionTableViewCell else {
             
             return nil
         }
+        
+        return indexPath
     }
     
     
