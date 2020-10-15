@@ -425,13 +425,11 @@ class XYZBudgetTableViewController: UITableViewController,
     
     func sectionTotalBudget(section: Int) -> (Double, String) {
         
-        var total = 0.0;
         let sectionBudgetList = sectionList[section].data as? [XYZBudget]
-        
-        for budget in sectionBudgetList! {
+        let total = sectionBudgetList?.reduce(0.0, { (result, budget) in
             
-            total = total + ((budget.value(forKey: XYZBudget.amount) as? Double) ?? 0.0 )
-        }
+            return result + ((budget.value(forKey: XYZBudget.amount) as? Double) ?? 0.0 )
+        }) ?? 0.0
         
         return (total, sectionList[section].title!)
     }
