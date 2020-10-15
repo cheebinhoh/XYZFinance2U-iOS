@@ -152,13 +152,13 @@ class XYZBudgetListTableViewController: UITableViewController {
                         }
                         
                         var lengthString = ""
-                        switch length!
-                        {
-                        case .none:
-                            lengthString = ""
-                            
-                        default:
-                            lengthString = length?.rawValue.localized() ?? ""
+                        switch length! {
+                        
+                            case .none:
+                                lengthString = ""
+                                
+                            default:
+                                lengthString = length?.rawValue.localized() ?? ""
                         }
                         
                         let tableCell = TableCell(length: "\(lengthString)", start: start, until: expenseLastDate, amount: amount, expenseList: filterExpenseList)
