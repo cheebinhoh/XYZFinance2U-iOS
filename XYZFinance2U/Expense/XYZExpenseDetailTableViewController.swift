@@ -277,14 +277,15 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                 
                 var receiptToBeDeleted: XYZExpenseReceipt?
                 
-                for receipt in receiptList {
+                receiptToBeDeleted = receiptList.first(where: {
                     
-                    if let sequenceNr = receipt.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int, sequenceNr == index {
+                    guard let sequenceNr = $0.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int else {
                         
-                        receiptToBeDeleted = receipt;
-                        break
+                        return false
                     }
-                }
+                    
+                    return sequenceNr == index
+                })
                 
                 if let _ = receiptToBeDeleted {
                     
@@ -407,6 +408,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
             let personList = expense?.getPersons()
             
             for person in personList!.sorted(by: { (person1, person2) -> Bool in
+                
                 let seq1 = person1.value(forKey: XYZExpensePerson.sequenceNr) as? Int
                 let seq2 = person2.value(forKey: XYZExpensePerson.sequenceNr) as? Int
                 
