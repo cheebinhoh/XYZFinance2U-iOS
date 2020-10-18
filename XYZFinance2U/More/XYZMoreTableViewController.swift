@@ -103,7 +103,7 @@ class XYZMoreTableViewController: UITableViewController,
                 })
                 
                 self.totalIncome = ( self.totalIncome ?? 0.0 )
-                    + ( amount * ( rate?.value ?? 1 ) )
+                    + ( amount / ( rate?.value ?? 1.0 ) )
             }
             
             DispatchQueue.main.async {
