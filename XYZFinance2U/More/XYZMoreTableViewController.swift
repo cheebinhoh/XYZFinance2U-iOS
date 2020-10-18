@@ -805,6 +805,8 @@ class XYZMoreTableViewController: UITableViewController,
         
         } else if sectionList[indexPath.section].cellList[indexPath.row] == "ToggleShowTotal" {
     
+        } else if sectionList[indexPath.section].cellList[indexPath.row] == "TotalIncome" {
+    
         } else {
             
             showAbout(indexPath)
