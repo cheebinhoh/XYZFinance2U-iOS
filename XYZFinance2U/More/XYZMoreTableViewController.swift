@@ -154,7 +154,6 @@ class XYZMoreTableViewController: UITableViewController,
                 defaults.set(!showTotalIncome, forKey: showTotalIncomeKey)
                 
                 self.reload()
-                //self.retrieveExchangeRateAndCalculateTotalIncome()
                 
             default:
                 fatalError("Invalid option \(sectionList[indexPath.section].cellList[indexPath.row])")
