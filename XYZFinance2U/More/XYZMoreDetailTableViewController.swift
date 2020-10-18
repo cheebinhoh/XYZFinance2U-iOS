@@ -1,5 +1,5 @@
 //
-//  XYZSettingDetailTableViewController.swift
+//  XYZMoreDetailTableViewController.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/29/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class XYZSettingDetailTableViewController: UITableViewController {
+class XYZMoreDetailTableViewController: UITableViewController {
 
     // MARK: - property
     
@@ -71,9 +71,9 @@ class XYZSettingDetailTableViewController: UITableViewController {
         switch  tableSectionCellList[indexPath.section].cellList[indexPath.row] {
             
             case "about":
-                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingDetailAboutCell", for: indexPath) as? XYZSettingDetailAboutTableViewCell else {
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingDetailAboutCell", for: indexPath) as? XYZMoreDetailAboutTableViewCell else {
                     
-                    fatalError("Exception: errpr on creating XYZSettingDetailAboutTableViewCell")
+                    fatalError("Exception: errpr on creating XYZMoreDetailAboutTableViewCell")
                 }
                 
                 let textVersion
@@ -131,9 +131,9 @@ class XYZSettingDetailTableViewController: UITableViewController {
                 cell = newcell
             
             case "credit":
-                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingDetailAboutCell", for: indexPath) as? XYZSettingDetailAboutTableViewCell else {
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingDetailAboutCell", for: indexPath) as? XYZMoreDetailAboutTableViewCell else {
                     
-                    fatalError("Exception: errpr on creating XYZSettingDetailAboutTableViewCell")
+                    fatalError("Exception: errpr on creating XYZMoreDetailAboutTableViewCell")
                 }
                 
                 let text = """

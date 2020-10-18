@@ -1,5 +1,5 @@
 //
-//  XYZSettingTableViewCell.swift
+//  XYZMoreTableViewCell.swift
 //  XYZFinance2U
 //
 //  Created by Chee Bin Hoh on 12/14/17.
@@ -8,19 +8,19 @@
 
 import UIKit
 
-protocol XYZSettingTextTableViewCellDelegate: class {
+protocol XYZMoreTextTableViewCellDelegate: class {
     
-    func switchChanged(_ yesno: Bool, _ sender:XYZSettingTableViewCell)
+    func switchChanged(_ yesno: Bool, _ sender:XYZMoreTableViewCell)
 }
 
-class XYZSettingTableViewCell: UITableViewCell {
+class XYZMoreTableViewCell: UITableViewCell {
     
     // MARK: - outlet
     
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var optionSwitch: UISwitch!
     @IBOutlet weak var stack: UIStackView!
-    var delegate: XYZSettingTextTableViewCellDelegate?
+    var delegate: XYZMoreTextTableViewCellDelegate?
     
     // MARK: - function
     
