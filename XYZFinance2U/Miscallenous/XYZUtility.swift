@@ -11,7 +11,8 @@ import UIKit
 import CoreData
 import CloudKit
 
-let requiredauthenticationKey = "requiredauthentication"
+let showTotalIncomeKey = "showtotalincome"
+let requiredAuthenticationKey = "requiredauthentication"
 var cksharesFoundButNoRootRecord = [CKShare]()
 
 protocol XYZTableViewReloadData {

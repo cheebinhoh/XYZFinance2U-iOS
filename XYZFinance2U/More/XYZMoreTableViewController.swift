@@ -29,26 +29,43 @@ class XYZMoreTableViewController: UITableViewController,
         let laContext = LAContext()
         var authError: NSError?
         
-        if #available(iOS 8.0, macOS 10.12.1, *) {
+        guard let indexPath = tableView.indexPath(for: sender) else {
             
-            if laContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
-                
-                laContext.evaluatePolicy(.deviceOwnerAuthentication,
-                                         localizedReason: "Authenticate to change the setting".localized() )
-                { (success, error) in
+            return
+        }
+        
+        switch sectionList[indexPath.section].cellList[indexPath.row] {
+        
+            case "RequiredAuthentication":
+                if #available(iOS 8.0, macOS 10.12.1, *) {
                     
-                    DispatchQueue.main.async {
+                    if laContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
                         
-                        if success {
+                        laContext.evaluatePolicy(.deviceOwnerAuthentication,
+                                                 localizedReason: "Authenticate to change the setting".localized() )
+                        { (success, error) in
                             
-                            let required = defaults.value(forKey: requiredauthenticationKey) as? Bool ?? false
-                            defaults.set(!required, forKey: requiredauthenticationKey)
+                            DispatchQueue.main.async {
+                                
+                                if success {
+                                    
+                                    let required = defaults.value(forKey: requiredAuthenticationKey) as? Bool ?? false
+                                    defaults.set(!required, forKey: requiredAuthenticationKey)
+                                }
+                                
+                                self.reload()
+                            }
                         }
-                        
-                        self.reload()
                     }
                 }
-            }
+                
+            case "ToggleShowTotal":
+                let showTotalIncome = defaults.value(forKey: showTotalIncomeKey) as? Bool ?? false
+                defaults.set(!showTotalIncome, forKey: showTotalIncomeKey)
+                self.reload()
+                
+            default:
+                fatalError("Invalid option \(sectionList[indexPath.section].cellList[indexPath.row])")
         }
     }
     
@@ -102,8 +119,8 @@ class XYZMoreTableViewController: UITableViewController,
         if tableViewController.authenticatedMechanismExist {
             
             let defaults = UserDefaults.standard;
-            let required = defaults.value(forKey: requiredauthenticationKey) as? Bool ?? false
-            var celllist = ["requiredauthentication"]
+            let required = defaults.value(forKey: requiredAuthenticationKey) as? Bool ?? false
+            var celllist = ["RequiredAuthentication"]
             
             if required {
                 
@@ -113,6 +130,10 @@ class XYZMoreTableViewController: UITableViewController,
             let logoutSection = TableSectionCell(identifier: "authentication", title: "", cellList: celllist, data: nil)
             sectionList.append(logoutSection)
         }
+        
+        let total = TableSectionCell(identifier: "total", title: "",
+                                     cellList: ["ToggleShowTotal", "TotalIncome"], data: nil)
+        sectionList.append(total)
     }
     
     override func viewDidLoad() {
@@ -158,7 +179,7 @@ class XYZMoreTableViewController: UITableViewController,
         switch sectionList[indexPath.section].cellList[indexPath.row] {
             
             case "About" :
-                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableViewCell", for: indexPath) as? XYZMoreTableViewCell else {
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "moreTableViewCell", for: indexPath) as? XYZMoreTableViewCell else {
                     
                     fatalError("Exception: error on creating settingTableViewCell")
                 }
@@ -168,7 +189,7 @@ class XYZMoreTableViewController: UITableViewController,
                 cell = newcell
             
             case "Export" :
-                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableViewCell", for: indexPath) as? XYZMoreTableViewCell else {
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "moreTableViewCell", for: indexPath) as? XYZMoreTableViewCell else {
                     
                     fatalError("Exception: error on creating settingTableViewCell")
                 }
@@ -179,7 +200,7 @@ class XYZMoreTableViewController: UITableViewController,
                 cell = newcell
             
             case "SynciCloud" :
-                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableViewCell", for: indexPath) as? XYZMoreTableViewCell else {
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "moreTableViewCell", for: indexPath) as? XYZMoreTableViewCell else {
                     
                     fatalError("Exception: error on creating settingTableViewCell")
                 }
@@ -190,7 +211,7 @@ class XYZMoreTableViewController: UITableViewController,
                 cell = newcell
             
             case "DeleteData":
-                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableViewCell", for: indexPath) as? XYZMoreTableViewCell else {
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "moreTableViewCell", for: indexPath) as? XYZMoreTableViewCell else {
                     
                     fatalError("Exception: error on creating settingTableViewCell")
                 }
@@ -201,7 +222,7 @@ class XYZMoreTableViewController: UITableViewController,
                 cell = newcell
             
             case "Lockout" :
-                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableViewCell", for: indexPath) as? XYZMoreTableViewCell else {
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "moreTableViewCell", for: indexPath) as? XYZMoreTableViewCell else {
                     
                     fatalError("Exception: error on creating settingTableViewCell")
                 }
@@ -211,14 +232,14 @@ class XYZMoreTableViewController: UITableViewController,
                 newcell.removeUISwitch()
                 cell = newcell
 
-            case "requiredauthentication" :
-                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "settingTableViewCell", for: indexPath) as? XYZMoreTableViewCell else {
+            case "RequiredAuthentication" :
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "moreTableViewCell", for: indexPath) as? XYZMoreTableViewCell else {
                     
                     fatalError("Exception: error on creating settingTableViewCell")
                 }
 
                 let defaults = UserDefaults.standard;
-                let required = defaults.value(forKey: requiredauthenticationKey) as? Bool ?? false
+                let required = defaults.value(forKey: requiredAuthenticationKey) as? Bool ?? false
                 
                 newcell.title.text = "Require authentication".localized()
                 newcell.accessoryType = .none
@@ -234,6 +255,28 @@ class XYZMoreTableViewController: UITableViewController,
                 // newcell.accessoryType = required ? .checkmark : .none
                 cell = newcell
             
+            case "ToggleShowTotal" :
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "moreTableViewCell", for: indexPath) as? XYZMoreTableViewCell else {
+                    
+                    fatalError("Exception: error on creating settingTableViewCell")
+                }
+
+                let defaults = UserDefaults.standard;
+                let showTotal = defaults.value(forKey: showTotalIncomeKey) as? Bool ?? false
+                
+                newcell.title.text = "Show total income".localized()
+                newcell.accessoryType = .none
+                
+                if nil == newcell.optionSwitch {
+                    
+                    newcell.addUISwitch()
+                    newcell.delegate = self
+                }
+                
+                newcell.optionSwitch.isOn = showTotal
+                
+                // newcell.accessoryType = required ? .checkmark : .none
+                cell = newcell
             default:
                 fatalError("Exception: \(sectionList[indexPath.section].cellList[indexPath.row]) is not supported")
         }
@@ -626,34 +669,10 @@ class XYZMoreTableViewController: UITableViewController,
             let tableViewController = getMainTableView()
             
             tableViewController.lockout()
-        } else if sectionList[indexPath.section].cellList[indexPath.row] == "requiredauthentication" {
+        } else if sectionList[indexPath.section].cellList[indexPath.row] == "RequiredAuthentication" {
         
-            /*
-            let defaults = UserDefaults.standard;
-            let laContext = LAContext()
-            var authError: NSError?
-            
-            if #available(iOS 8.0, macOS 10.12.1, *) {
-                
-                if laContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &authError) {
-                    
-                    laContext.evaluatePolicy(.deviceOwnerAuthentication,
-                                             localizedReason: "Authenticate to change the setting" )
-                    { (success, error) in
-                        
-                        if success {
-                            
-                            DispatchQueue.main.async {
-                                
-                                let required = defaults.value(forKey: "requiredauthentication") as? Bool ?? false
-                                defaults.set(!required, forKey: "requiredauthentication")
-                                self.reload()
-                            }
-                        }
-                    }
-                }
-            }
-            */
+        } else if sectionList[indexPath.section].cellList[indexPath.row] == "ToggleShowTotal" {
+    
         } else {
             
             showAbout(indexPath)

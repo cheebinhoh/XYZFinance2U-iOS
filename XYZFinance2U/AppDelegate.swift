@@ -482,7 +482,7 @@ class AppDelegate: UIResponder,
             && nil == tabBarController.popOverNavigatorController {
             
             let defaults = UserDefaults.standard;
-            let required = defaults.value(forKey: requiredauthenticationKey) as? Bool ?? false
+            let required = defaults.value(forKey: requiredAuthenticationKey) as? Bool ?? false
             
             if required {
             
