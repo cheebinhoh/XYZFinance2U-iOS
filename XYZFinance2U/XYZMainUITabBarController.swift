@@ -42,6 +42,17 @@ class XYZMainUITabBarController: UITabBarController,
     // when we switch the tab, we want to create proper secondary detail view in the master-detail view.
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
   
+        guard let moreNavController = tabBarController.viewControllers?[3] as? UINavigationController else {
+            
+            fatalError("Exception: moreNavController is expected")
+        }
+        
+        guard let moreView = moreNavController.viewControllers.first as? XYZMoreTableViewController else {
+            
+            fatalError("Exception: XYZMoreTableViewController is expected")
+        }
+        
+        moreView.reload()
     }
     
     /*

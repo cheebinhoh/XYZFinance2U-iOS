@@ -20,8 +20,98 @@ class XYZMoreTableViewController: UITableViewController,
     var sectionList = [TableSectionCell]()
     var delegate: UIViewController?
     var popoverView: UIViewController?
+    var totalIncomeCurrencyCode : String?
+    var totalIncome: Double?
+    var rates : [String : Double]?
+    var incomeList : [XYZAccount]?
     
     // MARK: - function
+    func retrieveExchangeRateAndCalculateTotalIncome() {
+        
+        let currencyCode = Locale.current.currencyCode
+        var otherCurrencyCodes = [String]()
+        var urlString = "https://api.exchangeratesapi.io/latest?base=\(currencyCode!)"
+        
+        guard let incomeList = incomeList else {
+            
+            return
+        }
+        
+        for income in incomeList {
+            
+            if let incomeCurrencyCode = income.value(forKey: XYZAccount.currencyCode) as? String {
+                
+                if incomeCurrencyCode != currencyCode {
+                    
+                    if !otherCurrencyCodes.contains(incomeCurrencyCode) {
+                        
+                        otherCurrencyCodes.append(incomeCurrencyCode)
+                    }
+                }
+            }
+        }
+        
+        if otherCurrencyCodes.isEmpty {
+
+            self.calculateTotalIncome()
+        } else {
+            
+            urlString = urlString + "&symbols=" + otherCurrencyCodes.joined(separator: ",")
+            
+            if let url = URL(string: urlString) {
+                
+               URLSession.shared.dataTask(with: url) { data, response, error in
+                  if let data = data {
+                        
+                        struct ExchangRateAPIResult : Decodable {
+            
+                            let rates : [String : Double]
+                            let base : String
+                            let date : String
+                        }
+                        
+                        let decoder = JSONDecoder()
+                        decoder.dateDecodingStrategy = .iso8601
+                        let res = try? decoder.decode(ExchangRateAPIResult.self, from: data )
+                        
+                        if let _ = res {
+                            
+                            self.rates = res?.rates;
+                        }
+                    
+                        self.calculateTotalIncome()
+                   }
+               }.resume()
+            }
+        }
+    }
+    
+    func calculateTotalIncome() {
+    
+        self.totalIncome = 0.0
+        
+        if let incomeList = incomeList {
+
+            for income in incomeList {
+                
+                let incomeCc = income.value(forKey: XYZAccount.currencyCode) as! String
+                let amount = income.value(forKey: XYZAccount.amount) as! Double
+                
+                let rate = rates?.first(where: {
+                    
+                    return $0.key == incomeCc
+                })
+                
+                self.totalIncome = ( self.totalIncome ?? 0.0 )
+                    + ( amount * ( rate?.value ?? 1 ) )
+            }
+            
+            DispatchQueue.main.async {
+            
+                self.tableView.reloadData()
+            }
+        }
+    }
     
     func switchChanged(_ value: Bool, _ sender: XYZMoreTableViewCell) {
     
@@ -62,7 +152,9 @@ class XYZMoreTableViewController: UITableViewController,
             case "ToggleShowTotal":
                 let showTotalIncome = defaults.value(forKey: showTotalIncomeKey) as? Bool ?? false
                 defaults.set(!showTotalIncome, forKey: showTotalIncomeKey)
+                
                 self.reload()
+                //self.retrieveExchangeRateAndCalculateTotalIncome()
                 
             default:
                 fatalError("Invalid option \(sectionList[indexPath.section].cellList[indexPath.row])")
@@ -131,9 +223,23 @@ class XYZMoreTableViewController: UITableViewController,
             sectionList.append(logoutSection)
         }
         
+        let defaults = UserDefaults.standard;
+        let showTotal = defaults.value(forKey: showTotalIncomeKey) as? Bool ?? false
+        
+        var totalCellList = ["ToggleShowTotal"]
+        if showTotal {
+            
+            totalCellList.append("TotalIncome")
+        }
+        
         let total = TableSectionCell(identifier: "total", title: "",
-                                     cellList: ["ToggleShowTotal", "TotalIncome"], data: nil)
+                                     cellList: totalCellList, data: nil)
         sectionList.append(total)
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        incomeList = appDelegate?.incomeList
+        
+        retrieveExchangeRateAndCalculateTotalIncome()
     }
     
     override func viewDidLoad() {
@@ -149,10 +255,24 @@ class XYZMoreTableViewController: UITableViewController,
 
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
-        
+
         loadDataIntoSection()
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Retrieve latest exchange rate".localized())
+        refreshControl.addTarget(self, action: #selector(refreshUpdateFromiCloud), for: .valueChanged)
+        
+        // this is the replacement of implementing: "collectionView.addSubview(refreshControl)"
+        tableView.refreshControl = refreshControl
     }
 
+    @objc func refreshUpdateFromiCloud(refreshControl: UIRefreshControl) {
+    
+        self.reload()
+        
+        refreshControl.endRefreshing()
+    }
+    
     override func didReceiveMemoryWarning() {
         
         super.didReceiveMemoryWarning()
@@ -277,6 +397,19 @@ class XYZMoreTableViewController: UITableViewController,
                 
                 // newcell.accessoryType = required ? .checkmark : .none
                 cell = newcell
+                
+            case "TotalIncome":
+                guard let newcell = tableView.dequeueReusableCell(withIdentifier: "moreTableViewCell", for: indexPath) as? XYZMoreTableViewCell else {
+                    
+                    fatalError("Exception: error on creating settingTableViewCell")
+                }
+                
+                newcell.title.text = formattingCurrencyValue(of: totalIncome ?? 0.0,
+                                                             as: totalIncomeCurrencyCode ?? Locale.current.currencyCode! )
+                newcell.accessoryType = .none
+                newcell.removeUISwitch()
+                cell = newcell
+                
             default:
                 fatalError("Exception: \(sectionList[indexPath.section].cellList[indexPath.row]) is not supported")
         }
