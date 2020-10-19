@@ -26,18 +26,20 @@ class XYZMoreTableViewController: UITableViewController,
     // MARK: - property
     
     var sectionList = [TableSectionCell]()
-    var delegate: UIViewController?
-    var popoverView: UIViewController?
+    var delegate : UIViewController?
+    var popoverView : UIViewController?
     var totalIncomeCurrencyCode : String?
-    var totalIncome: Double?
+    var totalIncome : Double?
+    var lastRateTimestamp : String?
     var rates : [String : Double]?
     var incomeList : [XYZAccount]?
     
     // MARK: - function
     func retrieveExchangeRateAndCalculateTotalIncome() {
         
+        let host = "https://api.exchangerate.host/"
         var otherCurrencyCodes = [String]()
-        var urlString = "https://api.exchangeratesapi.io/latest?base=\(totalIncomeCurrencyCode!)"
+        var urlString = host + "latest?base=\(totalIncomeCurrencyCode!)"
         
         guard let incomeList = incomeList else {
             
@@ -69,8 +71,14 @@ class XYZMoreTableViewController: UITableViewController,
             
                URLSession.shared.dataTask(with: url) { data, response, error in
                 
+                    /*
+                    if let _ = error {
+                        print("---------- error")
+                        self.lastRateTimestamp = nil
+                    } else
+                    */
                     if let data = data {
-                            
+                    
                         struct ExchangRateAPIResult : Decodable {
             
                             let rates : [String : Double]
@@ -87,6 +95,7 @@ class XYZMoreTableViewController: UITableViewController,
                             self.rates = res?.rates;
                         }
                        
+                        self.lastRateTimestamp = res?.date
                         self.calculateTotalIncome()
                     }
                }.resume()
@@ -96,8 +105,15 @@ class XYZMoreTableViewController: UITableViewController,
     
     func calculateTotalIncome() {
     
+  
+        guard let _ = self.lastRateTimestamp else {
+            
+            self.totalIncome = nil
+            return
+        }
+
         self.totalIncome = 0.0
-        
+      
         if let incomeList = incomeList {
 
             for income in incomeList {
@@ -420,12 +436,17 @@ class XYZMoreTableViewController: UITableViewController,
                 }
                 
                 if let _ = totalIncome {
-                    
+
                     newcell.title.text = formattingCurrencyValue(of: totalIncome ?? 0.0,
                                                                  as: totalIncomeCurrencyCode ?? Locale.current.currencyCode! )
                 } else {
                   
                     newcell.title.text = "-"
+                }
+                
+                if let _ = lastRateTimestamp {
+                
+                    newcell.title.text = newcell.title.text! + "   (\(lastRateTimestamp!))"
                 }
                 
                 newcell.accessoryType = .none
