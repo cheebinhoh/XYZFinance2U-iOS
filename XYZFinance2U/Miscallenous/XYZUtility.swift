@@ -11,6 +11,7 @@ import UIKit
 import CoreData
 import CloudKit
 
+let totalIncomeCurrencyCodeKey = "totalincomecurrencycode"
 let showTotalIncomeKey = "showtotalincome"
 let requiredAuthenticationKey = "requiredauthentication"
 var cksharesFoundButNoRootRecord = [CKShare]()

@@ -1475,7 +1475,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                     
                     selectionTableViewController.selectionIdentifier = "currency"
                     
-                        if let _ = currencyCodes, !(currencyCodes?.isEmpty)! {
+                    if let _ = currencyCodes, !(currencyCodes?.isEmpty)! {
                         
                         selectionTableViewController.setSelections("", false, currencyCodes!)
                     }

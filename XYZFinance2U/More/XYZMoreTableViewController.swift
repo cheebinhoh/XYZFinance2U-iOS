@@ -13,7 +13,15 @@ import UIKit
 
 class XYZMoreTableViewController: UITableViewController,
     UIDocumentPickerDelegate,
-    XYZMoreTextTableViewCellDelegate {
+    XYZMoreTextTableViewCellDelegate, XYZSelectionDelegate {
+    
+    func selectedItem(_ item: String?, sender: XYZSelectionTableViewController) {
+
+        let defaults = UserDefaults.standard;
+        defaults.setValue(item, forKey: totalIncomeCurrencyCodeKey)
+        
+        self.reload()
+    }
     
     // MARK: - property
     
@@ -28,9 +36,8 @@ class XYZMoreTableViewController: UITableViewController,
     // MARK: - function
     func retrieveExchangeRateAndCalculateTotalIncome() {
         
-        let currencyCode = Locale.current.currencyCode
         var otherCurrencyCodes = [String]()
-        var urlString = "https://api.exchangeratesapi.io/latest?base=\(currencyCode!)"
+        var urlString = "https://api.exchangeratesapi.io/latest?base=\(totalIncomeCurrencyCode!)"
         
         guard let incomeList = incomeList else {
             
@@ -41,7 +48,7 @@ class XYZMoreTableViewController: UITableViewController,
             
             if let incomeCurrencyCode = income.value(forKey: XYZAccount.currencyCode) as? String {
                 
-                if incomeCurrencyCode != currencyCode {
+                if incomeCurrencyCode != totalIncomeCurrencyCode! {
                     
                     if !otherCurrencyCodes.contains(incomeCurrencyCode) {
                         
@@ -223,12 +230,20 @@ class XYZMoreTableViewController: UITableViewController,
         }
         
         let defaults = UserDefaults.standard;
+        totalIncomeCurrencyCode = defaults.value(forKey: totalIncomeCurrencyCodeKey) as? String
+        if totalIncomeCurrencyCode == nil {
+            
+            totalIncomeCurrencyCode = Locale.current.currencyCode
+            defaults.setValue(totalIncomeCurrencyCode, forKey: totalIncomeCurrencyCodeKey)
+        }
+        
         let showTotal = defaults.value(forKey: showTotalIncomeKey) as? Bool ?? false
         
         var totalCellList = ["ToggleShowTotal"]
         if showTotal {
             
             totalCellList.append("TotalIncome")
+            totalCellList.append("TotalIncomeCurrency")
         }
         
         let total = TableSectionCell(identifier: "total", title: "",
@@ -409,6 +424,17 @@ class XYZMoreTableViewController: UITableViewController,
                 newcell.removeUISwitch()
                 cell = newcell
                 
+            case "TotalIncomeCurrency":
+                guard let currencycell = tableView.dequeueReusableCell(withIdentifier: "moreSelectionTableViewCell", for: indexPath) as? XYZSelectionTableViewCell else {
+                    
+                    fatalError("Exception: incomeDetailSelectionCell is failed to be created")
+                }
+                
+                currencycell.setSelection( totalIncomeCurrencyCode! )
+                currencycell.selectionStyle = .none
+                
+                cell = currencycell
+            
             default:
                 fatalError("Exception: \(sectionList[indexPath.section].cellList[indexPath.row]) is not supported")
         }
@@ -807,6 +833,50 @@ class XYZMoreTableViewController: UITableViewController,
     
         } else if sectionList[indexPath.section].cellList[indexPath.row] == "TotalIncome" {
     
+            
+        } else if sectionList[indexPath.section].cellList[indexPath.row] == "TotalIncomeCurrency" {
+
+            guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "selectionTableViewController") as? XYZSelectionTableViewController else {
+                
+                fatalError("Exception: error on instantiating SelectionNavigationController")
+            }
+            
+            selectionTableViewController.selectionIdentifier = "currency"
+            
+            var codeIndex: Character?
+            var codes = [String]()
+            for code in Locale.isoCurrencyCodes {
+                
+                if nil == codeIndex {
+                    
+                    codes.append(code)
+                    codeIndex = code.first
+                } else if code.first == codeIndex {
+                    
+                    codes.append(code)
+                } else {
+                    
+                    var identifier = ""
+                    identifier.append(codeIndex!)
+                    
+                    selectionTableViewController.setSelections(identifier, true, codes )
+                    codes.removeAll()
+                    codes.append(code)
+                    codeIndex = code.first
+                }
+            }
+            
+            var identifier = ""
+            identifier.append(codeIndex!)
+            
+            selectionTableViewController.setSelections(identifier, true, codes )
+            selectionTableViewController.setSelectedItem(totalIncomeCurrencyCode ?? "USD")
+            selectionTableViewController.delegate = self
+            
+            let nav = UINavigationController(rootViewController: selectionTableViewController)
+            nav.modalPresentationStyle = .popover
+            
+            self.present(nav, animated: true, completion: nil)
         } else {
             
             showAbout(indexPath)
