@@ -116,6 +116,6 @@
 "Undo last change" = "deshacer el último cambio";
 "Copy balance" = "copia de saldo";
 "Show total income" = "Mostrar ingresos totales";
-"The foreign exchange rate is from https://exchangeratesapi.io" = "El tipo de cambio es de https://exchangeratesapi.io.";
+"The foreign exchange rate is from https://exchangerate.host. " = "El tipo de cambio es de https://exchangerate.host.";
 "It is a free service and use it at your discretion." = "Es un servicio gratuito y utilícelo a su discreción.";
 

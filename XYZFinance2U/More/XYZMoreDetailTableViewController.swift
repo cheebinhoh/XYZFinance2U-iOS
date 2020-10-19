@@ -140,7 +140,7 @@ class XYZMoreDetailTableViewController: UITableViewController {
                 
                 \("The icons are from Noun Project by".localized()) Yoraslav Samoylov, Sumhi_icon, Shmidt Sergey, Sandy Priyasa, Sophia Bai, ProSymbols, Mike Ashley, Krishna, Gregor Cresnar, Dinosoft Lab, Delwar Hossain, Arien Coquet.
 
-                \("The foreign exchange rate is from https://exchangerate.host".localized()) \(
+                \("The foreign exchange rate is from https://exchangerate.host. ".localized()) \(
                 "It is a free service and use it at your discretion.".localized())
 
                 """
