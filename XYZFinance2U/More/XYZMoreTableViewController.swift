@@ -66,17 +66,18 @@ class XYZMoreTableViewController: UITableViewController,
             urlString = urlString + "&symbols=" + otherCurrencyCodes.joined(separator: ",")
             
             if let url = URL(string: urlString) {
-                
+            
                URLSession.shared.dataTask(with: url) { data, response, error in
-                  if let data = data {
-                        
+                
+                    if let data = data {
+                            
                         struct ExchangRateAPIResult : Decodable {
             
                             let rates : [String : Double]
                             let base : String
                             let date : String
                         }
-                        
+                            
                         let decoder = JSONDecoder()
                         decoder.dateDecodingStrategy = .iso8601
                         let res = try? decoder.decode(ExchangRateAPIResult.self, from: data )
@@ -85,9 +86,9 @@ class XYZMoreTableViewController: UITableViewController,
                             
                             self.rates = res?.rates;
                         }
-                    
+                       
                         self.calculateTotalIncome()
-                   }
+                    }
                }.resume()
             }
         }
@@ -274,13 +275,13 @@ class XYZMoreTableViewController: UITableViewController,
         
         let refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Retrieve latest exchange rate".localized())
-        refreshControl.addTarget(self, action: #selector(refreshUpdateFromiCloud), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshExchangeRate), for: .valueChanged)
         
         // this is the replacement of implementing: "collectionView.addSubview(refreshControl)"
         tableView.refreshControl = refreshControl
     }
 
-    @objc func refreshUpdateFromiCloud(refreshControl: UIRefreshControl) {
+    @objc func refreshExchangeRate(refreshControl: UIRefreshControl) {
     
         self.reload()
         
@@ -418,8 +419,15 @@ class XYZMoreTableViewController: UITableViewController,
                     fatalError("Exception: error on creating settingTableViewCell")
                 }
                 
-                newcell.title.text = formattingCurrencyValue(of: totalIncome ?? 0.0,
-                                                             as: totalIncomeCurrencyCode ?? Locale.current.currencyCode! )
+                if let _ = totalIncome {
+                    
+                    newcell.title.text = formattingCurrencyValue(of: totalIncome ?? 0.0,
+                                                                 as: totalIncomeCurrencyCode ?? Locale.current.currencyCode! )
+                } else {
+                  
+                    newcell.title.text = "-"
+                }
+                
                 newcell.accessoryType = .none
                 newcell.removeUISwitch()
                 cell = newcell
