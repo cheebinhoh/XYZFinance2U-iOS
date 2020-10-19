@@ -37,7 +37,7 @@ class XYZMoreTableViewController: UITableViewController,
     // MARK: - function
     func retrieveExchangeRateAndCalculateTotalIncome() {
         
-        let host = "https://api.exchangerate.host/"
+        let host = "https://api.exchangerate.host/" // "https://api.exchangeratesapi.io/"
         var otherCurrencyCodes = [String]()
         var urlString = host + "latest?base=\(totalIncomeCurrencyCode!)"
         
@@ -68,7 +68,7 @@ class XYZMoreTableViewController: UITableViewController,
             urlString = urlString + "&symbols=" + otherCurrencyCodes.joined(separator: ",")
             
             if let url = URL(string: urlString) {
-            
+
                URLSession.shared.dataTask(with: url) { data, response, error in
                 
                     /*
@@ -125,7 +125,7 @@ class XYZMoreTableViewController: UITableViewController,
                     
                     return $0.key == incomeCc
                 })
-                
+
                 self.totalIncome = ( self.totalIncome ?? 0.0 )
                     + ( amount / ( rate?.value ?? 1.0 ) )
             }
