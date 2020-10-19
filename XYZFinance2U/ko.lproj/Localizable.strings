@@ -116,3 +116,5 @@
 "Undo last change" = "마지막 변경 사항 취소";
 "Copy balance" = "카피 밸런스";
 "Show total income" = "총 수입 표시";
+"The foreign exchange rate is from https://exchangeratesapi.io" = "환율은 https://exchangeratesapi.io입니다。";
+"It is a free service for current and historical foreign exchange rates published by the European Central Bank. Use it at your discretion." = "유럽 중앙 은행에서 발행 한 현재 및 과거 환율에 대한 무료 서비스입니다. 재량에 따라 사용하십시오.";

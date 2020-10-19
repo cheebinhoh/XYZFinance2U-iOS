@@ -123,4 +123,6 @@
 "Saturday heading" = "六";
 "Sunday heading" = "日";
 "Show total income" = "显示总收入";
+"The foreign exchange rate is from https://exchangeratesapi.io" = "外汇汇率来自https://exchangeratesapi.io。";
+"It is a free service for current and historical foreign exchange rates published by the European Central Bank. Use it at your discretion." = "这是欧洲中央银行发布的当前和历史汇率的免费服务。 您可以自行决定使用它。";
 

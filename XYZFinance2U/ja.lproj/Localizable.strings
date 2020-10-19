@@ -116,4 +116,6 @@
 "Undo last change" = "最後の変更を元に戻す";
 "Copy balance" = "コピーバランス";
 "Show total income" = "総収入を表示する";
+"The foreign exchange rate is from https://exchangeratesapi.io" = "外国為替レートはhttps://exchangeratesapi.ioからです。";
+"It is a free service for current and historical foreign exchange rates published by the European Central Bank. Use it at your discretion." = "これは、欧州中央銀行が発行している現在および過去の外国為替レートの無料サービスです。 あなたの裁量でそれを使用してください。";
 
