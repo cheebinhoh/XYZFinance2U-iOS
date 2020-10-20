@@ -100,7 +100,6 @@ class XYZMoreTableViewController: UITableViewController,
                             self.rates = res?.rates;
                         }
                        
-                        print("result : date = \(res?.date)")
                         self.lastRateTimestamp = res?.date
                         self.calculateTotalIncome()
                     }
