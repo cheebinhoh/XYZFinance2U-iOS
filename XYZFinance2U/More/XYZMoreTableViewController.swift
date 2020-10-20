@@ -75,12 +75,6 @@ class XYZMoreTableViewController: UITableViewController,
                 
                 session.dataTask(with: url) { data, response, error in
                 
-                    /*
-                    if let _ = error {
-                        print("---------- error")
-                        self.lastRateTimestamp = nil
-                    } else
-                    */
                     if let data = data {
                     
                         struct ExchangRateAPIResult : Decodable {
