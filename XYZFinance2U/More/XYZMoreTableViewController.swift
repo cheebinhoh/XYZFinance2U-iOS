@@ -61,11 +61,13 @@ class XYZMoreTableViewController: UITableViewController,
         
         if otherCurrencyCodes.isEmpty {
 
+            self.lastRateTimestamp =  ""
             self.calculateTotalIncome()
         } else {
             
-            urlString = urlString + "&symbols=" + otherCurrencyCodes.joined(separator: ",")
+            urlString = urlString + "&symbols=" + otherCurrencyCodes.joined(separator: ",") + "&places=10"
             
+            print("\(urlString)")
             if let url = URL(string: urlString) {
 
                 let configuration = URLSessionConfiguration.ephemeral
@@ -440,9 +442,12 @@ class XYZMoreTableViewController: UITableViewController,
                     newcell.title.text = "-"
                 }
                 
-                if let _ = lastRateTimestamp {
+                if let lastRateTimestamp = lastRateTimestamp {
                 
-                    newcell.title.text = newcell.title.text! + "  (Update at \(lastRateTimestamp!))"
+                    if !lastRateTimestamp.isEmpty {
+                
+                        newcell.title.text = newcell.title.text! + "  (Last rate at \(lastRateTimestamp))"
+                    }
                 }
                 
                 newcell.accessoryType = .none

@@ -11,8 +11,8 @@ import UIKit
 import CoreData
 import CloudKit
 
-let exchangeAPIWeb = "https://www.exchangeratesapi.io"
-let exchangeAPIHost = "https://api.exchangeratesapi.io" //"https://api.exchangerate.host" //
+let exchangeAPIWeb = "https://www.exchangerate.host"
+let exchangeAPIHost = "https://api.exchangerate.host" // "https://api.exchangeratesapi.io" //
 let totalIncomeCurrencyCodeKey = "totalincomecurrencycode"
 let showTotalIncomeKey = "showtotalincome"
 let requiredAuthenticationKey = "requiredauthentication"
