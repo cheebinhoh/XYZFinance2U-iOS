@@ -117,6 +117,6 @@
 "Copy balance" = "コピーバランス";
 "Show total income" = "総収入を表示する";
 "Retrieve latest exchange rate" = "最新の為替レートを取得する";
-"The foreign exchange rate is from https://exchangerate.host. " = "外国為替レートはhttps://exchangerate.hostからです。";
+"The foreign exchange rate is from" = "外国為替レートは";
 "It is a free service and use it at your discretion." = "これは無料のサービスであり、あなたの裁量でそれを使用してください。";
 

@@ -37,9 +37,8 @@ class XYZMoreTableViewController: UITableViewController,
     // MARK: - function
     func retrieveExchangeRateAndCalculateTotalIncome() {
         
-        let host = "https://api.exchangeratesapi.io/" // "https://api.exchangerate.host/"
         var otherCurrencyCodes = [String]()
-        var urlString = host + "latest?base=\(totalIncomeCurrencyCode!)"
+        var urlString = exchangeAPIHost + "/latest?base=\(totalIncomeCurrencyCode!)"
         
         guard let incomeList = incomeList else {
             

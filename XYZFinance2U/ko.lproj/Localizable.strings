@@ -117,5 +117,5 @@
 "Copy balance" = "카피 밸런스";
 "Show total income" = "총 수입 표시";
 "Retrieve latest exchange rate" = "최신 환율 검색";
-"The foreign exchange rate is from https://exchangerate.host. " = "환율은 https://exchangerate.host입니다.";
+"The foreign exchange rate is from" = "환율은";
 "It is a free service and use it at your discretion." = "무료 서비스이며 재량에 따라 사용하십시오.";

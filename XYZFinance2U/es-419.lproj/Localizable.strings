@@ -117,6 +117,6 @@
 "Copy balance" = "copia de saldo";
 "Show total income" = "Mostrar ingresos totales";
 "Retrieve latest exchange rate" = "Recuperar el último tipo de cambio";
-"The foreign exchange rate is from https://exchangerate.host. " = "El tipo de cambio es de https://exchangerate.host.";
+"The foreign exchange rate is from" = "El tipo de cambio es de";
 "It is a free service and use it at your discretion." = "Es un servicio gratuito y utilícelo a su discreción.";
 
