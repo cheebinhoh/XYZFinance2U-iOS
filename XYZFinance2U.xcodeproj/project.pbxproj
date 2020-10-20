@@ -713,7 +713,7 @@
 				CODE_SIGN_ENTITLEMENTS = XYZFinance2U/XYZFinance2U.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = BKU6P4Y9G4;
 				INFOPLIST_FILE = XYZFinance2U/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -736,7 +736,7 @@
 				CODE_SIGN_ENTITLEMENTS = XYZFinance2U/XYZFinance2U.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = BKU6P4Y9G4;
 				INFOPLIST_FILE = XYZFinance2U/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
