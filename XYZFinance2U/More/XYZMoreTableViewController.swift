@@ -446,7 +446,7 @@ class XYZMoreTableViewController: UITableViewController,
                 
                     if !lastRateTimestamp.isEmpty {
                 
-                        newcell.title.text = newcell.title.text! + "  (Last rate at \(lastRateTimestamp))"
+                        newcell.title.text = newcell.title.text! + "  (\("Last rate at".localized()) \(lastRateTimestamp))"
                     }
                 }
                 
