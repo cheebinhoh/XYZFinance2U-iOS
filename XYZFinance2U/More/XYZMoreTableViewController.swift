@@ -442,7 +442,7 @@ class XYZMoreTableViewController: UITableViewController,
                 
                 if let _ = lastRateTimestamp {
                 
-                    newcell.title.text = newcell.title.text! + "  (Rate at \(lastRateTimestamp!))"
+                    newcell.title.text = newcell.title.text! + "  (Update at \(lastRateTimestamp!))"
                 }
                 
                 newcell.accessoryType = .none
