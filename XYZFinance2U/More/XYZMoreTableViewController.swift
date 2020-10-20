@@ -68,8 +68,6 @@ class XYZMoreTableViewController: UITableViewController,
             
             if let url = URL(string: urlString) {
 
-                print("url : \(url)")
-
                 let configuration = URLSessionConfiguration.ephemeral
                 let session = URLSession(configuration: configuration)
                 
@@ -444,7 +442,7 @@ class XYZMoreTableViewController: UITableViewController,
                 
                 if let _ = lastRateTimestamp {
                 
-                    newcell.title.text = newcell.title.text! + "   (\(lastRateTimestamp!))"
+                    newcell.title.text = newcell.title.text! + "  (Rate at \(lastRateTimestamp!))"
                 }
                 
                 newcell.accessoryType = .none
