@@ -69,7 +69,12 @@ class XYZMoreTableViewController: UITableViewController,
             
             if let url = URL(string: urlString) {
 
-               URLSession.shared.dataTask(with: url) { data, response, error in
+                print("url : \(url)")
+
+                let configuration = URLSessionConfiguration.ephemeral
+                let session = URLSession(configuration: configuration)
+                
+                session.dataTask(with: url) { data, response, error in
                 
                     /*
                     if let _ = error {
@@ -95,10 +100,11 @@ class XYZMoreTableViewController: UITableViewController,
                             self.rates = res?.rates;
                         }
                        
+                        print("result : date = \(res?.date)")
                         self.lastRateTimestamp = res?.date
                         self.calculateTotalIncome()
                     }
-               }.resume()
+                }.resume()
             }
         }
     }
