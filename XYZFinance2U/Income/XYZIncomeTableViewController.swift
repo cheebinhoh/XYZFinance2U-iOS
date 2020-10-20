@@ -991,7 +991,7 @@ class XYZIncomeTableViewController: UITableViewController,
                     }
                     
                     incomecell.amount.text = formattingCurrencyValue(of: (account.value(forKey: XYZAccount.amount) as? Double)!, as: currencyCode)
-                    
+
                     incomecell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 
                     cell = incomecell
