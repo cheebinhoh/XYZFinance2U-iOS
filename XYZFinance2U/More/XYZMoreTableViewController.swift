@@ -35,10 +35,14 @@ class XYZMoreTableViewController: UITableViewController,
     var incomeList : [XYZAccount]?
     
     // MARK: - function
-    func retrieveExchangeRateAndCalculateTotalIncome() {
+    func retrieveExchangeRateAndCalculateTotalIncome( hostindex : Int = 0 ) {
         
         var otherCurrencyCodes = [String]()
-        var urlString = exchangeAPIHost + "/latest?base=\(totalIncomeCurrencyCode!)"
+        
+        guard hostindex < exchangeAPIHostList.count else {
+        
+            return
+        }
         
         guard let incomeList = incomeList else {
             
@@ -65,38 +69,43 @@ class XYZMoreTableViewController: UITableViewController,
             self.calculateTotalIncome()
         } else {
             
-            urlString = urlString + "&symbols=" + otherCurrencyCodes.joined(separator: ",") + "&places=10"
-            
-            print("\(urlString)")
-            if let url = URL(string: urlString) {
+                var urlString = exchangeAPIHostList[hostindex] + "/latest?base=\(totalIncomeCurrencyCode!)"
+                urlString = urlString + "&symbols=" + otherCurrencyCodes.joined(separator: ",") + "&places=10"
+                
+                if let url = URL(string: urlString) {
 
-                let configuration = URLSessionConfiguration.ephemeral
-                let session = URLSession(configuration: configuration)
-                
-                session.dataTask(with: url) { data, response, error in
-                
-                    if let data = data {
+                    let configuration = URLSessionConfiguration.ephemeral
+                    let session = URLSession(configuration: configuration)
                     
-                        struct ExchangRateAPIResult : Decodable {
-            
-                            let rates : [String : Double]
-                            let base : String
-                            let date : String
-                        }
+                    session.dataTask(with: url) { data, response, error in
+                    
+                        if let _ = error {
                             
-                        let decoder = JSONDecoder()
-                        decoder.dateDecodingStrategy = .iso8601
-                        let res = try? decoder.decode(ExchangRateAPIResult.self, from: data )
+                            self.retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
+                        } else if let data = data {
                         
-                        if let _ = res {
+                            struct ExchangRateAPIResult : Decodable {
+                
+                                let rates : [String : Double]
+                                let base : String
+                                let date : String
+                            }
+                                
+                            let decoder = JSONDecoder()
+                            decoder.dateDecodingStrategy = .iso8601
+                            let res = try? decoder.decode(ExchangRateAPIResult.self, from: data )
                             
-                            self.rates = res?.rates;
+                            if let _ = res {
+                                
+                                self.rates = res?.rates;
+                                self.lastRateTimestamp = res?.date
+                                self.calculateTotalIncome()
+                            } else {
+                              
+                                self.retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
+                            }
                         }
-                       
-                        self.lastRateTimestamp = res?.date
-                        self.calculateTotalIncome()
-                    }
-                }.resume()
+                    }.resume()
             }
         }
     }
