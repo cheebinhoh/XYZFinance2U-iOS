@@ -41,6 +41,10 @@ class XYZMoreTableViewController: UITableViewController,
         
         guard hostindex < exchangeAPIHostList.count else {
         
+            self.rates = nil;
+            self.lastRateTimestamp = nil
+            self.calculateTotalIncome()
+            
             return
         }
         
