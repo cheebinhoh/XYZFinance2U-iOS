@@ -886,6 +886,19 @@ class XYZMoreTableViewController: UITableViewController,
             }
             
             selectionTableViewController.selectionIdentifier = "currency"
+            var currencyCodesUsed = Set<String>()
+            
+            for income in incomeList! {
+                
+                let incomeCurrencyCode = income.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode
+                
+                currencyCodesUsed.insert(incomeCurrencyCode!)
+            }
+            
+            if !currencyCodesUsed.isEmpty {
+                
+                selectionTableViewController.setSelections("", false, Array(currencyCodesUsed.sorted()) )
+            }
             
             var codeIndex: Character?
             var codes = [String]()
