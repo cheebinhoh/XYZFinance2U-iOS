@@ -74,6 +74,7 @@ class XYZBudgetTableViewController: UITableViewController,
     
     
     // MARK: budget detail protocol
+    
     func saveNewBudgetWithoutUndo(budget: XYZBudget) {
         
         if let currencyCode = budget.value(forKey: XYZBudget.currency) as? String, currencyCodes.contains(currencyCode) {
@@ -1113,5 +1114,4 @@ class XYZBudgetTableViewController: UITableViewController,
         // Pass the selected object to the new view controller.
     }
     */
-
 }
