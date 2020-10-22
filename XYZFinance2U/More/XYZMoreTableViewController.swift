@@ -895,6 +895,11 @@ class XYZMoreTableViewController: UITableViewController,
                 currencyCodesUsed.insert(incomeCurrencyCode!)
             }
             
+            if let _ = totalIncomeCurrencyCode {
+                
+                currencyCodesUsed.insert(totalIncomeCurrencyCode!)
+            }
+            
             if !currencyCodesUsed.isEmpty {
                 
                 selectionTableViewController.setSelections("", false, Array(currencyCodesUsed.sorted()) )
