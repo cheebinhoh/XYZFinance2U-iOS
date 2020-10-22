@@ -52,5 +52,4 @@ class XYZExpenseDetailDateTableViewCell: UITableViewCell {
             delegate?.dateInputTouchUp(self)
         }
     }
-
 }

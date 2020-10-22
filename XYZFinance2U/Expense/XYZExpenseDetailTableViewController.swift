@@ -1599,7 +1599,6 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                 fatalError("Exception: segue identifier \(String(describing: segue.identifier)) is not expected")
         }
     }
-
 }
 
 // Helper function inserted by Swift 4.2 migrator.
