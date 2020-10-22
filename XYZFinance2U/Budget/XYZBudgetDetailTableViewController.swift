@@ -168,7 +168,6 @@ class XYZBudgetDetailTableViewController: UITableViewController,
     
     }
     
-    
     func budgetSelected(budget: XYZBudget?) {
 
         modalEditing = false
@@ -1002,5 +1001,4 @@ class XYZBudgetDetailTableViewController: UITableViewController,
         // Pass the selected object to the new view controller.
     }
     */
-
 }

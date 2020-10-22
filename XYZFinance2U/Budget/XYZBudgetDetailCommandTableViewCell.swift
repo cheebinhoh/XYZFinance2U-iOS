@@ -53,5 +53,4 @@ class XYZBudgetDetailCommandTableViewCell: UITableViewCell {
         
         self.delegate?.executeCommand(sender: self)
     }
-    
 }
