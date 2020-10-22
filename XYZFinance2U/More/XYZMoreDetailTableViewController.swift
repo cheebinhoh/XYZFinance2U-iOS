@@ -99,7 +99,7 @@ class XYZMoreDetailTableViewController: UITableViewController {
                 }
                 
                 let authorPreText = """
-                (\(textVersion)) \("was created by ".localized())
+                 (\(textVersion)) \("was created by ".localized())
                 """
                 
                 let attributeAuthorPreText = NSAttributedString(string: authorPreText, attributes: attributes)

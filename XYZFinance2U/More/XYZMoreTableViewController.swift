@@ -36,20 +36,15 @@ class XYZMoreTableViewController: UITableViewController,
         self.reload()
     }
 
-    func retrieveExchangeRateAndCalculateTotalIncome( hostindex : Int = 0 ) {
+    func retrieveExchangeRateAndCalculateTotalIncome(hostindex : Int = 0) {
         
         var otherCurrencyCodes = [String]()
         
-        guard hostindex < exchangeAPIHostList.count else {
+        guard hostindex < exchangeAPIHostList.count, let incomeList = incomeList else {
         
             self.rates = nil;
             self.lastRateTimestamp = nil
             self.calculateTotalIncome()
-            
-            return
-        }
-        
-        guard let incomeList = incomeList else {
             
             return
         }
@@ -74,50 +69,49 @@ class XYZMoreTableViewController: UITableViewController,
             self.calculateTotalIncome()
         } else {
             
-                var urlString = exchangeAPIHostList[hostindex] + "/latest?base=\(totalIncomeCurrencyCode!)"
-                urlString = urlString + "&symbols=" + otherCurrencyCodes.joined(separator: ",") + "&places=10"
-                
-                if let url = URL(string: urlString) {
+            var urlString = exchangeAPIHostList[hostindex] + "/latest?base=\(totalIncomeCurrencyCode!)"
+            urlString = urlString + "&symbols=" + otherCurrencyCodes.joined(separator: ",") + "&places=10"
+            
+            if let url = URL(string: urlString) {
 
-                    let configuration = URLSessionConfiguration.ephemeral
-                    let session = URLSession(configuration: configuration)
-                    
-                    session.dataTask(with: url) { data, response, error in
-                    
-                        if let _ = error {
-                            
-                            self.retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
-                        } else if let data = data {
-                        
-                            struct ExchangRateAPIResult : Decodable {
+                let configuration = URLSessionConfiguration.ephemeral
+                let session = URLSession(configuration: configuration)
                 
-                                let rates : [String : Double]
-                                let base : String
-                                let date : String
-                            }
-                                
-                            let decoder = JSONDecoder()
-                            decoder.dateDecodingStrategy = .iso8601
-                            let res = try? decoder.decode(ExchangRateAPIResult.self, from: data )
-                            
-                            if let _ = res {
-                                
-                                self.rates = res?.rates;
-                                self.lastRateTimestamp = res?.date
-                                self.calculateTotalIncome()
-                            } else {
-                              
-                                self.retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
-                            }
+                session.dataTask(with: url) { data, response, error in
+                
+                    if let _ = error {
+                        
+                        self.retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
+                    } else if let data = data {
+                    
+                        struct ExchangRateAPIResult : Decodable {
+            
+                            let rates : [String : Double]
+                            let base : String
+                            let date : String
                         }
-                    }.resume()
+                            
+                        let decoder = JSONDecoder()
+                        decoder.dateDecodingStrategy = .iso8601
+                        let res = try? decoder.decode(ExchangRateAPIResult.self, from: data )
+                        
+                        if let _ = res {
+                            
+                            self.rates = res?.rates;
+                            self.lastRateTimestamp = res?.date
+                            self.calculateTotalIncome()
+                        } else {
+                          
+                            self.retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
+                        }
+                    }
+                }.resume()
             }
         }
     }
     
     func calculateTotalIncome() {
     
-  
         guard let _ = self.lastRateTimestamp else {
             
             self.totalIncome = nil
@@ -221,6 +215,7 @@ class XYZMoreTableViewController: UITableViewController,
     func reload() {
         
         loadDataIntoSection()
+        
         tableView.reloadData()
     }
     
@@ -414,8 +409,7 @@ class XYZMoreTableViewController: UITableViewController,
                 }
                 
                 newcell.optionSwitch.isOn = required
-                
-                // newcell.accessoryType = required ? .checkmark : .none
+
                 cell = newcell
             
             case "ToggleShowTotal" :
@@ -438,7 +432,6 @@ class XYZMoreTableViewController: UITableViewController,
                 
                 newcell.optionSwitch.isOn = showTotal
                 
-                // newcell.accessoryType = required ? .checkmark : .none
                 cell = newcell
                 
             case "TotalIncome":
@@ -447,21 +440,19 @@ class XYZMoreTableViewController: UITableViewController,
                     fatalError("Exception: error on creating settingTableViewCell")
                 }
                 
-                if let _ = totalIncome {
+                if let totalIncome = totalIncome {
 
-                    newcell.title.text = formattingCurrencyValue(of: totalIncome ?? 0.0,
+                    newcell.title.text = formattingCurrencyValue(of: totalIncome,
                                                                  as: totalIncomeCurrencyCode ?? Locale.current.currencyCode! )
                 } else {
                   
                     newcell.title.text = "-"
                 }
                 
-                if let lastRateTimestamp = lastRateTimestamp {
-                
-                    if !lastRateTimestamp.isEmpty {
-                
-                        newcell.title.text = newcell.title.text! + "  (\("Last rate at".localized()) \(lastRateTimestamp))"
-                    }
+                if let lastRateTimestamp = lastRateTimestamp,
+                   !lastRateTimestamp.isEmpty {
+
+                    newcell.title.text = newcell.title.text! + "  (\("Last rate at".localized()) \(lastRateTimestamp))"
                 }
                 
                 newcell.accessoryType = .none
