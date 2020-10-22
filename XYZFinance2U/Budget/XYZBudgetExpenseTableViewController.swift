@@ -136,14 +136,16 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         for (sectionIndex, section) in sectionList.enumerated() {
             
             let sectionExpenseList = section.data as? [XYZExpense]
-            
-            for (index, expenseItem) in (sectionExpenseList?.enumerated())! {
+
+            let index = sectionExpenseList?.firstIndex(where: {
                 
-                if expense == expenseItem {
-                    
-                    indexPath = IndexPath(row: index, section: sectionIndex)
-                    break
-                }
+                return $0 == expense
+            })
+
+            if let _ = index {
+                
+                indexPath = IndexPath(row: index!, section: sectionIndex)
+                break
             }
         }
         
@@ -162,7 +164,6 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         } else {
             
             aContext?.delete(expense)
-            
             
             self.updateToiCloud(nil)
         }
@@ -553,5 +554,4 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         // Pass the selected object to the new view controller.
     }
     */
-
 }
