@@ -130,24 +130,19 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
     }
     
     func deleteExpense(expense: XYZExpense) {
-    
-        var foundIndex = -1
         
-        for (index, item) in (expenseList?.enumerated())! {
+        let foundIndex = expenseList?.firstIndex(where: {
             
-            if item == expense {
-                
-                foundIndex = index
-                break
-            }
-        }
+            return $0 == expense
+        })
         
-        expenseList?.remove(at: foundIndex)
+        expenseList?.remove(at: foundIndex!)
         
         self.reloadData()
     }
     
     // MARK: - properties
+    
     var targetYear: Date?
     var monthLevel = true
     var budget: XYZBudget?
@@ -380,6 +375,7 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
         } else {
             
             var monthIndex = (indexPath.section) * 3 + (indexPath.row)
+            
             if (indexPath.row) <= 0 {
                 
                 monthIndex = monthIndex + 1
@@ -451,6 +447,7 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
             } else if (tapIndexPath?.row)! > 0 {
                 
                 var monthIndex = (tapIndexPath?.section)! * 3 + (tapIndexPath?.row)!
+                
                 if (tapIndexPath?.row)! <= 0 {
                     
                     monthIndex = monthIndex + 1
