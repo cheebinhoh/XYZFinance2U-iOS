@@ -363,16 +363,13 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         let stackView = UIStackView()
         let title = UILabel()
         let subtotal = UILabel()
-        var total = 0.0
-        var currencyCode = Locale.current.currencyCode
         let sectionExpenseList = sectionList[section].data as? [XYZExpense]
         
-        for expense in sectionExpenseList! {
-            
-            let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
-            total = total + amount
-            
-            currencyCode = expense.value(forKey: XYZExpense.currencyCode) as? String
+        let currencyCode = sectionExpenseList!.first?.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
+        
+        let total = sectionExpenseList!.reduce(0.0) { (result, expense) in
+        
+            return result + ( expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0 )
         }
         
         if hasDisclosureIndicator {
@@ -463,11 +460,8 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         if !readonly {
             
             var sectionExpenseList = self.sectionList[indexPath.section].data as? [XYZExpense]
-            // let expense = sectionExpenseList![indexPath.row]
 
             let delete = UIContextualAction(style: .destructive, title: "Delete".localized()) { _, _, handler in
-                
-                //let aContext = managedContext()
                 
                 let oldExpense = sectionExpenseList?.remove(at: indexPath.row)
                 self.deleteExpense(expense: oldExpense!)
