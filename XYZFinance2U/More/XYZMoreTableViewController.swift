@@ -15,14 +15,6 @@ class XYZMoreTableViewController: UITableViewController,
     UIDocumentPickerDelegate,
     XYZMoreTextTableViewCellDelegate, XYZSelectionDelegate {
     
-    func selectedItem(_ item: String?, sender: XYZSelectionTableViewController) {
-
-        let defaults = UserDefaults.standard;
-        defaults.setValue(item, forKey: totalIncomeCurrencyCodeKey)
-        
-        self.reload()
-    }
-    
     // MARK: - property
     
     var sectionList = [TableSectionCell]()
@@ -35,6 +27,15 @@ class XYZMoreTableViewController: UITableViewController,
     var incomeList : [XYZAccount]?
     
     // MARK: - function
+    
+    func selectedItem(_ item: String?, sender: XYZSelectionTableViewController) {
+
+        let defaults = UserDefaults.standard;
+        defaults.setValue(item, forKey: totalIncomeCurrencyCodeKey)
+        
+        self.reload()
+    }
+
     func retrieveExchangeRateAndCalculateTotalIncome( hostindex : Int = 0 ) {
         
         var otherCurrencyCodes = [String]()
