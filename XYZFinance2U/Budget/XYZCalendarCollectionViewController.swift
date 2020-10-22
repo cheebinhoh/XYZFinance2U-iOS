@@ -98,16 +98,14 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
             }
         }
         
-        while step != 0 {
+        step.repeatUntilZero {
             
-            if step > 0 {
+            if $0 > 0 {
                 
                 moveNextPeriod(self)
-                step = step - 1
             } else {
                 
                 movePreviousPeriod(self)
-                step = step + 1
             }
         }
 

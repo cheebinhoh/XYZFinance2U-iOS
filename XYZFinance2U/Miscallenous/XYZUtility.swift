@@ -39,6 +39,25 @@ extension String {
     }
 }
 
+extension Int {
+    
+    mutating func repeatUntilZero(block : (_ value : Int) -> Void) {
+        
+        while self != 0 {
+            
+            block(self)
+            
+            if self > 0 {
+                
+                self = self - 1
+            } else {
+                
+                self = self + 1
+            }
+        }
+    }
+}
+
 // MARK: - type
 
 struct TableSectionCell {
