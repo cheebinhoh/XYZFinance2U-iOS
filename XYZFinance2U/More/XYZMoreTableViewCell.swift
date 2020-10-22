@@ -66,5 +66,4 @@ class XYZMoreTableViewCell: UITableViewCell {
         delegate?.switchChanged(value.isOn, self)
         // Do something
     }
-    
 }
