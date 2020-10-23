@@ -446,34 +446,34 @@ class XYZIncomeTableViewController: UITableViewController,
             var units: Set<Calendar.Component> = [ .minute ]
             switch repeatAction ?? XYZAccount.RepeatAction.none.rawValue {
                 
-            case XYZAccount.RepeatAction.none.rawValue:
-                units.insert(.year)
-                units.insert(.month)
-                units.insert(.day)
-                units.insert(.hour)
-                units.insert(.minute)
-                
-            case XYZAccount.RepeatAction.monthly.rawValue:
-                units.insert(.month)
-                units.insert(.day)
-                units.insert(.hour)
-                units.insert(.minute)
-                
-            case XYZAccount.RepeatAction.weekly.rawValue:
-                units.insert(.weekday)
-                units.insert(.hour)
-                units.insert(.minute)
-                
-            case XYZAccount.RepeatAction.daily.rawValue:
-                units.insert(.hour)
-                units.insert(.minute)
-                
-            case XYZAccount.RepeatAction.hourly.rawValue:
-                units.insert(.minute)
-                
-            default:
-                // we need to tolerate value that is not longer valid.
-                break
+                case XYZAccount.RepeatAction.none.rawValue:
+                    units.insert(.year)
+                    units.insert(.month)
+                    units.insert(.day)
+                    units.insert(.hour)
+                    units.insert(.minute)
+                    
+                case XYZAccount.RepeatAction.monthly.rawValue:
+                    units.insert(.month)
+                    units.insert(.day)
+                    units.insert(.hour)
+                    units.insert(.minute)
+                    
+                case XYZAccount.RepeatAction.weekly.rawValue:
+                    units.insert(.weekday)
+                    units.insert(.hour)
+                    units.insert(.minute)
+                    
+                case XYZAccount.RepeatAction.daily.rawValue:
+                    units.insert(.hour)
+                    units.insert(.minute)
+                    
+                case XYZAccount.RepeatAction.hourly.rawValue:
+                    units.insert(.minute)
+                    
+                default:
+                    // we need to tolerate value that is not longer valid.
+                    break
             }
             
             let dateInfo = Calendar.current.dateComponents(units, from: reminddate!)

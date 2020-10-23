@@ -29,13 +29,18 @@ class XYZIncomeDetailTableViewController: UITableViewController,
     
     func selectedItem(_ item: String?, sender: XYZSelectionTableViewController) {
         
-        if sender.selectionIdentifier == "currency" {
+        switch sender.selectionIdentifier {
             
-            currencyCode = item
-        } else {
-            
-            repeatAction = item
+            case "currency":
+                currencyCode = item
+        
+            case "repeat":
+                repeatAction = item
+                
+            default:
+                fatalError("Unsupported selected item \(String(describing: sender.selectionIdentifier))")
         }
+
         
         tableView.reloadData()
     }
@@ -69,6 +74,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         
         modalEditing = false
         income = newIncome
+        
         reloadData()
         
         let editButton = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(edit(_:)))
@@ -82,6 +88,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         
         navigationItem.setRightBarButton(nil, animated: true)
         navigationItem.setLeftBarButton(nil, animated: true)
+        
         reloadData()
     }
     
@@ -157,12 +164,12 @@ class XYZIncomeDetailTableViewController: UITableViewController,
             && tableView.cellForRow(at: IndexPath(row: (indexPath?.row)! + 1, section: indexPath!.section)) is XYZIncomeDetailDatePickerTableViewCell
         let datepickeridentifier = tableSectionCellList[indexPath!.section].identifier == "remind" ? "reminddatepicker" : "datepicker"
         
-        if !showDatePicker {
-            
-            tableSectionCellList[(indexPath?.section)!].cellList.insert(datepickeridentifier, at: (indexPath?.row)! + 1)
-        } else {
+        if showDatePicker {
             
             tableSectionCellList[(indexPath?.section)!].cellList.remove(at: (indexPath?.row)! + 1)
+        
+        } else {
+            tableSectionCellList[(indexPath?.section)!].cellList.insert(datepickeridentifier, at: (indexPath?.row)! + 1)
         }
         
         tableView.reloadData()
@@ -185,7 +192,6 @@ class XYZIncomeDetailTableViewController: UITableViewController,
             guard let index = tableView.indexPath(for: sender) else {
                 
                 return
-                //fatalError("Exception: index path is expected")
             }
             
             switch tableSectionCellList[index.section].cellList[index.row] {
@@ -228,6 +234,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
     }
     
     // MARK: - property
+    
     var income: XYZAccount?
     var modalEditing = true
     var incomeDelegate: XYZIncomeDetailDelegate?
@@ -252,17 +259,12 @@ class XYZIncomeDetailTableViewController: UITableViewController,
     var repeatAction: String?
     var currencyCode: String? = Locale.current.currencyCode
     
-    /*
-    var isCollapsed: Bool {
-        
-        return true
-    }*/
-    
     var tableSectionCellList = [TableSectionCell]()
     weak var datecell: XYZIncomeDetailDateTableViewCell?
     weak var dateremindcell: XYZIncomeDetailDateTableViewCell?
     
     // MARK: - IBOutlet
+    
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     
@@ -412,9 +414,6 @@ class XYZIncomeDetailTableViewController: UITableViewController,
                 hasUpdateReminder = true
                 reminddate = setdate
                 repeatAction = (income?.value(forKey: XYZAccount.repeatAction) as? String)
-            } else {
-                
-                hasUpdateReminder = false
             }
         }
         
@@ -743,81 +742,87 @@ class XYZIncomeDetailTableViewController: UITableViewController,
        
             let cellId = tableSectionCellList[indexPath.section].cellList[indexPath.row];
        
-            if cellId == "currency" {
+            switch cellId {
+            
+                case "currency":
 
-                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "selectionTableViewController") as? XYZSelectionTableViewController else {
-                    
-                    fatalError("Exception: error on instantiating SelectionNavigationController")
-                }
-                
-                selectionTableViewController.selectionIdentifier = "currency"
-    
-                if let _ = currencyCodes, !(currencyCodes?.isEmpty)! {
-                    
-                    selectionTableViewController.setSelections("", false, currencyCodes!)
-                }
-                
-                var codeIndex: Character?
-                var codes = [String]()
-                for code in Locale.isoCurrencyCodes {
-                    
-                    if nil == codeIndex {
+                    guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "selectionTableViewController") as? XYZSelectionTableViewController else {
                         
-                        codes.append(code)
-                        codeIndex = code.first
-                    } else if code.first == codeIndex {
-                        
-                        codes.append(code)
-                    } else {
-                        
-                        let identifier = "\(codeIndex!)"
-                        
-                        selectionTableViewController.setSelections(identifier, true, codes )
-                        codes.removeAll()
-                        codes.append(code)
-                        codeIndex = code.first
-                    }
-                }
-  
-                let identifier = "\(codeIndex!)"
-                
-                selectionTableViewController.setSelections(identifier, true, codes )
-                selectionTableViewController.setSelectedItem(currencyCode ?? "USD")
-                selectionTableViewController.delegate = self
-                
-                let nav = UINavigationController(rootViewController: selectionTableViewController)
-                nav.modalPresentationStyle = .popover
-                
-                self.present(nav, animated: true, completion: nil)
-            } else {
-                
-                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "selectionTableViewController") as? XYZSelectionTableViewController else {
-                    
                         fatalError("Exception: error on instantiating SelectionNavigationController")
-                }
+                    }
+                    
+                    selectionTableViewController.selectionIdentifier = "currency"
+        
+                    if let _ = currencyCodes, !(currencyCodes?.isEmpty)! {
+                        
+                        selectionTableViewController.setSelections("", false, currencyCodes!)
+                    }
+                    
+                    var codeIndex: Character?
+                    var codes = [String]()
+                    for code in Locale.isoCurrencyCodes {
+                        
+                        if nil == codeIndex {
+                            
+                            codes.append(code)
+                            codeIndex = code.first
+                        } else if code.first == codeIndex {
+                            
+                            codes.append(code)
+                        } else {
+                            
+                            let identifier = "\(codeIndex!)"
+                            
+                            selectionTableViewController.setSelections(identifier, true, codes )
+                            codes.removeAll()
+                            codes.append(code)
+                            codeIndex = code.first
+                        }
+                    }
+      
+                    let identifier = "\(codeIndex!)"
+                    
+                    selectionTableViewController.setSelections(identifier, true, codes )
+                    selectionTableViewController.setSelectedItem(currencyCode ?? "USD")
+                    selectionTableViewController.delegate = self
+                    
+                    let nav = UINavigationController(rootViewController: selectionTableViewController)
+                    nav.modalPresentationStyle = .popover
+                    
+                    self.present(nav, animated: true, completion: nil)
                 
-                selectionTableViewController.selectionIdentifier = "repeat"
-                selectionTableViewController.setSelections("",
-                                                           false,
-                                                           ["\(XYZAccount.RepeatAction.none)",
-                                                            "\(XYZAccount.RepeatAction.hourly)",
-                                                            "\(XYZAccount.RepeatAction.daily)",
-                                                            "\(XYZAccount.RepeatAction.weekly)",
-                                                            "\(XYZAccount.RepeatAction.monthly)",
-                                                            "\(XYZAccount.RepeatAction.yearly)"],
-                                                           ["",
-                                                            "\(XYZAccount.RepeatAction.hourly.rawValue.localized())",
-                                                            "\(XYZAccount.RepeatAction.daily.rawValue.localized())",
-                                                            "\(XYZAccount.RepeatAction.weekly.rawValue.localized())",
-                                                            "\(XYZAccount.RepeatAction.monthly.rawValue.localized())",
-                                                            "\(XYZAccount.RepeatAction.yearly.rawValue.localized())"])
-                selectionTableViewController.setSelectedItem(repeatAction ?? XYZAccount.RepeatAction.none.rawValue)
-                selectionTableViewController.delegate = self
-                
-                let nav = UINavigationController(rootViewController: selectionTableViewController)
-                nav.modalPresentationStyle = .popover
-                
-                self.present(nav, animated: true, completion: nil)
+                case "repeat":
+                    
+                    guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "selectionTableViewController") as? XYZSelectionTableViewController else {
+                        
+                            fatalError("Exception: error on instantiating SelectionNavigationController")
+                    }
+                    
+                    selectionTableViewController.selectionIdentifier = "repeat"
+                    selectionTableViewController.setSelections("",
+                                                               false,
+                                                               ["\(XYZAccount.RepeatAction.none)",
+                                                                "\(XYZAccount.RepeatAction.hourly)",
+                                                                "\(XYZAccount.RepeatAction.daily)",
+                                                                "\(XYZAccount.RepeatAction.weekly)",
+                                                                "\(XYZAccount.RepeatAction.monthly)",
+                                                                "\(XYZAccount.RepeatAction.yearly)"],
+                                                               ["",
+                                                                "\(XYZAccount.RepeatAction.hourly.rawValue.localized())",
+                                                                "\(XYZAccount.RepeatAction.daily.rawValue.localized())",
+                                                                "\(XYZAccount.RepeatAction.weekly.rawValue.localized())",
+                                                                "\(XYZAccount.RepeatAction.monthly.rawValue.localized())",
+                                                                "\(XYZAccount.RepeatAction.yearly.rawValue.localized())"])
+                    selectionTableViewController.setSelectedItem(repeatAction ?? XYZAccount.RepeatAction.none.rawValue)
+                    selectionTableViewController.delegate = self
+                    
+                    let nav = UINavigationController(rootViewController: selectionTableViewController)
+                    nav.modalPresentationStyle = .popover
+                    
+                    self.present(nav, animated: true, completion: nil)
+            
+                default:
+                    fatalError("Unsupported selection for cell \(cellId)")
             }
         }
     }
@@ -876,5 +881,4 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         // Pass the selected object to the new view controller.
     }
     */
-
 }
