@@ -138,7 +138,7 @@ class XYZMoreDetailTableViewController: UITableViewController {
                 
                 let text = """
                 
-                \("The icons are from Noun Project by".localized()) Yoraslav Samoylov, Sumhi_icon, Shmidt Sergey, Sandy Priyasa, Sophia Bai, ProSymbols, Mike Ashley, Krishna, Gregor Cresnar, Dinosoft Lab, Delwar Hossain, Arien Coquet.
+                \("The icons are from Noun Project by".localized()) Yoraslav Samoylov, Sumhi_icon, Shmidt Sergey, Sandy Priyasa, Sophia Bai, ProSymbols, Mike Ashley, Krishna, Gregor Cresnar, Dinosoft Lab, Delwar Hossain, Arien Coquet\(".".localized())
 
                 \("The foreign exchange rate is from".localized()) \(exchangeAPIWebSiteList.joined(separator: ", ")). \(
                 "It is a free service and use it at your discretion.".localized())

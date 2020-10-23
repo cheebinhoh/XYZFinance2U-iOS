@@ -20,6 +20,7 @@
 "The foreign exchange rates are from http://fixer.io" = "為替レートはhttp://fixer.ioから取得されます";
 "It does not come with warranty of any sort." = "それはいかなる形の保証も付いていません。";
 "The icons are from Noun Project by" = "これらのアイコンはNoun Projectからのもので、";
+"." = "。";
 "Delete incomes" = "収益を削除する";
 "Delete expenses" = "支出を削除する";
 "Delete budgets" = "予算を削除する";

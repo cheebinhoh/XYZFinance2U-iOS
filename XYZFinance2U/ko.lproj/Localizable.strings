@@ -16,10 +16,11 @@
 "Back" = "이전 페이지";
 "was created by " = "에서 프로그래밍 ";
 "Chee Bin Hoh" = "胡志斌";
-"2017 - 2020 Chee Bin Hoh, All rights reserved." = "2017 - 2020, 胡志斌. 모든 권리 보유.";
+"2017 - 2020 Chee Bin Hoh, All rights reserved." = "2017 - 2020, 胡志斌, 모든 권리 보유.";
 "The foreign exchange rates are from http://fixer.io" = "환율은 http://fixer.io에서 가져옵니다.";
 "It does not come with warranty of any sort." = "어떠한 형태의 보증도 제공되지 않습니다.";
 "The icons are from Noun Project by" = "이 아이콘은 Noun Project에서 제공되며";
+"." = ".";
 "Delete incomes" = "수익 삭제";
 "Delete expenses" = "지출 삭제";
 "Delete budgets" = "예산 삭제";
