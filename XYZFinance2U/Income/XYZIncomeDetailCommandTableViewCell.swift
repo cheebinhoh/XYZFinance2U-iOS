@@ -54,5 +54,4 @@ class XYZIncomeDetailCommandTableViewCell: UITableViewCell {
         
         self.delegate?.commandExecuted(sender: self)
     }
-    
 }

@@ -40,12 +40,7 @@ class XYZIncomeDetailViewController: UIViewController {
         
         let copyAction = UIPreviewAction(title: "Copy balance".localized(), style: .default, handler: { (action, viewcontroller) in
             
-            var balance = 0.0
-            
-            if let _ = self.income {
-            
-                balance = (self.income?.value(forKey: XYZAccount.amount) as? Double)!
-            }
+            let balance = (self.income?.value(forKey: XYZAccount.amount) as? Double) ?? 0.0
             
             tabBarController.popOverAlertController  = nil
             UIPasteboard.general.string = "\(balance)"
@@ -102,5 +97,4 @@ class XYZIncomeDetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }
