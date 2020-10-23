@@ -46,6 +46,7 @@ class XYZIncomeDetailDateTableViewCell: UITableViewCell {
     }
 
     // MARK: - IBAction
+    
     @objc
     @IBAction func dateInputTouchUp(_ sender: UITapGestureRecognizer) {
         

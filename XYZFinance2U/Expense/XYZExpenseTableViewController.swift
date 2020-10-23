@@ -49,6 +49,7 @@ class XYZExpenseTableViewController: UITableViewController,
     }
     
     // MARK: - property
+    
     var sectionExpandStatus = [Bool]()
     weak var searchBar: UISearchBar?
     var filteredMonthYear: Date!
