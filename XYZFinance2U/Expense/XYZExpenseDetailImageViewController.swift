@@ -98,6 +98,7 @@ class XYZExpenseDetailImageViewController: UIViewController,
     private func addBackButton() {
         
         let backButton = UIButton(type: .custom)
+        
         backButton.setImage(UIImage(named: "BackButton"), for: .normal) // Image can be downloaded from here below link
         backButton.setTitle(" \("Back".localized())", for: .normal)
         backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
@@ -123,7 +124,7 @@ class XYZExpenseDetailImageViewController: UIViewController,
 
     @IBAction func zoomIn(_ sender: UITapGestureRecognizer) {
         
-        if (self.scrollView!.zoomScale == self.scrollView!.minimumZoomScale) {
+        if self.scrollView!.zoomScale == self.scrollView!.minimumZoomScale {
             
             let center = sender.location(in: self.scrollView!)
             let size = self.imageView!.image!.size
