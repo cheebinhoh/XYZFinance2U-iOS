@@ -35,6 +35,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
     let textcellLeadingAnchor = CGFloat(50)
     
     // MARK: - nested type
+    
     struct ImageSet {
         
         var image: UIImage?
@@ -621,23 +622,23 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         switch sectionList[(indexPath?.section)!].cellList[(indexPath?.row)!] {
         
             case "recurringStopDate":
-                if !showRecurringStopDatePicker {
-                    
-                    sectionList[(indexPath?.section)!].cellList.insert("recurringStopDatePicker", at: (indexPath?.row)! + 1)
-                } else {
+                if showRecurringStopDatePicker {
                     
                     sectionList[(indexPath?.section)!].cellList.remove(at: (indexPath?.row)! + 1)
+                } else {
+                    
+                    sectionList[(indexPath?.section)!].cellList.insert("recurringStopDatePicker", at: (indexPath?.row)! + 1)
                 }
                 
                 showRecurringStopDatePicker = !showRecurringStopDatePicker
             
             case "date":
-                if !showDatePicker {
-                    
-                    sectionList[(indexPath?.section)!].cellList.insert("datepicker", at: (indexPath?.row)! + 1)
-                } else {
+                if showDatePicker {
                     
                     sectionList[(indexPath?.section)!].cellList.remove(at: (indexPath?.row)! + 1)
+                } else {
+                    
+                    sectionList[(indexPath?.section)!].cellList.insert("datepicker", at: (indexPath?.row)! + 1)
                 }
                 
                 showDatePicker = !showDatePicker
@@ -702,9 +703,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                                                  section: index.section)
                     tableView.insertRows(at: [newIndexPath], with: .fade)
                 }
-                
-                break
-            
+
             default:
                 break
         }
@@ -892,15 +891,13 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         if nil == expense {
             
             expense = XYZExpense(id: nil, detail: detail, amount: amount!, date: date!, context: managedContext())
-            
-            saveData()
-            expenseDelegate?.saveNewExpense(expense: expense!)
         } else {
             
             registerUndoSave(expense)
-            saveData()
-            expenseDelegate?.saveExpense(expense: expense!)
         }
+
+        saveData()
+        expenseDelegate?.saveExpense(expense: expense!)
         
         dismiss(animated: true, completion: nil)
     }
@@ -992,7 +989,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         
         if isShared {
         
-            navigationItem.title = "Shared"
+            navigationItem.title = "Shared".localized()
         } else if let _ = expense {
             
             navigationItem.title = "Expense".localized()

@@ -11,6 +11,7 @@ import UIKit
 class XYZExpenseTableViewCell: UITableViewCell {
     
     // MARK: - IBOutlet
+    
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var detail: UILabel!
     @IBOutlet weak var amount: UILabel!
@@ -22,6 +23,7 @@ class XYZExpenseTableViewCell: UITableViewCell {
     var monthYearDate: Date?
     
     // MARK: - function
+    
     override func awakeFromNib() {
         
         super.awakeFromNib()

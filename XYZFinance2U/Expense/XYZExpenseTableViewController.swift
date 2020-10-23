@@ -759,15 +759,10 @@ class XYZExpenseTableViewController: UITableViewController,
                     let monthYearComponent =  Calendar.current.dateComponents([.month, .year], from: date)
                     let monthYearDate = Calendar.current.date(from: monthYearComponent)
                     
-                    var foundIndex = -1
-                    for (index, section) in sectionList.enumerated() {
+                    var foundIndex = sectionList.firstIndex {
                         
-                        if section.identifier == identifier {
-                            
-                            foundIndex = index
-                            break
-                        }
-                    }
+                        return $0.identifier == identifier
+                    } ?? -1
 
                     if foundIndex < 0 {
                         
@@ -899,8 +894,8 @@ class XYZExpenseTableViewController: UITableViewController,
                             })
                         }
                     
-                default:
-                    fatalError("Exception: \(String(describing: zName)) is not supported")
+                    default:
+                        fatalError("Exception: \(String(describing: zName)) is not supported")
                 }
             }
         })

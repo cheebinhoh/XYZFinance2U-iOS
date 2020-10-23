@@ -17,6 +17,7 @@ protocol XYZExpenseDetailDateTableViewCellDelegate: class {
 class XYZExpenseDetailDateTableViewCell: UITableViewCell {
     
     // MARK: - property
+    
     weak var delegate: XYZExpenseDetailDateTableViewCellDelegate?
     var enableEditing = true
     
