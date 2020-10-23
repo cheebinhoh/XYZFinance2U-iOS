@@ -452,7 +452,16 @@ class XYZMoreTableViewController: UITableViewController,
                 if let lastRateTimestamp = lastRateTimestamp,
                    !lastRateTimestamp.isEmpty {
 
-                    newcell.title.text = newcell.title.text! + "  (\("Last rate at".localized()) \(lastRateTimestamp))"
+                    let sourceDateFormat = DateFormatter()
+                    sourceDateFormat.dateFormat = "yyyy-MM-dd"
+                    
+                    let date = sourceDateFormat.date(from: lastRateTimestamp)
+                    
+                    let localeDateFormat = DateFormatter()
+                    localeDateFormat.locale = Locale.current
+                    localeDateFormat.dateStyle = .short
+
+                    newcell.title.text = newcell.title.text! + "  (\("Last rate at".localized()) \(localeDateFormat.string(from: date!)))"
                 }
                 
                 newcell.accessoryType = .none
