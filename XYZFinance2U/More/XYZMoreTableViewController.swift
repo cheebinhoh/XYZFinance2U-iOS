@@ -459,7 +459,7 @@ class XYZMoreTableViewController: UITableViewController,
                     
                     let localeDateFormat = DateFormatter()
                     localeDateFormat.locale = Locale.current
-                    localeDateFormat.dateStyle = .short
+                    localeDateFormat.dateStyle = .medium
 
                     newcell.title.text = newcell.title.text! + "  (\("Last rate at".localized()) \(localeDateFormat.string(from: date!)))"
                 }
