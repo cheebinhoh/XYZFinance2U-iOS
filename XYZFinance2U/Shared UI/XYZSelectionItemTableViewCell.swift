@@ -29,5 +29,4 @@ class XYZSelectionItemTableViewCell: UITableViewCell {
         colorView.backgroundColor = color
         // Configure the view for the selected state
     }
-
 }
