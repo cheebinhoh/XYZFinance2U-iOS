@@ -148,8 +148,8 @@ class XYZMoreDetailTableViewController: UITableViewController {
                 newcell.content.text = text
                 cell = newcell
             
-                default:
-                    break
+            default:
+                break
         }
         
         return cell!

@@ -772,176 +772,173 @@ class XYZMoreTableViewController: UITableViewController,
             fatalError("Exception: XYZMainUITabBarController is expected" )
         }
         
-        if sectionList[indexPath.section].cellList[indexPath.row] == "Export" {
+        switch sectionList[indexPath.section].cellList[indexPath.row]  {
         
-            let dateFormatter = DateFormatter();
-            
-            dateFormatter.dateFormat = "MM-dd-yyyy"
-            let datetoday = dateFormatter.string(from: Date())
-            
-            let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let saveIncomeOption = UIAlertAction(title: "Save incomes".localized(), style: .default, handler: { (action) in
+            case "Export":
+                let dateFormatter = DateFormatter();
                 
-                let file = AppDelegate.appName + "-income-\(datetoday).csv"
-                let text = self.incomeFileContent()
+                dateFormatter.dateFormat = "MM-dd-yyyy"
+                let datetoday = dateFormatter.string(from: Date())
                 
-                self.saveContent(text, file: file)
-            })
+                let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                let saveIncomeOption = UIAlertAction(title: "Save incomes".localized(), style: .default, handler: { (action) in
+                    
+                    let file = AppDelegate.appName + "-income-\(datetoday).csv"
+                    let text = self.incomeFileContent()
+                    
+                    self.saveContent(text, file: file)
+                })
 
-            optionMenu.addAction(saveIncomeOption)
-            
-            let saveExpenseOption = UIAlertAction(title: "Save expenses".localized(), style: .default, handler: { (action) in
+                optionMenu.addAction(saveIncomeOption)
                 
-                let file = AppDelegate.appName + "-expense-\(datetoday).csv"
-                let text = self.expenseFileContent()
+                let saveExpenseOption = UIAlertAction(title: "Save expenses".localized(), style: .default, handler: { (action) in
+                    
+                    let file = AppDelegate.appName + "-expense-\(datetoday).csv"
+                    let text = self.expenseFileContent()
+                    
+                    self.saveContent(text, file: file)
+                })
                 
-                self.saveContent(text, file: file)
-            })
-            
-            optionMenu.addAction(saveExpenseOption)
-            
-            let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler:{ (action) in
+                optionMenu.addAction(saveExpenseOption)
                 
-                tabBarController.popOverAlertController = nil
-            })
+                let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler:{ (action) in
+                    
+                    tabBarController.popOverAlertController = nil
+                })
+                
+                optionMenu.addAction(cancelAction)
+                tabBarController.popOverAlertController = optionMenu
+                
+                present(optionMenu, animated: true, completion: nil)
             
-            optionMenu.addAction(cancelAction)
-            tabBarController.popOverAlertController = optionMenu
-            
-            present(optionMenu, animated: true, completion: nil)
-        } else if sectionList[indexPath.section].cellList[indexPath.row] == "DeleteData" {
-        
-            let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let deleteIncomes = UIAlertAction(title: "Delete incomes".localized(), style: .default, handler: { (action) in
+            case "DeleteData":
+                let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                let deleteIncomes = UIAlertAction(title: "Delete incomes".localized(), style: .default, handler: { (action) in
 
-                self.deleteIncomesLocallyAndFromiCloud()
-            })
-            
-            optionMenu.addAction(deleteIncomes)
-            
-            let deleteExpenses = UIAlertAction(title: "Delete expenses".localized(), style: .default, handler: { (action) in
+                    self.deleteIncomesLocallyAndFromiCloud()
+                })
                 
-                self.deleteExpensesLocallyAndFromiCloud()
-            })
-            
-            optionMenu.addAction(deleteExpenses)
-            
-            let deletebudgets = UIAlertAction(title: "Delete budgets".localized(), style: .default, handler: { (action) in
+                optionMenu.addAction(deleteIncomes)
                 
-                self.deletebudgetsLocallyAndFromiCloud()
-            })
-            
-            optionMenu.addAction(deletebudgets)
-            
-            let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler:{ (action) in
+                let deleteExpenses = UIAlertAction(title: "Delete expenses".localized(), style: .default, handler: { (action) in
+                    
+                    self.deleteExpensesLocallyAndFromiCloud()
+                })
                 
-                tabBarController.popOverAlertController = nil
-            })
-            
-            optionMenu.addAction(cancelAction)
-            tabBarController.popOverAlertController = optionMenu
-            
-            present(optionMenu, animated: true, completion: nil)
-        } else if sectionList[indexPath.section].cellList[indexPath.row] == "SynciCloud" {
-            
-            let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let deleteOption = UIAlertAction(title: "Update to iCloud".localized(), style: .default, handler: { (action) in
+                optionMenu.addAction(deleteExpenses)
                 
-                tabBarController.popOverAlertController = nil
+                let deletebudgets = UIAlertAction(title: "Delete budgets".localized(), style: .default, handler: { (action) in
+                    
+                    self.deletebudgetsLocallyAndFromiCloud()
+                })
+                
+                optionMenu.addAction(deletebudgets)
+                
+                let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler:{ (action) in
+                    
+                    tabBarController.popOverAlertController = nil
+                })
+                
+                optionMenu.addAction(cancelAction)
+                tabBarController.popOverAlertController = optionMenu
+                
+                present(optionMenu, animated: true, completion: nil)
+            
+            case "SynciCloud":
+                let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                let deleteOption = UIAlertAction(title: "Update to iCloud".localized(), style: .default, handler: { (action) in
+                    
+                    tabBarController.popOverAlertController = nil
+                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                    
+                    appDelegate?.syncWithiCloudAndCoreData()
+                })
+                
+                let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler:{ (action) in
+                 
+                    tabBarController.popOverAlertController = nil
+                })
+                
+                optionMenu.addAction(deleteOption)
+                optionMenu.addAction(cancelAction)
+                
+                tabBarController.popOverAlertController = optionMenu
+                present(optionMenu, animated: true, completion: nil)
+            
+            case "Lockout":
                 let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                appDelegate?.lastAuthenticated = nil
                 
-                appDelegate?.syncWithiCloudAndCoreData()
-            })
-            
-            let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler:{ (action) in
-             
-                tabBarController.popOverAlertController = nil
-            })
-            
-            optionMenu.addAction(deleteOption)
-            optionMenu.addAction(cancelAction)
-            
-            tabBarController.popOverAlertController = optionMenu
-            present(optionMenu, animated: true, completion: nil)
-        } else if sectionList[indexPath.section].cellList[indexPath.row] == "Lockout" {
-            
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            appDelegate?.lastAuthenticated = nil
-            
-            let tableViewController = getMainTableView()
-            
-            tableViewController.lockout()
-        } else if sectionList[indexPath.section].cellList[indexPath.row] == "RequiredAuthentication" {
-        
-        } else if sectionList[indexPath.section].cellList[indexPath.row] == "ToggleShowTotal" {
-    
-        } else if sectionList[indexPath.section].cellList[indexPath.row] == "TotalIncome" {
-    
-            
-        } else if sectionList[indexPath.section].cellList[indexPath.row] == "TotalIncomeCurrency" {
-
-            guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "selectionTableViewController") as? XYZSelectionTableViewController else {
+                let tableViewController = getMainTableView()
                 
-                fatalError("Exception: error on instantiating SelectionNavigationController")
-            }
+                tableViewController.lockout()
             
-            selectionTableViewController.selectionIdentifier = "currency"
-            var currencyCodesUsed = Set<String>()
-            
-            for income in incomeList! {
-                
-                let incomeCurrencyCode = income.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode
-                
-                currencyCodesUsed.insert(incomeCurrencyCode!)
-            }
-            
-            if let _ = totalIncomeCurrencyCode {
-                
-                currencyCodesUsed.insert(totalIncomeCurrencyCode!)
-            }
-            
-            if !currencyCodesUsed.isEmpty {
-                
-                selectionTableViewController.setSelections("", false, Array(currencyCodesUsed.sorted()) )
-            }
-            
-            var codeIndex: Character?
-            var codes = [String]()
-            for code in Locale.isoCurrencyCodes {
-                
-                if nil == codeIndex {
+            case "TotalIncomeCurrency":
+                guard let selectionTableViewController = self.storyboard?.instantiateViewController(withIdentifier: "selectionTableViewController") as? XYZSelectionTableViewController else {
                     
-                    codes.append(code)
-                    codeIndex = code.first
-                } else if code.first == codeIndex {
-                    
-                    codes.append(code)
-                } else {
-                    
-                    var identifier = ""
-                    identifier.append(codeIndex!)
-                    
-                    selectionTableViewController.setSelections(identifier, true, codes )
-                    codes.removeAll()
-                    codes.append(code)
-                    codeIndex = code.first
+                    fatalError("Exception: error on instantiating SelectionNavigationController")
                 }
-            }
+                
+                selectionTableViewController.selectionIdentifier = "currency"
+                var currencyCodesUsed = Set<String>()
+                
+                for income in incomeList! {
+                    
+                    let incomeCurrencyCode = income.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode
+                    
+                    currencyCodesUsed.insert(incomeCurrencyCode!)
+                }
+                
+                if let _ = totalIncomeCurrencyCode {
+                    
+                    currencyCodesUsed.insert(totalIncomeCurrencyCode!)
+                }
+                
+                if !currencyCodesUsed.isEmpty {
+                    
+                    selectionTableViewController.setSelections("", false, Array(currencyCodesUsed.sorted()) )
+                }
+                
+                var codeIndex: Character?
+                var codes = [String]()
+                for code in Locale.isoCurrencyCodes {
+                    
+                    if nil == codeIndex {
+                        
+                        codes.append(code)
+                        codeIndex = code.first
+                    } else if code.first == codeIndex {
+                        
+                        codes.append(code)
+                    } else {
+                        
+                        var identifier = ""
+                        identifier.append(codeIndex!)
+                        
+                        selectionTableViewController.setSelections(identifier, true, codes )
+                        codes.removeAll()
+                        codes.append(code)
+                        codeIndex = code.first
+                    }
+                }
+                
+                var identifier = ""
+                identifier.append(codeIndex!)
+                
+                selectionTableViewController.setSelections(identifier, true, codes )
+                selectionTableViewController.setSelectedItem(totalIncomeCurrencyCode ?? "USD")
+                selectionTableViewController.delegate = self
+                
+                let nav = UINavigationController(rootViewController: selectionTableViewController)
+                nav.modalPresentationStyle = .popover
+                
+                self.present(nav, animated: true, completion: nil)
             
-            var identifier = ""
-            identifier.append(codeIndex!)
+            case "RequiredAuthentication", "ToggleShowTotal", "TotalIncome":
+                break
             
-            selectionTableViewController.setSelections(identifier, true, codes )
-            selectionTableViewController.setSelectedItem(totalIncomeCurrencyCode ?? "USD")
-            selectionTableViewController.delegate = self
-            
-            let nav = UINavigationController(rootViewController: selectionTableViewController)
-            nav.modalPresentationStyle = .popover
-            
-            self.present(nav, animated: true, completion: nil)
-        } else {
-            
-            showAbout(indexPath)
+            default:
+                showAbout(indexPath)
         }
     }
     
