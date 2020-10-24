@@ -105,193 +105,193 @@ func createUpdateExpense(record: CKRecord,
     var outputUnprocessedCkrecords: [CKRecord] = unprocessedCKrecords
     var unprocessedCkrecord: CKRecord?
     
-    if record.recordType == XYZExpensePerson.type {
-        
-        let parentckreference = record[XYZExpense.type] as? CKRecord.Reference
-      
-        unprocessedCkrecord = record
-        
-        for expense in expenseList {
-            
-            let recordid = expense.value(forKey: XYZExpense.recordId) as? String
-            if recordid == parentckreference?.recordID.recordName {
-                
-                let sequenceNr = record[XYZExpensePerson.sequenceNr] as? Int
-                let name = record[XYZExpensePerson.name] as? String
-                let email = record[XYZExpensePerson.email] as? String
-                let paid = record[XYZExpensePerson.paid] as? Bool
-                
-                expense.addPerson(sequenceNr: sequenceNr!, name: name!, email: email!, paid: paid!, context: context)
-                unprocessedCkrecord = nil
-                
-                break
-            }
-        }
-        
-        if let _ = unprocessedCkrecord {
-            
-            outputUnprocessedCkrecords.append(unprocessedCkrecord!)
-        }
-    } else if record.recordType == XYZExpense.type {
+    switch record.recordType {
     
-        let recordName = record.recordID.recordName
-        let detail = record[XYZExpense.detail] as? String
-        let amount = record[XYZExpense.amount] as? Double
-        let date = record[XYZExpense.date] as? Date
-        let shareRecordId = record[XYZExpense.shareRecordId] as? String
-        let hasLocation = record[XYZExpense.hasLocation] as? Bool
-        let isSoftDelete = record[XYZExpense.isSoftDelete] as? Bool
-        let isSharedRecord = record[XYZExpense.isShared] as? Bool ?? false
-        let currency = record[XYZExpense.currencyCode] as? String ?? Locale.current.currencyCode
-        let budget = record[XYZExpense.budgetCategory] as? String ?? ""
-        let recurring = record[XYZExpense.recurring] as? String ?? XYZExpense.Length.none.rawValue
-        let recurringStopDate = record[XYZExpense.recurringStopDate] as? Date ?? date
-        
-        var expenseToBeUpdated: XYZExpense?
-
-        expenseToBeUpdated = outputExpenseList.first(where: { (expense) -> Bool in
-
-            guard let recordId = expense.value(forKey: XYZExpense.recordId) as? String else {
+        case XYZExpensePerson.type:
+            let parentckreference = record[XYZExpense.type] as? CKRecord.Reference
+          
+            unprocessedCkrecord = record
+            
+            for expense in expenseList {
                 
-                fatalError("Exception: record is expected")
-            }
-            
-            return recordId == recordName
-        })
-        
-        if nil == expenseToBeUpdated {
-        
-            expenseToBeUpdated = XYZExpense(id: recordName, detail: detail!, amount: amount!, date: date!, context: context)
-            outputExpenseList.append(expenseToBeUpdated!)
-        }
-        
-        var indexToBeRemoved = [Int]()
-        
-        for (index, pendingCkrecord) in unprocessedCKrecords.enumerated() {
-            
-            let parentckreference = pendingCkrecord[XYZExpense.type] as? CKRecord.Reference
-            
-            if recordName == parentckreference?.recordID.recordName {
-                
-                let sequenceNr = pendingCkrecord[XYZExpensePerson.sequenceNr] as? Int
-                let name = pendingCkrecord[XYZExpensePerson.name] as? String
-                let email = pendingCkrecord[XYZExpensePerson.email] as? String
-                let paid = pendingCkrecord[XYZExpensePerson.paid] as? Bool
-                
-                expenseToBeUpdated?.addPerson(sequenceNr: sequenceNr!, name: name!, email: email!, paid: paid!, context: context)
-
-                indexToBeRemoved.append(index)
-            }
-        }
-
-        for index in indexToBeRemoved.reversed() {
-            
-            outputUnprocessedCkrecords.remove(at: index)
-        }
-        
-        expenseToBeUpdated?.setValue(detail, forKey: XYZExpense.detail)
-        expenseToBeUpdated?.setValue(amount, forKey: XYZExpense.amount)
-        expenseToBeUpdated?.setValue(date, forKey: XYZExpense.date)
-        expenseToBeUpdated?.setValue(shareRecordId, forKey: XYZExpense.shareRecordId)
-        expenseToBeUpdated?.setValue(isShared || isSharedRecord, forKey: XYZExpense.isShared)
-        expenseToBeUpdated?.setValue(hasLocation, forKey: XYZExpense.hasLocation)
-        expenseToBeUpdated?.setValue(oldChangeToken, forKey: XYZExpense.preChangeToken)
-        expenseToBeUpdated?.setValue(isSoftDelete, forKey: XYZExpense.isSoftDelete)
-        expenseToBeUpdated?.setValue(currency, forKey: XYZExpense.currencyCode)
-        expenseToBeUpdated?.setValue(budget, forKey: XYZExpense.budgetCategory)
-        expenseToBeUpdated?.setValue(recurring, forKey: XYZExpense.recurring)
-        expenseToBeUpdated?.setValue(recurringStopDate, forKey: XYZExpense.recurringStopDate)
-        
-        let nrOfReceipt = record[XYZExpense.nrOfReceipts] as? Int
-        for index in 0..<nrOfReceipt! {
-            
-            let image = "image\(index)"
-            let ckasset = record[image] as? CKAsset
-            let fileURL = ckasset?.fileURL!
-            
-            if let _ = fileURL {
-            
-                let task = URLSession.shared.dataTask(with: fileURL!) {(data, response, error) in
+                let recordid = expense.value(forKey: XYZExpense.recordId) as? String
+                if recordid == parentckreference?.recordID.recordName {
                     
-                    if nil != error {
+                    let sequenceNr = record[XYZExpensePerson.sequenceNr] as? Int
+                    let name = record[XYZExpensePerson.name] as? String
+                    let email = record[XYZExpensePerson.email] as? String
+                    let paid = record[XYZExpensePerson.paid] as? Bool
+                    
+                    expense.addPerson(sequenceNr: sequenceNr!, name: name!, email: email!, paid: paid!, context: context)
+                    unprocessedCkrecord = nil
+                    
+                    break
+                }
+            }
+            
+            if let _ = unprocessedCkrecord {
+                
+                outputUnprocessedCkrecords.append(unprocessedCkrecord!)
+            }
+            
+        case XYZExpense.type:
+            let recordName = record.recordID.recordName
+            let detail = record[XYZExpense.detail] as? String
+            let amount = record[XYZExpense.amount] as? Double
+            let date = record[XYZExpense.date] as? Date
+            let shareRecordId = record[XYZExpense.shareRecordId] as? String
+            let hasLocation = record[XYZExpense.hasLocation] as? Bool
+            let isSoftDelete = record[XYZExpense.isSoftDelete] as? Bool
+            let isSharedRecord = record[XYZExpense.isShared] as? Bool ?? false
+            let currency = record[XYZExpense.currencyCode] as? String ?? Locale.current.currencyCode
+            let budget = record[XYZExpense.budgetCategory] as? String ?? ""
+            let recurring = record[XYZExpense.recurring] as? String ?? XYZExpense.Length.none.rawValue
+            let recurringStopDate = record[XYZExpense.recurringStopDate] as? Date ?? date
+            
+            var expenseToBeUpdated: XYZExpense?
+
+            expenseToBeUpdated = outputExpenseList.first(where: { (expense) -> Bool in
+
+                guard let recordId = expense.value(forKey: XYZExpense.recordId) as? String else {
+                    
+                    fatalError("Exception: record is expected")
+                }
+                
+                return recordId == recordName
+            })
+            
+            if nil == expenseToBeUpdated {
+            
+                expenseToBeUpdated = XYZExpense(id: recordName, detail: detail!, amount: amount!, date: date!, context: context)
+                outputExpenseList.append(expenseToBeUpdated!)
+            }
+            
+            var indexToBeRemoved = [Int]()
+            
+            for (index, pendingCkrecord) in unprocessedCKrecords.enumerated() {
+                
+                let parentckreference = pendingCkrecord[XYZExpense.type] as? CKRecord.Reference
+                
+                if recordName == parentckreference?.recordID.recordName {
+                    
+                    let sequenceNr = pendingCkrecord[XYZExpensePerson.sequenceNr] as? Int
+                    let name = pendingCkrecord[XYZExpensePerson.name] as? String
+                    let email = pendingCkrecord[XYZExpensePerson.email] as? String
+                    let paid = pendingCkrecord[XYZExpensePerson.paid] as? Bool
+                    
+                    expenseToBeUpdated?.addPerson(sequenceNr: sequenceNr!, name: name!, email: email!, paid: paid!, context: context)
+
+                    indexToBeRemoved.append(index)
+                }
+            }
+
+            for index in indexToBeRemoved.reversed() {
+                
+                outputUnprocessedCkrecords.remove(at: index)
+            }
+            
+            expenseToBeUpdated?.setValue(detail, forKey: XYZExpense.detail)
+            expenseToBeUpdated?.setValue(amount, forKey: XYZExpense.amount)
+            expenseToBeUpdated?.setValue(date, forKey: XYZExpense.date)
+            expenseToBeUpdated?.setValue(shareRecordId, forKey: XYZExpense.shareRecordId)
+            expenseToBeUpdated?.setValue(isShared || isSharedRecord, forKey: XYZExpense.isShared)
+            expenseToBeUpdated?.setValue(hasLocation, forKey: XYZExpense.hasLocation)
+            expenseToBeUpdated?.setValue(oldChangeToken, forKey: XYZExpense.preChangeToken)
+            expenseToBeUpdated?.setValue(isSoftDelete, forKey: XYZExpense.isSoftDelete)
+            expenseToBeUpdated?.setValue(currency, forKey: XYZExpense.currencyCode)
+            expenseToBeUpdated?.setValue(budget, forKey: XYZExpense.budgetCategory)
+            expenseToBeUpdated?.setValue(recurring, forKey: XYZExpense.recurring)
+            expenseToBeUpdated?.setValue(recurringStopDate, forKey: XYZExpense.recurringStopDate)
+            
+            let nrOfReceipt = record[XYZExpense.nrOfReceipts] as? Int
+            for index in 0..<nrOfReceipt! {
+                
+                let image = "image\(index)"
+                let ckasset = record[image] as? CKAsset
+                let fileURL = ckasset?.fileURL!
+                
+                if let _ = fileURL {
+                
+                    let task = URLSession.shared.dataTask(with: fileURL!) {(data, response, error) in
                         
-                    } else {
-                        
-                        OperationQueue.main.addOperation {
-                        
-                            expenseToBeUpdated?.addReceipt(sequenceNr: index, image: data! as NSData)
+                        if nil != error {
+                            
+                        } else {
+                            
+                            OperationQueue.main.addOperation {
+                            
+                                expenseToBeUpdated?.addReceipt(sequenceNr: index, image: data! as NSData)
+                            }
                         }
                     }
+                    
+                    task.resume()
+                }
+            }
+        
+            if let locationData = record[XYZExpense.loction] as? CLLocation {
+                
+                let data = try! NSKeyedArchiver.archivedData(withRootObject: locationData, requiringSecureCoding: false)
+                
+                expenseToBeUpdated?.setValue(data, forKey: XYZExpense.loction)
+            }
+            
+            var ckshareFound: CKShare? = nil
+            var ckshareFoundIndex: Int? = nil
+            
+            for (index, ckshare) in cksharesFoundButNoRootRecord.enumerated() {
+                
+                if ckshare.recordID.recordName == shareRecordId {
+                    
+                    ckshareFoundIndex = index
+                    ckshareFound = ckshare
+                    break
+                }
+            }
+            
+            if let _ = ckshareFound {
+                
+                if let shareUrl = ckshareFound?.url?.absoluteString {
+                    
+                    expenseToBeUpdated?.setValue(shareUrl, forKey: XYZExpense.shareUrl)
                 }
                 
-                task.resume()
-            }
-        }
-    
-        if let locationData = record[XYZExpense.loction] as? CLLocation {
-            
-            let data = try! NSKeyedArchiver.archivedData(withRootObject: locationData, requiringSecureCoding: false)
-            
-            expenseToBeUpdated?.setValue(data, forKey: XYZExpense.loction)
-        }
-        
-        var ckshareFound: CKShare? = nil
-        var ckshareFoundIndex: Int? = nil
-        
-        for (index, ckshare) in cksharesFoundButNoRootRecord.enumerated() {
-            
-            if ckshare.recordID.recordName == shareRecordId {
-                
-                ckshareFoundIndex = index
-                ckshareFound = ckshare
-                break
-            }
-        }
-        
-        if let _ = ckshareFound {
-            
-            if let shareUrl = ckshareFound?.url?.absoluteString {
-                
-                expenseToBeUpdated?.setValue(shareUrl, forKey: XYZExpense.shareUrl)
+                cksharesFoundButNoRootRecord.remove(at: ckshareFoundIndex!)
             }
             
-            cksharesFoundButNoRootRecord.remove(at: ckshareFoundIndex!)
-        }
-        
-        // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
-        expenseToBeUpdated?.setValue(Date(), forKey: XYZExpense.lastRecordChange)
-    } else if record.recordType == cloudkitshareRecordType {
-        
-        let recordName = record.recordID.recordName
-        var found = false
+            // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
+            expenseToBeUpdated?.setValue(Date(), forKey: XYZExpense.lastRecordChange)
+            
+        case cloudkitshareRecordType:
+            let recordName = record.recordID.recordName
+            var found = false
 
-        guard let ckshare = record as? CKShare else {
-            
-            fatalError("Exception: CKShare is expected")
-        }
-        
-        for expense in expenseList {
-            
-            if let shareRecordId = expense.value(forKey: XYZExpense.shareRecordId) as? String, shareRecordId == recordName {
-
-                if let shareUrl = ckshare.url?.absoluteString {
+            guard let ckshare = record as? CKShare else {
                 
-                    expense.setValue(shareUrl, forKey: XYZExpense.shareUrl)
+                fatalError("Exception: CKShare is expected")
+            }
+            
+            for expense in expenseList {
+                
+                if let shareRecordId = expense.value(forKey: XYZExpense.shareRecordId) as? String, shareRecordId == recordName {
+
+                    if let shareUrl = ckshare.url?.absoluteString {
+                    
+                        expense.setValue(shareUrl, forKey: XYZExpense.shareUrl)
+                    }
+                    
+                    found = true
+                    break
                 }
-                
-                found = true
-                break
             }
-        }
-        
-        if !found {
+            
+            if !found {
 
-            cksharesFoundButNoRootRecord.append(ckshare)
-        }
-        
-    } else {
-        
-        fatalError("Exception: \(record.recordType) is not supported")
+                cksharesFoundButNoRootRecord.append(ckshare)
+            }
+            
+        default:
+            fatalError("Exception: \(record.recordType) is not supported")
     }
     
     return (outputExpenseList, outputUnprocessedCkrecords)
