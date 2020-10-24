@@ -18,9 +18,11 @@ class AppDelegate: UIResponder,
     UNUserNotificationCenterDelegate {
 
     // MARK: - static
+    
     static let appName: String = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? ""
     
     // MARK: - property
+    
     var lastAuthenticated: Date?
     var expenseList = [XYZExpense]()
     var incomeList = [XYZAccount]()
