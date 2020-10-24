@@ -20,12 +20,14 @@ class XYZTextTableViewCell: UITableViewCell,
     UITextFieldDelegate {
 
     // MARK: - property
+    
     weak var delegate: XYZTextTableViewCellDelegate?
     var monetory = false
     var currencyCode = Locale.current.currencyCode!
     var isEditable = true
     
     // MARK: - IBOutlet
+    
     @IBOutlet weak var input: UITextField!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var optionSwitch: UISwitch!

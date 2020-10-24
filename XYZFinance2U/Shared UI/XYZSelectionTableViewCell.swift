@@ -44,5 +44,4 @@ class XYZSelectionTableViewCell: UITableViewCell {
     
         self.selection.textColor = color
     }
-
 }
