@@ -436,7 +436,7 @@ func fetchiCloudZoneChange(database: CKDatabase,
             default:
                 fatalError("Exception: zone type \(String(describing: zoneName)) is not supported")
         }
-    }
+    } // opZoneChange.recordChangedBlock = { (record) ...
     
     opZoneChange.recordWithIDWasDeletedBlock = { (recordId, recordType) in
     
@@ -661,7 +661,7 @@ func fetchiCloudZoneChange(database: CKDatabase,
                 saveManageContext() // save changed token and data
             }
         }
-    }
+    } // opZoneChange.recordZoneFetchCompletionBlock = { (zoneId,
     
     opZoneChange.fetchRecordZoneChangesCompletionBlock = { (error) in
 
@@ -714,22 +714,22 @@ func pushChangeToiCloudZone(database: CKDatabase,
         switch name {
             
             case XYZAccount.type:
-                    guard let incomeList = iCloudZone.data as? [XYZAccount] else {
-                        
-                        fatalError("Exception: [XYZAccount] is expected")
-                    }
+                guard let incomeList = iCloudZone.data as? [XYZAccount] else {
                     
-                    saveAccountsToiCloud(database: database, zone: zone, iCloudZone: iCloudZone, incomeList: incomeList, completionblock: {
+                    fatalError("Exception: [XYZAccount] is expected")
+                }
+                
+                saveAccountsToiCloud(database: database, zone: zone, iCloudZone: iCloudZone, incomeList: incomeList, completionblock: {
+                    
+                    OperationQueue.main.addOperation {
                         
-                        OperationQueue.main.addOperation {
+                        fetchiCloudZoneChange(database: database, zones: [zone], icloudZones: icloudZones, completionblock: {
                             
-                            fetchiCloudZoneChange(database: database, zones: [zone], icloudZones: icloudZones, completionblock: {
-                                
-                            })
-                            
-                            completionblock()
-                        }
-                    })
+                        })
+                        
+                        completionblock()
+                    }
+                })
             
             case XYZExpense.type:
                 guard let expenseList = iCloudZone.data as? [XYZExpense] else {
@@ -749,27 +749,27 @@ func pushChangeToiCloudZone(database: CKDatabase,
                 })
 
             case XYZBudget.type:
-                    guard let budgetList = iCloudZone.data as? [XYZBudget] else {
-                        
-                        fatalError("Exception: [XYZBudget] is expected")
-                    }
+                guard let budgetList = iCloudZone.data as? [XYZBudget] else {
                     
-                    saveBudgetsToiCloud(database: database, zone: zone, iCloudZone: iCloudZone, budgetList: budgetList, completionblock: {
+                    fatalError("Exception: [XYZBudget] is expected")
+                }
+                
+                saveBudgetsToiCloud(database: database, zone: zone, iCloudZone: iCloudZone, budgetList: budgetList, completionblock: {
+                    
+                    OperationQueue.main.addOperation {
                         
-                        OperationQueue.main.addOperation {
+                        fetchiCloudZoneChange(database: database, zones: [zone], icloudZones: icloudZones, completionblock: {
                             
-                            fetchiCloudZoneChange(database: database, zones: [zone], icloudZones: icloudZones, completionblock: {
-                                
-                            })
-                            
-                            completionblock()
-                        }
-                    })
+                        })
+                        
+                        completionblock()
+                    }
+                })
             
             default:
                 fatalError("Exception: zone \(name) is not supported")
-        }
-    }
+        } // switch name
+    } // for zone in zones
 }
 
 func fetchAndUpdateiCloud(database: CKDatabase,
@@ -1007,7 +1007,7 @@ func saveExpensesToiCloud(database: CKDatabase,
         }
         
         recordsToBeSaved.append(record)
-    }
+    } // for expense in expenseList
     
     let opToSaved = CKModifyRecordsOperation(recordsToSave: recordsToBeSaved, recordIDsToDelete: recordIdsToBeDeleted)
     opToSaved.savePolicy = .allKeys
@@ -1146,7 +1146,7 @@ func saveAccountsToiCloud(database: CKDatabase,
         }
 
         recordsToBeSaved.append(record)
-    }
+    } // for income in incomeList
 
     let opToSaved = CKModifyRecordsOperation(recordsToSave: recordsToBeSaved, recordIDsToDelete: recordIdsToBeDeleted)
     opToSaved.savePolicy = .allKeys
@@ -1346,6 +1346,6 @@ func registeriCloudSubscription(database: CKDatabase,
         }
         
         database.add(fetchOp)
-    }
+    } // for icloudzone in iCloudZones
 }
 
