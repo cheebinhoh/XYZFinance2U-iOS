@@ -65,6 +65,7 @@ class XYZMoreTableViewController: UITableViewController,
         
         if otherCurrencyCodes.isEmpty {
 
+            self.rates = nil
             self.lastRateTimestamp =  ""
             self.calculateTotalIncome()
         } else {
@@ -126,14 +127,20 @@ class XYZMoreTableViewController: UITableViewController,
                 
                 let incomeCc = income.value(forKey: XYZAccount.currencyCode) as! String
                 let amount = income.value(forKey: XYZAccount.amount) as! Double
-                
-                let rate = rates?.first(where: {
-                    
-                    return $0.key == incomeCc
-                })
 
-                self.totalIncome = ( self.totalIncome ?? 0.0 )
-                    + ( amount / ( rate?.value ?? 1.0 ) )
+                if incomeCc == self.totalIncomeCurrencyCode {
+                    
+                    self.totalIncome = ( self.totalIncome ?? 0.0 ) + amount
+                } else {
+                    
+                    let rate = rates?.first(where: {
+                        
+                        return $0.key == incomeCc
+                    })
+
+                    self.totalIncome = ( self.totalIncome ?? 0.0 )
+                        + ( amount / ( rate?.value ?? 1.0 ) )
+                }
             }
             
             DispatchQueue.main.async {
