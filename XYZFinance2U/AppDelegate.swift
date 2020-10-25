@@ -84,7 +84,6 @@ class AppDelegate: UIResponder,
                         switch name! {
                         
                             case XYZExpense.type:
-                                
                                 guard let tabBarController = self.window?.rootViewController as? XYZMainUITabBarController else {
                                     
                                     fatalError("Exception: XYZMainUITabBarController is expected")
@@ -109,11 +108,11 @@ class AppDelegate: UIResponder,
                                 
                             default:
                                 fatalError("Exception: \(String(describing: name)) is not supported")
-                        }
-                    }
-                }
-            })
-        }
+                        } // switch name!
+                    } // for iCloudZone in self.shareiCloudZones
+                } // DispatchQueue.main.async
+            }) // fetchiCloudZoneChange(database: ...
+        } // if !zones.isEmpty
     }
     
     func application(_ application: UIApplication,
@@ -212,13 +211,13 @@ class AppDelegate: UIResponder,
                     
                     DispatchQueue.main.async {
                         
-                        for iCloudZone in [shareicloudZone!]{
+                        for iCloudZone in [shareicloudZone!] {
                             
                             let name = iCloudZone.value(forKey: XYZiCloudZone.name) as? String
                         
                             switch name! {
+                            
                                 case XYZExpense.type:
-
                                     guard let tabBarController = self.window?.rootViewController as? XYZMainUITabBarController else {
                                         
                                         fatalError("Exception: XYZMainUITabBarController is expected")
@@ -275,12 +274,12 @@ class AppDelegate: UIResponder,
                                 
                                 default:
                                     fatalError("Exception: \(String(describing: name)) is not supported")
-                            }
-                        }
-                    }
-                })
-            }
-        }
+                            } // switch name!
+                        } // for iCloudZone in [shareicloudZone!]
+                    } // DispatchQueue.main.async
+                }) // fetchiCloudZoneChange(database: ...
+            } // if zones.isEmpty
+        } // DispatchQueue.main.async
         
         CKContainer.default().add(acceptSharesOp)
     }
@@ -340,7 +339,6 @@ class AppDelegate: UIResponder,
 
     
     // MARK: - function
-    
     
     func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
 
@@ -790,16 +788,16 @@ class AppDelegate: UIResponder,
                                     tableViewToBeReload.reloadData()
                                 }
                             }
-                        }
-                    })
-                }
-            }
+                        } // for icloudzone in self.privateiCloudZones
+                    }) // fetchiCloudZoneChange(database: ...
+                } // OperationQueue.main.addOperation
+            } // op.modifyRecordZonesCompletionBlock = { (saved,  ...
             
             let container = CKContainer.default()
             let database = container.privateCloudDatabase
             
             database.add(op)
-        }
+        } // if !zonesToBeSaved.isEmpty
         
         if !zonesToBeFetched.isEmpty {
             
@@ -866,11 +864,11 @@ class AppDelegate: UIResponder,
                             }
                             
                             registeriCloudSubscription(database: CKContainer.default().privateCloudDatabase, iCloudZones: [icloudzone])
-                        }
-                    }
-                }
-            })
-        }
-    }
+                        } // DispatchQueue.main.async
+                    } // if let tableViewToBeReload = tableViewToBeReload
+                } // for (index, icloudzone) in self.privateiCloudZones.enumerated()
+            }) // fetchAndUpdateiCloud(database: ...
+        } // if !zonesToBeFetched.isEmpty
+    } // if !zonesToBeSaved.isEmpty
 }
 
