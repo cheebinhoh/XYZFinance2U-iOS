@@ -1,88 +1,80 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18B75" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="20A5395g" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="XYZAccount" representedClassName="XYZAccount" syncable="YES">
-        <attribute name="accountNr" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="bank" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="currencyCode" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lastRecordChange" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="lastRecordFetch" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="lastRecordUpload" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="lastUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="principal" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="recordId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="repeatAction" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="repeatDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="sequenceNr" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="accountNr" optional="YES" attributeType="String"/>
+        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="bank" optional="YES" attributeType="String"/>
+        <attribute name="currencyCode" optional="YES" attributeType="String"/>
+        <attribute name="lastRecordChange" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="lastRecordFetch" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="lastRecordUpload" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="lastUpdate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="principal" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="recordId" optional="YES" attributeType="String"/>
+        <attribute name="repeatAction" optional="YES" attributeType="String"/>
+        <attribute name="repeatDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="sequenceNr" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <entity name="XYZBudget" representedClassName="XYZBudget" syncable="YES">
-        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="currency" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="historicalAmount" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="historicalLength" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="historicalStart" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="iconName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lastRecordChange" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="length" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="recordId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sequenceNr" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-    </entity>
-    <entity name="XYZExchangeRate" representedClassName="XYZExchangeRate" syncable="YES">
-        <attribute name="base" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="rate" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="recordId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="target" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="color" optional="YES" attributeType="String"/>
+        <attribute name="currency" optional="YES" attributeType="String"/>
+        <attribute name="historicalAmount" optional="YES" attributeType="Binary"/>
+        <attribute name="historicalLength" optional="YES" attributeType="Binary"/>
+        <attribute name="historicalStart" optional="YES" attributeType="Binary"/>
+        <attribute name="iconName" optional="YES" attributeType="String"/>
+        <attribute name="lastRecordChange" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="length" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="recordId" optional="YES" attributeType="String"/>
+        <attribute name="sequenceNr" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <entity name="XYZExpense" representedClassName="XYZExpense" syncable="YES">
-        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="budgetCategory" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="currencyCode" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="detail" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="hasgeolocation" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="hasLocation" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="isShared" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="isSoftDelete" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="lastRecordChange" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="location" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="preChangeToken" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="recordId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="recurring" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="recurringStopDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="shareRecordId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="shareUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="persons" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="XYZExpensePerson" inverseName="expense" inverseEntity="XYZExpensePerson" syncable="YES"/>
-        <relationship name="receipts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="XYZExpenseReceipt" inverseName="expense" inverseEntity="XYZExpenseReceipt" syncable="YES"/>
+        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="budgetCategory" optional="YES" attributeType="String"/>
+        <attribute name="currencyCode" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="detail" optional="YES" attributeType="String"/>
+        <attribute name="hasgeolocation" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="hasLocation" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isShared" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isSoftDelete" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="lastRecordChange" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="location" optional="YES" attributeType="Binary"/>
+        <attribute name="preChangeToken" optional="YES" attributeType="Binary"/>
+        <attribute name="recordId" optional="YES" attributeType="String"/>
+        <attribute name="recurring" optional="YES" attributeType="String"/>
+        <attribute name="recurringStopDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="shareRecordId" optional="YES" attributeType="String"/>
+        <attribute name="shareUrl" optional="YES" attributeType="String"/>
+        <relationship name="persons" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="XYZExpensePerson" inverseName="expense" inverseEntity="XYZExpensePerson"/>
+        <relationship name="receipts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="XYZExpenseReceipt" inverseName="expense" inverseEntity="XYZExpenseReceipt"/>
     </entity>
     <entity name="XYZExpensePerson" representedClassName="XYZExpensePerson" syncable="YES">
-        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="paid" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="sequenceNr" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="expense" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="XYZExpense" inverseName="persons" inverseEntity="XYZExpense" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="paid" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="sequenceNr" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="expense" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="XYZExpense" inverseName="persons" inverseEntity="XYZExpense"/>
     </entity>
     <entity name="XYZExpenseReceipt" representedClassName="XYZExpenseReceipt" syncable="YES">
-        <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="sequenceNr" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="expense" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="XYZExpense" inverseName="receipts" inverseEntity="XYZExpense" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="sequenceNr" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="expense" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="XYZExpense" inverseName="receipts" inverseEntity="XYZExpense"/>
     </entity>
     <entity name="XYZiCloudZone" representedClassName="XYZiCloudZone" syncable="YES">
-        <attribute name="changeToken" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="changeTokenLastFetch" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="deleteRecordIdList" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="deleteShareRecordIdList" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="inShareDB" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="ownerName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="changeToken" optional="YES" attributeType="Binary"/>
+        <attribute name="changeTokenLastFetch" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="deleteRecordIdList" optional="YES" attributeType="Binary"/>
+        <attribute name="deleteShareRecordIdList" optional="YES" attributeType="Binary"/>
+        <attribute name="inShareDB" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="ownerName" optional="YES" attributeType="String"/>
     </entity>
     <elements>
         <element name="XYZAccount" positionX="-63" positionY="-18" width="128" height="240"/>
         <element name="XYZBudget" positionX="-36" positionY="126" width="128" height="240"/>
-        <element name="XYZExchangeRate" positionX="-36" positionY="81" width="128" height="120"/>
         <element name="XYZExpense" positionX="-63" positionY="18" width="128" height="330"/>
         <element name="XYZExpensePerson" positionX="-36" positionY="72" width="128" height="120"/>
         <element name="XYZExpenseReceipt" positionX="-9" positionY="99" width="128" height="90"/>

@@ -415,14 +415,6 @@ func loadBudgets() -> [XYZBudget]? {
     return try? aContext?.fetch(fetchRequest)
 }
 
-func loadExchangeRates() -> [XYZExchangeRate]? {
-    
-    let aContext = managedContext()
-    let fetchRequest = NSFetchRequest<XYZExchangeRate>(entityName: XYZExchangeRate.type)
-    
-    return try? aContext?.fetch(fetchRequest)
-}
-
 func loadiCloudZone() -> [XYZiCloudZone]? {
     
     let aContext = managedContext()

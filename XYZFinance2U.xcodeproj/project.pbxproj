@@ -53,7 +53,6 @@
 		65D870C42033B17700DE991E /* XYZBudgetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C32033B17700DE991E /* XYZBudgetTableViewCell.swift */; };
 		65D870C6203673BB00DE991E /* XYZBudgetDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870C5203673BB00DE991E /* XYZBudgetDetailTableViewController.swift */; };
 		65D870CE2037D76100DE991E /* XYZBudgetDetailDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D870CD2037D76100DE991E /* XYZBudgetDetailDateTableViewCell.swift */; };
-		65D8BA7F2013ADD200944C2D /* XYZExchangeRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D8BA7E2013ADD200944C2D /* XYZExchangeRate.swift */; };
 		65ECB04D20418D57009F01A9 /* XYZCalendarCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65ECB04C20418D57009F01A9 /* XYZCalendarCollectionViewController.swift */; };
 		65EE339D20013F4600DEA680 /* XYZUITextField-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE339C20013F4600DEA680 /* XYZUITextField-Extension.swift */; };
 		65EE339F2001A5EF00DEA680 /* XYZMoreDetailAboutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EE339E2001A5EF00DEA680 /* XYZMoreDetailAboutTableViewCell.swift */; };
@@ -147,7 +146,6 @@
 		65D870C32033B17700DE991E /* XYZBudgetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZBudgetTableViewCell.swift; sourceTree = "<group>"; };
 		65D870C5203673BB00DE991E /* XYZBudgetDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZBudgetDetailTableViewController.swift; sourceTree = "<group>"; };
 		65D870CD2037D76100DE991E /* XYZBudgetDetailDateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZBudgetDetailDateTableViewCell.swift; sourceTree = "<group>"; };
-		65D8BA7E2013ADD200944C2D /* XYZExchangeRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZExchangeRate.swift; sourceTree = "<group>"; };
 		65ECB04C20418D57009F01A9 /* XYZCalendarCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZCalendarCollectionViewController.swift; sourceTree = "<group>"; };
 		65EE339C20013F4600DEA680 /* XYZUITextField-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XYZUITextField-Extension.swift"; sourceTree = "<group>"; };
 		65EE339E2001A5EF00DEA680 /* XYZMoreDetailAboutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XYZMoreDetailAboutTableViewCell.swift; sourceTree = "<group>"; };
@@ -332,7 +330,6 @@
 			isa = PBXGroup;
 			children = (
 				655C97C21FCCD5130098D58D /* XYZAccount.swift */,
-				65D8BA7E2013ADD200944C2D /* XYZExchangeRate.swift */,
 				6576938A1FDA317F00BFFB6B /* XYZExpense.swift */,
 				65F48F281FE56137006951F7 /* XYZExpensePerson.swift */,
 				65F48F2A1FE5828E006951F7 /* XYZExpenseReceipt.swift */,
@@ -484,7 +481,6 @@
 				65402D961FEE0B740051367F /* XYZExpenseDetailCommandTableViewCell.swift in Sources */,
 				65F48F211FE377EC006951F7 /* XYZMoreTableViewCell.swift in Sources */,
 				6567E1322032866C00058238 /* XYZBudget.swift in Sources */,
-				65D8BA7F2013ADD200944C2D /* XYZExchangeRate.swift in Sources */,
 				655C97BF1FCCCF320098D58D /* XYZIncomeTableViewController.swift in Sources */,
 				650068FE200814F8003B6469 /* XYZiCloudZone.swift in Sources */,
 				658FD1D82037DB3F00ABDD55 /* XYZBudgetDetailDatePickerTableViewCell.swift in Sources */,
