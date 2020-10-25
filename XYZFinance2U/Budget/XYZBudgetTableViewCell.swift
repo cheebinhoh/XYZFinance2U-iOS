@@ -26,7 +26,7 @@ class XYZBudgetTableViewCell: UITableViewCell {
         
         if let _ = icon {
             
-            icon.image = UIImage(named: "")
+            icon.image = UIImage(named: "empty")
         }
         // Initialization code
     }

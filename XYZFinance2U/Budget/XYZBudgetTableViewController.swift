@@ -954,7 +954,7 @@ class XYZBudgetTableViewController: UITableViewController,
             cell.icon.image = UIImage(named: "empty")
             cell.icon.setNeedsDisplay()
         }
-        
+
         return cell
     }
 
