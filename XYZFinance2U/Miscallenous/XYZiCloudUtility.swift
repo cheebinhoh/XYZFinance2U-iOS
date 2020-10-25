@@ -103,35 +103,30 @@ func createUpdateExpense(record: CKRecord,
     
     var outputExpenseList: [XYZExpense] = expenseList
     var outputUnprocessedCkrecords: [CKRecord] = unprocessedCKrecords
-    var unprocessedCkrecord: CKRecord?
-    
+
     switch record.recordType {
     
         case XYZExpensePerson.type:
             let parentckreference = record[XYZExpense.type] as? CKRecord.Reference
           
-            unprocessedCkrecord = record
-            
-            for expense in expenseList {
+            let expense = expenseList.first {
                 
-                let recordid = expense.value(forKey: XYZExpense.recordId) as? String
-                if recordid == parentckreference?.recordID.recordName {
-                    
-                    let sequenceNr = record[XYZExpensePerson.sequenceNr] as? Int
-                    let name = record[XYZExpensePerson.name] as? String
-                    let email = record[XYZExpensePerson.email] as? String
-                    let paid = record[XYZExpensePerson.paid] as? Bool
-                    
-                    expense.addPerson(sequenceNr: sequenceNr!, name: name!, email: email!, paid: paid!, context: context)
-                    unprocessedCkrecord = nil
-                    
-                    break
-                }
+                let recordid = $0.value(forKey: XYZExpense.recordId) as? String
+                
+                return recordid == parentckreference?.recordID.recordName
             }
-            
-            if let _ = unprocessedCkrecord {
+        
+            if let expense = expense {
                 
-                outputUnprocessedCkrecords.append(unprocessedCkrecord!)
+                let sequenceNr = record[XYZExpensePerson.sequenceNr] as? Int
+                let name = record[XYZExpensePerson.name] as? String
+                let email = record[XYZExpensePerson.email] as? String
+                let paid = record[XYZExpensePerson.paid] as? Bool
+                
+                expense.addPerson(sequenceNr: sequenceNr!, name: name!, email: email!, paid: paid!, context: context)
+            } else {
+                
+                outputUnprocessedCkrecords.append(record)
             }
             
         case XYZExpense.type:
@@ -292,7 +287,7 @@ func createUpdateExpense(record: CKRecord,
             
         default:
             fatalError("Exception: \(record.recordType) is not supported")
-    }
+    }// switch record.recordType
     
     return (outputExpenseList, outputUnprocessedCkrecords)
 }
@@ -461,6 +456,7 @@ func fetchiCloudZoneChange(database: CKDatabase,
                             
                             guard let recordName = income.value(forKey: XYZAccount.recordId) as? String else {
                                 fatalError("Exception: record id is expected")
+                                
                             }
                             
                             if recordName == recordId.recordName {
@@ -475,19 +471,12 @@ func fetchiCloudZoneChange(database: CKDatabase,
                         icloudZone.data = incomeList
                     
                     case XYZExpense.type:
-
                         guard var expenseList = icloudZone.data as? [XYZExpense] else {
                             
                             fatalError("Exception: expense is expected")
                         }
                     
                         for (index, expense) in expenseList.enumerated() {
-                            
-                            // TODO: there are case that we do not get recordName
-                            //guard let recordName = expense.value(forKey: XYZExpense.recordId) as? String else {
-                                
-                            //    fatalError("Exception: record id is expected")
-                            //}
                             
                             let recordName = expense.value(forKey: XYZExpense.recordId) as? String
                             
@@ -563,10 +552,10 @@ func fetchiCloudZoneChange(database: CKDatabase,
                     
                     default:
                         fatalError("Exception: \(recordType) is not supported")
-                }
-            }
-        }
-    }
+                } // switch recordType {
+            } // if let zName = icloudZone.value( ...
+        } // for icloudZone in icloudZones
+    } // opZoneChange.recordWithIDWasDeletedBlock = { (recordId, ...
     
     opZoneChange.recordZoneChangeTokensUpdatedBlock = { (zoneId, token, data) in
         
@@ -610,7 +599,6 @@ func fetchiCloudZoneChange(database: CKDatabase,
             switch ckerror! {
                 
                 case CKError.zoneNotFound:
-                    
                     if CKContainer.default().sharedCloudDatabase == database {
                         
                         DispatchQueue.main.async {
@@ -639,10 +627,10 @@ func fetchiCloudZoneChange(database: CKDatabase,
                 
                 default:
                     break
-            }
+            } // switch ckerror!
             
             return
-        }
+        } // if let _ = error
         
         OperationQueue.main.addOperation {
             
