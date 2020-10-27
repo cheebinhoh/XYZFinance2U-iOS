@@ -120,7 +120,7 @@ class XYZMoreTableViewController: UITableViewController,
         }
 
         self.totalIncome = 0.0
-      
+
         if let incomeList = incomeList {
 
             for income in incomeList {

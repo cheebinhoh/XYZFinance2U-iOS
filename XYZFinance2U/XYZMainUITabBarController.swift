@@ -52,7 +52,10 @@ class XYZMainUITabBarController: UITabBarController,
             fatalError("Exception: XYZMoreTableViewController is expected")
         }
         
-        moreView.reload()
+        if moreView.isViewLoaded {
+            
+            moreView.reload()
+        }
     }
     
     /*
