@@ -1,9 +1,8 @@
 //
 //  XYZSelectionTableViewController.swift
-//  XYZFinance2U
+//  XYZTodos
 //
-//  Created by Chee Bin Hoh on 1/3/18.
-//  Copyright © 2018 - 2020 Chee Bin Hoh. All rights reserved.
+//  Created by Chee Bin Hoh on 10/30/20.
 //
 
 import UIKit
@@ -15,6 +14,7 @@ protocol XYZSelectionDelegate: class {
 
 class XYZSelectionTableViewController: UITableViewController {
 
+    
     // MARK: - property
     
     var delegate: XYZSelectionDelegate?
@@ -28,7 +28,16 @@ class XYZSelectionTableViewController: UITableViewController {
     var readonly = false
     var imageNames: [String]?
     var displayStrings = [String]()
+
     
+    // MARK: - IBAction
+    
+    @IBAction func backAction(_ sender: UIButton) {
+
+        delegate?.selectedItem(selectedItem, sender: self)
+        dismiss(animated: true, completion: nil)
+    }
+
     // MARK: - function
     
     override func viewDidLoad() {
@@ -54,19 +63,12 @@ class XYZSelectionTableViewController: UITableViewController {
     private func addBackButton() {
         
         let backButton = UIButton(type: .custom)
-        backButton.setImage(UIImage(named: "BackButton"), for: .normal) 
+        backButton.setImage(UIImage(named: "BackButton"), for: .normal)
         backButton.setTitle(" \("Back".localized())", for: .normal)
         backButton.setTitleColor(backButton.tintColor, for: .normal) // You can change the TitleColor
         backButton.addTarget(self, action: #selector(self.backAction(_:)), for: .touchUpInside)
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-    }
-
-    // MARK: - IBAction
-    @IBAction func backAction(_ sender: UIButton) {
-
-        delegate?.selectedItem(selectedItem, sender: self)
-        dismiss(animated: true, completion: nil)
     }
 
     func setSelectedItem(_ item: String?,
@@ -124,7 +126,7 @@ class XYZSelectionTableViewController: UITableViewController {
                        _ selection: [String],
                        _ displayStrings: [String] = [String]()) {
         
-        self.displayStrings = displayStrings
+        self.displayStrings.append(contentsOf: displayStrings)
         
         if indexing {
         
@@ -174,7 +176,19 @@ class XYZSelectionTableViewController: UITableViewController {
             cell.label.text = tableSectionList[indexPath.section].cellList[indexPath.row].localized()
         } else {
             
-            cell.label.text = displayStrings[indexPath.row]
+            var totalRowBeforeSection = 0
+            
+            for (index, section) in tableSectionList.enumerated() {
+                
+                if index == indexPath.section {
+                    
+                    break
+                }
+                
+                totalRowBeforeSection += section.cellList.count
+            }
+            
+            cell.label.text = displayStrings[totalRowBeforeSection + indexPath.row]
         }
         
         if !selectionColors.isEmpty {
@@ -197,7 +211,6 @@ class XYZSelectionTableViewController: UITableViewController {
                 } else {
                     // Fallback on earlier versions
                 }
-                
             } else {
                 
                 cell.icon.image = UIImage(named: "bigemptyspace")
@@ -219,7 +232,7 @@ class XYZSelectionTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        return tableSectionList[section].title
+        return tableSectionList[section].title?.localized()
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -290,7 +303,7 @@ class XYZSelectionTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
     */
 
@@ -318,4 +331,5 @@ class XYZSelectionTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
 }
