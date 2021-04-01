@@ -91,20 +91,17 @@ class XYZMoreTableViewController: UITableViewController,
                             let base : String
                             let date : String
                         }
-                            
+                        
                         let decoder = JSONDecoder()
                         decoder.dateDecodingStrategy = .iso8601
                         let res = try? decoder.decode(ExchangRateAPIResult.self, from: data )
-                        
+
                         if let _ = res {
          
                             var rates = [String : Double]()
-                            for c in otherCurrencyCodes {
+                            for (c, r) in res!.rates {
                                 
-                                if let r = res?.rates[c] {
-                                    
-                                    rates[c] = Double(r)
-                                }
+                                rates[c] = Double(r)
                             }
 
                             self.rates = rates;
