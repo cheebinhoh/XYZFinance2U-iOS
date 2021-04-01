@@ -119,7 +119,7 @@ class XYZMoreDetailTableViewController: UITableViewController {
                 
                 let copyRightText = """
                 
-                \u{A9} \("2017 - 2020 Chee Bin Hoh, All rights reserved.".localized())
+                \u{A9} \("2017 - 2021 Chee Bin Hoh, All rights reserved.".localized())
 
                 """
                 
