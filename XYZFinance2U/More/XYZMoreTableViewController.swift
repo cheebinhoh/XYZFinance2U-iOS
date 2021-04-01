@@ -87,7 +87,7 @@ class XYZMoreTableViewController: UITableViewController,
                     
                         struct ExchangRateAPIResult : Decodable {
             
-                            let rates : [String : Double]
+                            let rates : [String : String]
                             let base : String
                             let date : String
                         }
@@ -97,8 +97,17 @@ class XYZMoreTableViewController: UITableViewController,
                         let res = try? decoder.decode(ExchangRateAPIResult.self, from: data )
                         
                         if let _ = res {
-                            
-                            self.rates = res?.rates;
+         
+                            var rates = [String : Double]()
+                            for c in otherCurrencyCodes {
+                                
+                                if let r = res?.rates[c] {
+                                    
+                                    rates[c] = Double(r)
+                                }
+                            }
+
+                            self.rates = rates;
                             self.lastRateTimestamp = res?.date
                             self.calculateTotalIncome()
                         } else {
