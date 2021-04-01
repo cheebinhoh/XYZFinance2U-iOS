@@ -992,8 +992,6 @@ class XYZIncomeTableViewController: UITableViewController,
                     
                     incomecell.amount.text = formattingCurrencyValue(of: (account.value(forKey: XYZAccount.amount) as? Double)!, as: currencyCode)
 
-                    incomecell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                
                     cell = incomecell
                     
                 } else {
@@ -1014,16 +1012,6 @@ class XYZIncomeTableViewController: UITableViewController,
                     
                     totalCell.amount.text = formattingCurrencyValue(of: total, as: currencyCode)
                     totalCell.currency.text = currencyCode.localized()
-                    
-                    if sectionExpandStatus[indexPath.section] {
-                        
-                        totalCell.accessoryType = UITableViewCell.AccessoryType.none
-                        totalCell.accessoryView = createDownDisclosureIndicatorImage()
-                    } else {
-                        
-                        totalCell.accessoryView = nil
-                        totalCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                    }
                     
                     cell = totalCell
                 }

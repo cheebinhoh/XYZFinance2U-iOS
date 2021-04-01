@@ -1119,16 +1119,6 @@ class XYZExpenseTableViewController: UITableViewController,
                         totalCell.date.text = sectionList[indexPath.section].title
                         totalCell.dotColorView.isHidden = true
                         
-                        if sectionExpandStatus[indexPath.section] {
-                            
-                            totalCell.accessoryType = UITableViewCell.AccessoryType.none
-                            totalCell.accessoryView = createDownDisclosureIndicatorImage()
-                        } else {
-                            
-                            totalCell.accessoryView = nil
-                            totalCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-                        }
-                        
                         cell = totalCell
                     
                     default:
@@ -1141,7 +1131,6 @@ class XYZExpenseTableViewController: UITableViewController,
                         expenseCell.monthYearDate = sectionMonthYearList[indexPath.section]
                         
                         expenseCell.setExpense(expense: (sectionExpenseList?[indexPath.row - 1])!)
-                        expenseCell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                         cell = expenseCell
                 }
         }

@@ -247,6 +247,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         cell.monthYearDate = monthYearDate
         cell.setExpense(expense: expense)
         
+        /*
         if hasDisclosureIndicator {
             
             cell.accessoryType = .disclosureIndicator
@@ -259,6 +260,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
                 }
             }
         }
+        */
         
         return cell
     }
@@ -372,13 +374,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
             return result + ( expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0 )
         }
         
-        if hasDisclosureIndicator {
-            
-            stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 43)
-        } else {
-            
-            stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        }
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 15)
         
         stackView.isLayoutMarginsRelativeArrangement = true
         

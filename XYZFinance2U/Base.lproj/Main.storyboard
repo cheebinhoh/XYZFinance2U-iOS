@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -86,27 +86,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="incomeTableViewCell" rowHeight="70" id="j7T-3u-Niu" customClass="XYZIncomeTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="incomeTableViewCell" rowHeight="70" id="j7T-3u-Niu" customClass="XYZIncomeTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="j7T-3u-Niu" id="eLK-LZ-xE9">
-                                    <rect key="frame" x="0.0" y="0.0" width="348" height="70"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CMI-F5-8uV">
-                                            <rect key="frame" x="16" y="38.5" width="127" height="20.5"/>
+                                            <rect key="frame" x="26" y="38.5" width="127" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bank name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wuV-kR-Y7q">
-                                            <rect key="frame" x="16" y="11" width="85" height="21"/>
+                                            <rect key="frame" x="26" y="11" width="85" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6U1-rC-2b9">
-                                            <rect key="frame" x="264.5" y="22" width="75.5" height="26.5"/>
+                                            <rect key="frame" x="283.5" y="22" width="75.5" height="26.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -117,10 +117,10 @@
                                         <constraint firstItem="6U1-rC-2b9" firstAttribute="centerY" secondItem="eLK-LZ-xE9" secondAttribute="centerY" id="SIt-2S-Ugn"/>
                                         <constraint firstItem="wuV-kR-Y7q" firstAttribute="top" secondItem="eLK-LZ-xE9" secondAttribute="topMargin" id="T9p-3b-AYp"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="CMI-F5-8uV" secondAttribute="trailingMargin" id="Zni-o9-lvd"/>
-                                        <constraint firstItem="CMI-F5-8uV" firstAttribute="leading" secondItem="eLK-LZ-xE9" secondAttribute="leadingMargin" id="g47-Ti-C2p"/>
+                                        <constraint firstItem="CMI-F5-8uV" firstAttribute="leading" secondItem="eLK-LZ-xE9" secondAttribute="leadingMargin" constant="10" id="g47-Ti-C2p"/>
                                         <constraint firstItem="6U1-rC-2b9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eLK-LZ-xE9" secondAttribute="leadingMargin" id="h18-C7-x01"/>
                                         <constraint firstItem="CMI-F5-8uV" firstAttribute="bottom" secondItem="eLK-LZ-xE9" secondAttribute="bottomMargin" id="siZ-wD-BvM"/>
-                                        <constraint firstItem="wuV-kR-Y7q" firstAttribute="leading" secondItem="eLK-LZ-xE9" secondAttribute="leadingMargin" id="tON-Ho-yni"/>
+                                        <constraint firstItem="wuV-kR-Y7q" firstAttribute="leading" secondItem="eLK-LZ-xE9" secondAttribute="leadingMargin" constant="10" id="tON-Ho-yni"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wuV-kR-Y7q" secondAttribute="trailingMargin" id="ybW-gM-GGi"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -130,15 +130,15 @@
                                     <outlet property="bank" destination="wuV-kR-Y7q" id="bwF-QU-cg1"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="incomeTotalTableViewCell" rowHeight="70" id="4Xn-4a-N0D" customClass="XYZIncomeTotalTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="incomeTotalTableViewCell" rowHeight="70" id="4Xn-4a-N0D" customClass="XYZIncomeTotalTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="125.5" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4Xn-4a-N0D" id="kSB-Oh-7wh">
-                                    <rect key="frame" x="0.0" y="0.0" width="348" height="70"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oqt-fr-z7l">
-                                            <rect key="frame" x="258" y="22" width="82" height="26.5"/>
+                                            <rect key="frame" x="277" y="22" width="82" height="26.5"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -215,15 +215,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="expenseTableViewCell" rowHeight="70" id="2Mj-ez-myH" customClass="XYZExpenseTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseTableViewCell" rowHeight="70" id="2Mj-ez-myH" customClass="XYZExpenseTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2Mj-ez-myH" id="Rt8-ns-G36">
-                                    <rect key="frame" x="0.0" y="0.0" width="348" height="70"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ll3-uL-fct">
-                                            <rect key="frame" x="191" y="24" width="150" height="22"/>
+                                            <rect key="frame" x="210" y="24" width="150" height="22"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="uQK-dU-KOf"/>
                                             </constraints>
@@ -232,10 +232,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tfB-lJ-RhK">
-                                            <rect key="frame" x="58" y="11" width="150" height="21"/>
+                                            <rect key="frame" x="65" y="11" width="140" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="Xaf-gw-y6l"/>
-                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="u1C-Uw-OR2"/>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="140" id="u1C-Uw-OR2"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -263,7 +263,7 @@
                                             </constraints>
                                         </view>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="45" placeholderIntrinsicHeight="45" image="empty" translatesAutoresizingMaskIntoConstraints="NO" id="Thd-SS-YV1" userLabel="Icon">
-                                            <rect key="frame" x="8" y="12.5" width="45" height="45"/>
+                                            <rect key="frame" x="15" y="12.5" width="45" height="45"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="45" id="1Mh-R7-CPk"/>
                                                 <constraint firstAttribute="width" secondItem="Thd-SS-YV1" secondAttribute="height" multiplier="1:1" id="66x-4s-0Yj"/>
@@ -271,7 +271,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c9a-BL-5zy">
-                                            <rect key="frame" x="58" y="41.5" width="40" height="20.5"/>
+                                            <rect key="frame" x="65" y="41.5" width="40" height="20.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="qum-PM-I9L"/>
                                             </constraints>
@@ -291,10 +291,10 @@
                                         <constraint firstAttribute="bottomMargin" secondItem="ll3-uL-fct" secondAttribute="bottom" constant="13" id="lVV-Pi-uhA"/>
                                         <constraint firstItem="tfB-lJ-RhK" firstAttribute="top" secondItem="Rt8-ns-G36" secondAttribute="topMargin" id="lcy-Ia-5JD"/>
                                         <constraint firstItem="ll3-uL-fct" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c9a-BL-5zy" secondAttribute="trailing" constant="8" symbolic="YES" id="mnO-Uc-F70"/>
-                                        <constraint firstAttribute="trailing" secondItem="ll3-uL-fct" secondAttribute="trailing" constant="7" id="q60-sU-HnW"/>
+                                        <constraint firstAttribute="trailing" secondItem="ll3-uL-fct" secondAttribute="trailing" constant="15" id="q60-sU-HnW"/>
                                         <constraint firstItem="c9a-BL-5zy" firstAttribute="leading" secondItem="Thd-SS-YV1" secondAttribute="trailing" constant="5" id="qIM-ab-kxc"/>
                                         <constraint firstItem="c9a-BL-5zy" firstAttribute="bottom" secondItem="Rt8-ns-G36" secondAttribute="bottom" constant="-8" id="rjF-hj-JAP"/>
-                                        <constraint firstItem="Thd-SS-YV1" firstAttribute="leading" secondItem="Rt8-ns-G36" secondAttribute="leading" constant="8" id="uAw-Fj-VBz"/>
+                                        <constraint firstItem="Thd-SS-YV1" firstAttribute="leading" secondItem="Rt8-ns-G36" secondAttribute="leading" constant="15" id="uAw-Fj-VBz"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -306,15 +306,15 @@
                                     <outlet property="icon" destination="Thd-SS-YV1" id="apw-en-K9l"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="expenseTotalTableViewCell" rowHeight="70" id="e6e-7N-6TQ" customClass="XYZExpenseTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="expenseTotalTableViewCell" rowHeight="70" id="e6e-7N-6TQ" customClass="XYZExpenseTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="125.5" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e6e-7N-6TQ" id="qIR-dd-Z4b">
-                                    <rect key="frame" x="0.0" y="0.0" width="348" height="70"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6D-Fu-Aas">
-                                            <rect key="frame" x="191" y="24" width="150" height="22"/>
+                                            <rect key="frame" x="210" y="24" width="150" height="22"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="f4w-qU-0rf"/>
                                             </constraints>
@@ -323,10 +323,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ont-5a-ztw">
-                                            <rect key="frame" x="58" y="11" width="150" height="21"/>
+                                            <rect key="frame" x="58" y="11" width="145" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="EAC-cN-yBv"/>
-                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="hEg-DZ-9x0"/>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="145" id="hEg-DZ-9x0"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                             <nil key="textColor"/>
@@ -375,7 +375,7 @@
                                         <constraint firstItem="HG2-gx-Rty" firstAttribute="leading" secondItem="qIR-dd-Z4b" secondAttribute="leading" constant="8" id="1Hs-FK-LQZ"/>
                                         <constraint firstItem="HG2-gx-Rty" firstAttribute="centerY" secondItem="qIR-dd-Z4b" secondAttribute="centerY" id="26B-3W-O2S"/>
                                         <constraint firstItem="HG2-gx-Rty" firstAttribute="width" secondItem="HG2-gx-Rty" secondAttribute="height" multiplier="1:1" id="51Y-cQ-mta"/>
-                                        <constraint firstAttribute="trailing" secondItem="R6D-Fu-Aas" secondAttribute="trailing" constant="7" id="AIr-Zi-YL2"/>
+                                        <constraint firstAttribute="trailing" secondItem="R6D-Fu-Aas" secondAttribute="trailing" constant="15" id="AIr-Zi-YL2"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ont-5a-ztw" secondAttribute="trailing" constant="20" symbolic="YES" id="Flu-CS-C0b"/>
                                         <constraint firstItem="ont-5a-ztw" firstAttribute="top" secondItem="qIR-dd-Z4b" secondAttribute="topMargin" id="Uri-zy-gIT"/>
                                         <constraint firstItem="R6D-Fu-Aas" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tPD-BS-knf" secondAttribute="trailing" constant="8" symbolic="YES" id="aJ4-L0-uiU"/>
@@ -1300,7 +1300,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0PE-CR-JGs">
-                                            <rect key="frame" x="279.5" y="24" width="75.5" height="22"/>
+                                            <rect key="frame" x="284.5" y="24" width="75.5" height="22"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1312,7 +1312,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VLh-q6-yD2">
-                                            <rect key="frame" x="16" y="11" width="239.5" height="21"/>
+                                            <rect key="frame" x="16" y="11" width="244.5" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="CYG-2K-OhM"/>
                                             </constraints>
@@ -1328,7 +1328,7 @@
                                         <constraint firstItem="0PE-CR-JGs" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="dNJ-3a-29C" secondAttribute="leading" constant="20" symbolic="YES" id="FjT-hI-rrj"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="0PE-CR-JGs" secondAttribute="bottom" constant="13" id="N4s-fb-Iao"/>
                                         <constraint firstItem="n13-xv-BIT" firstAttribute="top" secondItem="VLh-q6-yD2" secondAttribute="bottom" constant="6" id="WdR-1i-6Ob"/>
-                                        <constraint firstAttribute="trailing" secondItem="0PE-CR-JGs" secondAttribute="trailing" constant="20" identifier="amount" id="mI3-Lj-R0R"/>
+                                        <constraint firstAttribute="trailing" secondItem="0PE-CR-JGs" secondAttribute="trailing" constant="15" identifier="amount" id="mI3-Lj-R0R"/>
                                         <constraint firstItem="0PE-CR-JGs" firstAttribute="leading" secondItem="VLh-q6-yD2" secondAttribute="trailing" constant="24" id="q6g-of-BpW"/>
                                         <constraint firstItem="VLh-q6-yD2" firstAttribute="leading" relation="lessThanOrEqual" secondItem="dNJ-3a-29C" secondAttribute="leadingMargin" id="rtL-SC-Ncp"/>
                                         <constraint firstItem="VLh-q6-yD2" firstAttribute="leading" secondItem="n13-xv-BIT" secondAttribute="leading" id="vOP-gp-kh0"/>
@@ -1363,10 +1363,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SfN-xw-rth">
-                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="525"/>
                                 <subviews>
                                     <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="65b-9C-Wat">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="525"/>
                                         <gestureRecognizers/>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="ANL-Bn-bhJ" appends="YES" id="rC4-iu-7AU"/>
@@ -1617,15 +1617,15 @@ Chee Bin HOH, 2017</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="budgetTableCell" rowHeight="70" id="YLF-7c-7IH" customClass="XYZBudgetTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="budgetTableCell" rowHeight="70" id="YLF-7c-7IH" customClass="XYZBudgetTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YLF-7c-7IH" id="eX9-4P-DBj">
-                                    <rect key="frame" x="0.0" y="0.0" width="348" height="70"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="E3R-7O-nWA" userLabel="Balance">
-                                            <rect key="frame" x="266.5" y="9" width="75.5" height="27"/>
+                                            <rect key="frame" x="284.5" y="9" width="75.5" height="27"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1666,7 +1666,7 @@ Chee Bin HOH, 2017</string>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="Ech-ju-oc8" userLabel="Amount">
-                                            <rect key="frame" x="282" y="40" width="60" height="21"/>
+                                            <rect key="frame" x="300" y="40" width="60" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1685,7 +1685,7 @@ Chee Bin HOH, 2017</string>
                                         <constraint firstItem="a2C-1Y-pZ3" firstAttribute="centerY" secondItem="eX9-4P-DBj" secondAttribute="centerY" id="89X-2J-1cJ"/>
                                         <constraint firstItem="E3R-7O-nWA" firstAttribute="top" secondItem="eX9-4P-DBj" secondAttribute="top" constant="9" id="F8I-rl-qxK"/>
                                         <constraint firstItem="8Jw-qJ-ejx" firstAttribute="leading" secondItem="a2C-1Y-pZ3" secondAttribute="trailing" constant="5" id="HDq-ZI-VCK"/>
-                                        <constraint firstAttribute="trailing" secondItem="E3R-7O-nWA" secondAttribute="trailing" constant="6" id="MId-nK-Ucn"/>
+                                        <constraint firstAttribute="trailing" secondItem="E3R-7O-nWA" secondAttribute="trailing" constant="15" id="MId-nK-Ucn"/>
                                         <constraint firstItem="Ech-ju-oc8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8Jw-qJ-ejx" secondAttribute="trailing" constant="8" symbolic="YES" id="PiT-rG-8WL"/>
                                         <constraint firstItem="qOX-jY-XiK" firstAttribute="top" secondItem="eX9-4P-DBj" secondAttribute="topMargin" id="ZPZ-5c-X2D"/>
                                         <constraint firstItem="E3R-7O-nWA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qOX-jY-XiK" secondAttribute="trailing" constant="8" symbolic="YES" id="dMd-vg-5p1"/>
@@ -1694,7 +1694,7 @@ Chee Bin HOH, 2017</string>
                                         <constraint firstItem="8Jw-qJ-ejx" firstAttribute="bottom" secondItem="eX9-4P-DBj" secondAttribute="bottomMargin" id="ibF-Yy-r6w"/>
                                         <constraint firstItem="X2O-Og-T8e" firstAttribute="leading" secondItem="eX9-4P-DBj" secondAttribute="leading" id="igQ-ET-ZyV"/>
                                         <constraint firstItem="X2O-Og-T8e" firstAttribute="top" secondItem="eX9-4P-DBj" secondAttribute="top" id="lxF-DR-4aP"/>
-                                        <constraint firstAttribute="trailing" secondItem="Ech-ju-oc8" secondAttribute="trailing" constant="6" id="mPm-6l-DvY"/>
+                                        <constraint firstAttribute="trailing" secondItem="Ech-ju-oc8" secondAttribute="trailing" constant="15" id="mPm-6l-DvY"/>
                                         <constraint firstItem="qOX-jY-XiK" firstAttribute="leading" secondItem="a2C-1Y-pZ3" secondAttribute="trailing" constant="5" id="mx0-hO-Ffk"/>
                                         <constraint firstAttribute="bottom" secondItem="X2O-Og-T8e" secondAttribute="bottom" id="sSB-tg-evV"/>
                                     </constraints>
@@ -1740,15 +1740,15 @@ Chee Bin HOH, 2017</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="budgetTableCell" rowHeight="70" id="D3y-Se-AKK" customClass="XYZBudgetTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="budgetTableCell" rowHeight="70" id="D3y-Se-AKK" customClass="XYZBudgetTableViewCell" customModule="XYZFinance2U" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="D3y-Se-AKK" id="VLJ-bo-j9W">
-                                    <rect key="frame" x="0.0" y="0.0" width="348" height="70"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="54w-S4-OlL" userLabel="Balance">
-                                            <rect key="frame" x="265.5" y="9" width="75.5" height="27"/>
+                                            <rect key="frame" x="284.5" y="9" width="75.5" height="27"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1789,7 +1789,7 @@ Chee Bin HOH, 2017</string>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="fcd-LF-mvF" userLabel="Amount">
-                                            <rect key="frame" x="281" y="40" width="60" height="21"/>
+                                            <rect key="frame" x="300" y="40" width="60" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1797,14 +1797,14 @@ Chee Bin HOH, 2017</string>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="o2O-q2-nlb" firstAttribute="top" secondItem="VLJ-bo-j9W" secondAttribute="top" id="0ED-cj-a1D"/>
-                                        <constraint firstAttribute="trailing" secondItem="54w-S4-OlL" secondAttribute="trailing" constant="7" id="3UA-2o-pcD"/>
+                                        <constraint firstAttribute="trailing" secondItem="54w-S4-OlL" secondAttribute="trailing" constant="15" id="3UA-2o-pcD"/>
                                         <constraint firstItem="54w-S4-OlL" firstAttribute="top" secondItem="VLJ-bo-j9W" secondAttribute="top" constant="9" id="8Gx-d8-BSJ"/>
                                         <constraint firstItem="fcd-LF-mvF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="s4F-ZZ-x0O" secondAttribute="trailing" constant="8" symbolic="YES" id="CM3-LU-0JB"/>
                                         <constraint firstAttribute="bottom" secondItem="o2O-q2-nlb" secondAttribute="bottom" id="E4M-aL-2uI"/>
                                         <constraint firstItem="s4F-ZZ-x0O" firstAttribute="leading" secondItem="o2O-q2-nlb" secondAttribute="trailing" constant="11" id="F4K-mO-ejO"/>
                                         <constraint firstItem="fcd-LF-mvF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VLJ-bo-j9W" secondAttribute="leading" constant="20" symbolic="YES" id="KaR-TY-oSi"/>
                                         <constraint firstItem="2ew-Em-eaH" firstAttribute="top" secondItem="VLJ-bo-j9W" secondAttribute="topMargin" id="M9K-1b-NqJ"/>
-                                        <constraint firstAttribute="trailing" secondItem="fcd-LF-mvF" secondAttribute="trailing" constant="7" id="Mnp-Jw-d5Z"/>
+                                        <constraint firstAttribute="trailing" secondItem="fcd-LF-mvF" secondAttribute="trailing" constant="15" id="Mnp-Jw-d5Z"/>
                                         <constraint firstItem="54w-S4-OlL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2ew-Em-eaH" secondAttribute="trailing" constant="8" symbolic="YES" id="RIz-0G-Ojr"/>
                                         <constraint firstAttribute="bottom" secondItem="fcd-LF-mvF" secondAttribute="bottom" constant="9" id="T3q-tX-mkY"/>
                                         <constraint firstItem="o2O-q2-nlb" firstAttribute="leading" secondItem="VLJ-bo-j9W" secondAttribute="leading" id="kig-gN-Gvi"/>
@@ -2279,9 +2279,9 @@ Chee Bin HOH, 2017</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Yzc-xO-mr2"/>
-        <segue reference="ve4-y6-Yqm"/>
-        <segue reference="12h-Ii-8y1"/>
+        <segue reference="Vbr-uz-1K0"/>
+        <segue reference="n4x-5K-QOe"/>
+        <segue reference="p2p-KG-gtc"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="budget" width="25" height="25"/>
@@ -2291,45 +2291,6 @@ Chee Bin HOH, 2017</string>
         <image name="minus" width="25" height="25"/>
         <image name="more" width="24.5" height="6.5"/>
         <image name="plus" width="25" height="25"/>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="groupTableViewBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
