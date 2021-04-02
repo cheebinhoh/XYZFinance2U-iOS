@@ -64,12 +64,13 @@ class XYZBudgetTableViewController: UITableViewController,
     
     func saveExpense(expense: XYZExpense) {
         
-        fatalError("Exception: it is not supposed to be here")
+        saveNewExpense(expense: expense)
+        //fatalError("Exception: it is not supposed to be here")
     }
     
     func deleteExpense(expense: XYZExpense) {
         
-        fatalError("Exception: it is not supposed to be here")
+        //fatalError("Exception: it is not supposed to be here")
     }
     
     
