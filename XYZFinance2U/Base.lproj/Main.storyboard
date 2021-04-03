@@ -106,14 +106,14 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6U1-rC-2b9">
-                                            <rect key="frame" x="284.5" y="22" width="75.5" height="26.5"/>
+                                            <rect key="frame" x="279.5" y="22" width="75.5" height="26.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="6U1-rC-2b9" firstAttribute="trailing" secondItem="eLK-LZ-xE9" secondAttribute="trailing" constant="-15" id="NrT-fZ-Bqt"/>
+                                        <constraint firstItem="6U1-rC-2b9" firstAttribute="trailing" secondItem="eLK-LZ-xE9" secondAttribute="trailing" constant="-20" id="NrT-fZ-Bqt"/>
                                         <constraint firstItem="6U1-rC-2b9" firstAttribute="centerY" secondItem="eLK-LZ-xE9" secondAttribute="centerY" id="SIt-2S-Ugn"/>
                                         <constraint firstItem="wuV-kR-Y7q" firstAttribute="top" secondItem="eLK-LZ-xE9" secondAttribute="topMargin" id="T9p-3b-AYp"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="CMI-F5-8uV" secondAttribute="trailingMargin" id="Zni-o9-lvd"/>
@@ -138,7 +138,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oqt-fr-z7l">
-                                            <rect key="frame" x="278" y="22" width="82" height="26.5"/>
+                                            <rect key="frame" x="273" y="22" width="82" height="26.5"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -152,7 +152,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Oqt-fr-z7l" firstAttribute="centerY" secondItem="kSB-Oh-7wh" secondAttribute="centerY" id="17o-dD-OAY"/>
-                                        <constraint firstAttribute="trailing" secondItem="Oqt-fr-z7l" secondAttribute="trailing" constant="15" id="OeO-KW-T56"/>
+                                        <constraint firstAttribute="trailing" secondItem="Oqt-fr-z7l" secondAttribute="trailing" constant="20" id="OeO-KW-T56"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="lvN-dn-FNt" secondAttribute="trailingMargin" id="WQv-Fh-EK4"/>
                                         <constraint firstItem="lvN-dn-FNt" firstAttribute="centerY" secondItem="kSB-Oh-7wh" secondAttribute="centerY" id="ohD-Gn-PSd"/>
                                         <constraint firstItem="lvN-dn-FNt" firstAttribute="leading" secondItem="kSB-Oh-7wh" secondAttribute="leadingMargin" id="tNt-PZ-nWg"/>
@@ -223,7 +223,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ll3-uL-fct">
-                                            <rect key="frame" x="210" y="24" width="150" height="22"/>
+                                            <rect key="frame" x="205" y="24" width="150" height="22"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="uQK-dU-KOf"/>
                                             </constraints>
@@ -291,7 +291,7 @@
                                         <constraint firstAttribute="bottomMargin" secondItem="ll3-uL-fct" secondAttribute="bottom" constant="13" id="lVV-Pi-uhA"/>
                                         <constraint firstItem="tfB-lJ-RhK" firstAttribute="top" secondItem="Rt8-ns-G36" secondAttribute="topMargin" id="lcy-Ia-5JD"/>
                                         <constraint firstItem="ll3-uL-fct" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c9a-BL-5zy" secondAttribute="trailing" constant="8" symbolic="YES" id="mnO-Uc-F70"/>
-                                        <constraint firstAttribute="trailing" secondItem="ll3-uL-fct" secondAttribute="trailing" constant="15" id="q60-sU-HnW"/>
+                                        <constraint firstAttribute="trailing" secondItem="ll3-uL-fct" secondAttribute="trailing" constant="20" id="q60-sU-HnW"/>
                                         <constraint firstItem="c9a-BL-5zy" firstAttribute="leading" secondItem="Thd-SS-YV1" secondAttribute="trailing" constant="5" id="qIM-ab-kxc"/>
                                         <constraint firstItem="c9a-BL-5zy" firstAttribute="bottom" secondItem="Rt8-ns-G36" secondAttribute="bottom" constant="-8" id="rjF-hj-JAP"/>
                                         <constraint firstItem="Thd-SS-YV1" firstAttribute="leading" secondItem="Rt8-ns-G36" secondAttribute="leading" constant="15" id="uAw-Fj-VBz"/>
@@ -314,7 +314,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6D-Fu-Aas">
-                                            <rect key="frame" x="210" y="24" width="150" height="22"/>
+                                            <rect key="frame" x="205" y="24" width="150" height="22"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="f4w-qU-0rf"/>
                                             </constraints>
@@ -375,7 +375,7 @@
                                         <constraint firstItem="HG2-gx-Rty" firstAttribute="leading" secondItem="qIR-dd-Z4b" secondAttribute="leading" constant="8" id="1Hs-FK-LQZ"/>
                                         <constraint firstItem="HG2-gx-Rty" firstAttribute="centerY" secondItem="qIR-dd-Z4b" secondAttribute="centerY" id="26B-3W-O2S"/>
                                         <constraint firstItem="HG2-gx-Rty" firstAttribute="width" secondItem="HG2-gx-Rty" secondAttribute="height" multiplier="1:1" id="51Y-cQ-mta"/>
-                                        <constraint firstAttribute="trailing" secondItem="R6D-Fu-Aas" secondAttribute="trailing" constant="15" id="AIr-Zi-YL2"/>
+                                        <constraint firstAttribute="trailing" secondItem="R6D-Fu-Aas" secondAttribute="trailing" constant="20" id="AIr-Zi-YL2"/>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ont-5a-ztw" secondAttribute="trailing" constant="20" symbolic="YES" id="Flu-CS-C0b"/>
                                         <constraint firstItem="ont-5a-ztw" firstAttribute="top" secondItem="qIR-dd-Z4b" secondAttribute="topMargin" id="Uri-zy-gIT"/>
                                         <constraint firstItem="R6D-Fu-Aas" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tPD-BS-knf" secondAttribute="trailing" constant="8" symbolic="YES" id="aJ4-L0-uiU"/>
@@ -1625,7 +1625,7 @@ Chee Bin HOH, 2017</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="E3R-7O-nWA" userLabel="Balance">
-                                            <rect key="frame" x="284.5" y="9" width="75.5" height="27"/>
+                                            <rect key="frame" x="279.5" y="9" width="75.5" height="27"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1666,7 +1666,7 @@ Chee Bin HOH, 2017</string>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="Ech-ju-oc8" userLabel="Amount">
-                                            <rect key="frame" x="300" y="40" width="60" height="21"/>
+                                            <rect key="frame" x="295" y="40" width="60" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1685,7 +1685,7 @@ Chee Bin HOH, 2017</string>
                                         <constraint firstItem="a2C-1Y-pZ3" firstAttribute="centerY" secondItem="eX9-4P-DBj" secondAttribute="centerY" id="89X-2J-1cJ"/>
                                         <constraint firstItem="E3R-7O-nWA" firstAttribute="top" secondItem="eX9-4P-DBj" secondAttribute="top" constant="9" id="F8I-rl-qxK"/>
                                         <constraint firstItem="8Jw-qJ-ejx" firstAttribute="leading" secondItem="a2C-1Y-pZ3" secondAttribute="trailing" constant="5" id="HDq-ZI-VCK"/>
-                                        <constraint firstAttribute="trailing" secondItem="E3R-7O-nWA" secondAttribute="trailing" constant="15" id="MId-nK-Ucn"/>
+                                        <constraint firstAttribute="trailing" secondItem="E3R-7O-nWA" secondAttribute="trailing" constant="20" id="MId-nK-Ucn"/>
                                         <constraint firstItem="Ech-ju-oc8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8Jw-qJ-ejx" secondAttribute="trailing" constant="8" symbolic="YES" id="PiT-rG-8WL"/>
                                         <constraint firstItem="qOX-jY-XiK" firstAttribute="top" secondItem="eX9-4P-DBj" secondAttribute="topMargin" id="ZPZ-5c-X2D"/>
                                         <constraint firstItem="E3R-7O-nWA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qOX-jY-XiK" secondAttribute="trailing" constant="8" symbolic="YES" id="dMd-vg-5p1"/>
@@ -1694,7 +1694,7 @@ Chee Bin HOH, 2017</string>
                                         <constraint firstItem="8Jw-qJ-ejx" firstAttribute="bottom" secondItem="eX9-4P-DBj" secondAttribute="bottomMargin" id="ibF-Yy-r6w"/>
                                         <constraint firstItem="X2O-Og-T8e" firstAttribute="leading" secondItem="eX9-4P-DBj" secondAttribute="leading" id="igQ-ET-ZyV"/>
                                         <constraint firstItem="X2O-Og-T8e" firstAttribute="top" secondItem="eX9-4P-DBj" secondAttribute="top" id="lxF-DR-4aP"/>
-                                        <constraint firstAttribute="trailing" secondItem="Ech-ju-oc8" secondAttribute="trailing" constant="15" id="mPm-6l-DvY"/>
+                                        <constraint firstAttribute="trailing" secondItem="Ech-ju-oc8" secondAttribute="trailing" constant="20" id="mPm-6l-DvY"/>
                                         <constraint firstItem="qOX-jY-XiK" firstAttribute="leading" secondItem="a2C-1Y-pZ3" secondAttribute="trailing" constant="5" id="mx0-hO-Ffk"/>
                                         <constraint firstAttribute="bottom" secondItem="X2O-Og-T8e" secondAttribute="bottom" id="sSB-tg-evV"/>
                                     </constraints>
@@ -1748,7 +1748,7 @@ Chee Bin HOH, 2017</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="54w-S4-OlL" userLabel="Balance">
-                                            <rect key="frame" x="284.5" y="9" width="75.5" height="27"/>
+                                            <rect key="frame" x="279.5" y="9" width="75.5" height="27"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1789,7 +1789,7 @@ Chee Bin HOH, 2017</string>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Amount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="45" translatesAutoresizingMaskIntoConstraints="NO" id="fcd-LF-mvF" userLabel="Amount">
-                                            <rect key="frame" x="300" y="40" width="60" height="21"/>
+                                            <rect key="frame" x="295" y="40" width="60" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1797,14 +1797,14 @@ Chee Bin HOH, 2017</string>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="o2O-q2-nlb" firstAttribute="top" secondItem="VLJ-bo-j9W" secondAttribute="top" id="0ED-cj-a1D"/>
-                                        <constraint firstAttribute="trailing" secondItem="54w-S4-OlL" secondAttribute="trailing" constant="15" id="3UA-2o-pcD"/>
+                                        <constraint firstAttribute="trailing" secondItem="54w-S4-OlL" secondAttribute="trailing" constant="20" id="3UA-2o-pcD"/>
                                         <constraint firstItem="54w-S4-OlL" firstAttribute="top" secondItem="VLJ-bo-j9W" secondAttribute="top" constant="9" id="8Gx-d8-BSJ"/>
                                         <constraint firstItem="fcd-LF-mvF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="s4F-ZZ-x0O" secondAttribute="trailing" constant="8" symbolic="YES" id="CM3-LU-0JB"/>
                                         <constraint firstAttribute="bottom" secondItem="o2O-q2-nlb" secondAttribute="bottom" id="E4M-aL-2uI"/>
                                         <constraint firstItem="s4F-ZZ-x0O" firstAttribute="leading" secondItem="o2O-q2-nlb" secondAttribute="trailing" constant="11" id="F4K-mO-ejO"/>
                                         <constraint firstItem="fcd-LF-mvF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VLJ-bo-j9W" secondAttribute="leading" constant="20" symbolic="YES" id="KaR-TY-oSi"/>
                                         <constraint firstItem="2ew-Em-eaH" firstAttribute="top" secondItem="VLJ-bo-j9W" secondAttribute="topMargin" id="M9K-1b-NqJ"/>
-                                        <constraint firstAttribute="trailing" secondItem="fcd-LF-mvF" secondAttribute="trailing" constant="15" id="Mnp-Jw-d5Z"/>
+                                        <constraint firstAttribute="trailing" secondItem="fcd-LF-mvF" secondAttribute="trailing" constant="20" id="Mnp-Jw-d5Z"/>
                                         <constraint firstItem="54w-S4-OlL" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2ew-Em-eaH" secondAttribute="trailing" constant="8" symbolic="YES" id="RIz-0G-Ojr"/>
                                         <constraint firstAttribute="bottom" secondItem="fcd-LF-mvF" secondAttribute="bottom" constant="9" id="T3q-tX-mkY"/>
                                         <constraint firstItem="o2O-q2-nlb" firstAttribute="leading" secondItem="VLJ-bo-j9W" secondAttribute="leading" id="kig-gN-Gvi"/>
