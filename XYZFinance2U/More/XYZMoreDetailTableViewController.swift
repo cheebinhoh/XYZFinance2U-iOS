@@ -76,12 +76,15 @@ class XYZMoreDetailTableViewController: UITableViewController {
                     fatalError("Exception: errpr on creating XYZMoreDetailAboutTableViewCell")
                 }
                 
+                
+                let appBundleName = Bundle.main.localizedInfoDictionary?["CFBUNDLE_DISPLAYNAME"]as? String ?? ""
+
                 let textVersion
                     = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
                 
                 let textHeading = """
                 
-                \(AppDelegate.appName)
+                \(appBundleName)
                 """
                 
                 let headingAttributes: [NSAttributedString.Key: Any]? = [NSAttributedString.Key.font: newcell.content.font!,
