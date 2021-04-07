@@ -20,6 +20,7 @@ class AppDelegate: UIResponder,
     // MARK: - static
     
     static let appName: String = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? ""
+    static let appDisplayName : String = Bundle.main.localizedInfoDictionary?["CFBUNDLE_DISPLAYNAME"]as? String ?? ""
     
     // MARK: - property
     

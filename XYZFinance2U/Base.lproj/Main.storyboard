@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--XYZFinance2U-->
+        <!--XYZ Finance2U-->
         <scene sceneID="cBa-xZ-YhF">
             <objects>
-                <viewController storyboardIdentifier="lockScreenView" title="XYZFinance2U" id="ho8-Yj-zuC" customClass="XYZLockScreenViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="lockScreenView" title="XYZ Finance2U" id="ho8-Yj-zuC" customClass="XYZLockScreenViewController" customModule="XYZFinance2U" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zvC-Ic-M8f">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1554,14 +1554,14 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="qEh-BH-4ok"/>
                                 </constraints>
-                                <string key="text">XYZFinance2U was created by:
+                                <string key="text">XYZ Finance2U was created by:
  
 Chee Bin HOH, 2017</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XYZFinance2U" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lcd-SV-3xf">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XYZ Finance2U" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lcd-SV-3xf">
                                 <rect key="frame" x="16" y="64" width="119.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <nil key="textColor"/>

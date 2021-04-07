@@ -714,7 +714,7 @@
 				INFOPLIST_FILE = XYZFinance2U/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 5.4;
+				MARKETING_VERSION = 5.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cbHOH.XYZFinance2U;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -737,7 +737,7 @@
 				INFOPLIST_FILE = XYZFinance2U/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 5.4;
+				MARKETING_VERSION = 5.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cbHOH.XYZFinance2U;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

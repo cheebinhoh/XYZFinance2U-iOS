@@ -27,7 +27,7 @@
 "54w-S4-OlL.text" = "금액";
 
 /* Class = "UILabel"; text = "XYZFinance2U was created by:\n \nChee Bin HOH, 2017"; ObjectID = "5P9-Ea-pOH"; */
-"5P9-Ea-pOH.text" = "XYZFinance2U 작성자 : \ n \ nChee Bin HOH, 2017";
+"5P9-Ea-pOH.text" = "XYZ Finance2U 작성자 : \ n \ nChee Bin HOH, 2017";
 
 /* Class = "UIBarButtonItem"; title = "Prev"; ObjectID = "6A0-tv-4RK"; */
 "6A0-tv-4RK.title" = "이전 페이지";
@@ -105,7 +105,7 @@
 "LDj-vD-hFl.title" = "위치";
 
 /* Class = "UILabel"; text = "XYZFinance2U"; ObjectID = "Lcd-SV-3xf"; */
-"Lcd-SV-3xf.text" = "XYZFinance2U";
+"Lcd-SV-3xf.text" = "XYZ Finance2U";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "M1a-nl-R47"; */
 "M1a-nl-R47.text" = "Label";

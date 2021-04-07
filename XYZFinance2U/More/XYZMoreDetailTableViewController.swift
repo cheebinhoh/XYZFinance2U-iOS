@@ -77,7 +77,7 @@ class XYZMoreDetailTableViewController: UITableViewController {
                 }
                 
                 
-                let appBundleName = Bundle.main.localizedInfoDictionary?["CFBUNDLE_DISPLAYNAME"]as? String ?? ""
+                let appBundleName = AppDelegate.appDisplayName
 
                 let textVersion
                     = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
