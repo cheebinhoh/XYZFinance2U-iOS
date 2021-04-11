@@ -304,7 +304,7 @@ class XYZIncomeTableViewController: UITableViewController,
     func deleteIncome(income: XYZAccount) {
 
         let oldBank = income.value(forKey: XYZAccount.bank) as! String
-        let oldAccountNr = income.value(forKey: XYZAccount.accountNr) as! String
+        let oldAccountNr = income.accountNr
         let oldAmount = income.value(forKey: XYZAccount.amount) as! Double
         let oldPrincipal = income.value(forKey: XYZAccount.principal) as! Double
         let oldDate = income.value(forKey: XYZAccount.lastUpdate) as! Date
@@ -429,7 +429,7 @@ class XYZIncomeTableViewController: UITableViewController,
         notificationCenter.removeAllDeliveredNotifications()
     
         let bank = income.value(forKey: XYZAccount.bank) as? String
-        let accountNr = income.value(forKey: XYZAccount.accountNr) as? String
+        let accountNr = income.accountNr
         let repeatAction = income.value(forKey: XYZAccount.repeatAction) as? String
         let reminddate = income.value(forKey: XYZAccount.repeatDate) as? Date
         
@@ -438,7 +438,7 @@ class XYZIncomeTableViewController: UITableViewController,
             
             let content = UNMutableNotificationContent()
             content.title = "Income update reminder"
-            content.body = "\(String(describing: bank!)), \(String(describing: accountNr!)) ..."
+            content.body = "\(String(describing: bank!)), \(String(describing: accountNr)) ..."
             content.sound = UNNotificationSound.default
             content.userInfo[XYZAccount.type] = true
             content.userInfo[XYZAccount.recordId] = income.value(forKey: XYZAccount.recordId) as? String
@@ -951,7 +951,7 @@ class XYZIncomeTableViewController: UITableViewController,
                     let currencyCode = account.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
                     
                     incomecell.bank.text = account.value(forKey: XYZAccount.bank) as? String
-                    incomecell.account.text = account.value(forKey: XYZAccount.accountNr ) as? String
+                    incomecell.account.text = account.accountNr
                     
                     let principal = account.value(forKey: XYZAccount.principal) as? Double
                     

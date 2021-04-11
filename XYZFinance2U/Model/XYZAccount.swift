@@ -48,7 +48,19 @@ class XYZAccount : NSManagedObject {
 
     // MARK: - property
     
-    var accountNr = ""
+    var accountNr: String {
+    
+        get {
+            
+            return self.value(forKey: XYZAccount.accountNr) as? String ?? ""
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZAccount.accountNr)
+        }
+    }
+    
     var amount = 0.0
     var bank = ""
     var currencyCode: String = Locale.current.currencyCode!
@@ -80,7 +92,7 @@ class XYZAccount : NSManagedObject {
         self.setValue(recordName, forKey: XYZAccount.recordId)
         self.setValue(bank, forKey: XYZAccount.bank)
         self.setValue(amount, forKey:XYZAccount.amount)
-        self.setValue(accountNr, forKey: XYZAccount.accountNr)
+        self.accountNr = accountNr
         self.setValue(date, forKey: XYZAccount.lastUpdate)
         self.setValue(sequenceNr, forKey: XYZAccount.sequenceNr)
         self.setValue(principal, forKey: XYZAccount.principal)

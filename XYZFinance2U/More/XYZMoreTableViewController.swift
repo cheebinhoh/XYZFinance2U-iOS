@@ -974,7 +974,7 @@ class XYZMoreTableViewController: UITableViewController,
         for (index, income) in incomeList.enumerated() {
             
             let bank = income.value(forKey: XYZAccount.bank) as? String ?? ""
-            let accountNr = income.value(forKey: XYZAccount.accountNr) as? String ?? ""
+            let accountNr = income.accountNr
             let amount = income.value(forKey: XYZAccount.amount) as? Double ?? 0.0
             let currency = income.value(forKey: XYZAccount.currencyCode) as? String ?? ""
             let principal = income.value(forKey: XYZAccount.principal) as? Double ?? 0.0

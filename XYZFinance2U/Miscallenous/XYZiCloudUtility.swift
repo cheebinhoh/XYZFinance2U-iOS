@@ -1118,7 +1118,7 @@ func saveAccountsToiCloud(database: CKDatabase,
         let record = CKRecord(recordType: XYZAccount.type, recordID: ckrecordId)
 
         let bank = income.value(forKey: XYZAccount.bank) as? String
-        let accountNr = income.value(forKey: XYZAccount.accountNr) as? String ?? ""
+        let accountNr = income.accountNr
         let amount = income.value(forKey: XYZAccount.amount) as? Double
         let lastUpdate = income.value(forKey: XYZAccount.lastUpdate) as? Date
         let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String

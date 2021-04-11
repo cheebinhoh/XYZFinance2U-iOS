@@ -298,7 +298,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
     func registerUndoSave(income: XYZAccount)
     {
         let oldBank = income.value(forKey: XYZAccount.bank)
-        let oldAccountNr = income.value(forKey: XYZAccount.accountNr)
+        let oldAccountNr = income.accountNr
         let oldAmount = income.value(forKey: XYZAccount.amount)
         let oldPrincipal = income.value(forKey: XYZAccount.principal)
         let oldDate = income.value(forKey: XYZAccount.lastUpdate)
@@ -310,7 +310,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         undoManager?.registerUndo(withTarget: income, handler: { (income) in
             
             income.setValue(oldBank, forKey: XYZAccount.bank)
-            income.setValue(oldAccountNr, forKey: XYZAccount.accountNr)
+            income.accountNr = oldAccountNr
             income.setValue(oldAmount, forKey: XYZAccount.amount)
             income.setValue(oldPrincipal, forKey: XYZAccount.principal)
             income.setValue(oldDate, forKey: XYZAccount.lastUpdate)
@@ -378,7 +378,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
     func saveData() {
         
         income?.setValue(bank, forKey: XYZAccount.bank)
-        income?.setValue(accountNr, forKey: XYZAccount.accountNr)
+        income?.accountNr = accountNr
         income?.setValue(amount, forKey: XYZAccount.amount)
         income?.setValue(principal, forKey: XYZAccount.principal)
         income?.setValue(date, forKey: XYZAccount.lastUpdate)
@@ -403,7 +403,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         if let _ = income {
             
             bank = (income?.value(forKey: XYZAccount.bank) as! String)
-            accountNr = (income?.value(forKey: XYZAccount.accountNr) as! String)
+            accountNr = (income?.accountNr)!
             date = (income?.value(forKey: XYZAccount.lastUpdate) as? Date) ?? Date()
             amount = (income?.value(forKey: XYZAccount.amount) as? Double) ?? 0.0
             principal = (income?.value(forKey: XYZAccount.principal) as? Double) ?? 0.0

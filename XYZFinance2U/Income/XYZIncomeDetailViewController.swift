@@ -65,7 +65,7 @@ class XYZIncomeDetailViewController: UIViewController {
         if let _ = income {
             
             let bankValue = income?.value(forKey: XYZAccount.bank) as? String
-            let accountNrValue = income?.value(forKey: XYZAccount.accountNr) as? String
+            let accountNrValue = income?.accountNr
             let currencyCode = income?.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode
             let balance = income?.value(forKey: XYZAccount.amount) as? Double
             let principalAmount = income?.value(forKey: XYZAccount.principal) as? Double ?? 0.0
