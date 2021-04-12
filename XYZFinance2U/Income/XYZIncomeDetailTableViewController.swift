@@ -302,7 +302,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         let oldAmount = income.amount
         let oldPrincipal = income.value(forKey: XYZAccount.principal)
         let oldDate = income.value(forKey: XYZAccount.lastUpdate)
-        let oldRepeatAction = income.value(forKey: XYZAccount.repeatAction)
+        let oldRepeatAction = income.repeatAction
         let oldRemindDate = income.value(forKey: XYZAccount.repeatDate)
         let oldCurrencyCode = income.value(forKey: XYZAccount.currencyCode)
         let oldSequenceNr = income.value(forKey: XYZAccount.sequenceNr)
@@ -314,7 +314,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
             income.amount = oldAmount
             income.setValue(oldPrincipal, forKey: XYZAccount.principal)
             income.setValue(oldDate, forKey: XYZAccount.lastUpdate)
-            income.setValue(oldRepeatAction, forKey: XYZAccount.repeatAction)
+            income.repeatAction = oldRepeatAction
             income.setValue(oldRemindDate, forKey: XYZAccount.repeatDate)
             income.setValue(oldCurrencyCode, forKey: XYZAccount.currencyCode)
             income.setValue(oldSequenceNr, forKey: XYZAccount.sequenceNr)
@@ -382,7 +382,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         income?.amount = amount!
         income?.setValue(principal, forKey: XYZAccount.principal)
         income?.setValue(date, forKey: XYZAccount.lastUpdate)
-        income?.setValue(repeatAction, forKey: XYZAccount.repeatAction)
+        income?.repeatAction = repeatAction ?? XYZAccount.RepeatAction.none.rawValue
         income?.setValue(reminddate, forKey: XYZAccount.repeatDate)
         income?.setValue(currencyCode, forKey: XYZAccount.currencyCode)
         income?.setValue(Date(), forKey: XYZAccount.lastRecordChange)
@@ -413,7 +413,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
             
                 hasUpdateReminder = true
                 reminddate = setdate
-                repeatAction = (income.value(forKey: XYZAccount.repeatAction) as? String)
+                repeatAction = income.repeatAction
             }
         }
         

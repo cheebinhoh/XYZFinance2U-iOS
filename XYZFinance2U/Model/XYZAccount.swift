@@ -104,7 +104,19 @@ class XYZAccount : NSManagedObject {
         }
     }
     
-    var repeatAction = ""
+    var repeatAction: String {
+        
+        get {
+            
+            return self.value(forKey: XYZAccount.repeatAction) as? String ?? XYZAccount.RepeatAction.none.rawValue
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZAccount.repeatAction)
+        }
+    }
+    
     var repeatDate = Date()
     var sequenceNr = 0
     

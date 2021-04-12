@@ -76,10 +76,10 @@ func createUpdateAccount(record: CKRecord,
         
         if let _ = XYZAccount.RepeatAction(rawValue: repeatAction ?? "") {
             
-            incomeToBeUpdated?.setValue(repeatAction, forKey: XYZAccount.repeatAction)
+            incomeToBeUpdated?.repeatAction = repeatAction!
         } else {
             
-            incomeToBeUpdated?.setValue(XYZAccount.RepeatAction.none.rawValue, forKey: XYZAccount.repeatAction)
+            incomeToBeUpdated?.repeatAction = XYZAccount.RepeatAction.none.rawValue
         }
     }
 
@@ -1113,7 +1113,7 @@ func saveAccountsToiCloud(database: CKDatabase,
         let lastUpdate = income.value(forKey: XYZAccount.lastUpdate) as? Date
         let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
         let repeatDate = income.value(forKey: XYZAccount.repeatDate) as? Date
-        let repeatAction = income.value(forKey: XYZAccount.repeatAction) as? String ?? ""
+        let repeatAction = income.repeatAction
         let sequencNr = income.value(forKey: XYZAccount.sequenceNr) as? Int
         let principal = income.value(forKey: XYZAccount.principal) as? Double ?? 0.0
         

@@ -308,7 +308,7 @@ class XYZIncomeTableViewController: UITableViewController,
         let oldAmount = income.amount
         let oldPrincipal = income.value(forKey: XYZAccount.principal) as! Double
         let oldDate = income.value(forKey: XYZAccount.lastUpdate) as! Date
-        let oldRepeatAction = income.value(forKey: XYZAccount.repeatAction) as? String ?? ""
+        let oldRepeatAction = income.repeatAction
         let oldRemindDate = income.value(forKey: XYZAccount.repeatDate) as? Date
         let oldCurrencyCode = income.value(forKey: XYZAccount.currencyCode) as? String ?? ""
         let oldSequenceNr = income.value(forKey: XYZAccount.sequenceNr)
@@ -317,7 +317,7 @@ class XYZIncomeTableViewController: UITableViewController,
             
             let income = XYZAccount(id: nil, sequenceNr: 0, bank: oldBank, accountNr: oldAccountNr, amount: oldAmount, principal: oldPrincipal, date: oldDate, context: managedContext())
             
-            income.setValue(oldRepeatAction, forKey: XYZAccount.repeatAction)
+            income.repeatAction = oldRepeatAction
             income.setValue(oldRemindDate, forKey: XYZAccount.repeatDate)
             income.setValue(oldCurrencyCode, forKey: XYZAccount.currencyCode)
             income.setValue(oldSequenceNr, forKey: XYZAccount.sequenceNr)
@@ -430,7 +430,7 @@ class XYZIncomeTableViewController: UITableViewController,
     
         let bank = income.bank
         let accountNr = income.accountNr
-        let repeatAction = income.value(forKey: XYZAccount.repeatAction) as? String
+        let repeatAction = income.repeatAction
         let reminddate = income.value(forKey: XYZAccount.repeatDate) as? Date
         
         // setup local notification
