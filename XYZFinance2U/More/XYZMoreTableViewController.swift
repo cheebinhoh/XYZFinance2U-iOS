@@ -604,8 +604,8 @@ class XYZMoreTableViewController: UITableViewController,
         
         for income in (appDelegate?.incomeList)! {
             
-            let recordName = income.value(forKey: XYZAccount.recordId) as? String
-            deleteRecordList.append(recordName!)
+            let recordName = income.recordId
+            deleteRecordList.append(recordName)
             
             managedContext()?.delete(income)
         }

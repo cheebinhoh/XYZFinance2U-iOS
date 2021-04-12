@@ -279,8 +279,8 @@ class XYZIncomeTableViewController: UITableViewController,
                 fatalError("Exception: deleteRecordList is expected as [String]")
             }
             
-            let recordName = income.value(forKey: XYZAccount.recordId) as? String
-            deleteRecordList.append(recordName!)
+            let recordName = income.recordId
+            deleteRecordList.append(recordName)
             
             let savedDeleteRecordList = try? NSKeyedArchiver.archivedData(withRootObject: deleteRecordList, requiringSecureCoding: false)
             zone.setValue(savedDeleteRecordList, forKey: XYZiCloudZone.deleteRecordIdList)
@@ -423,9 +423,9 @@ class XYZIncomeTableViewController: UITableViewController,
     func registerNotification(income: XYZAccount) {
         
         let notificationCenter = UNUserNotificationCenter.current()
-        let identifier = income.value(forKey: XYZAccount.recordId) as? String
+        let identifier = income.recordId
         
-        notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier!])
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
         notificationCenter.removeAllDeliveredNotifications()
     
         let bank = income.bank
@@ -441,7 +441,7 @@ class XYZIncomeTableViewController: UITableViewController,
             content.body = "\(String(describing: bank)), \(String(describing: accountNr)) ..."
             content.sound = UNNotificationSound.default
             content.userInfo[XYZAccount.type] = true
-            content.userInfo[XYZAccount.recordId] = income.value(forKey: XYZAccount.recordId) as? String
+            content.userInfo[XYZAccount.recordId] = income.recordId
             
             var units: Set<Calendar.Component> = [ .minute ]
             switch repeatAction ?? XYZAccount.RepeatAction.none.rawValue {
@@ -480,7 +480,7 @@ class XYZIncomeTableViewController: UITableViewController,
             
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: ( repeatAction ?? XYZAccount.RepeatAction.none.rawValue ) != XYZAccount.RepeatAction.none.rawValue )
             
-            let request = UNNotificationRequest(identifier: identifier!, content: content, trigger: trigger)
+            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
             
             notificationCenter.add(request) { (error : Error?) in
                 
@@ -1062,11 +1062,11 @@ class XYZIncomeTableViewController: UITableViewController,
             let appDelegate = UIApplication.shared.delegate as? AppDelegate
             
             softDeleteIncome(income: incomeToBeDeleted)
-            let identifier = incomeToBeDeleted.value(forKey: XYZAccount.recordId) as? String
+            let identifier = incomeToBeDeleted.recordId
             
             let notificationCenter = UNUserNotificationCenter.current()
   
-            notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier!])
+            notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
             notificationCenter.removeAllDeliveredNotifications()
   
             let aContext = managedContext()

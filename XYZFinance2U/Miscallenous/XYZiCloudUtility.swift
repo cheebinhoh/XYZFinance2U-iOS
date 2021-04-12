@@ -47,12 +47,7 @@ func createUpdateAccount(record: CKRecord,
     
     incomeToBeUpdated = outputIncomeList.first { (income) -> Bool in
 
-        guard let recordId = income.value(forKey: XYZAccount.recordId) as? String else {
-            
-            fatalError("Exception: record is expected")
-        }
-        
-        return recordId == recordName
+        return income.recordId == recordName
     }
 
     
@@ -73,7 +68,7 @@ func createUpdateAccount(record: CKRecord,
     incomeToBeUpdated?.amount = amount!
     incomeToBeUpdated?.setValue(lastUpdate!, forKey: XYZAccount.lastUpdate)
     incomeToBeUpdated?.setValue(currencyCode!, forKey: XYZAccount.currencyCode)
-    incomeToBeUpdated?.setValue(recordName, forKey: XYZAccount.recordId)
+    incomeToBeUpdated?.recordId = recordName
     
     if repeatDate != nil {
         
@@ -454,12 +449,7 @@ func fetchiCloudZoneChange(database: CKDatabase,
                     
                         for (index, income) in incomeList.enumerated() {
                             
-                            guard let recordName = income.value(forKey: XYZAccount.recordId) as? String else {
-                                fatalError("Exception: record id is expected")
-                                
-                            }
-                            
-                            if recordName == recordId.recordName {
+                            if income.recordId == recordId.recordName {
                                 
                                 aContext?.delete(income)
                                 incomeList.remove(at: index)
@@ -1111,9 +1101,9 @@ func saveAccountsToiCloud(database: CKDatabase,
 
     for income in incomeList {
 
-        let recordName = income.value(forKey: XYZAccount.recordId) as? String
+        let recordName = income.recordId
         let customZone = CKRecordZone(zoneName: XYZAccount.type)
-        let ckrecordId = CKRecord.ID(recordName: recordName!, zoneID: customZone.zoneID)
+        let ckrecordId = CKRecord.ID(recordName: recordName, zoneID: customZone.zoneID)
 
         let record = CKRecord(recordType: XYZAccount.type, recordID: ckrecordId)
 

@@ -91,7 +91,19 @@ class XYZAccount : NSManagedObject {
     var lastRecordChange = Date()
     var lastUpdate = Date()
     var principal = 0.0
-    var recordId = ""
+    var recordId: String {
+        
+        get {
+            
+            return self.value(forKey: XYZAccount.recordId) as? String ?? ""
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZAccount.recordId)
+        }
+    }
+    
     var repeatAction = ""
     var repeatDate = Date()
     var sequenceNr = 0
@@ -113,7 +125,7 @@ class XYZAccount : NSManagedObject {
         
         super.init(entity: entity, insertInto: context!)
         
-        self.setValue(recordName, forKey: XYZAccount.recordId)
+        self.recordId = recordName
         self.bank = bank
         self.amount = amount
         self.accountNr = accountNr
