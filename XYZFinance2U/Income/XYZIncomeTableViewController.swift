@@ -311,7 +311,7 @@ class XYZIncomeTableViewController: UITableViewController,
         let oldRepeatAction = income.repeatAction
         let oldRemindDate = income.value(forKey: XYZAccount.repeatDate) as? Date
         let oldCurrencyCode = income.value(forKey: XYZAccount.currencyCode) as? String ?? ""
-        let oldSequenceNr = income.value(forKey: XYZAccount.sequenceNr)
+        let oldSequenceNr = income.sequenceNr
         
         undoManager?.registerUndo(withTarget: self, handler: { (controller) in
             
@@ -320,7 +320,7 @@ class XYZIncomeTableViewController: UITableViewController,
             income.repeatAction = oldRepeatAction
             income.setValue(oldRemindDate, forKey: XYZAccount.repeatDate)
             income.setValue(oldCurrencyCode, forKey: XYZAccount.currencyCode)
-            income.setValue(oldSequenceNr, forKey: XYZAccount.sequenceNr)
+            income.sequenceNr = oldSequenceNr
             income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
             
             for (index, section) in self.sectionList.enumerated() {
@@ -516,10 +516,10 @@ class XYZIncomeTableViewController: UITableViewController,
                 
                 for (rowIndex, income) in sectionIncomeList.enumerated() {
                     
-                    let oldSequenceNr = income.value(forKey: XYZAccount.sequenceNr) as? Int
+                    let oldSequenceNr = income.sequenceNr
                     
                     let sequenceNr = 1000 * sectionIndex + rowIndex
-                    income.setValue(sequenceNr, forKey: XYZAccount.sequenceNr)
+                    income.sequenceNr = sequenceNr
                     
                     if oldSequenceNr != sequenceNr {
                         
@@ -1124,7 +1124,7 @@ class XYZIncomeTableViewController: UITableViewController,
                 for (rowIndex, income) in sectionIncomeList.enumerated() {
                     
                     let sequenceNr = 1000 * sectionIndex + rowIndex // each section is allowed to have 999 records, which is pretty large number, consider the purpose of it.
-                    income.setValue(sequenceNr, forKey: XYZAccount.sequenceNr)
+                    income.sequenceNr = sequenceNr
                     
                     income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
                 }

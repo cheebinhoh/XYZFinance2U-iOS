@@ -305,7 +305,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         let oldRepeatAction = income.repeatAction
         let oldRemindDate = income.value(forKey: XYZAccount.repeatDate)
         let oldCurrencyCode = income.value(forKey: XYZAccount.currencyCode)
-        let oldSequenceNr = income.value(forKey: XYZAccount.sequenceNr)
+        let oldSequenceNr = income.sequenceNr
         
         undoManager?.registerUndo(withTarget: income, handler: { (income) in
             
@@ -317,7 +317,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
             income.repeatAction = oldRepeatAction
             income.setValue(oldRemindDate, forKey: XYZAccount.repeatDate)
             income.setValue(oldCurrencyCode, forKey: XYZAccount.currencyCode)
-            income.setValue(oldSequenceNr, forKey: XYZAccount.sequenceNr)
+            income.sequenceNr = oldSequenceNr
             income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
             
             self.incomeDelegate?.saveIncome(income: income)

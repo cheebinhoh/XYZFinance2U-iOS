@@ -118,7 +118,18 @@ class XYZAccount : NSManagedObject {
     }
     
     var repeatDate = Date()
-    var sequenceNr = 0
+    var sequenceNr: Int {
+        
+        get {
+            
+            return self.value(forKey: XYZAccount.sequenceNr) as? Int ?? 0
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZAccount.sequenceNr)
+        }
+    }
     
     // MARK: - function
     
@@ -142,7 +153,7 @@ class XYZAccount : NSManagedObject {
         self.amount = amount
         self.accountNr = accountNr
         self.setValue(date, forKey: XYZAccount.lastUpdate)
-        self.setValue(sequenceNr, forKey: XYZAccount.sequenceNr)
+        self.sequenceNr = sequenceNr
         self.setValue(principal, forKey: XYZAccount.principal)
     }
     

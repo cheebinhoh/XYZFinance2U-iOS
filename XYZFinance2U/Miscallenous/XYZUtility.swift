@@ -357,7 +357,7 @@ func sortAcounts(_ incomeList: [XYZAccount]) -> [XYZAccount] {
     
     return incomeList.sorted() { (acc1, acc2) in
         
-        return ( acc1.value(forKey: XYZAccount.sequenceNr) as! Int ) < ( acc2.value(forKey: XYZAccount.sequenceNr) as! Int)
+        return acc1.sequenceNr < acc2.sequenceNr
     }
 }
 
