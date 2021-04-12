@@ -304,7 +304,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         let oldDate = income.value(forKey: XYZAccount.lastUpdate)
         let oldRepeatAction = income.repeatAction
         let oldRemindDate = income.value(forKey: XYZAccount.repeatDate)
-        let oldCurrencyCode = income.value(forKey: XYZAccount.currencyCode)
+        let oldCurrencyCode = income.currencyCode
         let oldSequenceNr = income.sequenceNr
         
         undoManager?.registerUndo(withTarget: income, handler: { (income) in
@@ -316,7 +316,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
             income.setValue(oldDate, forKey: XYZAccount.lastUpdate)
             income.repeatAction = oldRepeatAction
             income.setValue(oldRemindDate, forKey: XYZAccount.repeatDate)
-            income.setValue(oldCurrencyCode, forKey: XYZAccount.currencyCode)
+            income.currencyCode = oldCurrencyCode
             income.sequenceNr = oldSequenceNr
             income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
             
@@ -384,7 +384,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         income?.setValue(date, forKey: XYZAccount.lastUpdate)
         income?.repeatAction = repeatAction ?? XYZAccount.RepeatAction.none.rawValue
         income?.setValue(reminddate, forKey: XYZAccount.repeatDate)
-        income?.setValue(currencyCode, forKey: XYZAccount.currencyCode)
+        income?.currencyCode = currencyCode!
         income?.setValue(Date(), forKey: XYZAccount.lastRecordChange)
     }
 
@@ -407,7 +407,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
             date = (income.value(forKey: XYZAccount.lastUpdate) as? Date) ?? Date()
             amount = income.amount
             principal = (income.value(forKey: XYZAccount.principal) as? Double) ?? 0.0
-            currencyCode = (income.value(forKey: XYZAccount.currencyCode) as? String) ?? Locale.current.currencyCode!
+            currencyCode = income.currencyCode
             
             if let setdate = (income.value(forKey: XYZAccount.repeatDate) as? Date) {
             

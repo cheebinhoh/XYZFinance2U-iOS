@@ -67,7 +67,7 @@ func createUpdateAccount(record: CKRecord,
     incomeToBeUpdated?.sequenceNr = sequenceNr!
     incomeToBeUpdated?.amount = amount!
     incomeToBeUpdated?.setValue(lastUpdate!, forKey: XYZAccount.lastUpdate)
-    incomeToBeUpdated?.setValue(currencyCode!, forKey: XYZAccount.currencyCode)
+    incomeToBeUpdated?.currencyCode = currencyCode!
     incomeToBeUpdated?.recordId = recordName
     
     if repeatDate != nil {
@@ -1111,7 +1111,7 @@ func saveAccountsToiCloud(database: CKDatabase,
         let accountNr = income.accountNr
         let amount = income.amount
         let lastUpdate = income.value(forKey: XYZAccount.lastUpdate) as? Date
-        let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
+        let currencyCode = income.currencyCode
         let repeatDate = income.value(forKey: XYZAccount.repeatDate) as? Date
         let repeatAction = income.repeatAction
         let sequencNr = income.sequenceNr

@@ -87,7 +87,19 @@ class XYZAccount : NSManagedObject {
         }
     }
     
-    var currencyCode: String = Locale.current.currencyCode!
+    var currencyCode: String {
+        
+        get {
+            
+            return self.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZAccount.currencyCode)
+        }
+    }
+    
     var lastRecordChange = Date()
     var lastUpdate = Date()
     var principal = 0.0

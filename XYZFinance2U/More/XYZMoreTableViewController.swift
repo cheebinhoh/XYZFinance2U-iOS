@@ -51,14 +51,13 @@ class XYZMoreTableViewController: UITableViewController,
         
         for income in incomeList {
             
-            if let incomeCurrencyCode = income.value(forKey: XYZAccount.currencyCode) as? String {
+            let incomeCurrencyCode = income.currencyCode
+            
+            if incomeCurrencyCode != totalIncomeCurrencyCode! {
                 
-                if incomeCurrencyCode != totalIncomeCurrencyCode! {
+                if !otherCurrencyCodes.contains(incomeCurrencyCode) {
                     
-                    if !otherCurrencyCodes.contains(incomeCurrencyCode) {
-                        
-                        otherCurrencyCodes.append(incomeCurrencyCode)
-                    }
+                    otherCurrencyCodes.append(incomeCurrencyCode)
                 }
             }
         }
@@ -131,7 +130,7 @@ class XYZMoreTableViewController: UITableViewController,
 
             for income in incomeList {
                 
-                let incomeCc = income.value(forKey: XYZAccount.currencyCode) as! String
+                let incomeCc = income.currencyCode
                 let amount = income.amount
 
                 if incomeCc == self.totalIncomeCurrencyCode {
@@ -897,9 +896,7 @@ class XYZMoreTableViewController: UITableViewController,
                 
                 for income in incomeList! {
                     
-                    let incomeCurrencyCode = income.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode
-                    
-                    currencyCodesUsed.insert(incomeCurrencyCode!)
+                    currencyCodesUsed.insert(income.currencyCode)
                 }
                 
                 if let _ = totalIncomeCurrencyCode {
@@ -976,7 +973,7 @@ class XYZMoreTableViewController: UITableViewController,
             let bank = income.bank
             let accountNr = income.accountNr
             let amount = income.amount
-            let currency = income.value(forKey: XYZAccount.currencyCode) as? String ?? ""
+            let currency = income.currencyCode
             let principal = income.value(forKey: XYZAccount.principal) as? Double ?? 0.0
             let lastUpdate = formattingDate(income.value(forKey: XYZAccount.lastUpdate) as? Date ?? Date(), style: .short )
             

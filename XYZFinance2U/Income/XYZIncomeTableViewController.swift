@@ -202,11 +202,11 @@ class XYZIncomeTableViewController: UITableViewController,
     
     func saveNewIncomeWithoutUndo(income: XYZAccount) {
 
-        let currencyCode = income.value(forKey: XYZAccount.currencyCode) as? String
+        let currencyCode = income.currencyCode
         
-        if let _ = currencyCode, !currencyCodes.contains(currencyCode!) {
+        if !currencyCodes.contains(currencyCode) {
             
-            currencyCodes.append(currencyCode!)
+            currencyCodes.append(currencyCode)
         }
         
         for (index, section) in sectionList.enumerated() {
@@ -310,7 +310,7 @@ class XYZIncomeTableViewController: UITableViewController,
         let oldDate = income.value(forKey: XYZAccount.lastUpdate) as! Date
         let oldRepeatAction = income.repeatAction
         let oldRemindDate = income.value(forKey: XYZAccount.repeatDate) as? Date
-        let oldCurrencyCode = income.value(forKey: XYZAccount.currencyCode) as? String ?? ""
+        let oldCurrencyCode = income.currencyCode
         let oldSequenceNr = income.sequenceNr
         
         undoManager?.registerUndo(withTarget: self, handler: { (controller) in
@@ -319,7 +319,7 @@ class XYZIncomeTableViewController: UITableViewController,
             
             income.repeatAction = oldRepeatAction
             income.setValue(oldRemindDate, forKey: XYZAccount.repeatDate)
-            income.setValue(oldCurrencyCode, forKey: XYZAccount.currencyCode)
+            income.currencyCode = oldCurrencyCode
             income.sequenceNr = oldSequenceNr
             income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
             
@@ -358,7 +358,7 @@ class XYZIncomeTableViewController: UITableViewController,
         
         (appDelegate?.incomeList)!.forEach { income in
 
-            let currency = income.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
+            let currency = income.currencyCode
             
             currencyList.insert(currency)
         }
@@ -380,13 +380,11 @@ class XYZIncomeTableViewController: UITableViewController,
             
             for income in (appDelegate?.incomeList)! {
                 
-                if let setCurrency = income.value(forKey: XYZAccount.currencyCode) as? String {
+                if income.currencyCode == currency {
                     
-                    if setCurrency == currency {
-                        
-                        sectionIncomeList.append(income)
-                    }
-                } else if currency == Locale.current.currencyCode {
+                    sectionIncomeList.append(income)
+                }
+                else if currency == Locale.current.currencyCode {
                     
                     sectionIncomeList.append(income)
                 }
@@ -948,7 +946,7 @@ class XYZIncomeTableViewController: UITableViewController,
                     }
                     
                     let account = incomeListStored![indexPath.row - 1]
-                    let currencyCode = account.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
+                    let currencyCode = account.currencyCode
                     
                     incomecell.bank.text = account.bank
                     incomecell.account.text = account.accountNr
@@ -1008,7 +1006,7 @@ class XYZIncomeTableViewController: UITableViewController,
                         return result + account.amount
                     }
                     
-                    currencyCode = incomeListStored?.first?.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
+                    currencyCode = incomeListStored?.first?.currencyCode ?? Locale.current.currencyCode!
                     
                     totalCell.amount.text = formattingCurrencyValue(of: total, as: currencyCode)
                     totalCell.currency.text = currencyCode.localized()
