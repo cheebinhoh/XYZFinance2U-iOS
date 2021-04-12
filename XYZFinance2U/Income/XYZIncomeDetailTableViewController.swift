@@ -303,7 +303,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         let oldPrincipal = income.principal
         let oldDate = income.value(forKey: XYZAccount.lastUpdate)
         let oldRepeatAction = income.repeatAction
-        let oldRemindDate = income.value(forKey: XYZAccount.repeatDate)
+        let oldRemindDate = income.repeatDate
         let oldCurrencyCode = income.currencyCode
         let oldSequenceNr = income.sequenceNr
         
@@ -315,7 +315,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
             income.principal = oldPrincipal
             income.setValue(oldDate, forKey: XYZAccount.lastUpdate)
             income.repeatAction = oldRepeatAction
-            income.setValue(oldRemindDate, forKey: XYZAccount.repeatDate)
+            income.repeatDate = oldRemindDate
             income.currencyCode = oldCurrencyCode
             income.sequenceNr = oldSequenceNr
             income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
@@ -383,7 +383,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         income?.principal = principal!
         income?.setValue(date, forKey: XYZAccount.lastUpdate)
         income?.repeatAction = repeatAction ?? XYZAccount.RepeatAction.none.rawValue
-        income?.setValue(reminddate, forKey: XYZAccount.repeatDate)
+        income?.repeatDate = reminddate ?? Date.distantPast
         income?.currencyCode = currencyCode!
         income?.setValue(Date(), forKey: XYZAccount.lastRecordChange)
     }
@@ -409,10 +409,10 @@ class XYZIncomeDetailTableViewController: UITableViewController,
             principal = income.principal
             currencyCode = income.currencyCode
             
-            if let setdate = (income.value(forKey: XYZAccount.repeatDate) as? Date) {
+            if income.repeatDate != Date.distantPast {
             
                 hasUpdateReminder = true
-                reminddate = setdate
+                reminddate = income.repeatDate
                 repeatAction = income.repeatAction
             }
         }

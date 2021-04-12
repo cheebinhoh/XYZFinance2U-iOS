@@ -141,7 +141,19 @@ class XYZAccount : NSManagedObject {
         }
     }
     
-    var repeatDate = Date()
+    var repeatDate: Date {
+        
+        get {
+            
+            return self.value(forKey: XYZAccount.repeatDate) as? Date ?? Date.distantPast
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZAccount.repeatDate)
+        }
+    }
+    
     var sequenceNr: Int {
         
         get {
