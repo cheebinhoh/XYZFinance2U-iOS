@@ -1115,7 +1115,7 @@ func saveAccountsToiCloud(database: CKDatabase,
         let repeatDate = income.value(forKey: XYZAccount.repeatDate) as? Date
         let repeatAction = income.repeatAction
         let sequencNr = income.sequenceNr
-        let principal = income.value(forKey: XYZAccount.principal) as? Double ?? 0.0
+        let principal = income.principal
         
         record.setValue(sequencNr, forKey: XYZAccount.sequenceNr)
         record.setValue(bank, forKey: XYZAccount.bank)

@@ -306,7 +306,7 @@ class XYZIncomeTableViewController: UITableViewController,
         let oldBank = income.bank
         let oldAccountNr = income.accountNr
         let oldAmount = income.amount
-        let oldPrincipal = income.value(forKey: XYZAccount.principal) as! Double
+        let oldPrincipal = income.principal
         let oldDate = income.value(forKey: XYZAccount.lastUpdate) as! Date
         let oldRepeatAction = income.repeatAction
         let oldRemindDate = income.value(forKey: XYZAccount.repeatDate) as? Date
@@ -951,17 +951,17 @@ class XYZIncomeTableViewController: UITableViewController,
                     incomecell.bank.text = account.bank
                     incomecell.account.text = account.accountNr
                     
-                    let principal = account.value(forKey: XYZAccount.principal) as? Double
+                    let principal = account.principal
                     
-                    if nil != principal && principal! > 0.0 {
+                    if principal > 0.0 {
                         
                         if incomecell.account.text != "" {
                             
                             incomecell.account.text = incomecell.account.text! + ", "
                         }
                         
-                        let earnedAmount = account.amount - principal!
-                        let percentage = earnedAmount / principal!
+                        let earnedAmount = account.amount - principal
+                        let percentage = earnedAmount / principal
                         let amountASNSNumber = NSNumber(value: percentage * 100)
                         let formatter = NumberFormatter()
                         

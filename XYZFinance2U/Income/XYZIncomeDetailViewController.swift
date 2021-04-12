@@ -68,12 +68,12 @@ class XYZIncomeDetailViewController: UIViewController {
             let accountNrValue = income?.accountNr
             let currencyCode = income?.currencyCode
             let balance = income?.amount
-            let principalAmount = income?.value(forKey: XYZAccount.principal) as? Double ?? 0.0
+            let principalAmount = income?.principal
 
             bank.text = bankValue
             accountNr.text = accountNrValue
             amount.text = formattingCurrencyValue(of: balance!, as: currencyCode)
-            principal.text = formattingCurrencyValue(of: principalAmount, as: currencyCode)
+            principal.text = formattingCurrencyValue(of: principalAmount!, as: currencyCode)
             date.text = formattingDate((income?.value(forKey: XYZAccount.lastUpdate) as? Date )!, style: .medium)
         }
         

@@ -102,7 +102,19 @@ class XYZAccount : NSManagedObject {
     
     var lastRecordChange = Date()
     var lastUpdate = Date()
-    var principal = 0.0
+    var principal: Double {
+        
+        get {
+            
+            return self.value(forKey: XYZAccount.principal) as? Double ?? 0.0
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZAccount.principal)
+        }
+    }
+    
     var recordId: String {
         
         get {
@@ -166,7 +178,7 @@ class XYZAccount : NSManagedObject {
         self.accountNr = accountNr
         self.setValue(date, forKey: XYZAccount.lastUpdate)
         self.sequenceNr = sequenceNr
-        self.setValue(principal, forKey: XYZAccount.principal)
+        self.principal = principal
     }
     
     override init(entity: NSEntityDescription,

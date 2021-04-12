@@ -300,7 +300,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         let oldBank = income.bank
         let oldAccountNr = income.accountNr
         let oldAmount = income.amount
-        let oldPrincipal = income.value(forKey: XYZAccount.principal)
+        let oldPrincipal = income.principal
         let oldDate = income.value(forKey: XYZAccount.lastUpdate)
         let oldRepeatAction = income.repeatAction
         let oldRemindDate = income.value(forKey: XYZAccount.repeatDate)
@@ -312,7 +312,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
             income.bank = oldBank
             income.accountNr = oldAccountNr
             income.amount = oldAmount
-            income.setValue(oldPrincipal, forKey: XYZAccount.principal)
+            income.principal = oldPrincipal
             income.setValue(oldDate, forKey: XYZAccount.lastUpdate)
             income.repeatAction = oldRepeatAction
             income.setValue(oldRemindDate, forKey: XYZAccount.repeatDate)
@@ -380,7 +380,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         income?.bank = bank
         income?.accountNr = accountNr
         income?.amount = amount!
-        income?.setValue(principal, forKey: XYZAccount.principal)
+        income?.principal = principal!
         income?.setValue(date, forKey: XYZAccount.lastUpdate)
         income?.repeatAction = repeatAction ?? XYZAccount.RepeatAction.none.rawValue
         income?.setValue(reminddate, forKey: XYZAccount.repeatDate)
@@ -406,7 +406,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
             accountNr = income.accountNr
             date = (income.value(forKey: XYZAccount.lastUpdate) as? Date) ?? Date()
             amount = income.amount
-            principal = (income.value(forKey: XYZAccount.principal) as? Double) ?? 0.0
+            principal = income.principal
             currencyCode = income.currencyCode
             
             if let setdate = (income.value(forKey: XYZAccount.repeatDate) as? Date) {

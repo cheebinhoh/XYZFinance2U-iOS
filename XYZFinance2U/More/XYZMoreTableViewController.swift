@@ -974,7 +974,7 @@ class XYZMoreTableViewController: UITableViewController,
             let accountNr = income.accountNr
             let amount = income.amount
             let currency = income.currencyCode
-            let principal = income.value(forKey: XYZAccount.principal) as? Double ?? 0.0
+            let principal = income.principal
             let lastUpdate = formattingDate(income.value(forKey: XYZAccount.lastUpdate) as? Date ?? Date(), style: .short )
             
             text = text + "\(index)\t\(bank)\t\(accountNr.isEmpty ? " " : accountNr)\t\(amount)\t\(principal)\t\(currency)\t\(lastUpdate)\n"
