@@ -40,7 +40,7 @@ class XYZIncomeDetailViewController: UIViewController {
         
         let copyAction = UIPreviewAction(title: "Copy balance".localized(), style: .default, handler: { (action, viewcontroller) in
             
-            let balance = (self.income?.value(forKey: XYZAccount.amount) as? Double) ?? 0.0
+            let balance = self.income?.amount ?? 0.0
             
             tabBarController.popOverAlertController  = nil
             UIPasteboard.general.string = "\(balance)"
@@ -64,10 +64,10 @@ class XYZIncomeDetailViewController: UIViewController {
 
         if let _ = income {
             
-            let bankValue = income?.value(forKey: XYZAccount.bank) as? String
+            let bankValue = income?.bank
             let accountNrValue = income?.accountNr
             let currencyCode = income?.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode
-            let balance = income?.value(forKey: XYZAccount.amount) as? Double
+            let balance = income?.amount
             let principalAmount = income?.value(forKey: XYZAccount.principal) as? Double ?? 0.0
 
             bank.text = bankValue

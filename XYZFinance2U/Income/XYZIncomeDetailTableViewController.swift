@@ -201,7 +201,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
                 
                 case "amount":
                     amount = formattingDoubleValueAsDouble(of: sender.input.text!)
-                    if let oldAmount = income?.value(forKey: XYZAccount.amount) as? Double {
+                    if let oldAmount = income?.amount {
                         
                         if nil == dateUpdatedExplicitly || !(dateUpdatedExplicitly!) {
                             
@@ -297,9 +297,9 @@ class XYZIncomeDetailTableViewController: UITableViewController,
 
     func registerUndoSave(income: XYZAccount)
     {
-        let oldBank = income.value(forKey: XYZAccount.bank)
+        let oldBank = income.bank
         let oldAccountNr = income.accountNr
-        let oldAmount = income.value(forKey: XYZAccount.amount)
+        let oldAmount = income.amount
         let oldPrincipal = income.value(forKey: XYZAccount.principal)
         let oldDate = income.value(forKey: XYZAccount.lastUpdate)
         let oldRepeatAction = income.value(forKey: XYZAccount.repeatAction)
@@ -309,9 +309,9 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         
         undoManager?.registerUndo(withTarget: income, handler: { (income) in
             
-            income.setValue(oldBank, forKey: XYZAccount.bank)
+            income.bank = oldBank
             income.accountNr = oldAccountNr
-            income.setValue(oldAmount, forKey: XYZAccount.amount)
+            income.amount = oldAmount
             income.setValue(oldPrincipal, forKey: XYZAccount.principal)
             income.setValue(oldDate, forKey: XYZAccount.lastUpdate)
             income.setValue(oldRepeatAction, forKey: XYZAccount.repeatAction)
@@ -377,9 +377,9 @@ class XYZIncomeDetailTableViewController: UITableViewController,
     
     func saveData() {
         
-        income?.setValue(bank, forKey: XYZAccount.bank)
+        income?.bank = bank
         income?.accountNr = accountNr
-        income?.setValue(amount, forKey: XYZAccount.amount)
+        income?.amount = amount!
         income?.setValue(principal, forKey: XYZAccount.principal)
         income?.setValue(date, forKey: XYZAccount.lastUpdate)
         income?.setValue(repeatAction, forKey: XYZAccount.repeatAction)
@@ -400,20 +400,20 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         
         // we do not set reminddate as it is used to indicate if we have remind option checked
         
-        if let _ = income {
+        if let income = income {
             
-            bank = (income?.value(forKey: XYZAccount.bank) as! String)
-            accountNr = (income?.accountNr)!
-            date = (income?.value(forKey: XYZAccount.lastUpdate) as? Date) ?? Date()
-            amount = (income?.value(forKey: XYZAccount.amount) as? Double) ?? 0.0
-            principal = (income?.value(forKey: XYZAccount.principal) as? Double) ?? 0.0
-            currencyCode = (income?.value(forKey: XYZAccount.currencyCode) as? String) ?? Locale.current.currencyCode!
+            bank = income.bank
+            accountNr = income.accountNr
+            date = (income.value(forKey: XYZAccount.lastUpdate) as? Date) ?? Date()
+            amount = income.amount
+            principal = (income.value(forKey: XYZAccount.principal) as? Double) ?? 0.0
+            currencyCode = (income.value(forKey: XYZAccount.currencyCode) as? String) ?? Locale.current.currencyCode!
             
-            if let setdate = (income?.value(forKey: XYZAccount.repeatDate) as? Date) {
+            if let setdate = (income.value(forKey: XYZAccount.repeatDate) as? Date) {
             
                 hasUpdateReminder = true
                 reminddate = setdate
-                repeatAction = (income?.value(forKey: XYZAccount.repeatAction) as? String)
+                repeatAction = (income.value(forKey: XYZAccount.repeatAction) as? String)
             }
         }
         

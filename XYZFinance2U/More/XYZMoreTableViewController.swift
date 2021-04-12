@@ -132,7 +132,7 @@ class XYZMoreTableViewController: UITableViewController,
             for income in incomeList {
                 
                 let incomeCc = income.value(forKey: XYZAccount.currencyCode) as! String
-                let amount = income.value(forKey: XYZAccount.amount) as! Double
+                let amount = income.amount
 
                 if incomeCc == self.totalIncomeCurrencyCode {
                     
@@ -973,9 +973,9 @@ class XYZMoreTableViewController: UITableViewController,
         
         for (index, income) in incomeList.enumerated() {
             
-            let bank = income.value(forKey: XYZAccount.bank) as? String ?? ""
+            let bank = income.bank
             let accountNr = income.accountNr
-            let amount = income.value(forKey: XYZAccount.amount) as? Double ?? 0.0
+            let amount = income.amount
             let currency = income.value(forKey: XYZAccount.currencyCode) as? String ?? ""
             let principal = income.value(forKey: XYZAccount.principal) as? Double ?? 0.0
             let lastUpdate = formattingDate(income.value(forKey: XYZAccount.lastUpdate) as? Date ?? Date(), style: .short )

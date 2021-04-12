@@ -48,7 +48,7 @@ class XYZIncomeTableViewController: UITableViewController,
         
         return (appDelegate?.incomeList)!.reduce(0.0) { (result, account) in
         
-            return result + ( account.value(forKey: XYZAccount.amount) as? Double )!
+            return result + account.amount
         }
     }
     
@@ -179,7 +179,7 @@ class XYZIncomeTableViewController: UITableViewController,
         
         let total = (sectionIncomeList!).reduce(0.0) { (result, account) in
         
-            return result + ( ( account.value(forKey: XYZAccount.amount) as? Double ) ?? 0.0 )
+            return result + account.amount
         }
         
         return (total, sectionList[section].title!)
@@ -303,9 +303,9 @@ class XYZIncomeTableViewController: UITableViewController,
     
     func deleteIncome(income: XYZAccount) {
 
-        let oldBank = income.value(forKey: XYZAccount.bank) as! String
+        let oldBank = income.bank
         let oldAccountNr = income.accountNr
-        let oldAmount = income.value(forKey: XYZAccount.amount) as! Double
+        let oldAmount = income.amount
         let oldPrincipal = income.value(forKey: XYZAccount.principal) as! Double
         let oldDate = income.value(forKey: XYZAccount.lastUpdate) as! Date
         let oldRepeatAction = income.value(forKey: XYZAccount.repeatAction) as? String ?? ""
@@ -428,7 +428,7 @@ class XYZIncomeTableViewController: UITableViewController,
         notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier!])
         notificationCenter.removeAllDeliveredNotifications()
     
-        let bank = income.value(forKey: XYZAccount.bank) as? String
+        let bank = income.bank
         let accountNr = income.accountNr
         let repeatAction = income.value(forKey: XYZAccount.repeatAction) as? String
         let reminddate = income.value(forKey: XYZAccount.repeatDate) as? Date
@@ -438,7 +438,7 @@ class XYZIncomeTableViewController: UITableViewController,
             
             let content = UNMutableNotificationContent()
             content.title = "Income update reminder"
-            content.body = "\(String(describing: bank!)), \(String(describing: accountNr)) ..."
+            content.body = "\(String(describing: bank)), \(String(describing: accountNr)) ..."
             content.sound = UNNotificationSound.default
             content.userInfo[XYZAccount.type] = true
             content.userInfo[XYZAccount.recordId] = income.value(forKey: XYZAccount.recordId) as? String
@@ -950,7 +950,7 @@ class XYZIncomeTableViewController: UITableViewController,
                     let account = incomeListStored![indexPath.row - 1]
                     let currencyCode = account.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!
                     
-                    incomecell.bank.text = account.value(forKey: XYZAccount.bank) as? String
+                    incomecell.bank.text = account.bank
                     incomecell.account.text = account.accountNr
                     
                     let principal = account.value(forKey: XYZAccount.principal) as? Double
@@ -962,7 +962,7 @@ class XYZIncomeTableViewController: UITableViewController,
                             incomecell.account.text = incomecell.account.text! + ", "
                         }
                         
-                        let earnedAmount = ( ( account.value(forKey: XYZAccount.amount) as? Double ?? 0.0 ) - principal! )
+                        let earnedAmount = account.amount - principal!
                         let percentage = earnedAmount / principal!
                         let amountASNSNumber = NSNumber(value: percentage * 100)
                         let formatter = NumberFormatter()
@@ -990,7 +990,7 @@ class XYZIncomeTableViewController: UITableViewController,
                         incomecell.account.text = incomecell.account.text! + "\(percentageSign)\(formattingCurrencyValue(of: earnedAmount, as: currencyCode)) (\(percentageDiff))"
                     }
                     
-                    incomecell.amount.text = formattingCurrencyValue(of: (account.value(forKey: XYZAccount.amount) as? Double)!, as: currencyCode)
+                    incomecell.amount.text = formattingCurrencyValue(of: account.amount, as: currencyCode)
 
                     cell = incomecell
                     
@@ -1005,7 +1005,7 @@ class XYZIncomeTableViewController: UITableViewController,
                     
                     let total = incomeListStored!.reduce(0.0) { (result, account) in
                      
-                        return result + ( account.value(forKey: XYZAccount.amount) as? Double ?? 0.0 )
+                        return result + account.amount
                     }
                     
                     currencyCode = incomeListStored?.first?.value(forKey: XYZAccount.currencyCode) as? String ?? Locale.current.currencyCode!

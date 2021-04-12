@@ -61,8 +61,32 @@ class XYZAccount : NSManagedObject {
         }
     }
     
-    var amount = 0.0
-    var bank = ""
+    var amount: Double {
+        
+        get {
+            
+            return self.value(forKey: XYZAccount.amount) as? Double ?? 0.0
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZAccount.amount)
+        }
+    }
+    
+    var bank: String {
+    
+        get {
+            
+            return self.value(forKey: XYZAccount.bank) as? String ?? ""
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZAccount.bank)
+        }
+    }
+    
     var currencyCode: String = Locale.current.currencyCode!
     var lastRecordChange = Date()
     var lastUpdate = Date()
@@ -90,8 +114,8 @@ class XYZAccount : NSManagedObject {
         super.init(entity: entity, insertInto: context!)
         
         self.setValue(recordName, forKey: XYZAccount.recordId)
-        self.setValue(bank, forKey: XYZAccount.bank)
-        self.setValue(amount, forKey:XYZAccount.amount)
+        self.bank = bank
+        self.amount = amount
         self.accountNr = accountNr
         self.setValue(date, forKey: XYZAccount.lastUpdate)
         self.setValue(sequenceNr, forKey: XYZAccount.sequenceNr)
