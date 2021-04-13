@@ -143,10 +143,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
                 datecell?.dateInput.text = formattingDate(sender.date ?? Date(), style: .medium)
                 date = sender.date ?? Date()
             
-                if let oldDate = income?.value(forKey: XYZAccount.lastUpdate) as? Date {
-                    
-                    dateUpdatedExplicitly = oldDate != date
-                }
+                dateUpdatedExplicitly = income?.lastUpdate != date
 
             case "remind":
                 dateremindcell?.dateInput.text = formattingDateTime(sender.date ?? Date())
@@ -210,7 +207,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
                                 date = Date()
                             } else {
                                 
-                                date = income?.value(forKey: XYZAccount.lastUpdate) as? Date ?? Date()
+                                date = income?.lastUpdate
                             }
                             
                             datecell?.dateInput.text = formattingDate(date!, style: .medium)
@@ -301,7 +298,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         let oldAccountNr = income.accountNr
         let oldAmount = income.amount
         let oldPrincipal = income.principal
-        let oldDate = income.value(forKey: XYZAccount.lastUpdate)
+        let oldDate = income.lastUpdate
         let oldRepeatAction = income.repeatAction
         let oldRemindDate = income.repeatDate
         let oldCurrencyCode = income.currencyCode
@@ -313,7 +310,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
             income.accountNr = oldAccountNr
             income.amount = oldAmount
             income.principal = oldPrincipal
-            income.setValue(oldDate, forKey: XYZAccount.lastUpdate)
+            income.lastUpdate = oldDate
             income.repeatAction = oldRepeatAction
             income.repeatDate = oldRemindDate
             income.currencyCode = oldCurrencyCode
@@ -381,7 +378,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         income?.accountNr = accountNr
         income?.amount = amount!
         income?.principal = principal!
-        income?.setValue(date, forKey: XYZAccount.lastUpdate)
+        income?.lastUpdate = date!
         income?.repeatAction = repeatAction ?? XYZAccount.RepeatAction.none.rawValue
         income?.repeatDate = reminddate ?? Date.distantPast
         income?.currencyCode = currencyCode!
@@ -404,7 +401,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
             
             bank = income.bank
             accountNr = income.accountNr
-            date = (income.value(forKey: XYZAccount.lastUpdate) as? Date) ?? Date()
+            date = income.lastUpdate
             amount = income.amount
             principal = income.principal
             currencyCode = income.currencyCode

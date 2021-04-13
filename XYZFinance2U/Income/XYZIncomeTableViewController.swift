@@ -307,7 +307,7 @@ class XYZIncomeTableViewController: UITableViewController,
         let oldAccountNr = income.accountNr
         let oldAmount = income.amount
         let oldPrincipal = income.principal
-        let oldDate = income.value(forKey: XYZAccount.lastUpdate) as! Date
+        let oldDate = income.lastUpdate
         let oldRepeatAction = income.repeatAction
         let oldRemindDate = income.repeatDate
         let oldCurrencyCode = income.currencyCode
@@ -384,12 +384,8 @@ class XYZIncomeTableViewController: UITableViewController,
                     
                     sectionIncomeList.append(income)
                 }
-                else if currency == Locale.current.currencyCode {
-                    
-                    sectionIncomeList.append(income)
-                }
             }
-            
+
             if !sectionIncomeList.isEmpty {
                 
                 sectionExpandStatus.append(true)
