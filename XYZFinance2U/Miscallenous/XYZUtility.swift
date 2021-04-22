@@ -318,7 +318,7 @@ func getBudgets(of currency: String) -> [XYZBudget] {
     return (appDelegate?.budgetList.filter({ (budget) -> Bool in
         
         return currency == ""
-               || (budget.value(forKey: XYZBudget.currency) as? String ?? "" )! == currency
+               || budget.currency == currency
     }))!
 }
 

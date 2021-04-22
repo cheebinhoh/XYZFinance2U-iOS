@@ -78,7 +78,9 @@ class XYZBudgetTableViewController: UITableViewController,
     
     func saveNewBudgetWithoutUndo(budget: XYZBudget) {
         
-        if let currencyCode = budget.value(forKey: XYZBudget.currency) as? String, currencyCodes.contains(currencyCode) {
+        let currencyCode = budget.currency
+        
+        if currencyCodes.contains(currencyCode) {
             
             for (sectionIndex, section) in sectionList.enumerated() {
                 
@@ -177,14 +179,13 @@ class XYZBudgetTableViewController: UITableViewController,
         
         let oldName = budget.name
         let oldAmount = budget.amount
-        let oldCurrency = budget.value(forKey: XYZBudget.currency) as? String ?? ""
-        let oldStart = budget.value(forKey: XYZBudget.start) as? Date ?? Date()
-        let oldLength = XYZBudget.Length(rawValue: budget.value(forKey: XYZBudget.length) as?
-                                                    String ?? XYZBudget.Length.none.rawValue)
+        let oldCurrency = budget.currency
+        let oldStart = budget.start
+        let oldLength = budget.length
         let oldColor = budget.color
-        let oldHistoricalAmount = budget.value(forKey: XYZBudget.historicalAmount)
-        let oldHistoricalStart = budget.value(forKey: XYZBudget.historicalStart)
-        let oldHistoricalLength = budget.value(forKey: XYZBudget.historicalLength)
+        let oldHistoricalAmount = budget.historicalAmount
+        let oldHistoricalStart = budget.historicalStart
+        let oldHistoricalLength = budget.historicalLength
         let oldIconName = budget.iconName
         let oldSequenceNr = budget.sequenceNr
         
@@ -194,17 +195,17 @@ class XYZBudgetTableViewController: UITableViewController,
                                    name: oldName,
                                    amount: oldAmount,
                                    currency: oldCurrency,
-                                   length: oldLength!,
+                                   length: oldLength,
                                    start: oldStart,
                                    sequenceNr: oldSequenceNr,
                                    context: managedContext())
             
             budget.color = oldColor
-            budget.setValue(oldHistoricalAmount, forKey: XYZBudget.historicalAmount)
-            budget.setValue(oldHistoricalStart, forKey: XYZBudget.historicalStart)
-            budget.setValue(oldHistoricalLength, forKey: XYZBudget.historicalLength)
+            budget.historicalAmount = oldHistoricalAmount
+            budget.historicalStart = oldHistoricalStart
+            budget.historicalLength = oldHistoricalLength
             budget.iconName = oldIconName
-            budget.setValue(Date(), forKey: XYZBudget.lastRecordChange)
+            budget.lastRecordChange = Date()
             
             self.saveNewBudgetWithoutUndo(budget: budget)
         })
@@ -262,21 +263,21 @@ class XYZBudgetTableViewController: UITableViewController,
         
         for budget in budgetList {
             
-            let currency = budget.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode
+            let currency = budget.currency
             
-            if !currencyCodes.contains(currency!) {
+            if !currencyCodes.contains(currency) {
             
-                currencyCodes.append(currency!)
+                currencyCodes.append(currency)
             }
         }
         
         for budget in budgetList {
             
-            let length = XYZBudget.Length(rawValue: budget.value(forKey: XYZBudget.length) as? String ?? XYZBudget.Length.none.rawValue)
+            let length = budget.length
             
-            if !budgetLengths.contains(length!) {
+            if !budgetLengths.contains(length) {
                 
-                budgetLengths.append(length!)
+                budgetLengths.append(length)
             }
         }
         
@@ -298,13 +299,11 @@ class XYZBudgetTableViewController: UITableViewController,
                 
                 for budget in budgetList {
                     
-                    let budgetCurrency = budget.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode
+                    let budgetCurrency = budget.currency
                     
                     if budgetCurrency == currency {
                         
-                        let budgetLength = XYZBudget.Length(rawValue: budget.value(forKey: XYZBudget.length) as? String ?? XYZBudget.Length.none.rawValue)
-                        
-                        if budgetLength == length {
+                        if budget.length == length {
                             
                             sectionBudgetList.append(budget)
                         }
@@ -671,7 +670,7 @@ class XYZBudgetTableViewController: UITableViewController,
             
             let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]
             let budget = sectionBudgetList![indexPath.row]
-            let currrency = budget.value(forKey: XYZBudget.currency) as? String
+            let currrency = budget.currency
             let budgetGroup = budget.name
             
             expenseDetailTableView.presetBudgetCategory = budgetGroup
@@ -900,7 +899,7 @@ class XYZBudgetTableViewController: UITableViewController,
         
         let name = budget.name
         let amount = effectivebudget.amount ?? 0.0
-        let currency = budget.value(forKey: XYZBudget.currency) as? String
+        let currency = budget.currency
         let budgetColor = XYZColor(rawValue: budget.color)
         
         var period = "∞"
@@ -915,8 +914,8 @@ class XYZBudgetTableViewController: UITableViewController,
         let spendAmount = getTotalSpendAmount(of: budget, from: (appDelegate?.expenseList)!)
 
         let balance = amount - spendAmount
-        cell.balanceAmount.text = formattingCurrencyValue(of: balance, as: currency!)
-        cell.amount.text = formattingCurrencyValue(of: amount, as: currency!)
+        cell.balanceAmount.text = formattingCurrencyValue(of: balance, as: currency)
+        cell.amount.text = formattingCurrencyValue(of: amount, as: currency)
         cell.name.text = name
         cell.length.text = period
         var color = UIColor.black
@@ -1069,7 +1068,7 @@ class XYZBudgetTableViewController: UITableViewController,
             for (index, budget) in sectionBudgetList.enumerated() {
                 
                 budget.sequenceNr = index + to.section * 1000
-                budget.setValue(Date(), forKey: XYZBudget.lastRecordChange)
+                budget.lastRecordChange = Date()
             }
             
             sectionList[fromIndexPath.section].data = sectionBudgetList

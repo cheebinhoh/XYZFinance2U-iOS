@@ -1433,7 +1433,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                     iconNames.append("")
                     for budget in soretedBudgetList {
                         
-                        let icon = budget.value(forKey: XYZBudget.iconName) as? String ?? ""
+                        let icon = budget.iconName
                         
                         iconNames.append(icon)
                     }

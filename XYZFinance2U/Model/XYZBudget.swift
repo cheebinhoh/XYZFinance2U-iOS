@@ -79,10 +79,58 @@ class XYZBudget : NSManagedObject {
         }
     }
     
-    var currency: String = Locale.current.currencyCode ?? ""
-    var historicalAmount = NSData()
-    var historicalStart = NSData()
-    var historicalLength = NSData()
+    var currency: String {
+        
+        get {
+            
+            return self.value(forKey: XYZBudget.currency) as? String ?? Locale.current.currencyCode!
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZBudget.currency)
+        }
+    }
+    
+    var historicalAmount: Data {
+        
+        get {
+            
+            return self.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZBudget.historicalAmount)
+        }
+    }
+    
+    var historicalStart: Data {
+        
+        get {
+            
+            return self.value(forKey: XYZBudget.historicalStart) as? Data ?? NSData() as Data
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZBudget.historicalStart)
+        }
+    }
+    
+    var historicalLength: Data {
+        
+        get {
+            
+            return self.value(forKey: XYZBudget.historicalLength) as? Data ?? NSData() as Data
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZBudget.historicalLength)
+        }
+    }
+    
     var iconName: String {
         
         get {
@@ -96,8 +144,34 @@ class XYZBudget : NSManagedObject {
         }
     }
     
-    var lastRecordChange = Date()
-    var length: Length = .none
+    var lastRecordChange: Date {
+        
+        get {
+            
+            return self.value(forKey: XYZBudget.lastRecordChange) as? Date ?? Date()
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZBudget.lastRecordChange)
+        }
+    }
+    
+    var length: Length {
+        
+        get {
+            
+            let rawValue = self.value(forKey: XYZBudget.length) as? String ?? XYZBudget.Length.none.rawValue
+            
+            return XYZBudget.Length(rawValue: rawValue)!
+        }
+        
+        set {
+            
+            self.setValue(newValue.rawValue, forKey: XYZBudget.length)
+        }
+    }
+    
     var name: String {
         
         get {
@@ -137,7 +211,18 @@ class XYZBudget : NSManagedObject {
         }
     }
     
-    var start = Date()
+    var start: Date {
+    
+        get {
+            
+            return self.value(forKey: XYZBudget.start) as? Date ?? Date()
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZBudget.start)
+        }
+    }
 
     var currentStart: Date? {
         
@@ -216,8 +301,8 @@ class XYZBudget : NSManagedObject {
             return endOfStart
         } else {
             
-            let start = self.value(forKey: XYZBudget.start) as? Date
-            let startComponents = Calendar.current.dateComponents([.day, .month, .year], from: start!)
+            let start = self.start
+            let startComponents = Calendar.current.dateComponents([.day, .month, .year], from: start)
             let startDateOnly = Calendar.current.date(from: startComponents)
  
             let dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: Date())
@@ -281,18 +366,18 @@ class XYZBudget : NSManagedObject {
                                                 start: Date?,
                                                 amount: Double?) {
         
-        let dataAmount = self.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
+        let dataAmount = self.historicalAmount
         let historicalAmount = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataAmount) as? [Double] ?? [Double]()
         
-        let dataStart = self.value(forKey: XYZBudget.historicalStart) as? Data ?? NSData() as Data
+        let dataStart = self.historicalStart
         let historicalStart = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataStart) as? [Date] ?? [Date]()
         
-        let dataLength = self.value(forKey: XYZBudget.historicalLength) as? Data ?? NSData() as Data
+        let dataLength = self.historicalLength
         let historicalLength = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataLength) as? [String] ?? [String]()
         
-        let length = self.value(forKey: XYZBudget.length) as? String ?? Length.none.rawValue
+        let length = self.length.rawValue
         let amount = self.amount
-        let start = self.value(forKey: XYZBudget.start) as? Date ?? Date()
+        let start = self.start
         
         return XYZBudget.getEffectiveBudgetDateAmount(length: length, start: start, amount: amount,
                                                       lengths: historicalLength!.reversed(),
@@ -342,23 +427,23 @@ class XYZBudget : NSManagedObject {
         var amounts = [Double]()
         var lengths = [String]()
 
-        let dataAmount = self.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
+        let dataAmount = self.historicalAmount
         amounts = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataAmount) as? [Double] ?? [Double]()
   
-        let dataStart = self.value(forKey: XYZBudget.historicalStart) as? Data ?? NSData() as Data
+        let dataStart = self.historicalStart
         dates = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataStart) as? [Date] ?? [Date]()
             
-        let dataLength = self.value(forKey: XYZBudget.historicalLength) as? Data ?? NSData() as Data
+        let dataLength = self.historicalLength
         lengths = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataLength) as? [String] ?? [String]()
  
-        let date = self.value(forKey: XYZBudget.start) as? Date
-        dates.append(date!)
+        let date = self.start
+        dates.append(date)
     
         let amount = self.amount
         amounts.append(amount)
         
-        let length = self.value(forKey: XYZBudget.length) as? String
-        lengths.append(length!)
+        let length = self.length.rawValue
+        lengths.append(length)
                                             
         dates = dates.map({ (date) -> Date in
             
@@ -388,24 +473,24 @@ class XYZBudget : NSManagedObject {
         self.recordId = recordName
         self.name = name
         self.amount = amount
-        self.setValue(length.rawValue, forKey: XYZBudget.length)
-        self.setValue(currency, forKey: XYZBudget.currency)
-        self.setValue(start, forKey: XYZBudget.start)
+        self.length = length
+        self.currency = currency
+        self.start = start
         self.sequenceNr = sequenceNr
-        self.setValue(Date(), forKey: XYZBudget.lastRecordChange)
+        self.lastRecordChange = Date()
         
         // optional ...
-        self.setValue("", forKey: XYZBudget.color)
+        self.color = ""
         self.iconName = ""
         
         let dataAmount = try! NSKeyedArchiver.archivedData(withRootObject: [Double](), requiringSecureCoding: false)
-        self.setValue(dataAmount, forKey: XYZBudget.historicalAmount)
+        self.historicalAmount = dataAmount
         
         let dataDate = try! NSKeyedArchiver.archivedData(withRootObject: [Date](), requiringSecureCoding: false)
-        self.setValue(dataDate, forKey: XYZBudget.historicalStart)
+        self.historicalStart = dataDate
         
         let dataLength = try! NSKeyedArchiver.archivedData(withRootObject: [String](), requiringSecureCoding: false)
-        self.setValue(dataLength, forKey: XYZBudget.historicalLength)
+        self.historicalLength = dataLength
     }
 
     override init(entity: NSEntityDescription,

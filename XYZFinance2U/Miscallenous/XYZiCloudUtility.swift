@@ -321,17 +321,17 @@ func createUpdateBudget(record: CKRecord,
     
     budgetToBeUpdated?.name = name ?? ""
     budgetToBeUpdated?.amount = amount!
-    budgetToBeUpdated?.setValue(currency, forKey: XYZBudget.currency)
-    budgetToBeUpdated?.setValue(length, forKey: XYZBudget.length)
+    budgetToBeUpdated?.currency = currency!
+    budgetToBeUpdated?.length = XYZBudget.Length(rawValue: length!) ?? XYZBudget.Length.none
     budgetToBeUpdated?.sequenceNr = sequenceNr!
     budgetToBeUpdated?.color = color
-    budgetToBeUpdated?.setValue(dataStart, forKey: XYZBudget.historicalStart)
-    budgetToBeUpdated?.setValue(dataAmount, forKey: XYZBudget.historicalAmount)
-    budgetToBeUpdated?.setValue(dataLength, forKey: XYZBudget.historicalLength)
+    budgetToBeUpdated?.historicalStart = dataStart
+    budgetToBeUpdated?.historicalAmount = dataAmount
+    budgetToBeUpdated?.historicalLength = dataLength
     budgetToBeUpdated?.iconName = iconName
     
     // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
-    budgetToBeUpdated?.setValue(Date(), forKey: XYZBudget.lastRecordChange)
+    budgetToBeUpdated?.lastRecordChange = Date()
     
     return outputBudgetList
 }
@@ -1162,13 +1162,7 @@ func saveBudgetsToiCloud(database: CKDatabase,
         
         for budget in budgetList {
             
-            if let lastChanged = budget.value(forKey: XYZBudget.lastRecordChange) as? Date {
-                
-                if lastChanged > lastChangeTokenFetch {
-                    
-                    budgetListToBeSaved?.append(budget)
-                }
-            } else {
+            if budget.lastRecordChange > lastChangeTokenFetch {
                 
                 budgetListToBeSaved?.append(budget)
             }
@@ -1225,20 +1219,20 @@ func saveBudgetsToiCloud(database: CKDatabase,
         
         let name = budget.name
         let amount = budget.amount
-        let date = budget.value(forKey: XYZBudget.start) as? Date
-        let currency = budget.value(forKey: XYZBudget.currency) as? String
+        let date = budget.start
+        let currency = budget.currency
         let sequenceNr = budget.sequenceNr
-        let length = budget.value(forKey: XYZBudget.length) as? String
+        let length = budget.length.rawValue
         let color = budget.color
         let iconName = budget.iconName
         
-        let dataAmount = budget.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
+        let dataAmount = budget.historicalAmount
         record.setValue(dataAmount, forKey: XYZBudget.historicalAmount)
         
-        let dataStart = budget.value(forKey: XYZBudget.historicalStart) as? Data ?? NSData() as Data
+        let dataStart = budget.historicalStart
         record.setValue(dataStart, forKey: XYZBudget.historicalStart)
         
-        let dataLength = budget.value(forKey: XYZBudget.historicalLength) as? Data ?? NSData() as Data
+        let dataLength = budget.historicalLength
         record.setValue(dataLength, forKey: XYZBudget.historicalLength)
         
         record.setValue(name, forKey: XYZBudget.name)
