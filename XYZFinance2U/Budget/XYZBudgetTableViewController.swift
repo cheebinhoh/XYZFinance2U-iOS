@@ -86,7 +86,7 @@ class XYZBudgetTableViewController: UITableViewController,
                     
                     let setionBudgetList = section.data as? [XYZBudget]
                     
-                    budget.setValue((setionBudgetList?.count)! + sectionIndex * 1000, forKey: XYZBudget.sequenceNr)
+                    budget.sequenceNr = (setionBudgetList?.count)! + sectionIndex * 1000
                     
                     break
                 }
@@ -175,18 +175,18 @@ class XYZBudgetTableViewController: UITableViewController,
     
     func registerDeleteUndo(budget: XYZBudget) {
         
-        let oldName = budget.value(forKey: XYZBudget.name) as? String ?? ""
-        let oldAmount = budget.value(forKey: XYZBudget.amount) as? Double ?? 0.0
+        let oldName = budget.name
+        let oldAmount = budget.amount
         let oldCurrency = budget.value(forKey: XYZBudget.currency) as? String ?? ""
         let oldStart = budget.value(forKey: XYZBudget.start) as? Date ?? Date()
         let oldLength = XYZBudget.Length(rawValue: budget.value(forKey: XYZBudget.length) as?
                                                     String ?? XYZBudget.Length.none.rawValue)
-        let oldColor = budget.value(forKey: XYZBudget.color)
+        let oldColor = budget.color
         let oldHistoricalAmount = budget.value(forKey: XYZBudget.historicalAmount)
         let oldHistoricalStart = budget.value(forKey: XYZBudget.historicalStart)
         let oldHistoricalLength = budget.value(forKey: XYZBudget.historicalLength)
-        let oldIconName = budget.value(forKey: XYZBudget.iconName)
-        let oldSequenceNr = budget.value(forKey: XYZBudget.sequenceNr) as? Int ?? 0
+        let oldIconName = budget.iconName
+        let oldSequenceNr = budget.sequenceNr
         
         undoManager?.registerUndo(withTarget: self, handler: { (controller) in
             
@@ -199,11 +199,11 @@ class XYZBudgetTableViewController: UITableViewController,
                                    sequenceNr: oldSequenceNr,
                                    context: managedContext())
             
-            budget.setValue(oldColor, forKey: XYZBudget.color)
+            budget.color = oldColor
             budget.setValue(oldHistoricalAmount, forKey: XYZBudget.historicalAmount)
             budget.setValue(oldHistoricalStart, forKey: XYZBudget.historicalStart)
             budget.setValue(oldHistoricalLength, forKey: XYZBudget.historicalLength)
-            budget.setValue(oldIconName, forKey: XYZBudget.iconName)
+            budget.iconName = oldIconName
             budget.setValue(Date(), forKey: XYZBudget.lastRecordChange)
             
             self.saveNewBudgetWithoutUndo(budget: budget)
@@ -313,10 +313,10 @@ class XYZBudgetTableViewController: UITableViewController,
                 
                 sectionBudgetList.sort(by: { (bu1, bu2) -> Bool in
                     
-                    let seq1 = bu1.value(forKey: XYZBudget.sequenceNr) as? Int
-                    let seq2 = bu2.value(forKey: XYZBudget.sequenceNr) as? Int
+                    let seq1 = bu1.sequenceNr
+                    let seq2 = bu2.sequenceNr
                     
-                    return seq1! < seq2!
+                    return seq1 < seq2
                 })
                 
                 if !sectionBudgetList.isEmpty {
@@ -324,8 +324,8 @@ class XYZBudgetTableViewController: UITableViewController,
                     let title = ( length == XYZBudget.Length.none ) ? "\(currency)" : "\(currency) \(length.rawValue.localized())"
                     let sortedSectionBudgetList = sectionBudgetList.sorted { (bud1, bud2) -> Bool in
                     
-                        let seqNr1 = bud1.value(forKey: XYZBudget.sequenceNr) as? Int ?? 0
-                        let seqNr2 = bud2.value(forKey: XYZBudget.sequenceNr) as? Int ?? 0
+                        let seqNr1 = bud1.sequenceNr
+                        let seqNr2 = bud2.sequenceNr
                         
                         return seqNr1 <= seqNr2
                     }
@@ -430,7 +430,7 @@ class XYZBudgetTableViewController: UITableViewController,
         let sectionBudgetList = sectionList[section].data as? [XYZBudget]
         let total = sectionBudgetList?.reduce(0.0, { (result, budget) in
             
-            return result + ((budget.value(forKey: XYZBudget.amount) as? Double) ?? 0.0 )
+            return result + budget.amount
         }) ?? 0.0
         
         return (total, sectionList[section].title!)
@@ -515,7 +515,7 @@ class XYZBudgetTableViewController: UITableViewController,
     func getExpenseList(of budget: XYZBudget, from expenseList: [XYZExpense]) -> [XYZExpense] {
      
         var outputExpenseList = [XYZExpense]()
-        let name = budget.value(forKey: XYZBudget.name) as? String ?? ""
+        let name = budget.name
         
         for expense in expenseList {
             
@@ -539,7 +539,7 @@ class XYZBudgetTableViewController: UITableViewController,
     func getTotalSpendAmount(of budget: XYZBudget, from expenseList: [XYZExpense]) -> Double {
         
         var total = 0.0
-        let name = budget.value(forKey: XYZBudget.name) as? String ?? ""
+        let name = budget.name
         let currentStart = budget.currentStart
         let currentEnd = budget.currentEnd
         
@@ -672,7 +672,7 @@ class XYZBudgetTableViewController: UITableViewController,
             let sectionBudgetList = self.sectionList[indexPath.section].data as? [XYZBudget]
             let budget = sectionBudgetList![indexPath.row]
             let currrency = budget.value(forKey: XYZBudget.currency) as? String
-            let budgetGroup = budget.value(forKey: XYZBudget.name) as? String
+            let budgetGroup = budget.name
             
             expenseDetailTableView.presetBudgetCategory = budgetGroup
             expenseDetailTableView.presetCurrencyCode = currrency
@@ -715,7 +715,7 @@ class XYZBudgetTableViewController: UITableViewController,
                 
                 let expeneseList = self.getExpenseList(of: budget, from: (appDelegate?.expenseList)!)
                 calendarCollectionViewController.expenseList = expeneseList
-                calendarCollectionViewController.budgetGroup = budget.value(forKey: XYZBudget.name) as? String ?? ""
+                calendarCollectionViewController.budgetGroup = budget.name
                 calendarCollectionViewController.setDate(Date())
                 calendarCollectionViewController.budget = budget
                                 
@@ -898,10 +898,10 @@ class XYZBudgetTableViewController: UITableViewController,
         
         let effectivebudget = budget.getEffectiveBudgetDateAmount()
         
-        let name = budget.value(forKey: XYZBudget.name) as? String
+        let name = budget.name
         let amount = effectivebudget.amount ?? 0.0
         let currency = budget.value(forKey: XYZBudget.currency) as? String
-        let budgetColor = XYZColor(rawValue: budget.value(forKey: XYZBudget.color) as? String ?? "")
+        let budgetColor = XYZColor(rawValue: budget.color)
         
         var period = "∞"
         if let currentStart = budget.currentStart, let currentEnd = budget.currentEnd {
@@ -938,10 +938,10 @@ class XYZBudgetTableViewController: UITableViewController,
         cell.balanceAmount.textColor = color
         cell.dotColorView.backgroundColor = (budgetColor?.uiColor())!
         
-        if let iconName = budget.value(forKey: XYZBudget.iconName) as? String, iconName != "" {
+        if budget.iconName != "" {
 
             cell.icon.isHidden = false
-            cell.icon.image = UIImage(named: iconName)
+            cell.icon.image = UIImage(named: budget.iconName)
             cell.icon.image = cell.icon.image?.withRenderingMode(.alwaysTemplate)
             
             if #available(iOS 13.0, *) {
@@ -1017,8 +1017,8 @@ class XYZBudgetTableViewController: UITableViewController,
                 fatalError("Exception: deleteRecordList is expected as [String]")
             }
             
-            let recordName = budget.value(forKey: XYZBudget.recordId) as? String
-            deleteRecordList.append(recordName!)
+            let recordName = budget.recordId
+            deleteRecordList.append(recordName)
             
             let savedDeleteRecordList =  try? NSKeyedArchiver.archivedData(withRootObject: deleteRecordList, requiringSecureCoding: false)
             zone.setValue(savedDeleteRecordList, forKey: XYZiCloudZone.deleteRecordIdList)
@@ -1068,7 +1068,7 @@ class XYZBudgetTableViewController: UITableViewController,
 
             for (index, budget) in sectionBudgetList.enumerated() {
                 
-                budget.setValue(index + to.section * 1000, forKey: XYZBudget.sequenceNr)
+                budget.sequenceNr = index + to.section * 1000
                 budget.setValue(Date(), forKey: XYZBudget.lastRecordChange)
             }
             

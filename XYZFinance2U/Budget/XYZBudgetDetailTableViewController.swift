@@ -51,7 +51,7 @@ class XYZBudgetDetailTableViewController: UITableViewController,
                 if sender.date! > date {
                     
                     historicalStart.append(date)
-                    historicalAmount.append(budget?.value(forKey: XYZBudget.amount) as? Double ?? 0.0)
+                    historicalAmount.append(budget?.amount ?? 0.0)
                     historicalLength.append(budget?.value(forKey: XYZBudget.length) as? String ?? XYZBudget.Length.none.rawValue)
                 }
             } else {
@@ -295,31 +295,31 @@ class XYZBudgetDetailTableViewController: UITableViewController,
 
     func registerUndoSave(budget: XYZBudget) {
         
-        let oldName = budget.value(forKey: XYZBudget.name)
-        let oldAmount = budget.value(forKey: XYZBudget.amount)
+        let oldName = budget.name
+        let oldAmount = budget.amount
         let oldCurrency = budget.value(forKey: XYZBudget.currency)
         let oldStart = budget.value(forKey: XYZBudget.start)
         let oldLength = budget.value(forKey: XYZBudget.length)
-        let oldColor = budget.value(forKey: XYZBudget.color)
+        let oldColor = budget.color
         let oldHistoricalAmount = budget.value(forKey: XYZBudget.historicalAmount)
         let oldHistoricalStart = budget.value(forKey: XYZBudget.historicalStart)
         let oldHistoricalLength = budget.value(forKey: XYZBudget.historicalLength)
-        let oldIconName = budget.value(forKey: XYZBudget.iconName)
-        let oldSequenceNr = budget.value(forKey: XYZBudget.sequenceNr)
+        let oldIconName = budget.iconName
+        let oldSequenceNr = budget.sequenceNr
         
         undoManager?.registerUndo(withTarget: budget, handler: { (budget) in
           
-            budget.setValue(oldName, forKey: XYZBudget.name)
-            budget.setValue(oldAmount, forKey: XYZBudget.amount)
+            budget.name = oldName
+            budget.amount = oldAmount
             budget.setValue(oldCurrency, forKey: XYZBudget.currency)
             budget.setValue(oldStart, forKey: XYZBudget.start)
             budget.setValue(oldLength, forKey: XYZBudget.length)
-            budget.setValue(oldColor, forKey: XYZBudget.color)
+            budget.color = oldColor
             budget.setValue(oldHistoricalAmount, forKey: XYZBudget.historicalAmount)
             budget.setValue(oldHistoricalStart, forKey: XYZBudget.historicalStart)
             budget.setValue(oldHistoricalLength, forKey: XYZBudget.historicalLength)
-            budget.setValue(oldIconName, forKey: XYZBudget.iconName)
-            budget.setValue(oldSequenceNr, forKey: XYZBudget.sequenceNr)
+            budget.iconName = oldIconName
+            budget.sequenceNr = oldSequenceNr
             budget.setValue(Date(), forKey: XYZBudget.lastRecordChange)
             
             self.budgetDelegate?.saveBudget(budget: budget)
@@ -354,10 +354,10 @@ class XYZBudgetDetailTableViewController: UITableViewController,
         let dataDate = try! NSKeyedArchiver.archivedData(withRootObject: processedHistoricalStart, requiringSecureCoding: false)
         let dataLength = try! NSKeyedArchiver.archivedData(withRootObject: processedHistoricalLength, requiringSecureCoding: false)
 
-        if let existingBudgetType = budget?.value(forKey: XYZBudget.name) as? String, existingBudgetType != budgetType {
+        if let existingBudgetType = budget?.name, existingBudgetType != budgetType {
             
             hasChanged = true
-        } else if let existingAmount = budget?.value(forKey: XYZBudget.amount) as? Double, existingAmount != amount {
+        } else if let existingAmount = budget?.amount, existingAmount != amount {
             
             hasChanged = true
         } else if let existingCurrencyCode = budget?.value(forKey: XYZBudget.currency) as? String, existingCurrencyCode != currencyCode {
@@ -370,7 +370,7 @@ class XYZBudgetDetailTableViewController: UITableViewController,
         } else if let existingDate = budget?.value(forKey: XYZBudget.start) as? Date, existingDate != date {
             
             hasChanged = true
-        } else if let existingColor = budget?.value(forKey: XYZBudget.color) as? String, existingColor != color.rawValue {
+        } else if let existingColor = budget?.color, existingColor != color.rawValue {
             
             hasChanged = true
         } else if let existingDataAmount = budget?.value(forKey: XYZBudget.historicalAmount) as? Data, existingDataAmount as Data != dataAmount {
@@ -382,21 +382,21 @@ class XYZBudgetDetailTableViewController: UITableViewController,
         } else if let existingDataLength = budget?.value(forKey: XYZBudget.historicalLength) as? Data, existingDataLength != dataLength {
             
             hasChanged = true
-        } else if let existingIconName = budget?.value(forKey: XYZBudget.iconName) as? String, existingIconName != iconName {
+        } else if let existingIconName = budget?.iconName, existingIconName != iconName {
             
             hasChanged = true
         }
         
-        budget?.setValue(budgetType, forKey: XYZBudget.name)
-        budget?.setValue(amount, forKey: XYZBudget.amount)
+        budget?.name = budgetType
+        budget?.amount = amount
         budget?.setValue(currencyCode, forKey: XYZBudget.currency)
         budget?.setValue(date, forKey: XYZBudget.start)
         budget?.setValue(length.rawValue, forKey: XYZBudget.length)
-        budget?.setValue(color.rawValue, forKey: XYZBudget.color)
+        budget?.color = color.rawValue
         budget?.setValue(dataAmount, forKey: XYZBudget.historicalAmount)
         budget?.setValue(dataDate, forKey: XYZBudget.historicalStart)
         budget?.setValue(dataLength, forKey: XYZBudget.historicalLength)
-        budget?.setValue(iconName, forKey: XYZBudget.iconName)
+        budget?.iconName = iconName
         
         if nil == budget?.value(forKey: XYZBudget.lastRecordChange) as? Date
             || hasChanged {
@@ -446,12 +446,12 @@ class XYZBudgetDetailTableViewController: UITableViewController,
                 navigationItem.title = "Budget".localized()
             }
             
-            budgetType = (budget?.value(forKey: XYZBudget.name) as? String)!
-            amount = (budget?.value(forKey: XYZBudget.amount) as? Double)!
+            budgetType = (budget?.name)!
+            amount = (budget?.amount)!
             currencyCode = budget?.value(forKey: XYZBudget.currency) as? String
             length = XYZBudget.Length(rawValue: (budget?.value(forKey: XYZBudget.length) as? String)!)!
             date = (budget?.value(forKey: XYZBudget.start) as? Date)!
-            color = XYZColor(rawValue: budget?.value(forKey: XYZBudget.color) as? String ?? "")!
+            color = XYZColor(rawValue: budget?.color ?? "")!
             
             let dataAmount = budget?.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
             historicalAmount = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataAmount) as? [Double] ?? [Double]()
@@ -464,7 +464,7 @@ class XYZBudgetDetailTableViewController: UITableViewController,
 
             nrOfHistoricalItems = historicalStart.count
             
-            iconName = budget?.value(forKey: XYZBudget.iconName) as? String ?? ""
+            iconName = budget?.iconName ?? ""
         } else {
             
             budgetType = ""

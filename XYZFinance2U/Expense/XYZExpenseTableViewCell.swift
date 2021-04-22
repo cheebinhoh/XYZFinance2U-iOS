@@ -52,12 +52,12 @@ class XYZExpenseTableViewCell: UITableViewCell {
         let budgetList = appDelegate?.budgetList
         let budget = budgetList?.first(where: { (budget) -> Bool in
         
-            return ( budget.value(forKey: XYZBudget.name) as? String ?? "" ) == budgetCategory
+            return budget.name == budgetCategory
         })
         
         if let _ = icon {
             
-            if let iconName = budget?.value(forKey: XYZBudget.iconName) as? String, iconName != "" {
+            if let iconName = budget?.iconName, iconName != "" {
                 
                 icon.image = UIImage(named: iconName)
                 icon.image = icon.image?.withRenderingMode(.alwaysTemplate)
@@ -74,7 +74,7 @@ class XYZExpenseTableViewCell: UITableViewCell {
             }
         }
         
-        let color = XYZColor(rawValue: budget?.value(forKey: XYZBudget.color) as? String ?? "")
+        let color = XYZColor(rawValue: budget?.color ?? "")
   
         if let _ = colorView {
         

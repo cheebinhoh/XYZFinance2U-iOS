@@ -740,8 +740,8 @@ class XYZMoreTableViewController: UITableViewController,
         
         for budget in (appDelegate?.budgetList)! {
             
-            let recordName = budget.value(forKey: XYZBudget.recordId) as? String
-            deleteRecordList.append(recordName!)
+            let recordName = budget.recordId
+            deleteRecordList.append(recordName)
             
             managedContext()?.delete(budget)
         }

@@ -421,7 +421,7 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
                     tabBarController.popOverNavigatorController = expenseDetailNavigationController
                     
                     let currrency = self.budget?.value(forKey: XYZBudget.currency) as? String
-                    let budgetGroup = self.budget?.value(forKey: XYZBudget.name) as? String
+                    let budgetGroup = self.budget?.name
                     
                     expenseDetailTableView.presetBudgetCategory = budgetGroup
                     expenseDetailTableView.presetCurrencyCode = currrency

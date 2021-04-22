@@ -308,13 +308,8 @@ func createUpdateBudget(record: CKRecord,
     var budgetToBeUpdated: XYZBudget?
     
     budgetToBeUpdated = outputBudgetList.first(where: { (budget) -> Bool in
-
-        guard let recordId = budget.value(forKey: XYZBudget.recordId) as? String else {
-            
-            fatalError("Exception: record is expected")
-        }
         
-        return recordId == recordName
+        return budget.recordId == recordName
     })
     
     if nil == budgetToBeUpdated {
@@ -324,16 +319,16 @@ func createUpdateBudget(record: CKRecord,
         outputBudgetList.append(budgetToBeUpdated!)
     }
     
-    budgetToBeUpdated?.setValue(name, forKey: XYZBudget.name)
-    budgetToBeUpdated?.setValue(amount, forKey: XYZBudget.amount)
+    budgetToBeUpdated?.name = name ?? ""
+    budgetToBeUpdated?.amount = amount!
     budgetToBeUpdated?.setValue(currency, forKey: XYZBudget.currency)
     budgetToBeUpdated?.setValue(length, forKey: XYZBudget.length)
-    budgetToBeUpdated?.setValue(sequenceNr, forKey: XYZBudget.sequenceNr)
-    budgetToBeUpdated?.setValue(color, forKey: XYZBudget.color)
+    budgetToBeUpdated?.sequenceNr = sequenceNr!
+    budgetToBeUpdated?.color = color
     budgetToBeUpdated?.setValue(dataStart, forKey: XYZBudget.historicalStart)
     budgetToBeUpdated?.setValue(dataAmount, forKey: XYZBudget.historicalAmount)
     budgetToBeUpdated?.setValue(dataLength, forKey: XYZBudget.historicalLength)
-    budgetToBeUpdated?.setValue(iconName, forKey: XYZBudget.iconName)
+    budgetToBeUpdated?.iconName = iconName
     
     // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
     budgetToBeUpdated?.setValue(Date(), forKey: XYZBudget.lastRecordChange)
@@ -522,11 +517,7 @@ func fetchiCloudZoneChange(database: CKDatabase,
                         
                         for (index, budget) in budgetList.enumerated() {
                             
-                            guard let recordName = budget.value(forKey: XYZBudget.recordId) as? String else {
-                                fatalError("Exception: record id is expected")
-                            }
-                            
-                            if recordName == recordId.recordName {
+                            if budget.recordId == recordId.recordName {
                                 
                                 aContext?.delete(budget)
                                 budgetList.remove(at: index)
@@ -1226,20 +1217,20 @@ func saveBudgetsToiCloud(database: CKDatabase,
     
     for budget in budgetList {
         
-        let recordName = budget.value(forKey: XYZBudget.recordId) as? String
+        let recordName = budget.recordId
         let customZone = CKRecordZone(zoneName: XYZBudget.type)
-        let ckrecordId = CKRecord.ID(recordName: recordName!, zoneID: customZone.zoneID)
+        let ckrecordId = CKRecord.ID(recordName: recordName, zoneID: customZone.zoneID)
         
         let record = CKRecord(recordType: XYZBudget.type, recordID: ckrecordId)
         
-        let name = budget.value(forKey: XYZBudget.name) as? String
-        let amount = budget.value(forKey: XYZBudget.amount) as? Double
+        let name = budget.name
+        let amount = budget.amount
         let date = budget.value(forKey: XYZBudget.start) as? Date
         let currency = budget.value(forKey: XYZBudget.currency) as? String
-        let sequenceNr = budget.value(forKey: XYZBudget.sequenceNr) as? Int
+        let sequenceNr = budget.sequenceNr
         let length = budget.value(forKey: XYZBudget.length) as? String
-        let color = budget.value(forKey: XYZBudget.color) as? String ?? ""
-        let iconName = budget.value(forKey: XYZBudget.iconName) as? String ?? ""
+        let color = budget.color
+        let iconName = budget.iconName
         
         let dataAmount = budget.value(forKey: XYZBudget.historicalAmount) as? Data ?? NSData() as Data
         record.setValue(dataAmount, forKey: XYZBudget.historicalAmount)

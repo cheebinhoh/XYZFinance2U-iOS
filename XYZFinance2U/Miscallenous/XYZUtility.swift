@@ -349,7 +349,7 @@ func sortBudgets(_ budgetList: [XYZBudget]) -> [XYZBudget] {
     
     return budgetList.sorted() { (acc1, acc2) in
         
-        return ( acc1.value(forKey: XYZBudget.sequenceNr) as! Int ) < ( acc2.value(forKey: XYZBudget.sequenceNr) as! Int)
+        return acc1.sequenceNr < acc2.sequenceNr 
     }
 }
 

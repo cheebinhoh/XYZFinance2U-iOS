@@ -62,13 +62,11 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                     
                     let appDelegate = UIApplication.shared.delegate as? AppDelegate
                     let budget = appDelegate?.budgetList.first(where: { (budget) -> Bool in
-                    
-                        let name = budget.value(forKey: XYZBudget.name) as? String
                         
-                        return name == item!
+                        return budget.name == item!
                     })
                     
-                    iconName = budget?.value(forKey: XYZBudget.iconName) as? String ?? ""
+                    iconName = budget?.iconName ?? ""
                     
                 } else {
                     
@@ -446,12 +444,10 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let budget = appDelegate?.budgetList.first(where: { (budget) -> Bool in
             
-            let name = budget.value(forKey: XYZBudget.name) as? String
-            
-            return name == budgetCategory
+            return budget.name == budgetCategory
         })
         
-        iconName = budget?.value(forKey: XYZBudget.iconName) as? String ?? ""
+        iconName = budget?.iconName ?? ""
         
         budgetList = getBudgets(of: currencyCode!)
         
@@ -1421,18 +1417,16 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                     
                     let soretedBudgetList = budgetList.sorted { (bud1, bud2) -> Bool in
                         
-                        let type1 = bud1.value(forKey: XYZBudget.name) as? String
-                        let type2 = bud2.value(forKey: XYZBudget.name) as? String
+                        let type1 = bud1.name
+                        let type2 = bud2.name
                         
-                        return type1!.lowercased() < type2!.lowercased()
+                        return type1.lowercased() < type2.lowercased()
                     }
                     
                     budgetCategories.append("")
                     for budget in soretedBudgetList {
                      
-                        let type = budget.value(forKey: XYZBudget.name) as? String
-                        
-                        budgetCategories.append(type!)
+                        budgetCategories.append(budget.name)
                     }
                     
                     var iconNames = [String]()

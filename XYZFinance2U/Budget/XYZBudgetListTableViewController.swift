@@ -47,7 +47,7 @@ class XYZBudgetListTableViewController: UITableViewController {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let expenseList = (appDelegate?.expenseList)!
-        let budgetName = budget?.value(forKey: XYZBudget.name) as? String ?? ""
+        let budgetName = budget?.name ?? ""
         
         navigationItem.title = budgetName
         cellList = [TableCell]()
@@ -234,8 +234,7 @@ class XYZBudgetListTableViewController: UITableViewController {
         
         periodExpenseList.forEach { (expense) in
             
-            let amount = expense.value(forKey: XYZBudget.amount) as? Double ?? 0.0
-            spentAmount = spentAmount + amount
+            spentAmount = spentAmount + expense.amount
         }
         
         let balanceAmount = cellList[indexPath.row].amount - spentAmount
@@ -287,7 +286,7 @@ class XYZBudgetListTableViewController: UITableViewController {
         expenseListViewController.addBackButton()
         expenseListViewController.loadData()
         expenseListViewController.headerPretext = "\(formattingDate(cellList[indexPath.row].start, style: .short)) ... \(formattingDate(cellList[indexPath.row].until, style: .short))"
-        expenseListViewController.navigationItem.title = budget?.value(forKey: XYZBudget.name) as? String
+        expenseListViewController.navigationItem.title = budget?.name
         expenseListViewController.readonly = true
         expenseListViewController.tableView.allowsSelection = false
         expenseListViewController.monthYearDate = cellList[indexPath.row].start

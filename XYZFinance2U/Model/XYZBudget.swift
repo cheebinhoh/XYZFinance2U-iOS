@@ -53,18 +53,90 @@ class XYZBudget : NSManagedObject {
     static let sequenceNr = "sequenceNr"
     static let start = "start"
     
-    var amount = 0.0
-    var color = ""
+    var amount: Double {
+        
+        get {
+            
+            return self.value(forKey: XYZBudget.amount) as? Double ?? 0.0
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZBudget.amount)
+        }
+    }
+    
+    var color: String {
+        
+        get {
+            
+            return self.value(forKey: XYZBudget.color) as? String ?? ""
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZBudget.color)
+        }
+    }
+    
     var currency: String = Locale.current.currencyCode ?? ""
     var historicalAmount = NSData()
     var historicalStart = NSData()
     var historicalLength = NSData()
-    var iconName = ""
+    var iconName: String {
+        
+        get {
+            
+            return self.value(forKey: XYZBudget.iconName) as? String ?? ""
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZBudget.iconName)
+        }
+    }
+    
     var lastRecordChange = Date()
     var length: Length = .none
-    var name = ""
-    var recordId = ""
-    var sequenceNr = 0
+    var name: String {
+        
+        get {
+            
+            return self.value(forKey: XYZBudget.name) as? String ?? ""
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZBudget.name)
+        }
+    }
+    
+    var recordId: String {
+        
+        get {
+            
+            return self.value(forKey: XYZBudget.recordId) as? String ?? ""
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZBudget.recordId)
+        }
+    }
+    
+    var sequenceNr: Int {
+        
+        get {
+            
+            return self.value(forKey: XYZBudget.sequenceNr) as? Int ?? 0
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZBudget.sequenceNr)
+        }
+    }
+    
     var start = Date()
 
     var currentStart: Date? {
@@ -219,7 +291,7 @@ class XYZBudget : NSManagedObject {
         let historicalLength = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataLength) as? [String] ?? [String]()
         
         let length = self.value(forKey: XYZBudget.length) as? String ?? Length.none.rawValue
-        let amount = self.value(forKey: XYZBudget.amount) as? Double ?? 0.0
+        let amount = self.amount
         let start = self.value(forKey: XYZBudget.start) as? Date ?? Date()
         
         return XYZBudget.getEffectiveBudgetDateAmount(length: length, start: start, amount: amount,
@@ -282,8 +354,8 @@ class XYZBudget : NSManagedObject {
         let date = self.value(forKey: XYZBudget.start) as? Date
         dates.append(date!)
     
-        let amount = self.value(forKey: XYZBudget.amount) as? Double
-        amounts.append(amount!)
+        let amount = self.amount
+        amounts.append(amount)
         
         let length = self.value(forKey: XYZBudget.length) as? String
         lengths.append(length!)
@@ -313,18 +385,18 @@ class XYZBudget : NSManagedObject {
                                                 in: context!)!
         super.init(entity: entity, insertInto: context!)
         
-        self.setValue(recordName, forKey: XYZBudget.recordId)
-        self.setValue(name, forKey: XYZBudget.name)
-        self.setValue(amount, forKey: XYZBudget.amount)
+        self.recordId = recordName
+        self.name = name
+        self.amount = amount
         self.setValue(length.rawValue, forKey: XYZBudget.length)
         self.setValue(currency, forKey: XYZBudget.currency)
         self.setValue(start, forKey: XYZBudget.start)
-        self.setValue(sequenceNr, forKey: XYZBudget.sequenceNr)
+        self.sequenceNr = sequenceNr
         self.setValue(Date(), forKey: XYZBudget.lastRecordChange)
         
         // optional ...
         self.setValue("", forKey: XYZBudget.color)
-        self.setValue("", forKey: XYZBudget.iconName)
+        self.iconName = ""
         
         let dataAmount = try! NSKeyedArchiver.archivedData(withRootObject: [Double](), requiringSecureCoding: false)
         self.setValue(dataAmount, forKey: XYZBudget.historicalAmount)
