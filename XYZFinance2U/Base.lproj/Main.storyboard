@@ -861,7 +861,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qDS-1l-Ky4" userLabel="Command">
+                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qDS-1l-Ky4" userLabel="Command">
                                             <rect key="frame" x="16" y="30" width="343" height="20.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1137,7 +1137,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HtK-nY-joS" userLabel="Command">
-                                            <rect key="frame" x="167" y="4.5" width="41.5" height="35"/>
+                                            <rect key="frame" x="50" y="4.5" width="41.5" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="zF5-Sr-6uZ"/>
                                             </constraints>
@@ -1148,7 +1148,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="HtK-nY-joS" secondAttribute="trailing" id="GWG-jm-JXL"/>
-                                        <constraint firstItem="HtK-nY-joS" firstAttribute="centerX" secondItem="Ril-0t-baW" secondAttribute="centerX" id="XjE-jG-vKv"/>
+                                        <constraint firstItem="HtK-nY-joS" firstAttribute="leading" secondItem="Ril-0t-baW" secondAttribute="leading" constant="50" id="XjE-jG-vKv"/>
                                         <constraint firstItem="HtK-nY-joS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ril-0t-baW" secondAttribute="leadingMargin" id="kzz-tR-RzI"/>
                                         <constraint firstItem="HtK-nY-joS" firstAttribute="centerY" secondItem="Ril-0t-baW" secondAttribute="centerY" id="rDK-mM-2hJ"/>
                                     </constraints>
@@ -2008,7 +2008,7 @@ Chee Bin HOH, 2017</string>
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l1b-gI-J2V" userLabel="Command">
+                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l1b-gI-J2V" userLabel="Command">
                                             <rect key="frame" x="16" y="30" width="343" height="20.5"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                             <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
