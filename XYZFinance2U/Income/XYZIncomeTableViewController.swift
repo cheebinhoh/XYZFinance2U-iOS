@@ -440,29 +440,29 @@ class XYZIncomeTableViewController: UITableViewController,
             var units: Set<Calendar.Component> = [ .minute ]
             switch repeatAction {
                 
-                case XYZAccount.RepeatAction.none.rawValue:
+                case XYZAccount.RepeatAction.none:
                     units.insert(.year)
                     units.insert(.month)
                     units.insert(.day)
                     units.insert(.hour)
                     units.insert(.minute)
                     
-                case XYZAccount.RepeatAction.monthly.rawValue:
+                case XYZAccount.RepeatAction.monthly:
                     units.insert(.month)
                     units.insert(.day)
                     units.insert(.hour)
                     units.insert(.minute)
                     
-                case XYZAccount.RepeatAction.weekly.rawValue:
+                case XYZAccount.RepeatAction.weekly:
                     units.insert(.weekday)
                     units.insert(.hour)
                     units.insert(.minute)
                     
-                case XYZAccount.RepeatAction.daily.rawValue:
+                case XYZAccount.RepeatAction.daily:
                     units.insert(.hour)
                     units.insert(.minute)
                     
-                case XYZAccount.RepeatAction.hourly.rawValue:
+                case XYZAccount.RepeatAction.hourly:
                     units.insert(.minute)
                     
                 default:
@@ -472,7 +472,7 @@ class XYZIncomeTableViewController: UITableViewController,
             
             let dateInfo = Calendar.current.dateComponents(units, from: reminddate)
             
-            let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: ( repeatAction ) != XYZAccount.RepeatAction.none.rawValue )
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateInfo, repeats: ( repeatAction ) != XYZAccount.RepeatAction.none )
             
             let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
             

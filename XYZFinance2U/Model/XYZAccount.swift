@@ -152,16 +152,18 @@ class XYZAccount : NSManagedObject {
         }
     }
     
-    var repeatAction: String {
+    var repeatAction: XYZAccount.RepeatAction {
         
         get {
             
-            return self.value(forKey: XYZAccount.repeatAction) as? String ?? XYZAccount.RepeatAction.none.rawValue
+            let rawValue = self.value(forKey: XYZAccount.repeatAction) as? String ?? XYZAccount.RepeatAction.none.rawValue
+            
+            return XYZAccount.RepeatAction(rawValue: rawValue) ?? XYZAccount.RepeatAction.none
         }
         
         set {
             
-            self.setValue(newValue, forKey: XYZAccount.repeatAction)
+            self.setValue(newValue.rawValue, forKey: XYZAccount.repeatAction)
         }
     }
     

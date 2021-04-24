@@ -74,12 +74,12 @@ func createUpdateAccount(record: CKRecord,
         
         incomeToBeUpdated?.repeatDate = repeatDate!
         
-        if let _ = XYZAccount.RepeatAction(rawValue: repeatAction ?? "") {
+        if let ra = XYZAccount.RepeatAction(rawValue: repeatAction ?? "") {
             
-            incomeToBeUpdated?.repeatAction = repeatAction!
+            incomeToBeUpdated?.repeatAction = ra
         } else {
             
-            incomeToBeUpdated?.repeatAction = XYZAccount.RepeatAction.none.rawValue
+            incomeToBeUpdated?.repeatAction = XYZAccount.RepeatAction.none
         }
     }
 
@@ -1119,7 +1119,7 @@ func saveAccountsToiCloud(database: CKDatabase,
         if repeatDate != Date.distantPast {
 
             record.setValue(repeatDate, forKey: XYZAccount.repeatDate)
-            record.setValue(repeatAction, forKey: XYZAccount.repeatAction)
+            record.setValue(repeatAction.rawValue, forKey: XYZAccount.repeatAction)
         } else {
             
             record.setValue(nil, forKey: XYZAccount.repeatDate)

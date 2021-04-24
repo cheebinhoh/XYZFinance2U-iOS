@@ -379,7 +379,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         income?.amount = amount!
         income?.principal = principal!
         income?.lastUpdate = date!
-        income?.repeatAction = repeatAction ?? XYZAccount.RepeatAction.none.rawValue
+        income?.repeatAction =  XYZAccount.RepeatAction(rawValue: repeatAction ?? "") ?? XYZAccount.RepeatAction.none
         income?.repeatDate = reminddate ?? Date.distantPast
         income?.currencyCode = currencyCode!
         income?.lastRecordChange = Date()
@@ -410,7 +410,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
             
                 hasUpdateReminder = true
                 reminddate = income.repeatDate
-                repeatAction = income.repeatAction
+                repeatAction = income.repeatAction.rawValue
             }
         }
         
