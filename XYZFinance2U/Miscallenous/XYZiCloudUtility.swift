@@ -84,7 +84,7 @@ func createUpdateAccount(record: CKRecord,
     }
 
     // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
-    incomeToBeUpdated?.setValue(Date(), forKey: XYZAccount.lastRecordChange)
+    incomeToBeUpdated?.lastRecordChange = Date()
 
     return outputIncomeList
 }

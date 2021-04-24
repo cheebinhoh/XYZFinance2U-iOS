@@ -321,7 +321,7 @@ class XYZIncomeTableViewController: UITableViewController,
             income.repeatDate = oldRemindDate
             income.currencyCode = oldCurrencyCode
             income.sequenceNr = oldSequenceNr
-            income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
+            income.lastRecordChange = Date()
             
             for (index, section) in self.sectionList.enumerated() {
                 
@@ -517,7 +517,7 @@ class XYZIncomeTableViewController: UITableViewController,
                     
                     if oldSequenceNr != sequenceNr {
                         
-                        income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
+                        income.lastRecordChange = Date()
                     }
                 }
             }
@@ -1120,7 +1120,7 @@ class XYZIncomeTableViewController: UITableViewController,
                     let sequenceNr = 1000 * sectionIndex + rowIndex // each section is allowed to have 999 records, which is pretty large number, consider the purpose of it.
                     income.sequenceNr = sequenceNr
                     
-                    income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
+                    income.lastRecordChange = Date()
                 }
             }
         }

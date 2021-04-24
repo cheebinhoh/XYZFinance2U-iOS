@@ -100,7 +100,19 @@ class XYZAccount : NSManagedObject {
         }
     }
     
-    var lastRecordChange = Date()
+    var lastRecordChange: Date {
+        
+        get {
+            
+            return self.value(forKey: XYZAccount.lastRecordChange) as? Date ?? Date()
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZAccount.lastRecordChange)
+        }
+    }
+    
     var lastUpdate: Date {
         
         get {

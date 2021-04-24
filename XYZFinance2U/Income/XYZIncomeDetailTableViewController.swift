@@ -315,7 +315,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
             income.repeatDate = oldRemindDate
             income.currencyCode = oldCurrencyCode
             income.sequenceNr = oldSequenceNr
-            income.setValue(Date(), forKey: XYZAccount.lastRecordChange)
+            income.lastRecordChange = Date()
             
             self.incomeDelegate?.saveIncome(income: income)
         })
@@ -382,7 +382,7 @@ class XYZIncomeDetailTableViewController: UITableViewController,
         income?.repeatAction = repeatAction ?? XYZAccount.RepeatAction.none.rawValue
         income?.repeatDate = reminddate ?? Date.distantPast
         income?.currencyCode = currencyCode!
-        income?.setValue(Date(), forKey: XYZAccount.lastRecordChange)
+        income?.lastRecordChange = Date()
     }
 
     func loadData() {
