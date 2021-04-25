@@ -334,10 +334,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                 fatalError("Exception: iCloudZone is expected")
             }
             
-            guard let data = zone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
-                
-                fatalError("Exception: data is expected for deleteRecordIdList")
-            }
+            let data = zone.deleteRecordIdList
             
             guard var deleteRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
                 
@@ -348,7 +345,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
             deleteRecordList.append(recordName)
             
             let savedDeleteRecordList = try? NSKeyedArchiver.archivedData(withRootObject: deleteRecordList, requiringSecureCoding: false)
-            zone.setValue(savedDeleteRecordList, forKey: XYZiCloudZone.deleteRecordIdList)
+            zone.deleteRecordIdList = savedDeleteRecordList!
         }
         
         if nil == expense?.value(forKey: XYZExpense.lastRecordChange) as? Date

@@ -383,18 +383,14 @@ class XYZBudgetTableViewController: UITableViewController,
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let icloudZones = appDelegate?.privateiCloudZones.filter({ (icloudZone) -> Bool in
             
-            let name = icloudZone.value(forKey: XYZiCloudZone.name) as? String ?? ""
-            
-            return name == XYZBudget.type
+            return icloudZone.name == XYZBudget.type
         })
         
         fetchiCloudZoneChange(database: CKContainer.default().privateCloudDatabase, zones: zonesToBeFetched, icloudZones: icloudZones!, completionblock: {
             
             for (_, icloudzone) in (icloudZones?.enumerated())! {
                 
-                let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
-                
-                switch zName! {
+                switch icloudzone.name {
                     case XYZBudget.type:
                         appDelegate?.budgetList = (icloudzone.data as? [XYZBudget])!
                         appDelegate?.budgetList = sortBudgets((appDelegate?.budgetList)!)
@@ -409,7 +405,7 @@ class XYZBudgetTableViewController: UITableViewController,
                         }
                     
                     default:
-                        fatalError("Exception: \(String(describing: zName)) is not supported")
+                        fatalError("Exception: \(String(describing: icloudzone.name)) is not supported")
                 }
             }
         })
@@ -1006,10 +1002,7 @@ class XYZBudgetTableViewController: UITableViewController,
                 fatalError("Exception: iCloudZoen is expected")
             }
             
-            guard let data = zone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
-                
-                fatalError("Exception: data is expected for deleteRecordIdList")
-            }
+            let data = zone.deleteRecordIdList
             
             guard var deleteRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
                 
@@ -1019,8 +1012,8 @@ class XYZBudgetTableViewController: UITableViewController,
             let recordName = budget.recordId
             deleteRecordList.append(recordName)
             
-            let savedDeleteRecordList =  try? NSKeyedArchiver.archivedData(withRootObject: deleteRecordList, requiringSecureCoding: false)
-            zone.setValue(savedDeleteRecordList, forKey: XYZiCloudZone.deleteRecordIdList)
+            let savedDeleteRecordList = try? NSKeyedArchiver.archivedData(withRootObject: deleteRecordList, requiringSecureCoding: false)
+            zone.deleteRecordIdList = savedDeleteRecordList!
         }
         
         let indexPath = self.indexPath(budget)

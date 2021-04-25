@@ -45,16 +45,15 @@ class AppDelegate: UIResponder,
         
         for icloudZone in self.shareiCloudZones {
 
-            if let name = icloudZone.value(forKey: XYZiCloudZone.name) as? String {
+            let name = icloudZone.name
+            
+            if name != "" {
                 
                 let privateiCloudZone = self.privateiCloudZones.first(where: {
                     
-                    guard let privateName = $0.value(forKey: XYZiCloudZone.name) as? String else {
-                        
-                        return false
-                    }
+                    let privateName = $0.name
                     
-                    return name == privateName
+                    return privateName != "" && name == privateName
                 })
                 
                 if let _ = privateiCloudZone {
@@ -62,9 +61,9 @@ class AppDelegate: UIResponder,
                     icloudZone.data = privateiCloudZone?.data
                 }
                 
-                if let ownerName = icloudZone.value(forKey: XYZiCloudZone.ownerName) as? String, ownerName != "" {
+                if icloudZone.ownerName != "" {
                     
-                    let zoneId = CKRecordZone.ID(zoneName: name, ownerName: ownerName)
+                    let zoneId = CKRecordZone.ID(zoneName: name, ownerName: icloudZone.ownerName)
                     let zone = CKRecordZone(zoneID: zoneId)
                 
                     zones.append(zone)
@@ -80,9 +79,7 @@ class AppDelegate: UIResponder,
                     
                     for iCloudZone in self.shareiCloudZones {
                         
-                        let name = iCloudZone.value(forKey: XYZiCloudZone.name) as? String
-                        
-                        switch name! {
+                        switch iCloudZone.name {
                         
                             case XYZExpense.type:
                                 guard let tabBarController = self.window?.rootViewController as? XYZMainUITabBarController else {
@@ -108,7 +105,7 @@ class AppDelegate: UIResponder,
                                 expenseView.reloadData()
                                 
                             default:
-                                fatalError("Exception: \(String(describing: name)) is not supported")
+                                fatalError("Exception: \(String(describing: iCloudZone.name)) is not supported")
                         } // switch name!
                     } // for iCloudZone in self.shareiCloudZones
                 } // DispatchQueue.main.async
@@ -136,22 +133,18 @@ class AppDelegate: UIResponder,
             
             for icloudZone in self.shareiCloudZones {
                 
-                if let name = icloudZone.value(forKey: XYZiCloudZone.name) as? String,
-                    name == cloudKitShareMetadata.share.recordID.zoneID.zoneName {
+                if icloudZone.name == cloudKitShareMetadata.share.recordID.zoneID.zoneName {
                  
-                    if let owner = icloudZone.value(forKey: XYZiCloudZone.ownerName) as? String, owner == cloudKitShareMetadata.share.recordID.zoneID.ownerName {
+                    if icloudZone.ownerName == cloudKitShareMetadata.share.recordID.zoneID.ownerName {
                         
                         let newZone = CKRecordZone(zoneID: cloudKitShareMetadata.share.recordID.zoneID)
                         zones.append(newZone)
                         
                         let privateiCloudZone = self.privateiCloudZones.first(where: {
                                 
-                            guard let privateName = $0.value(forKey: XYZiCloudZone.name) as? String else {
-                                    
-                                    return false
-                            }
+                            let privateName = $0.name
                             
-                            return privateName == name
+                            return privateName != "" && privateName == icloudZone.name
                         })
                      
                         if let _ = privateiCloudZone {
@@ -174,7 +167,7 @@ class AppDelegate: UIResponder,
                                                    owner: cloudKitShareMetadata.share.recordID.zoneID.ownerName,
                                                    context: managedContext())
                     
-                    icloudZone.setValue(true, forKey: XYZiCloudZone.inShareDB)
+                    icloudZone.inShareDB = true
                     self.shareiCloudZones.append(icloudZone)
                     
                     let newZone = CKRecordZone(zoneID: cloudKitShareMetadata.share.recordID.zoneID)
@@ -186,12 +179,9 @@ class AppDelegate: UIResponder,
                     
                     let privateiCloudZone = self.privateiCloudZones.first(where: {
                         
-                        guard let privateName = $0.value(forKey: XYZiCloudZone.name) as? String else {
-                            
-                            return false
-                        }
+                        let privateName = $0.name
                         
-                        return privateName == cloudKitShareMetadata.share.recordID.zoneID.zoneName
+                        return privateName != "" && privateName == cloudKitShareMetadata.share.recordID.zoneID.zoneName
                     })
                     
                     if let _ = privateiCloudZone {
@@ -213,10 +203,8 @@ class AppDelegate: UIResponder,
                     DispatchQueue.main.async {
                         
                         for iCloudZone in [shareicloudZone!] {
-                            
-                            let name = iCloudZone.value(forKey: XYZiCloudZone.name) as? String
-                        
-                            switch name! {
+
+                            switch iCloudZone.name {
                             
                                 case XYZExpense.type:
                                     guard let tabBarController = self.window?.rootViewController as? XYZMainUITabBarController else {
@@ -274,7 +262,7 @@ class AppDelegate: UIResponder,
                                     })
                                 
                                 default:
-                                    fatalError("Exception: \(String(describing: name)) is not supported")
+                                    fatalError("Exception: \(String(describing: iCloudZone.name)) is not supported")
                             } // switch name!
                         } // for iCloudZone in [shareicloudZone!]
                     } // DispatchQueue.main.async
@@ -649,7 +637,7 @@ class AppDelegate: UIResponder,
       
         for icloudzone in iCloudZones {
             
-            switch (icloudzone.value(forKey: XYZiCloudZone.name) as? String )! {
+            switch icloudzone.name {
                 
                 case XYZAccount.type:
                     icloudzone.data = incomeList  // We do not need to keep it in persistent state as it is already stored core data
@@ -657,7 +645,7 @@ class AppDelegate: UIResponder,
                     privateiCloudZones.append(icloudzone)
                 
                 case XYZExpense.type:
-                    if let inShareDB = icloudzone.value(forKey: XYZiCloudZone.inShareDB) as? Bool, inShareDB {
+                    if icloudzone.inShareDB {
                         
                         expenseShareiCloudZone = icloudzone
                         shareiCloudZones.append(icloudzone)
@@ -760,9 +748,8 @@ class AppDelegate: UIResponder,
                         for icloudzone in self.privateiCloudZones {
                             
                             var tableViewToBeReload : XYZTableViewReloadData?
-                            let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
-                            
-                            switch zName! {
+
+                            switch icloudzone.name {
                                 
                                 case XYZAccount.type:
                                     self.incomeList = (icloudzone.data as? [XYZAccount])!
@@ -779,7 +766,7 @@ class AppDelegate: UIResponder,
                                     tableViewToBeReload = budgetView
                                     
                                 default:
-                                    fatalError("Exception: \(String(describing: zName)) is not supported")
+                                    fatalError("Exception: \(String(describing: icloudzone.name )) is not supported")
                             }
                             
                             if let tableViewToBeReload = tableViewToBeReload {
@@ -808,7 +795,9 @@ class AppDelegate: UIResponder,
                 
                 var changeToken: CKServerChangeToken? = nil
                 
-                if let data = icloudzone.value(forKey: XYZiCloudZone.changeToken) as? Data {
+                let data = icloudzone.changeToken
+                
+                if data.count > 0 {
                     
                     changeToken = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? CKServerChangeToken
                 }
@@ -822,7 +811,9 @@ class AppDelegate: UIResponder,
 
                     var changeToken: CKServerChangeToken? = nil
                     
-                    if let data = icloudzone.value(forKey: XYZiCloudZone.changeToken) as? Data {
+                    let data = icloudzone.changeToken
+                    
+                    if data.count > 0 {
                         
                         changeToken = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? CKServerChangeToken 
                     }
@@ -831,11 +822,9 @@ class AppDelegate: UIResponder,
                                        || nil == changeTokens[index]
                                        || changeToken != changeTokens[index] )
 
-                    let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
-                    
                     var tableViewToBeReload : XYZTableViewReloadData?
                     
-                    switch zName! {
+                    switch icloudzone.name {
                         
                         case XYZAccount.type:
                             self.incomeList = (icloudzone.data as? [XYZAccount])!
@@ -852,7 +841,7 @@ class AppDelegate: UIResponder,
                             tableViewToBeReload = budgetView
                         
                         default:
-                            fatalError("Exception: \(String(describing: zName)) is not supported")
+                            fatalError("Exception: \(String(describing: icloudzone.name)) is not supported")
                     }
                     
                     if let tableViewToBeReload = tableViewToBeReload {

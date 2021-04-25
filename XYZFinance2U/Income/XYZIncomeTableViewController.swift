@@ -269,10 +269,7 @@ class XYZIncomeTableViewController: UITableViewController,
                 fatalError("Exception: iCloudZoen is expected")
             }
             
-            guard let data = zone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
-                
-                fatalError("Exception: data is expected for deleteRecordIdList")
-            }
+            let data = zone.deleteRecordIdList
             
             guard var deleteRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
                 
@@ -283,7 +280,7 @@ class XYZIncomeTableViewController: UITableViewController,
             deleteRecordList.append(recordName)
             
             let savedDeleteRecordList = try? NSKeyedArchiver.archivedData(withRootObject: deleteRecordList, requiringSecureCoding: false)
-            zone.setValue(savedDeleteRecordList, forKey: XYZiCloudZone.deleteRecordIdList)
+            zone.deleteRecordIdList = savedDeleteRecordList!
         }
     }
     
@@ -779,18 +776,14 @@ class XYZIncomeTableViewController: UITableViewController,
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let icloudZones = appDelegate?.privateiCloudZones.filter({ (icloudZone) -> Bool in
         
-            let name = icloudZone.value(forKey: XYZiCloudZone.name) as? String ?? ""
-            
-            return name == XYZAccount.type
+            return icloudZone.name == XYZAccount.type
         })
 
         fetchiCloudZoneChange(database: CKContainer.default().privateCloudDatabase, zones: zonesToBeFetched, icloudZones: icloudZones!, completionblock: {
             
             for (_, icloudzone) in (icloudZones?.enumerated())! {
                 
-                let zName = icloudzone.value(forKey: XYZiCloudZone.name) as? String
-                
-                switch zName! {
+                switch icloudzone.name {
                     
                     case XYZAccount.type:
                         appDelegate?.incomeList = (icloudzone.data as? [XYZAccount])!
@@ -806,7 +799,7 @@ class XYZIncomeTableViewController: UITableViewController,
                         }
      
                     default:
-                        fatalError("Exception: \(String(describing: zName)) is not supported")
+                        fatalError("Exception: \(String(describing: icloudzone.name)) is not supported")
                 }
             }
         })

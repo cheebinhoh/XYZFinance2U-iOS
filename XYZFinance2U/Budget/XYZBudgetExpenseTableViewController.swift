@@ -288,10 +288,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
                     fatalError("Exception: iCloudZoen is expected")
                 }
                 
-                guard let data = zone.value(forKey: XYZiCloudZone.deleteRecordIdList) as? Data else {
-                    
-                    fatalError("Exception: data is expected for deleteRecordIdList")
-                }
+                let data = zone.deleteRecordIdList
                 
                 guard var deleteRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
                     
@@ -302,12 +299,9 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
                 deleteRecordList.append(recordName!)
                 
                 let savedDeleteRecordList = try? NSKeyedArchiver.archivedData(withRootObject: deleteRecordList, requiringSecureCoding: false)
-                zone.setValue(savedDeleteRecordList, forKey: XYZiCloudZone.deleteRecordIdList)
+                zone.deleteRecordIdList = savedDeleteRecordList!
                 
-                guard let shareRecordNameData = zone.value(forKey: XYZiCloudZone.deleteShareRecordIdList) as? Data else {
-                    
-                    fatalError("Exception: data is expected for deleteRecordIdList")
-                }
+                let shareRecordNameData = zone.deleteShareRecordIdList
                 
                 guard var deleteShareRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(shareRecordNameData) as? [String] else {
                     
@@ -319,7 +313,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
                     deleteShareRecordList.append(shareRecordName)
                     
                     let savedDeleteShareRecordList = try? NSKeyedArchiver.archivedData(withRootObject: deleteShareRecordList, requiringSecureCoding: false)
-                    zone.setValue(savedDeleteShareRecordList, forKey: XYZiCloudZone.deleteShareRecordIdList)
+                    zone.deleteShareRecordIdList = savedDeleteShareRecordList!
                 }
             }
         }
