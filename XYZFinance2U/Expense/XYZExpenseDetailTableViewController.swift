@@ -228,8 +228,8 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         } else if let existingBudgetCategory = expense?.budgetCategory, existingBudgetCategory != budgetCategory {
             
             hasChanged = true
-        } else if let existingRecurring = expense?.value(forKey: XYZExpense.recurring) as? String,
-            existingRecurring != recurring?.rawValue {
+        } else if let existingRecurring = expense?.recurring,
+            existingRecurring != recurring {
             
             hasChanged = true
         } else if let existingRecurringStopDate = expense?.value(forKey: XYZExpense.recurringStopDate) as? Date ,
@@ -244,7 +244,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         expense?.isShared = false // if we can save it, it means it is not readonly
         expense?.currencyCode = currencyCode!
         expense?.budgetCategory = budgetCategory
-        expense?.setValue(recurring?.rawValue, forKey: XYZExpense.recurring)
+        expense?.recurring = recurring!
         expense?.setValue(recurringStopDate!, forKey: XYZExpense.recurringStopDate)
         
         for (index, image) in imageSet!.enumerated() {
@@ -425,7 +425,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                 navigationItem.setLeftBarButton(backButton, animated: true)
             }
             
-            recurring = XYZExpense.Length(rawValue: expense.value(forKey: XYZExpense.recurring) as? String ?? XYZExpense.Length.none.rawValue)
+            recurring = expense.recurring
             recurringStopDate = expense.value(forKey: XYZExpense.recurringStopDate) as? Date ?? date
         } else {
             
@@ -853,7 +853,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         let oldShareRecordId = expense?.shareRecordId
         let oldCurrencyCode = expense?.currencyCode
         let oldBudgetCategory = expense?.budgetCategory
-        let oldRecurring = expense?.value(forKey: XYZExpense.recurring)
+        let oldRecurring = expense?.recurring
         let oldRecurringStopDate = expense?.value(forKey: XYZExpense.recurringStopDate)
         let oldReceiptList = expense?.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>
         let oldPersonList = expense?.getPersons()
@@ -868,7 +868,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
             expense.isShared = oldIsShared!
             expense.currencyCode = oldCurrencyCode!
             expense.budgetCategory = oldBudgetCategory!
-            expense.setValue(oldRecurring, forKey: XYZExpense.recurring)
+            expense.recurring = oldRecurring!
             expense.setValue(oldRecurringStopDate, forKey: XYZExpense.recurringStopDate)
             expense.setValue(oldReceiptList, forKey: XYZExpense.receipts)
             expense.setValue(oldPersonList, forKey: XYZExpense.persons)

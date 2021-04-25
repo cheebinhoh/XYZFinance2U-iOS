@@ -183,7 +183,7 @@ func createUpdateExpense(record: CKRecord,
             expenseToBeUpdated?.isSoftDelete = isSoftDelete!
             expenseToBeUpdated?.currencyCode = currency!
             expenseToBeUpdated?.budgetCategory = budget
-            expenseToBeUpdated?.setValue(recurring, forKey: XYZExpense.recurring)
+            expenseToBeUpdated?.recurring = XYZExpense.Length(rawValue: recurring) ?? .none
             expenseToBeUpdated?.setValue(recurringStopDate, forKey: XYZExpense.recurringStopDate)
             
             let nrOfReceipt = record[XYZExpense.nrOfReceipts] as? Int
@@ -861,7 +861,7 @@ func saveExpensesToiCloud(database: CKDatabase,
         let currency = expense.currencyCode
         let budget = expense.budgetCategory
         
-        let recurring = expense.value(forKey: XYZExpense.recurring) as? String ?? XYZExpense.Length.none.rawValue
+        let recurring = expense.recurring.rawValue
         let recurringStopDate = expense.value(forKey: XYZExpense.recurringStopDate) as? Date ?? date
         
         record.setValue(detail, forKey: XYZExpense.detail)

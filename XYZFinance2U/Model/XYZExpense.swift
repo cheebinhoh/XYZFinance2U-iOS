@@ -205,7 +205,19 @@ class XYZExpense: NSManagedObject {
         }
     }
     
-    var recurring: Length = .none
+    var recurring: Length {
+        
+        get {
+            
+            return Length(rawValue: self.value(forKey: XYZExpense.recurring) as? String ?? Length.none.rawValue ) ?? Length.none
+        }
+        
+        set {
+            
+            self.setValue(newValue.rawValue, forKey: XYZExpense.recurring)
+        }
+    }
+    
     var recurringStopDate = Date()
     
     // MARK: - function
@@ -213,7 +225,7 @@ class XYZExpense: NSManagedObject {
     func getOccurenceDates(until: Date) -> [Date] {
         
         var outputDate = [Date]()
-        let recurring = XYZExpense.Length(rawValue: self.value(forKey: XYZExpense.recurring) as! String) ?? .none
+        let recurring = self.recurring
         
         switch recurring {
             

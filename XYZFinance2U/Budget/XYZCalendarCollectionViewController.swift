@@ -174,7 +174,7 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
 
         return (expenseList?.filter({ (expense) -> Bool in
       
-            let recurring = XYZExpense.Length(rawValue: expense.value(forKey: XYZExpense.recurring) as? String ?? XYZExpense.Length.none.rawValue )
+            let recurring = expense.recurring
             
             if XYZExpense.Length.none == recurring {
                 

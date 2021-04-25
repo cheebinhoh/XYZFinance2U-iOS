@@ -267,7 +267,7 @@ class XYZExpenseTableViewController: UITableViewController,
         let oldHasLocation = expense.hasLocation
         let oldCurrencyCode = expense.currencyCode
         let oldBudgetCategory = expense.budgetCategory
-        let oldRecurring = expense.value(forKey: XYZExpense.recurring)
+        let oldRecurring = expense.recurring
         let oldRecurringStopDate = expense.value(forKey: XYZExpense.recurringStopDate)
         let oldLocation = expense.value(forKey: XYZExpense.loction)
         let oldReceiptList = expense.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>
@@ -283,7 +283,7 @@ class XYZExpenseTableViewController: UITableViewController,
             newExpense.hasLocation = oldHasLocation
             newExpense.currencyCode = oldCurrencyCode
             newExpense.budgetCategory = oldBudgetCategory
-            newExpense.setValue(oldRecurring, forKey: XYZExpense.recurring)
+            newExpense.recurring = oldRecurring
             newExpense.setValue(oldRecurringStopDate, forKey: XYZExpense.recurringStopDate)
             newExpense.setValue(oldLocation, forKey: XYZExpense.loction)
             newExpense.setValue(oldReceiptList, forKey: XYZExpense.receipts)
