@@ -234,8 +234,8 @@ class AppDelegate: UIResponder,
                                             
                                             if let isShare = expense.value(forKey: XYZExpense.isShared) as? Bool, isShare {
                                                 
-                                                expense.setValue(false, forKey: XYZExpense.isSoftDelete)
-                                                expense.setValue(Date(), forKey: XYZExpense.lastRecordChange)
+                                                expense.isSoftDelete = false
+                                                expense.lastRecordChange = Date()
                                                 
                                                 saveManageContext()
                                                 

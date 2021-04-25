@@ -511,9 +511,8 @@ class XYZBudgetTableViewController: UITableViewController,
         for expense in expenseList {
             
             let category = expense.budgetCategory
-            let isSoftDelete = expense.value(forKey: XYZExpense.isSoftDelete) as? Bool ?? false
             
-            if isSoftDelete {
+            if expense.isSoftDelete {
                 
                 continue
             }
@@ -537,9 +536,8 @@ class XYZBudgetTableViewController: UITableViewController,
         for expense in expenseList {
         
             let category = expense.budgetCategory
-            let isSoftDelete = expense.value(forKey: XYZExpense.isSoftDelete) as? Bool ?? false
-            
-            if isSoftDelete {
+
+            if expense.isSoftDelete {
                 
                 continue
             }

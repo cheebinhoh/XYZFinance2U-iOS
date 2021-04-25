@@ -112,8 +112,32 @@ class XYZExpense: NSManagedObject {
     
     var hasLocation = false
     var isShared = false
-    var isSoftDelete = false
-    var lastRecordChange = Date()
+    var isSoftDelete: Bool {
+    
+        get {
+            
+            return self.value(forKey: XYZExpense.isSoftDelete) as? Bool ?? false
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpense.isSoftDelete)
+        }
+    }
+    
+    var lastRecordChange: Date {
+        
+        get {
+            
+            return self.value(forKey: XYZExpense.lastRecordChange) as? Date ?? Date()
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpense.lastRecordChange)
+        }
+    }
+    
     var location = CLLocation()
     var persons: Set<XYZExpensePerson>?
     var preChangeToken = NSData()
@@ -255,7 +279,7 @@ class XYZExpense: NSManagedObject {
         self.setValue(Set<XYZExpensePerson>(), forKey: XYZExpense.persons)
         self.setValue(Set<XYZExpenseReceipt>(), forKey: XYZExpense.receipts)
         self.setValue(NSData(), forKey: XYZExpense.preChangeToken)
-        self.setValue(false, forKey: XYZExpense.isSoftDelete)
+        self.isSoftDelete = false
         self.currencyCode = Locale.current.currencyCode!
         self.budgetCategory = ""
     }

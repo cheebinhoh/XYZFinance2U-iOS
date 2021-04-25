@@ -348,10 +348,9 @@ class XYZExpenseDetailTableViewController: UITableViewController,
             zone.deleteRecordIdList = savedDeleteRecordList!
         }
         
-        if nil == expense?.value(forKey: XYZExpense.lastRecordChange) as? Date
-            || hasChanged {
+        if hasChanged {
             
-            expense?.setValue(Date(), forKey: XYZExpense.lastRecordChange)
+            expense?.lastRecordChange = Date()
         }
     }
     
@@ -873,7 +872,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
             expense.setValue(oldRecurringStopDate, forKey: XYZExpense.recurringStopDate)
             expense.setValue(oldReceiptList, forKey: XYZExpense.receipts)
             expense.setValue(oldPersonList, forKey: XYZExpense.persons)
-            expense.setValue(Date(), forKey: XYZExpense.lastRecordChange)
+            expense.lastRecordChange = Date()
             
             self.expenseDelegate?.saveExpense(expense: expense)
         })

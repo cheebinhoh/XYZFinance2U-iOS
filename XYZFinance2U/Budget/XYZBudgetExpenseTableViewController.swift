@@ -116,7 +116,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
             newExpense.setValue(oldPersonList, forKey: XYZExpense.persons)
             newExpense.shareUrl = oldShareUrl
             newExpense.shareRecordId = oldShareRecordId
-            newExpense.setValue(Date(), forKey: XYZExpense.lastRecordChange)
+            newExpense.lastRecordChange = Date()
             
             self.saveNewExpenseWithoutUndo(expense: newExpense)
         })
@@ -273,8 +273,8 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         
         if isShared {
             
-            expense.setValue(true, forKey: XYZExpense.isSoftDelete)
-            expense.setValue(Date(), forKey: XYZExpense.lastRecordChange)
+            expense.isSoftDelete = true
+            expense.lastRecordChange = Date()
         }
         
         if !((appDelegate?.iCloudZones.isEmpty)!) {

@@ -180,7 +180,7 @@ func createUpdateExpense(record: CKRecord,
             expenseToBeUpdated?.setValue(isShared || isSharedRecord, forKey: XYZExpense.isShared)
             expenseToBeUpdated?.setValue(hasLocation, forKey: XYZExpense.hasLocation)
             expenseToBeUpdated?.setValue(oldChangeToken, forKey: XYZExpense.preChangeToken)
-            expenseToBeUpdated?.setValue(isSoftDelete, forKey: XYZExpense.isSoftDelete)
+            expenseToBeUpdated?.isSoftDelete = isSoftDelete!
             expenseToBeUpdated?.currencyCode = currency!
             expenseToBeUpdated?.budgetCategory = budget
             expenseToBeUpdated?.setValue(recurring, forKey: XYZExpense.recurring)
@@ -243,7 +243,7 @@ func createUpdateExpense(record: CKRecord,
             }
             
             // the record change is updated but we save the last token fetch after that, so we are still up to date after fetching
-            expenseToBeUpdated?.setValue(Date(), forKey: XYZExpense.lastRecordChange)
+            expenseToBeUpdated?.lastRecordChange = Date()
             
         case cloudkitshareRecordType:
             let recordName = record.recordID.recordName
@@ -778,14 +778,8 @@ func saveExpensesToiCloud(database: CKDatabase,
     expenseListToBeSaved = [XYZExpense]()
     
     for expense in expenseList {
-        
-        if let lastChanged = expense.value(forKey: XYZExpense.lastRecordChange) as? Date {
-            
-            if lastChanged > lastChangeTokenFetch {
-                
-                expenseListToBeSaved?.append(expense)
-            }
-        } else {
+ 
+        if expense.lastRecordChange  > lastChangeTokenFetch {
             
             expenseListToBeSaved?.append(expense)
         }
@@ -862,7 +856,7 @@ func saveExpensesToiCloud(database: CKDatabase,
         let detail = expense.detail
         let amount = expense.amount
         let date = expense.value(forKey: XYZExpense.date) as? Date
-        let isSoftDelete = expense.value(forKey: XYZExpense.isSoftDelete) as? Bool
+        let isSoftDelete = expense.isSoftDelete
         let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
         let currency = expense.currencyCode
         let budget = expense.budgetCategory

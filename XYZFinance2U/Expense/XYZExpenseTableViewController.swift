@@ -556,8 +556,8 @@ class XYZExpenseTableViewController: UITableViewController,
         
         if isShared {
             
-            expense.setValue(true, forKey: XYZExpense.isSoftDelete)
-            expense.setValue(Date(), forKey: XYZExpense.lastRecordChange)
+            expense.isSoftDelete = true
+            expense.lastRecordChange = Date()
         }
         
         if !((appDelegate?.iCloudZones.isEmpty)!) {
@@ -717,9 +717,7 @@ class XYZExpenseTableViewController: UITableViewController,
                 continue
             }
             
-            let isSoftDelete = expense.value(forKey: XYZExpense.isSoftDelete) as? Bool ?? false
-            
-            if isSoftDelete {
+            if expense.isSoftDelete {
                 
                 continue
             }
