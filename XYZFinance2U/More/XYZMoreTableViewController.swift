@@ -663,12 +663,11 @@ class XYZMoreTableViewController: UITableViewController,
         
         for expense in (appDelegate?.expenseList)! {
             
-            let recordName = expense.value(forKey: XYZExpense.recordId) as? String
-            deleteRecordList.append(recordName!)
+            deleteRecordList.append(expense.recordId)
             
-            if let shareRecordName = expense.value(forKey: XYZExpense.shareRecordId) as? String {
+            if expense.shareRecordId != "" {
                 
-                deleteShareRecordList.append(shareRecordName)
+                deleteShareRecordList.append(expense.shareRecordId)
             }
             
             managedContext()?.delete(expense)
@@ -979,8 +978,7 @@ class XYZMoreTableViewController: UITableViewController,
 
         expenseList.forEach { (expense) in
         
-            let currencyCode = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
-            currencyCodes.insert(currencyCode!)
+            currencyCodes.insert(expense.currencyCode)
         }
         
         // now but only year, month, day
@@ -1017,7 +1015,7 @@ class XYZMoreTableViewController: UITableViewController,
                 
                 let dayfilteredExpenseList = filteredExpenseList.filter { (expense) -> Bool in
                     
-                    let expenseCurrencyCode = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
+                    let expenseCurrencyCode = expense.currencyCode
                     var found = false
                     
                     if expenseCurrencyCode == currencyCode {
@@ -1037,11 +1035,11 @@ class XYZMoreTableViewController: UITableViewController,
                 
                 for expense in dayfilteredExpenseList {
                     
-                    let detail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
-                    let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
+                    let detail = expense.detail
+                    let amount = expense.amount
                     let date = formattingDate(startDate!, style: .short)
                     
-                    let category = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
+                    let category = expense.budgetCategory
                     
                     text = text + "\(index)\t\(detail)\t\(date)\t\(currencyCode)\t\(amount)\t\(category)\n"
                     

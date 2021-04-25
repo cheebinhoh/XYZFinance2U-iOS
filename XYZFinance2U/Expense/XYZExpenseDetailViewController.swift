@@ -27,8 +27,8 @@ class XYZExpenseDetailViewController: UIViewController {
 
         if let _ = expense {
             
-            let detailValue = expense?.value(forKey: XYZExpense.detail) as? String
-            let amountValue = expense?.value(forKey: XYZExpense.amount) as? Double
+            let detailValue = expense?.detail
+            let amountValue = expense?.amount
             let dateValue = expense?.value(forKey: XYZExpense.date) as? Date
 
             detail.text = detailValue!

@@ -96,9 +96,7 @@ class XYZBudgetListTableViewController: UITableViewController {
                         
                         let filterExpenseList = expenseList.filter { (expense) -> Bool in
                             
-                            let expenseBudget = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
-                            
-                            if expenseBudget != budgetName {
+                            if expense.budgetCategory != budgetName {
                                 
                                 return false
                             } else {
@@ -135,9 +133,7 @@ class XYZBudgetListTableViewController: UITableViewController {
                         let expenseLastDate = Calendar.current.date(byAdding: .day, value: -1, to: end!)!
                         let filterExpenseList = expenseList.filter { (expense) -> Bool in
                             
-                            let expenseBudget = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
-                            
-                            if expenseBudget != budgetName {
+                            if expense.budgetCategory != budgetName {
                                 
                                 return false
                             } else {

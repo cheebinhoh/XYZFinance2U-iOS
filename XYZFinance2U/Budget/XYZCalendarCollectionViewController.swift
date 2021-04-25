@@ -549,7 +549,7 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
         
         expenseList = expenseList?.filter({ (expense) -> Bool in
         
-            let expenseBudgetGroup = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
+            let expenseBudgetGroup = expense.budgetCategory
             
             return budgetGroup == "" || expenseBudgetGroup.lowercased() == budgetGroup.lowercased()
         })

@@ -57,11 +57,59 @@ class XYZExpense: NSManagedObject {
 
     // MARK: - property
     
-    var amount = 0.0
-    var budgetCategory = ""
-    var currencyCode: String = Locale.current.currencyCode!
+    var amount: Double {
+        
+        get {
+            
+            return self.value(forKey: XYZExpense.amount) as? Double ?? 0.0
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpense.amount)
+        }
+    }
+    
+    var budgetCategory: String {
+        
+        get {
+            
+            return self.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpense.budgetCategory)
+        }
+    }
+    
+    var currencyCode: String {
+        
+        get {
+            
+            return self.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode!
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpense.currencyCode)
+        }
+    }
+    
     var date = Date()
-    var detail = ""
+    var detail: String {
+        
+        get {
+            
+            return self.value(forKey: XYZExpense.detail) as? String ?? ""
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpense.detail)
+        }
+    }
+    
     var hasLocation = false
     var isShared = false
     var isSoftDelete = false
@@ -70,9 +118,45 @@ class XYZExpense: NSManagedObject {
     var persons: Set<XYZExpensePerson>?
     var preChangeToken = NSData()
     var receipts: Set<XYZExpenseReceipt>?
-    var recordId = ""
-    var shareRecordId = ""
-    var shareUrl = ""
+    var recordId: String {
+        
+        get {
+            
+            return self.value(forKey: XYZExpense.recordId) as? String ?? ""
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpense.recordId)
+        }
+    }
+    
+    var shareRecordId: String {
+        
+        get {
+            
+            return self.value(forKey: XYZExpense.shareRecordId) as? String ?? ""
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpense.shareRecordId)
+        }
+    }
+    
+    var shareUrl: String {
+        
+        get {
+            
+            return self.value(forKey: XYZExpense.shareUrl) as? String ?? ""
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpense.shareUrl)
+        }
+    }
+    
     var recurring: Length = .none
     var recurringStopDate = Date()
     
@@ -164,16 +248,16 @@ class XYZExpense: NSManagedObject {
                                                 in: context!)!
         super.init(entity: entity, insertInto: context!)
     
-        self.setValue(recordName, forKey: XYZExpense.recordId)
-        self.setValue(detail, forKey: XYZExpense.detail)
-        self.setValue(amount, forKey: XYZExpense.amount)
+        self.recordId = recordName
+        self.detail = detail
+        self.amount = amount
         self.setValue(date, forKey: XYZExpense.date)
         self.setValue(Set<XYZExpensePerson>(), forKey: XYZExpense.persons)
         self.setValue(Set<XYZExpenseReceipt>(), forKey: XYZExpense.receipts)
         self.setValue(NSData(), forKey: XYZExpense.preChangeToken)
         self.setValue(false, forKey: XYZExpense.isSoftDelete)
-        self.setValue(Locale.current.currencyCode, forKey: XYZExpense.currencyCode)
-        self.setValue("", forKey: XYZExpense.budgetCategory)
+        self.currencyCode = Locale.current.currencyCode!
+        self.budgetCategory = ""
     }
     
     func getPersons() -> Set<XYZExpensePerson> {

@@ -85,16 +85,16 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
     
     func registerUndoDeleteExpense(expense: XYZExpense) {
         
-        let oldRecordId = expense.value(forKey: XYZExpense.recordId) as? String
-        let oldDetail = expense.value(forKey: XYZExpense.detail) as? String ?? ""
-        let oldAmount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
+        let oldRecordId = expense.recordId
+        let oldDetail = expense.detail
+        let oldAmount = expense.amount
         let oldDate = expense.value(forKey: XYZExpense.date) as? Date ?? Date()
         let oldIsShared = expense.value(forKey: XYZExpense.isShared) // if we can save it, it means it is not readonly
-        let oldShareRecordId = expense.value(forKey: XYZExpense.shareRecordId)
-        let oldShareUrl = expense.value(forKey: XYZExpense.shareUrl)
+        let oldShareRecordId = expense.shareRecordId
+        let oldShareUrl = expense.shareUrl
         let oldHasLocation = expense.value(forKey: XYZExpense.hasLocation)
-        let oldCurrencyCode = expense.value(forKey: XYZExpense.currencyCode)
-        let oldBudgetCategory = expense.value(forKey: XYZExpense.budgetCategory)
+        let oldCurrencyCode = expense.currencyCode
+        let oldBudgetCategory = expense.budgetCategory
         let oldRecurring = expense.value(forKey: XYZExpense.recurring)
         let oldRecurringStopDate = expense.value(forKey: XYZExpense.recurringStopDate)
         let oldLocation = expense.value(forKey: XYZExpense.loction)
@@ -103,19 +103,19 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         
         undoManager?.registerUndo(withTarget: self, handler: { (viewController) in
             
-            let newExpense = XYZExpense(id: oldRecordId ?? nil, detail: oldDetail, amount: oldAmount, date: oldDate, context: managedContext())
+            let newExpense = XYZExpense(id: oldRecordId, detail: oldDetail, amount: oldAmount, date: oldDate, context: managedContext())
             
             newExpense.setValue(oldIsShared, forKey: XYZExpense.isShared)
             newExpense.setValue(oldHasLocation, forKey: XYZExpense.hasLocation)
-            newExpense.setValue(oldCurrencyCode, forKey: XYZExpense.currencyCode)
-            newExpense.setValue(oldBudgetCategory, forKey: XYZExpense.budgetCategory)
+            newExpense.currencyCode = oldCurrencyCode
+            newExpense.budgetCategory = oldBudgetCategory
             newExpense.setValue(oldRecurring, forKey: XYZExpense.recurring)
             newExpense.setValue(oldRecurringStopDate, forKey: XYZExpense.recurringStopDate)
             newExpense.setValue(oldLocation, forKey: XYZExpense.loction)
             newExpense.setValue(oldReceiptList, forKey: XYZExpense.receipts)
             newExpense.setValue(oldPersonList, forKey: XYZExpense.persons)
-            newExpense.setValue(oldShareUrl, forKey: XYZExpense.shareUrl)
-            newExpense.setValue(oldShareRecordId, forKey: XYZExpense.shareRecordId)
+            newExpense.shareUrl = oldShareUrl
+            newExpense.shareRecordId = oldShareRecordId
             newExpense.setValue(Date(), forKey: XYZExpense.lastRecordChange)
             
             self.saveNewExpenseWithoutUndo(expense: newExpense)
@@ -295,8 +295,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
                     fatalError("Exception: deleteRecordList is expected as [String]")
                 }
                 
-                let recordName = expense.value(forKey: XYZExpense.recordId) as? String
-                deleteRecordList.append(recordName!)
+                deleteRecordList.append(expense.recordId)
                 
                 let savedDeleteRecordList = try? NSKeyedArchiver.archivedData(withRootObject: deleteRecordList, requiringSecureCoding: false)
                 zone.deleteRecordIdList = savedDeleteRecordList!
@@ -308,9 +307,9 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
                     fatalError("Exception: deleteShareRecordList is expected as [String]")
                 }
     
-                if let shareRecordName = expense.value(forKey: XYZExpense.shareRecordId) as? String {
+                if expense.shareRecordId != "" {
                     
-                    deleteShareRecordList.append(shareRecordName)
+                    deleteShareRecordList.append(expense.shareRecordId)
                     
                     let savedDeleteShareRecordList = try? NSKeyedArchiver.archivedData(withRootObject: deleteShareRecordList, requiringSecureCoding: false)
                     zone.deleteShareRecordIdList = savedDeleteShareRecordList!
@@ -361,11 +360,11 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         let subtotal = UILabel()
         let sectionExpenseList = sectionList[section].data as? [XYZExpense]
         
-        let currencyCode = sectionExpenseList!.first?.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
+        let currencyCode = sectionExpenseList!.first?.currencyCode
         
         let total = sectionExpenseList!.reduce(0.0) { (result, expense) in
         
-            return result + ( expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0 )
+            return result + expense.amount
         }
         
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 15)
@@ -418,11 +417,11 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
                 
                 tabBarController.popOverNavigatorController = expenseDetailNavigationController
                 
-                let detail = expense.value(forKey: XYZExpense.detail) as? String
-                let amount = expense.value(forKey: XYZExpense.amount) as? Double
-                let budgetGroup = expense.value(forKey: XYZExpense.budgetCategory) as? String
+                let detail = expense.detail
+                let amount = expense.amount
+                let budgetGroup = expense.budgetCategory
                 let date = Date()
-                let currency = expense.value(forKey: XYZExpense.currencyCode) as? String
+                let currency = expense.currencyCode
                 
                 expenseDetailTableView.presetAmount = amount
                 expenseDetailTableView.presetDate = date

@@ -42,12 +42,12 @@ class XYZExpenseTableViewCell: UITableViewCell {
 
     func setExpense(expense: XYZExpense) {
         
-        amount.text = formattingCurrencyValue(of: (expense.value(forKey: XYZExpense.amount) as? Double) ?? 0.0,
-                                              as: expense.value(forKey: XYZExpense.currencyCode) as? String )
-        detail.text = ( expense.value(forKey: XYZExpense.detail) as? String ) ?? ""
+        amount.text = formattingCurrencyValue(of: expense.amount,
+                                              as: expense.currencyCode )
+        detail.text = expense.detail
         date.text = formattingDate((expense.value(forKey: XYZExpense.date) as? Date) ?? Date(), style: .medium )
         
-        let budgetCategory = expense.value(forKey: XYZExpense.budgetCategory) as? String
+        let budgetCategory = expense.budgetCategory
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let budgetList = appDelegate?.budgetList
         let budget = budgetList?.first(where: { (budget) -> Bool in

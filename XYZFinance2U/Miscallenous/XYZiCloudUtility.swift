@@ -106,9 +106,7 @@ func createUpdateExpense(record: CKRecord,
           
             let expense = expenseList.first {
                 
-                let recordid = $0.value(forKey: XYZExpense.recordId) as? String
-                
-                return recordid == parentckreference?.recordID.recordName
+                return $0.recordId == parentckreference?.recordID.recordName
             }
         
             if let expense = expense {
@@ -141,13 +139,8 @@ func createUpdateExpense(record: CKRecord,
             var expenseToBeUpdated: XYZExpense?
 
             expenseToBeUpdated = outputExpenseList.first(where: { (expense) -> Bool in
-
-                guard let recordId = expense.value(forKey: XYZExpense.recordId) as? String else {
-                    
-                    fatalError("Exception: record is expected")
-                }
-                
-                return recordId == recordName
+ 
+                return expense.recordId == recordName
             })
             
             if nil == expenseToBeUpdated {
@@ -180,16 +173,16 @@ func createUpdateExpense(record: CKRecord,
                 outputUnprocessedCkrecords.remove(at: index)
             }
             
-            expenseToBeUpdated?.setValue(detail, forKey: XYZExpense.detail)
-            expenseToBeUpdated?.setValue(amount, forKey: XYZExpense.amount)
+            expenseToBeUpdated?.detail = detail!
+            expenseToBeUpdated?.amount = amount!
             expenseToBeUpdated?.setValue(date, forKey: XYZExpense.date)
-            expenseToBeUpdated?.setValue(shareRecordId, forKey: XYZExpense.shareRecordId)
+            expenseToBeUpdated?.shareRecordId = shareRecordId!
             expenseToBeUpdated?.setValue(isShared || isSharedRecord, forKey: XYZExpense.isShared)
             expenseToBeUpdated?.setValue(hasLocation, forKey: XYZExpense.hasLocation)
             expenseToBeUpdated?.setValue(oldChangeToken, forKey: XYZExpense.preChangeToken)
             expenseToBeUpdated?.setValue(isSoftDelete, forKey: XYZExpense.isSoftDelete)
-            expenseToBeUpdated?.setValue(currency, forKey: XYZExpense.currencyCode)
-            expenseToBeUpdated?.setValue(budget, forKey: XYZExpense.budgetCategory)
+            expenseToBeUpdated?.currencyCode = currency!
+            expenseToBeUpdated?.budgetCategory = budget
             expenseToBeUpdated?.setValue(recurring, forKey: XYZExpense.recurring)
             expenseToBeUpdated?.setValue(recurringStopDate, forKey: XYZExpense.recurringStopDate)
             
@@ -243,7 +236,7 @@ func createUpdateExpense(record: CKRecord,
                 
                 if let shareUrl = ckshareFound?.url?.absoluteString {
                     
-                    expenseToBeUpdated?.setValue(shareUrl, forKey: XYZExpense.shareUrl)
+                    expenseToBeUpdated?.shareUrl = shareUrl
                 }
                 
                 cksharesFoundButNoRootRecord.remove(at: ckshareFoundIndex!)
@@ -263,11 +256,11 @@ func createUpdateExpense(record: CKRecord,
             
             for expense in expenseList {
                 
-                if let shareRecordId = expense.value(forKey: XYZExpense.shareRecordId) as? String, shareRecordId == recordName {
+                if expense.shareRecordId == recordName {
 
                     if let shareUrl = ckshare.url?.absoluteString {
                     
-                        expense.setValue(shareUrl, forKey: XYZExpense.shareUrl)
+                        expense.shareUrl = shareUrl
                     }
                     
                     found = true
@@ -464,9 +457,7 @@ func fetchiCloudZoneChange(database: CKDatabase,
                     
                         for (index, expense) in expenseList.enumerated() {
                             
-                            let recordName = expense.value(forKey: XYZExpense.recordId) as? String
-                            
-                            if let _ = recordName, recordName == recordId.recordName {
+                            if expense.recordId == recordId.recordName {
                                 
                                 aContext?.delete(expense)
                                 expenseList.remove(at: index)
@@ -499,9 +490,7 @@ func fetchiCloudZoneChange(database: CKDatabase,
                         
                         for expense in expenseList {
                             
-                            let recordId = expense.value(forKey: XYZExpense.recordId) as? String
-                            
-                            if recordId! == parentRecordName {
+                            if expense.recordId == parentRecordName {
                                 
                                 let sequenceNr = Int(tokens[tokens.count - 1])
                                 expense.removePerson(sequenceNr: sequenceNr!, context: aContext)
@@ -864,19 +853,19 @@ func saveExpensesToiCloud(database: CKDatabase,
     
     for expense in expenseList {
         
-        let recordName = expense.value(forKey: XYZExpense.recordId) as? String
+        let recordName = expense.recordId
         let customZone = CKRecordZone(zoneName: XYZExpense.type)
-        let ckrecordId = CKRecord.ID(recordName: recordName!, zoneID: customZone.zoneID)
+        let ckrecordId = CKRecord.ID(recordName: recordName, zoneID: customZone.zoneID)
         
         let record = CKRecord(recordType: XYZExpense.type, recordID: ckrecordId)
         
-        let detail = expense.value(forKey: XYZExpense.detail) as? String
-        let amount = expense.value(forKey: XYZExpense.amount) as? Double
+        let detail = expense.detail
+        let amount = expense.amount
         let date = expense.value(forKey: XYZExpense.date) as? Date
         let isSoftDelete = expense.value(forKey: XYZExpense.isSoftDelete) as? Bool
         let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
-        let currency = expense.value(forKey: XYZExpense.currencyCode) as? String ?? Locale.current.currencyCode
-        let budget = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
+        let currency = expense.currencyCode
+        let budget = expense.budgetCategory
         
         let recurring = expense.value(forKey: XYZExpense.recurring) as? String ?? XYZExpense.Length.none.rawValue
         let recurringStopDate = expense.value(forKey: XYZExpense.recurringStopDate) as? Date ?? date
@@ -947,7 +936,7 @@ func saveExpensesToiCloud(database: CKDatabase,
         for person in personList {
             
             let sequenceNr = person.value(forKey: XYZExpensePerson.sequenceNr) as? Int
-            let personRecordName = "\(recordName!)-\(sequenceNr!)"
+            let personRecordName = "\(recordName)-\(sequenceNr!)"
             let personckrecordId = CKRecord.ID(recordName: personRecordName, zoneID: customZone.zoneID)
          
             let personRecord = CKRecord(recordType: XYZExpensePerson.type, recordID: personckrecordId)
@@ -969,9 +958,9 @@ func saveExpensesToiCloud(database: CKDatabase,
         
         record.setValue(personList.count, forKey: XYZExpense.nrOfPersons)
         
-        let shareRecordId = expense.value(forKey: XYZExpense.shareRecordId) as? String
+        let shareRecordId = expense.shareRecordId
         
-        if nil == shareRecordId || shareRecordId == "" {
+        if shareRecordId == "" {
             
             let ckshare = CKShare(rootRecord: record)
             recordsToBeSaved.append(ckshare)
@@ -1007,10 +996,10 @@ func saveExpensesToiCloud(database: CKDatabase,
                         fatalError("Exception: CKShare is expected")
                     }
                     
-                    let url = ckshare.url?.absoluteString
+                    let url = ckshare.url?.absoluteString ?? ""
                     
-                    expense.setValue(url, forKey: XYZExpense.shareUrl)
-                    expense.setValue(shareRecordIds[index], forKey: XYZExpense.shareRecordId)
+                    expense.shareUrl = url
+                    expense.shareRecordId = shareRecordIds[index]
                 }
             }
             

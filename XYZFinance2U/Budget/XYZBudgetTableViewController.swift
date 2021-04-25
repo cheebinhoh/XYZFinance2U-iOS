@@ -458,9 +458,7 @@ class XYZBudgetTableViewController: UITableViewController,
                 
                 if needed {
                     
-                    let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
-                    
-                    total = total + amount
+                    total = total + expense.amount
                 }
             }
         }
@@ -494,10 +492,8 @@ class XYZBudgetTableViewController: UITableViewController,
                 }
                 
                 if needed {
-                
-                    let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
-                    
-                    total = total + amount
+                   
+                    total = total + expense.amount
                 }
             }
         }
@@ -514,7 +510,7 @@ class XYZBudgetTableViewController: UITableViewController,
         
         for expense in expenseList {
             
-            let category = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
+            let category = expense.budgetCategory
             let isSoftDelete = expense.value(forKey: XYZExpense.isSoftDelete) as? Bool ?? false
             
             if isSoftDelete {
@@ -540,7 +536,7 @@ class XYZBudgetTableViewController: UITableViewController,
         
         for expense in expenseList {
         
-            let category = expense.value(forKey: XYZExpense.budgetCategory) as? String ?? ""
+            let category = expense.budgetCategory
             let isSoftDelete = expense.value(forKey: XYZExpense.isSoftDelete) as? Bool ?? false
             
             if isSoftDelete {
@@ -567,10 +563,8 @@ class XYZBudgetTableViewController: UITableViewController,
                 }
                 
                 if !(occurenceDates?.isEmpty)! {
-                
-                    let amount = expense.value(forKey: XYZExpense.amount) as? Double ?? 0.0
-                    
-                    total = total + ( amount * Double( (occurenceDates?.count)! ) )
+
+                    total = total + ( expense.amount * Double( (occurenceDates?.count)! ) )
                 }
             }
         }

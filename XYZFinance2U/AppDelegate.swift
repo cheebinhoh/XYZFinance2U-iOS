@@ -230,7 +230,7 @@ class AppDelegate: UIResponder,
                                     
                                     for expense in self.expenseList {
                                         
-                                        if let expRecordId = expense.value(forKey: XYZExpense.recordId) as? String, expRecordId == recordName {
+                                        if expense.recordId == recordName {
                                             
                                             if let isShare = expense.value(forKey: XYZExpense.isShared) as? Bool, isShare {
                                                 
