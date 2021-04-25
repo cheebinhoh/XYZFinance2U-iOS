@@ -110,8 +110,32 @@ class XYZExpense: NSManagedObject {
         }
     }
     
-    var hasLocation = false
-    var isShared = false
+    var hasLocation: Bool {
+        
+        get {
+            
+            return self.value(forKey: XYZExpense.hasLocation) as? Bool ?? false
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpense.hasLocation)
+        }
+    }
+    
+    var isShared: Bool {
+        
+        get {
+            
+            return self.value(forKey: XYZExpense.isShared) as? Bool ?? false
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpense.isShared)
+        }
+    }
+    
     var isSoftDelete: Bool {
     
         get {

@@ -177,8 +177,8 @@ func createUpdateExpense(record: CKRecord,
             expenseToBeUpdated?.amount = amount!
             expenseToBeUpdated?.setValue(date, forKey: XYZExpense.date)
             expenseToBeUpdated?.shareRecordId = shareRecordId!
-            expenseToBeUpdated?.setValue(isShared || isSharedRecord, forKey: XYZExpense.isShared)
-            expenseToBeUpdated?.setValue(hasLocation, forKey: XYZExpense.hasLocation)
+            expenseToBeUpdated?.isShared = isShared || isSharedRecord
+            expenseToBeUpdated?.hasLocation = hasLocation!
             expenseToBeUpdated?.setValue(oldChangeToken, forKey: XYZExpense.preChangeToken)
             expenseToBeUpdated?.isSoftDelete = isSoftDelete!
             expenseToBeUpdated?.currencyCode = currency!
@@ -910,7 +910,7 @@ func saveExpensesToiCloud(database: CKDatabase,
         
         record.setValue(maxSequenceNr + 1, forKey: XYZExpense.nrOfReceipts)
         
-        let hasLocation = expense.value(forKey: XYZExpense.hasLocation) as? Bool ?? false
+        let hasLocation = expense.hasLocation
         
         record.setValue(hasLocation, forKey: XYZExpense.hasLocation)
         

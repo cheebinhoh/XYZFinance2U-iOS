@@ -89,10 +89,10 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         let oldDetail = expense.detail
         let oldAmount = expense.amount
         let oldDate = expense.value(forKey: XYZExpense.date) as? Date ?? Date()
-        let oldIsShared = expense.value(forKey: XYZExpense.isShared) // if we can save it, it means it is not readonly
+        let oldIsShared = expense.isShared // if we can save it, it means it is not readonly
         let oldShareRecordId = expense.shareRecordId
         let oldShareUrl = expense.shareUrl
-        let oldHasLocation = expense.value(forKey: XYZExpense.hasLocation)
+        let oldHasLocation = expense.hasLocation
         let oldCurrencyCode = expense.currencyCode
         let oldBudgetCategory = expense.budgetCategory
         let oldRecurring = expense.value(forKey: XYZExpense.recurring)
@@ -105,8 +105,8 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
             
             let newExpense = XYZExpense(id: oldRecordId, detail: oldDetail, amount: oldAmount, date: oldDate, context: managedContext())
             
-            newExpense.setValue(oldIsShared, forKey: XYZExpense.isShared)
-            newExpense.setValue(oldHasLocation, forKey: XYZExpense.hasLocation)
+            newExpense.isShared = oldIsShared
+            newExpense.hasLocation = oldHasLocation
             newExpense.currencyCode = oldCurrencyCode
             newExpense.budgetCategory = oldBudgetCategory
             newExpense.setValue(oldRecurring, forKey: XYZExpense.recurring)
@@ -269,9 +269,8 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let ckrecordzone = CKRecordZone(zoneName: XYZExpense.type)
-        let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool ?? false
         
-        if isShared {
+        if expense.isShared {
             
             expense.isSoftDelete = true
             expense.lastRecordChange = Date()
@@ -279,7 +278,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         
         if !((appDelegate?.iCloudZones.isEmpty)!) {
             
-            if isShared {
+            if expense.isShared  {
                 
             } else {
                 
@@ -317,7 +316,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
             }
         }
         
-        return isShared // if it is shared, then we softdelete it by keeping
+        return expense.isShared  // if it is shared, then we softdelete it by keeping
     }
     
     func updateToiCloud(_ expense: XYZExpense?) {

@@ -241,7 +241,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         expense?.detail = detail
         expense?.amount = amount!
         expense?.setValue(date, forKey: XYZExpense.date)
-        expense?.setValue(false, forKey: XYZExpense.isShared) // if we can save it, it means it is not readonly
+        expense?.isShared = false // if we can save it, it means it is not readonly
         expense?.currencyCode = currencyCode!
         expense?.budgetCategory = budgetCategory
         expense?.setValue(recurring?.rawValue, forKey: XYZExpense.recurring)
@@ -372,7 +372,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
             detail = expense.detail
             date = (expense.value(forKey: XYZExpense.date) as? Date) ?? Date()
             amount = expense.amount
-            isShared = (expense.value(forKey: XYZExpense.isShared) as? Bool) ?? false
+            isShared = expense.isShared
             currencyCode = expense.currencyCode
             budgetCategory = expense.budgetCategory
             
@@ -848,7 +848,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         let oldDetail = expense?.detail
         let oldAmount = expense?.amount
         let oldDate = expense?.value(forKey: XYZExpense.date)
-        let oldIsShared = expense?.value(forKey: XYZExpense.isShared) // if we can save it, it means it is not readonly
+        let oldIsShared = expense?.isShared // if we can save it, it means it is not readonly
         let oldShareUrl = expense?.shareUrl
         let oldShareRecordId = expense?.shareRecordId
         let oldCurrencyCode = expense?.currencyCode
@@ -865,7 +865,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
             expense.detail = oldDetail!
             expense.amount = oldAmount!
             expense.setValue(oldDate, forKey: XYZExpense.date)
-            expense.setValue(oldIsShared, forKey: XYZExpense.isShared)
+            expense.isShared = oldIsShared!
             expense.currencyCode = oldCurrencyCode!
             expense.budgetCategory = oldBudgetCategory!
             expense.setValue(oldRecurring, forKey: XYZExpense.recurring)
