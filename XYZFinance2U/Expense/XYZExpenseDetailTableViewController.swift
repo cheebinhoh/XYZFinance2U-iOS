@@ -883,13 +883,15 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         if nil == expense {
             
             expense = XYZExpense(id: nil, detail: detail, amount: amount!, date: date!, context: managedContext())
+            
+            saveData()
+            expenseDelegate?.saveNewExpense(expense: expense!)
         } else {
             
             registerUndoSave(expense)
+            saveData()
+            expenseDelegate?.saveExpense(expense: expense!)
         }
-
-        saveData()
-        expenseDelegate?.saveExpense(expense: expense!)
         
         dismiss(animated: true, completion: nil)
     }
