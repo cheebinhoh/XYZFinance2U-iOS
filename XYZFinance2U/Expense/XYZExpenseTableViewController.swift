@@ -27,12 +27,12 @@ class XYZExpenseTableViewController: UITableViewController,
     
     func change(_ monthYear: Date!) {
 
-        if let _ = monthYear {
+        if let monthYear = monthYear {
         
             let formatter = DateFormatter()
             formatter.dateFormat = "MMM, YY"
             
-            navigationItem.title = "\("Expenses -".localized()) \((formatter.string(from: monthYear!)))"
+            navigationItem.title = "\("Expenses -".localized()) \((formatter.string(from: monthYear)))"
         } else {
             
             filteredExpenseList = nil
@@ -316,32 +316,33 @@ class XYZExpenseTableViewController: UITableViewController,
     
         let lastTokenChangeFetch = iCloudZone?.changeTokenLastFetch
         
-        if let _ = iCloudZone {
+        if let iCloudZone = iCloudZone {
         
             fetchAndUpdateiCloud(database: CKContainer.default().privateCloudDatabase,
                                  zones: [ckrecordzone],
-                                 iCloudZones: [iCloudZone!], completionblock: {
+                                 iCloudZones: [iCloudZone], completionblock: {
             
             // if we implement synchronization of content, then time to refresh it.
             DispatchQueue.main.async {
                 
-                appDelegate?.expenseList = (iCloudZone?.data as? [XYZExpense])!
+                appDelegate?.expenseList = (iCloudZone.data as? [XYZExpense])!
                 self.reloadData()
             }
                                 
-            if let _ = expense {
+            if let expense = expense {
                 
-                let newLastTokenChangeFetch = iCloudZone?.changeTokenLastFetch
+                let newLastTokenChangeFetch = iCloudZone.changeTokenLastFetch
 
-                    if let shareRecordId = expense?.shareRecordId,
-                        shareRecordId != "",
-                        lastTokenChangeFetch != newLastTokenChangeFetch {
+                let shareRecordId = expense.shareRecordId
                 
-                        let ckrecordid = CKRecord.ID(recordName: shareRecordId, zoneID: ckrecordzone.zoneID)
-                        let database = CKContainer.default().privateCloudDatabase
+                if shareRecordId != "" &&
+                    lastTokenChangeFetch != newLastTokenChangeFetch {
+                
+                    let ckrecordid = CKRecord.ID(recordName: shareRecordId, zoneID: ckrecordzone.zoneID)
+                    let database = CKContainer.default().privateCloudDatabase
+                
+                    database.fetch(withRecordID: ckrecordid , completionHandler: { (ckrecord, error) in
                     
-                        database.fetch(withRecordID: ckrecordid , completionHandler: { (ckrecord, error) in
-                        
                         // after fetching share record
                             if let _ = error {
                             
@@ -352,7 +353,7 @@ class XYZExpenseTableViewController: UITableViewController,
                                     fatalError("Exception: CKShare is expected")
                                 }
                             
-                                guard let personList = expense?.persons else {
+                                guard let personList = expense.persons else {
                                 
                                     fatalError("Exception: [XYZExpensePerson] is expected")
                                 }
@@ -400,11 +401,11 @@ class XYZExpenseTableViewController: UITableViewController,
                                                     DispatchQueue.main.async {
                                                     
                                                         fetchiCloudZoneChange(database: CKContainer.default().privateCloudDatabase,
-                                                                              zones: [ckrecordzone], icloudZones: [iCloudZone!]) {
+                                                                              zones: [ckrecordzone], icloudZones: [iCloudZone]) {
                                                     
                                                             DispatchQueue.main.async {
                                                             
-                                                                appDelegate?.expenseList = (iCloudZone?.data as? [XYZExpense])!
+                                                                appDelegate?.expenseList = (iCloudZone.data as? [XYZExpense])!
                                                                 self.reloadData()
                                                             }
                                                                             
@@ -468,11 +469,11 @@ class XYZExpenseTableViewController: UITableViewController,
                                             DispatchQueue.main.async {
                                             
                                                 fetchiCloudZoneChange(database: CKContainer.default().privateCloudDatabase,
-                                                                      zones: [ckrecordzone], icloudZones: [iCloudZone!]) {
+                                                                      zones: [ckrecordzone], icloudZones: [iCloudZone]) {
                                                 
                                                     DispatchQueue.main.async {
                                                     
-                                                        appDelegate?.expenseList = (iCloudZone?.data as? [XYZExpense])!
+                                                        appDelegate?.expenseList = (iCloudZone.data as? [XYZExpense])!
                                                         self.reloadData()
                                                     }
                                                 }
@@ -656,15 +657,15 @@ class XYZExpenseTableViewController: UITableViewController,
         
         sectionExpandStatus.removeAll()
         
-        if let _ = searchText, !(searchText?.isEmpty)! {
+        if let searchText = searchText, !(searchText.isEmpty) {
             
             expenseList = expenseList?.filter({ (expense) -> Bool in
                 
                 let detail = expense.detail
                 let category = expense.budgetCategory
                 
-                return detail.lowercased().range(of: searchText!.lowercased()) != nil
-                    || category.lowercased().range(of: searchText!.lowercased()) != nil
+                return detail.lowercased().range(of: searchText.lowercased()) != nil
+                    || category.lowercased().range(of: searchText.lowercased()) != nil
             })
         }
         
@@ -697,9 +698,9 @@ class XYZExpenseTableViewController: UITableViewController,
         
         var dateComponentWanted: DateComponents?
         
-        if let _ = filteredMonthYear {
+        if let filteredMonthYear = filteredMonthYear {
         
-            dateComponentWanted = Calendar.current.dateComponents([.month, .year], from: filteredMonthYear!)
+            dateComponentWanted = Calendar.current.dateComponents([.month, .year], from: filteredMonthYear)
         }
         
         for expense in expenseList! {
@@ -715,12 +716,12 @@ class XYZExpenseTableViewController: UITableViewController,
                 
                 var needed = true
                 
-                if let _ = dateComponentWanted {
+                if let dateComponentWanted = dateComponentWanted {
                     
                     let dateComponent = Calendar.current.dateComponents([.month, .year], from: date)
                     
-                    needed = ( dateComponent.year! == dateComponentWanted?.year! )
-                               && (dateComponent.month! == dateComponentWanted?.month! )
+                    needed = ( dateComponent.year! == dateComponentWanted.year! )
+                               && (dateComponent.month! == dateComponentWanted.month! )
                 }
                 
                 if needed {
@@ -885,7 +886,7 @@ class XYZExpenseTableViewController: UITableViewController,
     // MARK: - Search delegate
     func didDismissSearchController(_ searchController: UISearchController) {
     
-        if let _ = searchText, !((searchText?.isEmpty)!), searchActive  {
+        if let searchText = searchText, !(searchText.isEmpty), searchActive  {
             
             searchBar?.text = searchText
         } else {

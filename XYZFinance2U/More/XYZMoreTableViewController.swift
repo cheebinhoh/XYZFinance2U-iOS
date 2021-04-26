@@ -94,17 +94,17 @@ class XYZMoreTableViewController: UITableViewController,
                         let decoder = JSONDecoder()
                         decoder.dateDecodingStrategy = .iso8601
                         let res = try? decoder.decode(ExchangRateAPIResult.self, from: data )
-
-                        if let _ = res {
+                        
+                        if let res = res {
          
                             var rates = [String : Double]()
-                            for (c, r) in res!.rates {
+                            for (c, r) in res.rates {
                                 
                                 rates[c] = Double(r)
                             }
 
                             self.rates = rates;
-                            self.lastRateTimestamp = res?.date
+                            self.lastRateTimestamp = res.date
                             self.calculateTotalIncome()
                         } else {
                           
@@ -886,9 +886,9 @@ class XYZMoreTableViewController: UITableViewController,
                     currencyCodesUsed.insert(income.currencyCode)
                 }
                 
-                if let _ = totalIncomeCurrencyCode {
+                if let totalIncomeCurrencyCode = totalIncomeCurrencyCode {
                     
-                    currencyCodesUsed.insert(totalIncomeCurrencyCode!)
+                    currencyCodesUsed.insert(totalIncomeCurrencyCode)
                 }
                 
                 if !currencyCodesUsed.isEmpty {

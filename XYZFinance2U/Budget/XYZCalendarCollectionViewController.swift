@@ -870,7 +870,7 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
             let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: Date())
             let nowDate = Calendar.current.date(from: dateComponent)
             
-            if let _ = expenseList, !(expenseList?.isEmpty)! {
+            if let expenseList = expenseList, !(expenseList.isEmpty) {
                 
                 cell.indicator.backgroundColor = UIColor.systemBlue
             } else {

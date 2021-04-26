@@ -56,14 +56,14 @@ class XYZExpenseDetailTableViewController: UITableViewController,
             
             case "budget":
                 
-                if let _ = item, item! != "" {
+                if let item = item, item != "" {
                     
-                    budgetCategory = item!
+                    budgetCategory = item
                     
                     let appDelegate = UIApplication.shared.delegate as? AppDelegate
                     let budget = appDelegate?.budgetList.first(where: { (budget) -> Bool in
                         
-                        return budget.name == item!
+                        return budget.name == item
                     })
                     
                     iconName = budget?.iconName ?? ""
@@ -577,11 +577,11 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                 date = sender.date ?? Date()
             
             case "recurringStopDatePicker":
-                if let _ = sender.date {
+                if let senderDate = sender.date {
                     
-                    if sender.date! > date! {
+                    if senderDate > date! {
                         
-                        recurringStopDateCell?.dateInput.text = "\("Recurring stop:".localized()) \(formattingDate(sender.date ?? Date(), style: .medium))"
+                        recurringStopDateCell?.dateInput.text = "\("Recurring stop:".localized()) \(formattingDate(senderDate, style: .medium))"
                     } else {
                         
                        recurringStopDateCell?.dateInput.text = "\("Recurring stop:".localized()) -"
@@ -1453,9 +1453,9 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                     
                     selectionTableViewController.selectionIdentifier = "currency"
                     
-                    if let _ = currencyCodes, !(currencyCodes?.isEmpty)! {
+                    if let currencyCodes = currencyCodes, !(currencyCodes.isEmpty) {
                         
-                        selectionTableViewController.setSelections("", false, currencyCodes!)
+                        selectionTableViewController.setSelections("", false, currencyCodes)
                     }
                     
                     var codeIndex: Character?

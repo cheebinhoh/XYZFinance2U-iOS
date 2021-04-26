@@ -62,19 +62,19 @@ class XYZIncomeDetailViewController: UIViewController {
         
         super.viewDidLoad()
 
-        if let _ = income {
+        if let income = income {
             
-            let bankValue = income?.bank
-            let accountNrValue = income?.accountNr
-            let currencyCode = income?.currencyCode
-            let balance = income?.amount
-            let principalAmount = income?.principal
+            let bankValue = income.bank
+            let accountNrValue = income.accountNr
+            let currencyCode = income.currencyCode
+            let balance = income.amount
+            let principalAmount = income.principal
 
             bank.text = bankValue
             accountNr.text = accountNrValue
-            amount.text = formattingCurrencyValue(of: balance!, as: currencyCode)
-            principal.text = formattingCurrencyValue(of: principalAmount!, as: currencyCode)
-            date.text = formattingDate(income?.lastUpdate ?? Date(), style: .medium)
+            amount.text = formattingCurrencyValue(of: balance, as: currencyCode)
+            principal.text = formattingCurrencyValue(of: principalAmount, as: currencyCode)
+            date.text = formattingDate(income.lastUpdate, style: .medium)
         }
         
         // Do any additional setup after loading the view.

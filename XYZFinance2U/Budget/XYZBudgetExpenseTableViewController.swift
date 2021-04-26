@@ -138,9 +138,9 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
                 return $0 == expense
             })
 
-            if let _ = index {
+            if let index = index {
                 
-                indexPath = IndexPath(row: index!, section: sectionIndex)
+                indexPath = IndexPath(row: index, section: sectionIndex)
                 break
             }
         }

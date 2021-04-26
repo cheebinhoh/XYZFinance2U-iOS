@@ -750,9 +750,9 @@ class XYZIncomeDetailTableViewController: UITableViewController,
                     
                     selectionTableViewController.selectionIdentifier = "currency"
         
-                    if let _ = currencyCodes, !(currencyCodes?.isEmpty)! {
+                    if let currencyCodes = currencyCodes, !(currencyCodes.isEmpty) {
                         
-                        selectionTableViewController.setSelections("", false, currencyCodes!)
+                        selectionTableViewController.setSelections("", false, currencyCodes)
                     }
                     
                     var codeIndex: Character?

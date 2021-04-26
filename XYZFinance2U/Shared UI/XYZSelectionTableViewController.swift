@@ -78,9 +78,9 @@ class XYZSelectionTableViewController: UITableViewController {
         
         var title = item?.localized()
         
-        if let _ = displayString {
+        if let displayString = displayString {
             
-            title = displayString!
+            title = displayString
         } else if !self.displayStrings.isEmpty {
             
             for tablesection in self.tableSectionList {
@@ -196,13 +196,13 @@ class XYZSelectionTableViewController: UITableViewController {
             cell.color = selectionColors[indexPath.row]
         }
         
-        if let _ = imageNames {
+        if let imageNames = imageNames {
             
-            let iconName = imageNames![indexPath.row]
+            let iconName = imageNames[indexPath.row]
             
             if iconName != "" {
                 
-                cell.icon.image = UIImage(named: imageNames![indexPath.row])
+                cell.icon.image = UIImage(named: imageNames[indexPath.row])
                 cell.icon.image = cell.icon.image?.withRenderingMode(.alwaysTemplate)
                 
                 if #available(iOS 13.0, *) {

@@ -44,15 +44,15 @@ class XYZBudgetDetailTableViewController: UITableViewController,
     
     func dateDidPick(sender: XYZBudgetDetailDatePickerTableViewCell) {
     
-        if let _ = budget {
+        if let budget = budget {
             
             if nrOfHistoricalItems >= historicalStart.count {
         
                 if sender.date! > date {
                     
                     historicalStart.append(date)
-                    historicalAmount.append(budget?.amount ?? 0.0)
-                    historicalLength.append(budget?.length.rawValue ?? XYZBudget.Length.none.rawValue)
+                    historicalAmount.append(budget.amount)
+                    historicalLength.append(budget.length.rawValue)
                 }
             } else {
                 

@@ -52,9 +52,9 @@ class XYZBudgetListTableViewController: UITableViewController {
         navigationItem.title = budgetName
         cellList = [TableCell]()
         
-        if let _ = budget {
+        if let budget = budget {
             
-            var (count, lengths, dates, amounts) = (budget?.getAllBudgetDateAmount())!
+            var (count, lengths, dates, amounts) = (budget.getAllBudgetDateAmount())
 
             let nowIsCovered = dates.contains { (start) -> Bool in
             
@@ -64,9 +64,9 @@ class XYZBudgetListTableViewController: UITableViewController {
             // if the early start of the budget is in future, we need an entry to cover what is now until early start.
             if !nowIsCovered {
                 
-                if let _ = budget?.currentStart {
+                if let currentStart = budget.currentStart {
                     
-                    dates.insert((budget?.currentStart)!, at: 0)
+                    dates.insert(currentStart, at: 0)
                     amounts.insert(0.0, at: 0)
                     lengths.insert(XYZBudget.Length.none.rawValue, at: 0)
                     count = count + 1
