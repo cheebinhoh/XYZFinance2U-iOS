@@ -24,11 +24,70 @@ class XYZExpensePerson: NSManagedObject
     
     // MARK: - property
     
-    var expense: XYZExpense?
-    var name  = ""
-    var email = ""
-    var paid = false
-    var sequenceNr = 0
+    var expense: XYZExpense? {
+        
+        get {
+            
+            return self.value(forKey: XYZExpensePerson.expense) as? XYZExpense
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpensePerson.expense)
+        }
+    }
+    
+    var name: String {
+        
+        get {
+            
+            return self.value(forKey: XYZExpensePerson.name) as? String ?? ""
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpensePerson.name)
+        }
+    }
+    
+    var email: String {
+        
+        get {
+            
+            return self.value(forKey: XYZExpensePerson.email) as? String ?? ""
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpensePerson.email)
+        }
+    }
+    
+    var paid: Bool {
+        
+        get {
+            
+            return self.value(forKey: XYZExpensePerson.paid) as? Bool ?? false
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpensePerson.paid)
+        }
+    }
+    
+    var sequenceNr: Int {
+        
+        get {
+            
+            return self.value(forKey: XYZExpensePerson.sequenceNr) as? Int ?? 0
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpensePerson.sequenceNr)
+        }
+    }
     
     // MARK: - function
     override init(entity: NSEntityDescription,
@@ -48,9 +107,9 @@ class XYZExpensePerson: NSManagedObject
         
         super.init(entity: entity, insertInto: context!)
         
-        self.setValue(sequenceNr, forKey: XYZExpensePerson.sequenceNr)
-        self.setValue(expense, forKey: XYZExpensePerson.expense)
-        self.setValue(name, forKey: XYZExpensePerson.name)
-        self.setValue(email, forKey: XYZExpensePerson.email)
+        self.sequenceNr = sequenceNr
+        self.expense = expense
+        self.name = name
+        self.email = email
     }
 }

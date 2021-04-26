@@ -249,7 +249,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         
         for (index, image) in imageSet!.enumerated() {
             
-            guard var receiptList = expense?.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt> else {
+            guard var receiptList = expense?.receipts else {
                 
                 fatalError("Exception: [XYZExpenseReceipt] is expected")
             }
@@ -278,12 +278,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                 
                 receiptToBeDeleted = receiptList.first(where: {
                     
-                    guard let sequenceNr = $0.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int else {
-                        
-                        return false
-                    }
-                    
-                    return sequenceNr == index
+                    return $0.sequenceNr == index
                 })
                 
                 if let _ = receiptToBeDeleted {
@@ -295,12 +290,12 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                     
                     receiptList.remove(receiptToBeDeleted!)
 
-                    expense?.setValue(receiptList, forKey: XYZExpense.receipts)
+                    expense?.receipts = receiptList
                 }
             }
         }
         
-        guard let personList = expense?.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
+        guard let personList = expense?.persons else {
             
             fatalError("Exception: [XYZExpensePerson] is expected")
         }
@@ -381,40 +376,34 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                 modalEditing = false
             }
 
-            guard let receiptList = expense.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt> else {
+            guard let receiptList = expense.receipts else {
                 
                 fatalError("Exception: [XYZExpenseReceipt] is expected")
             }
             
             for receipt in receiptList {
                 
-                let data = receipt.value(forKey: XYZExpenseReceipt.image) as? NSData
+                let data = receipt.image as NSData
                 
-                guard let image = UIImage(data: data! as Data ) else {
+                guard let image = UIImage(data: data as Data ) else {
                     
                     fatalError("Exception: ui image is expected")
                 }
                 
-                let seqNr = receipt.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int
-                imageSet?[seqNr!].image = image
-                imageSet?[seqNr!].selected = true
+                let seqNr = receipt.sequenceNr
+                imageSet?[seqNr].image = image
+                imageSet?[seqNr].selected = true
             }
             
             let personList = expense.getPersons()
             
             for person in personList.sorted(by: { (person1, person2) -> Bool in
                 
-                let seq1 = person1.value(forKey: XYZExpensePerson.sequenceNr) as? Int
-                let seq2 = person2.value(forKey: XYZExpensePerson.sequenceNr) as? Int
-                
-                return seq1! < seq2!
+                return person1.sequenceNr < person2.sequenceNr
             }) {
                 
-                let email = person.value(forKey: XYZExpensePerson.email) as? String
-                let paid = person.value(forKey: XYZExpensePerson.paid) as? Bool
-                emails.append(email!)
-                
-                paids.append(paid!)
+                emails.append(person.email)
+                paids.append(person.paid)
             }
             
             if isShared {
@@ -855,7 +844,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         let oldBudgetCategory = expense?.budgetCategory
         let oldRecurring = expense?.recurring
         let oldRecurringStopDate = expense?.recurringStopDate
-        let oldReceiptList = expense?.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>
+        let oldReceiptList = expense?.receipts!
         let oldPersonList = expense?.getPersons()
         
         undoManager?.registerUndo(withTarget: expense!, handler: { (expense) in
@@ -870,8 +859,8 @@ class XYZExpenseDetailTableViewController: UITableViewController,
             expense.budgetCategory = oldBudgetCategory!
             expense.recurring = oldRecurring!
             expense.recurringStopDate = oldRecurringStopDate!
-            expense.setValue(oldReceiptList, forKey: XYZExpense.receipts)
-            expense.setValue(oldPersonList, forKey: XYZExpense.persons)
+            expense.receipts = oldReceiptList
+            expense.persons = oldPersonList
             expense.lastRecordChange = Date()
             
             self.expenseDelegate?.saveExpense(expense: expense)

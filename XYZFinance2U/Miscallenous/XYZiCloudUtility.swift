@@ -128,7 +128,6 @@ func createUpdateExpense(record: CKRecord,
             let amount = record[XYZExpense.amount] as? Double
             let date = record[XYZExpense.date] as? Date
             let shareRecordId = record[XYZExpense.shareRecordId] as? String
-            let hasLocation = record[XYZExpense.hasLocation] as? Bool
             let isSoftDelete = record[XYZExpense.isSoftDelete] as? Bool
             let isSharedRecord = record[XYZExpense.isShared] as? Bool ?? false
             let currency = record[XYZExpense.currencyCode] as? String ?? Locale.current.currencyCode
@@ -178,8 +177,7 @@ func createUpdateExpense(record: CKRecord,
             expenseToBeUpdated?.date = date!
             expenseToBeUpdated?.shareRecordId = shareRecordId!
             expenseToBeUpdated?.isShared = isShared || isSharedRecord
-            expenseToBeUpdated?.hasLocation = hasLocation!
-            expenseToBeUpdated?.setValue(oldChangeToken, forKey: XYZExpense.preChangeToken)
+            expenseToBeUpdated?.preChangeToken = oldChangeToken
             expenseToBeUpdated?.isSoftDelete = isSoftDelete!
             expenseToBeUpdated?.currencyCode = currency!
             expenseToBeUpdated?.budgetCategory = budget
@@ -210,13 +208,6 @@ func createUpdateExpense(record: CKRecord,
                     
                     task.resume()
                 }
-            }
-        
-            if let locationData = record[XYZExpense.loction] as? CLLocation {
-                
-                let data = try! NSKeyedArchiver.archivedData(withRootObject: locationData, requiringSecureCoding: false)
-                
-                expenseToBeUpdated?.setValue(data, forKey: XYZExpense.loction)
             }
             
             var ckshareFound: CKShare? = nil
@@ -875,30 +866,30 @@ func saveExpensesToiCloud(database: CKDatabase,
         record.setValue(recurring, forKey: XYZExpense.recurring)
         record.setValue(recurringStopDate, forKey: XYZExpense.recurringStopDate)
     
-        guard let receiptList = expense.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>  else {
+        guard let receiptList = expense.receipts else {
             
             fatalError("Exception: [XYZExpenseReceipt] is expected")
         }
         
         let sortedReceiptList = receiptList.sorted(by: { (p1, p2) -> Bool in
         
-            ( p1.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int)! < (p2.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int)!
+            p1.sequenceNr < p2.sequenceNr
         })
         
         var maxSequenceNr = 0
         for receipt in sortedReceiptList {
 
-            let sequenceNr = receipt.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int
+            let sequenceNr = receipt.sequenceNr
             
-            maxSequenceNr = max(sequenceNr!, maxSequenceNr)
+            maxSequenceNr = max(sequenceNr, maxSequenceNr)
             
-            let file = "image\(sequenceNr!)"
-            let text = receipt.value(forKey: XYZExpenseReceipt.image) as? NSData
+            let file = "image\(sequenceNr)"
+            let text = receipt.image as NSData
             
             if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             
                 let fileURL = dir.appendingPathComponent(file)
-                text?.write(to: fileURL, atomically: true)
+                text.write(to: fileURL, atomically: true)
                 
                 let ckasset = CKAsset(fileURL: fileURL)
                 record.setValue(ckasset, forKey: file)
@@ -910,34 +901,22 @@ func saveExpensesToiCloud(database: CKDatabase,
         
         record.setValue(maxSequenceNr + 1, forKey: XYZExpense.nrOfReceipts)
         
-        let hasLocation = expense.hasLocation
-        
-        record.setValue(hasLocation, forKey: XYZExpense.hasLocation)
-        
-        if hasLocation, let data = expense.value(forKey: XYZExpense.loction) as? Data {
-            
-            if let cllocation = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? CLLocation {
-            
-                record.setValue(cllocation, forKey: XYZExpense.loction)
-            }
-        }
-        
-        guard let personList = expense.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
+        guard let personList = expense.persons else {
             
             fatalError("Exception: [XYZExpensePerson] is expected")
         }
         
         for person in personList {
             
-            let sequenceNr = person.value(forKey: XYZExpensePerson.sequenceNr) as? Int
-            let personRecordName = "\(recordName)-\(sequenceNr!)"
+            let sequenceNr = person.sequenceNr
+            let personRecordName = "\(recordName)-\(sequenceNr)"
             let personckrecordId = CKRecord.ID(recordName: personRecordName, zoneID: customZone.zoneID)
          
             let personRecord = CKRecord(recordType: XYZExpensePerson.type, recordID: personckrecordId)
             
-            let email = person.value(forKey: XYZExpensePerson.email) as? String
-            let name = person.value(forKey: XYZExpensePerson.name) as? String
-            let paid = person.value(forKey: XYZExpensePerson.paid) as? Bool
+            let email = person.email
+            let name = person.name
+            let paid = person.paid
             
             personRecord.setValue(email, forKey: XYZExpensePerson.email)
             personRecord.setValue(name, forKey: XYZExpensePerson.name)

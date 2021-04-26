@@ -264,13 +264,11 @@ class XYZExpenseTableViewController: UITableViewController,
         let oldIsShared = expense.isShared // if we can save it, it means it is not readonly
         let oldShareUrl = expense.shareUrl
         let oldShareRecordId = expense.shareRecordId
-        let oldHasLocation = expense.hasLocation
         let oldCurrencyCode = expense.currencyCode
         let oldBudgetCategory = expense.budgetCategory
         let oldRecurring = expense.recurring
         let oldRecurringStopDate = expense.recurringStopDate
-        let oldLocation = expense.value(forKey: XYZExpense.loction)
-        let oldReceiptList = expense.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>
+        let oldReceiptList = expense.receipts!
         let oldPersonList = expense.getPersons()
         
         undoManager?.registerUndo(withTarget: self, handler: { (viewController) in
@@ -280,14 +278,12 @@ class XYZExpenseTableViewController: UITableViewController,
             newExpense.shareRecordId = oldShareRecordId
             newExpense.shareUrl = oldShareUrl
             newExpense.isShared = oldIsShared
-            newExpense.hasLocation = oldHasLocation
             newExpense.currencyCode = oldCurrencyCode
             newExpense.budgetCategory = oldBudgetCategory
             newExpense.recurring = oldRecurring
             newExpense.recurringStopDate = oldRecurringStopDate
-            newExpense.setValue(oldLocation, forKey: XYZExpense.loction)
-            newExpense.setValue(oldReceiptList, forKey: XYZExpense.receipts)
-            newExpense.setValue(oldPersonList, forKey: XYZExpense.persons)
+            newExpense.receipts = oldReceiptList
+            newExpense.persons = oldPersonList
             
             self.saveNewIncomeWithoutUndo(expense: newExpense)
         })
@@ -356,7 +352,7 @@ class XYZExpenseTableViewController: UITableViewController,
                                     fatalError("Exception: CKShare is expected")
                                 }
                             
-                                guard let personList = expense?.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
+                                guard let personList = expense?.persons else {
                                 
                                     fatalError("Exception: [XYZExpensePerson] is expected")
                                 }
@@ -366,9 +362,9 @@ class XYZExpenseTableViewController: UITableViewController,
                             
                                 for person in personList {
                                 
-                                    let email = person.value(forKey: XYZExpensePerson.email) as? String
+                                    let email = person.email
                                                                     
-                                    let useridentitylookup = CKUserIdentity.LookupInfo(emailAddress: email!)
+                                    let useridentitylookup = CKUserIdentity.LookupInfo(emailAddress: email)
                                     userIdentityLookupInfos.append(useridentitylookup)
                                 }
                             

@@ -92,13 +92,11 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         let oldIsShared = expense.isShared // if we can save it, it means it is not readonly
         let oldShareRecordId = expense.shareRecordId
         let oldShareUrl = expense.shareUrl
-        let oldHasLocation = expense.hasLocation
         let oldCurrencyCode = expense.currencyCode
         let oldBudgetCategory = expense.budgetCategory
         let oldRecurring = expense.recurring
         let oldRecurringStopDate = expense.recurringStopDate
-        let oldLocation = expense.value(forKey: XYZExpense.loction)
-        let oldReceiptList = expense.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>
+        let oldReceiptList = expense.receipts
         let oldPersonList = expense.getPersons()
         
         undoManager?.registerUndo(withTarget: self, handler: { (viewController) in
@@ -106,14 +104,12 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
             let newExpense = XYZExpense(id: oldRecordId, detail: oldDetail, amount: oldAmount, date: oldDate, context: managedContext())
             
             newExpense.isShared = oldIsShared
-            newExpense.hasLocation = oldHasLocation
             newExpense.currencyCode = oldCurrencyCode
             newExpense.budgetCategory = oldBudgetCategory
             newExpense.recurring = oldRecurring
             newExpense.recurringStopDate = oldRecurringStopDate
-            newExpense.setValue(oldLocation, forKey: XYZExpense.loction)
-            newExpense.setValue(oldReceiptList, forKey: XYZExpense.receipts)
-            newExpense.setValue(oldPersonList, forKey: XYZExpense.persons)
+            newExpense.receipts = oldReceiptList
+            newExpense.persons = oldPersonList
             newExpense.shareUrl = oldShareUrl
             newExpense.shareRecordId = oldShareRecordId
             newExpense.lastRecordChange = Date()

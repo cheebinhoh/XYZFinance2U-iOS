@@ -22,9 +22,44 @@ class XYZExpenseReceipt: NSManagedObject
     
     // MARK: - property
     
-    var expense: XYZExpense?
-    var image = NSData()
-    var sequenceNr = 0
+    var expense: XYZExpense? {
+        
+        get {
+            
+            return self.value(forKey: XYZExpenseReceipt.expense) as? XYZExpense
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpenseReceipt.expense)
+        }
+    }
+    
+    var image: Data {
+        
+        get {
+            
+            return self.value(forKey: XYZExpenseReceipt.image) as? Data ?? NSData() as Data
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpenseReceipt.image)
+        }
+    }
+    
+    var sequenceNr: Int {
+        
+        get {
+            
+            return self.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int ?? 0
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpenseReceipt.sequenceNr)
+        }
+    }
     
     // MARK: - function
     override init(entity: NSEntityDescription,
@@ -42,8 +77,8 @@ class XYZExpenseReceipt: NSManagedObject
                                                 in: context!)!
         
         super.init(entity: entity, insertInto: context!)
-        self.setValue(expense, forKey: XYZExpenseReceipt.expense)
-        self.setValue(sequenceNr, forKey: XYZExpenseReceipt.sequenceNr)
-        self.setValue(image, forKey: XYZExpenseReceipt.image)
+        self.expense = expense
+        self.sequenceNr = sequenceNr
+        self.image = image as Data
     }
 }

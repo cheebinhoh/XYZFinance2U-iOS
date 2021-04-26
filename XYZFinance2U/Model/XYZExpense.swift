@@ -39,11 +39,9 @@ class XYZExpense: NSManagedObject {
     static let currencyCode = "currencyCode"
     static let date = "date"
     static let detail = "detail"
-    static let hasLocation = "hasLocation"
     static let isShared = "isShared"
     static let isSoftDelete = "isSoftDelete"
     static let lastRecordChange = "lastRecordChange"
-    static let loction = "location"
     static let nrOfPersons = "nrOfPersons"
     static let nrOfReceipts = "nrOfReceipts"
     static let preChangeToken = "preChangeToken"
@@ -122,19 +120,6 @@ class XYZExpense: NSManagedObject {
         }
     }
     
-    var hasLocation: Bool {
-        
-        get {
-            
-            return self.value(forKey: XYZExpense.hasLocation) as? Bool ?? false
-        }
-        
-        set {
-            
-            self.setValue(newValue, forKey: XYZExpense.hasLocation)
-        }
-    }
-    
     var isShared: Bool {
         
         get {
@@ -174,9 +159,45 @@ class XYZExpense: NSManagedObject {
         }
     }
     
-    var persons: Set<XYZExpensePerson>?
-    var preChangeToken = NSData()
-    var receipts: Set<XYZExpenseReceipt>?
+    var persons: Set<XYZExpensePerson>? {
+        
+        get {
+            
+            return self.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson>
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpense.persons)
+        }
+    }
+    
+    var preChangeToken: Data {
+        
+        get {
+            
+            return self.value(forKey: XYZExpense.preChangeToken) as? Data ?? NSData() as Data
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpense.preChangeToken)
+        }
+    }
+    
+    var receipts: Set<XYZExpenseReceipt>? {
+        
+        get {
+            
+            return self.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpense.receipts)
+        }
+    }
+    
     var recordId: String {
         
         get {
@@ -333,9 +354,9 @@ class XYZExpense: NSManagedObject {
         self.detail = detail
         self.amount = amount
         self.date = date
-        self.setValue(Set<XYZExpensePerson>(), forKey: XYZExpense.persons)
-        self.setValue(Set<XYZExpenseReceipt>(), forKey: XYZExpense.receipts)
-        self.setValue(NSData(), forKey: XYZExpense.preChangeToken)
+        self.persons = Set<XYZExpensePerson>()
+        self.receipts = Set<XYZExpenseReceipt>()
+        self.preChangeToken = NSData() as Data
         self.isSoftDelete = false
         self.currencyCode = Locale.current.currencyCode!
         self.budgetCategory = ""
@@ -343,7 +364,7 @@ class XYZExpense: NSManagedObject {
     
     func getPersons() -> Set<XYZExpensePerson> {
         
-        guard let personList = self.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
+        guard let personList = self.persons else {
             
             fatalError("Exception: [XYZExpensePerson] is expected")
         }
@@ -353,7 +374,7 @@ class XYZExpense: NSManagedObject {
     
     func removeAllPersons() {
         
-        guard let personList = self.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
+        guard let personList = self.persons else {
             
             fatalError("Exception: [XYZExpensePerson] is expected")
         }
@@ -365,7 +386,7 @@ class XYZExpense: NSManagedObject {
         
         // for some reason, deleting individual items from set does not empty them, some where are reference them or because
         // the hashable is not working, so i do not able to just use deleteall
-        self.setValue(Set<XYZExpensePerson>(), forKey: XYZExpense.persons)
+        self.persons = Set<XYZExpensePerson>()
     }
     
     @discardableResult
@@ -374,19 +395,14 @@ class XYZExpense: NSManagedObject {
         
         var personRemoved: XYZExpensePerson?
         
-        guard var personList = self.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
+        guard var personList = self.persons else {
             
             fatalError("Exception: [XYZExpensePerson] is expected")
         }
         
         personRemoved = personList.first(where: { (person) -> Bool in
             
-            if let personSequenceNr = person.value(forKey: XYZExpensePerson.sequenceNr) as? Int {
-                
-                return personSequenceNr == sequenceNr
-            }
-            
-            return false;
+            return person.sequenceNr == sequenceNr
         })
         
         if let _ = personRemoved {
@@ -394,7 +410,7 @@ class XYZExpense: NSManagedObject {
             personList.remove(personRemoved!)
             context?.delete(personRemoved!)
              
-            self.setValue(personList, forKey: XYZExpense.persons)
+            self.persons = personList
         }
         
         return personRemoved
@@ -419,33 +435,29 @@ class XYZExpense: NSManagedObject {
         var hasChange = false
         var person: XYZExpensePerson?
         
-        guard var personList = self.value(forKey: XYZExpense.persons) as? Set<XYZExpensePerson> else {
+        guard var personList = self.persons else {
             
             fatalError("Exception: [XYZExpensePerson] is expected")
         }
         
         for existingPerson in personList {
             
-            if let existingSequenceNr = existingPerson.value(forKey: XYZExpensePerson.sequenceNr) as? Int,
-                existingSequenceNr == sequenceNr {
+            if existingPerson.sequenceNr == sequenceNr {
                 
-                if let existingName = existingPerson.value(forKey: XYZExpensePerson.name) as? String,
-                    existingName != name {
+                if existingPerson.name != name {
                     
                     hasChange = true
-                } else if let existingEmail = existingPerson.value(forKey: XYZExpensePerson.email) as? String,
-                    existingEmail != email {
+                } else if existingPerson.email != email {
                     
                     hasChange = true
-                } else if let existingPaid = existingPerson.value(forKey: XYZExpensePerson.paid) as? Bool,
-                    existingPaid != paid {
+                } else if existingPerson.paid != paid {
                 
                     hasChange = true
                 }
                 
-                existingPerson.setValue(name, forKey: XYZExpensePerson.name)
-                existingPerson.setValue(email, forKey: XYZExpensePerson.email)
-                existingPerson.setValue(paid, forKey: XYZExpensePerson.paid)
+                existingPerson.name = name
+                existingPerson.email = email
+                existingPerson.paid = paid
                 person = existingPerson
                 
                 break
@@ -456,11 +468,11 @@ class XYZExpense: NSManagedObject {
             
             hasChange = true
             person = XYZExpensePerson(expense: self, sequenceNr: sequenceNr, name: name, email: email, context: context)
-            person?.setValue(paid, forKey: XYZExpensePerson.paid)
+            person?.paid = paid
             
             personList.insert(person!)
             
-            self.setValue(personList, forKey: XYZExpense.persons)
+            self.persons = personList
         }
         
         return (person!, hasChange)
@@ -473,22 +485,21 @@ class XYZExpense: NSManagedObject {
         var hasChange = false
         var receipt: XYZExpenseReceipt?
         
-        guard var receiptList = self.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>  else {
+        guard var receiptList = self.receipts  else {
             
             fatalError("Exception: [XYZExpenseReceipt] is expected")
         }
         
         for existingReceipt in receiptList {
             
-            if let existingSequenceNr = existingReceipt.value(forKey: XYZExpenseReceipt.sequenceNr) as? Int,
-                existingSequenceNr == sequenceNr {
+            if existingReceipt.sequenceNr == sequenceNr {
                 
-                let imageData = existingReceipt.value(forKey: XYZExpenseReceipt.image) as? NSData
+                let imageData = existingReceipt.image as NSData
                 
                 hasChange = imageData != image // this is not 100% accurate as data might be different
                                                // at various time of compress image.
                 
-                existingReceipt.setValue(image, forKey: XYZExpenseReceipt.image)
+                existingReceipt.image = image as Data
                 receipt = existingReceipt
                 
                 break
@@ -501,7 +512,7 @@ class XYZExpense: NSManagedObject {
             receipt = XYZExpenseReceipt(expense: self, sequenceNr: sequenceNr, image: image, context: managedContext())
             receiptList.insert(receipt!)
             
-            self.setValue(receiptList, forKey: XYZExpense.receipts)
+            self.receipts = receiptList
         }
         
         return (receipt!, hasChange)
