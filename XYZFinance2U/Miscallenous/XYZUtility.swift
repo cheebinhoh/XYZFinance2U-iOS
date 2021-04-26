@@ -364,11 +364,8 @@ func sortAcounts(_ incomeList: [XYZAccount]) -> [XYZAccount] {
 func sortExpenses(_ expenses: [XYZExpense]) -> [XYZExpense] {
     
     return expenses.sorted(by: { (exp1, exp2) -> Bool in
-        
-        let date1 = exp1.value(forKey: XYZExpense.date) as! Date
-        let date2 = exp2.value(forKey: XYZExpense.date) as! Date
-        
-        return date1 > date2
+
+        return exp1.date > exp2.date
     })
 }
 

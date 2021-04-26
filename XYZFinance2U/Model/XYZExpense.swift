@@ -96,7 +96,19 @@ class XYZExpense: NSManagedObject {
         }
     }
     
-    var date = Date()
+    var date: Date {
+        
+        get {
+            
+            return self.value(forKey: XYZExpense.date) as? Date ?? Date()
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpense.date)
+        }
+    }
+    
     var detail: String {
         
         get {
@@ -162,7 +174,6 @@ class XYZExpense: NSManagedObject {
         }
     }
     
-    var location = CLLocation()
     var persons: Set<XYZExpensePerson>?
     var preChangeToken = NSData()
     var receipts: Set<XYZExpenseReceipt>?
@@ -218,7 +229,18 @@ class XYZExpense: NSManagedObject {
         }
     }
     
-    var recurringStopDate = Date()
+    var recurringStopDate: Date {
+        
+        get {
+            
+            return self.value(forKey: XYZExpense.recurringStopDate) as? Date ?? Date()
+        }
+        
+        set {
+            
+            self.setValue(newValue, forKey: XYZExpense.recurringStopDate)
+        }
+    }
     
     // MARK: - function
     
@@ -230,62 +252,61 @@ class XYZExpense: NSManagedObject {
         switch recurring {
             
             case .none:
-                let date = self.value(forKey: XYZExpense.date) as? Date
-                outputDate.append(date!)
+                outputDate.append(self.date)
             
             default:
-                var date = self.value(forKey: XYZExpense.date) as? Date
+                var date = self.date
 
                 var stopDate = until
-                let recurringStopDate = self.value(forKey: XYZExpense.recurringStopDate) as? Date ?? date
-                if recurringStopDate! > date! {
+                let recurringStopDate = self.recurringStopDate
+                if recurringStopDate > date {
                     
-                    stopDate = min(stopDate, recurringStopDate!)
+                    stopDate = min(stopDate, recurringStopDate)
                 }
 
-                let dateDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date!)
+                let dateDateComponents = Calendar.current.dateComponents([.day, .month, .year], from: date)
                 date = Calendar.current.date(from: dateDateComponents)!
 
                 repeat {
-                    outputDate.append(date!)
+                    outputDate.append(date)
                     
                     switch recurring {
                         case .none:
                             date = Calendar.current.date(byAdding: .day,
                                                          value:1,
-                                                         to: stopDate)
+                                                         to: stopDate)!
                         
                         case .daily:
                             date = Calendar.current.date(byAdding: .day,
                                                          value:1,
-                                                         to: date!)
+                                                         to: date)!
                         
                         case .weekly:
                             date = Calendar.current.date(byAdding: .weekday,
                                                          value:7,
-                                                         to: date!)
+                                                         to: date)!
                         case .biweekly:
                             date = Calendar.current.date(byAdding: .weekday,
                                                          value:14,
-                                                         to: date!)
+                                                         to: date)!
                         
                         case .monthly:
                             date = Calendar.current.date(byAdding: .month,
                                                          value:1,
-                                                         to: date!)
+                                                         to: date)!
                         
                         case .halfyearly:
                             date = Calendar.current.date(byAdding: .month,
                                                          value:7,
-                                                         to: date!)
+                                                         to: date)!
                         
                         case .yearly:
                             date = Calendar.current.date(byAdding: .year,
                                                          value:1,
-                                                         to: date!)
+                                                         to: date)!
                     }
                 }
-                while date! <= stopDate
+                while date <= stopDate
         }
         
         return outputDate.sorted(by: >= )
@@ -311,7 +332,7 @@ class XYZExpense: NSManagedObject {
         self.recordId = recordName
         self.detail = detail
         self.amount = amount
-        self.setValue(date, forKey: XYZExpense.date)
+        self.date = date
         self.setValue(Set<XYZExpensePerson>(), forKey: XYZExpense.persons)
         self.setValue(Set<XYZExpenseReceipt>(), forKey: XYZExpense.receipts)
         self.setValue(NSData(), forKey: XYZExpense.preChangeToken)

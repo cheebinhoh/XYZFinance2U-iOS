@@ -29,7 +29,7 @@ class XYZExpenseDetailViewController: UIViewController {
             
             let detailValue = expense?.detail
             let amountValue = expense?.amount
-            let dateValue = expense?.value(forKey: XYZExpense.date) as? Date
+            let dateValue = expense?.date
 
             detail.text = detailValue!
             amount.text = formattingCurrencyValue(of: amountValue!, as: Locale.current.currencyCode)

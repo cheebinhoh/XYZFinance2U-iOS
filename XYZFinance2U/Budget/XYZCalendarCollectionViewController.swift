@@ -55,9 +55,9 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
         budgetView.reloadData()
         expenseView.reloadData()
 
-        let date = expense.value(forKey: XYZExpense.date) as? Date
+        let date = expense.date
         
-        let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: date!)
+        let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: date)
         let startDateOfMonthComponent = Calendar.current.dateComponents([.day, .month, .year], from: startDateOfMonth!)
 
         var step = 0
@@ -109,7 +109,7 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
             }
         }
 
-        let indexPath = self.indexPath(of: date!)
+        let indexPath = self.indexPath(of: date)
 
         if let _ = indexPath {
             
@@ -178,9 +178,9 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
             
             if XYZExpense.Length.none == recurring {
                 
-                var theDate = expense.value(forKey: XYZExpense.date) as? Date
-                let theDateComponent = Calendar.current.dateComponents([.day, .month, .year], from: theDate!)
-                theDate = Calendar.current.date(from: theDateComponent)
+                var theDate = expense.date
+                let theDateComponent = Calendar.current.dateComponents([.day, .month, .year], from: theDate)
+                theDate = Calendar.current.date(from: theDateComponent)!
                 
                 if wholeMonth {
                     

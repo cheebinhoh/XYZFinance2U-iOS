@@ -88,7 +88,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         let oldRecordId = expense.recordId
         let oldDetail = expense.detail
         let oldAmount = expense.amount
-        let oldDate = expense.value(forKey: XYZExpense.date) as? Date ?? Date()
+        let oldDate = expense.date
         let oldIsShared = expense.isShared // if we can save it, it means it is not readonly
         let oldShareRecordId = expense.shareRecordId
         let oldShareUrl = expense.shareUrl
@@ -96,7 +96,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         let oldCurrencyCode = expense.currencyCode
         let oldBudgetCategory = expense.budgetCategory
         let oldRecurring = expense.recurring
-        let oldRecurringStopDate = expense.value(forKey: XYZExpense.recurringStopDate)
+        let oldRecurringStopDate = expense.recurringStopDate
         let oldLocation = expense.value(forKey: XYZExpense.loction)
         let oldReceiptList = expense.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>
         let oldPersonList = expense.getPersons()
@@ -110,7 +110,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
             newExpense.currencyCode = oldCurrencyCode
             newExpense.budgetCategory = oldBudgetCategory
             newExpense.recurring = oldRecurring
-            newExpense.setValue(oldRecurringStopDate, forKey: XYZExpense.recurringStopDate)
+            newExpense.recurringStopDate = oldRecurringStopDate
             newExpense.setValue(oldLocation, forKey: XYZExpense.loction)
             newExpense.setValue(oldReceiptList, forKey: XYZExpense.receipts)
             newExpense.setValue(oldPersonList, forKey: XYZExpense.persons)

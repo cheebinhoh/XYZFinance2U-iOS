@@ -260,7 +260,7 @@ class XYZExpenseTableViewController: UITableViewController,
         let oldRecordId = expense.recordId
         let oldDetail = expense.detail
         let oldAmount = expense.amount
-        let oldDate = expense.value(forKey: XYZExpense.date) as? Date ?? Date()
+        let oldDate = expense.date
         let oldIsShared = expense.isShared // if we can save it, it means it is not readonly
         let oldShareUrl = expense.shareUrl
         let oldShareRecordId = expense.shareRecordId
@@ -268,7 +268,7 @@ class XYZExpenseTableViewController: UITableViewController,
         let oldCurrencyCode = expense.currencyCode
         let oldBudgetCategory = expense.budgetCategory
         let oldRecurring = expense.recurring
-        let oldRecurringStopDate = expense.value(forKey: XYZExpense.recurringStopDate)
+        let oldRecurringStopDate = expense.recurringStopDate
         let oldLocation = expense.value(forKey: XYZExpense.loction)
         let oldReceiptList = expense.value(forKey: XYZExpense.receipts) as? Set<XYZExpenseReceipt>
         let oldPersonList = expense.getPersons()
@@ -284,7 +284,7 @@ class XYZExpenseTableViewController: UITableViewController,
             newExpense.currencyCode = oldCurrencyCode
             newExpense.budgetCategory = oldBudgetCategory
             newExpense.recurring = oldRecurring
-            newExpense.setValue(oldRecurringStopDate, forKey: XYZExpense.recurringStopDate)
+            newExpense.recurringStopDate = oldRecurringStopDate
             newExpense.setValue(oldLocation, forKey: XYZExpense.loction)
             newExpense.setValue(oldReceiptList, forKey: XYZExpense.receipts)
             newExpense.setValue(oldPersonList, forKey: XYZExpense.persons)
@@ -504,17 +504,14 @@ class XYZExpenseTableViewController: UITableViewController,
             
             let dateComponentWanted = Calendar.current.dateComponents([.month, .year], from: filteredMonthYear!)
             
-            if let date = expense.value(forKey: XYZExpense.date) as? Date {
+            let dateComponent = Calendar.current.dateComponents([.month, .year], from: expense.date)
+            
+            if dateComponent.year! == dateComponentWanted.year!
+                && dateComponent.month! == dateComponentWanted.month! {
+             
+                filteredExpenseList?.append(expense)
                 
-                let dateComponent = Calendar.current.dateComponents([.month, .year], from: date)
-                
-                if dateComponent.year! == dateComponentWanted.year!
-                    && dateComponent.month! == dateComponentWanted.month! {
-                 
-                    filteredExpenseList?.append(expense)
-                    
-                    filteredExpenseList = sortExpenses(filteredExpenseList!)
-                }
+                filteredExpenseList = sortExpenses(filteredExpenseList!)
             }
         }
         
@@ -710,11 +707,6 @@ class XYZExpenseTableViewController: UITableViewController,
         }
         
         for expense in expenseList! {
-            
-            guard let _ = expense.value(forKey: XYZExpense.date) as? Date else {
-                
-                continue
-            }
             
             if expense.isSoftDelete {
                 

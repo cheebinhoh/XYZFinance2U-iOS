@@ -45,7 +45,7 @@ class XYZExpenseTableViewCell: UITableViewCell {
         amount.text = formattingCurrencyValue(of: expense.amount,
                                               as: expense.currencyCode )
         detail.text = expense.detail
-        date.text = formattingDate((expense.value(forKey: XYZExpense.date) as? Date) ?? Date(), style: .medium )
+        date.text = formattingDate(expense.date, style: .medium )
         
         let budgetCategory = expense.budgetCategory
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -83,7 +83,7 @@ class XYZExpenseTableViewCell: UITableViewCell {
         }
 
         let recurring = expense.recurring
-        let theDate = (expense.value(forKey: XYZExpense.date) as? Date) ?? Date()
+        let theDate = expense.date
         switch recurring {
             
             case .none:

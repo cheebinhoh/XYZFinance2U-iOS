@@ -175,7 +175,7 @@ func createUpdateExpense(record: CKRecord,
             
             expenseToBeUpdated?.detail = detail!
             expenseToBeUpdated?.amount = amount!
-            expenseToBeUpdated?.setValue(date, forKey: XYZExpense.date)
+            expenseToBeUpdated?.date = date!
             expenseToBeUpdated?.shareRecordId = shareRecordId!
             expenseToBeUpdated?.isShared = isShared || isSharedRecord
             expenseToBeUpdated?.hasLocation = hasLocation!
@@ -184,7 +184,7 @@ func createUpdateExpense(record: CKRecord,
             expenseToBeUpdated?.currencyCode = currency!
             expenseToBeUpdated?.budgetCategory = budget
             expenseToBeUpdated?.recurring = XYZExpense.Length(rawValue: recurring) ?? .none
-            expenseToBeUpdated?.setValue(recurringStopDate, forKey: XYZExpense.recurringStopDate)
+            expenseToBeUpdated?.recurringStopDate = recurringStopDate!
             
             let nrOfReceipt = record[XYZExpense.nrOfReceipts] as? Int
             for index in 0..<nrOfReceipt! {
@@ -855,14 +855,14 @@ func saveExpensesToiCloud(database: CKDatabase,
         
         let detail = expense.detail
         let amount = expense.amount
-        let date = expense.value(forKey: XYZExpense.date) as? Date
+        let date = expense.date
         let isSoftDelete = expense.isSoftDelete
         let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
         let currency = expense.currencyCode
         let budget = expense.budgetCategory
         
         let recurring = expense.recurring.rawValue
-        let recurringStopDate = expense.value(forKey: XYZExpense.recurringStopDate) as? Date ?? date
+        let recurringStopDate = expense.recurringStopDate
         
         record.setValue(detail, forKey: XYZExpense.detail)
         record.setValue(amount, forKey: XYZExpense.amount)
