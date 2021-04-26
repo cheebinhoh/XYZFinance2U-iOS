@@ -232,7 +232,7 @@ class AppDelegate: UIResponder,
                                         
                                         if expense.recordId == recordName {
                                             
-                                            if let isShare = expense.value(forKey: XYZExpense.isShared) as? Bool, isShare {
+                                            if expense.isShared {
                                                 
                                                 expense.isSoftDelete = false
                                                 expense.lastRecordChange = Date()

@@ -762,8 +762,6 @@ func saveExpensesToiCloud(database: CKDatabase,
     
     var expenseListToBeSaved: [XYZExpense]?
     
-    //if let lastChangeTokenFetch = iCloudZone.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date {
-    
     let lastChangeTokenFetch = iCloudZone.changeTokenLastFetch
     
     expenseListToBeSaved = [XYZExpense]()
@@ -848,7 +846,7 @@ func saveExpensesToiCloud(database: CKDatabase,
         let amount = expense.amount
         let date = expense.date
         let isSoftDelete = expense.isSoftDelete
-        let isShared = expense.value(forKey: XYZExpense.isShared) as? Bool
+        let isShared = expense.isShared
         let currency = expense.currencyCode
         let budget = expense.budgetCategory
         
@@ -993,26 +991,18 @@ func saveAccountsToiCloud(database: CKDatabase,
     
     var incomeListToBeSaved: [XYZAccount]?
     
-    if let lastChangeTokenFetch = iCloudZone.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date {
+    let lastChangeTokenFetch = iCloudZone.changeTokenLastFetch
         
-        incomeListToBeSaved = [XYZAccount]()
-        
-        for income in incomeList {
+    incomeListToBeSaved = [XYZAccount]()
     
-            if let lastChanged = income.value(forKey: XYZAccount.lastRecordChange) as? Date {
-                
-                if lastChanged > lastChangeTokenFetch {
-                    
-                    incomeListToBeSaved?.append(income)
-                }
-            } else {
-                
-                incomeListToBeSaved?.append(income)
-            }
+    for income in incomeList {
+
+        let lastChanged = income.lastRecordChange
+            
+        if lastChanged > lastChangeTokenFetch {
+            
+            incomeListToBeSaved?.append(income)
         }
-    } else {
-      
-        incomeListToBeSaved = incomeList
     }
  
     var recordIdsToBeDeleted = [CKRecord.ID]()
@@ -1113,9 +1103,7 @@ func saveBudgetsToiCloud(database: CKDatabase,
                          completionblock: @escaping () -> Void ) {
     
     var budgetListToBeSaved: [XYZBudget]?
-    
-    //if let lastChangeTokenFetch = iCloudZone.value(forKey: XYZiCloudZone.changeTokenLastFetch) as? Date {
-    
+
     let lastChangeTokenFetch = iCloudZone.changeTokenLastFetch
     
         budgetListToBeSaved = [XYZBudget]()
