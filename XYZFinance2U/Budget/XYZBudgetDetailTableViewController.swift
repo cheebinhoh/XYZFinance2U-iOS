@@ -82,9 +82,9 @@ class XYZBudgetDetailTableViewController: UITableViewController,
         
         tableView.reloadRows(at: [dateIndexPath], with: .none)
         
-        if let _ = lastEffectiveIndexPath {
+        if let lastEffectiveIndexPath = lastEffectiveIndexPath {
             
-            tableView.reloadRows(at: [lastEffectiveIndexPath!], with: .none)
+            tableView.reloadRows(at: [lastEffectiveIndexPath], with: .none)
         }
     }
     
@@ -151,9 +151,9 @@ class XYZBudgetDetailTableViewController: UITableViewController,
                 case "amount":
                     amount = formattingDoubleValueAsDouble(of: sender.input.text!)
                     
-                    if let _ = lastEffectiveIndexPath {
+                    if let lastEffectiveIndexPath = lastEffectiveIndexPath {
                     
-                        tableView.reloadRows(at: [lastEffectiveIndexPath!], with: .none)
+                        tableView.reloadRows(at: [lastEffectiveIndexPath], with: .none)
                     }
                     
                     break
@@ -438,32 +438,32 @@ class XYZBudgetDetailTableViewController: UITableViewController,
     
     func loadData() {
         
-        if let _ = budget {
+        if let budget = budget {
             
             if isCollapsed {
                 
                 navigationItem.title = "Budget".localized()
             }
             
-            budgetType = (budget?.name)!
-            amount = (budget?.amount)!
-            currencyCode = (budget?.currency)!
-            length = (budget?.length)!
-            date = (budget?.start)!
-            color = XYZColor(rawValue: budget?.color ?? "")!
+            budgetType = budget.name
+            amount = budget.amount
+            currencyCode = budget.currency
+            length = budget.length
+            date = budget.start
+            color = XYZColor(rawValue: budget.color)!
             
-            let dataAmount = budget?.historicalAmount ?? NSData() as Data
+            let dataAmount = budget.historicalAmount 
             historicalAmount = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataAmount) as? [Double] ?? [Double]()
 
-            let dataStart = budget?.historicalStart ?? NSData() as Data
+            let dataStart = budget.historicalStart 
             historicalStart = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataStart) as? [Date] ?? [Date]()
 
-            let dataLength = budget?.historicalLength ?? NSData() as Data
+            let dataLength = budget.historicalLength 
             historicalLength = try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(dataLength) as? [String] ?? [String]()
 
             nrOfHistoricalItems = historicalStart.count
             
-            iconName = budget?.iconName ?? ""
+            iconName = budget.iconName 
         } else {
             
             budgetType = ""
@@ -624,9 +624,9 @@ class XYZBudgetDetailTableViewController: UITableViewController,
                                                                                                amounts: historicalAmount.reversed())
                 
                 lasteffectivecell.setLabel("Current effective".localized())
-                if let _ = retstart {
+                if let retstart = retstart {
                     
-                    lasteffectivecell.setSelection("\(formattingCurrencyValue(of: retamount!, as: currencyCode)), \(retlength!.localized()), \(formattingDate(retstart!, style: .medium))")
+                    lasteffectivecell.setSelection("\(formattingCurrencyValue(of: retamount!, as: currencyCode)), \(retlength!.localized()), \(formattingDate(retstart, style: .medium))")
                 } else {
                     
                     lasteffectivecell.setSelection("")
@@ -871,10 +871,10 @@ class XYZBudgetDetailTableViewController: UITableViewController,
                                                                                                starts: historicalStart.reversed(),
                                                                                                amounts: historicalAmount.reversed())
                 
-                if let _ = retstart {
+                if let retstart = retstart {
                     
-                    selectionTableViewController.setSelectedItem("\(formattingCurrencyValue(of: retamount!, as: currencyCode)), \(retlength!), \(formattingDate(retstart!, style: .medium))",
-                        "\(formattingCurrencyValue(of: retamount!, as: currencyCode)), \(retlength!.localized()), \(formattingDate(retstart!, style: .medium))")
+                    selectionTableViewController.setSelectedItem("\(formattingCurrencyValue(of: retamount!, as: currencyCode)), \(retlength!), \(formattingDate(retstart, style: .medium))",
+                        "\(formattingCurrencyValue(of: retamount!, as: currencyCode)), \(retlength!.localized()), \(formattingDate(retstart, style: .medium))")
                 } else {
                     
                    selectionTableViewController.setSelectedItem("")

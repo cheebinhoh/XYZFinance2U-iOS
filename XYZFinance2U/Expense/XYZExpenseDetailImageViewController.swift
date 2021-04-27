@@ -119,7 +119,6 @@ class XYZExpenseDetailImageViewController: UIViewController,
         
         delegate?.viewImage(self)
         dismiss(animated: true, completion: nil)
-        //let _ = self.navigationController?.popViewController(animated: true)
     }
 
     @IBAction func zoomIn(_ sender: UITapGestureRecognizer) {

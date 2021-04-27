@@ -178,7 +178,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         
         sectionList = [TableSectionCell]()
         
-        if let _ = expenseList, !(expenseList?.isEmpty)! {
+        if let expenseList = expenseList, !expenseList.isEmpty {
             
             let expenseSection = TableSectionCell(identifier: "expense", title: "", cellList: [], data: expenseList)
             sectionList.append(expenseSection)
@@ -322,11 +322,11 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         let iCloudZone = GetiCloudZone(of: ckrecordzone, share: false, icloudZones: (appDelegate?.iCloudZones)!)
         iCloudZone?.data = appDelegate?.expenseList
         
-        if let _ = iCloudZone {
+        if let iCloudZone = iCloudZone {
             
             fetchAndUpdateiCloud(database: CKContainer.default().privateCloudDatabase,
                                  zones: [ckrecordzone],
-                                 iCloudZones: [iCloudZone!], completionblock: {
+                                 iCloudZones: [iCloudZone], completionblock: {
                                     
                 DispatchQueue.main.async {
                     
