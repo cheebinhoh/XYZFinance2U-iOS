@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol XYZBudgetDetailDateTableViewCellDelegate : class {
+protocol XYZBudgetDetailDateTableViewCellDelegate : AnyObject {
     
     func dateInputTouchUp(sender:XYZBudgetDetailDateTableViewCell)
 }

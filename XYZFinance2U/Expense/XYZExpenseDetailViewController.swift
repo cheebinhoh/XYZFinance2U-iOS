@@ -25,15 +25,15 @@ class XYZExpenseDetailViewController: UIViewController {
         
         super.viewDidLoad()
 
-        if let _ = expense {
+        if let expense = expense {
             
-            let detailValue = expense?.detail
-            let amountValue = expense?.amount
-            let dateValue = expense?.date
+            let detailValue = expense.detail
+            let amountValue = expense.amount
+            let dateValue = expense.date
 
-            detail.text = detailValue!
-            amount.text = formattingCurrencyValue(of: amountValue!, as: Locale.current.currencyCode)
-            date.text = formattingDate(dateValue!, style: .medium)
+            detail.text = detailValue
+            amount.text = formattingCurrencyValue(of: amountValue, as: Locale.current.currencyCode)
+            date.text = formattingDate(dateValue, style: .medium)
         }
         
         // Do any additional setup after loading the view.

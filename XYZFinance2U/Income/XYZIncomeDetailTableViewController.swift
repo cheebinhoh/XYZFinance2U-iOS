@@ -11,7 +11,7 @@ import UIKit
 import UserNotifications
 import NotificationCenter
 
-protocol XYZIncomeDetailDelegate: class {
+protocol XYZIncomeDetailDelegate: AnyObject {
     
     func saveNewIncome(income: XYZAccount)
     func saveIncome(income: XYZAccount)

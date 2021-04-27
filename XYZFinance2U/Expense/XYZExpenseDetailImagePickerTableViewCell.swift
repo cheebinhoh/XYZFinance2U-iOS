@@ -9,7 +9,7 @@
 
 import UIKit
 
-protocol XYZExpenseDetailImagePickerTableViewCellDelegate: class {
+protocol XYZExpenseDetailImagePickerTableViewCellDelegate: AnyObject {
     
     func pickImage(_ sender:XYZExpenseDetailImagePickerTableViewCell, _ imageView: UIImageView, _ index: Int)
     func viewImage(_ sender:XYZExpenseDetailImagePickerTableViewCell, _ imageView: UIImageView, _ index: Int)

@@ -11,7 +11,7 @@ import CloudKit
 import ContactsUI
 
 // MARK: - protocol
-protocol XYZExpenseDetailDelegate: class {
+protocol XYZExpenseDetailDelegate: AnyObject {
     
     func saveNewExpense(expense: XYZExpense)
     func saveExpense(expense: XYZExpense)
@@ -281,14 +281,14 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                     return $0.sequenceNr == index
                 })
                 
-                if let _ = receiptToBeDeleted {
+                if let receiptToBeDeleted = receiptToBeDeleted {
                     
                     if !hasChanged {
 
                         hasChanged = true
                     }
                     
-                    receiptList.remove(receiptToBeDeleted!)
+                    receiptList.remove(receiptToBeDeleted)
 
                     expense?.receipts = receiptList
                 }

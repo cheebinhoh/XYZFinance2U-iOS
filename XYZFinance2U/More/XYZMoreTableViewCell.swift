@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol XYZMoreTextTableViewCellDelegate: class {
+protocol XYZMoreTextTableViewCellDelegate: AnyObject {
     
     func switchChanged(_ yesno: Bool, _ sender:XYZMoreTableViewCell)
 }

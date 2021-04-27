@@ -9,7 +9,7 @@
 import UIKit
 import CloudKit
 
-protocol XYZBudgetSelectionDelegate: class {
+protocol XYZBudgetSelectionDelegate: AnyObject {
     
     func budgetSelected(budget: XYZBudget?)
     func budgetDeleted(budget: XYZBudget)

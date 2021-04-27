@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol XYZIncomeDetailSwitchDelegate : class {
+protocol XYZIncomeDetailSwitchDelegate : AnyObject {
     
     func optionUpdated(option: Bool, sender: XYZIncomeDetailSwitchTableViewCell)
 }

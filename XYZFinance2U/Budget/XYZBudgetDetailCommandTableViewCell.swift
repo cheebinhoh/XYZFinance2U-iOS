@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol XYZBudgetDetailCommandDelegate: class {
+protocol XYZBudgetDetailCommandDelegate: AnyObject {
     
     func executeCommand(sender: XYZBudgetDetailCommandTableViewCell)
 }

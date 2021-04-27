@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol XYZBudgetDetailDelegate: class {
+protocol XYZBudgetDetailDelegate: AnyObject {
     
     func saveNewBudget(budget: XYZBudget)
     func saveBudget(budget: XYZBudget)

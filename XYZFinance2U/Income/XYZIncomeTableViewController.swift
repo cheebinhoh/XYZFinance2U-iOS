@@ -15,7 +15,7 @@ import UserNotifications
 import NotificationCenter
 import os.log
 
-protocol XYZIncomeSelectionDelegate: class {
+protocol XYZIncomeSelectionDelegate: AnyObject {
     
     func incomeSelected(newIncome: XYZAccount?)
     func incomeDeleted(deletedIncome: XYZAccount)

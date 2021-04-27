@@ -12,7 +12,7 @@ import CoreData
 import CloudKit
 
 // MARK: - protocol
-protocol XYZExpenseTableViewDelegate: class {
+protocol XYZExpenseTableViewDelegate: AnyObject {
     
     func expenseSelected(expense: XYZExpense?)
     func expenseDeleted(expense: XYZExpense)

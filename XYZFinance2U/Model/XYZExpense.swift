@@ -405,10 +405,10 @@ class XYZExpense: NSManagedObject {
             return person.sequenceNr == sequenceNr
         })
         
-        if let _ = personRemoved {
+        if let personRemoved = personRemoved {
             
-            personList.remove(personRemoved!)
-            context?.delete(personRemoved!)
+            personList.remove(personRemoved)
+            context?.delete(personRemoved)
              
             self.persons = personList
         }
@@ -485,7 +485,7 @@ class XYZExpense: NSManagedObject {
         var hasChange = false
         var receipt: XYZExpenseReceipt?
         
-        guard var receiptList = self.receipts  else {
+        guard var receiptList = self.receipts else {
             
             fatalError("Exception: [XYZExpenseReceipt] is expected")
         }

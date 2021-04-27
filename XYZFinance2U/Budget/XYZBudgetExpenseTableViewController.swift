@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import CloudKit
 
-protocol BudgetExpenseDelegate: class {
+protocol BudgetExpenseDelegate: AnyObject {
     
     func reloadData()
     func deleteExpense(expense: XYZExpense)

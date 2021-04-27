@@ -9,7 +9,7 @@
 
 import UIKit
 
-protocol XYZExpenseDetailImageViewTableViewCellDelegate: class {
+protocol XYZExpenseDetailImageViewTableViewCellDelegate: AnyObject {
     
     func viewImage(_ sender:XYZExpenseDetailImageViewController )
 }

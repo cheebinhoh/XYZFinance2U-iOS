@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol XYZSelectionDelegate: class {
+protocol XYZSelectionDelegate: AnyObject {
     
     func selectedItem(_ item: String?, sender: XYZSelectionTableViewController)
 }
