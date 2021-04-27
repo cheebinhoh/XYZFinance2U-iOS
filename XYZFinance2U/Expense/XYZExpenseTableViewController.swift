@@ -513,15 +513,6 @@ class XYZExpenseTableViewController: UITableViewController,
         }
         
         reloadData()
-        
-        /*
-        if let indexPath = self.indexPath(of: expense) {
-        
-            tableView.selectRow(at: indexPath, animated: true, scrollPosition: UITableView.ScrollPosition.bottom)
-            delegate?.expenseSelected(newExpense: expense)
-        }
-
-        */
     }
     
     func saveNewExpense(expense: XYZExpense) {
@@ -783,9 +774,6 @@ class XYZExpenseTableViewController: UITableViewController,
         })
         
         sectionExpandStatus = Array(repeating: true, count: sectionList.count)
-        //let newSection = TableSectionCell(identifier: "searchBar", title: "", cellList: ["searchBar"], data: nil)
-        //sectionList.insert(newSection, at: 0)
-        //sectionMonthYearList.insert(Date(), at: 0)
     }
     
     override func viewDidLoad() {

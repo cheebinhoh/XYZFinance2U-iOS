@@ -9,7 +9,7 @@
 
 import UIKit
 
-protocol XYZExpenseDetailCommandDelegate: class {
+protocol XYZExpenseDetailCommandDelegate: AnyObject {
     
     func executeCommand(_ sender: XYZExpenseDetailCommandTableViewCell)
 }
