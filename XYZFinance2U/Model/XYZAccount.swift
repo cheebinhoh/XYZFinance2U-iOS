@@ -214,7 +214,7 @@ class XYZAccount : NSManagedObject {
         self.bank = bank
         self.amount = amount
         self.accountNr = accountNr
-        self.setValue(date, forKey: XYZAccount.lastUpdate)
+        self.lastUpdate = date
         self.sequenceNr = sequenceNr
         self.principal = principal
     }
