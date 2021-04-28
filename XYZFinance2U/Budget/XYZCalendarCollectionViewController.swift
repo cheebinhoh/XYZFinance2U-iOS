@@ -641,7 +641,7 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
                 }
             }
             
-            if !hasNowDate && nil == indexPath {
+            if hasNowDate && nil == indexPath {
                 
                 indexPath = startIndexPath
             }
