@@ -51,14 +51,12 @@ class AppDelegate: UIResponder,
                 
                 let privateiCloudZone = self.privateiCloudZones.first(where: {
                     
-                    let privateName = $0.name
-                    
-                    return privateName != "" && name == privateName
+                    return $0.name != "" && name == $0.name
                 })
                 
-                if let _ = privateiCloudZone {
+                if let privateiCloudZone = privateiCloudZone {
                     
-                    icloudZone.data = privateiCloudZone?.data
+                    icloudZone.data = privateiCloudZone.data
                 }
                 
                 if icloudZone.ownerName != "" {
@@ -147,9 +145,9 @@ class AppDelegate: UIResponder,
                             return privateName != "" && privateName == icloudZone.name
                         })
                      
-                        if let _ = privateiCloudZone {
+                        if let privateiCloudZone = privateiCloudZone {
                             
-                            icloudZone.data = privateiCloudZone?.data
+                            icloudZone.data = privateiCloudZone.data
                         }
 
                         shareicloudZone = icloudZone
@@ -184,9 +182,9 @@ class AppDelegate: UIResponder,
                         return privateName != "" && privateName == cloudKitShareMetadata.share.recordID.zoneID.zoneName
                     })
                     
-                    if let _ = privateiCloudZone {
+                    if let privateiCloudZone = privateiCloudZone {
                         
-                        icloudZone.data = privateiCloudZone?.data
+                        icloudZone.data = privateiCloudZone.data
                     }
                 }
  
@@ -709,7 +707,7 @@ class AppDelegate: UIResponder,
             
             op.modifyRecordZonesCompletionBlock = { (saved, deleted, error) in
                 
-                guard nil == error  else {
+                guard nil == error else {
                     
                     return
                 }
