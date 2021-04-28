@@ -191,9 +191,9 @@ func createUpdateExpense(record: CKRecord,
                 let ckasset = record[image] as? CKAsset
                 let fileURL = ckasset?.fileURL!
                 
-                if let _ = fileURL {
+                if let fileURL = fileURL {
                 
-                    let task = URLSession.shared.dataTask(with: fileURL!) {(data, response, error) in
+                    let task = URLSession.shared.dataTask(with: fileURL) {(data, response, error) in
                         
                         if nil != error {
                             
@@ -223,9 +223,9 @@ func createUpdateExpense(record: CKRecord,
                 }
             }
             
-            if let _ = ckshareFound {
+            if let ckshareFound = ckshareFound {
                 
-                if let shareUrl = ckshareFound?.url?.absoluteString {
+                if let shareUrl = ckshareFound.url?.absoluteString {
                     
                     expenseToBeUpdated?.shareUrl = shareUrl
                 }
@@ -328,7 +328,6 @@ func fetchiCloudZoneChange(database: CKDatabase,
     let aContext = managedContext()
     var changedZoneIDs: [CKRecordZone.ID] = []
     var optionsByRecordZoneID = [CKRecordZone.ID: CKFetchRecordZoneChangesOperation.ZoneConfiguration]()
-    // [CKRecordZone.ID: CKFetchRecordZoneChangesOperation.ZoneOptions]()
     var unprocessedCkrecords = [CKRecord]()
     
     for zone in zones {
@@ -773,10 +772,6 @@ func saveExpensesToiCloud(database: CKDatabase,
             expenseListToBeSaved?.append(expense)
         }
     }
-    //} else {
-        
-    //    expenseListToBeSaved = expenseList
-    //}
     
     var recordIdsToBeDeleted = [CKRecord.ID]()
     
@@ -1102,12 +1097,12 @@ func saveBudgetsToiCloud(database: CKDatabase,
                          budgetList: [XYZBudget],
                          completionblock: @escaping () -> Void ) {
     
-    var budgetListToBeSaved: [XYZBudget]?
+        var budgetListToBeSaved: [XYZBudget]?
 
-    let lastChangeTokenFetch = iCloudZone.changeTokenLastFetch
-    
+        let lastChangeTokenFetch = iCloudZone.changeTokenLastFetch
+
         budgetListToBeSaved = [XYZBudget]()
-        
+
         for budget in budgetList {
             
             if budget.lastRecordChange > lastChangeTokenFetch {
@@ -1115,18 +1110,14 @@ func saveBudgetsToiCloud(database: CKDatabase,
                 budgetListToBeSaved?.append(budget)
             }
         }
-    //} else {
-        
-    //    budgetListToBeSaved = budgetList
-    //}
-    
-    var recordIdsToBeDeleted = [CKRecord.ID]()
-    
-    let data = iCloudZone.deleteRecordIdList
 
-    guard let deleteRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
-        
-        fatalError("Exception: deleteRecordList is expected as [String]")
+        var recordIdsToBeDeleted = [CKRecord.ID]()
+
+        let data = iCloudZone.deleteRecordIdList
+
+        guard let deleteRecordList = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] else {
+            
+            fatalError("Exception: deleteRecordList is expected as [String]")
     }
 
     for deleteRecordName in deleteRecordList {
