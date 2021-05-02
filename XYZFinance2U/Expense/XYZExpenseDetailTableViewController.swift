@@ -779,9 +779,9 @@ class XYZExpenseDetailTableViewController: UITableViewController,
     var newImageIndex: Int?
     var showDatePicker = false
     var showRecurringStopDatePicker = false
-    weak var datecell : XYZExpenseDetailDateTableViewCell?
+    weak var datecell: XYZExpenseDetailDateTableViewCell?
     weak var recurringStopDateCell: XYZExpenseDetailDateTableViewCell?
-    weak var imagecell : XYZExpenseDetailImagePickerTableViewCell?
+    weak var imagecell: XYZExpenseDetailImagePickerTableViewCell?
     var expense: XYZExpense?
     var isCollapsed: Bool {
         
@@ -790,7 +790,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
     
     var expenseDelegate: XYZExpenseDetailDelegate?
     var sectionList = [TableSectionCell]()
-    var emailcell : XYZTextTableViewCell?
+    var emailcell: XYZTextTableViewCell?
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     

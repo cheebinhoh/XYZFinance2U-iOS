@@ -18,13 +18,13 @@ class XYZMoreTableViewController: UITableViewController,
     // MARK: - property
     
     var sectionList = [TableSectionCell]()
-    var delegate : UIViewController?
-    var popoverView : UIViewController?
-    var totalIncomeCurrencyCode : String?
-    var totalIncome : Double?
-    var lastRateTimestamp : String?
-    var rates : [String : Double]?
-    var incomeList : [XYZAccount]?
+    var delegate: UIViewController?
+    var popoverView: UIViewController?
+    var totalIncomeCurrencyCode: String?
+    var totalIncome: Double?
+    var lastRateTimestamp: String?
+    var rates: [String : Double]?
+    var incomeList: [XYZAccount]?
     
     // MARK: - function
     
@@ -36,7 +36,7 @@ class XYZMoreTableViewController: UITableViewController,
         self.reload()
     }
 
-    func retrieveExchangeRateAndCalculateTotalIncome(hostindex : Int = 0) {
+    func retrieveExchangeRateAndCalculateTotalIncome(hostindex: Int = 0) {
         
         var otherCurrencyCodes = [String]()
         
@@ -84,11 +84,11 @@ class XYZMoreTableViewController: UITableViewController,
                         self.retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
                     } else if let data = data {
                     
-                        struct ExchangRateAPIResult : Decodable {
+                        struct ExchangRateAPIResult: Decodable {
             
-                            let rates : [String : String]
-                            let base : String
-                            let date : String
+                            let rates: [String : String]
+                            let base: String
+                            let date: String
                         }
                         
                         let decoder = JSONDecoder()

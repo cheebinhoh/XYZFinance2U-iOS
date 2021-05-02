@@ -24,7 +24,7 @@ class XYZIncomeDetailViewController: UIViewController {
     
     // MARK: 3d touch
     
-    override var previewActionItems : [UIPreviewActionItem] {
+    override var previewActionItems: [UIPreviewActionItem] {
         
         return previewActions
     }

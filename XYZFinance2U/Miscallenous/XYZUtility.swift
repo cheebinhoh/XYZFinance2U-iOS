@@ -41,7 +41,7 @@ extension String {
 
 extension Int {
     
-    mutating func repeatUntilZero(block : (_ value : Int) -> Void) {
+    mutating func repeatUntilZero(block: (_ value: Int) -> Void) {
         
         while self != 0 {
             

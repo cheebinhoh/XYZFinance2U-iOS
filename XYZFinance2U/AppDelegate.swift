@@ -20,7 +20,7 @@ class AppDelegate: UIResponder,
     // MARK: - static
     
     static let appName: String = Bundle.main.infoDictionary?["CFBundleName"] as? String ?? ""
-    static let appDisplayName : String = Bundle.main.localizedInfoDictionary?["CFBUNDLE_DISPLAYNAME"]as? String ?? ""
+    static let appDisplayName: String = Bundle.main.localizedInfoDictionary?["CFBUNDLE_DISPLAYNAME"]as? String ?? ""
     
     // MARK: - property
     
@@ -745,7 +745,7 @@ class AppDelegate: UIResponder,
                         
                         for icloudzone in self.privateiCloudZones {
                             
-                            var tableViewToBeReload : XYZTableViewReloadData?
+                            var tableViewToBeReload: XYZTableViewReloadData?
 
                             switch icloudzone.name {
                                 
@@ -820,7 +820,7 @@ class AppDelegate: UIResponder,
                                        || nil == changeTokens[index]
                                        || changeToken != changeTokens[index] )
 
-                    var tableViewToBeReload : XYZTableViewReloadData?
+                    var tableViewToBeReload: XYZTableViewReloadData?
                     
                     switch icloudzone.name {
                         

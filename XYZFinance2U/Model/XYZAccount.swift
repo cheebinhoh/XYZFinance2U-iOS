@@ -12,7 +12,7 @@ import CoreData
 import CloudKit
 
 @objc(XYZAccount)
-class XYZAccount : NSManagedObject {
+class XYZAccount: NSManagedObject {
     
     enum RepeatAction: String {
         

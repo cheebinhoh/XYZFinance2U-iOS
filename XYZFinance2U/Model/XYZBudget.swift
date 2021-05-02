@@ -12,7 +12,7 @@ import CoreData
 import CloudKit
 
 @objc(XYZBudget)
-class XYZBudget : NSManagedObject {
+class XYZBudget: NSManagedObject {
 
     enum Length: String, CaseIterable {
         
@@ -24,7 +24,7 @@ class XYZBudget : NSManagedObject {
         case halfyearly = "half yearly"
         case yearly
         
-        var index : Int {
+        var index: Int {
             
             return Length.allCases.firstIndex(of: self)!
         }

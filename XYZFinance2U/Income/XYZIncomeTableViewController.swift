@@ -473,7 +473,7 @@ class XYZIncomeTableViewController: UITableViewController,
             
             let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
             
-            notificationCenter.add(request) { (error : Error?) in
+            notificationCenter.add(request) { (error: Error?) in
                 
                 if let _ = error {
                     

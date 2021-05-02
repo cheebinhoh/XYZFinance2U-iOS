@@ -9,7 +9,7 @@
 
 import UIKit
 
-protocol XYZIncomeDetailDatePickerTableViewCellDelegate : AnyObject {
+protocol XYZIncomeDetailDatePickerTableViewCellDelegate: AnyObject {
     
     func dateDidPick(sender:XYZIncomeDetailDatePickerTableViewCell)
 }
