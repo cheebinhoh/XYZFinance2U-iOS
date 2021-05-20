@@ -309,7 +309,7 @@ class XYZIncomeTableViewController: UITableViewController,
         let oldRemindDate = income.repeatDate
         let oldCurrencyCode = income.currencyCode
         let oldSequenceNr = income.sequenceNr
-        
+
         undoManager?.registerUndo(withTarget: self, handler: { (controller) in
             
             let income = XYZAccount(id: nil, sequenceNr: 0, bank: oldBank, accountNr: oldAccountNr, amount: oldAmount, principal: oldPrincipal, date: oldDate, context: managedContext())
@@ -329,7 +329,12 @@ class XYZIncomeTableViewController: UITableViewController,
                         fatalError("Exception: [XYZAccount] is expected")
                     }
                     
-                    sectionIncomeList.insert(income, at: oldSequenceNr)
+                    let pos = sectionIncomeList.firstIndex { otherIncome in
+                        
+                        otherIncome.sequenceNr >= oldSequenceNr
+                    }
+                    
+                    sectionIncomeList.insert(income, at: pos ?? 0)
                     
                     self.sectionList[index].data = sectionIncomeList
                     break
@@ -941,7 +946,7 @@ class XYZIncomeTableViewController: UITableViewController,
                     incomecell.account.text = account.accountNr
                     
                     let principal = account.principal
-                    
+  
                     if principal > 0.0 {
                         
                         if incomecell.account.text != "" {
@@ -971,6 +976,7 @@ class XYZIncomeTableViewController: UITableViewController,
                                 percentageDiff = "+\(percentageAsString!)%"
                             
                             default:
+                                percentageDiff = "\(percentageAsString!)%"
                                 break
                         }
                         
