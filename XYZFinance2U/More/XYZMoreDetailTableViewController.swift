@@ -109,7 +109,7 @@ class XYZMoreDetailTableViewController: UITableViewController {
                 headingAttributeText.append(attributeAuthorPreText)
 
                 let authorText = """
-                \("Chee Bin Hoh".localized())
+                \("Chee Bin HOH".localized())
 
                 """
                 
@@ -122,7 +122,7 @@ class XYZMoreDetailTableViewController: UITableViewController {
                 
                 let copyRightText = """
                 
-                \u{A9} \("2017 - 2021 Chee Bin Hoh, All rights reserved.".localized())
+                \u{A9} \("2017 - 2021 Chee Bin HOH, All rights reserved.".localized())
 
                 """
                 
