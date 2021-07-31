@@ -551,9 +551,9 @@ class XYZBudgetTableViewController: UITableViewController,
                     
                     occurenceDates = expense.getOccurenceDates(until: Date())
                 } else {
+              
+                    occurenceDates = expense.getOccurenceDates(until: min(Date(), currentEnd!))
                     
-                    occurenceDates = expense.getOccurenceDates(until: currentEnd!)
-
                     occurenceDates = occurenceDates?.filter({ (date) -> Bool in
                         
                         date >= currentStart! && date < currentEnd!

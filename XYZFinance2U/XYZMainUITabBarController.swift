@@ -56,6 +56,21 @@ class XYZMainUITabBarController: UITabBarController,
             
             moreView.reload()
         }
+        
+        guard let budgetNavController = tabBarController.viewControllers?[2] as? UINavigationController else {
+            
+            fatalError("Exception: budgetNavController is expected")
+        }
+        
+        guard let budgetView = budgetNavController.viewControllers.first as? XYZBudgetTableViewController else {
+            
+            fatalError("Exception: XYZMoreTableViewController is expected")
+        }
+        
+        if budgetView.isViewLoaded {
+            
+            budgetView.reloadData()
+        }
     }
     
     /*
