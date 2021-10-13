@@ -577,8 +577,7 @@ class XYZIncomeTableViewController: UITableViewController,
             } else {
                 
                 self.iCloudEnable = true
-                
-                CKContainer.default().requestApplicationPermission(CKContainer.Application.Permissions.userDiscoverability, completionHandler: { (status, error) in
+                CKContainer.default().requestApplicationPermission(CKContainer.ApplicationPermissions.userDiscoverability, completionHandler: { (status, error) in
                     
                     if nil != error {
                         
