@@ -35,8 +35,96 @@ class XYZMoreTableViewController: UITableViewController,
         
         self.reload()
     }
+    
+    func retrieveExchangeRateAndCalculateTotalIncome() {
+        
+        var otherCurrencyCodes = [String]()
+        
+        guard let incomeList = incomeList else {
+        
+            return
+        }
+        
+        for income in incomeList {
+            
+            let incomeCurrencyCode = income.currencyCode
+            
+            if incomeCurrencyCode != totalIncomeCurrencyCode! {
+                
+                if !otherCurrencyCodes.contains(incomeCurrencyCode) {
+                    
+                    otherCurrencyCodes.append(incomeCurrencyCode)
+                }
+            }
+        }
+        
+        if otherCurrencyCodes.isEmpty {
 
-    func retrieveExchangeRateAndCalculateTotalIncome(hostindex: Int = 0) {
+            self.rates = nil
+            self.lastRateTimestamp =  ""
+            self.calculateTotalIncome()
+        } else {
+            
+            let otherCurrencyCodeList = otherCurrencyCodes.joined(separator: ",")
+            
+            if #available(iOS 15.0.0, *)  {
+                
+                Task {
+
+                    for urlHost in exchangeAPIHostList {
+                        
+                        var urlString = urlHost + "/latest?base=\(totalIncomeCurrencyCode!)"
+                        urlString = urlString + "&symbols=" + otherCurrencyCodeList + "&places=10"
+                        
+                        if let url = URL(string: urlString) {
+                            
+                            do {
+
+                                let ( data, response ) = try await URLSession.shared.data(from: url);
+
+                                if let httpResponse = response as? HTTPURLResponse,
+                                    httpResponse.statusCode != 200 {
+                                    
+                                    continue
+                                }
+                                
+                                struct ExchangRateAPIResult: Decodable {
+                        
+                                    let rates: [String : String]
+                                    let base: String
+                                    let date: String
+                                }
+                                
+                                let decoder = JSONDecoder()
+                                decoder.dateDecodingStrategy = .iso8601
+                                let res = try? decoder.decode(ExchangRateAPIResult.self, from: data )
+                                
+                                if let res = res {
+                 
+                                    var rates = [String : Double]()
+                                    for (c, r) in res.rates {
+                                        
+                                        rates[c] = Double(r)
+                                    }
+
+                                    self.rates = rates;
+                                    self.lastRateTimestamp = res.date
+                                    calculateTotalIncome()
+                                    
+                                    break
+                                }
+                            } catch {
+                                
+                                print("error \(error)")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    func retrieveExchangeRateAndCalculateTotalIncome(hostindex: Int) {
         
         var otherCurrencyCodes = [String]()
         
@@ -73,93 +161,45 @@ class XYZMoreTableViewController: UITableViewController,
             urlString = urlString + "&symbols=" + otherCurrencyCodes.joined(separator: ",") + "&places=10"
             
             if let url = URL(string: urlString) {
+    
+                let configuration = URLSessionConfiguration.ephemeral
+                let session = URLSession(configuration: configuration)
 
-                if #available(iOS 15.0.0, *)  {
+                session.dataTask(with: url) { data, response, error in
+                
+                    if let _ = error {
+                        
+                        self.retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
+                    } else if let data = data {
                     
-                    Task {
-
-                        do {
-
-                            let ( data, response ) = try await URLSession.shared.data(from: url);
-
-                            if let httpResponse = response as? HTTPURLResponse,
-                                httpResponse.statusCode != 200 {
+                        struct ExchangRateAPIResult: Decodable {
+            
+                            let rates: [String : String]
+                            let base: String
+                            let date: String
+                        }
+                        
+                        let decoder = JSONDecoder()
+                        decoder.dateDecodingStrategy = .iso8601
+                        let res = try? decoder.decode(ExchangRateAPIResult.self, from: data )
+                        
+                        if let res = res {
+         
+                            var rates = [String : Double]()
+                            for (c, r) in res.rates {
                                 
-                                retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
+                                rates[c] = Double(r)
                             }
-                            
-                            struct ExchangRateAPIResult: Decodable {
-                    
-                                let rates: [String : String]
-                                let base: String
-                                let date: String
-                            }
-                            
-                            let decoder = JSONDecoder()
-                            decoder.dateDecodingStrategy = .iso8601
-                            let res = try? decoder.decode(ExchangRateAPIResult.self, from: data )
-                            
-                            if let res = res {
-             
-                                var rates = [String : Double]()
-                                for (c, r) in res.rates {
-                                    
-                                    rates[c] = Double(r)
-                                }
 
-                                self.rates = rates;
-                                self.lastRateTimestamp = res.date
-                                calculateTotalIncome()
-                            } else {
-                              
-                                self.retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
-                            }
-                        } catch {
-                            
-                            retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
+                            self.rates = rates;
+                            self.lastRateTimestamp = res.date
+                            self.calculateTotalIncome()
+                        } else {
+                          
+                            self.retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
                         }
                     }
-                } else {
-                    
-                    let configuration = URLSessionConfiguration.ephemeral
-                    let session = URLSession(configuration: configuration)
-
-                    session.dataTask(with: url) { data, response, error in
-                    
-                        if let _ = error {
-                            
-                            self.retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
-                        } else if let data = data {
-                        
-                            struct ExchangRateAPIResult: Decodable {
-                
-                                let rates: [String : String]
-                                let base: String
-                                let date: String
-                            }
-                            
-                            let decoder = JSONDecoder()
-                            decoder.dateDecodingStrategy = .iso8601
-                            let res = try? decoder.decode(ExchangRateAPIResult.self, from: data )
-                            
-                            if let res = res {
-             
-                                var rates = [String : Double]()
-                                for (c, r) in res.rates {
-                                    
-                                    rates[c] = Double(r)
-                                }
-
-                                self.rates = rates;
-                                self.lastRateTimestamp = res.date
-                                self.calculateTotalIncome()
-                            } else {
-                              
-                                self.retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
-                            }
-                        }
-                    }.resume()
-                }
+                }.resume()
             }
         }
     }
@@ -337,7 +377,13 @@ class XYZMoreTableViewController: UITableViewController,
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         incomeList = appDelegate?.incomeList
         
-        retrieveExchangeRateAndCalculateTotalIncome()
+        if #available(iOS 15.0.0, *)  {
+
+            retrieveExchangeRateAndCalculateTotalIncome()
+        } else {
+            
+            retrieveExchangeRateAndCalculateTotalIncome(hostindex : 0)
+        }
     }
     
     override func viewDidLoad() {
