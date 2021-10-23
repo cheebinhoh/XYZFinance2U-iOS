@@ -36,14 +36,13 @@ class XYZMoreTableViewController: UITableViewController,
         self.reload()
     }
     
-    @available(iOS 15.0.0, *)
-    func retrieveExchangeRateAndCalculateTotalIncome() async {
+    func getOtherCurrencyCodes() -> String? {
         
         var otherCurrencyCodes = [String]()
         
         guard let incomeList = incomeList else {
         
-            return
+            return nil
         }
         
         for income in incomeList {
@@ -61,14 +60,23 @@ class XYZMoreTableViewController: UITableViewController,
         
         guard !otherCurrencyCodes.isEmpty else {
 
+            return nil
+        }
+            
+        return otherCurrencyCodes.joined(separator: ",")
+    }
+    
+    @available(iOS 15.0.0, *)
+    func retrieveExchangeRateAndCalculateTotalIncome() async {
+        
+        guard let otherCurrencyCodeList = getOtherCurrencyCodes() else {
+            
             self.rates = nil
             self.lastRateTimestamp =  ""
             self.calculateTotalIncome()
             
             return
         }
-            
-        let otherCurrencyCodeList = otherCurrencyCodes.joined(separator: ",")
         
         tryAllHost: for urlHost in exchangeAPIHostList {
             
@@ -122,81 +130,58 @@ class XYZMoreTableViewController: UITableViewController,
 
     func retrieveExchangeRateAndCalculateTotalIncome(hostindex: Int) {
         
-        var otherCurrencyCodes = [String]()
-        
-        guard hostindex < exchangeAPIHostList.count, let incomeList = incomeList else {
-        
-            self.rates = nil;
-            self.lastRateTimestamp = nil
+        guard let otherCurrencyCodeList = getOtherCurrencyCodes() else {
+            
+            self.rates = nil
+            self.lastRateTimestamp =  ""
             self.calculateTotalIncome()
             
             return
         }
         
-        for income in incomeList {
-            
-            let incomeCurrencyCode = income.currencyCode
-            
-            if incomeCurrencyCode != totalIncomeCurrencyCode! {
-                
-                if !otherCurrencyCodes.contains(incomeCurrencyCode) {
-                    
-                    otherCurrencyCodes.append(incomeCurrencyCode)
-                }
-            }
-        }
+        var urlString = exchangeAPIHostList[hostindex] + "/latest?base=\(totalIncomeCurrencyCode!)"
+        urlString = urlString + "&symbols=" + otherCurrencyCodeList + "&places=10"
         
-        if otherCurrencyCodes.isEmpty {
-
-            self.rates = nil
-            self.lastRateTimestamp =  ""
-            self.calculateTotalIncome()
-        } else {
-            
-            var urlString = exchangeAPIHostList[hostindex] + "/latest?base=\(totalIncomeCurrencyCode!)"
-            urlString = urlString + "&symbols=" + otherCurrencyCodes.joined(separator: ",") + "&places=10"
-            
-            if let url = URL(string: urlString) {
+        if let url = URL(string: urlString) {
     
-                let configuration = URLSessionConfiguration.ephemeral
-                let session = URLSession(configuration: configuration)
+            let configuration = URLSessionConfiguration.ephemeral
+            let session = URLSession(configuration: configuration)
 
-                session.dataTask(with: url) { data, response, error in
-                
-                    if let _ = error {
-                        
-                        self.retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
-                    } else if let data = data {
-                    
-                        struct ExchangRateAPIResult: Decodable {
+            session.dataTask(with: url) { data, response, error in
             
-                            let rates: [String : String]
-                            let base: String
-                            let date: String
-                        }
-                        
-                        let decoder = JSONDecoder()
-                        decoder.dateDecodingStrategy = .iso8601
-                        let res = try? decoder.decode(ExchangRateAPIResult.self, from: data )
-                        
-                        if let res = res {
-         
-                            var rates = [String : Double]()
-                            for (c, r) in res.rates {
-                                
-                                rates[c] = Double(r)
-                            }
-
-                            self.rates = rates;
-                            self.lastRateTimestamp = res.date
-                            self.calculateTotalIncome()
-                        } else {
-                          
-                            self.retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
-                        }
+                if let _ = error {
+                    
+                    self.retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
+                } else if let data = data {
+                    
+                    struct ExchangRateAPIResult: Decodable {
+        
+                        let rates: [String : String]
+                        let base: String
+                        let date: String
                     }
-                }.resume()
-            }
+                    
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .iso8601
+                    let res = try? decoder.decode(ExchangRateAPIResult.self, from: data )
+                    
+                    if let res = res {
+     
+                        var rates = [String : Double]()
+                        for (c, r) in res.rates {
+                            
+                            rates[c] = Double(r)
+                        }
+
+                        self.rates = rates;
+                        self.lastRateTimestamp = res.date
+                        self.calculateTotalIncome()
+                    } else {
+                      
+                        self.retrieveExchangeRateAndCalculateTotalIncome(hostindex: hostindex + 1)
+                    }
+                }
+            }.resume()
         }
     }
     
