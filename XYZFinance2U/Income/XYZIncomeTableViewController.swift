@@ -82,7 +82,8 @@ class XYZIncomeTableViewController: UITableViewController,
         incomeDetailTableView.currencyCodes = currencyCodes
         incomeDetailTableView.setDelegate(delegate: self)
 
-        incomeDetailNavigationController.modalPresentationStyle = .popover
+        //incomeDetailNavigationController.modalPresentationStyle = .popover
+        
         self.present(incomeDetailNavigationController, animated: true, completion: nil)
     }
     
@@ -110,6 +111,11 @@ class XYZIncomeTableViewController: UITableViewController,
         
         optionMenu.addAction(deleteOption)
         optionMenu.addAction(cancelAction)
+        
+        optionMenu.popoverPresentationController?.sourceView = self.view
+        optionMenu.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection()
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY,
+                                                                      width: 0, height: 0)
         
         present(optionMenu, animated: true, completion: nil)
     }
@@ -572,6 +578,12 @@ class XYZIncomeTableViewController: UITableViewController,
                     }))
                     
                     tabBarController.popOverAlertController = alert
+                    
+                    alert.popoverPresentationController?.sourceView = self.view
+                    alert.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection()
+                    alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY,
+                                                                                  width: 0, height: 0)
+                    
                     self.present(alert, animated: false, completion: nil)
                 }
             } else {
@@ -879,8 +891,9 @@ class XYZIncomeTableViewController: UITableViewController,
                 let sectionIncomeList = sectionList[indexPath.section].data as? [XYZAccount]
                 
                 incomeTableView.income = sectionIncomeList![indexPath.row - 1]
-                incomeDetailNavigationController.modalPresentationStyle = .popover
+                //incomeDetailNavigationController.modalPresentationStyle = .popover
                 incomeTableView.currencyCodes = currencyCodes
+            
                 self.present(incomeDetailNavigationController, animated: true, completion: nil)
             
                 guard let tabBarController = appDelegate?.window?.rootViewController as? XYZMainUITabBarController else {

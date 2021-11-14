@@ -94,7 +94,7 @@ class XYZExpenseTableViewController: UITableViewController,
         expenseDetailTableView.setDelegate(delegate: self)
         expenseDetailTableView.currencyCodes = currencyCodes
         
-        expenseDetailNavigationController.modalPresentationStyle = .popover
+        //expenseDetailNavigationController.modalPresentationStyle = .popover
         self.present(expenseDetailNavigationController, animated: true, completion: nil)
     }
     
@@ -170,6 +170,11 @@ class XYZExpenseTableViewController: UITableViewController,
         
         optionMenu.addAction(deleteOption)
         optionMenu.addAction(cancelAction)
+        
+        optionMenu.popoverPresentationController?.sourceView = self.view
+        optionMenu.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection()
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY,
+                                                                      width: 0, height: 0)
         
         present(optionMenu, animated: true, completion: nil)
     }
@@ -978,7 +983,7 @@ class XYZExpenseTableViewController: UITableViewController,
             expenseDetailTableView.presetCurrencyCode = currency
             expenseDetailTableView.setDelegate(delegate: self)
         
-            expenseDetailNavigationController.modalPresentationStyle = .popover
+            //expenseDetailNavigationController.modalPresentationStyle = .popover
             handler(true)
             self.present(expenseDetailNavigationController, animated: true, completion: nil)
         }
@@ -1199,7 +1204,7 @@ class XYZExpenseTableViewController: UITableViewController,
                     
                     expenseTableView.currencyCodes = currencyCodes
                     expenseTableView.expense = sectionExpenseList?[indexPath.row - 1]
-                    expenseDetailNavigationController.modalPresentationStyle = .popover
+                    //expenseDetailNavigationController.modalPresentationStyle = .popover
                     self.present(expenseDetailNavigationController, animated: true, completion: nil)
                     
                     let appDelegate = UIApplication.shared.delegate as? AppDelegate

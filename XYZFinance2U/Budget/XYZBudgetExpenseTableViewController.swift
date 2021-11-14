@@ -425,7 +425,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
                 expenseDetailTableView.presetCurrencyCode = currency
                 expenseDetailTableView.setDelegate(delegate: self)
                 
-                expenseDetailNavigationController.modalPresentationStyle = .popover
+                //xpenseDetailNavigationController.modalPresentationStyle = .popover
                 handler(true)
                 self.present(expenseDetailNavigationController, animated: true, completion: nil)
             }
@@ -475,7 +475,7 @@ class XYZBudgetExpenseTableViewController: UITableViewController,
         let sectionExpenseList = sectionList[indexPath.section].data as? [XYZExpense]
 
         expenseTableView.expense = sectionExpenseList?[indexPath.row]
-        expenseDetailNavigationController.modalPresentationStyle = .popover
+        //expenseDetailNavigationController.modalPresentationStyle = .popover
         self.present(expenseDetailNavigationController, animated: true, completion: nil)
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate

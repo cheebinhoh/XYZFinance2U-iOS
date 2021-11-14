@@ -97,6 +97,11 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         optionMenu.addAction(deleteOption)
         optionMenu.addAction(cancelAction)
         
+        optionMenu.popoverPresentationController?.sourceView = self.view
+        optionMenu.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection()
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY,
+                                                                      width: 0, height: 0)
+        
         present(optionMenu, animated: true, completion: nil)
     }
     
@@ -454,7 +459,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         expenseDetailImageNavigationController.image = imageSet?[newImageIndex!].image
         
         let nav = UINavigationController(rootViewController: expenseDetailImageNavigationController)
-        nav.modalPresentationStyle = .popover
+        //nav.modalPresentationStyle = .popover
         self.present(nav, animated: true, completion: nil)
     }
     
@@ -555,6 +560,10 @@ class XYZExpenseDetailTableViewController: UITableViewController,
         let cancelAction = UIAlertAction(title: "Cancel".localized(), style: .cancel, handler: nil)
         
         optionMenu.addAction(cancelAction)
+        optionMenu.popoverPresentationController?.sourceView = self.view
+        optionMenu.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection()
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY,
+                                                                      width: 0, height: 0)
         
         present(optionMenu, animated: true, completion: nil)
     }
@@ -919,6 +928,10 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                 
                 optionMenu.addAction(cancelAction)
                 
+                optionMenu.popoverPresentationController?.sourceView = self.view
+                optionMenu.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection()
+                optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY,
+                                                                              width: 0, height: 0)
                 present(optionMenu, animated: true, completion: nil)
             } else {
                 
@@ -1395,7 +1408,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                     selectionTableViewController.delegate = self
                     
                     let nav = UINavigationController(rootViewController: selectionTableViewController)
-                    nav.modalPresentationStyle = .popover
+                    //nav.modalPresentationStyle = .popover
                     
                     self.present(nav, animated: true, completion: nil)
                 
@@ -1441,7 +1454,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                     selectionTableViewController.delegate = self
                     
                     let nav = UINavigationController(rootViewController: selectionTableViewController)
-                    nav.modalPresentationStyle = .popover
+                    //nav.modalPresentationStyle = .popover
                     
                     self.present(nav, animated: true, completion: nil)
                
@@ -1489,7 +1502,7 @@ class XYZExpenseDetailTableViewController: UITableViewController,
                     selectionTableViewController.delegate = self
                     
                     let nav = UINavigationController(rootViewController: selectionTableViewController)
-                    nav.modalPresentationStyle = .popover
+                    //nav.modalPresentationStyle = .popover
                     
                     self.present(nav, animated: true, completion: nil)
             }

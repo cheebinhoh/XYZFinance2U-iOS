@@ -247,7 +247,7 @@ class XYZBudgetTableViewController: UITableViewController,
         budgetDetailTableView.currencyCodes = currencyCodes
         
         budgetDetailTableView.setDelegate(delegate: self)
-        budgetDetailNavigationController.modalPresentationStyle = .popover
+        //budgetDetailNavigationController.modalPresentationStyle = .popover
         
         self.present(budgetDetailNavigationController, animated: true, completion: nil)
     }
@@ -626,6 +626,10 @@ class XYZBudgetTableViewController: UITableViewController,
         optionMenu.addAction(deleteOption)
         optionMenu.addAction(cancelAction)
         
+        optionMenu.popoverPresentationController?.sourceView = self.view
+        optionMenu.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection()
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY,
+                                                                      width: 0, height: 0)
         present(optionMenu, animated: true, completion: nil)
     }
     
@@ -665,7 +669,7 @@ class XYZBudgetTableViewController: UITableViewController,
             expenseDetailTableView.presetCurrencyCode = currrency
             expenseDetailTableView.setDelegate(delegate: self)
       
-            expenseDetailNavigationController.modalPresentationStyle = .popover
+            //expenseDetailNavigationController.modalPresentationStyle = .popover
             handler(true)
             self.present(expenseDetailNavigationController, animated: true, completion: nil)
         }
@@ -714,6 +718,7 @@ class XYZBudgetTableViewController: UITableViewController,
                 tabBarController.popOverNavigatorController = calendarViewNavigationController
                 
                 handler(true)
+                
                 self.present(calendarViewNavigationController, animated: true, completion: {})
             })
             
@@ -759,6 +764,13 @@ class XYZBudgetTableViewController: UITableViewController,
             optionMenu.addAction(cancelAction)
             
             tabBarController.popOverAlertController = optionMenu
+            
+            optionMenu.popoverPresentationController?.sourceView = self.view
+            optionMenu.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection()
+            optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY,
+                                                                          width: 0, height: 0)
+            
+            
             self.present(optionMenu, animated: true, completion: nil)
         }
         
@@ -814,7 +826,7 @@ class XYZBudgetTableViewController: UITableViewController,
         
         budgetDetailTableViewController.budget = sectionBudgetList?[indexPath.row]
         budgetDetailTableViewController.currencyCodes = currencyCodes
-        budgetDetailNavigationController.modalPresentationStyle = .popover
+        //budgetDetailNavigationController.modalPresentationStyle = .popover
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         

@@ -430,7 +430,7 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
                     let date = self.getDate(of: tapIndexPath!)
                     expenseDetailTableView.presetDate = date
                     
-                    expenseDetailNavigationController.modalPresentationStyle = .popover
+                    //expenseDetailNavigationController.modalPresentationStyle = .popover
                     self.present(expenseDetailNavigationController, animated: true, completion: nil)
                 })
                 
@@ -443,6 +443,11 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
                 optionMenu.addAction(cancelAction)
                 
                 tabBarController.popOverAlertController = optionMenu
+                
+                optionMenu.popoverPresentationController?.sourceView = self.view
+                optionMenu.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection()
+                optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY,
+                                                                              width: 0, height: 0)
                 self.present(optionMenu, animated: true, completion: nil)
             } else if (tapIndexPath?.row)! > 0 {
                 
@@ -729,6 +734,11 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
         
         optionMenu.addAction(deleteOption)
         optionMenu.addAction(cancelAction)
+        
+        optionMenu.popoverPresentationController?.sourceView = self.view
+        optionMenu.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection()
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY,
+                                                                      width: 0, height: 0)
         
         present(optionMenu, animated: true, completion: nil)
     }

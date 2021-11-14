@@ -174,6 +174,11 @@ class XYZExpenseDetailImageViewController: UIViewController,
 
         optionMenu.addAction(cancelAction)
         
+        optionMenu.popoverPresentationController?.sourceView = self.view
+        optionMenu.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection()
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY,
+                                                                      width: 0, height: 0)
+        
         present(optionMenu, animated: true, completion: nil)
     }
     

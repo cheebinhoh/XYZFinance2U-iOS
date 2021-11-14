@@ -885,7 +885,12 @@ class XYZMoreTableViewController: UITableViewController,
                 
                 optionMenu.addAction(cancelAction)
                 tabBarController.popOverAlertController = optionMenu
-                
+            
+                optionMenu.popoverPresentationController?.sourceView = self.view
+                optionMenu.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection()
+                optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY,
+                                                                              width: 0, height: 0)
+            
                 present(optionMenu, animated: true, completion: nil)
             
             case "DeleteData":
@@ -918,7 +923,12 @@ class XYZMoreTableViewController: UITableViewController,
                 
                 optionMenu.addAction(cancelAction)
                 tabBarController.popOverAlertController = optionMenu
-                
+            
+                optionMenu.popoverPresentationController?.sourceView = self.view
+                optionMenu.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection()
+                optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY,
+                                                                              width: 0, height: 0)
+            
                 present(optionMenu, animated: true, completion: nil)
             
             case "SynciCloud":
@@ -940,6 +950,12 @@ class XYZMoreTableViewController: UITableViewController,
                 optionMenu.addAction(cancelAction)
                 
                 tabBarController.popOverAlertController = optionMenu
+            
+                optionMenu.popoverPresentationController?.sourceView = self.view
+                optionMenu.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection()
+                optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY,
+                                                                              width: 0, height: 0)
+            
                 present(optionMenu, animated: true, completion: nil)
             
             case "Lockout":
@@ -1005,7 +1021,7 @@ class XYZMoreTableViewController: UITableViewController,
                 selectionTableViewController.delegate = self
                 
                 let nav = UINavigationController(rootViewController: selectionTableViewController)
-                nav.modalPresentationStyle = .popover
+                //nav.modalPresentationStyle = .popover
                 
                 self.present(nav, animated: true, completion: nil)
             
