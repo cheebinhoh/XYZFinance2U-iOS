@@ -240,7 +240,11 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
         
             if monthLevel {
                 
-                if collectionView.frame.width >= 414.0 {
+                if collectionView.frame.width >= 744.0 {
+                    
+                    return CGSize(width: 70, height: 50.0)
+                }
+                else if collectionView.frame.width >= 414.0 {
                     
                     return CGSize(width: 50, height: 40.0)
                 } else if collectionView.frame.width >= 375.0 {
@@ -252,7 +256,11 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
                 }
             } else {
                 
-                if collectionView.frame.width >= 414.0 {
+                if collectionView.frame.width >= 744.0 {
+                    
+                    return CGSize(width: 120, height: 60.0)
+                }
+                else if collectionView.frame.width >= 414.0 {
                     
                     return CGSize(width: 80, height: 40.0)
                 } else if collectionView.frame.width >= 375.0 {
@@ -1065,7 +1073,7 @@ class XYZCalendarCollectionViewController: UICollectionViewController,
                 
                 let lineView = UIView(frame: CGRect(x: 0,
                                                     y: 0,
-                                                    width: 500,
+                                                    width: 580,
                                                     height: height))
 
                 lineView.backgroundColor = UIColor.lightGray
