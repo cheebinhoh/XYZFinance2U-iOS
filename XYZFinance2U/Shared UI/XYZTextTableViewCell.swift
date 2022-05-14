@@ -131,6 +131,7 @@ class XYZTextTableViewCell: UITableViewCell,
   
             if ( "" != pastedText && text.contains(pastedText) ) {
                 relocatingCursor = true
+                UIPasteboard.general.string = ""
             } else {
                 text = formattingDoubleValue(of: text)
                 text = formattingAndProcessDoubleValue(of: text)
@@ -150,6 +151,8 @@ class XYZTextTableViewCell: UITableViewCell,
             if let textPosition = textField.closestPosition(to: point) {
                 textField.selectedTextRange = textField.textRange(from: textPosition, to: textPosition)
             }
+            
+            afterTextPastedCursorReposition = false
         }
     }
 }
