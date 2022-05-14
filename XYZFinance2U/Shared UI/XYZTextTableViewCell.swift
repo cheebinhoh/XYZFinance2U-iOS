@@ -25,6 +25,7 @@ class XYZTextTableViewCell: UITableViewCell,
     var monetory = false
     var currencyCode = Locale.current.currencyCode!
     var isEditable = true
+    var afterTextPastedCursorReposition = false
     
     // MARK: - IBOutlet
     
@@ -55,6 +56,7 @@ class XYZTextTableViewCell: UITableViewCell,
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        afterTextPastedCursorReposition = false
         
         return isEditable
     }
@@ -79,7 +81,7 @@ class XYZTextTableViewCell: UITableViewCell,
         
         // Hide the keyboard.
         textField.resignFirstResponder()
-        
+
         return true
     }
     
@@ -89,7 +91,6 @@ class XYZTextTableViewCell: UITableViewCell,
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
         delegate?.textDidEndEditing(sender: self)
     }
     
@@ -121,17 +122,34 @@ class XYZTextTableViewCell: UITableViewCell,
     
     @objc
     func textFieldDidChange(_ textField: UITextField) {
+        var relocatingCursor = false
         
         if monetory {
             
             var text = textField.text ?? "0.00"
-            
-            text = formattingDoubleValue(of: text)
-            text = formattingAndProcessDoubleValue(of: text)
+            let pastedText = UIPasteboard.general.string ?? ""
+  
+            if ( "" != pastedText && text.contains(pastedText) ) {
+                relocatingCursor = true
+            } else {
+                text = formattingDoubleValue(of: text)
+                text = formattingAndProcessDoubleValue(of: text)
+            }
+
             text = formattingCurrencyValue(of: text, as: currencyCode)
             textField.text = text
         }
         
+        afterTextPastedCursorReposition = relocatingCursor
         delegate?.textDidEndEditing(sender: self)
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if (afterTextPastedCursorReposition) {
+            let point = CGPoint(x: bounds.maxX, y: bounds.height / 2)
+            if let textPosition = textField.closestPosition(to: point) {
+                textField.selectedTextRange = textField.textRange(from: textPosition, to: textPosition)
+            }
+        }
     }
 }
